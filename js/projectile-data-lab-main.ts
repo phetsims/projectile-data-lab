@@ -25,7 +25,7 @@ simLauncher.launch( () => {
 
   const options: SimOptions = {
 
-    //TODO fill in credits, all of these fields are optional, see joist.CreditsNode
+    //TODO fill in credits, all of these fields are optional, see joist.CreditsNode, see https://github.com/phetsims/projectile-data-lab/issues/3
     credits: {
       leadDesign: '',
       softwareDevelopment: '',

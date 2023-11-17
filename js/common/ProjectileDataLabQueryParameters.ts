@@ -11,7 +11,7 @@ import logGlobal from '../../../phet-core/js/logGlobal.js';
 import projectileDataLab from '../projectileDataLab.js';
 
 const SCHEMA_MAP = {
-  //TODO add schemas for query parameters
+  //TODO add schemas for query parameters, see https://github.com/phetsims/projectile-data-lab/issues/4
 };
 
 const ProjectileDataLabQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
