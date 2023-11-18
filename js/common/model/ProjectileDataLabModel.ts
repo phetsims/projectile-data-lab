@@ -7,14 +7,25 @@ import TModel from '../../../../joist/js/TModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import Property from '../../../../axon/js/Property.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ProjectileDataLabModelOptions = SelfOptions & { tandem: Tandem };
 
 export default class ProjectileDataLabModel implements TModel {
+
+  public readonly launcherProperty: Property<number>;
+
   public constructor( providedOptions: ProjectileDataLabModelOptions ) {
 
-    // implement me
+    this.launcherProperty = new Property<number>( 1, {
+      validValues: [ 1, 2, 3, 4, 5, 6 ],
+      tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
+      phetioDocumentation: 'This property configures the active launcher by number.',
+      phetioValueType: NumberIO
+    } );
+
   }
 
   public reset(): void {
