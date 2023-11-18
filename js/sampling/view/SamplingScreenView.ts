@@ -10,7 +10,6 @@ import SamplingModel from '../model/SamplingModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import SamplingLaunchPanel from './SamplingLaunchPanel.js';
-import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 
