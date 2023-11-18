@@ -18,10 +18,12 @@ type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export class PDLScreenView extends ScreenView {
+  protected readonly resetAllButton: ResetAllButton;
+
   public constructor( model: TModel, options: PDLScreenViewOptions ) {
     super( options );
 
-    const resetAllButton = new ResetAllButton( {
+    this.resetAllButton = new ResetAllButton( {
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
@@ -31,7 +33,7 @@ export class PDLScreenView extends ScreenView {
       bottom: this.layoutBounds.maxY - ProjectileDataLabConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
-    this.addChild( resetAllButton );
+    this.addChild( this.resetAllButton );
   }
 
   /**
