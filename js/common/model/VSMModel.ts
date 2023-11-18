@@ -7,29 +7,39 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabModel, { ProjectileDataLabModelOptions } from './ProjectileDataLabModel.js';
 import Property from '../../../../axon/js/Property.js';
-import { Configuration, ConfigurationValues } from './Configuration.js';
+import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
+import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & ProjectileDataLabModelOptions;
 
 export default class VSMModel extends ProjectileDataLabModel {
-  public readonly configurationProperty: Property<Configuration>;
+  public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
+  public readonly projectileTypeProperty: Property<ProjectileType>;
 
   public constructor( providedOptions: VSMModelOptions ) {
     super( providedOptions );
 
-    this.configurationProperty = new Property<Configuration>( 'ANGLE_30', {
-      validValues: ConfigurationValues,
-      tandem: providedOptions.tandem.createTandem( 'configurationProperty' ),
-      phetioDocumentation: 'Configures the angle of the cannon. When at ANGLE_0, the cannon also rises above the ground.',
-      phetioValueType: StringUnionIO( ConfigurationValues )
+    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_30', {
+      validValues: LauncherConfigurationValues,
+      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
+      phetioDocumentation: 'This property configures the angle and height of the cannon. When set to ANGLE_0, the cannon is raised.',
+      phetioValueType: StringUnionIO( LauncherConfigurationValues )
+    } );
+
+    this.projectileTypeProperty = new Property<ProjectileType>( 'CANNONBALL', {
+      validValues: ProjectileTypeValues,
+      tandem: providedOptions.tandem.createTandem( 'projectileTypeProperty' ),
+      phetioDocumentation: 'This property configures the type of projectile.',
+      phetioValueType: StringUnionIO( ProjectileTypeValues )
     } );
   }
 
   public override reset(): void {
-    this.configurationProperty.reset();
+    this.launcherConfigurationProperty.reset();
+    this.projectileTypeProperty.reset();
   }
 }
 projectileDataLab.register( 'VSMModel', VSMModel );
