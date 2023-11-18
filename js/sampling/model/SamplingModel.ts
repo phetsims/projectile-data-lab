@@ -8,25 +8,35 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import TModel from '../../../../joist/js/TModel.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import Property from '../../../../axon/js/Property.js';
+import ProjectileDataLabModel from '../../common/model/ProjectileDataLabModel.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class SamplingModel implements TModel {
+export default class SamplingModel extends ProjectileDataLabModel {
+
+  public readonly sampleSizeProperty: Property<number>;
 
   public constructor( providedOptions: ProjectileDataLabModelOptions ) {
+    super( providedOptions );
 
-    // implement me
+    this.sampleSizeProperty = new Property<number>( 2, {
+      validValues: [ 2, 5, 15, 40 ],
+      tandem: providedOptions.tandem.createTandem( 'sampleSizeProperty' ),
+      phetioDocumentation: 'This property configures the number of projectiles in a sample',
+      phetioValueType: NumberIO
+    } );
   }
 
   /**
    * Resets the model.
    */
-  public reset(): void {
-    // implement me
+  public override reset(): void {
+    this.sampleSizeProperty.reset();
   }
 
   /**
