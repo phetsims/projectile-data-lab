@@ -21,12 +21,21 @@ export default class FieldPanel extends PDLPanel {
   public constructor( providedOptions: FieldPanelOptions ) {
 
     const fieldProperty = new Property( 'field1' );
-    const fieldRadioButtonGroup = new RectangularRadioButtonGroup( fieldProperty, [ {
-      value: 'field1',
-      tandemName: 'field1RadioButton',
-      createNode: () => new Text( '1' )
-    } ], {
-      tandem: providedOptions.tandem.createTandem( 'fieldRadioButtonGroup' )
+
+    // Show radio buttons for the fields
+    const fieldRadioButtonGroup = new RectangularRadioButtonGroup( fieldProperty, _.range( 1, 7 ).map( i => {
+      return {
+        value: 'field' + i,
+        tandemName: 'field' + i + 'RadioButton',
+        createNode: () => new Text( i.toString() )
+      };
+    } ), {
+      tandem: providedOptions.tandem.createTandem( 'fieldRadioButtonGroup' ),
+      orientation: 'horizontal'
+
+      // TODO: Preferred width is not working to get the wrap, see https://github.com/phetsims/projectile-data-lab/issues/7
+      // wrap: true,
+      // preferredWidth: 250
     } );
     super( [ new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, fieldRadioButtonGroup, {
       tandem: providedOptions.tandem.createTandem( 'fieldPanelSection' ) // TODO: Unnecessary tandem? See https://github.com/phetsims/projectile-data-lab/issues/7
