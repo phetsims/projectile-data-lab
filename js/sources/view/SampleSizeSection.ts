@@ -6,6 +6,7 @@ import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '..
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -34,7 +35,7 @@ export default class SampleSizeSection extends PDLPanelSection {
       tandem: providedOptions.tandem.createTandem( 'sampleSizeRadioButtonGroup' ),
       orientation: 'horizontal'
     } );
-    super( 'Sample Size', sampleSizeRadioButtonGroup, providedOptions );
+    super( ProjectileDataLabStrings.sampleSizeStringProperty, sampleSizeRadioButtonGroup, providedOptions );
   }
 }
 
