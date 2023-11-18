@@ -19,6 +19,7 @@ export default class SampleSizeSection extends PDLPanelSection {
 
   public constructor( sampleSizeProperty: Property<number>, providedOptions: SampleSizeSectionOptions ) {
 
+    // TODO: Try to use Array.map for this without type errors - see https://github.com/phetsims/projectile-data-lab/issues/5
     const sampleSizeRadioButtonGroupItems: RectangularRadioButtonGroupItem<number>[] = [];
 
     sampleSizeProperty.validValues?.forEach( sampleSize => {
