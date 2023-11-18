@@ -12,12 +12,12 @@ import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common/view/VSMLaun
  */
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
+type MeasuresLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
-export default class SourcesLaunchPanel extends VSMLaunchPanel {
+export default class MeasuresLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( configurationProperty: Property<Configuration>, providedOptions: VariabilityLaunchPanelOptions ) {
+  public constructor( configurationProperty: Property<Configuration>, providedOptions: MeasuresLaunchPanelOptions ) {
     super( configurationProperty, providedOptions );
   }
 }
-projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );
+projectileDataLab.register( 'MeasuresLaunchPanel', MeasuresLaunchPanel );

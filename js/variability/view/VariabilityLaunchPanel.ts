@@ -1,12 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import ConfigurationSection from '../../common/view/ConfigurationSection.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Configuration } from '../../common/model/Configuration.js';
 import Property from '../../../../axon/js/Property.js';
+import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common/view/VSMLaunchPanel.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -14,19 +12,12 @@ import Property from '../../../../axon/js/Property.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityLaunchPanelOptions = SelfOptions & PDLPanelOptions;
+type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
-export default class VariabilityLaunchPanel extends PDLPanel {
+export default class VariabilityLaunchPanel extends VSMLaunchPanel {
 
   public constructor( configurationProperty: Property<Configuration>, providedOptions: VariabilityLaunchPanelOptions ) {
-
-    const content = new Node();
-    const configurationSection = new ConfigurationSection( configurationProperty, {
-      tandem: providedOptions.tandem
-    } );
-
-    content.addChild( configurationSection );
-    super( content );
+    super( configurationProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'VariabilityLaunchPanel', VariabilityLaunchPanel );
