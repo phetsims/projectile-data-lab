@@ -16,5 +16,11 @@
   },
   "noAirResistance": {
     "value": "No air resistance"
+  },
+  "configuration": {
+    "value": "Configuration"
+  },
+  "projectile10kg": {
+    "value": "Projectile (10 kg)"
   }
 }

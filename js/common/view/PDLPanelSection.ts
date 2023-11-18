@@ -6,6 +6,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -17,7 +18,7 @@ export type PDLPanelSectionOptions = SelfOptions & WithRequired<VBoxOptions, 'ta
 
 export default class PDLPanelSection extends VBox {
 
-  public constructor( titleString: string, content: RectangularRadioButtonGroup<IntentionalAny>, providedOptions: PDLPanelSectionOptions ) {
+  public constructor( titleString: TReadOnlyProperty<string>, content: RectangularRadioButtonGroup<IntentionalAny>, providedOptions: PDLPanelSectionOptions ) {
     const title = new Text( titleString );
 
     super( { children: [ title, content ], align: 'left', spacing: 8 } );

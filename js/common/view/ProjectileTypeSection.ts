@@ -7,6 +7,7 @@ import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import { ProjectileType } from '../model/ProjectileType.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -35,7 +36,7 @@ export default class ProjectileTypeSection extends PDLPanelSection {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
       orientation: 'horizontal'
     } );
-    super( 'Projectile (10 kg)', projectileTypeRadioButtonGroup, providedOptions );
+    super( ProjectileDataLabStrings.projectile10kgStringProperty, projectileTypeRadioButtonGroup, providedOptions );
   }
 }
 

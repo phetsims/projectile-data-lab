@@ -7,6 +7,7 @@ import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../model/LauncherConfiguration.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -39,7 +40,7 @@ export default class LauncherConfigurationSection extends PDLPanelSection {
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' ),
       orientation: 'horizontal'
     } );
-    super( 'Configuration', launcherConfigurationRadioButtonGroup, providedOptions );
+    super( ProjectileDataLabStrings.configurationStringProperty, launcherConfigurationRadioButtonGroup, providedOptions );
   }
 }
 
