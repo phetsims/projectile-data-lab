@@ -17,7 +17,8 @@ type StringsType = {
     'sourcesStringProperty': LocalizedStringProperty;
     'measuresStringProperty': LocalizedStringProperty;
     'samplingStringProperty': LocalizedStringProperty;
-  }
+  };
+  'noAirResistanceStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;

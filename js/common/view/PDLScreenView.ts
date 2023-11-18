@@ -11,8 +11,10 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
 import TModel from '../../../../joist/js/TModel.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -22,6 +24,12 @@ export class PDLScreenView extends ScreenView {
 
   public constructor( model: TModel, options: PDLScreenViewOptions ) {
     super( options );
+
+    const noAirResistanceText = new Text( ProjectileDataLabStrings.noAirResistanceStringProperty, {
+      font: ProjectileDataLabConstants.PRIMARY_FONT,
+      maxWidth: 120.046875 * 1.25 // 25% larger than the default English text
+    } );
+    this.addChild( noAirResistanceText );
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -34,6 +42,12 @@ export class PDLScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
     this.addChild( this.resetAllButton );
+
+    // layout
+    ManualConstraint.create( this, [ noAirResistanceText, this.resetAllButton ], ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
+      noAirResistanceTextProxy.right = resetAllButtonProxy.left - ProjectileDataLabConstants.SCREEN_VIEW_X_MARGIN;
+      noAirResistanceTextProxy.bottom = resetAllButtonProxy.bottom;
+    } );
   }
 
   /**
