@@ -30,15 +30,17 @@ simLauncher.launch( () => {
   ];
 
   const options: SimOptions = {
+
+    //TODO fill in credits, all of these fields are optional, see joist.CreditsNode, see https://github.com/phetsims/projectile-data-lab/issues/3
     credits: {
-      leadDesign: 'Matthew Blackman',
-      softwareDevelopment: 'Matthew Blackman, Sam Reid',
-      team: 'Cathy Carter, Ariel Paul, Kathy Perkins, Amy Rouinfar',
-      contributors: 'Kelly Findley',
-      qualityAssurance: 'Nancy Salpepi, Kathryn Woessner',
-      graphicArts: 'Mariah Hermsmeyer',
-      soundDesign: 'Ashton Morris',
-      thanks: 'Bill Finzer, Gayle Geschwind, Heather Lewandowski'
+      leadDesign: '',
+      softwareDevelopment: '',
+      team: '',
+      contributors: '',
+      qualityAssurance: '',
+      graphicArts: '',
+      soundDesign: '',
+      thanks: ''
     }
   };
 
