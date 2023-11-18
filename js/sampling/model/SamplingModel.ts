@@ -15,7 +15,7 @@ type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class ProjectileDataLabModel implements TModel {
+export default class SamplingModel implements TModel {
 
   public constructor( providedOptions: ProjectileDataLabModelOptions ) {
 
@@ -38,4 +38,4 @@ export default class ProjectileDataLabModel implements TModel {
   }
 }
 
-projectileDataLab.register( 'ProjectileDataLabModel', ProjectileDataLabModel );
+projectileDataLab.register( 'SamplingModel', SamplingModel );

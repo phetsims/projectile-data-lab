@@ -9,9 +9,12 @@
 import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
-import ProjectileDataLabScreen from './projectile-data-lab/ProjectileDataLabScreen.js';
 import ProjectileDataLabStrings from './ProjectileDataLabStrings.js';
 import './common/ProjectileDataLabQueryParameters.js';
+import VariabilityScreen from './variability/VariabilityScreen.js';
+import SourcesScreen from './sources/SourcesScreen.js';
+import MeasuresScreen from './measures/MeasuresScreen.js';
+import SamplingScreen from './sampling/SamplingScreen.js';
 
 // Launch the sim. Beware that scenery Image nodes created outside simLauncher.launch() will have zero bounds
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
@@ -20,7 +23,10 @@ simLauncher.launch( () => {
   const titleStringProperty = ProjectileDataLabStrings[ 'projectile-data-lab' ].titleStringProperty;
 
   const screens = [
-    new ProjectileDataLabScreen( { tandem: Tandem.ROOT.createTandem( 'projectileDataLabScreen' ) } )
+    new VariabilityScreen( { tandem: Tandem.ROOT.createTandem( 'variabilityScreen' ) } ),
+    new SourcesScreen( { tandem: Tandem.ROOT.createTandem( 'sourcesScreen' ) } ),
+    new MeasuresScreen( { tandem: Tandem.ROOT.createTandem( 'measuresScreen' ) } ),
+    new SamplingScreen( { tandem: Tandem.ROOT.createTandem( 'samplingScreen' ) } )
   ];
 
   const options: SimOptions = {

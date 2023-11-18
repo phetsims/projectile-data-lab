@@ -8,16 +8,16 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ProjectileDataLabConstants from '../../common/ProjectileDataLabConstants.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import ProjectileDataLabModel from '../model/ProjectileDataLabModel.js';
+import SourcesModel from '../model/SourcesModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class ProjectileDataLabScreenView extends ScreenView {
+export default class SourcesScreenView extends ScreenView {
 
-  public constructor( model: ProjectileDataLabModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
+  public constructor( model: SourcesModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
 
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
@@ -53,4 +53,4 @@ export default class ProjectileDataLabScreenView extends ScreenView {
   }
 }
 
-projectileDataLab.register( 'ProjectileDataLabScreenView', ProjectileDataLabScreenView );
+projectileDataLab.register( 'SourcesScreenView', SourcesScreenView );

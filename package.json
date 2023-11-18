@@ -18,10 +18,20 @@
       "adapted-from-phet",
       "phet-io"
     ],
+    "phetLibs": [
+      "bamboo"
+    ],
     "supportsOutputJS": true,
     "simFeatures": {
-      "supportsDynamicLocale": true
-    }
+      "supportsDynamicLocale": true,
+      "supportsInteractiveDescription": true
+    },
+    "screenNameKeys": [
+      "PROJECTILE_DATA_LAB/screen.variability",
+      "PROJECTILE_DATA_LAB/screen.sources",
+      "PROJECTILE_DATA_LAB/screen.measures",
+      "PROJECTILE_DATA_LAB/screen.sampling"
+    ]
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",
@@ -39,6 +49,15 @@
               "ts-ignore": true,
               "ts-check": true,
               "ts-nocheck": true
+            }
+          ],
+          "no-object-spread-on-non-literals": "error",
+          "additional-bad-text": [
+            "error",
+            {
+              "forbiddenTextObjects": [
+                "dispose"
+              ]
             }
           ]
         }

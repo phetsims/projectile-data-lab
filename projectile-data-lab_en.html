@@ -16,7 +16,7 @@
 
 
 <script type="text/javascript">
-  /*eslint-disable quotes, quote-props*/
+  /* eslint-disable quotes, quote-props */
 
   window.phet = window.phet || {};
   window.phet.chipper = window.phet.chipper || {};
@@ -36,15 +36,25 @@
         "requirejsNamespace": "PROJECTILE_DATA_LAB",
         "simulation": true,
         "runnable": true,
-        "readmeCreatedManually": true,
         "supportedBrands": [
           "phet",
-          "adapted-from-phet"
+          "adapted-from-phet",
+          "phet-io"
+        ],
+        "phetLibs": [
+          "bamboo"
         ],
         "supportsOutputJS": true,
         "simFeatures": {
-          "supportsDynamicLocale": true
-        }
+          "supportsDynamicLocale": true,
+          "supportsInteractiveDescription": true
+        },
+        "screenNameKeys": [
+          "PROJECTILE_DATA_LAB/screen.variability",
+          "PROJECTILE_DATA_LAB/screen.sources",
+          "PROJECTILE_DATA_LAB/screen.measures",
+          "PROJECTILE_DATA_LAB/screen.sampling"
+        ]
       },
       "eslintConfig": {
         "extends": "../chipper/eslint/sim_eslintrc.js",
@@ -63,6 +73,15 @@
                   "ts-check": true,
                   "ts-nocheck": true
                 }
+              ],
+              "no-object-spread-on-non-literals": "error",
+              "additional-bad-text": [
+                "error",
+                {
+                  "forbiddenTextObjects": [
+                    "dispose"
+                  ]
+                }
               ]
             }
           }
@@ -72,16 +91,20 @@
   window.phet.chipper.stringRepos =
     [
       {
+        "repo": "bamboo",
+        "requirejsNamespace": "BAMBOO"
+      },
+      {
         "repo": "joist",
         "requirejsNamespace": "JOIST"
       },
       {
-        "repo": "scenery-phet",
-        "requirejsNamespace": "SCENERY_PHET"
-      },
-      {
         "repo": "projectile-data-lab",
         "requirejsNamespace": "PROJECTILE_DATA_LAB"
+      },
+      {
+        "repo": "scenery-phet",
+        "requirejsNamespace": "SCENERY_PHET"
       },
       {
         "repo": "sun",
