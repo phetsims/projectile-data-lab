@@ -22,7 +22,7 @@ export default class VariabilityScreenView extends PDLScreenView {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
 
-    const variabilityLaunchPanel = new VariabilityLaunchPanel( model.configurationProperty, {
+    const variabilityLaunchPanel = new VariabilityLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, {
       tandem: options.tandem.createTandem( 'variabilityLaunchPanel' )
     } );
     this.addChild( variabilityLaunchPanel );

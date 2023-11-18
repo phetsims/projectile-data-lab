@@ -2,9 +2,10 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Configuration } from '../../common/model/Configuration.js';
+import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import Property from '../../../../axon/js/Property.js';
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common/view/VSMLaunchPanel.js';
+import { ProjectileType } from '../../common/model/ProjectileType.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -16,8 +17,8 @@ type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class SourcesLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( configurationProperty: Property<Configuration>, providedOptions: VariabilityLaunchPanelOptions ) {
-    super( configurationProperty, providedOptions );
+  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, projectileTypeProperty: Property<ProjectileType>, providedOptions: VariabilityLaunchPanelOptions ) {
+    super( launcherConfigurationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );

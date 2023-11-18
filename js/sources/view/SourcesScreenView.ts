@@ -21,7 +21,7 @@ export default class SourcesScreenView extends PDLScreenView {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
 
-    const sourcesLaunchPanel = new SourcesLaunchPanel( model.configurationProperty, {
+    const sourcesLaunchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, {
       tandem: options.tandem.createTandem( 'sourcesLaunchPanel' )
     } );
     this.addChild( sourcesLaunchPanel );

@@ -1,12 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { Text, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import { Text } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { Configuration } from '../model/Configuration.js';
+import { LauncherConfiguration } from '../model/LauncherConfiguration.js';
+import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -14,15 +14,12 @@ import { Configuration } from '../model/Configuration.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type ConfigurationSectionOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
+type LauncherConfigurationSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
-export default class ConfigurationSection extends VBox {
+export default class LauncherConfigurationSection extends PDLPanelSection {
 
-  public constructor( configurationProperty: Property<Configuration>, providedOptions: ConfigurationSectionOptions ) {
-
-    const title = new Text( 'Configuration' );
-
-    const configurationRadioButtonGroup = new RectangularRadioButtonGroup( configurationProperty, [ {
+  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, providedOptions: LauncherConfigurationSectionOptions ) {
+    const launcherConfigurationRadioButtonGroup = new RectangularRadioButtonGroup( launcherConfigurationProperty, [ {
       value: 'ANGLE_30' as const,
       tandemName: 'angleThirtyRadioButton',
       createNode: () => new Text( '30' )
@@ -39,10 +36,11 @@ export default class ConfigurationSection extends VBox {
       tandemName: 'angleZeroRadioButton',
       createNode: () => new Text( '0' )
     } ], {
-      tandem: providedOptions.tandem.createTandem( 'configurationRadioButtonGroup' ),
+      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' ),
       orientation: 'horizontal'
     } );
-    super( { children: [ title, configurationRadioButtonGroup ] } );
+    super( 'Configuration', launcherConfigurationRadioButtonGroup, providedOptions );
   }
 }
-projectileDataLab.register( 'ConfigurationSection', ConfigurationSection );
+
+projectileDataLab.register( 'LauncherConfigurationSection', LauncherConfigurationSection );

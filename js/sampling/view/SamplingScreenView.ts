@@ -9,16 +9,28 @@ import projectileDataLab from '../../projectileDataLab.js';
 import SamplingModel from '../model/SamplingModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
+import SamplingLaunchPanel from './SamplingLaunchPanel.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
+type SamplingScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class SamplingScreenView extends PDLScreenView {
 
-  public constructor( model: SamplingModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
-    const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
+  public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
+    const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
+
+    const launcherProperty = new Property<number>( 1 );
+    const sampleSizeProperty = new Property<number>( 2 );
+
+    const samplingLaunchPanel = new SamplingLaunchPanel( launcherProperty, sampleSizeProperty, {
+      tandem: options.tandem.createTandem( 'samplingLaunchPanel' )
+    } );
+    this.addChild( samplingLaunchPanel );
+
+    this.pdomControlAreaNode.pdomOrder = [ samplingLaunchPanel, this.resetAllButton ];
   }
 }
 

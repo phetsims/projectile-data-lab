@@ -21,7 +21,7 @@ export default class MeasuresScreenView extends PDLScreenView {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
 
-    const measuresLaunchPanel = new SourcesLaunchPanel( model.configurationProperty, {
+    const measuresLaunchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, {
       tandem: options.tandem.createTandem( 'measuresLaunchPanel' )
     } );
     this.addChild( measuresLaunchPanel );

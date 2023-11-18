@@ -9,15 +9,16 @@
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Node, VBox } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLPanelOptions = SelfOptions & WithRequired<PanelOptions, 'tandem'>;
 
 export class PDLPanel extends Panel {
-  public constructor( content: Node, providedOptions?: PDLPanelOptions ) {
-    super( content, providedOptions );
+  public constructor( content: Node[], providedOptions?: PDLPanelOptions ) {
+    const contentContainer = new VBox( { children: [ ...content ], spacing: 5 } );
+    super( contentContainer, providedOptions );
   }
 }
 
