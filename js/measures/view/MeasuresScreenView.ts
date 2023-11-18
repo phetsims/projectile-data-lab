@@ -10,6 +10,8 @@ import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import SourcesLaunchPanel from '../../sources/view/SourcesLaunchPanel.js';
+import FieldPanel from '../../common/view/FieldPanel.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +28,18 @@ export default class MeasuresScreenView extends PDLScreenView {
     } );
     this.addChild( measuresLaunchPanel );
 
-    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, this.resetAllButton ];
+    const fieldPanel = new FieldPanel( {
+      tandem: options.tandem.createTandem( 'fieldPanel' )
+    } );
+    this.addChild( fieldPanel );
+
+    // Layout
+    ManualConstraint.create( this, [ fieldPanel ], fieldPanelProxy => {
+      fieldPanelProxy.right = this.layoutBounds.right;
+    } );
+
+    // Keyboard order
+    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, fieldPanel, this.resetAllButton ];
   }
 }
 

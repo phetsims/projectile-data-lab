@@ -10,6 +10,8 @@ import SourcesModel from '../model/SourcesModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import SourcesLaunchPanel from './SourcesLaunchPanel.js';
+import FieldPanel from '../../common/view/FieldPanel.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +28,16 @@ export default class SourcesScreenView extends PDLScreenView {
     } );
     this.addChild( sourcesLaunchPanel );
 
-    this.pdomControlAreaNode.pdomOrder = [ sourcesLaunchPanel, this.resetAllButton ];
+    const fieldPanel = new FieldPanel( {
+      tandem: options.tandem.createTandem( 'fieldPanel' )
+    } );
+    this.addChild( fieldPanel );
+
+    ManualConstraint.create( this, [ fieldPanel ], fieldPanelProxy => {
+      fieldPanelProxy.right = this.layoutBounds.right;
+    } );
+
+    this.pdomControlAreaNode.pdomOrder = [ sourcesLaunchPanel, fieldPanel, this.resetAllButton ];
   }
 }
 

@@ -11,6 +11,8 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
+import FieldPanel from '../../common/view/FieldPanel.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -27,7 +29,17 @@ export default class VariabilityScreenView extends PDLScreenView {
     } );
     this.addChild( variabilityLaunchPanel );
 
-    this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, this.resetAllButton ];
+    const fieldPanel = new FieldPanel( {
+      tandem: options.tandem.createTandem( 'fieldPanel' )
+    } );
+    this.addChild( fieldPanel );
+
+    // Layout
+    ManualConstraint.create( this, [ fieldPanel ], fieldPanelProxy => {
+      fieldPanelProxy.right = this.layoutBounds.right;
+    } );
+
+    this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, fieldPanel, this.resetAllButton ];
   }
 }
 projectileDataLab.register( 'VariabilityScreenView', VariabilityScreenView );
