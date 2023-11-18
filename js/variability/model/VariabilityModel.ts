@@ -20,7 +20,7 @@ export default class VariabilityModel extends VSMModel {
 
   public constructor( providedOptions: ProjectileDataLabModelOptions ) {
 
-    super();
+    super( providedOptions );
   }
 }
 

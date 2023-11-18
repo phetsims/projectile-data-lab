@@ -6,28 +6,9 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import TModel from '../../../../joist/js/TModel.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import VSMModel from '../../common/model/VSMModel.js';
 
-type SelfOptions = EmptySelfOptions;
-
-type ProjectileDataLabModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
-
-export default class SourcesModel implements TModel {
-
-  public constructor( providedOptions: ProjectileDataLabModelOptions ) {
-
-    // implement me
-  }
-
-  /**
-   * Resets the model.
-   */
-  public reset(): void {
-    // implement me
-  }
+export default class SourcesModel extends VSMModel {
 
   /**
    * Steps the model.
