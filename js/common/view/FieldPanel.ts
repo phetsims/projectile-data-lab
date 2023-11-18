@@ -7,7 +7,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
 import { Text } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -20,6 +20,8 @@ type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 export default class FieldPanel extends PDLPanel {
   public constructor( providedOptions: FieldPanelOptions ) {
 
+    const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
+
     // TODO: Move this to the model, see https://github.com/phetsims/projectile-data-lab/issues/7
     const fieldProperty = new Property( 'field1' );
 
@@ -31,7 +33,7 @@ export default class FieldPanel extends PDLPanel {
         createNode: () => new Text( i.toString() )
       };
     } ), {
-      tandem: providedOptions.tandem.createTandem( 'fieldRadioButtonGroup' ),
+      tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),
       orientation: 'horizontal'
 
       // TODO: Preferred width is not working to get the wrap, see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -39,10 +41,8 @@ export default class FieldPanel extends PDLPanel {
       // preferredWidth: 250
     } );
     super( [ new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, fieldRadioButtonGroup, {
-      tandem: providedOptions.tandem.createTandem( 'fieldPanelSection' ) // TODO: Unnecessary tandem? See https://github.com/phetsims/projectile-data-lab/issues/7
-    } ) ], {
-      tandem: providedOptions.tandem.createTandem( 'fieldPanel' )
-    } );
+      tandem: options.tandem.createTandem( 'fieldPanelSection' ) // TODO: Unnecessary tandem? See https://github.com/phetsims/projectile-data-lab/issues/7
+    } ) ], options );
   }
 }
 projectileDataLab.register( 'FieldPanel', FieldPanel );
