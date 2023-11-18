@@ -20,6 +20,7 @@ type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 export default class FieldPanel extends PDLPanel {
   public constructor( providedOptions: FieldPanelOptions ) {
 
+    // TODO: Move this to the model, see https://github.com/phetsims/projectile-data-lab/issues/7
     const fieldProperty = new Property( 'field1' );
 
     // Show radio buttons for the fields
