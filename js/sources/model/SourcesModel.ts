@@ -3,19 +3,24 @@
 /**
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common/model/VSMModel.js';
+
+type SelfOptions = EmptySelfOptions;
+
+type ProjectileDataLabModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export default class SourcesModel extends VSMModel {
 
-  /**
-   * Steps the model.
-   * @param dt - time step, in seconds
-   */
-  public step( dt: number ): void {
-    // implement me
+  public constructor( providedOptions: ProjectileDataLabModelOptions ) {
+
+    super( providedOptions );
   }
 }
 
