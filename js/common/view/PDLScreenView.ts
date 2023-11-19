@@ -11,10 +11,12 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { LinearGradient, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
 import TModel from '../../../../joist/js/TModel.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import ProjectileDataLabColors from '../ProjectileDataLabColors.js';
+import GradientBackgroundNode from '../../../../scenery-phet/js/GradientBackgroundNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -24,6 +26,17 @@ export class PDLScreenView extends ScreenView {
 
   public constructor( model: TModel, options: PDLScreenViewOptions ) {
     super( options );
+
+    const backgroundNode = new GradientBackgroundNode( 0, 0, 1, 1,
+      ProjectileDataLabColors.screenBackgroundTopColorProperty, ProjectileDataLabColors.screenBackgroundBottomColorProperty,
+      0, 1 );
+
+    // This instance lives for the lifetime of the simulation, so we don't need to remove this listener
+    this.visibleBoundsProperty.link( visibleBounds => {
+      backgroundNode.translation = visibleBounds.leftTop;
+      backgroundNode.setScaleMagnitude( visibleBounds.width, visibleBounds.height );
+    } );
+    this.addChild( backgroundNode );
 
     const noAirResistanceText = new Text( ProjectileDataLabStrings.noAirResistanceStringProperty, {
       font: ProjectileDataLabConstants.PRIMARY_FONT,

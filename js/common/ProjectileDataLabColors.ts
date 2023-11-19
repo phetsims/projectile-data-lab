@@ -20,8 +20,12 @@ import projectileDataLab from '../projectileDataLab.js';
 const ProjectileDataLabColors = {
 
   // Background color for screens in this sim
-  screenBackgroundColorProperty: new ProfileColorProperty( projectileDataLab, 'background', {
-    default: 'white'
+  screenBackgroundTopColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundTop', {
+    default: '#15AFFF'
+  } ),
+
+  screenBackgroundBottomColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundBottom', {
+    default: '#B6D2FF'
   } )
 };
 
