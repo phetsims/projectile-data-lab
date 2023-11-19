@@ -21,6 +21,7 @@ type StringsType = {
   'noAirResistanceStringProperty': LocalizedStringProperty;
   'configurationStringProperty': LocalizedStringProperty;
   'projectile10kgStringProperty': LocalizedStringProperty;
+  'launcherStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
 };
