@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { LinearGradient, ManualConstraint, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
 import TModel from '../../../../joist/js/TModel.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
