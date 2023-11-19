@@ -14,6 +14,14 @@ const ProjectileDataLabConstants = {
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
 
+  MAX_FIELD_DISTANCE: 100, // In field units
+
+  FIELD_CENTER_OFFSET_X: 50,
+  FIELD_CENTER_Y: 500,
+  FIELD_HEIGHT: 50,
+  FIELD_WIDTH: 880, // In view units
+  FIELD_BORDER_LINE_WIDTH: 3,
+
   PRIMARY_FONT: new PhetFont( 16 )
 } as const;
 

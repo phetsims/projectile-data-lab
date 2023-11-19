@@ -26,6 +26,18 @@ const ProjectileDataLabColors = {
 
   screenBackgroundBottomColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundBottom', {
     default: '#B6D2FF'
+  } ),
+
+  fieldFillColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill', {
+    default: '#1A974E'
+  } ),
+
+  fieldStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldStroke', {
+    default: '#FFFFFF'
+  } ),
+
+  fieldLineStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineStroke', {
+    default: '#70D1A4'
   } )
 };
 

@@ -13,18 +13,20 @@ import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
-import TModel from '../../../../joist/js/TModel.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import ProjectileDataLabColors from '../ProjectileDataLabColors.js';
 import GradientBackgroundNode from '../../../../scenery-phet/js/GradientBackgroundNode.js';
+import FieldNode from './FieldNode.js';
+import ProjectileDataLabModel from '../model/ProjectileDataLabModel.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export class PDLScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
+  private readonly field: FieldNode;
 
-  public constructor( model: TModel, options: PDLScreenViewOptions ) {
+  public constructor( model: ProjectileDataLabModel, options: PDLScreenViewOptions ) {
     super( options );
 
     const backgroundNode = new GradientBackgroundNode( 0, 0, 1, 1,
@@ -55,6 +57,9 @@ export class PDLScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
     this.addChild( this.resetAllButton );
+
+    this.field = new FieldNode( this.layoutBounds.centerX, ProjectileDataLabConstants.FIELD_CENTER_Y, model.binWidthProperty, {} );
+    this.addChild( this.field );
 
     // layout
     ManualConstraint.create( this, [ noAirResistanceText, this.resetAllButton ], ( noAirResistanceTextProxy, resetAllButtonProxy ) => {

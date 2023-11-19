@@ -16,6 +16,7 @@ export type ProjectileDataLabModelOptions = SelfOptions & { tandem: Tandem };
 export default class ProjectileDataLabModel implements TModel {
 
   public readonly launcherProperty: Property<number>;
+  public readonly binWidthProperty: Property<number>;
 
   public constructor( providedOptions: ProjectileDataLabModelOptions ) {
 
@@ -23,6 +24,13 @@ export default class ProjectileDataLabModel implements TModel {
       validValues: [ 1, 2, 3, 4, 5, 6 ],
       tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
       phetioDocumentation: 'This property configures the active launcher by number.',
+      phetioValueType: NumberIO
+    } );
+
+    this.binWidthProperty = new Property<number>( 1, {
+      validValues: [ 1, 2, 5, 10 ],
+      tandem: providedOptions.tandem.createTandem( 'binWidthProperty' ),
+      phetioDocumentation: 'This property configures the bin width of the field and histogram.',
       phetioValueType: NumberIO
     } );
 
