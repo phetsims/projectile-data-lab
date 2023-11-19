@@ -18,6 +18,7 @@ import ProjectileDataLabColors from '../ProjectileDataLabColors.js';
 import GradientBackgroundNode from '../../../../scenery-phet/js/GradientBackgroundNode.js';
 import FieldNode from './FieldNode.js';
 import ProjectileDataLabModel from '../model/ProjectileDataLabModel.js';
+import FieldOverlayNode from './FieldOverlayNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -58,13 +59,15 @@ export class PDLScreenView extends ScreenView {
     } );
     this.addChild( this.resetAllButton );
 
-    this.field = new FieldNode(
-      this.layoutBounds.centerX + ProjectileDataLabConstants.FIELD_CENTER_OFFSET_X,
-      ProjectileDataLabConstants.FIELD_CENTER_Y,
-      model.binWidthProperty,
-      {}
-    );
+    // Create the field and field overlay
+    const fieldX = this.layoutBounds.centerX + ProjectileDataLabConstants.FIELD_CENTER_OFFSET_X;
+    const fieldY = ProjectileDataLabConstants.FIELD_CENTER_Y;
+
+    this.field = new FieldNode( fieldX, fieldY, model.binWidthProperty, {} );
+    const fieldOverlayNode = new FieldOverlayNode( fieldX, fieldY, {} );
+
     this.addChild( this.field );
+    this.addChild( fieldOverlayNode );
 
     // layout
     ManualConstraint.create( this, [ noAirResistanceText, this.resetAllButton ],

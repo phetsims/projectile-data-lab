@@ -32,7 +32,7 @@ const ProjectileDataLabColors = {
     default: '#1A974E'
   } ),
 
-  fieldStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldStroke', {
+  fieldBorderStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldBorderStroke', {
     default: '#FFFFFF'
   } ),
 
