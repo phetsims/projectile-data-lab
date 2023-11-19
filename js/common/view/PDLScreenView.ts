@@ -19,6 +19,7 @@ import GradientBackgroundNode from '../../../../scenery-phet/js/GradientBackgrou
 import FieldNode from './FieldNode.js';
 import ProjectileDataLabModel from '../model/ProjectileDataLabModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
+import LauncherNode from './LauncherNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -26,13 +27,21 @@ type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 export class PDLScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
   private readonly field: FieldNode;
+  private readonly launcher: LauncherNode;
 
   public constructor( model: ProjectileDataLabModel, options: PDLScreenViewOptions ) {
     super( options );
 
-    const backgroundNode = new GradientBackgroundNode( 0, 0, 1, 1,
-      ProjectileDataLabColors.screenBackgroundTopColorProperty, ProjectileDataLabColors.screenBackgroundBottomColorProperty,
-      0, 1 );
+    const backgroundNode = new GradientBackgroundNode(
+      0,
+      0,
+      1,
+      1,
+      ProjectileDataLabColors.screenBackgroundTopColorProperty,
+      ProjectileDataLabColors.screenBackgroundBottomColorProperty,
+      0,
+      1
+    );
 
     // This instance lives for the lifetime of the simulation, so we don't need to remove this listener
     this.visibleBoundsProperty.link( visibleBounds => {
@@ -66,15 +75,31 @@ export class PDLScreenView extends ScreenView {
     this.field = new FieldNode( fieldX, fieldY, model.binWidthProperty, {} );
     const fieldOverlayNode = new FieldOverlayNode( fieldX, fieldY, {} );
 
+    // Create the launcher
+    const originX = fieldX - 0.5 * ProjectileDataLabConstants.FIELD_WIDTH;
+    this.launcher = new LauncherNode(
+      originX,
+      fieldY,
+      model.launcherAngleProperty,
+      model.launcherHeightProperty,
+      model.launcherTypeProperty,
+      {}
+    );
+
     this.addChild( this.field );
+    this.addChild( this.launcher );
     this.addChild( fieldOverlayNode );
 
     // layout
-    ManualConstraint.create( this, [ noAirResistanceText, this.resetAllButton ],
+    ManualConstraint.create(
+      this,
+      [ noAirResistanceText, this.resetAllButton ],
       ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
-        noAirResistanceTextProxy.right = resetAllButtonProxy.left - ProjectileDataLabConstants.SCREEN_VIEW_X_MARGIN;
+        noAirResistanceTextProxy.right =
+          resetAllButtonProxy.left - ProjectileDataLabConstants.SCREEN_VIEW_X_MARGIN;
         noAirResistanceTextProxy.bottom = resetAllButtonProxy.bottom;
-      } );
+      }
+    );
   }
 
   /**
