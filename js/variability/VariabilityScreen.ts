@@ -7,7 +7,6 @@
 
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import ProjectileDataLabColors from '../common/ProjectileDataLabColors.js';
 import projectileDataLab from '../projectileDataLab.js';
 import VariabilityModel from './model/VariabilityModel.js';
 import VariabilityScreenView from './view/VariabilityScreenView.js';
@@ -22,8 +21,7 @@ export default class VariabilityScreen extends Screen<VariabilityModel, Variabil
   public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: ProjectileDataLabStrings.screen.variabilityStringProperty,
-      backgroundColorProperty: ProjectileDataLabColors.screenBackgroundColorProperty
+      name: ProjectileDataLabStrings.screen.variabilityStringProperty
     }, providedOptions );
 
     super(

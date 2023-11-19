@@ -7,7 +7,6 @@
 
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import ProjectileDataLabColors from '../common/ProjectileDataLabColors.js';
 import projectileDataLab from '../projectileDataLab.js';
 import MeasuresModel from './model/MeasuresModel.js';
 import MeasuresScreenView from './view/MeasuresScreenView.js';
@@ -23,7 +22,6 @@ export default class MeasuresScreen extends Screen<MeasuresModel, MeasuresScreen
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.measuresStringProperty,
-      backgroundColorProperty: ProjectileDataLabColors.screenBackgroundColorProperty
     }, providedOptions );
 
     super(
