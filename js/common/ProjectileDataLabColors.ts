@@ -38,6 +38,40 @@ const ProjectileDataLabColors = {
 
   fieldLineStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineStroke', {
     default: '#70D1A4'
+  } ),
+
+  launcherFillColorProperties: [
+    new ProfileColorProperty( projectileDataLab, 'launcher1Fill', {
+      default: '#908C99'
+    } ),
+
+    new ProfileColorProperty( projectileDataLab, 'launcher2Fill', {
+      default: '#E82126'
+    } ),
+
+    new ProfileColorProperty( projectileDataLab, 'launcher3Fill', {
+      default: '#6D16C1'
+    } ),
+
+    new ProfileColorProperty( projectileDataLab, 'launcher4Fill', {
+      default: '#D424E2'
+    } ),
+
+    new ProfileColorProperty( projectileDataLab, 'launcher5Fill', {
+      default: '#237BE5'
+    } ),
+
+    new ProfileColorProperty( projectileDataLab, 'launcher6Fill', {
+      default: '#E88A1A'
+    } )
+  ],
+
+  launcherStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherStroke', {
+    default: '#111111'
+  } ),
+
+  launcherEndFillColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherEndFill', {
+    default: '#706C79'
   } )
 };
 
