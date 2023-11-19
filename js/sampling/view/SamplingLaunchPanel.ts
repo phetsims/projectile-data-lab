@@ -1,11 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
+import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
-import SampleSizeSection from '../../sources/view/SampleSizeSection.js';
+import SampleSizeSection from './SampleSizeSection.js';
+import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -15,19 +16,18 @@ import SampleSizeSection from '../../sources/view/SampleSizeSection.js';
 type SelfOptions = EmptySelfOptions;
 type SamplingLaunchPanelOptions = SelfOptions & PDLPanelOptions;
 
-export default class SamplingLaunchPanel extends PDLPanel {
+export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
   public constructor( launcherProperty: Property<number>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
-    const content: Node[] = [];
-    const sameSizeSection = new SampleSizeSection( sampleSizeProperty, {
+    const sampleSizeSection = new SampleSizeSection( sampleSizeProperty, {
       tandem: providedOptions.tandem
     } );
-    content.push( sameSizeSection );
 
-    const separator = new HSeparator( { stroke: Color.BLACK } );
-    content.push( separator );
+    const content: Node[] = [];
+    content.push( sampleSizeSection );
+    content.push( new HSeparator( { stroke: Color.BLACK } ) );
 
-    super( content, providedOptions );
+    super( launcherProperty, content, providedOptions );
   }
 }
 projectileDataLab.register( 'SamplingLaunchPanel', SamplingLaunchPanel );

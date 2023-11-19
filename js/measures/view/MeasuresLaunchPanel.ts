@@ -17,8 +17,8 @@ type MeasuresLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class MeasuresLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, projectileTypeProperty: Property<ProjectileType>, providedOptions: MeasuresLaunchPanelOptions ) {
-    super( launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, projectileTypeProperty: Property<ProjectileType>, launcherTypeProperty: Property<number>, providedOptions: MeasuresLaunchPanelOptions ) {
+    super( launcherConfigurationProperty, projectileTypeProperty, launcherTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'MeasuresLaunchPanel', MeasuresLaunchPanel );

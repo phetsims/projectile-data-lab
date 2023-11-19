@@ -13,12 +13,12 @@ import { ProjectileType } from '../../common/model/ProjectileType.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
+type SourcesLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class SourcesLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, projectileTypeProperty: Property<ProjectileType>, providedOptions: VariabilityLaunchPanelOptions ) {
-    super( launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, projectileTypeProperty: Property<ProjectileType>, launcherTypeProperty: Property<number>, providedOptions: SourcesLaunchPanelOptions ) {
+    super( launcherConfigurationProperty, projectileTypeProperty, launcherTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );

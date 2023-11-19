@@ -17,8 +17,8 @@ type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class VariabilityLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, projectileTypeProperty: Property<ProjectileType>, providedOptions: VariabilityLaunchPanelOptions ) {
-    super( launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+  public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, projectileTypeProperty: Property<ProjectileType>, launcherTypeProperty: Property<number>, providedOptions: VariabilityLaunchPanelOptions ) {
+    super( launcherConfigurationProperty, projectileTypeProperty, launcherTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'VariabilityLaunchPanel', VariabilityLaunchPanel );
