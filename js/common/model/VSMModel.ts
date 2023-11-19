@@ -11,6 +11,7 @@ import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherCo
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
+import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & ProjectileDataLabModelOptions;
@@ -34,6 +35,30 @@ export default class VSMModel extends ProjectileDataLabModel {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeProperty' ),
       phetioDocumentation: 'This property configures the type of projectile.',
       phetioValueType: StringUnionIO( ProjectileTypeValues )
+    } );
+
+    this.launcherConfigurationProperty.link( launcherAngle => {
+      let angle = 0;
+      let height = 0;
+      switch( launcherAngle ) {
+        case 'ANGLE_45':
+          angle = 45;
+          break;
+        case 'ANGLE_60':
+          angle = 60;
+          break;
+        case 'ANGLE_30':
+          angle = 30;
+          break;
+        case 'ANGLE_0':
+          height = ProjectileDataLabConstants.RAISED_LAUNCHER_HEIGHT;
+          break;
+        default:
+          break;
+      }
+
+      this.launcherAngleProperty.value = angle;
+      this.launcherHeightProperty.value = height;
     } );
   }
 

@@ -9,20 +9,34 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ProjectileDataLabModelOptions = SelfOptions & { tandem: Tandem };
 
 export default class ProjectileDataLabModel implements TModel {
 
-  public readonly launcherProperty: Property<number>;
+  public readonly launcherAngleProperty: Property<number>;
+  public readonly launcherHeightProperty: Property<number>;
+
+  public readonly launcherTypeProperty: Property<number>;
   public readonly binWidthProperty: Property<number>;
 
   public constructor( providedOptions: ProjectileDataLabModelOptions ) {
 
-    this.launcherProperty = new Property<number>( 1, {
+    this.launcherAngleProperty = new Property<number>( 30, {
+      validValues: [ 0, 30, 45, 60 ],
+      tandem: Tandem.OPT_OUT
+    } );
+
+    this.launcherHeightProperty = new Property<number>( 0, {
+      validValues: [ 0, ProjectileDataLabConstants.RAISED_LAUNCHER_HEIGHT ],
+      tandem: Tandem.OPT_OUT
+    } );
+
+    this.launcherTypeProperty = new Property<number>( 1, {
       validValues: [ 1, 2, 3, 4, 5, 6 ],
-      tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'launcherTypeProperty' ),
       phetioDocumentation: 'This property configures the active launcher by number.',
       phetioValueType: NumberIO
     } );
@@ -33,11 +47,13 @@ export default class ProjectileDataLabModel implements TModel {
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',
       phetioValueType: NumberIO
     } );
-
   }
 
   public reset(): void {
-    // implement me
+    this.launcherAngleProperty.reset();
+    this.launcherHeightProperty.reset();
+    this.launcherTypeProperty.reset();
+    this.binWidthProperty.reset();
   }
 }
 projectileDataLab.register( 'ProjectileDataLabModel', ProjectileDataLabModel );
