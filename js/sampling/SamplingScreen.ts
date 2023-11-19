@@ -21,7 +21,7 @@ export default class SamplingScreen extends Screen<SamplingModel, SamplingScreen
   public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: ProjectileDataLabStrings.screen.samplingStringProperty,
+      name: ProjectileDataLabStrings.screen.samplingStringProperty
     }, providedOptions );
 
     super(

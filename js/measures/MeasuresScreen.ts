@@ -21,7 +21,7 @@ export default class MeasuresScreen extends Screen<MeasuresModel, MeasuresScreen
   public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: ProjectileDataLabStrings.screen.measuresStringProperty,
+      name: ProjectileDataLabStrings.screen.measuresStringProperty
     }, providedOptions );
 
     super(
