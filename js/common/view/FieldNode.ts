@@ -36,11 +36,7 @@ export default class FieldNode extends Node {
       }
     );
 
-    const defaultOptions = {
-      x: x,
-      y: y,
-      children: [ fieldRectangle ]
-    };
+    const defaultOptions = { x: x, y: y, children: [ fieldRectangle ] };
     const options = optionize<FieldNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
