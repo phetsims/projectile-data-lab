@@ -58,14 +58,20 @@ export class PDLScreenView extends ScreenView {
     } );
     this.addChild( this.resetAllButton );
 
-    this.field = new FieldNode( this.layoutBounds.centerX, ProjectileDataLabConstants.FIELD_CENTER_Y, model.binWidthProperty, {} );
+    this.field = new FieldNode(
+      this.layoutBounds.centerX + ProjectileDataLabConstants.FIELD_CENTER_OFFSET_X,
+      ProjectileDataLabConstants.FIELD_CENTER_Y,
+      model.binWidthProperty,
+      {}
+    );
     this.addChild( this.field );
 
     // layout
-    ManualConstraint.create( this, [ noAirResistanceText, this.resetAllButton ], ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
-      noAirResistanceTextProxy.right = resetAllButtonProxy.left - ProjectileDataLabConstants.SCREEN_VIEW_X_MARGIN;
-      noAirResistanceTextProxy.bottom = resetAllButtonProxy.bottom;
-    } );
+    ManualConstraint.create( this, [ noAirResistanceText, this.resetAllButton ],
+      ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
+        noAirResistanceTextProxy.right = resetAllButtonProxy.left - ProjectileDataLabConstants.SCREEN_VIEW_X_MARGIN;
+        noAirResistanceTextProxy.bottom = resetAllButtonProxy.bottom;
+      } );
   }
 
   /**

@@ -38,7 +38,7 @@ export default class FieldNode extends Node {
     );
 
     const defaultOptions = {
-      x: x + ProjectileDataLabConstants.FIELD_CENTER_OFFSET_X,
+      x: x,
       y: y,
       children: [ fieldRectangle ]
     };
