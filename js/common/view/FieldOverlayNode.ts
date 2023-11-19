@@ -50,13 +50,12 @@ export default class FieldOverlayNode extends Node {
 
     for ( let i = 0; i <= totalDistanceLabels; i++ ) {
       const distance = ( i + 1 ) * ProjectileDataLabConstants.FIELD_LINE_NUMBER_INCREMENT;
-      const pixelsToDistance = ProjectileDataLabConstants.FIELD_WIDTH / ProjectileDataLabConstants.MAX_FIELD_DISTANCE;
-      const distanceLabelX = -0.5 * ProjectileDataLabConstants.FIELD_WIDTH + distance * pixelsToDistance;
+      const distanceLabelX = -0.5 * ProjectileDataLabConstants.FIELD_WIDTH + distance * ProjectileDataLabConstants.PIXELS_TO_DISTANCE;
       const textLabel = new Text( distance, {
         centerX: distanceLabelX,
         top: distanceLabelY,
         font: ProjectileDataLabConstants.FIELD_LABEL_FONT,
-        maxWidth: ProjectileDataLabConstants.FIELD_LINE_NUMBER_INCREMENT * pixelsToDistance * 0.9 // Add a horizontal margin
+        maxWidth: ProjectileDataLabConstants.FIELD_LINE_NUMBER_INCREMENT * ProjectileDataLabConstants.PIXELS_TO_DISTANCE * 0.9 // Add a horizontal margin
       } );
       distanceLabels.push( textLabel );
     }
