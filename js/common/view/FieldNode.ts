@@ -9,7 +9,7 @@ import Property from '../../../../axon/js/Property.js';
 
 /**
  * The FieldNode is the floating horizontal surface on which projectiles land. It contains vertical field lines
- * to show bins, as well as background graphics. It is drawn using a perpective transform to simulate depth.
+ * to show bins, as well as background graphics. It is drawn using a perspective transform to simulate depth.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
