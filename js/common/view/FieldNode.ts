@@ -82,7 +82,7 @@ export default class FieldNode extends Node {
 
     const rectBounds = isBottomHalf ? fieldBoundsBottomHalfWithStroke : fieldBoundsWithStroke;
     const rectBoundsTransformed = Shape.bounds( rectBounds ).nonlinearTransformed( {
-        pointMap: PDLUtils.FIELD_TRANSFORM
+      pointMap: PDLUtils.FIELD_TRANSFORM
     } );
     const maskShape = rectBoundsTransformed.shapeDifference( ellipse );
     this.setClipArea( maskShape );
@@ -101,13 +101,13 @@ export default class FieldNode extends Node {
         isNumberedLine ?
         PDLColors.fieldBorderStrokeColorProperty :
         PDLColors.fieldLineStrokeColorProperty;
-      const lineShape = new Shape().moveTo( x, -0.5 * lineHeight ).lineTo( x, 0.5 * lineHeight );
+      const strokeWidth = isNumberedLine ? PDLConstants.FIELD_LINE_NUMBERED_WIDTH : PDLConstants.FIELD_LINE_WIDTH;
+      const lineShape = new Shape().rect( x - 0.5 * strokeWidth, -0.5 * lineHeight, strokeWidth, lineHeight );
       const transformedLineShape = lineShape.nonlinearTransformed( {
         pointMap: PDLUtils.FIELD_TRANSFORM
       } );
       const fieldLine = new Path( transformedLineShape, {
-        stroke: strokeColorProperty,
-        lineWidth: PDLConstants.FIELD_LINE_WIDTH
+        fill: strokeColorProperty
       } );
       fieldLines.push( fieldLine );
     }
