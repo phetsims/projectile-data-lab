@@ -36,6 +36,7 @@ export default class SamplingModel extends PDLModel {
    * Resets the model.
    */
   public override reset(): void {
+    super.reset();
     this.sampleSizeProperty.reset();
   }
 
