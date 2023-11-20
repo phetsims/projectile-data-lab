@@ -16,9 +16,11 @@ import PDLConstants from '../PDLConstants.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
+import Field from './Field.js';
 
 type SelfOptions = {
   timeSpeedValues: TimeSpeed[];
+  fields: Field[];
 };
 export type PDLModelOptions = SelfOptions & { tandem: Tandem };
 

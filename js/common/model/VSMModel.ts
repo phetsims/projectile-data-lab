@@ -13,9 +13,10 @@ import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import PDLConstants from '../PDLConstants.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Field from './Field.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues'>;
+export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
 
 export default class VSMModel extends PDLModel {
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
@@ -23,8 +24,12 @@ export default class VSMModel extends PDLModel {
 
   public constructor( providedOptions: VSMModelOptions ) {
 
+    // Use lodash to iterate 1 to 8, then create a field for each:
+    const fields = _.range( 1, 9 ).map( i => new Field() );
+
     const options = optionize<VSMModelOptions, SelfOptions, PDLModelOptions>()( {
-      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ]
+      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],
+      fields: fields
     }, providedOptions );
     super( options );
 

@@ -12,10 +12,11 @@ import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
+import Field from '../../common/model/Field.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues'>;
+type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
 
 export default class SamplingModel extends PDLModel {
 
@@ -23,8 +24,18 @@ export default class SamplingModel extends PDLModel {
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
+    const fields: Field[] = [];
+    const NUM_LAUNCHERS = 6;
+    const NUM_SAMPLE_SIZES = 4;
+    for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
+      for ( let j = 0; j < NUM_SAMPLE_SIZES; j++ ) {
+        fields.push( new Field() );
+      }
+    }
+
     const options = optionize<SamplingModelOptions, SelfOptions, PDLModelOptions>()( {
-      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ]
+      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
+      fields: fields
     }, providedOptions );
 
     super( options );
