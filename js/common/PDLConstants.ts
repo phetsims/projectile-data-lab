@@ -34,7 +34,15 @@ const PDLConstants = {
   FIELD_LINE_NUMBERED_WIDTH: 2.5,
   FIELD_LABEL_TOP_MARGIN: 3,
 
+  // This is a value between 0-Number.POSITIVE_INFINITY. A value of 0 would mean the left and right edges are parallel.
+  // The more extreme the value is, the more the left and right edges angle inward.  A point on the center line will
+  // be offset by this amount
   FIELD_SCALING_FACTOR_HORIZONTAL: 18,
+
+  // This is a value between 0-1.
+  // 0 would mean the top and bottom halves of the same field have the same height.
+  // 1 would mean the entire field is shown below the center line.
+  // So this controls the amount of "squishing" for the perspective transformation.
   FIELD_SCALING_FACTOR_VERTICAL: 0.2,
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
