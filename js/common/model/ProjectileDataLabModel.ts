@@ -35,7 +35,7 @@ export default class ProjectileDataLabModel implements TModel {
     } );
 
     this.launcherTypeProperty = new Property<number>( 1, {
-      validValues: [ 1, 2, 3, 4, 5, 6 ],
+      validValues: _.range( 1, 6 ),
       tandem: providedOptions.tandem.createTandem( 'launcherTypeProperty' ),
       phetioDocumentation: 'This property configures the active launcher by number.',
       phetioValueType: NumberIO
