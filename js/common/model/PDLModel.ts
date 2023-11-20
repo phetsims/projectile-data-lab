@@ -1,7 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Base class for all models in the Projectile Data Lab.
+ * The PDLModel is the base class for all models in Projectile Data Lab (PDL).
+ * It contains model elements for the launcher, field, tools, histograms and overlays.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 import TModel from '../../../../joist/js/TModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -16,10 +20,16 @@ export type ProjectileDataLabModelOptions = SelfOptions & { tandem: Tandem };
 
 export default class PDLModel implements TModel {
 
+  // Launcher angle is the number of degrees between the launcher and the horizontal axis.
   public readonly launcherAngleProperty: Property<number>;
+
+  // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launcherHeightProperty: Property<number>;
 
+  // Launcher type is the number of the active launcher, from 1-6
   public readonly launcherTypeProperty: Property<number>;
+
+  // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
   public readonly binWidthProperty: Property<number>;
 
   public constructor( providedOptions: ProjectileDataLabModelOptions ) {
