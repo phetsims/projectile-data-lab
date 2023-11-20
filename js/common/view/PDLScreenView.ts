@@ -97,7 +97,8 @@ export class PDLScreenView extends ScreenView {
         includeStepForwardButton: false
       },
       timeSpeedProperty: model.timeSpeedProperty,
-      timeSpeeds: model.timeSpeedValues
+      timeSpeeds: model.timeSpeedValues,
+      buttonGroupXSpacing: 18
     } );
     this.addChild( timeControlNode );
 
