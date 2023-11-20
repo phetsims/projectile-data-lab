@@ -12,11 +12,12 @@ import PDLConstants from './PDLConstants.js';
 
 const PDLUtils = {
   FIELD_TRANSFORM: ( point: Vector2 ) => {
+    const pointY = point.y + PDLConstants.FIELD_SCALING_FACTOR_VERTICAL * Math.abs( point.y );
     const horizontalDistanceFactor = point.x / ( 0.5 * PDLConstants.FIELD_WIDTH );
-    const verticalDistanceFactor = point.y / ( 0.5 * PDLConstants.FIELD_HEIGHT );
+    const verticalDistanceFactor = pointY / ( 0.5 * PDLConstants.FIELD_HEIGHT );
     return new Vector2(
       point.x + PDLConstants.FIELD_SCALING_FACTOR_HORIZONTAL * horizontalDistanceFactor * verticalDistanceFactor,
-      point.y + PDLConstants.FIELD_SCALING_FACTOR_VERTICAL * Math.abs( point.y ) );
+      pointY );
   }
 } as const;
 
