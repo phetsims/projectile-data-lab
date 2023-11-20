@@ -29,13 +29,18 @@ export default class FieldOverlayNode extends Node {
 
     // The dashed line extends horizontally along the width of the field.
     const dashedLineShape = new Shape();
-    dashedLineShape.moveTo( -0.5 * PDLConstants.FIELD_WIDTH, 0 );
-    dashedLineShape.lineTo( 0.496 * PDLConstants.FIELD_WIDTH, 0 );
 
-    const dashedLine = new Path( dashedLineShape, {
-      stroke: PDLColors.fieldBorderStrokeColorProperty,
-      lineWidth: PDLConstants.FIELD_CENTER_LINE_WIDTH,
-      lineDash: [ dashLength, dashLength ]
+    for ( let i = 0; i < numTotalDashes; i++ ) {
+      const dashX = -0.5 * PDLConstants.FIELD_WIDTH + i * ( 2 * dashLength );
+      dashedLineShape.rect( dashX, -0.5 * PDLConstants.FIELD_CENTER_LINE_WIDTH, dashLength, PDLConstants.FIELD_CENTER_LINE_WIDTH );
+    }
+
+    const dashedLineTransformed = dashedLineShape.nonlinearTransformed( {
+      pointMap: PDLUtils.FIELD_TRANSFORM
+    } );
+
+    const dashedLine = new Path( dashedLineTransformed, {
+      fill: PDLColors.fieldBorderStrokeColorProperty
     } );
 
     const originCircle = new Circle( PDLConstants.FIELD_CENTER_LINE_WIDTH, {
@@ -70,7 +75,7 @@ export default class FieldOverlayNode extends Node {
       distanceLabels.push( textLabel );
     }
 
-    super( { x: x, y: y, children: [ dashedLine, originCircle, ...distanceLabels ] } );
+    super( { x: x, y: y, children: [ originCircle, dashedLine, ...distanceLabels ] } );
   }
 }
 projectileDataLab.register( 'FieldOverlayNode', FieldOverlayNode );
