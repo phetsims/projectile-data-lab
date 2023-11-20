@@ -53,9 +53,45 @@ export default class FieldNode extends Node {
 
     this.fieldLines = [];
 
-    this.fieldBorder = new Path( transformedShape, {
-      stroke: PDLColors.fieldBorderStrokeColorProperty,
-      lineWidth: PDLConstants.FIELD_BORDER_LINE_WIDTH
+    const fieldBorderShape = new Shape();
+
+    // Top border
+    fieldBorderShape.rect(
+      -0.5 * ( PDLConstants.FIELD_WIDTH + PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      -0.5 * ( PDLConstants.FIELD_HEIGHT + PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      PDLConstants.FIELD_WIDTH + PDLConstants.FIELD_BORDER_LINE_WIDTH,
+      PDLConstants.FIELD_BORDER_LINE_WIDTH
+    );
+
+    // Bottom border
+    fieldBorderShape.rect(
+      -0.5 * ( PDLConstants.FIELD_WIDTH + PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      0.5 * ( PDLConstants.FIELD_HEIGHT - PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      PDLConstants.FIELD_WIDTH + PDLConstants.FIELD_BORDER_LINE_WIDTH,
+      PDLConstants.FIELD_BORDER_LINE_WIDTH
+    );
+
+    // Left border
+    fieldBorderShape.rect(
+      -0.5 * ( PDLConstants.FIELD_WIDTH + PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      -0.5 * ( PDLConstants.FIELD_HEIGHT + PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      PDLConstants.FIELD_BORDER_LINE_WIDTH,
+      PDLConstants.FIELD_HEIGHT + PDLConstants.FIELD_BORDER_LINE_WIDTH
+    );
+
+    // Right border
+    fieldBorderShape.rect(
+      0.5 * ( PDLConstants.FIELD_WIDTH - PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      -0.5 * ( PDLConstants.FIELD_HEIGHT + PDLConstants.FIELD_BORDER_LINE_WIDTH ),
+      PDLConstants.FIELD_BORDER_LINE_WIDTH,
+      PDLConstants.FIELD_HEIGHT + PDLConstants.FIELD_BORDER_LINE_WIDTH
+    );
+
+    const transformedFieldBorderShape = fieldBorderShape.nonlinearTransformed( {
+      pointMap: PDLUtils.transformField
+    } );
+    this.fieldBorder = new Path( transformedFieldBorderShape, {
+      fill: PDLColors.fieldBorderStrokeColorProperty
     } );
     this.addChild( this.fieldBorder );
 
