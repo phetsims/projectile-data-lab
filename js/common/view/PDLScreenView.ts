@@ -20,6 +20,7 @@ import FieldNode from './FieldNode.js';
 import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
 import LauncherNode from './LauncherNode.js';
+import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -90,6 +91,16 @@ export class PDLScreenView extends ScreenView {
     this.addChild( this.launcher );
     this.addChild( fieldOverlayNode );
 
+    const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
+      tandem: options.tandem.createTandem( 'timeControlNode' ),
+      playPauseStepButtonOptions: {
+        includeStepForwardButton: false
+      },
+      timeSpeedProperty: model.timeSpeedProperty,
+      timeSpeeds: model.timeSpeedValues
+    } );
+    this.addChild( timeControlNode );
+
     // layout
     ManualConstraint.create(
       this,
@@ -100,6 +111,11 @@ export class PDLScreenView extends ScreenView {
         noAirResistanceTextProxy.bottom = resetAllButtonProxy.bottom;
       }
     );
+
+    ManualConstraint.create( this, [ timeControlNode ], timeControlNodeProxy => {
+      timeControlNodeProxy.centerX = this.layoutBounds.centerX;
+      timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
   }
 
   /**

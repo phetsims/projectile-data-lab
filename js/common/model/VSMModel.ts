@@ -4,23 +4,29 @@
  * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models.
  */
 import projectileDataLab from '../../projectileDataLab.js';
-import PDLModel, { ProjectileDataLabModelOptions } from './PDLModel.js';
+import PDLModel, { PDLModelOptions } from './PDLModel.js';
 import Property from '../../../../axon/js/Property.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import PDLConstants from '../PDLConstants.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMModelOptions = SelfOptions & ProjectileDataLabModelOptions;
+export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues'>;
 
 export default class VSMModel extends PDLModel {
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
   public constructor( providedOptions: VSMModelOptions ) {
-    super( providedOptions );
+
+    const options = optionize<VSMModelOptions, SelfOptions, PDLModelOptions>()( {
+      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ]
+    }, providedOptions );
+    super( options );
 
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_30', {
       validValues: LauncherConfigurationValues,

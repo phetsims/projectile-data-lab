@@ -6,27 +6,32 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
-import PDLModel from '../../common/model/PDLModel.js';
+import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type ProjectileDataLabModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues'>;
 
 export default class SamplingModel extends PDLModel {
 
   public readonly sampleSizeProperty: Property<number>;
 
-  public constructor( providedOptions: ProjectileDataLabModelOptions ) {
-    super( providedOptions );
+  public constructor( providedOptions: SamplingModelOptions ) {
+
+    const options = optionize<SamplingModelOptions, SelfOptions, PDLModelOptions>()( {
+      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ]
+    }, providedOptions );
+
+    super( options );
 
     this.sampleSizeProperty = new Property<number>( 2, {
       validValues: [ 2, 5, 15, 40 ],
-      tandem: providedOptions.tandem.createTandem( 'sampleSizeProperty' ),
+      tandem: options.tandem.createTandem( 'sampleSizeProperty' ),
       phetioDocumentation: 'This property configures the number of projectiles in a sample',
       phetioValueType: NumberIO
     } );

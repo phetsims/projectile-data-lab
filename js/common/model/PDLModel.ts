@@ -9,14 +9,18 @@
  */
 import TModel from '../../../../joist/js/TModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PDLConstants from '../PDLConstants.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 
-type SelfOptions = EmptySelfOptions;
-export type ProjectileDataLabModelOptions = SelfOptions & { tandem: Tandem };
+type SelfOptions = {
+  timeSpeedValues: TimeSpeed[];
+};
+export type PDLModelOptions = SelfOptions & { tandem: Tandem };
 
 export default class PDLModel implements TModel {
 
@@ -32,7 +36,15 @@ export default class PDLModel implements TModel {
   // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
   public readonly binWidthProperty: Property<number>;
 
-  public constructor( providedOptions: ProjectileDataLabModelOptions ) {
+  // Whether the simulation is playing (animating via the step() function)
+  public readonly isPlayingProperty: Property<boolean>;
+
+  // The rate of animation when the simulation is playing
+  public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
+
+  public readonly timeSpeedValues: TimeSpeed[];
+
+  public constructor( providedOptions: PDLModelOptions ) {
 
     this.launcherAngleProperty = new Property<number>( 30, {
       validValues: [ 0, 30, 45, 60 ],
@@ -57,6 +69,19 @@ export default class PDLModel implements TModel {
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',
       phetioValueType: NumberIO
     } );
+
+    this.isPlayingProperty = new BooleanProperty( true, {
+      tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
+      phetioDocumentation: 'This property indicates whether the simulation is playing. When false, the simulation is paused.'
+    } );
+
+    this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
+      validValues: providedOptions.timeSpeedValues,
+      tandem: providedOptions.tandem.createTandem( 'timeSpeedProperty' ),
+      phetioDocumentation: 'This property indicates the rate of animation when the simulation is playing.'
+    } );
+
+    this.timeSpeedValues = providedOptions.timeSpeedValues;
   }
 
   public reset(): void {
@@ -64,6 +89,8 @@ export default class PDLModel implements TModel {
     this.launcherHeightProperty.reset();
     this.launcherTypeProperty.reset();
     this.binWidthProperty.reset();
+    this.isPlayingProperty.reset();
+    this.timeSpeedProperty.reset();
   }
 }
 projectileDataLab.register( 'PDLModel', PDLModel );

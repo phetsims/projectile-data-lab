@@ -14,11 +14,11 @@ import VSMModel from '../../common/model/VSMModel.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type ProjectileDataLabModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export default class VariabilityModel extends VSMModel {
 
-  public constructor( providedOptions: ProjectileDataLabModelOptions ) {
+  public constructor( providedOptions: PDLModelOptions ) {
 
     super( providedOptions );
   }
