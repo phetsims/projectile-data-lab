@@ -54,7 +54,7 @@ export default class FieldOverlayNode extends Node {
       const textLabel = new Text( distance, {
         centerX: distanceLabelX,
         top: distanceLabelY,
-        font: PDLConstants.FIELD_LABEL_FONT,
+        font: PDLConstants.PRIMARY_FONT,
         maxWidth: PDLConstants.FIELD_LINE_NUMBER_INCREMENT * PDLConstants.PIXELS_TO_DISTANCE * 0.9 // Add a horizontal margin
       } );
       distanceLabels.push( textLabel );

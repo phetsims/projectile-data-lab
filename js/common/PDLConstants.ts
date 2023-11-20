@@ -35,8 +35,7 @@ const PDLConstants = {
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
-  PRIMARY_FONT: new PhetFont( 16 ),
-  FIELD_LABEL_FONT: new PhetFont( 17 )
+  PRIMARY_FONT: new PhetFont( 16 )
 } as const;
 
 projectileDataLab.register( 'PDLConstants', PDLConstants );
