@@ -10,8 +10,8 @@ import projectileDataLab from '../projectileDataLab.js';
 import Vector2 from '../../../dot/js/Vector2.js';
 import PDLConstants from './PDLConstants.js';
 
-const PDLUtils = {
-  FIELD_TRANSFORM: ( point: Vector2 ) => {
+export default class PDLUtils {
+  public static transformField( point: Vector2 ): Vector2 {
     const pointY = point.y + PDLConstants.FIELD_SCALING_FACTOR_VERTICAL * Math.abs( point.y );
     const horizontalDistanceFactor = point.x / ( 0.5 * PDLConstants.FIELD_WIDTH );
     const verticalDistanceFactor = pointY / ( 0.5 * PDLConstants.FIELD_HEIGHT );
@@ -19,7 +19,5 @@ const PDLUtils = {
       point.x + PDLConstants.FIELD_SCALING_FACTOR_HORIZONTAL * horizontalDistanceFactor * verticalDistanceFactor,
       pointY );
   }
-} as const;
-
+}
 projectileDataLab.register( 'PDLUtils', PDLUtils );
-export default PDLUtils;

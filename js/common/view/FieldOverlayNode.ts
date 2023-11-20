@@ -36,7 +36,7 @@ export default class FieldOverlayNode extends Node {
     }
 
     const dashedLineTransformed = dashedLineShape.nonlinearTransformed( {
-      pointMap: PDLUtils.FIELD_TRANSFORM
+      pointMap: PDLUtils.transformField
     } );
 
     const dashedLine = new Path( dashedLineTransformed, {
@@ -61,7 +61,7 @@ export default class FieldOverlayNode extends Node {
       // Apply the perspective transform to the label offset so that it is positioned relative to the bottom of the field
       const distanceLabelPositionShape = new Shape().moveTo( distanceLabelX, 0 ).lineTo( distanceLabelX, distanceLabelY );
       const distancePositionTransformed = distanceLabelPositionShape.nonlinearTransformed( {
-        pointMap: PDLUtils.FIELD_TRANSFORM
+        pointMap: PDLUtils.transformField
       } );
 
       const textLabel = new Text( distance, {
