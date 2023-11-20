@@ -57,7 +57,7 @@ export default class PDLModel implements TModel {
     } );
 
     this.launcherTypeProperty = new Property<number>( 1, {
-      validValues: _.range( 1, 6 ),
+      validValues: _.range( 1, 7 ),
       tandem: providedOptions.tandem.createTandem( 'launcherTypeProperty' ),
       phetioDocumentation: 'This property configures the active launcher by number.',
       phetioValueType: NumberIO
