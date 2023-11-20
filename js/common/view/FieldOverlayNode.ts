@@ -53,6 +53,7 @@ export default class FieldOverlayNode extends Node {
       const distance = ( i + 1 ) * PDLConstants.FIELD_LINE_NUMBER_INCREMENT;
       const distanceLabelX = -0.5 * PDLConstants.FIELD_WIDTH + distance * PDLConstants.PIXELS_TO_DISTANCE;
 
+      // Apply the perspective transform to the label offset so that it is positioned relative to the bottom of the field
       const distanceLabelPositionShape = new Shape().moveTo( distanceLabelX, 0 ).lineTo( distanceLabelX, distanceLabelY );
       const distancePositionTransformed = distanceLabelPositionShape.nonlinearTransformed( {
         pointMap: PDLUtils.FIELD_TRANSFORM
