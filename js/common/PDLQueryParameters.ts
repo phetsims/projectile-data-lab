@@ -14,16 +14,16 @@ const SCHEMA_MAP = {
   //TODO add schemas for query parameters, see https://github.com/phetsims/projectile-data-lab/issues/4
 };
 
-const ProjectileDataLabQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
+const PDLQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
 
 // The schema map is a read-only part of the public API, in case schema details (e.g. validValues) are needed elsewhere.
-ProjectileDataLabQueryParameters.SCHEMA_MAP = SCHEMA_MAP;
+PDLQueryParameters.SCHEMA_MAP = SCHEMA_MAP;
 
-projectileDataLab.register( 'ProjectileDataLabQueryParameters', ProjectileDataLabQueryParameters );
+projectileDataLab.register( 'PDLQueryParameters', PDLQueryParameters );
 
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );
 logGlobal( 'phet.preloads.phetio.queryParameters' );
-logGlobal( 'phet.projectileDataLab.ProjectileDataLabQueryParameters' );
+logGlobal( 'phet.projectileDataLab.PDLQueryParameters' );
 
-export default ProjectileDataLabQueryParameters;
+export default PDLQueryParameters;

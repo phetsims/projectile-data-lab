@@ -10,7 +10,7 @@ import Sim, { SimOptions } from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import ProjectileDataLabStrings from './ProjectileDataLabStrings.js';
-import './common/ProjectileDataLabQueryParameters.js';
+import './common/PDLQueryParameters.js';
 import VariabilityScreen from './variability/VariabilityScreen.js';
 import SourcesScreen from './sources/SourcesScreen.js';
 import MeasuresScreen from './measures/MeasuresScreen.js';
