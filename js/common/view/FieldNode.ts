@@ -1,15 +1,19 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Node, NodeOptions, Rectangle, Line } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLColors from '../PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import PDLUtils from '../PDLUtils.js';
 
 /**
- * The FieldNode is the floating horizontal surface on which projectiles land. It contains vertical field lines
- * to show bins, as well as background graphics. It is drawn using a perspective transform to simulate depth.
+ * The FieldNode is the floating horizontal surface on which projectiles land. Its elements are drawn using a nonlinear
+ * perspective transform to simulate depth. It contains a rectangular background and vertical field lines to show bins.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -23,24 +27,37 @@ export default class FieldNode extends Node {
   // The field lines are vertical lines spaced evenly along the field, according to the bin width.
   private fieldLines: Node[];
 
-  public constructor( x: number, y: number, binWidthProperty: Property<number>, providedOptions: FieldNodeOptions ) {
+  // The field
+  private fieldBorder: Node;
 
-    const fieldRectangle = new Rectangle(
+  public constructor( x: number, y: number, isBottomHalf: boolean, binWidthProperty: Property<number>, providedOptions: FieldNodeOptions ) {
+
+    const fieldBounds = new Bounds2(
       -0.5 * PDLConstants.FIELD_WIDTH,
       -0.5 * PDLConstants.FIELD_HEIGHT,
-      PDLConstants.FIELD_WIDTH,
-      PDLConstants.FIELD_HEIGHT, {
-        fill: PDLColors.fieldFillColorProperty,
-        stroke: PDLColors.fieldBorderStrokeColorProperty,
-        lineWidth: PDLConstants.FIELD_BORDER_LINE_WIDTH
-      }
+      0.5 * PDLConstants.FIELD_WIDTH,
+      0.5 * PDLConstants.FIELD_HEIGHT
     );
 
-    const defaultOptions = { x: x, y: y, children: [ fieldRectangle ] };
+    const transformedShape = Shape.bounds( fieldBounds ).nonlinearTransformed( {
+      pointMap: PDLUtils.FIELD_TRANSFORM
+    } );
+
+    const field = new Path( transformedShape, {
+      fill: PDLColors.fieldFillColorProperty
+    } );
+
+    const defaultOptions = { x: x, y: y, children: [ field ] };
     const options = optionize<FieldNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
     this.fieldLines = [];
+
+    this.fieldBorder = new Path( transformedShape, {
+      stroke: PDLColors.fieldBorderStrokeColorProperty,
+      lineWidth: PDLConstants.FIELD_BORDER_LINE_WIDTH
+    } );
+    this.addChild( this.fieldBorder );
 
     // If the bin width changes, remove the old field lines and create new ones.
     binWidthProperty.link( binWidth => {
@@ -52,13 +69,29 @@ export default class FieldNode extends Node {
         this.fieldLines.push( fieldLine );
         this.addChild( fieldLine );
       } );
+      this.fieldBorder.moveToFront();
     } );
+
+    const ellipse = new Shape().ellipse( new Vector2( -0.5 * PDLConstants.FIELD_WIDTH, 0 ), 35, 8, 0 );
+
+    const fieldBoundsWithStroke = fieldBounds.dilated( 0.5 * PDLConstants.FIELD_BORDER_LINE_WIDTH );
+    const fieldBoundsBottomHalf = fieldBounds.dilatedY( -0.25 * PDLConstants.FIELD_HEIGHT )
+      .shiftedY( 0.25 * PDLConstants.FIELD_HEIGHT );
+    const fieldBoundsBottomHalfWithStroke = fieldBoundsBottomHalf.dilatedX( 0.5 * PDLConstants.FIELD_BORDER_LINE_WIDTH )
+      .dilatedY( 0.25 * PDLConstants.FIELD_BORDER_LINE_WIDTH ).shiftedY( 0.25 * PDLConstants.FIELD_BORDER_LINE_WIDTH );
+
+    const rectBounds = isBottomHalf ? fieldBoundsBottomHalfWithStroke : fieldBoundsWithStroke;
+    const rectBoundsTransformed = Shape.bounds( rectBounds ).nonlinearTransformed( {
+        pointMap: PDLUtils.FIELD_TRANSFORM
+    } );
+    const maskShape = rectBoundsTransformed.shapeDifference( ellipse );
+    this.setClipArea( maskShape );
   }
 
   private fieldLinesForBinWidth( binWidth: number ): Node[] {
     const totalFieldLines = PDLConstants.MAX_FIELD_DISTANCE / binWidth - 1;
     const deltaX = binWidth * PDLConstants.FIELD_WIDTH / PDLConstants.MAX_FIELD_DISTANCE;
-    const lineHeight = PDLConstants.FIELD_HEIGHT - PDLConstants.FIELD_BORDER_LINE_WIDTH;
+    const lineHeight = PDLConstants.FIELD_HEIGHT;
     const fieldLines: Node[] = [];
 
     for ( let i = 0; i < totalFieldLines; i++ ) {
@@ -68,11 +101,15 @@ export default class FieldNode extends Node {
         isNumberedLine ?
         PDLColors.fieldBorderStrokeColorProperty :
         PDLColors.fieldLineStrokeColorProperty;
-      const line = new Line( x, -0.5 * lineHeight, x, 0.5 * lineHeight, {
+      const lineShape = new Shape().moveTo( x, -0.5 * lineHeight ).lineTo( x, 0.5 * lineHeight );
+      const transformedLineShape = lineShape.nonlinearTransformed( {
+        pointMap: PDLUtils.FIELD_TRANSFORM
+      } );
+      const fieldLine = new Path( transformedLineShape, {
         stroke: strokeColorProperty,
         lineWidth: PDLConstants.FIELD_LINE_WIDTH
       } );
-      fieldLines.push( line );
+      fieldLines.push( fieldLine );
     }
     return fieldLines;
   }

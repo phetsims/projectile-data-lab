@@ -27,7 +27,6 @@ type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export class PDLScreenView extends ScreenView {
 
-  private readonly field: FieldNode;
   private readonly launcher: LauncherNode;
 
   protected readonly resetAllButton: ResetAllButton;
@@ -76,7 +75,8 @@ export class PDLScreenView extends ScreenView {
     const fieldX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X;
     const fieldY = PDLConstants.FIELD_CENTER_Y;
 
-    this.field = new FieldNode( fieldX, fieldY, model.binWidthProperty, {} );
+    const fieldBack = new FieldNode( fieldX, fieldY, false, model.binWidthProperty, {} );
+    const fieldFront = new FieldNode( fieldX, fieldY, true, model.binWidthProperty, {} );
     const fieldOverlayNode = new FieldOverlayNode( fieldX, fieldY, {} );
 
     // Create the launcher
@@ -90,8 +90,9 @@ export class PDLScreenView extends ScreenView {
       {}
     );
 
-    this.addChild( this.field );
+    this.addChild( fieldBack );
     this.addChild( this.launcher );
+    this.addChild( fieldFront );
     this.addChild( fieldOverlayNode );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {

@@ -6,6 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLColors from '../PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import PDLUtils from '../PDLUtils.js';
 
 /**
  * The FieldOverlayNode contains the portions of the field that are not drawn using a perspective transform.
@@ -29,7 +30,7 @@ export default class FieldOverlayNode extends Node {
     // The dashed line extends horizontally along the width of the field.
     const dashedLineShape = new Shape();
     dashedLineShape.moveTo( -0.5 * PDLConstants.FIELD_WIDTH, 0 );
-    dashedLineShape.lineTo( 0.5 * PDLConstants.FIELD_WIDTH, 0 );
+    dashedLineShape.lineTo( 0.496 * PDLConstants.FIELD_WIDTH, 0 );
 
     const dashedLine = new Path( dashedLineShape, {
       stroke: PDLColors.fieldBorderStrokeColorProperty,
@@ -51,9 +52,17 @@ export default class FieldOverlayNode extends Node {
     for ( let i = 0; i <= totalDistanceLabels; i++ ) {
       const distance = ( i + 1 ) * PDLConstants.FIELD_LINE_NUMBER_INCREMENT;
       const distanceLabelX = -0.5 * PDLConstants.FIELD_WIDTH + distance * PDLConstants.PIXELS_TO_DISTANCE;
+
+      const distanceLabelPositionShape = new Shape().moveTo( distanceLabelX, 0 ).lineTo( distanceLabelX, distanceLabelY );
+      const distancePositionTransformed = distanceLabelPositionShape.nonlinearTransformed( {
+        pointMap: PDLUtils.FIELD_TRANSFORM
+      } );
+
       const textLabel = new Text( distance, {
-        centerX: distanceLabelX,
-        top: distanceLabelY,
+        centerX: distance >= 0.5 * PDLConstants.MAX_FIELD_DISTANCE ?
+                 distancePositionTransformed.bounds.right :
+                 distancePositionTransformed.bounds.left,
+        top: distancePositionTransformed.bounds.bottom + PDLConstants.FIELD_LABEL_TOP_MARGIN,
         font: PDLConstants.PRIMARY_FONT,
         maxWidth: PDLConstants.FIELD_LINE_NUMBER_INCREMENT * PDLConstants.PIXELS_TO_DISTANCE * 0.9 // Add a horizontal margin
       } );
