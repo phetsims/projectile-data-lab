@@ -19,6 +19,7 @@ import Field from './Field.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 
 type SelfOptions = {
   timeSpeedValues: TimeSpeed[];
@@ -79,7 +80,7 @@ export default class PDLModel implements TModel {
       validValues: this.fields,
       tandem: providedOptions.tandem.createTandem( 'fieldProperty' ),
       phetioDocumentation: 'This property indicates the active field.',
-      phetioValueType: Field.FieldIO
+      phetioValueType: ReferenceIO( Field.FieldIO )
     } );
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>( this.fieldProperty, {
