@@ -58,11 +58,6 @@ export default class Field extends PhetioObject {
       phetioValueType: StringUnionIO( ProjectileTypeValues )
     } );
 
-    this.projectileTypeProperty.link( projectileType => {
-      console.log( this.projectileTypeProperty.phetioID );
-      console.log( 'projectileTypeProperty changed to ' + projectileType );
-    } );
-
     // TODO: Keep in mind that in screens 2-3 it will have more sub-data structure, see https://github.com/phetsims/projectile-data-lab/issues/7
     // TODO: That may be done in another Property in Screen 2 + 3, see https://github.com/phetsims/projectile-data-lab/issues/7
     this.launcherTypeProperty = new Property<number>( 1, {
