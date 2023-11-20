@@ -56,6 +56,7 @@ export default class VSMModel extends PDLModel {
   }
 
   public override reset(): void {
+    super.reset();
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
   }
