@@ -9,16 +9,16 @@ import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
 import FieldPanel from '../../common/view/FieldPanel.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import { VSMScreenView } from '../../common/view/VSMScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class VariabilityScreenView extends PDLScreenView {
+export default class VariabilityScreenView extends VSMScreenView {
 
   public constructor( model: VariabilityModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
