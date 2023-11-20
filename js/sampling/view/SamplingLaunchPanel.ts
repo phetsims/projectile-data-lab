@@ -7,6 +7,7 @@ import Property from '../../../../axon/js/Property.js';
 import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
 import SampleSizeSection from './SampleSizeSection.js';
 import { PDLLaunchPanel } from '../../common/view/panels/PDLLaunchPanel.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -18,7 +19,7 @@ type SamplingLaunchPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
-  public constructor( launcherProperty: Property<number>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
+  public constructor( launcherProperty: PhetioProperty<number>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
     const sampleSizeSection = new SampleSizeSection( sampleSizeProperty, {
       tandem: providedOptions.tandem
     } );

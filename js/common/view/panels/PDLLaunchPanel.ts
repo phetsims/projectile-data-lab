@@ -13,13 +13,13 @@ import { Node } from '../../../../../scenery/js/imports.js';
 import WithRequired from '../../../../../phet-core/js/types/WithRequired.js';
 import { PDLPanel } from './PDLPanel.js';
 import SectionLauncherType from './SectionLauncherType.js';
-import Property from '../../../../../axon/js/Property.js';
+import PhetioProperty from '../../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLLaunchPanelOptions = SelfOptions & WithRequired<PanelOptions, 'tandem'>;
 
 export class PDLLaunchPanel extends PDLPanel {
-  public constructor( launcherProperty: Property<number>, content: Node[], providedOptions: PDLLaunchPanelOptions ) {
+  public constructor( launcherProperty: PhetioProperty<number>, content: Node[], providedOptions: PDLLaunchPanelOptions ) {
     const launcherTypeSection = new SectionLauncherType( launcherProperty, {
       tandem: providedOptions.tandem
     } );

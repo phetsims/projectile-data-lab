@@ -2,11 +2,11 @@
 
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import Property from '../../../../../axon/js/Property.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import { Text } from '../../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../../projectileDataLab.js';
+import PhetioProperty from '../../../../../axon/js/PhetioProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -18,11 +18,12 @@ type ProjectileTypeSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
 export default class SectionLauncherType extends PDLPanelSection {
 
-  public constructor( launcherTypeProperty: Property<number>, providedOptions: ProjectileTypeSectionOptions ) {
+  public constructor( launcherTypeProperty: PhetioProperty<number>, providedOptions: ProjectileTypeSectionOptions ) {
     // TODO: Try to use Array.map for this without type errors - see https://github.com/phetsims/projectile-data-lab/issues/5
     const launcherTypeRadioButtonGroupItems: RectangularRadioButtonGroupItem<number>[] = [];
 
-    launcherTypeProperty.validValues?.forEach( launcherType => {
+    // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/7
+    _.range( 1, 7 ).forEach( launcherType => {
       launcherTypeRadioButtonGroupItems.push( {
         value: launcherType,
         tandemName: `launcherType${launcherType}RadioButton`,

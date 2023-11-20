@@ -29,7 +29,9 @@ export default class SamplingModel extends PDLModel {
     const NUM_SAMPLE_SIZES = 4;
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
       for ( let j = 0; j < NUM_SAMPLE_SIZES; j++ ) {
-        fields.push( new Field() );
+        fields.push( new Field( {
+          tandem: providedOptions.tandem.createTandem( 'field' + i + '000' + j + '' )
+        } ) );
       }
     }
 
@@ -46,6 +48,8 @@ export default class SamplingModel extends PDLModel {
       phetioDocumentation: 'This property configures the number of projectiles in a sample',
       phetioValueType: NumberIO
     } );
+
+    // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
   }
 
   /**

@@ -12,11 +12,13 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import PDLConstants from '../PDLConstants.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Field from './Field.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import { LauncherConfiguration } from './LauncherConfiguration.js';
+import { ProjectileType } from './ProjectileType.js';
 
 type SelfOptions = {
   timeSpeedValues: TimeSpeed[];
@@ -25,15 +27,6 @@ type SelfOptions = {
 export type PDLModelOptions = SelfOptions & { tandem: Tandem };
 
 export default class PDLModel implements TModel {
-
-  // Launcher angle is the number of degrees between the launcher and the horizontal axis.
-  public readonly launcherAngleProperty: Property<number>;
-
-  // Launcher height is the vertical distance between the launch point and the origin, in field units.
-  public readonly launcherHeightProperty: Property<number>;
-
-  // Launcher type is the number of the active launcher, from 1-6
-  public readonly launcherTypeProperty: Property<number>;
 
   // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
   public readonly binWidthProperty: Property<number>;
@@ -46,24 +39,19 @@ export default class PDLModel implements TModel {
 
   public readonly timeSpeedValues: TimeSpeed[];
 
+  private readonly fields: Field[];
+
+  protected readonly fieldProperty: Property<Field>;
+  public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>;
+  public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, Field>;
+
+  // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
+  public readonly launcherTypeProperty: DynamicProperty<number, number, Field>;
+
+  public readonly launcherAngleProperty: DynamicProperty<number, number, Field>;
+  public readonly launcherHeightProperty: DynamicProperty<number, number, Field>;
+
   public constructor( providedOptions: PDLModelOptions ) {
-
-    this.launcherAngleProperty = new Property<number>( 30, {
-      validValues: [ 0, 30, 45, 60 ],
-      tandem: Tandem.OPT_OUT
-    } );
-
-    this.launcherHeightProperty = new Property<number>( 0, {
-      validValues: [ 0, PDLConstants.RAISED_LAUNCHER_HEIGHT ],
-      tandem: Tandem.OPT_OUT
-    } );
-
-    this.launcherTypeProperty = new Property<number>( 1, {
-      validValues: _.range( 1, 7 ),
-      tandem: providedOptions.tandem.createTandem( 'launcherTypeProperty' ),
-      phetioDocumentation: 'This property configures the active launcher by number.',
-      phetioValueType: NumberIO
-    } );
 
     this.binWidthProperty = new Property<number>( 1, {
       validValues: [ 1, 2, 5, 10 ],
@@ -84,15 +72,48 @@ export default class PDLModel implements TModel {
     } );
 
     this.timeSpeedValues = providedOptions.timeSpeedValues;
+
+    this.fields = providedOptions.fields;
+
+    this.fieldProperty = new Property( this.fields[ 0 ], {
+      validValues: this.fields,
+      tandem: providedOptions.tandem.createTandem( 'fieldProperty' ),
+      phetioDocumentation: 'This property indicates the active field.',
+      phetioValueType: Field.FieldIO
+    } );
+
+    this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>( this.fieldProperty, {
+      bidirectional: true,
+      derive: 'launcherConfigurationProperty'
+    } );
+
+    this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, Field>( this.fieldProperty, {
+      bidirectional: true,
+      derive: 'projectileTypeProperty'
+    } );
+
+    this.launcherTypeProperty = new DynamicProperty<number, number, Field>( this.fieldProperty, {
+      bidirectional: true,
+      derive: 'launcherTypeProperty'
+    } );
+
+    this.launcherAngleProperty = new DynamicProperty<number, number, Field>( this.fieldProperty, {
+      bidirectional: true,
+      derive: 'launcherAngleProperty'
+    } );
+
+    this.launcherHeightProperty = new DynamicProperty<number, number, Field>( this.fieldProperty, {
+      bidirectional: true,
+      derive: 'launcherHeightProperty'
+    } );
   }
 
   public reset(): void {
-    this.launcherAngleProperty.reset();
-    this.launcherHeightProperty.reset();
-    this.launcherTypeProperty.reset();
     this.binWidthProperty.reset();
     this.isPlayingProperty.reset();
     this.timeSpeedProperty.reset();
+
+    this.fields.forEach( field => field.reset() );
   }
 }
 projectileDataLab.register( 'PDLModel', PDLModel );

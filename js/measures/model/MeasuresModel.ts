@@ -17,6 +17,7 @@ type SelfOptions = EmptySelfOptions;
 type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export default class MeasuresModel extends VSMModel {
+  // public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration,Field,Field>;
 
   public constructor( providedOptions: PDLModelOptions ) {
 

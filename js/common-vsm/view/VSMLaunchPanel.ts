@@ -6,10 +6,10 @@ import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
 import SectionLauncherConfiguration from '../../common/view/panels/SectionLauncherConfiguration.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
-import Property from '../../../../axon/js/Property.js';
 import SectionProjectileType from '../../common/view/panels/SectionProjectileType.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import { PDLLaunchPanel } from '../../common/view/panels/PDLLaunchPanel.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -21,9 +21,9 @@ export type VSMLaunchPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class VSMLaunchPanel extends PDLLaunchPanel {
 
-  public constructor( configurationProperty: Property<LauncherConfiguration>,
-                      projectileTypeProperty: Property<ProjectileType>,
-                      launcherTypeProperty: Property<number>,
+  public constructor( configurationProperty: PhetioProperty<LauncherConfiguration>,
+                      projectileTypeProperty: PhetioProperty<ProjectileType>,
+                      launcherTypeProperty: PhetioProperty<number>,
                       providedOptions: VSMLaunchPanelOptions ) {
 
     const launcherConfigurationSection = new SectionLauncherConfiguration( configurationProperty, {

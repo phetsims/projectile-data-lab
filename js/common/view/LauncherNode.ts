@@ -4,8 +4,8 @@ import { LinearGradient, Node, NodeOptions, Rectangle } from '../../../../scener
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
-import Property from '../../../../axon/js/Property.js';
 import PDLConstants from '../PDLConstants.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -27,9 +27,9 @@ export default class LauncherNode extends Node {
 
   public constructor( x: number,
                       originY: number,
-                      launcherAngleProperty: Property<number>,
-                      launcherHeightProperty: Property<number>,
-                      launcherTypeProperty: Property<number>,
+                      launcherAngleProperty: TProperty<number>,
+                      launcherHeightProperty: TProperty<number>,
+                      launcherTypeProperty: TProperty<number>,
                       providedOptions: LauncherNodeOptions ) {
 
     const launcher = new Node();
