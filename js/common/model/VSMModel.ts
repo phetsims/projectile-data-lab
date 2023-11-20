@@ -36,29 +36,23 @@ export default class VSMModel extends PDLModel {
       phetioValueType: StringUnionIO( ProjectileTypeValues )
     } );
 
-    this.launcherConfigurationProperty.link( launcherAngle => {
-      let angle = 0;
-      let height = 0;
-      switch( launcherAngle ) {
-        case 'ANGLE_45':
-          angle = 45;
-          break;
-        case 'ANGLE_60':
-          angle = 60;
-          break;
-        case 'ANGLE_30':
-          angle = 30;
-          break;
-        case 'ANGLE_0':
-          height = PDLConstants.RAISED_LAUNCHER_HEIGHT;
-          break;
-        default:
-          break;
-      }
-
-      this.launcherAngleProperty.value = angle;
-      this.launcherHeightProperty.value = height;
+    this.launcherConfigurationProperty.link( configuration => {
+      this.launcherAngleProperty.value = this.angleForConfiguration( configuration );
+      this.launcherHeightProperty.value = configuration === 'ANGLE_0' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
+  }
+
+  private angleForConfiguration( configuration: LauncherConfiguration ): number {
+    switch( configuration ) {
+      case 'ANGLE_45':
+        return 45;
+      case 'ANGLE_60':
+        return 60;
+      case 'ANGLE_30':
+        return 30;
+      default:
+        return 0;
+    }
   }
 
   public override reset(): void {

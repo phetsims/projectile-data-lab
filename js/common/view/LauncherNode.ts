@@ -19,7 +19,10 @@ type LauncherNodeOptions = SelfOptions & NodeOptions;
 
 export default class LauncherNode extends Node {
 
+  // originY is the vertical position of the projectile launch point at field level.
   private readonly originY: number;
+
+  // launcher contains all graphics that rotate with launch angle. This includes the launch tube and end cap.
   private readonly launcher: Node;
 
   public constructor( x: number,
