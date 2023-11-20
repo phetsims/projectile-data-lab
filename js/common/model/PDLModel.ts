@@ -41,7 +41,7 @@ export default class PDLModel implements TModel {
 
   private readonly fields: Field[];
 
-  protected readonly fieldProperty: Property<Field>;
+  public readonly fieldProperty: Property<Field>;
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>;
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, Field>;
 

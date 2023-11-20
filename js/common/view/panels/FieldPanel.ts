@@ -8,6 +8,7 @@ import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/Rectangul
 import Property from '../../../../../axon/js/Property.js';
 import { Text } from '../../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
+import Field from '../../model/Field.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -18,17 +19,14 @@ type SelfOptions = EmptySelfOptions;
 type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class FieldPanel extends PDLPanel {
-  public constructor( providedOptions: FieldPanelOptions ) {
+  public constructor( fieldProperty: Property<Field>, providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
-
-    // TODO: Move this to the model, see https://github.com/phetsims/projectile-data-lab/issues/7
-    const fieldProperty = new Property( 'field1' );
 
     // Show radio buttons for the fields
     const fieldRadioButtonGroup = new RectangularRadioButtonGroup( fieldProperty, _.range( 1, 9 ).map( i => {
       return {
-        value: 'field' + i,
+        value: fieldProperty.validValues![ i - 1 ],
         tandemName: 'field' + i + 'RadioButton',
         createNode: () => new Text( i.toString() )
       };

@@ -28,7 +28,7 @@ export default class SourcesScreenView extends VSMScreenView {
     } );
     this.addChild( sourcesLaunchPanel );
 
-    const fieldPanel = new FieldPanel( {
+    const fieldPanel = new FieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
     this.addChild( fieldPanel );

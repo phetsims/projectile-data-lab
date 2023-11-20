@@ -29,7 +29,7 @@ export default class VariabilityScreenView extends VSMScreenView {
     } );
     this.addChild( variabilityLaunchPanel );
 
-    const fieldPanel = new FieldPanel( {
+    const fieldPanel = new FieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
     this.addChild( fieldPanel );

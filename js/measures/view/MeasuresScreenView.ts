@@ -28,7 +28,7 @@ export default class MeasuresScreenView extends VSMScreenView {
     } );
     this.addChild( measuresLaunchPanel );
 
-    const fieldPanel = new FieldPanel( {
+    const fieldPanel = new FieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
     this.addChild( fieldPanel );
