@@ -46,10 +46,22 @@ export default class LauncherNode extends Node {
     } );
 
     launcherTypeProperty.link( launcherType => {
-      this.launcher.removeAllChildren();
-      this.launcherGraphicsForType( launcherType ).forEach( launcherGraphics => {
-        this.launcher.addChild( launcherGraphics );
-      } );
+      this.updateLauncherType( launcherType );
+    } );
+  }
+
+  private updateLauncherAngle( angle: number ): void {
+    this.launcher.setRotation( -angle * Math.PI / 180 );
+  }
+
+  private updateLauncherHeight( height: number ): void {
+    this.y = this.originY - height * ProjectileDataLabConstants.PIXELS_TO_DISTANCE;
+  }
+
+  private updateLauncherType( type: number ): void {
+    this.launcher.removeAllChildren();
+    this.launcherGraphicsForType( type ).forEach( launcherGraphics => {
+      this.launcher.addChild( launcherGraphics );
     } );
   }
 
@@ -88,14 +100,6 @@ export default class LauncherNode extends Node {
     );
 
     return [ launcherRect, launcherEndRect ];
-  }
-
-  private updateLauncherAngle( angle: number ): void {
-    this.launcher.setRotation( -angle * Math.PI / 180 );
-  }
-
-  private updateLauncherHeight( height: number ): void {
-    this.y = this.originY - height * ProjectileDataLabConstants.PIXELS_TO_DISTANCE;
   }
 }
 projectileDataLab.register( 'LauncherNode', LauncherNode );
