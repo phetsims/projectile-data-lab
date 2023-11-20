@@ -26,9 +26,12 @@ type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export class PDLScreenView extends ScreenView {
-  protected readonly resetAllButton: ResetAllButton;
+
   private readonly field: FieldNode;
   private readonly launcher: LauncherNode;
+
+  protected readonly resetAllButton: ResetAllButton;
+  protected readonly timeControlNode: TimeControlNode;
 
   public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
     super( options );
@@ -91,7 +94,7 @@ export class PDLScreenView extends ScreenView {
     this.addChild( this.launcher );
     this.addChild( fieldOverlayNode );
 
-    const timeControlNode = new TimeControlNode( model.isPlayingProperty, {
+    this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),
       playPauseStepButtonOptions: {
         includeStepForwardButton: false
@@ -100,7 +103,7 @@ export class PDLScreenView extends ScreenView {
       timeSpeeds: model.timeSpeedValues,
       buttonGroupXSpacing: 18
     } );
-    this.addChild( timeControlNode );
+    this.addChild( this.timeControlNode );
 
     // layout
     ManualConstraint.create(
@@ -113,7 +116,7 @@ export class PDLScreenView extends ScreenView {
       }
     );
 
-    ManualConstraint.create( this, [ timeControlNode ], timeControlNodeProxy => {
+    ManualConstraint.create( this, [ this.timeControlNode ], timeControlNodeProxy => {
       timeControlNodeProxy.centerX = this.layoutBounds.centerX;
       timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );

@@ -37,7 +37,7 @@ export default class SourcesScreenView extends VSMScreenView {
       fieldPanelProxy.right = this.layoutBounds.right;
     } );
 
-    this.pdomControlAreaNode.pdomOrder = [ sourcesLaunchPanel, fieldPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [ sourcesLaunchPanel, fieldPanel, this.timeControlNode, this.resetAllButton ];
   }
 }
 

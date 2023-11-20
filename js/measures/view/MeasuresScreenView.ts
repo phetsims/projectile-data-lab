@@ -39,7 +39,7 @@ export default class MeasuresScreenView extends VSMScreenView {
     } );
 
     // Keyboard order
-    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, fieldPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, fieldPanel, this.timeControlNode, this.resetAllButton ];
   }
 }
 

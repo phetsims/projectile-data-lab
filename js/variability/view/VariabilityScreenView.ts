@@ -39,7 +39,7 @@ export default class VariabilityScreenView extends VSMScreenView {
       fieldPanelProxy.right = this.layoutBounds.right;
     } );
 
-    this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, fieldPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, fieldPanel, this.timeControlNode, this.resetAllButton ];
   }
 }
 projectileDataLab.register( 'VariabilityScreenView', VariabilityScreenView );

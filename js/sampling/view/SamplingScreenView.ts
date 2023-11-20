@@ -26,7 +26,7 @@ export default class SamplingScreenView extends PDLScreenView {
     } );
     this.addChild( samplingLaunchPanel );
 
-    this.pdomControlAreaNode.pdomOrder = [ samplingLaunchPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [ samplingLaunchPanel, this.timeControlNode, this.resetAllButton ];
   }
 }
 
