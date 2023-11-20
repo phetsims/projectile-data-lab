@@ -17,7 +17,7 @@
 import { ProfileColorProperty } from '../../../scenery/js/imports.js';
 import projectileDataLab from '../projectileDataLab.js';
 
-const ProjectileDataLabColors = {
+const PDLColors = {
 
   // Background color for screens in this sim
   screenBackgroundTopColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundTop', {
@@ -75,5 +75,5 @@ const ProjectileDataLabColors = {
   } )
 };
 
-projectileDataLab.register( 'ProjectileDataLabColors', ProjectileDataLabColors );
-export default ProjectileDataLabColors;
+projectileDataLab.register( 'PDLColors', PDLColors );
+export default PDLColors;

@@ -1,12 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Property from '../../../../axon/js/Property.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import projectileDataLab from '../../projectileDataLab.js';
+import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
+import Property from '../../../../../axon/js/Property.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import { Text } from '../../../../../scenery/js/imports.js';
+import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
+import projectileDataLab from '../../../projectileDataLab.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -16,7 +16,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 type SelfOptions = EmptySelfOptions;
 type ProjectileTypeSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
-export default class LauncherTypeSection extends PDLPanelSection {
+export default class SectionLauncherType extends PDLPanelSection {
 
   public constructor( launcherTypeProperty: Property<number>, providedOptions: ProjectileTypeSectionOptions ) {
     // TODO: Try to use Array.map for this without type errors - see https://github.com/phetsims/projectile-data-lab/issues/5
@@ -38,4 +38,4 @@ export default class LauncherTypeSection extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'LauncherTypeSection', LauncherTypeSection );
+projectileDataLab.register( 'SectionLauncherType', SectionLauncherType );

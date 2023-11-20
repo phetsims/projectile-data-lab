@@ -9,12 +9,12 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
+import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type ProjectileDataLabModelOptions = SelfOptions & { tandem: Tandem };
 
-export default class ProjectileDataLabModel implements TModel {
+export default class PDLModel implements TModel {
 
   public readonly launcherAngleProperty: Property<number>;
   public readonly launcherHeightProperty: Property<number>;
@@ -30,7 +30,7 @@ export default class ProjectileDataLabModel implements TModel {
     } );
 
     this.launcherHeightProperty = new Property<number>( 0, {
-      validValues: [ 0, ProjectileDataLabConstants.RAISED_LAUNCHER_HEIGHT ],
+      validValues: [ 0, PDLConstants.RAISED_LAUNCHER_HEIGHT ],
       tandem: Tandem.OPT_OUT
     } );
 
@@ -56,4 +56,4 @@ export default class ProjectileDataLabModel implements TModel {
     this.binWidthProperty.reset();
   }
 }
-projectileDataLab.register( 'ProjectileDataLabModel', ProjectileDataLabModel );
+projectileDataLab.register( 'PDLModel', PDLModel );

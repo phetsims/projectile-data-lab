@@ -10,7 +10,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
-import FieldPanel from '../../common/view/FieldPanel.js';
+import FieldPanel from '../../common/view/panels/FieldPanel.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common/view/VSMScreenView.js';
 

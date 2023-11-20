@@ -1,22 +1,21 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * The VSMModel is the base class for the Variability, Sources, and Measurement models.
- * // REVIEW: A better name would be nice.
+ * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models.
  */
 import projectileDataLab from '../../projectileDataLab.js';
-import ProjectileDataLabModel, { ProjectileDataLabModelOptions } from './ProjectileDataLabModel.js';
+import PDLModel, { ProjectileDataLabModelOptions } from './PDLModel.js';
 import Property from '../../../../axon/js/Property.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
-import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
+import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & ProjectileDataLabModelOptions;
 
-export default class VSMModel extends ProjectileDataLabModel {
+export default class VSMModel extends PDLModel {
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
@@ -51,7 +50,7 @@ export default class VSMModel extends ProjectileDataLabModel {
           angle = 30;
           break;
         case 'ANGLE_0':
-          height = ProjectileDataLabConstants.RAISED_LAUNCHER_HEIGHT;
+          height = PDLConstants.RAISED_LAUNCHER_HEIGHT;
           break;
         default:
           break;

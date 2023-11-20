@@ -3,8 +3,8 @@
 import { Node, NodeOptions, Rectangle, Line } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
-import ProjectileDataLabColors from '../ProjectileDataLabColors.js';
+import PDLConstants from '../PDLConstants.js';
+import PDLColors from '../PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
 
 /**
@@ -26,13 +26,13 @@ export default class FieldNode extends Node {
   public constructor( x: number, y: number, binWidthProperty: Property<number>, providedOptions: FieldNodeOptions ) {
 
     const fieldRectangle = new Rectangle(
-      -0.5 * ProjectileDataLabConstants.FIELD_WIDTH,
-      -0.5 * ProjectileDataLabConstants.FIELD_HEIGHT,
-      ProjectileDataLabConstants.FIELD_WIDTH,
-      ProjectileDataLabConstants.FIELD_HEIGHT, {
-        fill: ProjectileDataLabColors.fieldFillColorProperty,
-        stroke: ProjectileDataLabColors.fieldBorderStrokeColorProperty,
-        lineWidth: ProjectileDataLabConstants.FIELD_BORDER_LINE_WIDTH
+      -0.5 * PDLConstants.FIELD_WIDTH,
+      -0.5 * PDLConstants.FIELD_HEIGHT,
+      PDLConstants.FIELD_WIDTH,
+      PDLConstants.FIELD_HEIGHT, {
+        fill: PDLColors.fieldFillColorProperty,
+        stroke: PDLColors.fieldBorderStrokeColorProperty,
+        lineWidth: PDLConstants.FIELD_BORDER_LINE_WIDTH
       }
     );
 
@@ -59,21 +59,21 @@ export default class FieldNode extends Node {
   }
 
   private fieldLinesForBinWidth( binWidth: number ): Node[] {
-    const totalFieldLines = ProjectileDataLabConstants.MAX_FIELD_DISTANCE / binWidth - 1;
-    const deltaX = binWidth * ProjectileDataLabConstants.FIELD_WIDTH / ProjectileDataLabConstants.MAX_FIELD_DISTANCE;
-    const lineHeight = ProjectileDataLabConstants.FIELD_HEIGHT - ProjectileDataLabConstants.FIELD_BORDER_LINE_WIDTH;
+    const totalFieldLines = PDLConstants.MAX_FIELD_DISTANCE / binWidth - 1;
+    const deltaX = binWidth * PDLConstants.FIELD_WIDTH / PDLConstants.MAX_FIELD_DISTANCE;
+    const lineHeight = PDLConstants.FIELD_HEIGHT - PDLConstants.FIELD_BORDER_LINE_WIDTH;
     const fieldLines: Node[] = [];
 
     for ( let i = 0; i < totalFieldLines; i++ ) {
-      const x = -0.5 * ProjectileDataLabConstants.FIELD_WIDTH + deltaX * ( i + 1 );
-      const isNumberedLine = ( i + 1 ) * binWidth % ProjectileDataLabConstants.FIELD_LINE_NUMBER_INCREMENT === 0;
+      const x = -0.5 * PDLConstants.FIELD_WIDTH + deltaX * ( i + 1 );
+      const isNumberedLine = ( i + 1 ) * binWidth % PDLConstants.FIELD_LINE_NUMBER_INCREMENT === 0;
       const strokeColorProperty =
         isNumberedLine ?
-        ProjectileDataLabColors.fieldBorderStrokeColorProperty :
-        ProjectileDataLabColors.fieldLineStrokeColorProperty;
+        PDLColors.fieldBorderStrokeColorProperty :
+        PDLColors.fieldLineStrokeColorProperty;
       const line = new Line( x, -0.5 * lineHeight, x, 0.5 * lineHeight, {
         stroke: strokeColorProperty,
-        lineWidth: ProjectileDataLabConstants.FIELD_LINE_WIDTH
+        lineWidth: PDLConstants.FIELD_LINE_WIDTH
       } );
       fieldLines.push( line );
     }

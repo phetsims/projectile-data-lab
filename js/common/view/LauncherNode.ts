@@ -1,11 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import { LinearGradient, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import ProjectileDataLabColors from '../ProjectileDataLabColors.js';
+import PDLColors from '../PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
-import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
+import PDLConstants from '../PDLConstants.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -55,7 +55,7 @@ export default class LauncherNode extends Node {
   }
 
   private updateLauncherHeight( height: number ): void {
-    this.y = this.originY - height * ProjectileDataLabConstants.PIXELS_TO_DISTANCE;
+    this.y = this.originY - height * PDLConstants.PIXELS_TO_DISTANCE;
   }
 
   private updateLauncherType( type: number ): void {
@@ -70,15 +70,22 @@ export default class LauncherNode extends Node {
     const launcherLengthAfterOrigin = 15;
     const launcherLength = launcherLengthBeforeOrigin + launcherLengthAfterOrigin;
     const launcherWidth = 32;
-    const launcherFillColorProperty = ProjectileDataLabColors.launcherFillColorProperties[ launcherType - 1 ];
+    const launcherFillColorProperty = PDLColors.launcherFillColorProperties[ launcherType - 1 ];
+    const launcherFillDark = launcherFillColorProperty.value.darkerColor( 0.8 );
+
+    const launcherFillGradient = new LinearGradient( 0, -0.5 * launcherWidth, 0, 0.5 * launcherWidth );
+    launcherFillGradient.addColorStop( 0, launcherFillDark );
+    launcherFillGradient.addColorStop( 0.4, launcherFillColorProperty );
+    launcherFillGradient.addColorStop( 0.6, launcherFillColorProperty );
+    launcherFillGradient.addColorStop( 1, launcherFillDark );
 
     const launcherRect = new Rectangle(
       -launcherLengthBeforeOrigin,
       -0.5 * launcherWidth,
       launcherLength,
       launcherWidth, {
-        fill: launcherFillColorProperty,
-        stroke: ProjectileDataLabColors.launcherStrokeColorProperty,
+        fill: launcherFillGradient,
+        stroke: PDLColors.launcherStrokeColorProperty,
         lineWidth: 1,
         cornerRadius: 0.2 * launcherWidth
       }
@@ -92,8 +99,8 @@ export default class LauncherNode extends Node {
       -0.5 * launcherEndRectWidth,
       launcherEndRectLength,
       launcherEndRectWidth, {
-        fill: launcherFillColorProperty.value.darkerColor( 0.8 ),
-        stroke: ProjectileDataLabColors.launcherStrokeColorProperty,
+        fill: launcherFillDark,
+        stroke: PDLColors.launcherStrokeColorProperty,
         lineWidth: 1,
         cornerRadius: 0.1 * launcherEndRectLength
       }

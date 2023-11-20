@@ -9,7 +9,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import SourcesModel from '../model/SourcesModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SourcesLaunchPanel from './SourcesLaunchPanel.js';
-import FieldPanel from '../../common/view/FieldPanel.js';
+import FieldPanel from '../../common/view/panels/FieldPanel.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common/view/VSMScreenView.js';
 

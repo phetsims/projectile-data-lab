@@ -10,14 +10,14 @@ import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
-import ProjectileDataLabModel from '../../common/model/ProjectileDataLabModel.js';
+import PDLModel from '../../common/model/PDLModel.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class SamplingModel extends ProjectileDataLabModel {
+export default class SamplingModel extends PDLModel {
 
   public readonly sampleSizeProperty: Property<number>;
 

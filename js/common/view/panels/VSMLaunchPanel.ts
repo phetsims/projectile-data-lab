@@ -1,14 +1,14 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
-import LauncherConfigurationSection from './LauncherConfigurationSection.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherConfiguration } from '../model/LauncherConfiguration.js';
-import Property from '../../../../axon/js/Property.js';
-import ProjectileTypeSection from './ProjectileTypeSection.js';
-import { ProjectileType } from '../model/ProjectileType.js';
+import { PDLPanelOptions } from './PDLPanel.js';
+import projectileDataLab from '../../../projectileDataLab.js';
+import { Color, HSeparator, Node } from '../../../../../scenery/js/imports.js';
+import SectionLauncherConfiguration from './SectionLauncherConfiguration.js';
+import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
+import { LauncherConfiguration } from '../../model/LauncherConfiguration.js';
+import Property from '../../../../../axon/js/Property.js';
+import SectionProjectileType from './SectionProjectileType.js';
+import { ProjectileType } from '../../model/ProjectileType.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 
 /**
@@ -26,11 +26,11 @@ export default class VSMLaunchPanel extends PDLLaunchPanel {
                       launcherTypeProperty: Property<number>,
                       providedOptions: VSMLaunchPanelOptions ) {
 
-    const launcherConfigurationSection = new LauncherConfigurationSection( configurationProperty, {
+    const launcherConfigurationSection = new SectionLauncherConfiguration( configurationProperty, {
       tandem: providedOptions.tandem
     } );
 
-    const projectileTypeSection = new ProjectileTypeSection( projectileTypeProperty, {
+    const projectileTypeSection = new SectionProjectileType( projectileTypeProperty, {
       tandem: providedOptions.tandem
     } );
 

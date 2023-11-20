@@ -1,13 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import Property from '../../../../axon/js/Property.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import projectileDataLab from '../../../projectileDataLab.js';
+import { Text } from '../../../../../scenery/js/imports.js';
+import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import Property from '../../../../../axon/js/Property.js';
+import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import { ProjectileType } from '../model/ProjectileType.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import { ProjectileType } from '../../model/ProjectileType.js';
+import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -17,7 +17,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 type SelfOptions = EmptySelfOptions;
 type ProjectileTypeSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
-export default class ProjectileTypeSection extends PDLPanelSection {
+export default class SectionProjectileType extends PDLPanelSection {
 
   public constructor( projectileTypeProperty: Property<ProjectileType>, providedOptions: ProjectileTypeSectionOptions ) {
     const projectileTypeRadioButtonGroup = new RectangularRadioButtonGroup( projectileTypeProperty, [ {
@@ -40,4 +40,4 @@ export default class ProjectileTypeSection extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'ProjectileTypeSection', ProjectileTypeSection );
+projectileDataLab.register( 'SectionProjectileType', SectionProjectileType );

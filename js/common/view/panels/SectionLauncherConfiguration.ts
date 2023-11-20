@@ -1,13 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import Property from '../../../../axon/js/Property.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherConfiguration } from '../model/LauncherConfiguration.js';
+import projectileDataLab from '../../../projectileDataLab.js';
+import { Text } from '../../../../../scenery/js/imports.js';
+import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import Property from '../../../../../axon/js/Property.js';
+import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
+import { LauncherConfiguration } from '../../model/LauncherConfiguration.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -17,7 +17,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 type SelfOptions = EmptySelfOptions;
 type LauncherConfigurationSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
-export default class LauncherConfigurationSection extends PDLPanelSection {
+export default class SectionLauncherConfiguration extends PDLPanelSection {
 
   public constructor( launcherConfigurationProperty: Property<LauncherConfiguration>, providedOptions: LauncherConfigurationSectionOptions ) {
     const launcherConfigurationRadioButtonGroup = new RectangularRadioButtonGroup( launcherConfigurationProperty, [ {
@@ -44,4 +44,4 @@ export default class LauncherConfigurationSection extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'LauncherConfigurationSection', LauncherConfigurationSection );
+projectileDataLab.register( 'SectionLauncherConfiguration', SectionLauncherConfiguration );

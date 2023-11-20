@@ -12,12 +12,12 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
-import ProjectileDataLabConstants from '../ProjectileDataLabConstants.js';
+import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import ProjectileDataLabColors from '../ProjectileDataLabColors.js';
+import PDLColors from '../PDLColors.js';
 import GradientBackgroundNode from '../../../../scenery-phet/js/GradientBackgroundNode.js';
 import FieldNode from './FieldNode.js';
-import ProjectileDataLabModel from '../model/ProjectileDataLabModel.js';
+import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
 import LauncherNode from './LauncherNode.js';
 
@@ -29,7 +29,7 @@ export class PDLScreenView extends ScreenView {
   private readonly field: FieldNode;
   private readonly launcher: LauncherNode;
 
-  public constructor( model: ProjectileDataLabModel, options: PDLScreenViewOptions ) {
+  public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
     super( options );
 
     const backgroundNode = new GradientBackgroundNode(
@@ -37,8 +37,8 @@ export class PDLScreenView extends ScreenView {
       0,
       1,
       1,
-      ProjectileDataLabColors.screenBackgroundTopColorProperty,
-      ProjectileDataLabColors.screenBackgroundBottomColorProperty,
+      PDLColors.screenBackgroundTopColorProperty,
+      PDLColors.screenBackgroundBottomColorProperty,
       0,
       1
     );
@@ -51,7 +51,7 @@ export class PDLScreenView extends ScreenView {
     this.addChild( backgroundNode );
 
     const noAirResistanceText = new Text( ProjectileDataLabStrings.noAirResistanceStringProperty, {
-      font: ProjectileDataLabConstants.PRIMARY_FONT,
+      font: PDLConstants.PRIMARY_FONT,
       maxWidth: 120.046875 * 1.25 // 25% larger than the default English text
     } );
     this.addChild( noAirResistanceText );
@@ -62,21 +62,21 @@ export class PDLScreenView extends ScreenView {
         model.reset();
         this.reset();
       },
-      right: this.layoutBounds.maxX - ProjectileDataLabConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - ProjectileDataLabConstants.SCREEN_VIEW_Y_MARGIN,
+      right: this.layoutBounds.maxX - PDLConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
     this.addChild( this.resetAllButton );
 
     // Create the field and field overlay
-    const fieldX = this.layoutBounds.centerX + ProjectileDataLabConstants.FIELD_CENTER_OFFSET_X;
-    const fieldY = ProjectileDataLabConstants.FIELD_CENTER_Y;
+    const fieldX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X;
+    const fieldY = PDLConstants.FIELD_CENTER_Y;
 
     this.field = new FieldNode( fieldX, fieldY, model.binWidthProperty, {} );
     const fieldOverlayNode = new FieldOverlayNode( fieldX, fieldY, {} );
 
     // Create the launcher
-    const originX = fieldX - 0.5 * ProjectileDataLabConstants.FIELD_WIDTH;
+    const originX = fieldX - 0.5 * PDLConstants.FIELD_WIDTH;
     this.launcher = new LauncherNode(
       originX,
       fieldY,
@@ -96,7 +96,7 @@ export class PDLScreenView extends ScreenView {
       [ noAirResistanceText, this.resetAllButton ],
       ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
         noAirResistanceTextProxy.right =
-          resetAllButtonProxy.left - ProjectileDataLabConstants.SCREEN_VIEW_X_MARGIN;
+          resetAllButtonProxy.left - PDLConstants.SCREEN_VIEW_X_MARGIN;
         noAirResistanceTextProxy.bottom = resetAllButtonProxy.bottom;
       }
     );

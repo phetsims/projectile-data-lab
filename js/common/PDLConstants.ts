@@ -13,7 +13,7 @@ const maxFieldDistance = 100;
 const fieldWidth = 880;
 const pixelsToDistance = fieldWidth / maxFieldDistance;
 
-const ProjectileDataLabConstants = {
+const PDLConstants = {
 
   SCREEN_VIEW_X_MARGIN: 15,
   SCREEN_VIEW_Y_MARGIN: 15,
@@ -39,5 +39,5 @@ const ProjectileDataLabConstants = {
   FIELD_LABEL_FONT: new PhetFont( 17 )
 } as const;
 
-projectileDataLab.register( 'ProjectileDataLabConstants', ProjectileDataLabConstants );
-export default ProjectileDataLabConstants;
+projectileDataLab.register( 'PDLConstants', PDLConstants );
+export default PDLConstants;

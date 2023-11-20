@@ -2,12 +2,12 @@
 
 import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
 import PDLPanelSection from './PDLPanelSection.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import Property from '../../../../axon/js/Property.js';
-import { Text } from '../../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
+import projectileDataLab from '../../../projectileDataLab.js';
+import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import Property from '../../../../../axon/js/Property.js';
+import { Text } from '../../../../../scenery/js/imports.js';
+import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
