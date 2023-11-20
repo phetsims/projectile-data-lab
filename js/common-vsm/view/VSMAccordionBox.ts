@@ -1,10 +1,10 @@
 // Copyright 2022-2023, University of Colorado Boulder
 
-import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import { Node } from '../../../../../scenery/js/imports.js';
-import PDLAccordionBox, { PDLAccordionBoxOptions } from './PDLAccordionBox.js';
-import projectileDataLab from '../../../projectileDataLab.js';
-import WithRequired from '../../../../../phet-core/js/types/WithRequired.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import PDLAccordionBox, { PDLAccordionBoxOptions } from '../../common/view/PDLAccordionBox.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.

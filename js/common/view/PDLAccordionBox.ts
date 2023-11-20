@@ -8,12 +8,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import AccordionBox, { AccordionBoxOptions } from '../../../../../sun/js/AccordionBox.js';
-import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import { Node, Path, TPaint } from '../../../../../scenery/js/imports.js';
-import { Shape } from '../../../../../kite/js/imports.js';
-import WithRequired from '../../../../../phet-core/js/types/WithRequired.js';
-import projectileDataLab from '../../../projectileDataLab.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Node, Path, TPaint } from '../../../../scenery/js/imports.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 

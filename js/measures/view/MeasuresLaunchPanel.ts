@@ -4,7 +4,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import Property from '../../../../axon/js/Property.js';
-import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common/view/panels/VSMLaunchPanel.js';
+import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 
 /**

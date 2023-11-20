@@ -1,15 +1,15 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { PDLPanelOptions } from './PDLPanel.js';
-import projectileDataLab from '../../../projectileDataLab.js';
-import { Color, HSeparator, Node } from '../../../../../scenery/js/imports.js';
-import SectionLauncherConfiguration from './SectionLauncherConfiguration.js';
-import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import { LauncherConfiguration } from '../../model/LauncherConfiguration.js';
-import Property from '../../../../../axon/js/Property.js';
-import SectionProjectileType from './SectionProjectileType.js';
-import { ProjectileType } from '../../model/ProjectileType.js';
-import { PDLLaunchPanel } from './PDLLaunchPanel.js';
+import { PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
+import SectionLauncherConfiguration from '../../common/view/panels/SectionLauncherConfiguration.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
+import Property from '../../../../axon/js/Property.js';
+import SectionProjectileType from '../../common/view/panels/SectionProjectileType.js';
+import { ProjectileType } from '../../common/model/ProjectileType.js';
+import { PDLLaunchPanel } from '../../common/view/panels/PDLLaunchPanel.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)

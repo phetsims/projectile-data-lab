@@ -2,7 +2,7 @@
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import { PDLScreenView } from './PDLScreenView.js';
+import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 

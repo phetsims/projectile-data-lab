@@ -4,16 +4,16 @@
  * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models.
  */
 import projectileDataLab from '../../projectileDataLab.js';
-import PDLModel, { PDLModelOptions } from './PDLModel.js';
+import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
 import Property from '../../../../axon/js/Property.js';
-import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
+import { LauncherConfiguration, LauncherConfigurationValues } from '../../common/model/LauncherConfiguration.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
-import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
-import PDLConstants from '../PDLConstants.js';
+import { ProjectileType, ProjectileTypeValues } from '../../common/model/ProjectileType.js';
+import PDLConstants from '../../common/PDLConstants.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Field from './Field.js';
+import Field from '../../common/model/Field.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
