@@ -37,6 +37,8 @@ export default class VSMModel extends PDLModel {
     } );
 
     this.launcherConfigurationProperty.link( configuration => {
+
+      // REVIEW: Should these be DerivedProperties?
       this.launcherAngleProperty.value = this.angleForConfiguration( configuration );
       this.launcherHeightProperty.value = configuration === 'ANGLE_0' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
