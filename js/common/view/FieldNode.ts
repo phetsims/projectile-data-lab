@@ -40,13 +40,10 @@ export default class FieldNode extends Node {
     const options = optionize<FieldNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
-    this.fieldLines = this.fieldLinesForBinWidth( binWidthProperty.value );
-    this.fieldLines.forEach( fieldLine => {
-      this.addChild( fieldLine );
-    } );
+    this.fieldLines = [];
 
     // If the bin width changes, remove the old field lines and create new ones.
-    binWidthProperty.lazyLink( binWidth => {
+    binWidthProperty.link( binWidth => {
       this.fieldLines.forEach( fieldLine => {
         this.removeChild( fieldLine );
       } );
