@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2022-2023, University of Colorado Boulder
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, Text } from '../../../../scenery/js/imports.js';
@@ -9,8 +9,8 @@ import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 /**
- * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
- * It contains a histogram as well as associated controls.
+ * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
+ * It contains a sampling distribution histogram, preview thumbnails and associated controls.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -18,21 +18,20 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type VSMAccordionBoxOptions =
+export type SamplingAccordionBoxOptions =
   SelfOptions & WithRequired<PDLAccordionBoxOptions, 'tandem' | 'binWidthProperty'>;
 
-export default class VSMAccordionBox extends PDLAccordionBox {
+export default class SamplingAccordionBox extends PDLAccordionBox {
 
-  public constructor( contentNode: Node, providedOptions: VSMAccordionBoxOptions ) {
-    const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
-      titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
+  public constructor( contentNode: Node, providedOptions: SamplingAccordionBoxOptions ) {
+    const options = optionize<SamplingAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
+      titleNode: new Text( ProjectileDataLabStrings.samplingDistributionStringProperty, {
         font: PDLConstants.PRIMARY_FONT
-      } ),
-      maxWidth: 500
+      } )
     }, providedOptions );
 
     super( contentNode, options );
   }
 }
 
-projectileDataLab.register( 'VSMAccordionBox', VSMAccordionBox );
+projectileDataLab.register( 'SamplingAccordionBox', SamplingAccordionBox );
