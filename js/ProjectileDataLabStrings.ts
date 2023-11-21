@@ -18,10 +18,14 @@ type StringsType = {
     'measuresStringProperty': LocalizedStringProperty;
     'samplingStringProperty': LocalizedStringProperty;
   };
+  'singleLaunchStringProperty': LocalizedStringProperty;
+  'continuousLaunchStringProperty': LocalizedStringProperty;
   'noAirResistanceStringProperty': LocalizedStringProperty;
   'configurationStringProperty': LocalizedStringProperty;
   'projectile10kgStringProperty': LocalizedStringProperty;
   'launcherStringProperty': LocalizedStringProperty;
+  'histogramStringProperty': LocalizedStringProperty;
+  'samplingDistributionStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
   'pathsStringProperty': LocalizedStringProperty;
