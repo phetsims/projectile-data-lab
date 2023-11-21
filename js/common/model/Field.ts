@@ -12,6 +12,8 @@ import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLConstants from '../PDLConstants.js';
+import Projectile, { ProjectileStateObject } from './Projectile.js';
+import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -31,11 +33,13 @@ export default class Field extends PhetioObject {
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launcherHeightProperty: Property<number>;
 
+  public readonly projectiles: Projectile[] = [];
+
   public constructor( providedOptions: FieldOptions ) {
 
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,
-      phetioState: false // TODO: enable state, see https://github.com/phetsims/projectile-data-lab/issues/7
+      phetioState: true
     }, providedOptions );
 
     super( options );
@@ -67,7 +71,6 @@ export default class Field extends PhetioObject {
       phetioValueType: NumberIO
     } );
 
-
     this.launcherAngleProperty = new Property<number>( 30, {
       validValues: [ 0, 30, 45, 60 ],
       tandem: Tandem.OPT_OUT
@@ -84,6 +87,8 @@ export default class Field extends PhetioObject {
       this.launcherAngleProperty.value = Field.angleForConfiguration( configuration );
       this.launcherHeightProperty.value = configuration === 'ANGLE_0' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
+
+    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL' ) );
   }
 
   public reset(): void {
@@ -95,12 +100,25 @@ export default class Field extends PhetioObject {
   }
 
   public toStateObject(): object {
-    return {};
+    return {
+      projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
+    };
   }
 
   public static FieldIO = new IOType( 'FieldIO', {
     valueType: Field,
-    documentation: 'A field in the Projectile Data Lab' // TODO: https://github.com/phetsims/projectile-data-lab/issues/7 document fully
+    documentation: 'A field in the Projectile Data Lab', // TODO: https://github.com/phetsims/projectile-data-lab/issues/7 document fully
+    defaultDeserializationMethod: 'applyState',
+    stateSchema: {
+      projectiles: ArrayIO( Projectile.ProjectileIO )
+    },
+    toStateObject: field => field.toStateObject(),
+    applyState: ( field, stateObject ) => {
+      field.projectiles.length = 0;
+      stateObject.projectiles.forEach( ( projectileStateObject: ProjectileStateObject ) => {
+        field.projectiles.push( Projectile.ProjectileIO.fromStateObject( projectileStateObject ) );
+      } );
+    }
   } );
 
   private static angleForConfiguration( configuration: LauncherConfiguration ): number {

@@ -1,8 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { ProjectileType } from './ProjectileType.js';
-import { ProjectilePhase } from './ProjectilePhase.js';
+import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
+import { ProjectilePhase, ProjectilePhaseValues } from './ProjectilePhase.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -64,6 +68,65 @@ export default class Projectile {
     this.launchSpeed = launchSpeed;
     this.launchHeight = launchHeight;
   }
+
+  public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
+    valueType: Projectile,
+    stateSchema: {
+
+      // TODO: x and y can be derived from everything else, do we really want it in the state? See https://github.com/phetsims/projectile-data-lab/issues/7
+      x: NumberIO,
+      y: NumberIO,
+      type: StringUnionIO( ProjectileTypeValues ),
+      phase: StringUnionIO( ProjectilePhaseValues ),
+      scaleX: NumberIO,
+      landedImageIndex: NumberIO,
+      timeAirborne: NumberIO,
+      launchAngle: NullableIO( NumberIO ),
+      launchSpeed: NullableIO( NumberIO ),
+      launchHeight: NullableIO( NumberIO )
+    },
+    toStateObject: ( projectile: Projectile ): ProjectileStateObject => {
+      return {
+        x: projectile.x,
+        y: projectile.y,
+        type: projectile.type,
+        phase: projectile.phase,
+        scaleX: projectile.scaleX,
+        landedImageIndex: projectile.landedImageIndex,
+        timeAirborne: projectile.timeAirborne,
+        launchAngle: projectile.launchAngle,
+        launchSpeed: projectile.launchSpeed,
+        launchHeight: projectile.launchHeight
+      };
+    },
+    fromStateObject: ( stateObject: ProjectileStateObject ) => {
+      return new Projectile(
+        stateObject.x,
+        stateObject.y,
+        stateObject.type,
+        stateObject.phase,
+        stateObject.scaleX,
+        stateObject.landedImageIndex,
+        stateObject.timeAirborne,
+        stateObject.launchAngle,
+        stateObject.launchSpeed,
+        stateObject.launchHeight
+      );
+    }
+  } );
 }
+
+export type ProjectileStateObject = {
+  x: number;
+  y: number;
+  type: ProjectileType;
+  phase: ProjectilePhase;
+  scaleX: 1 | -1;
+  landedImageIndex: number;
+  timeAirborne: number;
+  launchAngle: number | null;
+  launchSpeed: number | null;
+  launchHeight: number | null;
+};
 
 projectileDataLab.register( 'Projectile', Projectile );

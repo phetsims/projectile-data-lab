@@ -31,6 +31,7 @@ export default class PDLUtils {
            - 0.5 * PDLConstants.FREEFALL_ACCELERATION * timeAirborne * timeAirborne;
   }
 
+  // TODO: This could be inferred from the field itself. See https://github.com/phetsims/projectile-data-lab/issues/7
   public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
     const launchAngleRadians = launchAngle * Math.PI / 180;
     const g = PDLConstants.FREEFALL_ACCELERATION;
