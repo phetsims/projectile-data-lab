@@ -10,7 +10,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 
 const maxFieldDistance = 100;
-const fieldWidth = 880;
+const fieldWidth = 870;
 const pixelsToDistance = fieldWidth / maxFieldDistance;
 
 const PDLConstants = {
@@ -25,25 +25,27 @@ const PDLConstants = {
 
   // In view units
   FIELD_CENTER_OFFSET_X: 32,
-  FIELD_CENTER_Y: 495,
-  FIELD_HEIGHT: 50,
+  FIELD_CENTER_Y: 490,
+  FIELD_HEIGHT: 40,
   FIELD_WIDTH: fieldWidth,
-  FIELD_BORDER_LINE_WIDTH: 3,
-  FIELD_CENTER_LINE_WIDTH: 2.5,
+  FIELD_BORDER_LINE_WIDTH: 2,
+  FIELD_CENTER_LINE_WIDTH: 2,
   FIELD_LINE_WIDTH: 2,
   FIELD_LINE_NUMBERED_WIDTH: 2.5,
-  FIELD_LABEL_TOP_MARGIN: 3,
+  FIELD_LABEL_TOP_MARGIN: 2,
 
-  // This is a value between 0-Number.POSITIVE_INFINITY. A value of 0 would mean the left and right edges are parallel.
-  // The more extreme the value is, the more the left and right edges angle inward.  A point on the center line will
-  // be offset by this amount
+  // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
+  // FIELD_SCALING_FACTOR_HORIZONTAL can be any value between 0-Number.POSITIVE_INFINITY.
+  // 0 would mean the left and right edges are parallel.
+  // The larger the value, the more the left and right edges angle inward.
+  // The value represents the maximum x-offset of points furthest from the center.
   FIELD_SCALING_FACTOR_HORIZONTAL: 18,
 
-  // This is a value between 0-1.
-  // 0 would mean the top and bottom halves of the same field have the same height.
-  // 1 would mean the entire field is shown below the center line.
-  // So this controls the amount of "squishing" for the perspective transformation.
-  FIELD_SCALING_FACTOR_VERTICAL: 0.2,
+  // Vertical scaling controls the amount of "squishing" for the perspective transformation.
+  // FIELD_SCALING_FACTOR_VERTICAL must be between 0-1.
+  // 0 means the top and bottom halves of the same field have the same height.
+  // 1 means the entire field is shown below the center line.
+  FIELD_SCALING_FACTOR_VERTICAL: 0.25,
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
