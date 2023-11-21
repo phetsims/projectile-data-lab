@@ -22,6 +22,10 @@ export default class HeatMapToolNode extends Node {
   public constructor( providedOptions: HeatMapToolNodeOptions ) {
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
     super( options );
+
+    options.sourceDataProperty.link( sourceData => {
+      console.log( 'heat map source data added: ' + sourceData );
+    } );
   }
 }
 
