@@ -23,10 +23,6 @@ export default class PDLCanvas extends CanvasNode {
   public constructor( fieldProperty: Property<Field>, modelViewTransform: ModelViewTransform2, providedOptions: PDLCanvasOptions ) {
 
     const options = optionize<PDLCanvasOptions, SelfOptions, CanvasNodeOptions>()( {
-
-      // only use the visible part for the bounds (not the damping regions).  Additionally erode so the particles
-      // don't leak over the edge of the wave area
-      // canvasBounds: waveAreaNodeBounds.eroded( 5 ),
       layerSplit: true // ensure we're on our own layer
     }, providedOptions );
 
@@ -50,7 +46,6 @@ export default class PDLCanvas extends CanvasNode {
    * Draws into the canvas.
    */
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
-    // context.transform( 1 / RESOLUTION, 0, 0, 1 / RESOLUTION, 0, 0 );
     const projectiles = this.fieldProperty.value.projectiles;
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
