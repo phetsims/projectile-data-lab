@@ -7,12 +7,14 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
 
 export default class MeasuresStaticToolPanel extends StaticToolPanel {
-  public constructor( providedOptions: PDLPanelOptions ) {
+  public constructor( arePathsVisibleProperty: Property<boolean>, isLaunchAngleVisibleProperty: Property<boolean>,
+                      isLaunchSpeedVisibleProperty: Property<boolean>, providedOptions: PDLPanelOptions ) {
 
     const options = optionize<PDLPanelOptions, SelfOptions, MeasuresStaticToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
@@ -27,7 +29,7 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
       ]
     }, providedOptions );
 
-    super( options );
+    super( arePathsVisibleProperty, isLaunchAngleVisibleProperty, isLaunchSpeedVisibleProperty, options );
   }
 }
 

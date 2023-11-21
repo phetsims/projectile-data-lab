@@ -34,7 +34,7 @@ export default class SourcesScreenView extends VSMScreenView {
     const fieldPanel = new FieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
-    const staticToolPanel = new StaticToolPanel( {
+    const staticToolPanel = new StaticToolPanel( model.arePathsVisibleProperty, model.isLaunchAngleVisibleProperty, model.isLaunchSpeedVisibleProperty, {
       tandem: options.tandem.createTandem( 'staticToolPanel' )
     } );
     const interactiveToolPanel = new InteractiveToolPanel( {

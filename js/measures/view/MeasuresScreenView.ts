@@ -35,9 +35,10 @@ export default class MeasuresScreenView extends VSMScreenView {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
 
-    const staticToolPanel = new MeasuresStaticToolPanel( {
-      tandem: options.tandem.createTandem( 'staticToolPanel' )
-    } );
+    const staticToolPanel = new MeasuresStaticToolPanel( model.arePathsVisibleProperty, model.isLaunchAngleVisibleProperty,
+      model.isLaunchSpeedVisibleProperty, {
+        tandem: options.tandem.createTandem( 'staticToolPanel' )
+      } );
     const interactiveToolPanel = new MeasuresInteractiveToolPanel( {
       tandem: options.tandem.createTandem( 'interactiveToolPanel' )
     } );
