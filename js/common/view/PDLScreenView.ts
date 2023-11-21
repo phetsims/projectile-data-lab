@@ -117,13 +117,15 @@ export class PDLScreenView extends ScreenView {
         value: 1,
         createNode: () => new Text( 'Single fire', {
           font: PDLConstants.PRIMARY_FONT
-        } )
+        } ),
+        tandemName: 'singleFireRadioButton'
       },
       {
         value: 2,
         createNode: () => new Text( 'Rapid fire', {
           font: PDLConstants.PRIMARY_FONT
-        } )
+        } ),
+        tandemName: 'rapidFireRadioButton'
       }
     ], {
       left: launchButton.right + 15,
