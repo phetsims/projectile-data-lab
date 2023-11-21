@@ -113,7 +113,10 @@ export class PDLScreenView extends ScreenView {
       baseColor: PDLColors.launchButtonColorProperty,
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
-      tandem: options.tandem.createTandem( 'launchButton' )
+      tandem: options.tandem.createTandem( 'launchButton' ),
+      listener: () => {
+        model.launchProjectile();
+      }
     } );
 
     this.addChild( this.launchButton );

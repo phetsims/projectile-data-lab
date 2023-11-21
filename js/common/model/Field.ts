@@ -107,17 +107,22 @@ export default class Field extends PhetioObject {
     };
   }
 
-  public step( dt: number ): void {
-    if ( dotRandom.nextDouble() < 0.05 ) {
+  public step( dt: number, continuousLaunch: boolean ): void {
+    if ( continuousLaunch && dotRandom.nextDouble() < 0.05 ) {
 
-      // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
-      this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, 50 + dotRandom.nextGaussian() * 7, 2.5, 0 ) );
+      this.launchProjectile();
     }
 
     // TODO: Speed and time step: https://github.com/phetsims/projectile-data-lab/issues/7
     this.projectiles.forEach( projectile => projectile.step( dt / 10 ) );
 
     this.projectilesChangedEmitter.emit();
+  }
+
+  public launchProjectile(): void {
+
+    // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
+    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, 50 + dotRandom.nextGaussian() * 7, 2.5, 0 ) );
   }
 
   public static FieldIO = new IOType( 'FieldIO', {

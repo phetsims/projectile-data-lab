@@ -128,9 +128,13 @@ export default class PDLModel implements TModel {
     } );
   }
 
+  public launchProjectile(): void {
+    this.fieldProperty.value.launchProjectile();
+  }
+
   public step( dt: number ): void {
     if ( this.isPlayingProperty.value ) {
-      this.fieldProperty.value.step( dt );
+      this.fieldProperty.value.step( dt, this.isContinuousLaunchProperty.value );
     }
   }
 
