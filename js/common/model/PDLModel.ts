@@ -20,6 +20,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 type SelfOptions = {
   timeSpeedValues: TimeSpeed[];
@@ -28,6 +29,12 @@ type SelfOptions = {
 export type PDLModelOptions = SelfOptions & { tandem: Tandem };
 
 export default class PDLModel implements TModel {
+
+  // isContinuousLaunchProperty is true when the launcher is in continuous launch (rapid fire) mode.
+  public readonly isContinuousLaunchProperty: Property<boolean>;
+
+  // isHistogramShowingProperty is true when the accordion box containing the histogram is open.
+  public readonly isHistogramShowingProperty: Property<boolean>;
 
   // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
   public readonly binWidthProperty: Property<number>;
@@ -53,6 +60,18 @@ export default class PDLModel implements TModel {
   public readonly launcherHeightProperty: DynamicProperty<number, number, Field>;
 
   public constructor( providedOptions: PDLModelOptions ) {
+
+    this.isContinuousLaunchProperty = new Property<boolean>( false, {
+      tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchProperty' ),
+      phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
+      phetioValueType: BooleanIO
+    } );
+
+    this.isHistogramShowingProperty = new Property<boolean>( false, {
+      tandem: providedOptions.tandem.createTandem( 'isHistogramShowingProperty' ),
+      phetioDocumentation: 'This property indicates whether the histogram is showing.',
+      phetioValueType: BooleanIO
+    } );
 
     this.binWidthProperty = new Property<number>( 1, {
       validValues: [ 1, 2, 5, 10 ],
@@ -110,6 +129,8 @@ export default class PDLModel implements TModel {
   }
 
   public reset(): void {
+    this.isContinuousLaunchProperty.reset();
+    this.isHistogramShowingProperty.reset();
     this.binWidthProperty.reset();
     this.isPlayingProperty.reset();
     this.timeSpeedProperty.reset();
