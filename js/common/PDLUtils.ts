@@ -32,7 +32,8 @@ export default class PDLUtils {
   }
 
   public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
-    if ( launchHeight !== 0 && launchAngle === 0 ) {
+    if ( launchHeight !== 0 ) {
+      assert && assert( launchAngle === 0, 'Launch angle must equal zero when launch height is nonzero' );
       return launchSpeed * Math.sqrt( 2 * launchHeight / PDLConstants.FREEFALL_ACCELERATION );
     }
     else {
@@ -42,7 +43,8 @@ export default class PDLUtils {
   }
 
   public static getMaximumHeight( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
-    if ( launchHeight !== 0 && launchAngle === 0 ) {
+    if ( launchHeight !== 0 ) {
+      assert && assert( launchAngle === 0, 'Launch angle must equal zero when launch height is nonzero' );
       return launchHeight;
     }
     else {
@@ -52,7 +54,8 @@ export default class PDLUtils {
   }
 
   public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
-    if ( launchHeight !== 0 && launchAngle === 0 ) {
+    if ( launchHeight !== 0 ) {
+      assert && assert( launchAngle === 0, 'Launch angle must equal zero when launch height is nonzero' );
       return Math.sqrt( 2 * launchHeight / PDLConstants.FREEFALL_ACCELERATION );
     }
     else {
