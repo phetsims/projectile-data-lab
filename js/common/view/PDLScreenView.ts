@@ -117,8 +117,10 @@ export class PDLScreenView extends ScreenView {
       }
     );
 
+    // Position the time control node so that the play/pause button is centered at the 50-meter mark
     ManualConstraint.create( this, [ this.timeControlNode ], timeControlNodeProxy => {
-      timeControlNodeProxy.centerX = this.layoutBounds.centerX;
+      const playPauseCenterOffsetX = 0.5 * this.timeControlNode.width - this.timeControlNode.getPlayPauseButtonCenter().x;
+      timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
       timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
   }
