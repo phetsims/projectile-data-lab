@@ -25,7 +25,7 @@ const PDLConstants = {
 
   // In view units
   FIELD_CENTER_OFFSET_X: 32,
-  FIELD_CENTER_Y: 490,
+  FIELD_CENTER_Y: 500,
   FIELD_HEIGHT: 40,
   FIELD_WIDTH: fieldWidth,
   FIELD_BORDER_LINE_WIDTH: 2,
