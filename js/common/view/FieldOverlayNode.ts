@@ -69,7 +69,7 @@ export default class FieldOverlayNode extends Node {
                  distancePositionTransformed.bounds.right :
                  distancePositionTransformed.bounds.left,
         top: distancePositionTransformed.bounds.bottom + PDLConstants.FIELD_LABEL_TOP_MARGIN,
-        font: PDLConstants.PRIMARY_FONT,
+        font: PDLConstants.FIELD_LABEL_FONT,
         maxWidth: PDLConstants.FIELD_LINE_NUMBER_INCREMENT * PDLConstants.PIXELS_TO_DISTANCE * 0.9 // Add a horizontal margin
       } );
       distanceLabels.push( textLabel );
