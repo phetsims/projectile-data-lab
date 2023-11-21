@@ -6,6 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
 import PDLConstants from '../PDLConstants.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -73,14 +74,16 @@ export default class LauncherNode extends Node {
     const launcherLengthAfterOrigin = 15;
     const launcherLength = launcherLengthBeforeOrigin + launcherLengthAfterOrigin;
     const launcherWidth = 32;
+
     const launcherFillColorProperty = PDLColors.launcherFillColorProperties[ launcherType - 1 ];
-    const launcherFillDark = launcherFillColorProperty.value.darkerColor( 0.8 );
+    const launcherFillDarkColorProperty = new DerivedProperty( [ launcherFillColorProperty ],
+      color => color.darkerColor( 0.8 ) );
 
     const launcherFillGradient = new LinearGradient( 0, -0.5 * launcherWidth, 0, 0.5 * launcherWidth );
-    launcherFillGradient.addColorStop( 0, launcherFillDark );
+    launcherFillGradient.addColorStop( 0, launcherFillDarkColorProperty );
     launcherFillGradient.addColorStop( 0.4, launcherFillColorProperty );
     launcherFillGradient.addColorStop( 0.6, launcherFillColorProperty );
-    launcherFillGradient.addColorStop( 1, launcherFillDark );
+    launcherFillGradient.addColorStop( 1, launcherFillDarkColorProperty );
 
     const launcherRect = new Rectangle(
       -launcherLengthBeforeOrigin,
@@ -102,7 +105,7 @@ export default class LauncherNode extends Node {
       -0.5 * launcherEndRectWidth,
       launcherEndRectLength,
       launcherEndRectWidth, {
-        fill: launcherFillDark,
+        fill: launcherFillDarkColorProperty,
         stroke: PDLColors.launcherStrokeColorProperty,
         lineWidth: 1,
         cornerRadius: 0.1 * launcherEndRectLength
@@ -112,4 +115,5 @@ export default class LauncherNode extends Node {
     return [ launcherRect, launcherEndRect ];
   }
 }
+
 projectileDataLab.register( 'LauncherNode', LauncherNode );
