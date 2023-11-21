@@ -1,12 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { Text } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/panels/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import PDLText from '../../common/view/PDLText.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -27,7 +27,7 @@ export default class SampleSizeSection extends PDLPanelSection {
       sampleSizeRadioButtonGroupItems.push( {
         value: sampleSize,
         tandemName: `sampleSize${sampleSize}RadioButton`,
-        createNode: () => new Text( sampleSize.toString() )
+        createNode: () => new PDLText( sampleSize.toString() )
       } );
     } );
 

@@ -6,9 +6,9 @@ import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../../projectileDataLab.js';
 import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../../axon/js/Property.js';
-import { Text } from '../../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import Field from '../../model/Field.js';
+import PDLText from '../PDLText.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -28,7 +28,7 @@ export default class FieldPanel extends PDLPanel {
       return {
         value: fieldProperty.validValues![ i - 1 ],
         tandemName: 'field' + i + 'RadioButton',
-        createNode: () => new Text( i.toString() )
+        createNode: () => new PDLText( i.toString() )
       };
     } ), {
       tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),

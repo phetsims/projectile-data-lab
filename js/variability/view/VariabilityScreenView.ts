@@ -13,6 +13,7 @@ import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
 import FieldPanel from '../../common/view/panels/FieldPanel.js';
 import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
+import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -32,10 +33,15 @@ export default class VariabilityScreenView extends VSMScreenView {
     const fieldPanel = new FieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
-    // this.addChild( fieldPanel );
-    const rightVBox = new VBox( {
-      children: [ fieldPanel ]
+
+    const staticToolPanel = new StaticToolPanel( {
+      tandem: options.tandem.createTandem( 'staticToolPanel' )
     } );
+    const rightVBox = new VBox( {
+      stretch: true,
+      children: [ staticToolPanel, fieldPanel ]
+    } );
+    this.addChild( rightVBox );
 
     // Layout
     ManualConstraint.create( this, [ rightVBox ], rightVBoxProxy => {

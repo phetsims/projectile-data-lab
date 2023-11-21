@@ -17,7 +17,7 @@ export type PDLPanelOptions = SelfOptions & WithRequired<PanelOptions, 'tandem'>
 
 export class PDLPanel extends Panel {
   public constructor( content: Node[], providedOptions?: PDLPanelOptions ) {
-    const contentContainer = new VBox( { children: [ ...content ], spacing: 5 } );
+    const contentContainer = new VBox( { children: [ ...content ], spacing: 5, stretch: true, align: 'left' } );
     super( contentContainer, providedOptions );
   }
 }

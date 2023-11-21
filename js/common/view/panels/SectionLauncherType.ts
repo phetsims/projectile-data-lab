@@ -3,10 +3,10 @@
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import { Text } from '../../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../../projectileDataLab.js';
 import PhetioProperty from '../../../../../axon/js/PhetioProperty.js';
+import PDLText from '../PDLText.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -27,7 +27,7 @@ export default class SectionLauncherType extends PDLPanelSection {
       launcherTypeRadioButtonGroupItems.push( {
         value: launcherType,
         tandemName: `launcherType${launcherType}RadioButton`,
-        createNode: () => new Text( launcherType.toString() )
+        createNode: () => new PDLText( launcherType.toString() )
       } );
     } );
 

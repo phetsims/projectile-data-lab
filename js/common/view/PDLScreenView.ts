@@ -25,6 +25,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import launchButton_png from '../../../images/launchButton_png.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
+import PDLText from './PDLText.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -59,9 +60,8 @@ export class PDLScreenView extends ScreenView {
     } );
     this.addChild( backgroundNode );
 
-    const noAirResistanceText = new Text( ProjectileDataLabStrings.noAirResistanceStringProperty, {
-      font: PDLConstants.PRIMARY_FONT,
-      maxWidth: 120.046875 * 1.25 // 25% larger than the default English text
+    const noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
+      maxWidth: 200
     } );
     this.addChild( noAirResistanceText );
 
