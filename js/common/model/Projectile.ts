@@ -7,6 +7,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import PDLUtils from '../PDLUtils.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -17,6 +18,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
  */
 
 export default class Projectile {
+
   // The x and y coordinates of the projectile relative to the launch position, in meters
   public x: number;
   public y: number;
@@ -67,6 +69,15 @@ export default class Projectile {
     this.launchAngle = launchAngle;
     this.launchSpeed = launchSpeed;
     this.launchHeight = launchHeight;
+  }
+
+  public step( dt: number ): void {
+    if ( this.phase === 'AIRBORNE' ) {
+      this.timeAirborne += dt;
+
+      this.x = PDLUtils.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
+      this.y = PDLUtils.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne )!;
+    }
   }
 
   public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {

@@ -28,6 +28,8 @@ import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioBu
 import PDLText from './PDLText.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLCanvas from './PDLCanvas.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -167,7 +169,8 @@ export class PDLScreenView extends ScreenView {
 
     this.addChild( eraserButton );
 
-    const projectileCanvas = new PDLCanvas( model.fieldProperty, {
+    const modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping( new Vector2( 0, 0 ), new Vector2( 110, 500 ), 1000 );
+    const projectileCanvas = new PDLCanvas( model.fieldProperty, modelViewTransform, {
       canvasBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS
     } );
     this.addChild( projectileCanvas );

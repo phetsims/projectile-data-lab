@@ -11,20 +11,16 @@ import Field from '../model/Field.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
-
-// constants
-// Render at increased resolution so particles don't appear pixellated on a large screen.  See Node.rasterized's
-// resolution option for details about this value.
-// TODO: Maybe do resolution? See https://github.com/phetsims/projectile-data-lab/issues/7
-// const RESOLUTION = 2;
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
 
 export default class PDLCanvas extends CanvasNode {
   private readonly fieldProperty: Property<Field>;
+  private readonly modelViewTransform: ModelViewTransform2;
 
-  public constructor( fieldProperty: Property<Field>, providedOptions: PDLCanvasOptions ) {
+  public constructor( fieldProperty: Property<Field>, modelViewTransform: ModelViewTransform2, providedOptions: PDLCanvasOptions ) {
 
     const options = optionize<PDLCanvasOptions, SelfOptions, CanvasNodeOptions>()( {
 
@@ -46,6 +42,8 @@ export default class PDLCanvas extends CanvasNode {
       newField.projectilesChangedEmitter.addListener( myBoundListener );
       this.invalidatePaint();
     } );
+
+    this.modelViewTransform = modelViewTransform;
   }
 
   /**
@@ -57,11 +55,19 @@ export default class PDLCanvas extends CanvasNode {
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
       context.beginPath();
-      context.moveTo( projectile.x, projectile.y );
-      context.lineTo( projectile.x + 4, projectile.y + 4 );
-      context.strokeStyle = 'black';
-      context.lineWidth = 1;
-      context.stroke();
+      const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
+
+      // Draw a black circle
+      context.beginPath();
+      context.arc( viewPoint.x, viewPoint.y, 5, 0, 2 * Math.PI );
+      context.fillStyle = 'black';
+      context.fill();
+
+      // Draw a highlight glint on the circle
+      context.beginPath();
+      context.arc( viewPoint.x - 2, viewPoint.y - 2, 2, 0, 2 * Math.PI );
+      context.fillStyle = 'white';
+      context.fill();
     }
   }
 }

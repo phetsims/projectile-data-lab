@@ -91,11 +91,6 @@ export default class Field extends PhetioObject {
       this.launcherAngleProperty.value = Field.angleForConfiguration( configuration );
       this.launcherHeightProperty.value = configuration === 'ANGLE_0' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
-
-    const numProjectiles = 200;
-    for ( let i = 0; i < numProjectiles; i++ ) {
-      this.projectiles.push( new Projectile( dotRandom.nextDouble() * 1000, dotRandom.nextDouble() * 1000, 'CANNONBALL' ) );
-    }
   }
 
   public reset(): void {
@@ -113,10 +108,12 @@ export default class Field extends PhetioObject {
   }
 
   public step( dt: number ): void {
-    this.projectiles.forEach( projectile => {
-      projectile.timeAirborne += dt;
-      projectile.x++;// = PDLUtils.getProjectileX( 10, Math.PI / 4, projectile.timeAirborne ) * 1000;
-    } );
+    if ( dotRandom.nextDouble() < 0.05 ) {
+
+      // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
+      this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, 50 + dotRandom.nextGaussian() * 7, 2.5, 0 ) );
+    }
+    this.projectiles.forEach( projectile => projectile.step( dt / 10 ) );
 
     this.projectilesChangedEmitter.emit();
   }
