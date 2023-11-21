@@ -9,66 +9,84 @@
  */
 
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, Path, TPaint } from '../../../../scenery/js/imports.js';
-import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import Property from '../../../../axon/js/Property.js';
+import ComboBox from '../../../../sun/js/ComboBox.js';
+import PDLConstants from '../PDLConstants.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  binWidthProperty: Property<number>;
+};
 
 export type PDLAccordionBoxOptions =
   SelfOptions
-  & WithRequired<AccordionBoxOptions, 'tandem' | 'expandedProperty' | 'fill'>;
-
-// constants
-export const CONTENT_MARGIN = 12;
-export const BUTTON_AND_TITLE_MARGIN = 10;
-const BUTTON_SIDE_LENGTH = 20;
+  & WithRequired<AccordionBoxOptions, 'tandem'>;
 
 export default class PDLAccordionBox extends AccordionBox {
-  public constructor( contentNode: Node, providedOptions: PDLAccordionBoxOptions ) {
+  public constructor( content: Node, providedOptions: PDLAccordionBoxOptions ) {
+
+    const margin = 10;
+
+    const comboBoxItems = [];
+    const validBinWidths = providedOptions.binWidthProperty.validValues ?? [];
+    for ( let i = 0; i < validBinWidths.length; i++ ) {
+      const binWidth = validBinWidths[ i ];
+      comboBoxItems.push( {
+        value: binWidth,
+        createNode: () => new Text( binWidth.toString(), {
+          font: PDLConstants.PRIMARY_FONT
+        } ),
+        tandemName: `binWidth${binWidth}Item`
+      } );
+    }
+
+    const contentContainer = new VBox( {
+      children: [
+        content
+      ],
+      spacing: margin,
+      align: 'left'
+    } );
+
+    const labelAndComboBoxContainer = new HBox( {
+      children: [
+        new Text( 'Bin width:', {
+          font: PDLConstants.PRIMARY_FONT,
+          layoutOptions: {
+            topMargin: PDLConstants.PRIMARY_FONT.getNumericSize() / 2,
+            rightMargin: margin
+          }
+        } )
+      ],
+      align: 'top'
+    } );
+
+    const comboBoxContainer = new VBox( {
+      children: [],
+      align: 'left'
+    } );
+
+    const binWidthComboBox = new ComboBox( providedOptions.binWidthProperty, comboBoxItems, comboBoxContainer, {
+      listPosition: 'below',
+      tandem: providedOptions.tandem.createTandem( 'binWidthComboBox' )
+    } );
+
+    comboBoxContainer.addChild( binWidthComboBox );
+    labelAndComboBoxContainer.addChild( comboBoxContainer );
+    contentContainer.addChild( labelAndComboBoxContainer );
 
     const options = optionize<PDLAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleAlignX: 'left',
-      titleXSpacing: 8,
-      cornerRadius: 6,
-      titleYMargin: BUTTON_AND_TITLE_MARGIN,
-      buttonXMargin: BUTTON_AND_TITLE_MARGIN,
-      buttonYMargin: BUTTON_AND_TITLE_MARGIN,
-      contentXMargin: CONTENT_MARGIN,
-
-      // We want the content to go all the way to the top of the accordionBox.
-      // The bottom margin is set in ACCORDION_BOX_CONTENTS_SHAPE values
-      contentYMargin: 0,
-      contentYSpacing: 0,
-      contentAlign: 'left',
-      allowContentToOverlapTitle: true,
-      useExpandedBoundsWhenCollapsed: false,
-      expandCollapseButtonOptions: {
-        sideLength: BUTTON_SIDE_LENGTH
-      },
-
-      isDisposable: false
+      titleXSpacing: margin,
+      buttonXMargin: margin,
+      buttonYMargin: margin,
+      contentYMargin: margin,
+      contentYSpacing: 0
     }, providedOptions );
-
-    super( contentNode, options );
-  }
-
-  public static createBackgroundNode( shape: Shape, fill: TPaint ): Node {
-    return new Node( {
-
-      // add clip area so dot stacks that are taller than the accordion box are clipped appropriately
-      clipArea: shape,
-      children: [
-
-        // A sub-node so it can be non-pickable (so that click events can still reach the accordion box title bar)
-        new Path( shape, {
-          pickable: false,
-          fill: fill
-        } )
-      ]
-    } );
+    super( contentContainer, options );
   }
 }
 
