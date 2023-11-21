@@ -10,34 +10,51 @@
 import { PDLPanel, PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { HBox, Node, Rectangle } from '../../../../scenery/js/imports.js';
-import VerticalCheckboxGroup from '../../../../sun/js/VerticalCheckboxGroup.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import PDLText from '../../common/view/PDLText.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+
+type SelfOptions = {
+  additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
+};
+export type StaticToolPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class StaticToolPanel extends PDLPanel {
   private readonly checkboxGroup: VerticalCheckboxGroup;
 
-  public constructor( providedOptions: PDLPanelOptions ) {
+  public constructor( providedOptions: StaticToolPanelOptions ) {
 
-    const createCheckboxRow = ( label: string, icon: Node ) => {
-      return new HBox( { stretch: true, children: [ new PDLText( label ), icon ] } );
-    };
+    const options = optionize<StaticToolPanelOptions, SelfOptions, PDLPanelOptions>()( {
+      additionalVerticalCheckboxGroupItems: []
+    }, providedOptions );
 
     const checkboxGroup = new VerticalCheckboxGroup( [ {
       property: new BooleanProperty( false ),
-      createNode: () => createCheckboxRow( 'Paths', new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.pathsStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
     }, {
       property: new BooleanProperty( false ),
-      createNode: () => createCheckboxRow( 'Launch angle', new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) )
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchAngleStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) )
     }, {
       property: new BooleanProperty( false ),
-      createNode: () => createCheckboxRow( 'Launch speed', new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) )
-    }
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchSpeedStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) )
+    },
+      ...options.additionalVerticalCheckboxGroupItems
     ], {
-      tandem: providedOptions.tandem.createTandem( 'checkboxGroup' )
+      tandem: options.tandem.createTandem( 'checkboxGroup' )
     } );
-    super( [ checkboxGroup ], providedOptions );
+    super( [ checkboxGroup ], options );
     this.checkboxGroup = checkboxGroup;
+  }
+
+  public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
+    return new HBox( {
+      stretch: true, children: [ new PDLText( label, {
+        maxWidth: 200
+      } ), icon ]
+    } );
   }
 }
 

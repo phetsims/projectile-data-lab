@@ -23,7 +23,7 @@
   "projectile10kg": {
     "value": "Projectile (10 kg)"
   },
-  "launcher" : {
+  "launcher": {
     "value": "Launcher"
   },
   "field": {
@@ -31,5 +31,32 @@
   },
   "sampleSize": {
     "value": "Sample Size"
+  },
+  "paths": {
+    "value": "Paths"
+  },
+  "launchSpeed": {
+    "value": "Launch speed"
+  },
+  "launchAngle": {
+    "value": "Launch angle"
+  },
+  "dataMeasures": {
+    "value": "Data measures"
+  },
+  "idealDistribution": {
+    "value": "Ideal distribution"
+  },
+  "target": {
+    "value": "Target"
+  },
+  "tapeMeasure": {
+    "value": "Tape measure"
+  },
+  "stopwatch": {
+    "value": "Stopwatch"
+  },
+  "intervalTool": {
+    "value": "Interval tool"
   }
 }

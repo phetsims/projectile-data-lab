@@ -24,6 +24,15 @@ type StringsType = {
   'launcherStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
+  'pathsStringProperty': LocalizedStringProperty;
+  'launchSpeedStringProperty': LocalizedStringProperty;
+  'launchAngleStringProperty': LocalizedStringProperty;
+  'dataMeasuresStringProperty': LocalizedStringProperty;
+  'idealDistributionStringProperty': LocalizedStringProperty;
+  'targetStringProperty': LocalizedStringProperty;
+  'tapeMeasureStringProperty': LocalizedStringProperty;
+  'stopwatchStringProperty': LocalizedStringProperty;
+  'intervalToolStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;

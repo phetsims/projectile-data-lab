@@ -15,8 +15,8 @@ const pixelsToDistance = fieldWidth / maxFieldDistance;
 
 const PDLConstants = {
 
-  SCREEN_VIEW_X_MARGIN: 15,
-  SCREEN_VIEW_Y_MARGIN: 15,
+  SCREEN_VIEW_X_MARGIN: 10,
+  SCREEN_VIEW_Y_MARGIN: 10,
 
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,
@@ -49,7 +49,9 @@ const PDLConstants = {
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
-  PRIMARY_FONT: new PhetFont( 13 )
+  PRIMARY_FONT: new PhetFont( 13 ),
+
+  INTER_PANEL_VERTICAL_SPACING: 5
 } as const;
 
 projectileDataLab.register( 'PDLConstants', PDLConstants );

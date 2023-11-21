@@ -12,6 +12,8 @@ import SourcesLaunchPanel from '../../sources/view/SourcesLaunchPanel.js';
 import FieldPanel from '../../common/view/panels/FieldPanel.js';
 import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -32,18 +34,24 @@ export default class MeasuresScreenView extends VSMScreenView {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
 
+    const staticToolPanel = new MeasuresStaticToolPanel( {
+      tandem: options.tandem.createTandem( 'staticToolPanel' )
+    } );
     const rightVBox = new VBox( {
-      children: [ fieldPanel ]
+      stretch: true,
+      spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,
+      children: [ staticToolPanel, fieldPanel ]
     } );
     this.addChild( rightVBox );
 
     // Layout
-    ManualConstraint.create( this, [ rightVBox ], rightBoxProxy => {
-      rightBoxProxy.right = this.layoutBounds.right;
+    ManualConstraint.create( this, [ rightVBox ], rightVBoxProxy => {
+      rightVBoxProxy.top = this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      rightVBoxProxy.right = this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN;
     } );
 
     // Keyboard order
-    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, fieldPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, staticToolPanel, fieldPanel, this.resetAllButton ];
   }
 }
 
