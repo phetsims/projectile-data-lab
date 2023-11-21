@@ -9,24 +9,26 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StaticToolPanel from './StaticToolPanel.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PDLText from '../../common/view/PDLText.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
 };
-export type StaticToolPanelOptions = SelfOptions & PDLPanelOptions;
+export type InteractiveToolPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class InteractiveToolPanel extends PDLPanel {
   private readonly checkboxGroup: VerticalCheckboxGroup;
 
-  public constructor( providedOptions: StaticToolPanelOptions ) {
+  public constructor( providedOptions: InteractiveToolPanelOptions ) {
 
-    const options = optionize<StaticToolPanelOptions, SelfOptions, PDLPanelOptions>()( {
+    const options = optionize<InteractiveToolPanelOptions, SelfOptions, PDLPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: []
     }, providedOptions );
 
@@ -46,6 +48,14 @@ export default class InteractiveToolPanel extends PDLPanel {
     } );
     super( [ checkboxGroup ], options );
     this.checkboxGroup = checkboxGroup;
+  }
+
+  public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
+    return new HBox( {
+      stretch: true, children: [ new PDLText( label, {
+        maxWidth: 200
+      } ), icon ]
+    } );
   }
 }
 

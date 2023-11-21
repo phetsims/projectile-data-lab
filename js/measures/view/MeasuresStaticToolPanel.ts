@@ -22,7 +22,7 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
         },
         {
           property: new BooleanProperty( false ),
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.intervalToolStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
+          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.idealDistributionStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
         }
       ]
     }, providedOptions );
