@@ -28,6 +28,10 @@ const PDLColors = {
     default: '#B6D2FF'
   } ),
 
+  launchButtonColorProperty: new ProfileColorProperty( projectileDataLab, 'launchButton', {
+    default: '#ea2621'
+  } ),
+
   fieldFillColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill', {
     default: '#1A974E'
   } ),
@@ -68,10 +72,6 @@ const PDLColors = {
 
   launcherStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherStroke', {
     default: '#111111'
-  } ),
-
-  launcherEndFillColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherEndFill', {
-    default: '#706C79'
   } )
 };
 
