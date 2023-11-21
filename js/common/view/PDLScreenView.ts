@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { Image, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -21,6 +21,10 @@ import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
 import LauncherNode from './LauncherNode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import launchButton_png from '../../../images/launchButton_png.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
+import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -94,6 +98,41 @@ export class PDLScreenView extends ScreenView {
     this.addChild( this.launcher );
     this.addChild( fieldFront );
     this.addChild( fieldOverlayNode );
+
+    // Create the launch button
+    const launchButton = new RectangularPushButton( {
+      content: new Image( launchButton_png ),
+      left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
+      bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      baseColor: 'rgb( 234,33,38 )',
+      size: new Dimension2( 85, 45 ),
+      yMargin: 5,
+      tandem: options.tandem.createTandem( 'launchButton' )
+    } );
+
+    this.addChild( launchButton );
+
+    const launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.binWidthProperty, [
+      {
+        value: 1,
+        createNode: () => new Text( 'Single fire', {
+          font: PDLConstants.PRIMARY_FONT
+        } )
+      },
+      {
+        value: 2,
+        createNode: () => new Text( 'Rapid fire', {
+          font: PDLConstants.PRIMARY_FONT
+        } )
+      }
+    ], {
+      left: launchButton.right + 15,
+      centerY: launchButton.centerY,
+      spacing: 10,
+      tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' )
+    } );
+
+    this.addChild( launchControlRadioButtonGroup );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),
