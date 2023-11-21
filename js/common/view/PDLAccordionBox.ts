@@ -1,4 +1,4 @@
-// Copyright 2022-2023, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 /**
  * The PDLAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
