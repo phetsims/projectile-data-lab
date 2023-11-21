@@ -9,6 +9,7 @@ import Property from '../../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import Field from '../../model/Field.js';
 import PDLText from '../PDLText.js';
+import PDLConstants from '../../PDLConstants.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -21,7 +22,9 @@ type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 export default class FieldPanel extends PDLPanel {
   public constructor( fieldProperty: Property<Field>, providedOptions: FieldPanelOptions ) {
 
-    const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
+    const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
+    }, providedOptions );
 
     // Show radio buttons for the fields
     const fieldRadioButtonGroup = new RectangularRadioButtonGroup( fieldProperty, _.range( 1, 9 ).map( i => {

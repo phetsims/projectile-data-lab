@@ -37,7 +37,7 @@ export class PDLScreenView extends ScreenView {
   protected readonly resetAllButton: ResetAllButton;
   protected readonly timeControlNode: TimeControlNode;
   protected readonly launchButton: RectangularPushButton;
-  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<number>;
+  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<boolean>;
 
   public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
     super( options );
@@ -106,7 +106,7 @@ export class PDLScreenView extends ScreenView {
       content: new Image( launchButton_png ),
       left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      baseColor: 'rgb( 234,33,38 )',
+      baseColor: PDLColors.launchButtonColorProperty,
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
       tandem: options.tandem.createTandem( 'launchButton' )
@@ -114,20 +114,23 @@ export class PDLScreenView extends ScreenView {
 
     this.addChild( this.launchButton );
 
-    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.binWidthProperty, [
+    const radioButtonLabelMaxWidth = 180;
+    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.isContinuousLaunchProperty, [
       {
-        value: 1,
-        createNode: () => new Text( 'Single fire', {
-          font: PDLConstants.PRIMARY_FONT
+        value: false,
+        createNode: () => new Text( ProjectileDataLabStrings.singleLaunchStringProperty, {
+          font: PDLConstants.LAUNCH_CONTROL_FONT,
+          maxWidth: radioButtonLabelMaxWidth
         } ),
-        tandemName: 'singleFireRadioButton'
+        tandemName: 'singleLaunchRadioButton'
       },
       {
-        value: 2,
-        createNode: () => new Text( 'Rapid fire', {
-          font: PDLConstants.PRIMARY_FONT
+        value: true,
+        createNode: () => new Text( ProjectileDataLabStrings.continuousLaunchStringProperty, {
+          font: PDLConstants.LAUNCH_CONTROL_FONT,
+          maxWidth: radioButtonLabelMaxWidth
         } ),
-        tandemName: 'rapidFireRadioButton'
+        tandemName: 'continuousLaunchRadioButton'
       }
     ], {
       left: this.launchButton.right + 15,
