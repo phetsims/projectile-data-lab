@@ -27,6 +27,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import PDLText from './PDLText.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
+import PDLCanvas from './PDLCanvas.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -165,6 +166,11 @@ export class PDLScreenView extends ScreenView {
     } );
 
     this.addChild( eraserButton );
+
+    const projectileCanvas = new PDLCanvas( model.fieldProperty, {
+      canvasBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS
+    } );
+    this.addChild( projectileCanvas );
 
     // layout
     ManualConstraint.create(

@@ -14,6 +14,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLConstants from '../PDLConstants.js';
 import Projectile, { ProjectileStateObject } from './Projectile.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -34,6 +36,8 @@ export default class Field extends PhetioObject {
   public readonly launcherHeightProperty: Property<number>;
 
   public readonly projectiles: Projectile[] = [];
+
+  public readonly projectilesChangedEmitter = new Emitter();
 
   public constructor( providedOptions: FieldOptions ) {
 
@@ -88,7 +92,10 @@ export default class Field extends PhetioObject {
       this.launcherHeightProperty.value = configuration === 'ANGLE_0' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
 
-    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL' ) );
+    const numProjectiles = 200;
+    for ( let i = 0; i < numProjectiles; i++ ) {
+      this.projectiles.push( new Projectile( dotRandom.nextDouble() * 1000, dotRandom.nextDouble() * 1000, 'CANNONBALL' ) );
+    }
   }
 
   public reset(): void {
@@ -103,6 +110,15 @@ export default class Field extends PhetioObject {
     return {
       projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
     };
+  }
+
+  public step( dt: number ): void {
+    this.projectiles.forEach( projectile => {
+      projectile.timeAirborne += dt;
+      projectile.x++;// = PDLUtils.getProjectileX( 10, Math.PI / 4, projectile.timeAirborne ) * 1000;
+    } );
+
+    this.projectilesChangedEmitter.emit();
   }
 
   public static FieldIO = new IOType( 'FieldIO', {

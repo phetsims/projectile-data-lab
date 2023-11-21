@@ -59,14 +59,6 @@ export default class SamplingModel extends PDLModel {
     super.reset();
     this.sampleSizeProperty.reset();
   }
-
-  /**
-   * Steps the model.
-   * @param dt - time step, in seconds
-   */
-  public step( dt: number ): void {
-    // implement me
-  }
 }
 
 projectileDataLab.register( 'SamplingModel', SamplingModel );

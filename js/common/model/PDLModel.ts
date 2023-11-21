@@ -128,6 +128,12 @@ export default class PDLModel implements TModel {
     } );
   }
 
+  public step( dt: number ): void {
+    if ( this.isPlayingProperty.value ) {
+      this.fieldProperty.value.step( dt );
+    }
+  }
+
   public reset(): void {
     this.isContinuousLaunchProperty.reset();
     this.isHistogramShowingProperty.reset();
