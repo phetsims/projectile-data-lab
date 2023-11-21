@@ -19,5 +19,46 @@ export default class PDLUtils {
       point.x + PDLConstants.FIELD_SCALING_FACTOR_HORIZONTAL * horizontalDistanceFactor * verticalDistanceFactor,
       pointY );
   }
+
+  public static getProjectileX( launchSpeed: number, launchAngle: number, timeAirborne: number ): number {
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    return launchSpeed * Math.cos( launchAngleRadians ) * timeAirborne;
+  }
+
+  public static getProjectileY( launchSpeed: number, launchAngle: number, launchHeight: number, timeAirborne: number ): number | null {
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    return launchHeight + launchSpeed * Math.sin( launchAngleRadians ) * timeAirborne
+           - 0.5 * PDLConstants.FREEFALL_ACCELERATION * timeAirborne * timeAirborne;
+  }
+
+  public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
+    if ( launchHeight !== 0 && launchAngle === 0 ) {
+      return launchSpeed * Math.sqrt( 2 * launchHeight / PDLConstants.FREEFALL_ACCELERATION );
+    }
+    else {
+      const launchAngleRadians = launchAngle * Math.PI / 180;
+      return launchSpeed * launchSpeed * Math.sin( 2 * launchAngleRadians ) / PDLConstants.FREEFALL_ACCELERATION;
+    }
+  }
+
+  public static getMaximumHeight( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
+    if ( launchHeight !== 0 && launchAngle === 0 ) {
+      return launchHeight;
+    }
+    else {
+      const launchAngleRadians = launchAngle * Math.PI / 180;
+      return launchSpeed * launchSpeed * Math.sin( launchAngleRadians ) * Math.sin( launchAngleRadians ) / ( 2 * PDLConstants.FREEFALL_ACCELERATION );
+    }
+  }
+
+  public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
+    if ( launchHeight !== 0 && launchAngle === 0 ) {
+      return Math.sqrt( 2 * launchHeight / PDLConstants.FREEFALL_ACCELERATION );
+    }
+    else {
+      const launchAngleRadians = launchAngle * Math.PI / 180;
+      return 2 * launchSpeed * Math.sin( launchAngleRadians ) / PDLConstants.FREEFALL_ACCELERATION;
+    }
+  }
 }
 projectileDataLab.register( 'PDLUtils', PDLUtils );
