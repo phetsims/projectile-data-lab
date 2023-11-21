@@ -14,6 +14,7 @@ import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
+import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -37,10 +38,13 @@ export default class MeasuresScreenView extends VSMScreenView {
     const staticToolPanel = new MeasuresStaticToolPanel( {
       tandem: options.tandem.createTandem( 'staticToolPanel' )
     } );
+    const interactiveToolPanel = new MeasuresInteractiveToolPanel( {
+      tandem: options.tandem.createTandem( 'interactiveToolPanel' )
+    } );
     const rightVBox = new VBox( {
       stretch: true,
       spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,
-      children: [ staticToolPanel, fieldPanel ]
+      children: [ staticToolPanel, interactiveToolPanel, fieldPanel ]
     } );
     this.addChild( rightVBox );
 
