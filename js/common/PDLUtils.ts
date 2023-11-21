@@ -32,36 +32,34 @@ export default class PDLUtils {
   }
 
   public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
-    if ( launchHeight !== 0 ) {
-      assert && assert( launchAngle === 0, 'Launch angle must equal zero when launch height is nonzero' );
-      return launchSpeed * Math.sqrt( 2 * launchHeight / PDLConstants.FREEFALL_ACCELERATION );
-    }
-    else {
-      const launchAngleRadians = launchAngle * Math.PI / 180;
-      return launchSpeed * launchSpeed * Math.sin( 2 * launchAngleRadians ) / PDLConstants.FREEFALL_ACCELERATION;
-    }
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    const g = PDLConstants.FREEFALL_ACCELERATION;
+    const v0 = launchSpeed;
+    const sinTheta = Math.sin( launchAngleRadians );
+    const cosTheta = Math.cos( launchAngleRadians );
+
+    return ( v0 * cosTheta / g ) * ( v0 * sinTheta + Math.sqrt( v0 * v0 * sinTheta * sinTheta + 2 * g * launchHeight ) );
   }
 
   public static getMaximumHeight( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
-    if ( launchHeight !== 0 ) {
-      assert && assert( launchAngle === 0, 'Launch angle must equal zero when launch height is nonzero' );
+    if ( launchAngle <= 0 ) {
       return launchHeight;
     }
     else {
       const launchAngleRadians = launchAngle * Math.PI / 180;
-      return launchSpeed * launchSpeed * Math.sin( launchAngleRadians ) * Math.sin( launchAngleRadians ) / ( 2 * PDLConstants.FREEFALL_ACCELERATION );
+      const g = PDLConstants.FREEFALL_ACCELERATION;
+      const v0 = launchSpeed;
+      const sinTheta = Math.sin( launchAngleRadians );
+      return launchHeight + v0 * v0 * sinTheta * sinTheta / ( 2 * g );
     }
   }
 
   public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
-    if ( launchHeight !== 0 ) {
-      assert && assert( launchAngle === 0, 'Launch angle must equal zero when launch height is nonzero' );
-      return Math.sqrt( 2 * launchHeight / PDLConstants.FREEFALL_ACCELERATION );
-    }
-    else {
-      const launchAngleRadians = launchAngle * Math.PI / 180;
-      return 2 * launchSpeed * Math.sin( launchAngleRadians ) / PDLConstants.FREEFALL_ACCELERATION;
-    }
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    const g = PDLConstants.FREEFALL_ACCELERATION;
+    const v0 = launchSpeed;
+    const sinTheta = Math.sin( launchAngleRadians );
+    return ( v0 * sinTheta / g ) + Math.sqrt( ( v0 * sinTheta / g ) * ( v0 * sinTheta / g ) + 2 * launchHeight / g );
   }
 }
 projectileDataLab.register( 'PDLUtils', PDLUtils );
