@@ -47,8 +47,8 @@ export default class VariabilityScreenView extends VSMScreenView {
 
     // Layout
     ManualConstraint.create( this, [ rightVBox ], rightVBoxProxy => {
-      rightVBoxProxy.top = this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
       rightVBoxProxy.right = this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN;
+      rightVBoxProxy.top = this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
     this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, staticToolPanel, fieldPanel, this.resetAllButton ];
