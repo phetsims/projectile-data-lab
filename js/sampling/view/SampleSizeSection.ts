@@ -25,11 +25,11 @@ export default class SampleSizeSection extends PDLPanelSection {
 
     sampleSizeProperty.validValues?.forEach( sampleSize => {
       sampleSizeRadioButtonGroupItems.push( {
-          value: sampleSize,
-          tandemName: `sampleSize${sampleSize}RadioButton`,
-          createNode: () => new Text( sampleSize.toString() )
-        } );
+        value: sampleSize,
+        tandemName: `sampleSize${sampleSize}RadioButton`,
+        createNode: () => new Text( sampleSize.toString() )
       } );
+    } );
 
     const sampleSizeRadioButtonGroup = new RectangularRadioButtonGroup( sampleSizeProperty, sampleSizeRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'sampleSizeRadioButtonGroup' ),
