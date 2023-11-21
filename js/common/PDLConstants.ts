@@ -33,6 +33,7 @@ const PDLConstants = {
   FIELD_LINE_WIDTH: 2,
   FIELD_LINE_NUMBERED_WIDTH: 2.5,
   FIELD_LABEL_TOP_MARGIN: 2,
+  FIELD_SIGN_CENTER_Y: 445,
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
   // FIELD_SCALING_FACTOR_HORIZONTAL can be any value between 0-Number.POSITIVE_INFINITY.

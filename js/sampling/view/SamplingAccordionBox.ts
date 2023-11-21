@@ -25,7 +25,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
 
   public constructor( contentNode: Node, providedOptions: SamplingAccordionBoxOptions ) {
     const options = optionize<SamplingAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
-      titleNode: new Text( ProjectileDataLabStrings.samplingDistributionStringProperty, {
+      titleNode: new Text( ProjectileDataLabStrings.distributionStringProperty, {
         font: PDLConstants.PRIMARY_FONT
       } )
     }, providedOptions );

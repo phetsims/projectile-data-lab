@@ -25,7 +25,7 @@ type StringsType = {
   'projectile10kgStringProperty': LocalizedStringProperty;
   'launcherStringProperty': LocalizedStringProperty;
   'histogramStringProperty': LocalizedStringProperty;
-  'samplingDistributionStringProperty': LocalizedStringProperty;
+  'distributionStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
   'pathsStringProperty': LocalizedStringProperty;

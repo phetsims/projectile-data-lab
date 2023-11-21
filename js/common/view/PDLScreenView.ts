@@ -26,6 +26,7 @@ import launchButton_png from '../../../images/launchButton_png.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import PDLText from './PDLText.js';
+import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -151,6 +152,19 @@ export class PDLScreenView extends ScreenView {
       buttonGroupXSpacing: 18
     } );
     this.addChild( this.timeControlNode );
+
+    // Create the eraser button
+    const eraserButton = new EraserButton( {
+      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
+      centerY: PDLConstants.FIELD_SIGN_CENTER_Y,
+      iconWidth: 25,
+      listener: () => {
+        console.log( 'eraser button clicked' );
+      },
+      tandem: options.tandem.createTandem( 'eraserButton' )
+    } );
+
+    this.addChild( eraserButton );
 
     // layout
     ManualConstraint.create(
