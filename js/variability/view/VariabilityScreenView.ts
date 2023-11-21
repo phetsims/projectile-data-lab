@@ -11,7 +11,7 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
 import FieldPanel from '../../common/view/panels/FieldPanel.js';
-import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -32,14 +32,17 @@ export default class VariabilityScreenView extends VSMScreenView {
     const fieldPanel = new FieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
-    this.addChild( fieldPanel );
-
-    // Layout
-    ManualConstraint.create( this, [ fieldPanel ], fieldPanelProxy => {
-      fieldPanelProxy.right = this.layoutBounds.right;
+    // this.addChild( fieldPanel );
+    const rightVBox = new VBox( {
+      children: [ fieldPanel ]
     } );
 
-    this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, fieldPanel, this.timeControlNode, this.resetAllButton ];
+    // Layout
+    ManualConstraint.create( this, [ rightVBox ], rightVBoxProxy => {
+      rightVBoxProxy.right = this.layoutBounds.right;
+    } );
+
+    this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, fieldPanel, this.resetAllButton ];
   }
 }
 projectileDataLab.register( 'VariabilityScreenView', VariabilityScreenView );

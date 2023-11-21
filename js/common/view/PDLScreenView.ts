@@ -35,6 +35,8 @@ export class PDLScreenView extends ScreenView {
 
   protected readonly resetAllButton: ResetAllButton;
   protected readonly timeControlNode: TimeControlNode;
+  protected readonly launchButton: RectangularPushButton;
+  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<number>;
 
   public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
     super( options );
@@ -100,7 +102,7 @@ export class PDLScreenView extends ScreenView {
     this.addChild( fieldOverlayNode );
 
     // Create the launch button
-    const launchButton = new RectangularPushButton( {
+    this.launchButton = new RectangularPushButton( {
       content: new Image( launchButton_png ),
       left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
@@ -110,9 +112,9 @@ export class PDLScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'launchButton' )
     } );
 
-    this.addChild( launchButton );
+    this.addChild( this.launchButton );
 
-    const launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.binWidthProperty, [
+    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.binWidthProperty, [
       {
         value: 1,
         createNode: () => new Text( 'Single fire', {
@@ -128,13 +130,13 @@ export class PDLScreenView extends ScreenView {
         tandemName: 'rapidFireRadioButton'
       }
     ], {
-      left: launchButton.right + 15,
-      centerY: launchButton.centerY,
+      left: this.launchButton.right + 15,
+      centerY: this.launchButton.centerY,
       spacing: 10,
       tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' )
     } );
 
-    this.addChild( launchControlRadioButtonGroup );
+    this.addChild( this.launchControlRadioButtonGroup );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),

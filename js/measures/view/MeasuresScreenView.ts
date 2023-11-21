@@ -10,7 +10,7 @@ import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SourcesLaunchPanel from '../../sources/view/SourcesLaunchPanel.js';
 import FieldPanel from '../../common/view/panels/FieldPanel.js';
-import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -31,15 +31,19 @@ export default class MeasuresScreenView extends VSMScreenView {
     const fieldPanel = new FieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
-    this.addChild( fieldPanel );
+
+    const rightVBox = new VBox( {
+      children: [ fieldPanel ]
+    } );
+    this.addChild( rightVBox );
 
     // Layout
-    ManualConstraint.create( this, [ fieldPanel ], fieldPanelProxy => {
-      fieldPanelProxy.right = this.layoutBounds.right;
+    ManualConstraint.create( this, [ rightVBox ], rightBoxProxy => {
+      rightBoxProxy.right = this.layoutBounds.right;
     } );
 
     // Keyboard order
-    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, fieldPanel, this.timeControlNode, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, fieldPanel, this.resetAllButton ];
   }
 }
 
