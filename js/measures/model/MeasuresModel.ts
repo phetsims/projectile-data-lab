@@ -20,7 +20,7 @@ type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>
 export default class MeasuresModel extends VSMModel {
 
   // Static tool visibility
-  public readonly areDataMeasuresVisibleProperty: BooleanProperty;
+  public readonly isDataMeasuresVisibleProperty: BooleanProperty;
   public readonly isIdealDistributionVisibleProperty: BooleanProperty;
 
   public readonly isIntervalToolVisibleProperty: BooleanProperty;
@@ -33,8 +33,8 @@ export default class MeasuresModel extends VSMModel {
       tandem: providedOptions.tandem.createTandem( 'isIntervalToolVisibleProperty' )
     } );
 
-    this.areDataMeasuresVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'areDataMeasuresVisibleProperty' )
+    this.isDataMeasuresVisibleProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isDataMeasuresVisibleProperty' )
     } );
     this.isIdealDistributionVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isIdealDistributionVisibleProperty' )

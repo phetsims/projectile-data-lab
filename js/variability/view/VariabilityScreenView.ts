@@ -36,7 +36,7 @@ export default class VariabilityScreenView extends VSMScreenView {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
 
-    const staticToolPanel = new StaticToolPanel( model.arePathsVisibleProperty, model.isLaunchAngleVisibleProperty, model.isLaunchSpeedVisibleProperty, {
+    const staticToolPanel = new StaticToolPanel( model.isPathsVisibleProperty, model.isLaunchAngleVisibleProperty, model.isLaunchSpeedVisibleProperty, {
       tandem: options.tandem.createTandem( 'staticToolPanel' )
     } );
     const interactiveToolPanel = new InteractiveToolPanel(

@@ -174,7 +174,7 @@ export class PDLScreenView extends ScreenView {
 
     const modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ), new Vector2( originX, fieldY ), PDLConstants.PIXELS_TO_DISTANCE );
-    const projectileCanvas = new PDLCanvas( model.fieldProperty, modelViewTransform, {
+    const projectileCanvas = new PDLCanvas( model.fieldProperty, model.isPathsVisibleProperty, modelViewTransform, {
       canvasBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS
     } );
     this.addChild( projectileCanvas );

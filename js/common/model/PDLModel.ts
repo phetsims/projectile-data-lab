@@ -59,6 +59,8 @@ export default class PDLModel implements TModel {
   public readonly launcherAngleProperty: DynamicProperty<number, number, Field>;
   public readonly launcherHeightProperty: DynamicProperty<number, number, Field>;
 
+  public readonly isPathsVisibleProperty: BooleanProperty;
+
   public constructor( providedOptions: PDLModelOptions ) {
 
     this.isContinuousLaunchProperty = new Property<boolean>( false, {
@@ -126,6 +128,10 @@ export default class PDLModel implements TModel {
       bidirectional: true,
       derive: 'launcherHeightProperty'
     } );
+
+    this.isPathsVisibleProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isPathsVisibleProperty' )
+    } );
   }
 
   public launchProjectile(): void {
@@ -147,6 +153,8 @@ export default class PDLModel implements TModel {
 
     this.fields.forEach( field => field.reset() );
     this.fieldProperty.reset();
+
+    this.isPathsVisibleProperty.reset();
   }
 
   public clearCurrentField(): void {

@@ -20,10 +20,11 @@ type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
 
 export default class PDLCanvas extends CanvasNode {
-  private readonly fieldProperty: Property<Field>;
-  private readonly modelViewTransform: ModelViewTransform2;
-
-  public constructor( fieldProperty: Property<Field>, modelViewTransform: ModelViewTransform2, providedOptions: PDLCanvasOptions ) {
+  public constructor(
+    private readonly fieldProperty: Property<Field>,
+    private readonly isPathsVisibleProperty: Property<boolean>,
+    private readonly modelViewTransform: ModelViewTransform2,
+    providedOptions: PDLCanvasOptions ) {
 
     const options = optionize<PDLCanvasOptions, SelfOptions, CanvasNodeOptions>()( {
       layerSplit: true // ensure we're on our own layer
@@ -44,6 +45,7 @@ export default class PDLCanvas extends CanvasNode {
 
     // When the path color changes, repaint
     PDLColors.pathStrokeColorProperty.link( myBoundListener );
+    isPathsVisibleProperty.link( myBoundListener );
 
     this.modelViewTransform = modelViewTransform;
   }
@@ -59,33 +61,36 @@ export default class PDLCanvas extends CanvasNode {
 
     // Render the paths. Draw a purple line from the projectile t=0 to the current position.
     // REVIEW: If performance is a problem, use a persistent canvas and just add on to it (for the paths layer)
-    for ( let i = 0; i < projectiles.length; i++ ) {
-      const projectile = projectiles[ i ];
-      context.beginPath();
-      let pathStarted = false;
+    if ( this.isPathsVisibleProperty.value ) {
+      for ( let i = 0; i < projectiles.length; i++ ) {
+        const projectile = projectiles[ i ];
 
-      const drawLineToProjectileAtTime = ( t: number ): void => {
-        const pathX = Projectile.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
-        const pathY = Projectile.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
-        const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
+        context.beginPath();
+        let pathStarted = false;
 
-        if ( !pathStarted ) {
-          context.moveTo( viewPoint.x, viewPoint.y );
-          pathStarted = true;
+        const drawLineToProjectileAtTime = ( t: number ): void => {
+          const pathX = Projectile.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
+          const pathY = Projectile.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
+          const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
+
+          if ( !pathStarted ) {
+            context.moveTo( viewPoint.x, viewPoint.y );
+            pathStarted = true;
+          }
+
+          context.lineTo( viewPoint.x, viewPoint.y );
+        };
+
+        for ( let t = 0; t < projectile.timeAirborne; t += 0.01 ) {
+          drawLineToProjectileAtTime( t );
         }
 
-        context.lineTo( viewPoint.x, viewPoint.y );
-      };
+        drawLineToProjectileAtTime( projectile.timeAirborne );
 
-      for ( let t = 0; t < projectile.timeAirborne; t += 0.01 ) {
-        drawLineToProjectileAtTime( t );
+        context.strokeStyle = strokeStyle;
+        context.lineWidth = 2;
+        context.stroke();
       }
-
-      drawLineToProjectileAtTime( projectile.timeAirborne );
-
-      context.strokeStyle = strokeStyle;
-      context.lineWidth = 2;
-      context.stroke();
     }
 
     // Render the projectiles

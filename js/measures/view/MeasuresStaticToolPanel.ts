@@ -14,14 +14,14 @@ type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
 export default class MeasuresStaticToolPanel extends StaticToolPanel {
   public constructor( arePathsVisibleProperty: Property<boolean>, isLaunchAngleVisibleProperty: Property<boolean>,
                       isLaunchSpeedVisibleProperty: Property<boolean>,
-                      areDataMeasuresVisibleProperty: Property<boolean>,
+                      isDataMeasuresVisibleProperty: Property<boolean>,
                       isIdealDistributionVisibleProperty: Property<boolean>,
                       providedOptions: PDLPanelOptions ) {
 
     const options = optionize<PDLPanelOptions, SelfOptions, MeasuresStaticToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
         {
-          property: areDataMeasuresVisibleProperty,
+          property: isDataMeasuresVisibleProperty,
           createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
           tandemName: 'dataMeasuresCheckbox'
         },
