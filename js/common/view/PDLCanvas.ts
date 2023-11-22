@@ -14,6 +14,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import projectileDataLab from '../../projectileDataLab.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PDLUtils from '../PDLUtils.js';
+import PDLColors from '../PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
@@ -41,6 +42,9 @@ export default class PDLCanvas extends CanvasNode {
       this.invalidatePaint();
     } );
 
+    // When the path color changes, repaint
+    PDLColors.pathStrokeColorProperty.link( myBoundListener );
+
     this.modelViewTransform = modelViewTransform;
   }
 
@@ -50,6 +54,8 @@ export default class PDLCanvas extends CanvasNode {
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
     const projectiles = this.fieldProperty.value.projectiles;
+
+    const strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
 
     // Render the paths. Draw a purple line from the projectile t=0 to the current position.
     // REVIEW: If performance is a problem, use a persistent canvas and just add on to it (for the paths layer)
@@ -72,7 +78,7 @@ export default class PDLCanvas extends CanvasNode {
         context.lineTo( viewPoint.x, viewPoint.y );
       }
 
-      context.strokeStyle = 'rgb(112,26,195)';
+      context.strokeStyle = strokeStyle;
       context.lineWidth = 2;
       context.stroke();
     }
