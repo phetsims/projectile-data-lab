@@ -7,6 +7,7 @@ import PDLConstants from '../PDLConstants.js';
 import PDLColors from '../PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PDLUtils from '../PDLUtils.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 
 /**
  * The FieldOverlayNode contains the portions of the field that are not drawn using a perspective transform.
@@ -20,7 +21,7 @@ type SelfOptions = EmptySelfOptions;
 type FieldOverlayNodeOptions = SelfOptions & NodeOptions;
 
 export default class FieldOverlayNode extends Node {
-  public constructor( x: number, y: number, providedOptions: FieldOverlayNodeOptions ) {
+  public constructor( modelViewTransform: ModelViewTransform2, providedOptions: FieldOverlayNodeOptions ) {
 
     const numTotalDashes = 40;
 
@@ -75,7 +76,7 @@ export default class FieldOverlayNode extends Node {
       distanceLabels.push( textLabel );
     }
 
-    super( { x: x, y: y, children: [ originCircle, dashedLine, ...distanceLabels ] } );
+    super( { children: [ originCircle, dashedLine, ...distanceLabels ] } );
   }
 }
 projectileDataLab.register( 'FieldOverlayNode', FieldOverlayNode );
