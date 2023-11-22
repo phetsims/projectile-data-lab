@@ -1,4 +1,5 @@
 // Copyright 2023, University of Colorado Boulder
+
 /**
  * Render the paths and projectiles for the Projectile Data Lab.
  *
