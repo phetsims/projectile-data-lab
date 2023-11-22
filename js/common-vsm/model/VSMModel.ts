@@ -15,9 +15,16 @@ type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
 
 export default class VSMModel extends PDLModel {
+
+  // Static tool visibility
   public readonly arePathsVisibleProperty: BooleanProperty;
   public readonly isLaunchAngleVisibleProperty: BooleanProperty;
   public readonly isLaunchSpeedVisibleProperty: BooleanProperty;
+
+  // Interactive tool visibility
+  public readonly isTargetVisibleProperty: BooleanProperty;
+  public readonly isTapeMeasureVisibleProperty: BooleanProperty;
+  public readonly isStopwatchVisibleProperty: BooleanProperty;
 
   public constructor( providedOptions: VSMModelOptions ) {
 
@@ -41,6 +48,19 @@ export default class VSMModel extends PDLModel {
 
     this.isLaunchSpeedVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isLaunchSpeedVisibleProperty' )
+    } );
+
+
+    this.isTargetVisibleProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isTargetVisibleProperty' )
+    } );
+
+    this.isTapeMeasureVisibleProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isTapeMeasureVisibleProperty' )
+    } );
+
+    this.isStopwatchVisibleProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isStopwatchVisibleProperty' )
     } );
   }
 

@@ -39,9 +39,12 @@ export default class VariabilityScreenView extends VSMScreenView {
     const staticToolPanel = new StaticToolPanel( model.arePathsVisibleProperty, model.isLaunchAngleVisibleProperty, model.isLaunchSpeedVisibleProperty, {
       tandem: options.tandem.createTandem( 'staticToolPanel' )
     } );
-    const interactiveToolPanel = new InteractiveToolPanel( {
-      tandem: options.tandem.createTandem( 'interactiveToolPanel' )
-    } );
+    const interactiveToolPanel = new InteractiveToolPanel(
+      model.isTargetVisibleProperty,
+      model.isTapeMeasureVisibleProperty,
+      model.isStopwatchVisibleProperty, {
+        tandem: options.tandem.createTandem( 'interactiveToolPanel' )
+      } );
     const rightVBox = new VBox( {
       stretch: true,
       spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,

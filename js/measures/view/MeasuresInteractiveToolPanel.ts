@@ -12,18 +12,24 @@ type SelfOptions = EmptySelfOptions;
 type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOptions;
 
 export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
-  public constructor( providedOptions: PDLPanelOptions ) {
+  public constructor(
+    isTargetVisibleProperty: BooleanProperty,
+    isTapeMeasureVisibleProperty: BooleanProperty,
+    isStopwatchVisibleProperty: BooleanProperty,
+    isIntervalToolVisibleProperty: BooleanProperty,
+    providedOptions: PDLPanelOptions ) {
 
     const options = optionize<PDLPanelOptions, SelfOptions, MeasuresInteractiveToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
         {
-          property: new BooleanProperty( false ),
-          createNode: () => InteractiveToolPanel.createCheckboxRow( ProjectileDataLabStrings.intervalToolStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
+          property: isIntervalToolVisibleProperty,
+          createNode: () => InteractiveToolPanel.createCheckboxRow( ProjectileDataLabStrings.intervalToolStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
+          tandemName: 'intervalToolCheckbox'
         }
       ]
     }, providedOptions );
 
-    super( options );
+    super( isTargetVisibleProperty, isTapeMeasureVisibleProperty, isStopwatchVisibleProperty, options );
   }
 }
 

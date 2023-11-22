@@ -36,12 +36,18 @@ export default class MeasuresScreenView extends VSMScreenView {
     } );
 
     const staticToolPanel = new MeasuresStaticToolPanel( model.arePathsVisibleProperty, model.isLaunchAngleVisibleProperty,
-      model.isLaunchSpeedVisibleProperty, {
+      model.isLaunchSpeedVisibleProperty,
+      model.areDataMeasuresVisibleProperty,
+      model.isIdealDistributionVisibleProperty, {
         tandem: options.tandem.createTandem( 'staticToolPanel' )
       } );
-    const interactiveToolPanel = new MeasuresInteractiveToolPanel( {
-      tandem: options.tandem.createTandem( 'interactiveToolPanel' )
-    } );
+    const interactiveToolPanel = new MeasuresInteractiveToolPanel(
+      model.isTargetVisibleProperty,
+      model.isTapeMeasureVisibleProperty,
+      model.isStopwatchVisibleProperty,
+      model.isIntervalToolVisibleProperty, {
+        tandem: options.tandem.createTandem( 'interactiveToolPanel' )
+      } );
     const rightVBox = new VBox( {
       stretch: true,
       spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,

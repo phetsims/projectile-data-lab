@@ -24,30 +24,35 @@ type SelfOptions = {
 export type InteractiveToolPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class InteractiveToolPanel extends PDLPanel {
-  private readonly checkboxGroup: VerticalCheckboxGroup;
 
-  public constructor( providedOptions: InteractiveToolPanelOptions ) {
+  public constructor(
+    isTargetVisibleProperty: BooleanProperty,
+    isTapeMeasureVisibleProperty: BooleanProperty,
+    isStopwatchVisibleProperty: BooleanProperty,
+    providedOptions: InteractiveToolPanelOptions ) {
 
     const options = optionize<InteractiveToolPanelOptions, SelfOptions, PDLPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: []
     }, providedOptions );
 
     const checkboxGroup = new VerticalCheckboxGroup( [ {
-      property: new BooleanProperty( false ),
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.targetStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
+      property: isTargetVisibleProperty,
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.targetStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
+      tandemName: 'targetCheckbox'
     }, {
-      property: new BooleanProperty( false ),
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.tapeMeasureStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) )
+      property: isTapeMeasureVisibleProperty,
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.tapeMeasureStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
+      tandemName: 'tapeMeasureCheckbox'
     }, {
-      property: new BooleanProperty( false ),
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) )
+      property: isStopwatchVisibleProperty,
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) ),
+      tandemName: 'stopwatchCheckbox'
     },
       ...options.additionalVerticalCheckboxGroupItems
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' )
     } );
     super( [ checkboxGroup ], options );
-    this.checkboxGroup = checkboxGroup;
   }
 
   public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {

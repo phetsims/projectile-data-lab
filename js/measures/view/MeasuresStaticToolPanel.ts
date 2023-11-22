@@ -5,7 +5,6 @@ import StaticToolPanel, { StaticToolPanelOptions } from '../../common-vsm/view/S
 import { PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Property from '../../../../axon/js/Property.js';
 
@@ -14,17 +13,20 @@ type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
 
 export default class MeasuresStaticToolPanel extends StaticToolPanel {
   public constructor( arePathsVisibleProperty: Property<boolean>, isLaunchAngleVisibleProperty: Property<boolean>,
-                      isLaunchSpeedVisibleProperty: Property<boolean>, providedOptions: PDLPanelOptions ) {
+                      isLaunchSpeedVisibleProperty: Property<boolean>,
+                      areDataMeasuresVisibleProperty: Property<boolean>,
+                      isIdealDistributionVisibleProperty: Property<boolean>,
+                      providedOptions: PDLPanelOptions ) {
 
     const options = optionize<PDLPanelOptions, SelfOptions, MeasuresStaticToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
         {
-          property: new BooleanProperty( false ),
+          property: areDataMeasuresVisibleProperty,
           createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
           tandemName: 'dataMeasuresCheckbox'
         },
         {
-          property: new BooleanProperty( false ),
+          property: isIdealDistributionVisibleProperty,
           createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.idealDistributionStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
           tandemName: 'idealDistributionCheckbox'
         }
