@@ -9,6 +9,8 @@ import PDLColors from '../../common/PDLColors.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 
+// TODO: Explain why this does not extend GaugeNode - see https://github.com/phetsims/projectile-data-lab/issues/7
+
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
  * array of graphical elements that update opacity as the data changes, as well as background and foreground graphics.
