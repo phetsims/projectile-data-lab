@@ -64,8 +64,7 @@ export default class PDLCanvas extends CanvasNode {
       context.beginPath();
       let pathStarted = false;
 
-      // TODO: Fine tune the time step.  Too large and it will look angular, too small and it will run slowly. See https://github.com/phetsims/projectile-data-lab/issues/7
-      for ( let t = 0; t < projectile.timeAirborne; t += 0.001 ) {
+      const drawLineToProjectileAtTime = ( t: number ): void => {
         const pathX = Projectile.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
         const pathY = Projectile.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
         const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
@@ -76,7 +75,13 @@ export default class PDLCanvas extends CanvasNode {
         }
 
         context.lineTo( viewPoint.x, viewPoint.y );
+      };
+
+      for ( let t = 0; t < projectile.timeAirborne; t += 0.01 ) {
+        drawLineToProjectileAtTime( t );
       }
+
+      drawLineToProjectileAtTime( projectile.timeAirborne );
 
       context.strokeStyle = strokeStyle;
       context.lineWidth = 2;
