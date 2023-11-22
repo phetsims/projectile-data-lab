@@ -102,7 +102,7 @@ export default class PDLCanvas extends CanvasNode {
 
       // Draw a highlight glint on the circle
       context.beginPath();
-      context.arc( viewPoint.x - 2, viewPoint.y - 2, 2, 0, 2 * Math.PI );
+      context.arc( viewPoint.x + 1.5, viewPoint.y - 1.5, 2, 0, 2 * Math.PI );
       context.fillStyle = 'white';
       context.fill();
     }

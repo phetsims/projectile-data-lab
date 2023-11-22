@@ -14,7 +14,7 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { ProfileColorProperty } from '../../../scenery/js/imports.js';
+import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
 import projectileDataLab from '../projectileDataLab.js';
 
 const PDLColors = {
@@ -41,7 +41,7 @@ const PDLColors = {
   } ),
 
   pathStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStroke', {
-    default: '#701AC3'
+    default: new Color( 0x701AC3, 0.5 )
   } ),
 
   fieldLineStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineStroke', {
