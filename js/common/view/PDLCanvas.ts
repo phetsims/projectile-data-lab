@@ -81,7 +81,7 @@ export default class PDLCanvas extends CanvasNode {
           context.lineTo( viewPoint.x, viewPoint.y );
         };
 
-        for ( let t = 0; t < projectile.timeAirborne; t += 0.01 ) {
+        for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
           drawLineToProjectileAtTime( t );
         }
 
