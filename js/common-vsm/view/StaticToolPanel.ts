@@ -23,7 +23,6 @@ type SelfOptions = {
 export type StaticToolPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class StaticToolPanel extends PDLPanel {
-  private readonly checkboxGroup: VerticalCheckboxGroup;
 
   public constructor(
     arePathsVisibleProperty: Property<boolean>,
@@ -37,20 +36,22 @@ export default class StaticToolPanel extends PDLPanel {
 
     const checkboxGroup = new VerticalCheckboxGroup( [ {
       property: arePathsVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.pathsStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.pathsStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
+      tandemName: 'pathsCheckbox'
     }, {
       property: isLaunchAngleVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchAngleStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) )
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchAngleStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
+      tandemName: 'launchAngleCheckbox'
     }, {
       property: isLaunchSpeedVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchSpeedStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) )
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchSpeedStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) ),
+      tandemName: 'launchSpeedCheckbox'
     },
       ...options.additionalVerticalCheckboxGroupItems
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' )
     } );
     super( [ checkboxGroup ], options );
-    this.checkboxGroup = checkboxGroup;
   }
 
   public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {

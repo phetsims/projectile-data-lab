@@ -20,11 +20,13 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
       additionalVerticalCheckboxGroupItems: [
         {
           property: new BooleanProperty( false ),
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
+          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
+          tandemName: 'dataMeasuresCheckbox'
         },
         {
           property: new BooleanProperty( false ),
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.idealDistributionStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) )
+          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.idealDistributionStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
+          tandemName: 'idealDistributionCheckbox'
         }
       ]
     }, providedOptions );
