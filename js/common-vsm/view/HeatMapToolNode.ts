@@ -7,6 +7,7 @@ import Property from '../../../../axon/js/Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
@@ -27,11 +28,19 @@ type SelfOptions = {
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
 export default class HeatMapToolNode extends Node {
+  private minValue: number;
+  private maxValue: number;
+  private binWidth: number;
   private readonly heatNodes: Path[] = [];
+  private readonly numValuesInBin: number[] = [];
 
   public constructor( providedOptions: HeatMapToolNodeOptions ) {
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
     super( options );
+
+    this.minValue = options.minValue;
+    this.maxValue = options.maxValue;
+    this.binWidth = options.binWidth;
 
     const heatNodeWidth = options.heatNodeShape.bounds.width;
     const heatNodeHeight = options.heatNodeShape.bounds.height;
@@ -57,15 +66,40 @@ export default class HeatMapToolNode extends Node {
     this.addChild( backgroundNode );
     backgroundNode.moveToBack();
 
-    for ( let i = options.minValue; i <= options.maxValue; i += options.binWidth ) {
+    for ( let i = this.minValue; i <= this.maxValue; i += this.binWidth ) {
       const heatNode = new Path( options.heatNodeShape, {
         fill: PDLColors.heatMapColorProperty,
         x: -0.5 * heatNodeTotalWidth + i * heatNodeWidth,
-        y: -0.5 * heatNodeHeight,
-        opacity: 1
+        y: -0.5 * heatNodeHeight
       } );
       this.heatNodes.push( heatNode );
       this.addChild( heatNode );
+
+      // Initialize the number of values in each bin to 0
+      this.numValuesInBin.push( 0 );
+    }
+
+    options.sourceDataProperty.link( data => {this.updateHeatMapWithData( data );}
+    );
+  }
+
+  // updateHeatMapWithData updates the opacity of each heat node based on the number of values in the bin
+  private updateHeatMapWithData( data: number ): void {
+    const minOpacity = 0.2;
+    const index = Math.floor( ( data - this.minValue ) / this.binWidth );
+
+    if ( this.numValuesInBin[ index ] !== null ) {
+      this.numValuesInBin[ index ]++;
+      const maxNumValuesInBin = Math.max( ...this.numValuesInBin );
+
+      // If the bin is empty, set the opacity to 0
+      // If the bin has values, set the opacity to minOpacity + (1-minOpacity) * (# values in bin) / (largest # values in any bin)
+      for ( let i = 0; i < this.heatNodes.length; i++ ) {
+        if ( this.heatNodes[ i ] !== null ) {
+          const opacityToSet = this.numValuesInBin[ i ] === 0 ? 0 : minOpacity + ( 1 - minOpacity ) * this.numValuesInBin[ i ] / maxNumValuesInBin;
+          this.heatNodes[ i ].opacity = Utils.clamp( opacityToSet, 0, 1 ); // to avoid floating point errors
+        }
+      }
     }
   }
 }
