@@ -146,6 +146,11 @@ export default class PDLModel implements TModel {
     this.timeSpeedProperty.reset();
 
     this.fields.forEach( field => field.reset() );
+    this.fieldProperty.reset();
+  }
+
+  public clearCurrentField(): void {
+    this.fieldProperty.value.clearProjectiles();
   }
 }
 projectileDataLab.register( 'PDLModel', PDLModel );

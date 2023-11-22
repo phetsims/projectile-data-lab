@@ -165,7 +165,7 @@ export class PDLScreenView extends ScreenView {
       centerY: PDLConstants.FIELD_SIGN_CENTER_Y,
       iconWidth: 25,
       listener: () => {
-        console.log( 'eraser button clicked' );
+        model.clearCurrentField();
       },
       tandem: options.tandem.createTandem( 'eraserButton' )
     } );

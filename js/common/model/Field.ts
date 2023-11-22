@@ -100,6 +100,10 @@ export default class Field extends PhetioObject {
     this.launcherAngleProperty.reset();
     this.launcherHeightProperty.reset();
 
+    this.clearProjectiles();
+  }
+
+  public clearProjectiles(): void {
     this.projectiles.length = 0;
     this.projectilesChangedEmitter.emit();
   }
