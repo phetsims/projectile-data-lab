@@ -99,6 +99,9 @@ export default class Field extends PhetioObject {
     this.launcherTypeProperty.reset();
     this.launcherAngleProperty.reset();
     this.launcherHeightProperty.reset();
+
+    this.projectiles.length = 0;
+    this.projectilesChangedEmitter.emit();
   }
 
   public toStateObject(): object {
