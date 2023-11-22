@@ -83,6 +83,7 @@ export default class Projectile {
         this.phase = 'LANDED';
         this.x = horizontalRange;
         this.y = 0;
+        this.timeAirborne = PDLUtils.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! )!;
       }
     }
   }
