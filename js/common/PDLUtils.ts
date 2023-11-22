@@ -32,7 +32,7 @@ export default class PDLUtils {
   }
 
   // TODO: This could be inferred from the field itself. See https://github.com/phetsims/projectile-data-lab/issues/7
-  public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
+  public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
     const launchAngleRadians = launchAngle * Math.PI / 180;
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
@@ -42,7 +42,7 @@ export default class PDLUtils {
     return ( v0 * cosTheta / g ) * ( v0 * sinTheta + Math.sqrt( v0 * v0 * sinTheta * sinTheta + 2 * g * launchHeight ) );
   }
 
-  public static getMaximumHeight( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
+  public static getMaximumHeight( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
     if ( launchAngle <= 0 ) {
       return launchHeight;
     }

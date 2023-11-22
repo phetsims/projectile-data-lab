@@ -77,6 +77,13 @@ export default class Projectile {
 
       this.x = PDLUtils.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
       this.y = PDLUtils.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne )!;
+
+      const horizontalRange = PDLUtils.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+      if ( this.x >= horizontalRange ) {
+        this.phase = 'LANDED';
+        this.x = horizontalRange;
+        this.y = 0;
+      }
     }
   }
 
