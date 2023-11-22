@@ -76,6 +76,10 @@ const PDLColors = {
 
   launcherStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherStroke', {
     default: '#111111'
+  } ),
+
+  heatMapColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMap', {
+    default: '#FF9700'
   } )
 };
 
