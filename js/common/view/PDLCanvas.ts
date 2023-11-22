@@ -12,6 +12,7 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import PDLUtils from '../PDLUtils.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
@@ -46,7 +47,36 @@ export default class PDLCanvas extends CanvasNode {
    * Draws into the canvas.
    */
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
+
     const projectiles = this.fieldProperty.value.projectiles;
+
+    // Render the paths. Draw a purple line from the projectile t=0 to the current position.
+    // REVIEW: If performance is a problem, use a persistent canvas and just add on to it (for the paths layer)
+    for ( let i = 0; i < projectiles.length; i++ ) {
+      const projectile = projectiles[ i ];
+      context.beginPath();
+      let pathStarted = false;
+
+      // TODO: Fine tune the time step.  Too large and it will look angular, too small and it will run slowly. See https://github.com/phetsims/projectile-data-lab/issues/7
+      for ( let t = 0; t < projectile.timeAirborne; t += 0.001 ) {
+        const pathX = PDLUtils.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
+        const pathY = PDLUtils.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
+        const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
+
+        if ( !pathStarted ) {
+          context.moveTo( viewPoint.x, viewPoint.y );
+          pathStarted = true;
+        }
+
+        context.lineTo( viewPoint.x, viewPoint.y );
+      }
+
+      context.strokeStyle = 'rgb(112,26,195)';
+      context.lineWidth = 2;
+      context.stroke();
+    }
+
+    // Render the projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
       context.beginPath();

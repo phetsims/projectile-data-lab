@@ -25,7 +25,7 @@ export default class PDLUtils {
     return launchSpeed * Math.cos( launchAngleRadians ) * timeAirborne;
   }
 
-  public static getProjectileY( launchSpeed: number, launchAngle: number, launchHeight: number, timeAirborne: number ): number | null {
+  public static getProjectileY( launchSpeed: number, launchAngle: number, launchHeight: number, timeAirborne: number ): number {
     const launchAngleRadians = launchAngle * Math.PI / 180;
     return launchHeight + launchSpeed * Math.sin( launchAngleRadians ) * timeAirborne
            - 0.5 * PDLConstants.FREEFALL_ACCELERATION * timeAirborne * timeAirborne;
