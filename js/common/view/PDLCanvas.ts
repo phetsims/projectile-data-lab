@@ -23,12 +23,6 @@ export default class PDLCanvas extends CanvasNode {
   private readonly fieldProperty: Property<Field>;
   private readonly modelViewTransform: ModelViewTransform2;
 
-  // Hello world
-
-
-
-
-
   public constructor( fieldProperty: Property<Field>, modelViewTransform: ModelViewTransform2, providedOptions: PDLCanvasOptions ) {
 
     const options = optionize<PDLCanvasOptions, SelfOptions, CanvasNodeOptions>()( {
