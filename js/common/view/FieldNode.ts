@@ -2,7 +2,7 @@
 
 import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLColors from '../PDLColors.js';
@@ -19,7 +19,10 @@ import PDLUtils from '../PDLUtils.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  // Is this the bottom half of the field? If so, it will be clipped to the bottom half of the field.
+  isBottomHalf?: boolean;
+};
 type FieldNodeOptions = SelfOptions & NodeOptions;
 
 export default class FieldNode extends Node {
@@ -30,7 +33,7 @@ export default class FieldNode extends Node {
   // The field
   private fieldBorder: Node;
 
-  public constructor( x: number, y: number, isBottomHalf: boolean, binWidthProperty: Property<number>, providedOptions: FieldNodeOptions ) {
+  public constructor( binWidthProperty: Property<number>, providedOptions: FieldNodeOptions ) {
 
     const fieldBounds = new Bounds2(
       -0.5 * PDLConstants.FIELD_WIDTH,
@@ -47,7 +50,7 @@ export default class FieldNode extends Node {
       fill: PDLColors.fieldFillColorProperty
     } );
 
-    const defaultOptions = { x: x, y: y, children: [ field ] };
+    const defaultOptions = { isBottomHalf: false, children: [ field ] };
     const options = optionize<FieldNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
@@ -116,7 +119,7 @@ export default class FieldNode extends Node {
     const fieldBoundsBottomHalfWithStroke = fieldBoundsBottomHalf.dilatedX( 0.5 * PDLConstants.FIELD_BORDER_LINE_WIDTH )
       .dilatedY( 0.25 * PDLConstants.FIELD_BORDER_LINE_WIDTH ).shiftedY( 0.25 * PDLConstants.FIELD_BORDER_LINE_WIDTH );
 
-    const rectBounds = isBottomHalf ? fieldBoundsBottomHalfWithStroke : fieldBoundsWithStroke;
+    const rectBounds = options.isBottomHalf ? fieldBoundsBottomHalfWithStroke : fieldBoundsWithStroke;
     const rectBoundsTransformed = Shape.bounds( rectBounds ).nonlinearTransformed( {
       pointMap: PDLUtils.transformField
     } );
