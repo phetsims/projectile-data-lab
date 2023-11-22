@@ -13,8 +13,8 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import PDLUtils from '../PDLUtils.js';
 import PDLColors from '../PDLColors.js';
+import Projectile from '../model/Projectile.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
@@ -66,8 +66,8 @@ export default class PDLCanvas extends CanvasNode {
 
       // TODO: Fine tune the time step.  Too large and it will look angular, too small and it will run slowly. See https://github.com/phetsims/projectile-data-lab/issues/7
       for ( let t = 0; t < projectile.timeAirborne; t += 0.001 ) {
-        const pathX = PDLUtils.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
-        const pathY = PDLUtils.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
+        const pathX = Projectile.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
+        const pathY = Projectile.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
         const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
 
         if ( !pathStarted ) {

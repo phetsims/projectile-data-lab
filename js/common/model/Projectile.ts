@@ -7,7 +7,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import PDLUtils from '../PDLUtils.js';
+import PDLConstants from '../PDLConstants.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -75,15 +75,14 @@ export default class Projectile {
     if ( this.phase === 'AIRBORNE' ) {
       this.timeAirborne += dt;
 
-      this.x = PDLUtils.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
-      this.y = PDLUtils.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne )!;
+      this.x = Projectile.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
+      this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne )!;
 
-      const horizontalRange = PDLUtils.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
-      if ( this.x >= horizontalRange ) {
+      if ( this.y <= 0 ) {
         this.phase = 'LANDED';
-        this.x = horizontalRange;
+        this.x = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
         this.y = 0;
-        this.timeAirborne = PDLUtils.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! )!;
+        this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! )!;
       }
     }
   }
@@ -133,6 +132,51 @@ export default class Projectile {
       );
     }
   } );
+
+  /** Physics functions - The PDL sim does not have air resistance, so 2D kinematics is sufficient to model the motion **/
+
+  public static getProjectileX( launchSpeed: number, launchAngle: number, timeAirborne: number ): number {
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    return launchSpeed * Math.cos( launchAngleRadians ) * timeAirborne;
+  }
+
+  public static getProjectileY( launchSpeed: number, launchAngle: number, launchHeight: number, timeAirborne: number ): number {
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    return launchHeight + launchSpeed * Math.sin( launchAngleRadians ) * timeAirborne
+           - 0.5 * PDLConstants.FREEFALL_ACCELERATION * timeAirborne * timeAirborne;
+  }
+
+  // TODO: launchHeight could be inferred from the launcher configuration. See https://github.com/phetsims/projectile-data-lab/issues/7
+  public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    const g = PDLConstants.FREEFALL_ACCELERATION;
+    const v0 = launchSpeed;
+    const sinTheta = Math.sin( launchAngleRadians );
+    const cosTheta = Math.cos( launchAngleRadians );
+
+    return ( v0 * cosTheta / g ) * ( v0 * sinTheta + Math.sqrt( v0 * v0 * sinTheta * sinTheta + 2 * g * launchHeight ) );
+  }
+
+  public static getMaximumHeight( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
+    if ( launchAngle <= 0 ) {
+      return launchHeight;
+    }
+    else {
+      const launchAngleRadians = launchAngle * Math.PI / 180;
+      const g = PDLConstants.FREEFALL_ACCELERATION;
+      const v0 = launchSpeed;
+      const sinTheta = Math.sin( launchAngleRadians );
+      return launchHeight + v0 * v0 * sinTheta * sinTheta / ( 2 * g );
+    }
+  }
+
+  public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
+    const launchAngleRadians = launchAngle * Math.PI / 180;
+    const g = PDLConstants.FREEFALL_ACCELERATION;
+    const v0 = launchSpeed;
+    const sinTheta = Math.sin( launchAngleRadians );
+    return ( v0 * sinTheta / g ) + Math.sqrt( ( v0 * sinTheta / g ) * ( v0 * sinTheta / g ) + 2 * launchHeight / g );
+  }
 }
 
 export type ProjectileStateObject = {
