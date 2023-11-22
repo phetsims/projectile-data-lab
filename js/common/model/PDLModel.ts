@@ -21,6 +21,7 @@ import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 type SelfOptions = {
   timeSpeedValues: TimeSpeed[];
@@ -139,8 +140,11 @@ export default class PDLModel implements TModel {
   }
 
   public step( dt: number ): void {
+    if ( this.isContinuousLaunchProperty.value && dotRandom.nextDouble() < 0.05 ) {
+      this.launchProjectile();
+    }
     if ( this.isPlayingProperty.value ) {
-      this.fieldProperty.value.step( dt, this.isContinuousLaunchProperty.value );
+      this.fieldProperty.value.step( dt );
     }
   }
 
