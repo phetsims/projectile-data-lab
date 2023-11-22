@@ -36,6 +36,8 @@ type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export class PDLScreenView extends ScreenView {
 
+  private readonly modelViewTransform;
+
   private readonly launcher: LauncherNode;
 
   protected readonly resetAllButton: ResetAllButton;
@@ -45,6 +47,13 @@ export class PDLScreenView extends ScreenView {
 
   public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
     super( options );
+
+    const fieldX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X;
+    const fieldY = PDLConstants.FIELD_CENTER_Y;
+    const originX = fieldX - 0.5 * PDLConstants.FIELD_WIDTH;
+
+    this.modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
+      new Vector2( 0, 0 ), new Vector2( originX, fieldY ), PDLConstants.PIXELS_TO_DISTANCE );
 
     const backgroundNode = new GradientBackgroundNode(
       0,
@@ -81,16 +90,12 @@ export class PDLScreenView extends ScreenView {
     } );
     this.addChild( this.resetAllButton );
 
-    // Create the field and field overlay
-    const fieldX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X;
-    const fieldY = PDLConstants.FIELD_CENTER_Y;
+    const fieldBack = new FieldNode( model.binWidthProperty, { x: fieldX, y: fieldY } );
+    const fieldFront = new FieldNode( model.binWidthProperty, { isBottomHalf: true, x: fieldX, y: fieldY } );
+    const fieldOverlayNode = new FieldOverlayNode( this.modelViewTransform, {} );
+    fieldOverlayNode.x = fieldX;
+    fieldOverlayNode.y = fieldY;
 
-    const fieldBack = new FieldNode( fieldX, fieldY, false, model.binWidthProperty, {} );
-    const fieldFront = new FieldNode( fieldX, fieldY, true, model.binWidthProperty, {} );
-    const fieldOverlayNode = new FieldOverlayNode( fieldX, fieldY, {} );
-
-    // Create the launcher
-    const originX = fieldX - 0.5 * PDLConstants.FIELD_WIDTH;
     this.launcher = new LauncherNode(
       originX,
       fieldY,
@@ -172,9 +177,7 @@ export class PDLScreenView extends ScreenView {
 
     this.addChild( eraserButton );
 
-    const modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
-      new Vector2( 0, 0 ), new Vector2( originX, fieldY ), PDLConstants.PIXELS_TO_DISTANCE );
-    const projectileCanvas = new PDLCanvas( model.fieldProperty, model.isPathsVisibleProperty, modelViewTransform, {
+    const projectileCanvas = new PDLCanvas( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform, {
       canvasBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS
     } );
     this.addChild( projectileCanvas );
