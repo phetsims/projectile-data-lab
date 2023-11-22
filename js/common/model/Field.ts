@@ -120,8 +120,7 @@ export default class Field extends PhetioObject {
       this.launchProjectile();
     }
 
-    // TODO: Speed and time step: https://github.com/phetsims/projectile-data-lab/issues/7
-    this.projectiles.forEach( projectile => projectile.step( dt / 10 ) );
+    this.projectiles.forEach( projectile => projectile.step( dt ) );
 
     this.projectilesChangedEmitter.emit();
   }
@@ -129,7 +128,7 @@ export default class Field extends PhetioObject {
   public launchProjectile(): void {
 
     // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
-    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, 50 + dotRandom.nextGaussian() * 7, 2.5, 0 ) );
+    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, 50 + dotRandom.nextGaussian() * 7, 25, 0 ) );
   }
 
   public static FieldIO = new IOType( 'FieldIO', {

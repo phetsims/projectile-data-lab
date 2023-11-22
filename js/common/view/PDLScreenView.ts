@@ -172,7 +172,8 @@ export class PDLScreenView extends ScreenView {
 
     this.addChild( eraserButton );
 
-    const modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping( new Vector2( 0, 0 ), new Vector2( 110, 500 ), 1000 );
+    const modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
+      new Vector2( 0, 0 ), new Vector2( originX, fieldY ), PDLConstants.PIXELS_TO_DISTANCE );
     const projectileCanvas = new PDLCanvas( model.fieldProperty, modelViewTransform, {
       canvasBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS
     } );
