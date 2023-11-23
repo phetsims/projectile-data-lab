@@ -52,7 +52,7 @@ export default class InteractiveToolPanel extends PDLPanel {
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' )
     } );
-    super( [ checkboxGroup ], options );
+    super( checkboxGroup, options );
   }
 
   public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {

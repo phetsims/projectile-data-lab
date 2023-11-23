@@ -8,7 +8,7 @@
  */
 import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../../projectileDataLab.js';
-import { Node } from '../../../../../scenery/js/imports.js';
+import { Node, VBox } from '../../../../../scenery/js/imports.js';
 import WithRequired from '../../../../../phet-core/js/types/WithRequired.js';
 import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
 import SectionLauncherType from './SectionLauncherType.js';
@@ -19,7 +19,7 @@ type SelfOptions = EmptySelfOptions;
 export type PDLLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
 export class PDLLaunchPanel extends PDLPanel {
-  public constructor( launcherProperty: PhetioProperty<number>, content: Node[], providedOptions: PDLLaunchPanelOptions ) {
+  public constructor( launcherProperty: PhetioProperty<number>, children: Node[], providedOptions: PDLLaunchPanelOptions ) {
     const options = optionize<PDLLaunchPanelOptions, SelfOptions, PDLPanelOptions>()( {
       left: PDLConstants.SCREEN_VIEW_X_MARGIN,
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN
@@ -28,9 +28,10 @@ export class PDLLaunchPanel extends PDLPanel {
     const launcherTypeSection = new SectionLauncherType( launcherProperty, {
       tandem: providedOptions.tandem
     } );
-    content.push( launcherTypeSection );
+    children.push( launcherTypeSection );
 
-    super( content, options );
+    const contentContainer = new VBox( { children: children, spacing: 5, stretch: true, align: 'left' } );
+    super( contentContainer, options );
   }
 }
 
