@@ -73,7 +73,8 @@ export class VSMScreenView extends PDLScreenView {
 
     const stopwatchNode = new StopwatchNode( model.stopwatch, {
       visibleProperty: model.isStopwatchVisibleProperty,
-      dragBoundsProperty: this.visibleBoundsProperty
+      dragBoundsProperty: this.visibleBoundsProperty,
+      tandem: options.tandem.createTandem( 'stopwatchNode' )
     } );
 
     const stopwatchStartingPosition = new Vector2(
