@@ -27,7 +27,7 @@ export default class VSMModel extends PDLModel {
 
   public constructor( providedOptions: VSMModelOptions ) {
 
-    const fields = _.range( 1, 9 ).map( i => new Field( {
+    const fields = _.range( 1, 9 ).map( i => new Field( i, {
       tandem: providedOptions.tandem.createTandem( 'field' + i )
     } ) );
 

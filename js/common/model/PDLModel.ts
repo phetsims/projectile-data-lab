@@ -48,7 +48,7 @@ export default class PDLModel implements TModel {
 
   public readonly timeSpeedValues: TimeSpeed[];
 
-  private readonly fields: Field[];
+  protected readonly fields: Field[];
 
   public readonly fieldProperty: Property<Field>;
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>;
@@ -102,7 +102,8 @@ export default class PDLModel implements TModel {
       validValues: this.fields,
       tandem: providedOptions.tandem.createTandem( 'fieldProperty' ),
       phetioDocumentation: 'This property indicates the active field.',
-      phetioValueType: ReferenceIO( Field.FieldIO )
+      phetioValueType: ReferenceIO( Field.FieldIO ),
+      reentrant: true
     } );
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>( this.fieldProperty, {

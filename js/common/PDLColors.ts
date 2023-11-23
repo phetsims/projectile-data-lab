@@ -78,6 +78,10 @@ const PDLColors = {
     default: '#111111'
   } ),
 
+  fieldSignColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignFill', {
+    default: '#E5C49C'
+  } ),
+
   heatMapColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMap', {
     default: '#FF9700'
   } )

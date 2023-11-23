@@ -30,6 +30,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLCanvas from './PDLCanvas.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import FieldSignNode from './FieldSignNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -109,6 +110,13 @@ export class PDLScreenView extends ScreenView {
     this.addChild( this.launcher );
     this.addChild( fieldFront );
     this.addChild( fieldOverlayNode );
+
+    // Create the field sign
+    const fieldSignPosition = this.modelViewTransform.modelToViewPosition( new Vector2( 95, 0 ) );
+    const fieldSign = new FieldSignNode( model.fieldProperty, {
+      x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y
+    } );
+    this.addChild( fieldSign );
 
     // Create the launch button
     this.launchButton = new RectangularPushButton( {
