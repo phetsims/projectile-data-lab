@@ -141,6 +141,10 @@ export default class PDLModel implements TModel {
   }
 
   public step( dt: number ): void {
+
+    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 2 :
+                this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 :
+                1 );
     if ( this.isContinuousLaunchProperty.value && dotRandom.nextDouble() < 0.05 ) {
       this.launchProjectile();
     }
