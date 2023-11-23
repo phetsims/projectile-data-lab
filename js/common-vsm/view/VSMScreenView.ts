@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { ManualConstraint, Rectangle } from '../../../../scenery/js/imports.js';
+import { Color, ManualConstraint, Rectangle } from '../../../../scenery/js/imports.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import VSMModel from '../model/VSMModel.js';
@@ -15,6 +15,7 @@ import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -46,15 +47,23 @@ export class VSMScreenView extends PDLScreenView {
     } );
     this.addChild( speedToolNode );
 
+
     // Create a MeasuringTapeNode to measure distance
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
       visibleProperty: model.isMeasuringTapeVisibleProperty,
       modelViewTransform: this.modelViewTransform,
+      dragBounds: new Bounds2(
+        0, 0, 100, ( PDLConstants.FIELD_CENTER_Y - PDLConstants.SCREEN_VIEW_Y_MARGIN ) / PDLConstants.PIXELS_TO_DISTANCE ),
       basePositionProperty: model.measuringTapeBasePositionProperty,
       tipPositionProperty: model.measuringTapeTipPositionProperty,
+      lineColor: new Color( 255, 255, 0 ),
+      tapeLineWidth: 3,
+      isBaseCrosshairRotating: false,
+      isTipCrosshairRotating: false,
+
       textColor: 'black',
       textBackgroundColor: 'rgba( 255, 255, 255, 0.6 )', // translucent white background
-      significantFigures: 2,
+      significantFigures: 1,
       textFont: new PhetFont( { size: 16, weight: 'bold' } ),
       tandem: options.tandem.createTandem( 'measuringTapeNode' ),
       phetioDocumentation: 'The node for the measuring tape'
