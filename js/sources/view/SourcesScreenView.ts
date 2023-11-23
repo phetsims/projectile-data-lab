@@ -56,7 +56,16 @@ export default class SourcesScreenView extends VSMScreenView {
       rightVBoxProxy.right = this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN;
     } );
 
-    this.pdomControlAreaNode.pdomOrder = [ sourcesLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, staticToolPanel, fieldPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [
+      sourcesLaunchPanel,
+      this.launchButton,
+      this.launchControlRadioButtonGroup,
+      this.timeControlNode,
+      rightVBox,
+      fieldPanel,
+      this.eraserButton,
+      this.resetAllButton
+    ];
   }
 }
 

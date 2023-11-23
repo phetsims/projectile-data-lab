@@ -45,6 +45,7 @@ export class PDLScreenView extends ScreenView {
   protected readonly timeControlNode;
   protected readonly launchButton;
   protected readonly launchControlRadioButtonGroup;
+  protected readonly eraserButton: EraserButton;
 
   public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
     super( options );
@@ -173,7 +174,7 @@ export class PDLScreenView extends ScreenView {
     this.addChild( this.timeControlNode );
 
     // Create the eraser button
-    const eraserButton = new EraserButton( {
+    this.eraserButton = new EraserButton( {
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
       centerY: PDLConstants.FIELD_SIGN_CENTER_Y,
       iconWidth: 25,
@@ -183,7 +184,7 @@ export class PDLScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'eraserButton' )
     } );
 
-    this.addChild( eraserButton );
+    this.addChild( this.eraserButton );
 
     const projectileCanvas = new PDLCanvas( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform, {
       canvasBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS

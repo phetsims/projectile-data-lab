@@ -58,7 +58,16 @@ export default class VariabilityScreenView extends VSMScreenView {
       rightVBoxProxy.top = this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
-    this.pdomControlAreaNode.pdomOrder = [ variabilityLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, staticToolPanel, fieldPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [
+      variabilityLaunchPanel,
+      this.launchButton,
+      this.launchControlRadioButtonGroup,
+      this.timeControlNode,
+      rightVBox,
+      fieldPanel,
+      this.eraserButton,
+      this.resetAllButton
+    ];
   }
 }
 projectileDataLab.register( 'VariabilityScreenView', VariabilityScreenView );

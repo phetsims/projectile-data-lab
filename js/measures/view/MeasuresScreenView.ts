@@ -62,7 +62,16 @@ export default class MeasuresScreenView extends VSMScreenView {
     } );
 
     // Keyboard order
-    this.pdomControlAreaNode.pdomOrder = [ measuresLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.timeControlNode, staticToolPanel, fieldPanel, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [
+      measuresLaunchPanel,
+      this.launchButton,
+      this.launchControlRadioButtonGroup,
+      this.timeControlNode,
+      rightVBox,
+      fieldPanel,
+      this.eraserButton,
+      this.resetAllButton
+    ];
   }
 }
 
