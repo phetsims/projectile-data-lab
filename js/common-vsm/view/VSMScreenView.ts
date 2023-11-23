@@ -10,6 +10,11 @@ import VSMAccordionBox from './VSMAccordionBox.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SpeedToolNode from './SpeedToolNode.js';
 import AngleToolNode from './AngleToolNode.js';
+import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import Property from '../../../../axon/js/Property.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -40,6 +45,35 @@ export class VSMScreenView extends PDLScreenView {
       sourceDataProperty: model.binWidthProperty
     } );
     this.addChild( speedToolNode );
+
+    // Create a MeasuringTapeNode to measure distance
+    const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
+      visibleProperty: model.isMeasuringTapeVisibleProperty,
+      modelViewTransform: this.modelViewTransform,
+      basePositionProperty: model.measuringTapeBasePositionProperty,
+      tipPositionProperty: model.measuringTapeTipPositionProperty,
+      textColor: 'black',
+      textBackgroundColor: 'rgba( 255, 255, 255, 0.6 )', // translucent white background
+      significantFigures: 2,
+      textFont: new PhetFont( { size: 16, weight: 'bold' } ),
+      tandem: options.tandem.createTandem( 'measuringTapeNode' ),
+      phetioDocumentation: 'The node for the measuring tape'
+    } );
+
+    this.addChild( measuringTapeNode );
+
+    const stopwatchNode = new StopwatchNode( model.stopwatch, {
+      visibleProperty: model.isStopwatchVisibleProperty,
+      dragBoundsProperty: this.visibleBoundsProperty
+    } );
+
+    const stopwatchStartingPosition = new Vector2(
+      this.layoutBounds.centerX - 0.5 * stopwatchNode.bounds.width,
+      this.layoutBounds.centerY - 0.5 * stopwatchNode.bounds.height );
+    model.stopwatch.positionProperty.setInitialValue( stopwatchStartingPosition );
+    model.stopwatch.positionProperty.reset();
+
+    this.addChild( stopwatchNode );
 
     const originX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - PDLConstants.FIELD_WIDTH / 2;
     speedToolNode.centerX = originX;

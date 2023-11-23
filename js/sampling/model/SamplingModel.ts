@@ -30,9 +30,9 @@ export default class SamplingModel extends PDLModel {
     const NUM_SAMPLE_SIZES = 4;
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
       for ( let j = 0; j < NUM_SAMPLE_SIZES; j++ ) {
-        const fieldNumber = i * NUM_SAMPLE_SIZES + j + 1;
+        const fieldNumber = 1 + j + i * NUM_SAMPLE_SIZES;
         fields.push( new Field( fieldNumber, {
-          tandem: providedOptions.tandem.createTandem( 'field' + i + '000' + j + '' )
+          tandem: providedOptions.tandem.createTandem( 'field' + fieldNumber )
         } ) );
       }
     }
@@ -57,8 +57,8 @@ export default class SamplingModel extends PDLModel {
       // Get the index of sampleSize in the validValues array
       // const numSampleSizes = this.sampleSizeProperty.validValues!.length;
       // const sampleSizeIndex = this.sampleSizeProperty.validValues!.indexOf( sampleSize );
-      // const fieldNumber = 1 + sampleSizeIndex + ( launcherType - 1 ) * numSampleSizes;
-      // this.fieldProperty.value = this.fields[ fieldNumber - 1 ];
+      // const fieldNumber = sampleSizeIndex + ( launcherType - 1 ) * numSampleSizes;
+      // this.fieldProperty.value = this.fields[ fieldNumber ];
     } );
   }
 

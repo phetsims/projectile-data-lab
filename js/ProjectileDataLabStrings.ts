@@ -34,7 +34,7 @@ type StringsType = {
   'dataMeasuresStringProperty': LocalizedStringProperty;
   'idealDistributionStringProperty': LocalizedStringProperty;
   'targetStringProperty': LocalizedStringProperty;
-  'tapeMeasureStringProperty': LocalizedStringProperty;
+  'measuringTapeStringProperty': LocalizedStringProperty;
   'stopwatchStringProperty': LocalizedStringProperty;
   'intervalToolStringProperty': LocalizedStringProperty;
 };

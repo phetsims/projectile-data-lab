@@ -37,14 +37,14 @@ type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export class PDLScreenView extends ScreenView {
 
-  private readonly modelViewTransform;
+  protected readonly modelViewTransform;
 
-  private readonly launcher: LauncherNode;
+  private readonly launcher;
 
-  protected readonly resetAllButton: ResetAllButton;
-  protected readonly timeControlNode: TimeControlNode;
-  protected readonly launchButton: RectangularPushButton;
-  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<boolean>;
+  protected readonly resetAllButton;
+  protected readonly timeControlNode;
+  protected readonly launchButton;
+  protected readonly launchControlRadioButtonGroup;
 
   public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
     super( options );

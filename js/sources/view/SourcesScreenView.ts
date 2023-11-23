@@ -39,7 +39,7 @@ export default class SourcesScreenView extends VSMScreenView {
     } );
     const interactiveToolPanel = new InteractiveToolPanel(
       model.isTargetVisibleProperty,
-      model.isTapeMeasureVisibleProperty,
+      model.isMeasuringTapeVisibleProperty,
       model.isStopwatchVisibleProperty, {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );

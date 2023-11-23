@@ -27,7 +27,7 @@ export default class InteractiveToolPanel extends PDLPanel {
 
   public constructor(
     isTargetVisibleProperty: BooleanProperty,
-    isTapeMeasureVisibleProperty: BooleanProperty,
+    isMeasuringTapeVisibleProperty: BooleanProperty,
     isStopwatchVisibleProperty: BooleanProperty,
     providedOptions: InteractiveToolPanelOptions ) {
 
@@ -40,9 +40,9 @@ export default class InteractiveToolPanel extends PDLPanel {
       createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.targetStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
       tandemName: 'targetCheckbox'
     }, {
-      property: isTapeMeasureVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.tapeMeasureStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
-      tandemName: 'tapeMeasureCheckbox'
+      property: isMeasuringTapeVisibleProperty,
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
+      tandemName: 'measuringTapeCheckbox'
     }, {
       property: isStopwatchVisibleProperty,
       createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) ),
