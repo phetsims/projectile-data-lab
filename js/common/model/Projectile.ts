@@ -8,6 +8,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import PDLConstants from '../PDLConstants.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -136,21 +137,19 @@ export default class Projectile {
   /** Physics functions - The PDL sim does not have air resistance, so 2D kinematics is sufficient to model the motion **/
 
   public static getProjectileX( launchSpeed: number, launchAngle: number, timeAirborne: number ): number {
-    const launchAngleRadians = launchAngle * Math.PI / 180;
-    return launchSpeed * Math.cos( launchAngleRadians ) * timeAirborne;
+    return launchSpeed * Math.cos( Utils.toRadians( launchAngle ) ) * timeAirborne;
   }
 
   public static getProjectileY( launchSpeed: number, launchAngle: number, launchHeight: number, timeAirborne: number ): number {
-    const launchAngleRadians = launchAngle * Math.PI / 180;
-    return launchHeight + launchSpeed * Math.sin( launchAngleRadians ) * timeAirborne
+    return launchHeight + launchSpeed * Math.sin( Utils.toRadians( launchAngle ) ) * timeAirborne
            - 0.5 * PDLConstants.FREEFALL_ACCELERATION * timeAirborne * timeAirborne;
   }
 
   // TODO: launchHeight could be inferred from the launcher configuration. See https://github.com/phetsims/projectile-data-lab/issues/7
   public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
-    const launchAngleRadians = launchAngle * Math.PI / 180;
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
+    const launchAngleRadians = Utils.toRadians( launchAngle );
     const sinTheta = Math.sin( launchAngleRadians );
     const cosTheta = Math.cos( launchAngleRadians );
 
@@ -162,19 +161,17 @@ export default class Projectile {
       return launchHeight;
     }
     else {
-      const launchAngleRadians = launchAngle * Math.PI / 180;
       const g = PDLConstants.FREEFALL_ACCELERATION;
       const v0 = launchSpeed;
-      const sinTheta = Math.sin( launchAngleRadians );
+      const sinTheta = Math.sin( Utils.toRadians( launchAngle ) );
       return launchHeight + v0 * v0 * sinTheta * sinTheta / ( 2 * g );
     }
   }
 
   public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
-    const launchAngleRadians = launchAngle * Math.PI / 180;
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
-    const sinTheta = Math.sin( launchAngleRadians );
+    const sinTheta = Math.sin( Utils.toRadians( launchAngle ) );
     return ( v0 * sinTheta / g ) + Math.sqrt( ( v0 * sinTheta / g ) * ( v0 * sinTheta / g ) + 2 * launchHeight / g );
   }
 }
