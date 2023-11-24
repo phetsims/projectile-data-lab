@@ -100,6 +100,10 @@ const PDLColors = {
 
   heatMapNeedleStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapNeedleStroke', {
     default: '#111111'
+  } ),
+
+  speedToolConnectorColorProperty: new ProfileColorProperty( projectileDataLab, 'speedToolConnector', {
+    default: '#363F82'
   } )
 };
 

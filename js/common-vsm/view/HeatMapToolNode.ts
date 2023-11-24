@@ -27,10 +27,13 @@ type SelfOptions = {
   displayOffset: Vector2;
   needleShape: Shape;
   bodyShape: Shape;
-  heatNodeShape: Shape;
   binWidth: number;
   minValue: number;
   maxValue: number;
+  innerHeatNodeRadius: number;
+  outerHeatNodeRadius: number;
+  minHeatNodeAngle: number;
+  maxHeatNodeAngle: number;
   minLabeledValue: number;
   maxLabeledValue: number;
   labeledValueIncrement: number;
@@ -39,6 +42,7 @@ type SelfOptions = {
   labelMaxAngle: number;
   titleStringProperty: LocalizedStringProperty;
   unitsStringProperty: LocalizedStringProperty;
+  clockwise?: boolean;
 };
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
@@ -52,48 +56,68 @@ export default class HeatMapToolNode extends Node {
   private readonly needleNode: Node;
 
   public constructor( providedOptions: HeatMapToolNodeOptions ) {
-    const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
+    const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {
+      clockwise: false
+    }, providedOptions );
     super( options );
-
-    const displayNode = new Node( { x: options.displayOffset.x, y: options.displayOffset.y } );
-    this.addChild( displayNode );
 
     this.minValue = options.minValue;
     this.maxValue = options.maxValue;
     this.binWidth = options.binWidth;
 
-    const heatNodeWidth = options.heatNodeShape.bounds.width;
-    const heatNodeHeight = options.heatNodeShape.bounds.height;
+    const displayNode = new Node( { x: options.displayOffset.x, y: options.displayOffset.y } );
+    this.addChild( displayNode );
 
-    const heatNodeTotalWidth = heatNodeWidth * ( 1 + options.maxValue - options.minValue ) / options.binWidth;
+    const totalDeltaAngle = Math.abs( options.minHeatNodeAngle - options.maxHeatNodeAngle );
+    const totalBins = ( options.maxValue - options.minValue ) / options.binWidth;
+    const heatNodeArcLength = totalDeltaAngle / totalBins;
 
-    for ( let i = this.minValue; i <= this.maxValue; i += this.binWidth ) {
-      const heatNode = new Path( options.heatNodeShape, {
-        fill: PDLColors.heatMapColorProperty,
-        x: -0.5 * heatNodeTotalWidth + i * heatNodeWidth,
-        y: -0.5 * heatNodeHeight
+    this.heatNodes = this.createHeatNodes( -options.minHeatNodeAngle, heatNodeArcLength, options.innerHeatNodeRadius,
+      options.outerHeatNodeRadius, options.clockwise );
+
+    const labels = this.createLabels( options.minLabeledValue, options.maxLabeledValue, options.labeledValueIncrement,
+      options.labelDistanceFromCenter, options.labelMinAngle, options.labelMaxAngle );
+
+    const bodyNodeBack = new Path( options.bodyShape, { fill: PDLColors.heatMapBodyFillColorProperty } );
+    const bodyNodeFront = new Path( options.bodyShape, { stroke: PDLColors.heatMapBodyStrokeColorProperty, lineWidth: 1 } );
+    this.needleNode = this.createNeedleNode( options.needleShape );
+
+    displayNode.addChild( bodyNodeBack );
+    this.heatNodes.forEach( heatNode => displayNode.addChild( heatNode ) );
+    labels.forEach( label => displayNode.addChild( label ) );
+    displayNode.addChild( bodyNodeFront );
+    displayNode.addChild( this.needleNode );
+
+    options.sourceDataProperty.link( data => { this.updateHeatMapWithData( data ); } );
+  }
+
+  private createHeatNodes( minHeatNodeAngle: number, heatNodeArcLength: number, innerRadius: number, outerRadius: number, isClockwise: boolean ): Path[] {
+    const heatNodes = [];
+
+    const outerCircle = new Shape().arc( 0, 0, outerRadius, Utils.toRadians( -heatNodeArcLength / 2 ),
+      Utils.toRadians( heatNodeArcLength / 2 ) ).lineTo( 0, 0 );
+    const innerCircle = new Shape().arc( 0, 0, innerRadius, Utils.toRadians( -heatNodeArcLength / 2 ),
+      Utils.toRadians( heatNodeArcLength / 2 ) ).lineTo( 0, 0 );
+    const heatNodeShape = outerCircle.shapeDifference( innerCircle ).close();
+
+    const numHeatNodes = Math.floor( ( this.maxValue - this.minValue ) / this.binWidth );
+
+    for ( let i = 0; i < numHeatNodes; i++ ) {
+      const heatNode = new Path( heatNodeShape, {
+        fill: PDLColors.heatMapColorProperty
       } );
-      this.heatNodes.push( heatNode );
-      displayNode.addChild( heatNode );
+
+      const deltaAngle = ( 0.5 + i ) * heatNodeArcLength;
+      const headNodeAngle = isClockwise ? minHeatNodeAngle + deltaAngle : minHeatNodeAngle - deltaAngle;
+
+      heatNode.rotateAround( Vector2.ZERO, Utils.toRadians( headNodeAngle ) );
+      heatNodes.push( heatNode );
 
       // Initialize the number of values in each bin to 0
       this.numValuesInBin.push( 0 );
     }
 
-    const labels = this.createLabels( options.minLabeledValue, options.maxLabeledValue, options.labeledValueIncrement,
-      options.labelDistanceFromCenter, options.labelMinAngle, options.labelMaxAngle );
-
-    const bodyNode = new Path( options.bodyShape, {
-      fill: PDLColors.heatMapBodyFillColorProperty,
-      stroke: PDLColors.heatMapBodyStrokeColorProperty, lineWidth: 1
-    } );
-    this.needleNode = this.createNeedleNode( options.needleShape );
-
-    displayNode.addChild( bodyNode );
-    labels.forEach( label => displayNode.addChild( label ) );
-    displayNode.addChild( this.needleNode );
-
-    options.sourceDataProperty.link( data => { this.updateHeatMapWithData( data ); } );
+    return heatNodes;
   }
 
   private createLabels( minLabeledValue: number, maxLabeledValue: number, labeledValueIncrement: number,

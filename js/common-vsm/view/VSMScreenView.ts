@@ -31,6 +31,8 @@ export class VSMScreenView extends PDLScreenView {
   public constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
 
+    const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
+
     const accordionBox = new VSMAccordionBox(
       new Rectangle( 0, 0, 500, 200, { fill: '#ffcccc' } ), {
         expandedProperty: model.isHistogramShowingProperty,
@@ -61,8 +63,6 @@ export class VSMScreenView extends PDLScreenView {
       phetioDocumentation: 'The node for the measuring tape'
     } );
 
-    this.addChild( measuringTapeNode );
-
     const stopwatchNode = new StopwatchNode( model.stopwatch, {
       visibleProperty: model.isStopwatchVisibleProperty,
       dragBoundsProperty: this.visibleBoundsProperty,
@@ -74,8 +74,6 @@ export class VSMScreenView extends PDLScreenView {
       this.layoutBounds.centerY - 0.5 * stopwatchNode.bounds.height );
     model.stopwatch.positionProperty.setInitialValue( stopwatchStartingPosition );
     model.stopwatch.positionProperty.reset();
-
-    const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
     // Add a heat map tool node
     const speedToolNode = new SpeedToolNode( {
@@ -91,6 +89,7 @@ export class VSMScreenView extends PDLScreenView {
     this.addChild( stopwatchNode );
     this.addChild( speedToolNode );
     this.addChild( angleToolNode );
+    this.addChild( measuringTapeNode );
 
     // Position the time control node so that the play/pause button is centered at the 50-meter mark
     ManualConstraint.create( this, [ accordionBox ], accordionBoxProxy => {

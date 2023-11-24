@@ -8,6 +8,8 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
+import { Circle, Path } from '../../../../scenery/js/imports.js';
+import PDLColors from '../../common/PDLColors.js';
 
 /**
  * The SpeedToolNode is a static tool that displays a heat map representation of speed data.
@@ -18,9 +20,10 @@ import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape'
+  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape'
   | 'binWidth' | 'minValue' | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement'
-  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle'>;
+  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius'
+  | 'minHeatNodeAngle' | 'maxHeatNodeAngle'>;
 export default class SpeedToolNode extends HeatMapToolNode {
   public constructor( providedOptions: SpeedToolNodeOptions ) {
 
@@ -51,24 +54,47 @@ export default class SpeedToolNode extends HeatMapToolNode {
     // Create a shape that is the union of the three needle shapes
     const needleShape = Shape.union( [ needleArmShape, needleBaseShape, needleTipShape ] );
 
+    const minValue = 0;
+    const maxValue = 30;
+
     const options = optionize<SpeedToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
       displayOffset: new Vector2( 0, -150 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
-      heatNodeShape: new Shape().rect( 0, 0, 10, 10 ),
       binWidth: 1,
-      minValue: 0,
-      maxValue: 10,
-      minLabeledValue: 0,
-      maxLabeledValue: 30,
+      minValue: minValue,
+      maxValue: maxValue,
+      minHeatNodeAngle: 180 + needleAngleOverhang,
+      maxHeatNodeAngle: -needleAngleOverhang,
+      innerHeatNodeRadius: 0.5 * bodyRadius,
+      outerHeatNodeRadius: bodyRadius,
+      minLabeledValue: minValue,
+      maxLabeledValue: maxValue,
       labeledValueIncrement: 5,
       labelDistanceFromCenter: 0.8 * bodyRadius,
       labelMinAngle: 180 + needleAngleOverhang,
       labelMaxAngle: -needleAngleOverhang,
       titleStringProperty: ProjectileDataLabStrings.launchSpeedStringProperty,
-      unitsStringProperty: ProjectileDataLabStrings.metersPerSecondStringProperty
+      unitsStringProperty: ProjectileDataLabStrings.metersPerSecondStringProperty,
+      clockwise: true
     }, providedOptions );
     super( options );
+
+    // Create the graphics for the wire connected to the launcher
+    const launcherCircle = new Circle( 4, { fill: 'black' } );
+
+    const controlPoint1 = new Vector2( 0, 0.7 * options.displayOffset.y );
+    const controlPoint2 = new Vector2( -30, 0.3 * options.displayOffset.y );
+    const connectorShape = new Shape().moveTo( options.displayOffset.x, options.displayOffset.y ).cubicCurveTo(
+      controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, 0, 0 );
+
+    const connector = new Path( connectorShape, { stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4 } );
+
+    this.addChild( launcherCircle );
+    this.addChild( connector );
+
+    launcherCircle.moveToBack();
+    connector.moveToBack();
   }
 }
 

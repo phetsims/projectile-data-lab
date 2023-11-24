@@ -18,9 +18,10 @@ import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
 export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape'
+  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape'
   | 'binWidth' | 'minValue' | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement'
-  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle'>;
+  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius'
+  | 'minHeatNodeAngle' | 'maxHeatNodeAngle'>;
 
 export default class AngleToolNode extends HeatMapToolNode {
   public constructor( providedOptions: AngleToolNodeOptions ) {
@@ -58,12 +59,15 @@ export default class AngleToolNode extends HeatMapToolNode {
 
     const options = optionize<AngleToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
       displayOffset: Vector2.ZERO,
-      heatNodeShape: new Shape().rect( 0, 0, 10, 10 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
-      binWidth: 1,
-      minValue: 0,
-      maxValue: 10,
+      binWidth: 2,
+      minValue: minAngle,
+      maxValue: maxAngle,
+      minHeatNodeAngle: minAngle,
+      maxHeatNodeAngle: maxAngle,
+      innerHeatNodeRadius: innerBodyRadius,
+      outerHeatNodeRadius: outerBodyRadius,
       minLabeledValue: minAngle + 10,
       maxLabeledValue: maxAngle - 10,
       labeledValueIncrement: 10,
@@ -71,7 +75,8 @@ export default class AngleToolNode extends HeatMapToolNode {
       labelMinAngle: minAngle + 10,
       labelMaxAngle: maxAngle - 10,
       titleStringProperty: ProjectileDataLabStrings.launchAngleStringProperty,
-      unitsStringProperty: ProjectileDataLabStrings.degreesStringProperty
+      unitsStringProperty: ProjectileDataLabStrings.degreesStringProperty,
+      clockwise: false
     }, providedOptions );
     super( options );
   }
