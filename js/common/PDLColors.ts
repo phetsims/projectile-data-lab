@@ -83,7 +83,7 @@ const PDLColors = {
   } ),
 
   heatMapColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMap', {
-    default: '#FF9700'
+    default: '#EE6102'
   } ),
 
   heatMapBodyFillColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapBodyFill', {

@@ -8,6 +8,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The AngleToolNode is a static tool that displays a heat map representation of angle data.
@@ -17,6 +18,7 @@ import Utils from '../../../../dot/js/Utils.js';
  */
 
 type SelfOptions = EmptySelfOptions;
+
 export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
   'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape'
   | 'binWidth' | 'minValue' | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement'
@@ -24,19 +26,25 @@ export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptio
   | 'minHeatNodeAngle' | 'maxHeatNodeAngle'>;
 
 export default class AngleToolNode extends HeatMapToolNode {
-  public constructor( providedOptions: AngleToolNodeOptions ) {
+  public constructor( isNegativeAnglesShowing: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
 
-    // Create the body shape
     const innerBodyRadius = 70;
     const outerBodyRadius = 100;
-    const minAngle = -20;
-    const maxAngle = 80;
+    const minAngle = -25;
+    const maxAngle = 90;
+
+    const bodyShapeForShowNegativeAngles = ( innerBodyRadius: number, outerBodyRadius: number, minAngle: number, maxAngle: number, showNegativeAngles: boolean ) => {
+      const minAngleToShow = !isNegativeAnglesShowing.value ? minAngle : 0;
+      const outerCircle = new Shape().arc( 0, 0, outerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngleToShow ) ).lineTo( 0, 0 );
+      const innerCircle = new Shape().arc( 0, 0, innerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngleToShow ) ).lineTo( 0, 0 );
+      return outerCircle.shapeDifference( innerCircle ).close();
+    };
+
+    // Create the body shape
+    const bodyShape = bodyShapeForShowNegativeAngles( innerBodyRadius, outerBodyRadius, minAngle, maxAngle,
+      isNegativeAnglesShowing.value );
 
     const needleLength = 80;
-
-    const outerCircle = new Shape().arc( 0, 0, outerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
-    const innerCircle = new Shape().arc( 0, 0, innerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
-    const bodyShape = outerCircle.shapeDifference( innerCircle ).close();
 
     // Create the needle shape
     const needleWidth = 6;
@@ -70,7 +78,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       outerHeatNodeRadius: outerBodyRadius,
       minLabeledValue: minAngle + 10,
       maxLabeledValue: maxAngle - 10,
-      labeledValueIncrement: 10,
+      labeledValueIncrement: 15,
       labelDistanceFromCenter: ( innerBodyRadius + outerBodyRadius ) / 2,
       labelMinAngle: minAngle + 10,
       labelMaxAngle: maxAngle - 10,

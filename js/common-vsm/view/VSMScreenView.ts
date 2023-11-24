@@ -16,6 +16,8 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -81,7 +83,12 @@ export class VSMScreenView extends PDLScreenView {
       x: originPosition.x, y: originPosition.y
     } );
 
-    const angleToolNode = new AngleToolNode( {
+    const isLauncherRaisedProperty: TReadOnlyProperty<boolean> = new DerivedProperty( [ model.launcherConfigurationProperty ],
+      launcherConfiguration => {
+        return launcherConfiguration === 'ANGLE_0';
+      } );
+
+    const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: model.lastProjectileAngleProperty,
       x: originPosition.x, y: originPosition.y
     } );

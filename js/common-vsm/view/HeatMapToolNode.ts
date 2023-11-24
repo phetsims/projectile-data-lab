@@ -156,10 +156,11 @@ export default class HeatMapToolNode extends Node {
   private updateHeatMapWithData( data: number ): void {
     const minOpacity = 0.2;
     const index = Math.floor( ( data - this.minValue ) / this.binWidth );
+    let maxNumValuesInBin = 0;
 
     if ( this.numValuesInBin[ index ] !== null ) {
       this.numValuesInBin[ index ]++;
-      const maxNumValuesInBin = Math.max( ...this.numValuesInBin );
+      maxNumValuesInBin = Math.max( ...this.numValuesInBin );
 
       // If the bin is empty, set the opacity to 0
       // If the bin has values, set the opacity to minOpacity + (1-minOpacity) * (# values in bin) / (largest # values in any bin)
