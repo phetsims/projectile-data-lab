@@ -77,12 +77,12 @@ export class VSMScreenView extends PDLScreenView {
 
     // Add a heat map tool node
     const speedToolNode = new SpeedToolNode( {
-      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: model.binWidthProperty,
+      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: model.lastProjectileSpeedProperty,
       x: originPosition.x, y: originPosition.y
     } );
 
     const angleToolNode = new AngleToolNode( {
-      visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: model.binWidthProperty,
+      visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: model.lastProjectileAngleProperty,
       x: originPosition.x, y: originPosition.y
     } );
 

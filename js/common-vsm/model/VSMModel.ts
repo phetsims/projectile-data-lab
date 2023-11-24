@@ -13,6 +13,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
@@ -32,6 +33,10 @@ export default class VSMModel extends PDLModel {
 
   public readonly measuringTapeBasePositionProperty;
   public readonly measuringTapeTipPositionProperty;
+
+  // TODO: Refactor this into the emitter pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
+  public readonly lastProjectileSpeedProperty;
+  public readonly lastProjectileAngleProperty;
 
   public constructor( providedOptions: VSMModelOptions ) {
 
@@ -86,6 +91,24 @@ export default class VSMModel extends PDLModel {
         this.stopwatch.isRunningProperty.value = false;
       }
     } );
+
+    this.lastProjectileSpeedProperty = new Property<number>( 0, {
+      tandem: providedOptions.tandem.createTandem( 'lastProjectileSpeedProperty' ),
+      phetioValueType: NumberIO,
+      phetioDocumentation: 'The speed of the last projectile launched.'
+    } );
+
+    this.lastProjectileAngleProperty = new Property<number>( 0, {
+      tandem: providedOptions.tandem.createTandem( 'lastProjectileAngleProperty' ),
+      phetioValueType: NumberIO,
+      phetioDocumentation: 'The angle of the last projectile launched.'
+    } );
+  }
+
+  public override launchProjectile(): void {
+    this.fieldProperty.value.launchProjectile();
+    this.lastProjectileSpeedProperty.value = this.fieldProperty.value.lastProjectileSpeedProperty.value;
+    this.lastProjectileAngleProperty.value = this.fieldProperty.value.lastProjectileAngleProperty.value;
   }
 
   public override step( dt: number ): void {

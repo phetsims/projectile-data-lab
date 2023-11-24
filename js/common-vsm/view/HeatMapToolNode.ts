@@ -88,7 +88,11 @@ export default class HeatMapToolNode extends Node {
     displayNode.addChild( bodyNodeFront );
     displayNode.addChild( this.needleNode );
 
-    options.sourceDataProperty.link( data => { this.updateHeatMapWithData( data ); } );
+    options.sourceDataProperty.link( data => {
+      const needleAngle = -Utils.linear( this.minValue, this.maxValue, options.minHeatNodeAngle, options.maxHeatNodeAngle, data );
+      this.needleNode.setRotation( Utils.toRadians( needleAngle ) );
+      this.updateHeatMapWithData( data );
+    } );
   }
 
   private createHeatNodes( minHeatNodeAngle: number, heatNodeArcLength: number, innerRadius: number, outerRadius: number, isClockwise: boolean ): Path[] {

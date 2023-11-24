@@ -61,7 +61,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       displayOffset: new Vector2( 0, -150 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
-      binWidth: 1,
+      binWidth: 0.5,
       minValue: minValue,
       maxValue: maxValue,
       minHeatNodeAngle: 180 + needleAngleOverhang,
