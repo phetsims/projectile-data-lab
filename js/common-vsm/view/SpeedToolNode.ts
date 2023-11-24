@@ -18,16 +18,18 @@ import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape' | 'binWidth' | 'minValue' | 'maxValue'>;
+  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape'
+  | 'binWidth' | 'minValue' | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement'
+  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle'>;
 export default class SpeedToolNode extends HeatMapToolNode {
   public constructor( providedOptions: SpeedToolNodeOptions ) {
 
     const bodyRadius = 60;
-    const needleLength = 56;
+    const needleLength = 55;
 
     // Create the body shape
     const needleAngleOverhang = 9; // The number of degrees that the needle rotates below the horizontal at 0 and max values
-    const bottomMarginAngle = 4; // The number of degrees that the body extends below the lowest overhang point
+    const bottomMarginAngle = 10; // The number of degrees that the body extends below the lowest overhang point
     const totalAngleOverhang = needleAngleOverhang + bottomMarginAngle;
     const bodyShape = new Shape().arc( 0, 0, bodyRadius,
       Math.PI - Utils.toRadians( totalAngleOverhang ), Utils.toRadians( totalAngleOverhang ) ).close();
@@ -50,13 +52,20 @@ export default class SpeedToolNode extends HeatMapToolNode {
     const needleShape = Shape.union( [ needleArmShape, needleBaseShape, needleTipShape ] );
 
     const options = optionize<SpeedToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
-      titleStringProperty: ProjectileDataLabStrings.launchSpeedStringProperty,
+      displayOffset: new Vector2( 0, -150 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
       heatNodeShape: new Shape().rect( 0, 0, 10, 10 ),
       binWidth: 1,
       minValue: 0,
       maxValue: 10,
+      minLabeledValue: 0,
+      maxLabeledValue: 20,
+      labeledValueIncrement: 5,
+      labelDistanceFromCenter: 0.8 * bodyRadius,
+      labelMinAngle: 180 + needleAngleOverhang,
+      labelMaxAngle: -needleAngleOverhang,
+      titleStringProperty: ProjectileDataLabStrings.launchSpeedStringProperty,
       unitsStringProperty: ProjectileDataLabStrings.metersPerSecondStringProperty
     }, providedOptions );
     super( options );

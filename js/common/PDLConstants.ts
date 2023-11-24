@@ -51,6 +51,7 @@ const PDLConstants = {
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
+  HEATMAP_TOOL_LABEL_FONT: new PhetFont( 11 ),
   PRIMARY_FONT: new PhetFont( 13 ),
   FIELD_LABEL_FONT: new PhetFont( 16 ),
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),

@@ -40,14 +40,6 @@ export class VSMScreenView extends PDLScreenView {
       } );
     this.addChild( accordionBox );
 
-    // Add a heat map tool node
-    const speedToolNode = new SpeedToolNode( {
-      visibleProperty: model.isLaunchSpeedVisibleProperty,
-      sourceDataProperty: model.binWidthProperty
-    } );
-    this.addChild( speedToolNode );
-
-
     // Create a MeasuringTapeNode to measure distance
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
       visibleProperty: model.isMeasuringTapeVisibleProperty,
@@ -83,20 +75,22 @@ export class VSMScreenView extends PDLScreenView {
     model.stopwatch.positionProperty.setInitialValue( stopwatchStartingPosition );
     model.stopwatch.positionProperty.reset();
 
-    this.addChild( stopwatchNode );
+    const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const originX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - PDLConstants.FIELD_WIDTH / 2;
-    speedToolNode.centerX = originX;
-    speedToolNode.top = this.layoutBounds.centerY;
-
-    const angleToolNode = new AngleToolNode( {
-      visibleProperty: model.isLaunchAngleVisibleProperty,
-      sourceDataProperty: model.binWidthProperty
+    // Add a heat map tool node
+    const speedToolNode = new SpeedToolNode( {
+      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: model.binWidthProperty,
+      x: originPosition.x, y: originPosition.y
     } );
 
+    const angleToolNode = new AngleToolNode( {
+      visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: model.binWidthProperty,
+      x: originPosition.x, y: originPosition.y
+    } );
+
+    this.addChild( stopwatchNode );
+    this.addChild( speedToolNode );
     this.addChild( angleToolNode );
-    angleToolNode.centerX = originX + 100;
-    angleToolNode.bottom = PDLConstants.FIELD_CENTER_Y - 30;
 
     // Position the time control node so that the play/pause button is centered at the 50-meter mark
     ManualConstraint.create( this, [ accordionBox ], accordionBoxProxy => {

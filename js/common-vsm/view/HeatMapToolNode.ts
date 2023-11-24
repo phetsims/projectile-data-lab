@@ -8,6 +8,8 @@ import { Shape } from '../../../../kite/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
@@ -22,12 +24,19 @@ import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = {
   sourceDataProperty: Property<number>;
+  displayOffset: Vector2;
   needleShape: Shape;
   bodyShape: Shape;
   heatNodeShape: Shape;
   binWidth: number;
   minValue: number;
   maxValue: number;
+  minLabeledValue: number;
+  maxLabeledValue: number;
+  labeledValueIncrement: number;
+  labelDistanceFromCenter: number;
+  labelMinAngle: number;
+  labelMaxAngle: number;
   titleStringProperty: LocalizedStringProperty;
   unitsStringProperty: LocalizedStringProperty;
 };
@@ -46,19 +55,15 @@ export default class HeatMapToolNode extends Node {
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
     super( options );
 
+    const displayNode = new Node( { x: options.displayOffset.x, y: options.displayOffset.y } );
+    this.addChild( displayNode );
+
     this.minValue = options.minValue;
     this.maxValue = options.maxValue;
     this.binWidth = options.binWidth;
 
     const heatNodeWidth = options.heatNodeShape.bounds.width;
     const heatNodeHeight = options.heatNodeShape.bounds.height;
-
-    const headingLabel = new Text( options.titleStringProperty, {
-      centerX: 0
-    } );
-    const headingOffsetY = 5;
-    headingLabel.setY( -0.5 * headingLabel.height - headingOffsetY );
-    this.addChild( headingLabel );
 
     const heatNodeTotalWidth = heatNodeWidth * ( 1 + options.maxValue - options.minValue ) / options.binWidth;
 
@@ -69,11 +74,14 @@ export default class HeatMapToolNode extends Node {
         y: -0.5 * heatNodeHeight
       } );
       this.heatNodes.push( heatNode );
-      this.addChild( heatNode );
+      displayNode.addChild( heatNode );
 
       // Initialize the number of values in each bin to 0
       this.numValuesInBin.push( 0 );
     }
+
+    const labels = this.createLabels( options.minLabeledValue, options.maxLabeledValue, options.labeledValueIncrement,
+      options.labelDistanceFromCenter, options.labelMinAngle, options.labelMaxAngle );
 
     const bodyNode = new Path( options.bodyShape, {
       fill: PDLColors.heatMapBodyFillColorProperty,
@@ -81,11 +89,28 @@ export default class HeatMapToolNode extends Node {
     } );
     this.needleNode = this.createNeedleNode( options.needleShape );
 
-    this.addChild( bodyNode );
-    this.addChild( this.needleNode );
+    displayNode.addChild( bodyNode );
+    labels.forEach( label => displayNode.addChild( label ) );
+    displayNode.addChild( this.needleNode );
 
-    options.sourceDataProperty.link( data => {this.updateHeatMapWithData( data );}
-    );
+    options.sourceDataProperty.link( data => { this.updateHeatMapWithData( data ); } );
+  }
+
+  private createLabels( minLabeledValue: number, maxLabeledValue: number, labeledValueIncrement: number,
+                        labelDistanceFromCenter: number, labelMinAngle: number, labelMaxAngle: number ): Text[] {
+    const labels = [];
+
+    for ( let i = minLabeledValue; i <= maxLabeledValue; i += labeledValueIncrement ) {
+      const labelAngle = Utils.linear( minLabeledValue, maxLabeledValue, labelMinAngle, labelMaxAngle, i );
+      const label = new Text( i.toString(), {
+        centerX: labelDistanceFromCenter * Math.cos( Utils.toRadians( -labelAngle ) ),
+        centerY: labelDistanceFromCenter * Math.sin( Utils.toRadians( -labelAngle ) ),
+        font: PDLConstants.HEATMAP_TOOL_LABEL_FONT
+      } );
+      labels.push( label );
+    }
+
+    return labels;
   }
 
   private createNeedleNode( needleShape: Shape ): Node {

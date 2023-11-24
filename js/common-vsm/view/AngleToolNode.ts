@@ -18,18 +18,20 @@ import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = EmptySelfOptions;
 export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape' | 'binWidth' | 'minValue' | 'maxValue'>;
+  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape'
+  | 'binWidth' | 'minValue' | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement'
+  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle'>;
 
 export default class AngleToolNode extends HeatMapToolNode {
   public constructor( providedOptions: AngleToolNodeOptions ) {
 
     // Create the body shape
-    const innerBodyRadius = 55;
-    const outerBodyRadius = 80;
+    const innerBodyRadius = 70;
+    const outerBodyRadius = 100;
     const minAngle = -20;
-    const maxAngle = 90;
+    const maxAngle = 80;
 
-    const needleLength = 70;
+    const needleLength = 80;
 
     const outerCircle = new Shape().arc( 0, 0, outerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
     const innerCircle = new Shape().arc( 0, 0, innerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
@@ -55,13 +57,20 @@ export default class AngleToolNode extends HeatMapToolNode {
     const needleShape = Shape.union( [ needleBaseShape, needleArmShape, needleTipShape ] );
 
     const options = optionize<AngleToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
-      titleStringProperty: ProjectileDataLabStrings.launchAngleStringProperty,
+      displayOffset: Vector2.ZERO,
       heatNodeShape: new Shape().rect( 0, 0, 10, 10 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
       binWidth: 1,
       minValue: 0,
       maxValue: 10,
+      minLabeledValue: minAngle + 10,
+      maxLabeledValue: maxAngle - 10,
+      labeledValueIncrement: 10,
+      labelDistanceFromCenter: ( innerBodyRadius + outerBodyRadius ) / 2,
+      labelMinAngle: minAngle + 10,
+      labelMaxAngle: maxAngle - 10,
+      titleStringProperty: ProjectileDataLabStrings.launchAngleStringProperty,
       unitsStringProperty: ProjectileDataLabStrings.degreesStringProperty
     }, providedOptions );
     super( options );
