@@ -60,7 +60,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       minValue: 0,
       maxValue: 10,
       minLabeledValue: 0,
-      maxLabeledValue: 20,
+      maxLabeledValue: 30,
       labeledValueIncrement: 5,
       labelDistanceFromCenter: 0.8 * bodyRadius,
       labelMinAngle: 180 + needleAngleOverhang,

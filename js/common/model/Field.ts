@@ -133,7 +133,7 @@ export default class Field extends PhetioObject {
   public launchProjectile(): void {
 
     // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
-    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, this.launcherAngleProperty.value + dotRandom.nextGaussian() * 7, 25, this.launcherHeightProperty.value ) );
+    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, this.launcherAngleProperty.value + dotRandom.nextGaussian() * 3, 25 + dotRandom.nextGaussian() * 1, this.launcherHeightProperty.value ) );
   }
 
   public static FieldIO = new IOType( 'FieldIO', {
