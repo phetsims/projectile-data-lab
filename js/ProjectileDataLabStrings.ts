@@ -37,6 +37,9 @@ type StringsType = {
   'measuringTapeStringProperty': LocalizedStringProperty;
   'stopwatchStringProperty': LocalizedStringProperty;
   'intervalToolStringProperty': LocalizedStringProperty;
+  'metersStringProperty': LocalizedStringProperty;
+  'metersPerSecondStringProperty': LocalizedStringProperty;
+  'degreesStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;

@@ -70,5 +70,14 @@
   },
   "intervalTool": {
     "value": "Interval tool"
+  },
+  "meters": {
+    "value": "m"
+  },
+  "metersPerSecond": {
+    "value": "m/s"
+  },
+  "degrees": {
+    "value": "°"
   }
 }

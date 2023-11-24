@@ -9,8 +9,6 @@ import PDLColors from '../../common/PDLColors.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 
-// TODO: Explain why this does not extend GaugeNode - see https://github.com/phetsims/projectile-data-lab/issues/7
-
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
  * array of graphical elements that update opacity as the data changes, as well as background and foreground graphics.
@@ -21,11 +19,13 @@ import Utils from '../../../../dot/js/Utils.js';
 
 type SelfOptions = {
   sourceDataProperty: Property<number>;
+  needleShape: Shape;
   heatNodeShape: Shape;
   binWidth: number;
   minValue: number;
   maxValue: number;
   titleStringProperty: LocalizedStringProperty;
+  unitsStringProperty: LocalizedStringProperty;
 };
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
@@ -35,6 +35,8 @@ export default class HeatMapToolNode extends Node {
   private binWidth: number;
   private readonly heatNodes: Path[] = [];
   private readonly numValuesInBin: number[] = [];
+
+  private readonly needleNode: Node;
 
   public constructor( providedOptions: HeatMapToolNodeOptions ) {
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
@@ -81,8 +83,22 @@ export default class HeatMapToolNode extends Node {
       this.numValuesInBin.push( 0 );
     }
 
+    this.needleNode = this.createNeedleNode( options.needleShape );
+
     options.sourceDataProperty.link( data => {this.updateHeatMapWithData( data );}
     );
+  }
+
+  private createNeedleNode( needleShape: Shape ): Node {
+    const needleNode = new Path( needleShape, {
+      fill: PDLColors.heatMapNeedleFillColorProperty,
+      stroke: PDLColors.heatMapNeedleStrokeColorProperty,
+      lineWidth: 1,
+      x: 0,
+      y: 0
+    } );
+    this.addChild( needleNode );
+    return needleNode;
   }
 
   // updateHeatMapWithData updates the opacity of each heat node based on the number of values in the bin
