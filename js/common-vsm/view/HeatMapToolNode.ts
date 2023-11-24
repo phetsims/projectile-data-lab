@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import { Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Property from '../../../../axon/js/Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -13,6 +13,9 @@ import Utils from '../../../../dot/js/Utils.js';
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
  * array of graphical elements that update opacity as the data changes, as well as background and foreground graphics.
  *
+ * NOTE: Due to simulation-specific design and the need to coordinate with the SpeedToolNode AngleToolNode,
+ * this does not extend or compose GaugeNode.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -20,6 +23,7 @@ import Utils from '../../../../dot/js/Utils.js';
 type SelfOptions = {
   sourceDataProperty: Property<number>;
   needleShape: Shape;
+  bodyShape: Shape;
   heatNodeShape: Shape;
   binWidth: number;
   minValue: number;
@@ -56,19 +60,7 @@ export default class HeatMapToolNode extends Node {
     headingLabel.setY( -0.5 * headingLabel.height - headingOffsetY );
     this.addChild( headingLabel );
 
-    const marginX = 5;
-    const marginY = 3;
     const heatNodeTotalWidth = heatNodeWidth * ( 1 + options.maxValue - options.minValue ) / options.binWidth;
-    const totalWidth = heatNodeTotalWidth + 2 * marginX;
-    const totalHeight = heatNodeHeight + headingLabel.bounds.height + headingOffsetY + 2 * marginY;
-    const topY = headingLabel.y - headingLabel.bounds.height;
-
-    const backgroundNode = new Rectangle( -0.5 * totalWidth, topY, totalWidth, totalHeight, {
-      fill: 'white',
-      cornerRadius: 5
-    } );
-    this.addChild( backgroundNode );
-    backgroundNode.moveToBack();
 
     for ( let i = this.minValue; i <= this.maxValue; i += this.binWidth ) {
       const heatNode = new Path( options.heatNodeShape, {
@@ -83,7 +75,14 @@ export default class HeatMapToolNode extends Node {
       this.numValuesInBin.push( 0 );
     }
 
+    const bodyNode = new Path( options.bodyShape, {
+      fill: PDLColors.heatMapBodyFillColorProperty,
+      stroke: PDLColors.heatMapBodyStrokeColorProperty, lineWidth: 1
+    } );
     this.needleNode = this.createNeedleNode( options.needleShape );
+
+    this.addChild( bodyNode );
+    this.addChild( this.needleNode );
 
     options.sourceDataProperty.link( data => {this.updateHeatMapWithData( data );}
     );
@@ -97,7 +96,6 @@ export default class HeatMapToolNode extends Node {
       x: 0,
       y: 0
     } );
-    this.addChild( needleNode );
     return needleNode;
   }
 

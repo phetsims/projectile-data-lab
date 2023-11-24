@@ -7,6 +7,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 /**
  * The AngleToolNode is a static tool that displays a heat map representation of angle data.
@@ -17,13 +18,25 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = EmptySelfOptions;
 export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'titleStringProperty' | 'unitsStringProperty' | 'needleShape' | 'heatNodeShape' | 'binWidth' | 'minValue' | 'maxValue'>;
+  'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape' | 'binWidth' | 'minValue' | 'maxValue'>;
 
 export default class AngleToolNode extends HeatMapToolNode {
   public constructor( providedOptions: AngleToolNodeOptions ) {
 
+    // Create the body shape
+    const innerBodyRadius = 55;
+    const outerBodyRadius = 80;
+    const minAngle = -20;
+    const maxAngle = 90;
+
+    const needleLength = 70;
+
+    const outerCircle = new Shape().arc( 0, 0, outerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
+    const innerCircle = new Shape().arc( 0, 0, innerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
+    const bodyShape = outerCircle.shapeDifference( innerCircle ).close();
+
+    // Create the needle shape
     const needleWidth = 6;
-    const needleLength = 80;
     const needleTipLength = 10;
     const needleArmLength = needleLength - needleTipLength - needleWidth / 2;
 
@@ -44,6 +57,7 @@ export default class AngleToolNode extends HeatMapToolNode {
     const options = optionize<AngleToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
       titleStringProperty: ProjectileDataLabStrings.launchAngleStringProperty,
       heatNodeShape: new Shape().rect( 0, 0, 10, 10 ),
+      bodyShape: bodyShape,
       needleShape: needleShape,
       binWidth: 1,
       minValue: 0,

@@ -86,6 +86,14 @@ const PDLColors = {
     default: '#FF9700'
   } ),
 
+  heatMapBodyFillColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapBodyFill', {
+    default: '#EEEEEE'
+  } ),
+
+  heatMapBodyStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapBodyStroke', {
+    default: '#111111'
+  } ),
+
   heatMapNeedleFillColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapNeedleFill', {
     default: '#EE6102'
   } ),

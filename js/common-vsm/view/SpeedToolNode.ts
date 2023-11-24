@@ -7,6 +7,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 /**
  * The SpeedToolNode is a static tool that displays a heat map representation of speed data.
@@ -17,13 +18,23 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'titleStringProperty' | 'unitsStringProperty' | 'needleShape' | 'heatNodeShape' | 'binWidth' | 'minValue' | 'maxValue'>;
+  'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'heatNodeShape' | 'binWidth' | 'minValue' | 'maxValue'>;
 export default class SpeedToolNode extends HeatMapToolNode {
   public constructor( providedOptions: SpeedToolNodeOptions ) {
 
+    const bodyRadius = 60;
+    const needleLength = 56;
+
+    // Create the body shape
+    const needleAngleOverhang = 9; // The number of degrees that the needle rotates below the horizontal at 0 and max values
+    const bottomMarginAngle = 4; // The number of degrees that the body extends below the lowest overhang point
+    const totalAngleOverhang = needleAngleOverhang + bottomMarginAngle;
+    const bodyShape = new Shape().arc( 0, 0, bodyRadius,
+      Math.PI - Utils.toRadians( totalAngleOverhang ), Utils.toRadians( totalAngleOverhang ) ).close();
+
+    // Create the needle shape
     const needleBaseRadius = 3;
     const needleTipRadius = 1;
-    const needleLength = 60;
     const needleTipX = needleLength - needleBaseRadius - needleTipRadius;
 
     const needleBaseShape = new Shape().arc( 0, 0, needleBaseRadius, Math.PI / 2, 3 * Math.PI / 2 );
@@ -40,6 +51,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
     const options = optionize<SpeedToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
       titleStringProperty: ProjectileDataLabStrings.launchSpeedStringProperty,
+      bodyShape: bodyShape,
       needleShape: needleShape,
       heatNodeShape: new Shape().rect( 0, 0, 10, 10 ),
       binWidth: 1,
