@@ -23,7 +23,7 @@ type FieldOverlayNodeOptions = SelfOptions & NodeOptions;
 export default class FieldOverlayNode extends Node {
   public constructor( modelViewTransform: ModelViewTransform2, providedOptions: FieldOverlayNodeOptions ) {
 
-    const numTotalDashes = 40;
+    const numTotalDashes = 30;
 
     // Subtract 1 to make the dashed part of the right edge line up with the right side of the field
     const dashLength = PDLConstants.FIELD_WIDTH / ( 2 * numTotalDashes - 1 );
