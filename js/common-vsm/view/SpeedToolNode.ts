@@ -20,11 +20,13 @@ import PDLColors from '../../common/PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape'
-  | 'binWidth' | 'minValue' | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement'
-  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius'
-  | 'minHeatNodeAngle' | 'maxHeatNodeAngle'>;
+  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
+  | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
+  | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'minorTickMarkIncrement' | 'valueReadoutY'
+  | 'majorTickMarkLength' | 'minorTickMarkLength'>;
 export default class SpeedToolNode extends HeatMapToolNode {
+  private readonly connectingWire;
+
   public constructor( providedOptions: SpeedToolNodeOptions ) {
 
     const bodyRadius = 60;
@@ -58,14 +60,14 @@ export default class SpeedToolNode extends HeatMapToolNode {
     const maxValue = 30;
 
     const options = optionize<SpeedToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
-      displayOffset: new Vector2( 0, -150 ),
+      displayOffset: new Vector2( -20, -150 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
       binWidth: 0.5,
       minValue: minValue,
       maxValue: maxValue,
-      minHeatNodeAngle: 180 + needleAngleOverhang,
-      maxHeatNodeAngle: -needleAngleOverhang,
+      minAngle: 180 + needleAngleOverhang,
+      maxAngle: -needleAngleOverhang,
       innerHeatNodeRadius: 0.5 * bodyRadius,
       outerHeatNodeRadius: bodyRadius,
       minLabeledValue: minValue,
@@ -74,27 +76,40 @@ export default class SpeedToolNode extends HeatMapToolNode {
       labelDistanceFromCenter: 0.8 * bodyRadius,
       labelMinAngle: 180 + needleAngleOverhang,
       labelMaxAngle: -needleAngleOverhang,
+      isWithMinorTickMarks: true,
+      minorTickMarkIncrement: 1,
+      majorTickMarkLength: 5,
+      minorTickMarkLength: 3,
+      valueReadoutY: 20,
       titleStringProperty: ProjectileDataLabStrings.launchSpeedStringProperty,
       unitsStringProperty: ProjectileDataLabStrings.metersPerSecondStringProperty,
-      clockwise: true
+      isClockwise: true
     }, providedOptions );
     super( options );
 
     // Create the graphics for the wire connected to the launcher
     const launcherCircle = new Circle( 4, { fill: 'black' } );
 
-    const controlPoint1 = new Vector2( 0, 0.7 * options.displayOffset.y );
-    const controlPoint2 = new Vector2( -30, 0.3 * options.displayOffset.y );
+    const controlPoint1 = new Vector2( options.displayOffset.x, 0.6 * options.displayOffset.y );
+    const controlPoint2 = new Vector2( options.displayOffset.x - 10, 0.3 * options.displayOffset.y );
     const connectorShape = new Shape().moveTo( options.displayOffset.x, options.displayOffset.y ).cubicCurveTo(
       controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, 0, 0 );
 
-    const connector = new Path( connectorShape, { stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4 } );
+    this.connectingWire = new Path( connectorShape, { stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4 } );
 
     this.addChild( launcherCircle );
-    this.addChild( connector );
+    this.addChild( this.connectingWire );
 
     launcherCircle.moveToBack();
-    connector.moveToBack();
+    this.connectingWire.moveToBack();
+  }
+
+  public setForIsLauncherRaised( isLauncherRaised: boolean ): void {
+    const speedToolY = isLauncherRaised ? 120 : -150;
+    this.displayNode.setY( speedToolY );
+
+    const connectingWireAngle = isLauncherRaised ? Math.PI : 0;
+    this.connectingWire.setRotation( connectingWireAngle );
   }
 }
 

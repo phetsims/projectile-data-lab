@@ -4,11 +4,13 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import projectileDataLab from '../../projectileDataLab.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import { Path } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PDLColors from '../../common/PDLColors.js';
 
 /**
  * The AngleToolNode is a static tool that displays a heat map representation of angle data.
@@ -20,21 +22,20 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 type SelfOptions = EmptySelfOptions;
 
 export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape'
-  | 'binWidth' | 'minValue' | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement'
-  | 'labelDistanceFromCenter' | 'labelMinAngle' | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius'
-  | 'minHeatNodeAngle' | 'maxHeatNodeAngle'>;
+  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
+  | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
+  | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'majorTickMarkLength' | 'valueReadoutY'>;
 
 export default class AngleToolNode extends HeatMapToolNode {
-  public constructor( isNegativeAnglesShowing: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
+  public constructor( isNegativeAnglesShowingProperty: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
 
     const innerBodyRadius = 70;
     const outerBodyRadius = 100;
-    const minAngle = -25;
+    const minAngle = -20;
     const maxAngle = 90;
 
     const bodyShapeForShowNegativeAngles = ( innerBodyRadius: number, outerBodyRadius: number, minAngle: number, maxAngle: number, showNegativeAngles: boolean ) => {
-      const minAngleToShow = !isNegativeAnglesShowing.value ? minAngle : 0;
+      const minAngleToShow = showNegativeAngles ? minAngle : 0;
       const outerCircle = new Shape().arc( 0, 0, outerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngleToShow ) ).lineTo( 0, 0 );
       const innerCircle = new Shape().arc( 0, 0, innerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngleToShow ) ).lineTo( 0, 0 );
       return outerCircle.shapeDifference( innerCircle ).close();
@@ -42,7 +43,7 @@ export default class AngleToolNode extends HeatMapToolNode {
 
     // Create the body shape
     const bodyShape = bodyShapeForShowNegativeAngles( innerBodyRadius, outerBodyRadius, minAngle, maxAngle,
-      isNegativeAnglesShowing.value );
+      isNegativeAnglesShowingProperty.value );
 
     const needleLength = 80;
 
@@ -72,21 +73,46 @@ export default class AngleToolNode extends HeatMapToolNode {
       binWidth: 2,
       minValue: minAngle,
       maxValue: maxAngle,
-      minHeatNodeAngle: minAngle,
-      maxHeatNodeAngle: maxAngle,
+      minAngle: minAngle,
+      maxAngle: maxAngle,
       innerHeatNodeRadius: innerBodyRadius,
       outerHeatNodeRadius: outerBodyRadius,
       minLabeledValue: minAngle + 10,
       maxLabeledValue: maxAngle - 10,
-      labeledValueIncrement: 15,
+      labeledValueIncrement: 10,
       labelDistanceFromCenter: ( innerBodyRadius + outerBodyRadius ) / 2,
       labelMinAngle: minAngle + 10,
       labelMaxAngle: maxAngle - 10,
+      isWithInnerTickMarks: true,
+      majorTickMarkLength: 5,
+      valueReadoutY: 16,
       titleStringProperty: ProjectileDataLabStrings.launchAngleStringProperty,
-      unitsStringProperty: ProjectileDataLabStrings.degreesStringProperty,
-      clockwise: false
+      unitsStringProperty: ProjectileDataLabStrings.degreesStringProperty
     }, providedOptions );
     super( options );
+
+    isNegativeAnglesShowingProperty.link( isNegativeAnglesShowing => {
+      const bodyShape = bodyShapeForShowNegativeAngles( innerBodyRadius, outerBodyRadius, minAngle, maxAngle, isNegativeAnglesShowing );
+      this.drawBodyNodes( bodyShape );
+      this.heatNodesBelowHorizontal.forEach( heatNode => heatNode.setVisible( isNegativeAnglesShowing ) );
+      this.labelsBelowHorizontal.forEach( label => label.setVisible( isNegativeAnglesShowing ) );
+      this.tickMarksBelowHorizontal.forEach( tickMark => tickMark.setVisible( isNegativeAnglesShowing ) );
+    } );
+  }
+
+  public setNeedleForValue( value: number ): void {
+    this.needleNode.setRotation( Utils.toRadians( -value ) );
+  }
+
+  private drawBodyNodes( bodyShape: Shape ): void {
+    this.displayNode.removeChild( this.bodyBackNode );
+    this.displayNode.removeChild( this.bodyFrontNode );
+    this.bodyBackNode = new Path( bodyShape, { fill: PDLColors.heatMapBodyFillColorProperty } );
+    this.bodyFrontNode = new Path( bodyShape, { stroke: PDLColors.heatMapBodyStrokeColorProperty, lineWidth: 1 } );
+    this.displayNode.addChild( this.bodyBackNode );
+    this.displayNode.addChild( this.bodyFrontNode );
+    this.bodyBackNode.moveToBack();
+    this.needleNode.moveToFront();
   }
 }
 

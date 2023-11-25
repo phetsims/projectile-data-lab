@@ -90,7 +90,22 @@ export class VSMScreenView extends PDLScreenView {
 
     const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: model.lastProjectileAngleProperty,
-      x: originPosition.x, y: originPosition.y
+      x: originPosition.x, y: originPosition.y,
+      initialNeedleValue: model.launcherAngleProperty.value
+    } );
+
+    model.launcherHeightProperty.link( launcherHeight => {
+      const launcherY = this.modelViewTransform.modelToViewY( launcherHeight );
+      angleToolNode.y = launcherY;
+      speedToolNode.y = launcherY;
+    } );
+    model.launcherAngleProperty.link( launcherAngle => {
+      angleToolNode.setNeedleForValue( launcherAngle );
+    } );
+
+    model.launcherConfigurationProperty.link( launcherConfiguration => {
+      const isLauncherRaised = launcherConfiguration === 'ANGLE_0';
+      speedToolNode.setForIsLauncherRaised( isLauncherRaised );
     } );
 
     this.addChild( stopwatchNode );
