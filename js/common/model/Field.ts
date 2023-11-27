@@ -39,6 +39,9 @@ export default class Field extends PhetioObject {
 
   public readonly projectilesChangedEmitter = new Emitter();
 
+  // REVIEW: Do we really want and need this as a redundant emitter?
+  public readonly projectileLandedEmitter;
+
   // TODO: Refactor this into the emitter pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
   public readonly lastProjectileSpeedProperty;
   public readonly lastProjectileAngleProperty;
@@ -50,6 +53,15 @@ export default class Field extends PhetioObject {
     }, providedOptions );
 
     super( options );
+
+    this.projectileLandedEmitter = new Emitter<[ Projectile ]>( {
+      parameters: [ {
+        name: 'projectile',
+        valueType: Projectile,
+        phetioType: Projectile.ProjectileIO
+      } ],
+      tandem: options.tandem.createTandem( 'projectileLandedEmitter' )
+    } );
 
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_30', {
 
@@ -130,7 +142,7 @@ export default class Field extends PhetioObject {
   }
 
   public step( dt: number ): void {
-    this.projectiles.forEach( projectile => projectile.step( dt ) );
+    this.projectiles.forEach( projectile => projectile.step( this, dt ) );
     this.projectilesChangedEmitter.emit();
   }
 
@@ -140,7 +152,8 @@ export default class Field extends PhetioObject {
     const launchSpeed = 25 + dotRandom.nextGaussian() * 1;
 
     // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
-    this.projectiles.push( new Projectile( 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value ) );
+    // TODO: Get the field number and screen identifier correct. See https://github.com/phetsims/projectile-data-lab/issues/7
+    this.projectiles.push( new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value ) );
 
     this.lastProjectileAngleProperty.value = launchAngle;
     this.lastProjectileSpeedProperty.value = launchSpeed;

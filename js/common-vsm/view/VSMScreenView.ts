@@ -59,7 +59,7 @@ export class VSMScreenView extends PDLScreenView {
     };
 
     // Listen to each of the fields for changes to their projectiles
-    model.fields.forEach( field => field.projectilesChangedEmitter.addListener( updateProjectileCountProperty ) );
+    model.fields.forEach( field => field.projectileLandedEmitter.addListener( updateProjectileCountProperty ) );
 
     model.fieldProperty.link( updateProjectileCountProperty );
 

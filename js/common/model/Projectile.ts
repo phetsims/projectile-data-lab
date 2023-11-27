@@ -1,7 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
-import { ProjectilePhase, ProjectilePhaseValues } from './ProjectilePhase.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -9,6 +8,9 @@ import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import PDLConstants from '../PDLConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
+import Field from './Field.js';
+import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
+import { ProjectilePhase, ProjectilePhaseValues } from './ProjectilePhase.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -19,6 +21,10 @@ import Utils from '../../../../dot/js/Utils.js';
  */
 
 export default class Projectile {
+
+  public screenIdentifier: ScreenIdentifier;
+
+  public fieldNumber: number;
 
   // The x and y coordinates of the projectile relative to the launch position, in meters
   public x: number;
@@ -49,6 +55,8 @@ export default class Projectile {
   public landedImageIndex: number;
 
   public constructor(
+    fieldNumber: number,
+    screenIdentifier: ScreenIdentifier,
     x: number,
     y: number,
     type: ProjectileType,
@@ -60,6 +68,8 @@ export default class Projectile {
     launchSpeed: number | null = null,
     launchHeight: number | null = null
   ) {
+    this.screenIdentifier = screenIdentifier;
+    this.fieldNumber = fieldNumber;
     this.x = x;
     this.y = y;
     this.type = type;
@@ -72,7 +82,7 @@ export default class Projectile {
     this.launchHeight = launchHeight;
   }
 
-  public step( dt: number ): void {
+  public step( field: Field, dt: number ): void {
     if ( this.phase === 'AIRBORNE' ) {
       this.timeAirborne += dt;
 
@@ -80,10 +90,13 @@ export default class Projectile {
       this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne )!;
 
       if ( this.y <= 0 ) {
+
         this.phase = 'LANDED';
         this.x = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
         this.y = 0;
         this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! )!;
+
+        field.projectileLandedEmitter.emit( this );
       }
     }
   }
@@ -91,6 +104,8 @@ export default class Projectile {
   public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
     valueType: Projectile,
     stateSchema: {
+      fieldNumber: NumberIO,
+      screenIdentifier: StringUnionIO( ScreenIdentifierValues ),
 
       // TODO: x and y can be derived from everything else, do we really want it in the state? See https://github.com/phetsims/projectile-data-lab/issues/7
       x: NumberIO,
@@ -106,6 +121,8 @@ export default class Projectile {
     },
     toStateObject: ( projectile: Projectile ): ProjectileStateObject => {
       return {
+        screenIdentifier: projectile.screenIdentifier,
+        fieldNumber: projectile.fieldNumber,
         x: projectile.x,
         y: projectile.y,
         type: projectile.type,
@@ -120,6 +137,8 @@ export default class Projectile {
     },
     fromStateObject: ( stateObject: ProjectileStateObject ) => {
       return new Projectile(
+        stateObject.fieldNumber,
+        stateObject.screenIdentifier,
         stateObject.x,
         stateObject.y,
         stateObject.type,
@@ -177,6 +196,8 @@ export default class Projectile {
 }
 
 export type ProjectileStateObject = {
+  screenIdentifier: ScreenIdentifier;
+  fieldNumber: number;
   x: number;
   y: number;
   type: ProjectileType;
