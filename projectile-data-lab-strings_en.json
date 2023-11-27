@@ -41,6 +41,9 @@
   "field": {
     "value": "Field"
   },
+  "fieldValuePattern": {
+    "value": "Field {{value}}"
+  },
   "sampleSize": {
     "value": "Sample Size"
   },

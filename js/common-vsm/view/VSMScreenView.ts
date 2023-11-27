@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, ManualConstraint, Rectangle } from '../../../../scenery/js/imports.js';
+import { Color, ManualConstraint, Rectangle, Text, VBox } from '../../../../scenery/js/imports.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import VSMModel from '../model/VSMModel.js';
@@ -18,6 +18,9 @@ import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import FieldSignNode from '../../common/view/FieldSignNode.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -34,6 +37,27 @@ export class VSMScreenView extends PDLScreenView {
     super( model, options );
 
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
+
+    // Create the field sign
+    const fieldSignPosition = this.modelViewTransform.modelToViewPosition( new Vector2( 95, 0 ) );
+
+    const fieldSignStringProperty = new PatternStringProperty( ProjectileDataLabStrings.fieldValuePatternStringProperty, {
+      value: new DerivedProperty( [ model.fieldProperty ], field => {
+        return model.fields.indexOf( field ) + 1;
+      } )
+    } );
+
+    const fieldSignTextNodes = [ new Text( fieldSignStringProperty ) ];
+
+    const fieldSignTextContainer = new VBox( {
+      children: [ ...fieldSignTextNodes ],
+      align: 'center'
+    } );
+
+    const fieldSign = new FieldSignNode( fieldSignTextContainer, {
+      x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y
+    } );
+    this.addChild( fieldSign );
 
     const accordionBox = new VSMAccordionBox(
       new Rectangle( 0, 0, 500, 200, { fill: '#ffcccc' } ), {

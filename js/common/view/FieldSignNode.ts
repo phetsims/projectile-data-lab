@@ -3,10 +3,6 @@
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import Property from '../../../../axon/js/Property.js';
-import Field from '../model/Field.js';
-import PDLText from './PDLText.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
 
 /**
@@ -20,28 +16,23 @@ type SelfOptions = EmptySelfOptions;
 type FieldSignNodeOptions = SelfOptions & NodeOptions;
 
 export default class FieldSignNode extends Node {
-  public constructor( fieldProperty: Property<Field>, providedOptions: FieldSignNodeOptions ) {
+  public constructor( private readonly textNode: Node, providedOptions: FieldSignNodeOptions ) {
     super( providedOptions );
 
-    fieldProperty.link( field => {
-      const fieldNumber = field.fieldNumber;
-      this.drawSignForFieldNumber( fieldNumber );
-    } );
+    this.drawSign();
   }
 
-  private drawSignForFieldNumber( fieldNumber: number ): void {
-    this.removeAllChildren();
-
+  private drawSign( ): void {
     const signMarginX = 7;
     const signMarginY = 5;
     const signOffsetY = 35;
     const signPostTopExtension = 5;
     const signPostWidth = 6;
 
-    const fieldNumberString = ProjectileDataLabStrings.fieldStringProperty.value + ' ' + fieldNumber.toString();
-    const fieldNumberText = new PDLText( fieldNumberString, { centerX: 0, centerY: 0 } );
+    this.textNode.centerX = 0;
+    this.textNode.centerY = 0;
 
-    const signRect = fieldNumberText.bounds.dilatedXY( signMarginX, signMarginY );
+    const signRect = this.textNode.bounds.dilatedXY( signMarginX, signMarginY );
     const sign = new Rectangle( signRect, { fill: PDLColors.fieldSignColorProperty, cornerRadius: 1 } );
     const signPost = new Rectangle( -0.5 * signPostWidth, -0.5 * signRect.height - signPostTopExtension,
       signPostWidth, signOffsetY + 0.5 * signRect.height + signPostTopExtension, {
@@ -50,7 +41,7 @@ export default class FieldSignNode extends Node {
 
     this.addChild( signPost );
     this.addChild( sign );
-    this.addChild( fieldNumberText );
+    this.addChild( this.textNode );
   }
 }
 projectileDataLab.register( 'FieldSignNode', FieldSignNode );

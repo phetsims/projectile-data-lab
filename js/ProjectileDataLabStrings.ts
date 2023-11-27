@@ -27,6 +27,7 @@ type StringsType = {
   'histogramStringProperty': LocalizedStringProperty;
   'distributionStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
+  'fieldValuePatternStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
   'pathsStringProperty': LocalizedStringProperty;
   'launchSpeedStringProperty': LocalizedStringProperty;

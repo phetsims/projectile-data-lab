@@ -40,9 +40,11 @@ export default class VSMModel extends PDLModel {
 
   public constructor( providedOptions: VSMModelOptions ) {
 
-    const fields = _.range( 1, 9 ).map( i => new Field( i, {
-      tandem: providedOptions.tandem.createTandem( 'field' + i )
-    } ) );
+    const fields = _.range( 1, 9 ).map( i => {
+      return new Field( {
+        tandem: providedOptions.tandem.createTandem( 'field' + i )
+      } );
+    } );
 
     const options = optionize<VSMModelOptions, SelfOptions, PDLModelOptions>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],

@@ -48,7 +48,7 @@ export default class PDLModel implements TModel {
 
   public readonly timeSpeedValues: TimeSpeed[];
 
-  protected readonly fields: Field[];
+  public readonly fields: Field[];
 
   public readonly fieldProperty: Property<Field>;
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>;

@@ -31,7 +31,7 @@ export default class SamplingModel extends PDLModel {
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
       for ( let j = 0; j < NUM_SAMPLE_SIZES; j++ ) {
         const fieldNumber = 1 + j + i * NUM_SAMPLE_SIZES;
-        fields.push( new Field( fieldNumber, {
+        fields.push( new Field( {
           tandem: providedOptions.tandem.createTandem( 'field' + fieldNumber )
         } ) );
       }

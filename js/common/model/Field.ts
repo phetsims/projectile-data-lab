@@ -22,10 +22,6 @@ export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
 
 export default class Field extends PhetioObject {
 
-  public readonly fieldNumber: number;
-
-  public readonly numLandedProjectilesProperty: Property<number>;
-
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
   public readonly projectileTypeProperty: Property<ProjectileType>;
@@ -47,21 +43,13 @@ export default class Field extends PhetioObject {
   public readonly lastProjectileSpeedProperty;
   public readonly lastProjectileAngleProperty;
 
-  public constructor( fieldNumber: number, providedOptions: FieldOptions ) {
+  public constructor( providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,
       phetioState: true
     }, providedOptions );
 
     super( options );
-
-    this.fieldNumber = fieldNumber;
-
-    this.numLandedProjectilesProperty = new Property<number>( 0, {
-      tandem: providedOptions.tandem.createTandem( 'numLandedProjectilesProperty' ),
-      phetioDocumentation: 'The number of projectiles that have landed in this field.',
-      phetioValueType: NumberIO
-    } );
 
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_30', {
 
