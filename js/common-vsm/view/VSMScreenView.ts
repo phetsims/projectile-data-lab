@@ -21,6 +21,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -47,7 +48,26 @@ export class VSMScreenView extends PDLScreenView {
       } )
     } );
 
-    const fieldSignTextNodes = [ new Text( fieldSignStringProperty ) ];
+    // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
+    const projectileCountProperty = new NumberProperty( 0 );
+    const updateProjectileCountProperty = () => {
+      const projectiles = model.fieldProperty.value.projectiles.filter(
+        projectile => projectile.phase === 'LANDED' ||
+                      projectile.phase === 'AIRBORNE_BELOW_FIELD'
+      );
+      projectileCountProperty.value = projectiles.length;
+    };
+
+    // Listen to each of the fields for changes to their projectiles
+    model.fields.forEach( field => field.projectilesChangedEmitter.addListener( updateProjectileCountProperty ) );
+
+    model.fieldProperty.link( updateProjectileCountProperty );
+
+    const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.nEqualsProjectileCountPatternStringProperty, {
+      projectileCount: projectileCountProperty
+    } );
+
+    const fieldSignTextNodes = [ new Text( fieldSignStringProperty ), new Text( patternStringProperty ) ];
 
     const fieldSignTextContainer = new VBox( {
       children: [ ...fieldSignTextNodes ],
