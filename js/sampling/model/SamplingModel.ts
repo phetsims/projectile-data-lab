@@ -24,6 +24,7 @@ export default class SamplingModel extends PDLModel {
   public readonly sampleSizeProperty: Property<number>;
 
   private launchTimer = 0;
+  private currentSampleCount: number | null = null;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
@@ -65,12 +66,24 @@ export default class SamplingModel extends PDLModel {
     } );
   }
 
+  // TODO: Should this move to SamplingField? See https://github.com/phetsims/projectile-data-lab/issues/7
   public launchButtonPressed(): void {
     this.fieldProperty.value.createLandedProjectile();
+    this.currentSampleCount = 1;
+    this.launchTimer = 0;
   }
 
   public step( dt: number ): void {
+
+    const timeBetweenProjectiles = 0.5 / this.sampleSizeProperty.value;
     this.launchTimer += dt;
+    if ( typeof this.currentSampleCount === 'number' && this.currentSampleCount < this.sampleSizeProperty.value && this.launchTimer > timeBetweenProjectiles ) {
+
+      const overflow = timeBetweenProjectiles - this.launchTimer;
+      this.fieldProperty.value.createLandedProjectile();
+      this.currentSampleCount++;
+      this.launchTimer = overflow;
+    }
   }
 
   /**
