@@ -23,7 +23,7 @@ export default class SamplingModel extends PDLModel {
 
   public readonly sampleSizeProperty: Property<number>;
 
-  private launchTimer = 0;
+  private elapsedTime = 0;
   private currentSampleCount: number | null = null;
 
   public constructor( providedOptions: SamplingModelOptions ) {
@@ -70,19 +70,22 @@ export default class SamplingModel extends PDLModel {
   public launchButtonPressed(): void {
     this.fieldProperty.value.createLandedProjectile();
     this.currentSampleCount = 1;
-    this.launchTimer = 0;
+    this.elapsedTime = 0;
   }
 
   public step( dt: number ): void {
 
-    const timeBetweenProjectiles = 0.5 / this.sampleSizeProperty.value;
-    this.launchTimer += dt;
-    if ( typeof this.currentSampleCount === 'number' && this.currentSampleCount < this.sampleSizeProperty.value && this.launchTimer > timeBetweenProjectiles ) {
+    const TIME_BETWEEN_PROJECTILES = 0.5; // seconds
 
-      const overflow = timeBetweenProjectiles - this.launchTimer;
+    // constant time per sample, independent of sample size
+    const timeBetweenProjectiles = TIME_BETWEEN_PROJECTILES / this.sampleSizeProperty.value;
+
+    this.elapsedTime += dt;
+
+    while ( typeof this.currentSampleCount === 'number' && this.currentSampleCount < this.sampleSizeProperty.value && ( this.elapsedTime - timeBetweenProjectiles > 0 ) ) {
       this.fieldProperty.value.createLandedProjectile();
       this.currentSampleCount++;
-      this.launchTimer = overflow;
+      this.elapsedTime -= timeBetweenProjectiles;
     }
   }
 
