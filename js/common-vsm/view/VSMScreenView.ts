@@ -71,13 +71,13 @@ export class VSMScreenView extends PDLScreenView {
 
     const fieldSignTextContainer = new VBox( {
       children: [ ...fieldSignTextNodes ],
-      align: 'center'
+      align: 'center',
+      maxWidth: this.modelViewTransform.modelToViewDeltaX( 5 )
     } );
 
     const fieldSign = new FieldSignNode( fieldSignTextContainer, {
       x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y
     } );
-    this.addChild( fieldSign );
 
     const accordionBox = new VSMAccordionBox(
       new Rectangle( 0, 0, 500, 200, { fill: '#ffcccc' } ), {
@@ -86,7 +86,6 @@ export class VSMScreenView extends PDLScreenView {
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         tandem: options.tandem.createTandem( 'accordionBox' )
       } );
-    this.addChild( accordionBox );
 
     // Create a MeasuringTapeNode to measure distance
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
@@ -152,6 +151,9 @@ export class VSMScreenView extends PDLScreenView {
       speedToolNode.setForIsLauncherRaised( isLauncherRaised );
     } );
 
+    this.behindProjectilesLayer.addChild( fieldSign );
+
+    this.addChild( accordionBox );
     this.addChild( stopwatchNode );
     this.addChild( speedToolNode );
     this.addChild( angleToolNode );

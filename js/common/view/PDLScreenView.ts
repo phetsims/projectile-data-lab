@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Image, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { Node, Image, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -39,6 +39,8 @@ export class PDLScreenView extends ScreenView {
   protected readonly modelViewTransform;
 
   private readonly launcher;
+
+  protected readonly behindProjectilesLayer;
 
   protected readonly resetAllButton;
   protected readonly timeControlNode;
@@ -72,12 +74,10 @@ export class PDLScreenView extends ScreenView {
       backgroundNode.translation = visibleBounds.leftTop;
       backgroundNode.setScaleMagnitude( visibleBounds.width, visibleBounds.height );
     } );
-    this.addChild( backgroundNode );
 
     const noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
       maxWidth: 200
     } );
-    this.addChild( noAirResistanceText );
 
     this.resetAllButton = new ResetAllButton( {
       listener: () => {
@@ -89,7 +89,8 @@ export class PDLScreenView extends ScreenView {
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
-    this.addChild( this.resetAllButton );
+
+    this.behindProjectilesLayer = new Node();
 
     const fieldBack = new FieldNode( model.binWidthProperty, { x: fieldX, y: fieldY } );
     const fieldFront = new FieldNode( model.binWidthProperty, { isBottomHalf: true, x: fieldX, y: fieldY } );
@@ -105,10 +106,6 @@ export class PDLScreenView extends ScreenView {
       {}
     );
 
-    this.addChild( fieldBack );
-    this.addChild( this.launcher );
-    this.addChild( fieldFront );
-    this.addChild( fieldOverlayNode );
 
     // Create the launch button
     this.launchButton = new RectangularPushButton( {
@@ -124,7 +121,6 @@ export class PDLScreenView extends ScreenView {
       }
     } );
 
-    this.addChild( this.launchButton );
 
     const radioButtonLabelMaxWidth = 180;
     this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.isContinuousLaunchProperty, [
@@ -151,8 +147,6 @@ export class PDLScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' )
     } );
 
-    this.addChild( this.launchControlRadioButtonGroup );
-
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),
       playPauseStepButtonOptions: {
@@ -162,7 +156,6 @@ export class PDLScreenView extends ScreenView {
       timeSpeeds: model.timeSpeedValues,
       buttonGroupXSpacing: 18
     } );
-    this.addChild( this.timeControlNode );
 
     // Create the eraser button
     this.eraserButton = new EraserButton( {
@@ -175,21 +168,38 @@ export class PDLScreenView extends ScreenView {
       tandem: options.tandem.createTandem( 'eraserButton' )
     } );
 
-    this.addChild( this.eraserButton );
+    // Expand the canvas bounds so that the projectile paths are not clipped if they go beyond the field
+    const canvasMarginRight = this.modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE / 2 );
+    const canvasBounds = ScreenView.DEFAULT_LAYOUT_BOUNDS.dilatedX( canvasMarginRight / 2 )
+      .shiftedX( canvasMarginRight / 2 );
 
     const projectileCanvas = new PDLCanvas( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform, {
-      canvasBounds: ScreenView.DEFAULT_LAYOUT_BOUNDS
+      canvasBounds: canvasBounds
     } );
+
+    this.behindProjectilesLayer.addChild( fieldBack );
+    this.behindProjectilesLayer.addChild( this.launcher );
+    this.behindProjectilesLayer.addChild( fieldFront );
+    this.behindProjectilesLayer.addChild( fieldOverlayNode );
+
+    this.addChild( backgroundNode );
+    this.addChild( this.behindProjectilesLayer );
     this.addChild( projectileCanvas );
+    this.addChild( this.launchButton );
+    this.addChild( this.launchControlRadioButtonGroup );
+    this.addChild( noAirResistanceText );
+    this.addChild( this.resetAllButton );
+    this.addChild( this.timeControlNode );
+    this.addChild( this.eraserButton );
 
     // layout
     ManualConstraint.create(
       this,
-      [ noAirResistanceText, this.resetAllButton ],
-      ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
-        noAirResistanceTextProxy.right =
-          resetAllButtonProxy.left - PDLConstants.SCREEN_VIEW_X_MARGIN;
-        noAirResistanceTextProxy.bottom = resetAllButtonProxy.bottom;
+      [ noAirResistanceText, this.timeControlNode, this.resetAllButton ],
+      ( noAirResistanceTextProxy, timeControlNodeProxy, resetAllButtonProxy ) => {
+        // Position the no air resistance text so that it is centered between the time control node and the reset all button
+        noAirResistanceTextProxy.centerX = 0.5 * ( timeControlNodeProxy.right + resetAllButtonProxy.left );
+        noAirResistanceTextProxy.centerY = resetAllButtonProxy.centerY;
       }
     );
 
