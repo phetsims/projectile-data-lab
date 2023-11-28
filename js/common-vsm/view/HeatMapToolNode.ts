@@ -55,11 +55,10 @@ type SelfOptions = {
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
 export default class HeatMapToolNode extends Node {
-  private minValue: number;
-  private maxValue: number;
-  private binWidth: number;
+  private readonly minValue: number;
+  private readonly maxValue: number;
+  private readonly binWidth: number;
   private readonly numValuesInBin: number[] = [];
-
   private readonly heatNodes: Path[] = [];
 
   // The display node contains all the graphical elements of the heat map tool, excluding any connector graphics
@@ -68,6 +67,8 @@ export default class HeatMapToolNode extends Node {
   protected bodyBackNode: Path;
   protected bodyFrontNode: Path;
   protected readonly needleNode: Node;
+
+  protected readonly valueReadoutNode: Node;
 
   // TODO: Find a way to move this into AngleToolNode - see https://github.com/phetsims/projectile-data-lab/issues/7
   protected readonly labelsBelowHorizontal: Text[] = [];
@@ -127,7 +128,7 @@ export default class HeatMapToolNode extends Node {
       return dataRounded.toString() + options.unitsStringProperty.value;
     } );
 
-    const valueReadoutNode = new Node( { x: 0, y: options.valueReadoutY } );
+    this.valueReadoutNode = new Node( { x: 0, y: options.valueReadoutY } );
     const valueReadout = new Text( valueReadoutStringProperty, {
       centerX: 0,
       centerY: 0,
@@ -143,10 +144,10 @@ export default class HeatMapToolNode extends Node {
       cornerRadius: 10
     } );
 
-    valueReadoutNode.addChild( valueReadoutBackground );
-    valueReadoutNode.addChild( valueReadout );
+    this.valueReadoutNode.addChild( valueReadoutBackground );
+    this.valueReadoutNode.addChild( valueReadout );
 
-    ManualConstraint.create( valueReadoutNode, [ valueReadout ], valueReadoutProxy => {
+    ManualConstraint.create( this.valueReadoutNode, [ valueReadout ], valueReadoutProxy => {
       valueReadoutProxy.x = -0.5 * valueReadoutProxy.width;
       valueReadoutBackground.setRectBounds( valueReadout.bounds.dilatedXY( 8, 2 ) );
     } );
@@ -157,7 +158,7 @@ export default class HeatMapToolNode extends Node {
     tickMarks.forEach( tickMark => this.displayNode.addChild( tickMark ) );
     this.displayNode.addChild( this.bodyFrontNode );
     this.displayNode.addChild( this.needleNode );
-    this.displayNode.addChild( valueReadoutNode );
+    this.displayNode.addChild( this.valueReadoutNode );
 
     const needleAngleForValue = ( value: number ): number => {
       return -Utils.linear( this.minValue, this.maxValue, options.minAngle, options.maxAngle, value );

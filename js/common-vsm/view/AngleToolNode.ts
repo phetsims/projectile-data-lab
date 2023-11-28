@@ -26,6 +26,9 @@ export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptio
   | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
   | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'majorTickMarkLength' | 'valueReadoutY'>;
 
+
+const VALUE_READOUT_Y_MAGNITUDE = 17;
+
 export default class AngleToolNode extends HeatMapToolNode {
   public constructor( isNegativeAnglesShowingProperty: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
 
@@ -45,11 +48,10 @@ export default class AngleToolNode extends HeatMapToolNode {
     const bodyShape = bodyShapeForShowNegativeAngles( innerBodyRadius, outerBodyRadius, minAngle, maxAngle,
       isNegativeAnglesShowingProperty.value );
 
-    const needleLength = 80;
-
     // Create the needle shape
-    const needleWidth = 6;
-    const needleTipLength = 10;
+    const needleLength = 76;
+    const needleWidth = 3;
+    const needleTipLength = 6;
     const needleArmLength = needleLength - needleTipLength - needleWidth / 2;
 
     const needleBaseShape = new Shape().arc( 0, 0, needleWidth / 2, Math.PI / 2, 3 * Math.PI / 2 );
@@ -85,7 +87,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       labelMaxAngle: maxAngle - 10,
       isWithInnerTickMarks: true,
       majorTickMarkLength: 5,
-      valueReadoutY: 16,
+      valueReadoutY: VALUE_READOUT_Y_MAGNITUDE,
       titleStringProperty: ProjectileDataLabStrings.launchAngleStringProperty,
       unitsStringProperty: ProjectileDataLabStrings.degreesStringProperty
     }, providedOptions );
@@ -97,6 +99,9 @@ export default class AngleToolNode extends HeatMapToolNode {
       this.heatNodesBelowHorizontal.forEach( heatNode => heatNode.setVisible( isNegativeAnglesShowing ) );
       this.labelsBelowHorizontal.forEach( label => label.setVisible( isNegativeAnglesShowing ) );
       this.tickMarksBelowHorizontal.forEach( tickMark => tickMark.setVisible( isNegativeAnglesShowing ) );
+
+      // Move the value readout node to the other side of the needle
+      this.valueReadoutNode.y = isNegativeAnglesShowing ? -VALUE_READOUT_Y_MAGNITUDE : VALUE_READOUT_Y_MAGNITUDE;
     } );
   }
 

@@ -34,13 +34,13 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
     // Create the body shape
     const needleAngleOverhang = 9; // The number of degrees that the needle rotates below the horizontal at 0 and max values
-    const bottomMarginAngle = 10; // The number of degrees that the body extends below the lowest overhang point
+    const bottomMarginAngle = 8; // The number of degrees that the body extends below the lowest overhang point
     const totalAngleOverhang = needleAngleOverhang + bottomMarginAngle;
     const bodyShape = new Shape().arc( 0, 0, bodyRadius,
       Math.PI - Utils.toRadians( totalAngleOverhang ), Utils.toRadians( totalAngleOverhang ) ).close();
 
     // Create the needle shape
-    const needleBaseRadius = 3;
+    const needleBaseRadius = 2.5;
     const needleTipRadius = 1;
     const needleTipX = needleLength - needleBaseRadius - needleTipRadius;
 
@@ -80,7 +80,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       minorTickMarkIncrement: 1,
       majorTickMarkLength: 5,
       minorTickMarkLength: 3,
-      valueReadoutY: 20,
+      valueReadoutY: bodyRadius * Math.sin( Utils.toRadians( totalAngleOverhang ) ),
       titleStringProperty: ProjectileDataLabStrings.launchSpeedStringProperty,
       unitsStringProperty: ProjectileDataLabStrings.metersPerSecondStringProperty,
       isClockwise: true
