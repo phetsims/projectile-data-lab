@@ -83,20 +83,33 @@ export default class Projectile {
   }
 
   public step( field: Field, dt: number ): void {
-    if ( this.phase === 'AIRBORNE' ) {
+    if ( this.phase === 'AIRBORNE' || this.phase === 'AIRBORNE_BELOW_FIELD' ) {
       this.timeAirborne += dt;
 
       this.x = Projectile.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
       this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne )!;
 
-      if ( this.y <= 0 ) {
+      if ( this.phase === 'AIRBORNE' ) {
+        if ( this.y <= 0 ) {
+          if ( this.x > PDLConstants.MAX_FIELD_DISTANCE ) {
+            this.phase = 'AIRBORNE_BELOW_FIELD';
+          }
+          else {
+            this.phase = 'LANDED';
+            this.x = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+            this.y = 0;
+            this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! )!;
+          }
 
-        this.phase = 'LANDED';
-        this.x = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
-        this.y = 0;
-        this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! )!;
+          field.projectileLandedEmitter.emit( this );
+        }
+      }
 
-        field.projectileLandedEmitter.emit( this );
+      if ( this.phase === 'AIRBORNE_BELOW_FIELD' ) {
+        // TODO: Avoid magic numbers - see https://github.com/phetsims/projectile-data-lab/issues/7
+        if ( this.y <= -15 ) {
+          this.phase = 'LANDED';
+        }
       }
     }
   }
