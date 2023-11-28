@@ -67,12 +67,15 @@ export class VSMScreenView extends PDLScreenView {
       projectileCount: projectileCountProperty
     } );
 
-    const fieldSignTextNodes = [ new Text( fieldSignStringProperty ), new Text( patternStringProperty ) ];
+    const fieldNumberText = new Text( fieldSignStringProperty, { font: PDLConstants.PRIMARY_FONT } );
+    const projectileCountText = new Text( patternStringProperty, { font: PDLConstants.PRIMARY_FONT } );
+
+    const fieldSignTextNodes = [ fieldNumberText, projectileCountText ];
 
     const fieldSignTextContainer = new VBox( {
       children: [ ...fieldSignTextNodes ],
       align: 'center',
-      maxWidth: this.modelViewTransform.modelToViewDeltaX( 5 )
+      maxWidth: this.modelViewTransform.modelToViewDeltaX( 6 )
     } );
 
     const fieldSign = new FieldSignNode( fieldSignTextContainer, {

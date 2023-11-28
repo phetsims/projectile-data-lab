@@ -161,7 +161,7 @@ export class PDLScreenView extends ScreenView {
     this.eraserButton = new EraserButton( {
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
       centerY: PDLConstants.FIELD_SIGN_CENTER_Y,
-      iconWidth: 25,
+      iconWidth: 27,
       listener: () => {
         model.clearCurrentField();
       },
