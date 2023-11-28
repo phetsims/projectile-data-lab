@@ -27,7 +27,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import PDLText from './PDLText.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import PDLCanvas from './PDLCanvas.js';
+import PDLCanvasNode from './PDLCanvasNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 
@@ -174,7 +174,7 @@ export class PDLScreenView extends ScreenView {
     const canvasBounds = ScreenView.DEFAULT_LAYOUT_BOUNDS.dilatedX( canvasMarginRight / 2 )
       .shiftedX( canvasMarginRight / 2 );
 
-    const projectileCanvas = new PDLCanvas( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform, {
+    const projectileCanvas = new PDLCanvasNode( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform, {
       canvasBounds: canvasBounds
     } );
 

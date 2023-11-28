@@ -19,7 +19,7 @@ import Projectile from '../model/Projectile.js';
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
 
-export default class PDLCanvas extends CanvasNode {
+export default class PDLCanvasNode extends CanvasNode {
   public constructor(
     private readonly fieldProperty: Property<Field>,
     private readonly isPathsVisibleProperty: Property<boolean>,
@@ -114,4 +114,4 @@ export default class PDLCanvas extends CanvasNode {
   }
 }
 
-projectileDataLab.register( 'PDLCanvas', PDLCanvas );
+projectileDataLab.register( 'PDLCanvasNode', PDLCanvasNode );
