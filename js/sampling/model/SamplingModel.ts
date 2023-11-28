@@ -12,14 +12,14 @@ import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
-import Field from '../../common/model/Field.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import SamplingField from './SamplingField.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
+type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
-export default class SamplingModel extends PDLModel {
+export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly sampleSizeProperty: Property<number>;
 
@@ -28,19 +28,19 @@ export default class SamplingModel extends PDLModel {
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
-    const fields: Field[] = [];
+    const fields: SamplingField[] = [];
     const NUM_LAUNCHERS = 6;
     const NUM_SAMPLE_SIZES = 4;
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
       for ( let j = 0; j < NUM_SAMPLE_SIZES; j++ ) {
         const fieldNumber = 1 + j + i * NUM_SAMPLE_SIZES;
-        fields.push( new Field( {
+        fields.push( new SamplingField( {
           tandem: providedOptions.tandem.createTandem( 'field' + fieldNumber )
         } ) );
       }
     }
 
-    const options = optionize<SamplingModelOptions, SelfOptions, PDLModelOptions>()( {
+    const options = optionize<SamplingModelOptions, SelfOptions, PDLModelOptions<SamplingField>>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
       fields: fields,
       isPathsVisible: true

@@ -9,7 +9,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SourcesLaunchPanel from '../../sources/view/SourcesLaunchPanel.js';
-import FieldPanel from '../../common/view/panels/FieldPanel.js';
+import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
 import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -31,7 +31,7 @@ export default class MeasuresScreenView extends VSMScreenView {
     } );
     this.addChild( measuresLaunchPanel );
 
-    const fieldPanel = new FieldPanel( model.fieldProperty, {
+    const fieldPanel = new VSMFieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
 

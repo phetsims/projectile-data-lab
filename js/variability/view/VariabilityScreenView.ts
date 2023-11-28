@@ -10,7 +10,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
-import FieldPanel from '../../common/view/panels/FieldPanel.js';
+import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
 import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
@@ -32,7 +32,7 @@ export default class VariabilityScreenView extends VSMScreenView {
     } );
     this.addChild( variabilityLaunchPanel );
 
-    const fieldPanel = new FieldPanel( model.fieldProperty, {
+    const fieldPanel = new VSMFieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
 

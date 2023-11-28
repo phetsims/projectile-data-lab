@@ -1,15 +1,15 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
-import PDLPanelSection from './PDLPanelSection.js';
-import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
-import projectileDataLab from '../../../projectileDataLab.js';
-import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import Property from '../../../../../axon/js/Property.js';
-import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import Field from '../../model/Field.js';
-import PDLText from '../PDLText.js';
-import PDLConstants from '../../PDLConstants.js';
+import { PDLPanel, PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
+import PDLPanelSection from '../../common/view/panels/PDLPanelSection.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PDLText from '../../common/view/PDLText.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import VSMField from '../model/VSMField.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -19,8 +19,8 @@ import PDLConstants from '../../PDLConstants.js';
 type SelfOptions = EmptySelfOptions;
 type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 
-export default class FieldPanel extends PDLPanel {
-  public constructor( fieldProperty: Property<Field>, providedOptions: FieldPanelOptions ) {
+export default class VSMFieldPanel extends PDLPanel {
+  public constructor( fieldProperty: Property<VSMField>, providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN
@@ -47,4 +47,5 @@ export default class FieldPanel extends PDLPanel {
     } ), options );
   }
 }
-projectileDataLab.register( 'FieldPanel', FieldPanel );
+
+projectileDataLab.register( 'VSMFieldPanel', VSMFieldPanel );

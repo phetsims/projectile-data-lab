@@ -2,23 +2,26 @@
 
 /**
  * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Field from '../../common/model/Field.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import VSMField from './VSMField.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
+export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
-export default class VSMModel extends PDLModel {
+export default class VSMModel extends PDLModel<VSMField> {
 
   // Static tool visibility
   public readonly isLaunchAngleVisibleProperty: BooleanProperty;
@@ -37,12 +40,12 @@ export default class VSMModel extends PDLModel {
   public constructor( providedOptions: VSMModelOptions ) {
 
     const fields = _.range( 1, 9 ).map( i => {
-      return new Field( {
+      return new VSMField( {
         tandem: providedOptions.tandem.createTandem( 'field' + i )
       } );
     } );
 
-    const options = optionize<VSMModelOptions, SelfOptions, PDLModelOptions>()( {
+    const options = optionize<VSMModelOptions, SelfOptions, PDLModelOptions<VSMField>>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],
       fields: fields,
       isPathsVisible: false

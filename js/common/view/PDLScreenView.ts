@@ -30,11 +30,12 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLCanvasNode from './PDLCanvasNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import Field from '../model/Field.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export class PDLScreenView extends ScreenView {
+export class PDLScreenView<T extends Field> extends ScreenView {
 
   protected readonly modelViewTransform;
 
@@ -48,7 +49,7 @@ export class PDLScreenView extends ScreenView {
   protected readonly launchControlRadioButtonGroup;
   protected readonly eraserButton: EraserButton;
 
-  public constructor( model: PDLModel, options: PDLScreenViewOptions ) {
+  public constructor( model: PDLModel<T>, options: PDLScreenViewOptions ) {
     super( options );
 
     const fieldX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X;

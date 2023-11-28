@@ -9,7 +9,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import SourcesModel from '../model/SourcesModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SourcesLaunchPanel from './SourcesLaunchPanel.js';
-import FieldPanel from '../../common/view/panels/FieldPanel.js';
+import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
 import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
@@ -31,7 +31,7 @@ export default class SourcesScreenView extends VSMScreenView {
     } );
     this.addChild( sourcesLaunchPanel );
 
-    const fieldPanel = new FieldPanel( model.fieldProperty, {
+    const fieldPanel = new VSMFieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );
     const staticToolPanel = new StaticToolPanel( model.isPathsVisibleProperty, model.isLaunchAngleVisibleProperty, model.isLaunchSpeedVisibleProperty, {

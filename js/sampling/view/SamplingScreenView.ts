@@ -13,12 +13,13 @@ import SamplingLaunchPanel from './SamplingLaunchPanel.js';
 import { ManualConstraint, Rectangle } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
+import SamplingField from '../model/SamplingField.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type SamplingScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class SamplingScreenView extends PDLScreenView {
+export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
     const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );

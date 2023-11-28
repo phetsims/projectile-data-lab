@@ -25,6 +25,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Projectile from '../../common/model/Projectile.js';
 import Field from '../../common/model/Field.js';
+import VSMField from '../model/VSMField.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -36,7 +37,7 @@ import Field from '../../common/model/Field.js';
 type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export class VSMScreenView extends PDLScreenView {
+export class VSMScreenView extends PDLScreenView<VSMField> {
   public constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
 

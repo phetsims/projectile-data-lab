@@ -22,14 +22,14 @@ import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
-type SelfOptions = {
+type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
-  fields: Field[];
+  fields: T[];
   isPathsVisible: boolean;
 };
-export type PDLModelOptions = SelfOptions & { tandem: Tandem };
+export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem };
 
-export default abstract class PDLModel implements TModel {
+export default abstract class PDLModel<T extends Field> implements TModel {
 
   // isContinuousLaunchProperty is true when the launcher is in continuous launch (rapid fire) mode.
   public readonly isContinuousLaunchProperty: Property<boolean>;
@@ -48,21 +48,21 @@ export default abstract class PDLModel implements TModel {
 
   public readonly timeSpeedValues: TimeSpeed[];
 
-  public readonly fields: Field[];
+  public readonly fields: T[];
 
-  public readonly fieldProperty: Property<Field>;
-  public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>;
-  public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, Field>;
+  public readonly fieldProperty: Property<T>;
+  public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
+  public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
 
   // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
-  public readonly launcherTypeProperty: DynamicProperty<number, number, Field>;
+  public readonly launcherTypeProperty: DynamicProperty<number, number, T>;
 
-  public readonly launcherAngleProperty: DynamicProperty<number, number, Field>;
-  public readonly launcherHeightProperty: DynamicProperty<number, number, Field>;
+  public readonly launcherAngleProperty: DynamicProperty<number, number, T>;
+  public readonly launcherHeightProperty: DynamicProperty<number, number, T>;
 
   public readonly isPathsVisibleProperty: BooleanProperty;
 
-  public constructor( providedOptions: PDLModelOptions ) {
+  public constructor( providedOptions: PDLModelOptions<T> ) {
 
     this.isContinuousLaunchProperty = new Property<boolean>( false, {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchProperty' ),
@@ -106,29 +106,29 @@ export default abstract class PDLModel implements TModel {
       reentrant: true
     } );
 
-    this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, Field>( this.fieldProperty, {
+    this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: 'launcherConfigurationProperty'
+      derive: t => t.launcherConfigurationProperty
     } );
 
-    this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, Field>( this.fieldProperty, {
+    this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: 'projectileTypeProperty'
+      derive: t => t.projectileTypeProperty
     } );
 
-    this.launcherTypeProperty = new DynamicProperty<number, number, Field>( this.fieldProperty, {
+    this.launcherTypeProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: 'launcherTypeProperty'
+      derive: t => t.launcherTypeProperty
     } );
 
-    this.launcherAngleProperty = new DynamicProperty<number, number, Field>( this.fieldProperty, {
+    this.launcherAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: 'launcherAngleProperty'
+      derive: t => t.launcherAngleProperty
     } );
 
-    this.launcherHeightProperty = new DynamicProperty<number, number, Field>( this.fieldProperty, {
+    this.launcherHeightProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: 'launcherHeightProperty'
+      derive: t => t.launcherHeightProperty
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {

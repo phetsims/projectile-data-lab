@@ -19,9 +19,9 @@ import Projectile from '../model/Projectile.js';
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
 
-export default class PDLCanvasNode extends CanvasNode {
+export default class PDLCanvasNode<T extends Field> extends CanvasNode {
   public constructor(
-    private readonly fieldProperty: Property<Field>,
+    private readonly fieldProperty: Property<T>,
     private readonly isPathsVisibleProperty: Property<boolean>,
     private readonly modelViewTransform: ModelViewTransform2,
     providedOptions: PDLCanvasOptions ) {
