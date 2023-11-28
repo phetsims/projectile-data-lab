@@ -174,12 +174,12 @@ export default class LauncherNode extends Node {
     const FRAME_BAR_WIDTH = 5;
 
     const frameBarTop = new Rectangle( 0, -FRAME_BAR_WIDTH, GUIDE_RAIL_INNER_RADIUS, FRAME_BAR_WIDTH, {
-      fill: frameFillDarkColorProperty,
+      fill: frameFillColorProperty,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
 
     const frameBarBottom = new Rectangle( 0, 0, GUIDE_RAIL_INNER_RADIUS, FRAME_BAR_WIDTH, {
-      fill: frameFillDarkColorProperty,
+      fill: frameFillColorProperty,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
 
