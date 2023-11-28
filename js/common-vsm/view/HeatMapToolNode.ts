@@ -319,6 +319,13 @@ export default class HeatMapToolNode extends Node {
       }
     }
   }
+
+  public clear(): void {
+    this.numValuesInBin.forEach( ( value, index ) => {
+      this.numValuesInBin[ index ] = 0;
+      this.heatNodes[ index ].opacity = 0;
+    } );
+  }
 }
 
 projectileDataLab.register( 'HeatMapToolNode', HeatMapToolNode );

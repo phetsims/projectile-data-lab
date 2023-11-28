@@ -140,21 +140,29 @@ export class VSMScreenView extends PDLScreenView {
       return projectile ? projectile.launchAngle : null;
     } );
 
-    // Add a heat map tool node
-    const speedToolNode = new SpeedToolNode( {
-      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: mostRecentLaunchSpeedProperty,
-      x: originPosition.x, y: originPosition.y
-    } );
-
     const isLauncherRaisedProperty: TReadOnlyProperty<boolean> = new DerivedProperty( [ model.launcherConfigurationProperty ],
       launcherConfiguration => {
         return launcherConfiguration === 'ANGLE_0';
       } );
 
+    // Create the heat map tools
+    const speedToolNode = new SpeedToolNode( {
+      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: mostRecentLaunchSpeedProperty,
+      x: originPosition.x, y: originPosition.y
+    } );
+
     const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: mostRecentLaunchAngleProperty,
       x: originPosition.x, y: originPosition.y,
       initialNeedleValue: model.launcherAngleProperty.value
+    } );
+
+    // If the projectiles are cleared, clear the heat map tools
+    model.fields.forEach( field => {
+      field.projectilesClearedEmitter.addListener( () => {
+        speedToolNode.clear();
+        angleToolNode.clear();
+      } );
     } );
 
     model.launcherHeightProperty.link( launcherHeight => {
