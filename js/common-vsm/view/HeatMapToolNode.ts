@@ -297,9 +297,10 @@ export default class HeatMapToolNode extends Node {
   private updateHeatMapWithData( data: number ): void {
     const minOpacity = 0.2;
     const index = Math.floor( ( data - this.minValue ) / this.binWidth );
+
     let maxNumValuesInBin = 0;
 
-    if ( this.numValuesInBin[ index ] !== null ) {
+    if ( this.numValuesInBin[ index ] !== undefined ) {
       this.numValuesInBin[ index ]++;
       maxNumValuesInBin = Math.max( ...this.numValuesInBin );
 
