@@ -24,7 +24,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
  */
 
 type SelfOptions = {
-  sourceDataProperty: Property<number>;
+  sourceDataProperty: Property<number | null>;
   titleStringProperty: LocalizedStringProperty;
   unitsStringProperty: LocalizedStringProperty;
   displayOffset: Vector2;
@@ -120,6 +120,9 @@ export default class HeatMapToolNode extends Node {
 
     // TODO: Use PatternStringProperty for adding a space before m/s but not degrees - see https://github.com/phetsims/projectile-data-lab/issues/7
     const valueReadoutStringProperty = new DerivedProperty( [ options.sourceDataProperty ], data => {
+      if ( data === null ) {
+        return '—';
+      }
       const dataRounded = Utils.toFixed( data, 1 );
       return dataRounded.toString() + options.unitsStringProperty.value;
     } );
@@ -132,7 +135,7 @@ export default class HeatMapToolNode extends Node {
     } );
 
     // Create a background rectangle for the value readout
-    const valueReadoutBounds = valueReadout.bounds.dilatedXY( 10, 2 );
+    const valueReadoutBounds = valueReadout.bounds.dilatedXY( 8, 2 );
     const valueReadoutBackground = new Rectangle( valueReadoutBounds, {
       fill: '#ECECEC',
       stroke: 'black',
@@ -145,6 +148,7 @@ export default class HeatMapToolNode extends Node {
 
     ManualConstraint.create( valueReadoutNode, [ valueReadout ], valueReadoutProxy => {
       valueReadoutProxy.x = -0.5 * valueReadoutProxy.width;
+      valueReadoutBackground.setRectBounds( valueReadout.bounds.dilatedXY( 8, 2 ) );
     } );
 
     this.displayNode.addChild( this.bodyBackNode );
@@ -160,16 +164,16 @@ export default class HeatMapToolNode extends Node {
     };
 
     const setNeedleRotation = ( value: number ): void => {
-      this.needleNode.setRotation( Utils.toRadians( needleAngleForValue( options.initialNeedleValue ) ) );
+      this.needleNode.setRotation( Utils.toRadians( needleAngleForValue( value ) ) );
     };
 
     setNeedleRotation( options.initialNeedleValue );
 
     options.sourceDataProperty.lazyLink( data => {
-      // TODO: Find out why calling setNeedleRotation does not work here - see https://github.com/phetsims/projectile-data-lab/issues/7
-      const needleAngle = -Utils.linear( this.minValue, this.maxValue, options.minAngle, options.maxAngle, data );
-      this.needleNode.setRotation( Utils.toRadians( needleAngle ) );
-      this.updateHeatMapWithData( data );
+      if ( data !== null ) {
+        setNeedleRotation( data );
+        this.updateHeatMapWithData( data );
+      }
     } );
   }
 

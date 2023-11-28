@@ -14,6 +14,7 @@ import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
@@ -94,15 +95,15 @@ export default class VSMModel extends PDLModel {
       }
     } );
 
-    this.lastProjectileSpeedProperty = new Property<number>( 0, {
+    this.lastProjectileSpeedProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'lastProjectileSpeedProperty' ),
-      phetioValueType: NumberIO,
+      phetioValueType: NullableIO( NumberIO ),
       phetioDocumentation: 'The speed of the last projectile launched.'
     } );
 
-    this.lastProjectileAngleProperty = new Property<number>( 0, {
+    this.lastProjectileAngleProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'lastProjectileAngleProperty' ),
-      phetioValueType: NumberIO,
+      phetioValueType: NullableIO( NumberIO ),
       phetioDocumentation: 'The angle of the last projectile launched.'
     } );
   }
