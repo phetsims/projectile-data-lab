@@ -42,6 +42,8 @@ export default class Field extends PhetioObject {
   // REVIEW: Do we really want and need this as a redundant emitter?
   public readonly projectileLandedEmitter;
 
+  public readonly projectilesClearedEmitter;
+
   // TODO: Refactor this into the emitter pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
   public readonly lastProjectileSpeedProperty;
   public readonly lastProjectileAngleProperty;
@@ -62,6 +64,8 @@ export default class Field extends PhetioObject {
       } ],
       tandem: options.tandem.createTandem( 'projectileLandedEmitter' )
     } );
+
+    this.projectilesClearedEmitter = new Emitter();
 
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_30', {
 
@@ -133,6 +137,8 @@ export default class Field extends PhetioObject {
   public clearProjectiles(): void {
     this.projectiles.length = 0;
     this.projectilesChangedEmitter.emit();
+
+    this.projectilesClearedEmitter.emit();
   }
 
   public toStateObject(): object {
