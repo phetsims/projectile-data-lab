@@ -4,9 +4,9 @@ import { LinearGradient, Node, NodeOptions, Rectangle } from '../../../../scener
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
-import PDLConstants from '../PDLConstants.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -20,25 +20,22 @@ type LauncherNodeOptions = SelfOptions & NodeOptions;
 
 export default class LauncherNode extends Node {
 
-  // originY is the vertical position of the projectile launch point at field level.
-  private readonly originY: number;
-
   // launcher contains all graphics that rotate with launch angle. This includes the launch tube and end cap.
   private readonly launcher: Node;
 
-  public constructor( x: number,
-                      originY: number,
+  public constructor( private readonly modelViewTransform: ModelViewTransform2,
                       launcherAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
                       launcherTypeProperty: TProperty<number>,
                       providedOptions: LauncherNodeOptions ) {
 
     const launcher = new Node();
-    const defaultOptions = { x: x, children: [ launcher ] };
+    const launcherX = modelViewTransform.modelToViewX( 0 );
+    const launcherY = modelViewTransform.modelToViewY( 0 );
+    const defaultOptions = { x: launcherX, y: launcherY, children: [ launcher ] };
     const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
-    this.originY = originY;
     this.launcher = launcher;
 
     launcherAngleProperty.link( launcherAngle => {
@@ -59,7 +56,7 @@ export default class LauncherNode extends Node {
   }
 
   private updateLauncherHeight( height: number ): void {
-    this.y = this.originY - height * PDLConstants.PIXELS_TO_DISTANCE;
+    this.y = this.modelViewTransform.modelToViewY( height );
   }
 
   private updateLauncherType( type: number ): void {

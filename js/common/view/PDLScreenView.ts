@@ -98,8 +98,7 @@ export class PDLScreenView extends ScreenView {
     fieldOverlayNode.y = fieldY;
 
     this.launcher = new LauncherNode(
-      originX,
-      fieldY,
+      this.modelViewTransform,
       model.launcherAngleProperty,
       model.launcherHeightProperty,
       model.launcherTypeProperty,

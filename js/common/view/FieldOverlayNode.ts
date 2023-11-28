@@ -12,6 +12,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 /**
  * The FieldOverlayNode contains the portions of the field that are not drawn using a perspective transform.
  * It consists of the horizontal dashed line, origin circle and field distance labels.
+ * The origin of the FieldOverlayNode is at the 50-meter mark on the field.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -26,13 +27,15 @@ export default class FieldOverlayNode extends Node {
     const numTotalDashes = 30;
 
     // Subtract 1 to make the dashed part of the right edge line up with the right side of the field
-    const dashLength = PDLConstants.FIELD_WIDTH / ( 2 * numTotalDashes - 1 );
+    const dashLength = modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE ) / ( 2 * numTotalDashes - 1 );
 
     // The dashed line extends horizontally along the width of the field.
     const dashedLineShape = new Shape();
 
+    const originX = modelViewTransform.modelToViewDeltaX( -PDLConstants.MAX_FIELD_DISTANCE / 2 );
+
     for ( let i = 0; i < numTotalDashes; i++ ) {
-      const dashX = -0.5 * PDLConstants.FIELD_WIDTH + i * ( 2 * dashLength );
+      const dashX = originX + i * ( 2 * dashLength );
       dashedLineShape.rect( dashX, -0.5 * PDLConstants.FIELD_CENTER_LINE_WIDTH, dashLength, PDLConstants.FIELD_CENTER_LINE_WIDTH );
     }
 
@@ -45,7 +48,7 @@ export default class FieldOverlayNode extends Node {
     } );
 
     const originCircle = new Circle( PDLConstants.FIELD_CENTER_LINE_WIDTH, {
-      x: -0.5 * PDLConstants.FIELD_WIDTH,
+      x: originX,
       fill: PDLColors.fieldBorderStrokeColorProperty
     } );
 
@@ -57,7 +60,7 @@ export default class FieldOverlayNode extends Node {
 
     for ( let i = 0; i <= totalDistanceLabels; i++ ) {
       const distance = ( i + 1 ) * PDLConstants.FIELD_LINE_NUMBER_INCREMENT;
-      const distanceLabelX = -0.5 * PDLConstants.FIELD_WIDTH + distance * PDLConstants.PIXELS_TO_DISTANCE;
+      const distanceLabelX = originX + modelViewTransform.modelToViewDeltaX( distance );
 
       // Apply the perspective transform to the label offset so that it is positioned relative to the bottom of the field
       const distanceLabelPositionShape = new Shape().moveTo( distanceLabelX, 0 ).lineTo( distanceLabelX, distanceLabelY );
@@ -71,7 +74,7 @@ export default class FieldOverlayNode extends Node {
                  distancePositionTransformed.bounds.left,
         top: distancePositionTransformed.bounds.bottom + PDLConstants.FIELD_LABEL_TOP_MARGIN,
         font: PDLConstants.FIELD_LABEL_FONT,
-        maxWidth: PDLConstants.FIELD_LINE_NUMBER_INCREMENT * PDLConstants.PIXELS_TO_DISTANCE * 0.9 // Add a horizontal margin
+        maxWidth: modelViewTransform.modelToViewDeltaX( PDLConstants.FIELD_LINE_NUMBER_INCREMENT ) * 0.9 // Add a horizontal margin
       } );
       distanceLabels.push( textLabel );
     }
