@@ -55,6 +55,7 @@ const PDLConstants = {
   PRIMARY_FONT: new PhetFont( 13 ),
   FIELD_LABEL_FONT: new PhetFont( 16 ),
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
+  NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
 
   INTER_PANEL_VERTICAL_SPACING: 5
 } as const;

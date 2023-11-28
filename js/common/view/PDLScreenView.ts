@@ -76,6 +76,7 @@ export class PDLScreenView extends ScreenView {
     } );
 
     const noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
+      font: PDLConstants.NO_AIR_RESISTANCE_FONT,
       maxWidth: 200
     } );
 
