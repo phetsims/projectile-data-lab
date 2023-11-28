@@ -23,31 +23,31 @@ type LauncherNodeOptions = SelfOptions & NodeOptions;
 
 const BARREL_LENGTH_BEFORE_ORIGIN = 95;
 const BARREL_LENGTH_AFTER_ORIGIN = 15;
-const NOZZLE_WIDTH = 32;
 
-const SUPPORT_BAR_CENTER_X = -20;
-const SUPPORT_BAR_WIDTH = 25;
-const SUPPORT_BAR_HEIGHT = 150;
-
-const GUIDE_RAIL_WIDTH = 27;
-const GUIDE_SLOT_WIDTH = 5;
-
-const GUIDE_RAIL_INNER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN - 0.5 * GUIDE_RAIL_WIDTH;
-const GUIDE_RAIL_OUTER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN + 0.5 * GUIDE_RAIL_WIDTH;
+const BARREL_BASE_WIDTH = 45;
+const BARREL_NOZZLE_WIDTH = 25;
+const BARREL_BASE_PAST_BOLT_FACTOR = 0.25; // The fraction of the barrel base radius that extends past the bolt
 
 const ANGLE_PAST_BOTTOM_VERTICAL = 15;
 const ANGLE_PAST_TOP_HORIZONTAL = 30;
 
+const GUIDE_RAIL_WIDTH = 27;
+const GUIDE_RAIL_INNER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN - 0.5 * GUIDE_RAIL_WIDTH;
+const GUIDE_RAIL_OUTER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN + 0.5 * GUIDE_RAIL_WIDTH;
+const GUIDE_RAIL_CENTER_RADIUS = 0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS );
 const GUIDE_RAIL_MIN_ANGLE = Utils.toRadians( 90 - ANGLE_PAST_BOTTOM_VERTICAL );
 const GUIDE_RAIL_MAX_ANGLE = Utils.toRadians( 180 + ANGLE_PAST_TOP_HORIZONTAL );
 
+const GUIDE_SLOT_WIDTH = 5;
 const GUIDE_SLOT_INSET_ANGLE = 10;
 const GUIDE_SLOT_MIN_ANGLE = GUIDE_RAIL_MIN_ANGLE + Utils.toRadians( GUIDE_SLOT_INSET_ANGLE );
 const GUIDE_SLOT_MAX_ANGLE = GUIDE_RAIL_MAX_ANGLE - Utils.toRadians( GUIDE_SLOT_INSET_ANGLE );
-
-const GUIDE_RAIL_CENTER_RADIUS = 0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS );
 const GUIDE_SLOT_INNER_RADIUS = GUIDE_RAIL_CENTER_RADIUS - 0.5 * GUIDE_SLOT_WIDTH;
 const GUIDE_SLOT_OUTER_RADIUS = GUIDE_RAIL_CENTER_RADIUS + 0.5 * GUIDE_SLOT_WIDTH;
+
+const SUPPORT_BAR_CENTER_X = -20;
+const SUPPORT_BAR_WIDTH = 25;
+const SUPPORT_BAR_HEIGHT = 150;
 
 export default class LauncherNode extends Node {
 
@@ -118,33 +118,37 @@ export default class LauncherNode extends Node {
     } );
   }
 
-  private launcherGraphicsForType( launcherType: number ): Rectangle[] {
-    const launcherLengthBeforeOrigin = BARREL_LENGTH_BEFORE_ORIGIN;
-    const launcherLength = launcherLengthBeforeOrigin + BARREL_LENGTH_AFTER_ORIGIN;
-
-    const launcherFillColorProperty = PDLColors.launcherFillColorProperties[ launcherType - 1 ];
-    const launcherFillDarkColorProperty = new DerivedProperty( [ launcherFillColorProperty ],
+  private launcherGraphicsForType( launcherType: number ): Node[] {
+    const barrelFillColorProperty = PDLColors.launcherFillColorProperties[ launcherType - 1 ];
+    const barrelFillDarkColorProperty = new DerivedProperty( [ barrelFillColorProperty ],
       color => color.darkerColor( 0.8 ) );
 
-    const launcherFillGradient = new LinearGradient( 0, -0.5 * NOZZLE_WIDTH, 0, 0.5 * NOZZLE_WIDTH );
-    launcherFillGradient.addColorStop( 0, launcherFillDarkColorProperty );
-    launcherFillGradient.addColorStop( 0.4, launcherFillColorProperty );
-    launcherFillGradient.addColorStop( 0.6, launcherFillColorProperty );
-    launcherFillGradient.addColorStop( 1, launcherFillDarkColorProperty );
+    const barrelBaseRadius = 0.5 * BARREL_BASE_WIDTH;
+    const barrelBaseX = -BARREL_LENGTH_BEFORE_ORIGIN + ( 1 - BARREL_BASE_PAST_BOLT_FACTOR ) * barrelBaseRadius;
+    const barrelBasePosition = new Vector2( barrelBaseX, 0 );
 
-    const launcherRect = new Rectangle(
-      -launcherLengthBeforeOrigin,
-      -0.5 * NOZZLE_WIDTH,
-      launcherLength,
-      NOZZLE_WIDTH, {
-        fill: launcherFillGradient,
-        stroke: PDLColors.launcherStrokeColorProperty,
-        lineWidth: 1,
-        cornerRadius: 0.2 * NOZZLE_WIDTH
-      }
-    );
+    const barrelBaseShape = new Shape().circle( barrelBasePosition, barrelBaseRadius );
 
-    const launcherEndRectWidth = 1.2 * NOZZLE_WIDTH;
+    const barrelNozzleShape = new Shape();
+    barrelNozzleShape.moveTo( barrelBaseX, -barrelBaseRadius );
+    barrelNozzleShape.lineTo( BARREL_LENGTH_AFTER_ORIGIN, -0.5 * BARREL_NOZZLE_WIDTH );
+    barrelNozzleShape.lineTo( BARREL_LENGTH_AFTER_ORIGIN, 0.5 * BARREL_NOZZLE_WIDTH );
+    barrelNozzleShape.lineTo( barrelBaseX, barrelBaseRadius );
+
+    const barrelShape = barrelBaseShape.shapeUnion( barrelNozzleShape );
+
+    const barrelFillGradient = new LinearGradient( 0, -barrelBaseRadius, 0, barrelBaseRadius );
+    barrelFillGradient.addColorStop( 0, barrelFillDarkColorProperty );
+    barrelFillGradient.addColorStop( 0.4, barrelFillColorProperty );
+    barrelFillGradient.addColorStop( 0.6, barrelFillColorProperty );
+    barrelFillGradient.addColorStop( 1, barrelFillDarkColorProperty );
+
+    const barrel = new Path( barrelShape, {
+      fill: barrelFillGradient,
+      stroke: PDLColors.launcherStrokeColorProperty
+    } );
+
+    const launcherEndRectWidth = 1.2 * BARREL_NOZZLE_WIDTH;
     const launcherEndRectLength = 0.12 * launcherEndRectWidth;
 
     const launcherEndRect = new Rectangle(
@@ -152,14 +156,14 @@ export default class LauncherNode extends Node {
       -0.5 * launcherEndRectWidth,
       launcherEndRectLength,
       launcherEndRectWidth, {
-        fill: launcherFillDarkColorProperty,
+        fill: barrelFillDarkColorProperty,
         stroke: PDLColors.launcherStrokeColorProperty,
         lineWidth: 1,
         cornerRadius: 0.1 * launcherEndRectLength
       }
     );
 
-    return [ launcherRect, launcherEndRect ];
+    return [ barrel, launcherEndRect ];
   }
 
   private launcherFrameBack(): Node {
