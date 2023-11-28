@@ -142,17 +142,29 @@ export default class Field extends PhetioObject {
     this.projectilesChangedEmitter.emit();
   }
 
-  public launchProjectile(): void {
-
+  private createProjectile(): Projectile {
+    const speedVariation = 1;
     const launchAngle = this.launcherAngleProperty.value + dotRandom.nextGaussian() * 5;
-    const launchSpeed = 25 + dotRandom.nextGaussian() * 1;
+    const launchSpeed = 25 + dotRandom.nextGaussian() * speedVariation;
 
     // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
     // TODO: Get the field number and screen identifier correct. See https://github.com/phetsims/projectile-data-lab/issues/7
-    const projectile = new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value );
-    this.projectiles.push( projectile );
+    return new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value );
+  }
 
+  public launchProjectile(): void {
+    const projectile = this.createProjectile();
+    this.projectiles.push( projectile );
     this.mostRecentlyLaunchedProjectileProperty.value = projectile;
+  }
+
+  public createLandedProjectile(): void {
+    const projectile = this.createProjectile();
+    projectile.setLanded( this );
+
+    this.projectiles.push( projectile );
+    this.mostRecentlyLaunchedProjectileProperty.value = projectile;
+    this.projectilesChangedEmitter.emit();
   }
 
   public static FieldIO = new IOType( 'FieldIO', {

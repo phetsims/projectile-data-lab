@@ -17,11 +17,13 @@ import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
+type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
 export default class SamplingModel extends PDLModel {
 
   public readonly sampleSizeProperty: Property<number>;
+
+  private launchTimer = 0;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
@@ -39,7 +41,8 @@ export default class SamplingModel extends PDLModel {
 
     const options = optionize<SamplingModelOptions, SelfOptions, PDLModelOptions>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
-      fields: fields
+      fields: fields,
+      isPathsVisible: true
     }, providedOptions );
 
     super( options );
@@ -60,6 +63,14 @@ export default class SamplingModel extends PDLModel {
       // const fieldNumber = sampleSizeIndex + ( launcherType - 1 ) * numSampleSizes;
       // this.fieldProperty.value = this.fields[ fieldNumber ];
     } );
+  }
+
+  public launchButtonPressed(): void {
+    this.fieldProperty.value.createLandedProjectile();
+  }
+
+  public step( dt: number ): void {
+    this.launchTimer += dt;
   }
 
   /**

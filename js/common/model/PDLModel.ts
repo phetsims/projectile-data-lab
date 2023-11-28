@@ -21,15 +21,15 @@ import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 
 type SelfOptions = {
   timeSpeedValues: TimeSpeed[];
   fields: Field[];
+  isPathsVisible: boolean;
 };
 export type PDLModelOptions = SelfOptions & { tandem: Tandem };
 
-export default class PDLModel implements TModel {
+export default abstract class PDLModel implements TModel {
 
   // isContinuousLaunchProperty is true when the launcher is in continuous launch (rapid fire) mode.
   public readonly isContinuousLaunchProperty: Property<boolean>;
@@ -131,27 +131,12 @@ export default class PDLModel implements TModel {
       derive: 'launcherHeightProperty'
     } );
 
-    this.isPathsVisibleProperty = new BooleanProperty( false, {
+    this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {
       tandem: providedOptions.tandem.createTandem( 'isPathsVisibleProperty' )
     } );
   }
 
-  public launchProjectile(): void {
-    this.fieldProperty.value.launchProjectile();
-  }
-
-  public step( dt: number ): void {
-
-    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 2 :
-                this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 :
-                1 );
-    if ( this.isContinuousLaunchProperty.value && dotRandom.nextDouble() < 0.05 ) {
-      this.launchProjectile();
-    }
-    if ( this.isPlayingProperty.value ) {
-      this.fieldProperty.value.step( dt );
-    }
-  }
+  public abstract launchButtonPressed(): void;
 
   public reset(): void {
     this.isContinuousLaunchProperty.reset();

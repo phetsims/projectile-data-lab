@@ -13,9 +13,10 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields'>;
+export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
 export default class VSMModel extends PDLModel {
 
@@ -43,7 +44,8 @@ export default class VSMModel extends PDLModel {
 
     const options = optionize<VSMModelOptions, SelfOptions, PDLModelOptions>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],
-      fields: fields
+      fields: fields,
+      isPathsVisible: false
     }, providedOptions );
     super( options );
 
@@ -54,7 +56,6 @@ export default class VSMModel extends PDLModel {
     this.isLaunchSpeedVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isLaunchSpeedVisibleProperty' )
     } );
-
 
     this.isTargetVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isTargetVisibleProperty' )
@@ -90,11 +91,26 @@ export default class VSMModel extends PDLModel {
     } );
   }
 
-  public override step( dt: number ): void {
-    super.step( dt );
+  public step( dt: number ): void {
+
+    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 2 :
+                this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 :
+                1 );
+
+    if ( this.isContinuousLaunchProperty.value && dotRandom.nextDouble() < 0.05 && this.isPlayingProperty.value ) {
+      this.fieldProperty.value.launchProjectile();
+    }
+    if ( this.isPlayingProperty.value ) {
+      this.fieldProperty.value.step( dt );
+    }
+
     if ( this.stopwatch.isRunningProperty.value ) {
       this.stopwatch.step( dt );
     }
+  }
+
+  public override launchButtonPressed(): void {
+    this.fieldProperty.value.launchProjectile();
   }
 
   public override reset(): void {

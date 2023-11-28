@@ -118,10 +118,9 @@ export class PDLScreenView extends ScreenView {
       yMargin: 5,
       tandem: options.tandem.createTandem( 'launchButton' ),
       listener: () => {
-        model.launchProjectile();
+        model.launchButtonPressed();
       }
     } );
-
 
     const radioButtonLabelMaxWidth = 180;
     this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.isContinuousLaunchProperty, [

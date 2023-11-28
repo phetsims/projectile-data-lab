@@ -114,6 +114,28 @@ export default class Projectile {
     }
   }
 
+  public setLanded( field: Field ): void {
+
+    this.phase = 'LANDED';
+
+    this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+    this.x = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+
+    if ( this.x > PDLConstants.MAX_FIELD_DISTANCE ) {
+
+      // TODO: Help on the time airborne, note how it overlaps with the magic number in step(), see https://github.com/phetsims/projectile-data-lab/issues/7
+      this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne * 2 );
+    }
+    else {
+      this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne );
+    }
+
+    this.phase = 'LANDED';
+
+    field.projectileLandedEmitter.emit( this );
+  }
+
+
   public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
     valueType: Projectile,
     stateSchema: {
@@ -200,7 +222,7 @@ export default class Projectile {
     }
   }
 
-  public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number | null {
+  public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
     const sinTheta = Math.sin( Utils.toRadians( launchAngle ) );
