@@ -22,6 +22,9 @@ import FieldSignNode from '../../common/view/FieldSignNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import Projectile from '../../common/model/Projectile.js';
+import Field from '../../common/model/Field.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -126,9 +129,20 @@ export class VSMScreenView extends PDLScreenView {
     model.stopwatch.positionProperty.setInitialValue( stopwatchStartingPosition );
     model.stopwatch.positionProperty.reset();
 
+    const mostRecentProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, Field>( model.fieldProperty, {
+      derive: 'mostRecentlyLaunchedProjectileProperty'
+    } );
+
+    const mostRecentLaunchSpeedProperty = new DerivedProperty( [ mostRecentProjectileProperty ], projectile => {
+      return projectile ? projectile.launchSpeed : null;
+    } );
+    const mostRecentLaunchAngleProperty = new DerivedProperty( [ mostRecentProjectileProperty ], projectile => {
+      return projectile ? projectile.launchAngle : null;
+    } );
+
     // Add a heat map tool node
     const speedToolNode = new SpeedToolNode( {
-      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: model.lastProjectileSpeedProperty,
+      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: mostRecentLaunchSpeedProperty,
       x: originPosition.x, y: originPosition.y
     } );
 
@@ -138,7 +152,7 @@ export class VSMScreenView extends PDLScreenView {
       } );
 
     const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
-      visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: model.lastProjectileAngleProperty,
+      visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: mostRecentLaunchAngleProperty,
       x: originPosition.x, y: originPosition.y,
       initialNeedleValue: model.launcherAngleProperty.value
     } );

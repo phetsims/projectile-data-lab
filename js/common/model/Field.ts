@@ -44,9 +44,7 @@ export default class Field extends PhetioObject {
 
   public readonly projectilesClearedEmitter;
 
-  // TODO: Refactor this into the emitter pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
-  public readonly lastProjectileSpeedProperty;
-  public readonly lastProjectileAngleProperty;
+  public readonly mostRecentlyLaunchedProjectileProperty: Property<Projectile | null>;
 
   public constructor( providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -111,17 +109,8 @@ export default class Field extends PhetioObject {
       this.launcherHeightProperty.value = configuration === 'ANGLE_0' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
 
-    this.lastProjectileSpeedProperty = new Property<number>( 0, {
-      tandem: providedOptions.tandem.createTandem( 'lastProjectileSpeedProperty' ),
-      phetioDocumentation: 'The speed of the last projectile launched.',
-      phetioValueType: NumberIO
-    } );
-
-    this.lastProjectileAngleProperty = new Property<number>( 0, {
-      tandem: providedOptions.tandem.createTandem( 'lastProjectileAngleProperty' ),
-      phetioDocumentation: 'The angle of the last projectile launched.',
-      phetioValueType: NumberIO
-    } );
+    // Note: this is not phet-io instrumented, but when a Field is restored from phet-io we must set this property
+    this.mostRecentlyLaunchedProjectileProperty = new Property<Projectile | null>( null );
   }
 
   public reset(): void {
@@ -139,6 +128,7 @@ export default class Field extends PhetioObject {
     this.projectilesChangedEmitter.emit();
 
     this.projectilesClearedEmitter.emit();
+    this.mostRecentlyLaunchedProjectileProperty.reset();
   }
 
   public toStateObject(): object {
@@ -159,10 +149,10 @@ export default class Field extends PhetioObject {
 
     // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
     // TODO: Get the field number and screen identifier correct. See https://github.com/phetsims/projectile-data-lab/issues/7
-    this.projectiles.push( new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value ) );
+    const projectile = new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value );
+    this.projectiles.push( projectile );
 
-    this.lastProjectileAngleProperty.value = launchAngle;
-    this.lastProjectileSpeedProperty.value = launchSpeed;
+    this.mostRecentlyLaunchedProjectileProperty.value = projectile;
   }
 
   public static FieldIO = new IOType( 'FieldIO', {

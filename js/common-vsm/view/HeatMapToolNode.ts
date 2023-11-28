@@ -3,7 +3,6 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import { ManualConstraint, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import Property from '../../../../axon/js/Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
@@ -11,6 +10,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
@@ -24,7 +24,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
  */
 
 type SelfOptions = {
-  sourceDataProperty: Property<number | null>;
+  sourceDataProperty: TReadOnlyProperty<number | null>;
   titleStringProperty: LocalizedStringProperty;
   unitsStringProperty: LocalizedStringProperty;
   displayOffset: Vector2;
