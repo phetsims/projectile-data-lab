@@ -78,6 +78,14 @@ const PDLColors = {
     default: '#111111'
   } ),
 
+  launcherFrameBackgroundColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherFrameBackground', {
+    default: new Color( 0xffffff, 0.35 )
+  } ),
+
+  launcherGuideBoltColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherGuideBolt', {
+    default: '#cccccc'
+  } ),
+
   fieldSignColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignFill', {
     default: '#E5C49C'
   } ),
