@@ -13,7 +13,7 @@ import PDLColors from '../PDLColors.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type FieldSignNodeOptions = SelfOptions & NodeOptions;
+export type FieldSignNodeOptions = SelfOptions & NodeOptions;
 
 export default class FieldSignNode extends Node {
   public constructor( private readonly textNode: Node, providedOptions: FieldSignNodeOptions ) {
