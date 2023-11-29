@@ -8,6 +8,7 @@
 
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import LauncherConfig from './LauncherConfig.js';
 
 const maxFieldDistance = 100;
 const fieldWidth = 870;
@@ -51,6 +52,15 @@ const PDLConstants = {
   FIELD_SCALING_FACTOR_VERTICAL: 0.25,
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
+
+  LAUNCHER_CONFIGS: [
+    new LauncherConfig( 24, 0.2, 0.8 ),
+    new LauncherConfig( 24, 0.2, 0.8 ),
+    new LauncherConfig( 24, 0.2, 0.8 ),
+    new LauncherConfig( 24, 0.2, 0.8 ),
+    new LauncherConfig( 24, 0.2, 0.8 ),
+    new LauncherConfig( 24, 0.2, 0.8 )
+  ],
 
   HEATMAP_TOOL_LABEL_FONT: new PhetFont( 11 ),
   PRIMARY_FONT: new PhetFont( 13 ),

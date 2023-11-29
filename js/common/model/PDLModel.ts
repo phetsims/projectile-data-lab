@@ -122,12 +122,12 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.launcherAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launcherAngleProperty
+      derive: t => t.launchAngleAverageProperty
     } );
 
     this.launcherHeightProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launcherHeightProperty
+      derive: t => t.launchHeightProperty
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {
