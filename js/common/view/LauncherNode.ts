@@ -25,7 +25,7 @@ const BARREL_LENGTH_BEFORE_ORIGIN = 95;
 const BARREL_LENGTH_AFTER_ORIGIN = 15;
 
 const BARREL_BASE_WIDTH = 45;
-const BARREL_NOZZLE_WIDTH = 25;
+const BARREL_NOZZLE_WIDTH = 28;
 const BARREL_BASE_PAST_BOLT_FACTOR = 0.25; // The fraction of the barrel base radius that extends past the bolt
 
 const ANGLE_PAST_BOTTOM_VERTICAL = 15;
