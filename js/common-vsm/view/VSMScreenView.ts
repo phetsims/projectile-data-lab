@@ -131,7 +131,6 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
       speedToolNode.setForIsLauncherRaised( isLauncherRaised );
     } );
 
-    // REVIEW: Can we just add it before the projectiles, or is the behindProjectilesLayer necessary?
     this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
       model.fieldProperty,
       model.fields,
