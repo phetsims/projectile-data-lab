@@ -139,6 +139,8 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
         break;
     }
 
+    // TODO: Is this too slow? If so, should we cache the flipped images or use separate image files for flipped x? - see https://github.com/phetsims/projectile-data-lab/issues/7
+
     // Save the current state of the canvas
     context.save();
 
