@@ -16,7 +16,6 @@ import SamplingField from '../model/SamplingField.js';
 type SelfOptions = EmptySelfOptions;
 type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
-// TODO: Some code copied with VSMFieldSignNode, see https://github.com/phetsims/projectile-data-lab/issues/7
 export default class SamplingFieldSignNode extends FieldSignNode {
   public constructor( fieldProperty: TReadOnlyProperty<SamplingField>,
                       modelViewTransform: ModelViewTransform2,
