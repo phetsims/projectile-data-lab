@@ -41,10 +41,11 @@ export default class SamplingField extends Field {
 
     this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
 
-    const TIME_BETWEEN_PROJECTILES = 0.5; // seconds
+    // Use a fractional power to increase the total time as the sample size increases,
+    // so that larger samples take longer but not too long.
+    const totalSampleTime = 0.4 * Math.pow( this.sampleSize, 0.5 ); // seconds
 
-    // constant time per sample, independent of sample size
-    this.timeBetweenProjectiles = TIME_BETWEEN_PROJECTILES / this.sampleSize;
+    this.timeBetweenProjectiles = totalSampleTime / this.sampleSize;
 
     this.launcherTypeProperty.value = launcher;
   }
