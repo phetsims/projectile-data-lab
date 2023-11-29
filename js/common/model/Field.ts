@@ -16,6 +16,7 @@ import Projectile, { ProjectileStateObject } from './Projectile.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -53,6 +54,8 @@ export default class Field extends PhetioObject {
   public readonly projectilesClearedEmitter;
 
   public readonly mostRecentlyLaunchedProjectileProperty: Property<Projectile | null>;
+
+  public readonly selectedSampleProperty: NumberProperty;
 
   public constructor( providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -122,6 +125,11 @@ export default class Field extends PhetioObject {
       tandem: Tandem.OPT_OUT
     } );
 
+    this.selectedSampleProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'selectedSampleProperty' ),
+      phetioDocumentation: 'The selected sample being shown on the field.'
+    } );
+
     // Note: this is not phet-io instrumented, but when a Field is restored from phet-io we must set this property
     this.mostRecentlyLaunchedProjectileProperty = new Property<Projectile | null>( null );
 
@@ -141,6 +149,11 @@ export default class Field extends PhetioObject {
     } );
   }
 
+  // Get the projectiles that are within the currently selected sample.
+  public getProjectilesInCurrentSample(): Projectile[] {
+    return this.projectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
+  }
+
   public reset(): void {
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
@@ -151,10 +164,12 @@ export default class Field extends PhetioObject {
 
   public clearProjectiles(): void {
     this.projectiles.length = 0;
-    this.projectilesChangedEmitter.emit();
 
+    this.projectilesChangedEmitter.emit();
     this.projectilesClearedEmitter.emit();
+
     this.mostRecentlyLaunchedProjectileProperty.reset();
+    this.selectedSampleProperty.reset();
   }
 
   public toStateObject(): object {
@@ -172,9 +187,9 @@ export default class Field extends PhetioObject {
     const projectileScaleX = this.projectileTypeProperty.value === 'CANNONBALL' ? 1 : dotRandom.nextBoolean() ? 1 : -1;
 
     // TODO: Get the field number and screen identifier correct. See https://github.com/phetsims/projectile-data-lab/issues/7
-    return new Projectile( -1, 'sources', 0, 0, this.projectileTypeProperty.value,
+    return new Projectile( 'sources', -1, sampleNumber, 0, 0, this.projectileTypeProperty.value,
       'AIRBORNE', projectileScaleX, landedImageIndex, 0, launchAngle, launchSpeed,
-      this.launchHeightProperty.value, sampleNumber );
+      this.launchHeightProperty.value );
   }
 
   public static FieldIO = new IOType( 'FieldIO', {

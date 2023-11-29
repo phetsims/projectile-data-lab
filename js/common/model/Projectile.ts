@@ -58,8 +58,9 @@ export default class Projectile {
   public landedImageIndex: number;
 
   public constructor(
-    fieldNumber: number,
     screenIdentifier: ScreenIdentifier,
+    fieldNumber: number,
+    sampleNumber: number,
     x: number,
     y: number,
     type: ProjectileType,
@@ -69,8 +70,7 @@ export default class Projectile {
     timeAirborne = 0,
     launchAngle: number | null = null,
     launchSpeed: number | null = null,
-    launchHeight: number | null = null,
-    sampleNumber = 0
+    launchHeight: number | null = null
   ) {
     this.screenIdentifier = screenIdentifier;
     this.fieldNumber = fieldNumber;
@@ -145,10 +145,9 @@ export default class Projectile {
   public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
     valueType: Projectile,
     stateSchema: {
-      fieldNumber: NumberIO,
       screenIdentifier: StringUnionIO( ScreenIdentifierValues ),
-
-      // TODO: x and y can be derived from everything else, do we really want it in the state? See https://github.com/phetsims/projectile-data-lab/issues/7
+      fieldNumber: NumberIO,
+      sampleNumber: NumberIO,
       x: NumberIO,
       y: NumberIO,
       type: StringUnionIO( ProjectileTypeValues ),
@@ -164,6 +163,7 @@ export default class Projectile {
       return {
         screenIdentifier: projectile.screenIdentifier,
         fieldNumber: projectile.fieldNumber,
+        sampleNumber: projectile.sampleNumber,
         x: projectile.x,
         y: projectile.y,
         type: projectile.type,
@@ -178,8 +178,9 @@ export default class Projectile {
     },
     fromStateObject: ( stateObject: ProjectileStateObject ) => {
       return new Projectile(
-        stateObject.fieldNumber,
         stateObject.screenIdentifier,
+        stateObject.fieldNumber,
+        stateObject.sampleNumber,
         stateObject.x,
         stateObject.y,
         stateObject.type,
@@ -239,6 +240,7 @@ export default class Projectile {
 export type ProjectileStateObject = {
   screenIdentifier: ScreenIdentifier;
   fieldNumber: number;
+  sampleNumber: number;
   x: number;
   y: number;
   type: ProjectileType;

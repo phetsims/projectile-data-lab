@@ -68,7 +68,7 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
    */
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
-    const projectiles = this.fieldProperty.value.projectiles;
+    const projectiles = this.fieldProperty.value.getProjectilesInCurrentSample();
 
     const strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
 
@@ -77,8 +77,6 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
     if ( this.isPathsVisibleProperty.value ) {
       for ( let i = 0; i < projectiles.length; i++ ) {
         const projectile = projectiles[ i ];
-
-        if ( projectile.sampleNumber === this.selectedSampleProperty.value ) {
 
           context.beginPath();
           let pathStarted = false;
@@ -105,18 +103,13 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
           context.strokeStyle = strokeStyle;
           context.lineWidth = 2;
           context.stroke();
-        }
       }
     }
 
     // Render the projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
-
-      if ( projectile.sampleNumber === this.selectedSampleProperty.value ) {
-
-        this.drawProjectile( context, projectile );
-      }
+      this.drawProjectile( context, projectile );
     }
   }
 
