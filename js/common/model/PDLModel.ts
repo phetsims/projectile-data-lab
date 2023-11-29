@@ -66,7 +66,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public abstract launcherTypeProperty: TProperty<number>;
   public abstract selectedSampleProperty: TReadOnlyProperty<number>;
 
-  public constructor( providedOptions: PDLModelOptions<T> ) {
+  protected constructor( providedOptions: PDLModelOptions<T> ) {
 
     this.isContinuousLaunchProperty = new Property<boolean>( false, {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchProperty' ),
