@@ -23,6 +23,7 @@ import Projectile from '../../common/model/Projectile.js';
 import Field from '../../common/model/Field.js';
 import VSMField from '../model/VSMField.js';
 import VSMFieldSignNode from './VSMFieldSignNode.js';
+import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -35,8 +36,23 @@ type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export class VSMScreenView extends PDLScreenView<VSMField> {
+
+  protected readonly timeControlNode;
+
   public constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
+
+    this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
+      tandem: options.tandem.createTandem( 'timeControlNode' ),
+      playPauseStepButtonOptions: {
+        includeStepForwardButton: false
+      },
+      timeSpeedProperty: model.timeSpeedProperty,
+      timeSpeeds: model.timeSpeedValues,
+      buttonGroupXSpacing: 18
+    } );
+
+    this.addChild( this.timeControlNode );
 
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
@@ -146,6 +162,24 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
     // Position the time control node so that the play/pause button is centered at the 50-meter mark
     ManualConstraint.create( this, [ accordionBox ], accordionBoxProxy => {
       accordionBoxProxy.centerX = this.layoutBounds.centerX;
+    } );
+
+    // layout
+    ManualConstraint.create(
+      this,
+      [ this.noAirResistanceText, this.timeControlNode, this.resetAllButton ],
+      ( noAirResistanceTextProxy, timeControlNodeProxy, resetAllButtonProxy ) => {
+        // Position the no air resistance text so that it is centered between the time control node and the reset all button
+        noAirResistanceTextProxy.centerX = 0.5 * ( timeControlNodeProxy.right + resetAllButtonProxy.left );
+        noAirResistanceTextProxy.centerY = resetAllButtonProxy.centerY;
+      }
+    );
+
+    // Position the time control node so that the play/pause button is centered at the 50-meter mark
+    ManualConstraint.create( this, [ this.timeControlNode ], timeControlNodeProxy => {
+      const playPauseCenterOffsetX = 0.5 * this.timeControlNode.width - this.timeControlNode.getPlayPauseButtonCenter().x;
+      timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
+      timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
   }
 }

@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Node, Image, ManualConstraint, Text } from '../../../../scenery/js/imports.js';
+import { Image, Node, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -20,7 +20,6 @@ import FieldNode from './FieldNode.js';
 import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
 import LauncherNode from './LauncherNode.js';
-import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import launchButton_png from '../../../images/launchButton_png.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
@@ -44,10 +43,11 @@ export class PDLScreenView<T extends Field> extends ScreenView {
   protected readonly behindProjectilesLayer = new Node();
 
   protected readonly resetAllButton;
-  protected readonly timeControlNode;
+
   protected readonly launchButton;
   protected readonly launchControlRadioButtonGroup;
   protected readonly eraserButton: EraserButton;
+  protected readonly noAirResistanceText: PDLText;
 
   public constructor( model: PDLModel<T>, options: PDLScreenViewOptions ) {
     super( options );
@@ -76,7 +76,7 @@ export class PDLScreenView<T extends Field> extends ScreenView {
       backgroundNode.setScaleMagnitude( visibleBounds.width, visibleBounds.height );
     } );
 
-    const noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
+    this.noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
       font: PDLConstants.NO_AIR_RESISTANCE_FONT,
       maxWidth: 200
     } );
@@ -146,16 +146,6 @@ export class PDLScreenView<T extends Field> extends ScreenView {
       tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' )
     } );
 
-    this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
-      tandem: options.tandem.createTandem( 'timeControlNode' ),
-      playPauseStepButtonOptions: {
-        includeStepForwardButton: false
-      },
-      timeSpeedProperty: model.timeSpeedProperty,
-      timeSpeeds: model.timeSpeedValues,
-      buttonGroupXSpacing: 18
-    } );
-
     // Create the eraser button
     this.eraserButton = new EraserButton( {
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
@@ -188,28 +178,9 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     this.addChild( projectileCanvas );
     this.addChild( this.launchButton );
     this.addChild( this.launchControlRadioButtonGroup );
-    this.addChild( noAirResistanceText );
+    this.addChild( this.noAirResistanceText );
     this.addChild( this.resetAllButton );
-    this.addChild( this.timeControlNode );
     this.addChild( this.eraserButton );
-
-    // layout
-    ManualConstraint.create(
-      this,
-      [ noAirResistanceText, this.timeControlNode, this.resetAllButton ],
-      ( noAirResistanceTextProxy, timeControlNodeProxy, resetAllButtonProxy ) => {
-        // Position the no air resistance text so that it is centered between the time control node and the reset all button
-        noAirResistanceTextProxy.centerX = 0.5 * ( timeControlNodeProxy.right + resetAllButtonProxy.left );
-        noAirResistanceTextProxy.centerY = resetAllButtonProxy.centerY;
-      }
-    );
-
-    // Position the time control node so that the play/pause button is centered at the 50-meter mark
-    ManualConstraint.create( this, [ this.timeControlNode ], timeControlNodeProxy => {
-      const playPauseCenterOffsetX = 0.5 * this.timeControlNode.width - this.timeControlNode.getPlayPauseButtonCenter().x;
-      timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
-      timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
-    } );
   }
 
   /**
