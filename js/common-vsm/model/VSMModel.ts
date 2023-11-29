@@ -18,6 +18,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -40,6 +41,7 @@ export default class VSMModel extends PDLModel<VSMField> {
 
   // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
   public readonly launcherTypeProperty: DynamicProperty<number, number, VSMField>;
+  public selectedSampleProperty: TReadOnlyProperty<number> = new Property( 0 );
 
   public constructor( providedOptions: VSMModelOptions ) {
 

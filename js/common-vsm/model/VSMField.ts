@@ -21,7 +21,7 @@ export default class VSMField extends Field {
   }
 
   public launchProjectile(): void {
-    const projectile = this.createProjectile();
+    const projectile = this.createProjectile( 0 );
     this.projectiles.push( projectile );
     this.mostRecentlyLaunchedProjectileProperty.value = projectile;
   }

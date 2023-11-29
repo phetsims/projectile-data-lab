@@ -174,9 +174,10 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     const canvasBounds = ScreenView.DEFAULT_LAYOUT_BOUNDS.dilatedX( canvasMarginRight / 2 )
       .shiftedX( canvasMarginRight / 2 );
 
-    const projectileCanvas = new PDLCanvasNode( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform, {
-      canvasBounds: canvasBounds
-    } );
+    const projectileCanvas = new PDLCanvasNode( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform,
+      model.selectedSampleProperty, {
+        canvasBounds: canvasBounds
+      } );
 
     this.behindProjectilesLayer.addChild( fieldBack );
     this.behindProjectilesLayer.addChild( this.launcher );

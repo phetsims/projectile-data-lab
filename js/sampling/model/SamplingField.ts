@@ -44,7 +44,7 @@ export default class SamplingField extends Field {
   }
 
   public createLandedProjectile(): void {
-    const projectile = this.createProjectile();
+    const projectile = this.createProjectile( this.numberOfSamplesProperty.value );
     projectile.setLanded( this );
 
     this.projectiles.push( projectile );
@@ -55,7 +55,8 @@ export default class SamplingField extends Field {
   }
 
   public launchButtonPressed(): void {
-
+    this.selectedSampleProperty.value++;
+    this.numberOfSamplesProperty.value++;
     this.createLandedProjectile();
     this.currentLandedCount = 1;
     this.elapsedTime = 0;
@@ -71,11 +72,8 @@ export default class SamplingField extends Field {
       this.elapsedTime -= this.timeBetweenProjectiles;
 
       if ( this.currentLandedCount === this.sampleSize ) {
-        this.numberOfSamplesProperty.value++;
 
-        if ( this.selectedSampleProperty.value === 0 ) {
-          this.selectedSampleProperty.value = 1;
-        }
+        // TODO: Signify that the sample is complete, and update the card, see https://github.com/phetsims/projectile-data-lab/issues/7
       }
     }
   }

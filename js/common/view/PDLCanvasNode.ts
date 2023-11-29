@@ -15,6 +15,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PDLColors from '../PDLColors.js';
 import Projectile from '../model/Projectile.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
@@ -24,6 +25,7 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
     private readonly fieldProperty: Property<T>,
     private readonly isPathsVisibleProperty: Property<boolean>,
     private readonly modelViewTransform: ModelViewTransform2,
+    private readonly selectedSampleProperty: TReadOnlyProperty<number>,
     providedOptions: PDLCanvasOptions ) {
 
     const options = optionize<PDLCanvasOptions, SelfOptions, CanvasNodeOptions>()( {
@@ -46,6 +48,7 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
     // When the path color changes, repaint
     PDLColors.pathStrokeColorProperty.link( myBoundListener );
     isPathsVisibleProperty.link( myBoundListener );
+    selectedSampleProperty.link( myBoundListener );
 
     this.modelViewTransform = modelViewTransform;
   }
@@ -65,51 +68,57 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
       for ( let i = 0; i < projectiles.length; i++ ) {
         const projectile = projectiles[ i ];
 
-        context.beginPath();
-        let pathStarted = false;
+        if ( projectile.sampleNumber === this.selectedSampleProperty.value ) {
 
-        const drawLineToProjectileAtTime = ( t: number ): void => {
-          const pathX = Projectile.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
-          const pathY = Projectile.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
-          const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
+          context.beginPath();
+          let pathStarted = false;
 
-          if ( !pathStarted ) {
-            context.moveTo( viewPoint.x, viewPoint.y );
-            pathStarted = true;
+          const drawLineToProjectileAtTime = ( t: number ): void => {
+            const pathX = Projectile.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
+            const pathY = Projectile.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
+            const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
+
+            if ( !pathStarted ) {
+              context.moveTo( viewPoint.x, viewPoint.y );
+              pathStarted = true;
+            }
+
+            context.lineTo( viewPoint.x, viewPoint.y );
+          };
+
+          for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
+            drawLineToProjectileAtTime( t );
           }
 
-          context.lineTo( viewPoint.x, viewPoint.y );
-        };
+          drawLineToProjectileAtTime( projectile.timeAirborne );
 
-        for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
-          drawLineToProjectileAtTime( t );
+          context.strokeStyle = strokeStyle;
+          context.lineWidth = 2;
+          context.stroke();
         }
-
-        drawLineToProjectileAtTime( projectile.timeAirborne );
-
-        context.strokeStyle = strokeStyle;
-        context.lineWidth = 2;
-        context.stroke();
       }
     }
 
     // Render the projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
-      context.beginPath();
-      const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
 
-      // Draw a black circle
-      context.beginPath();
-      context.arc( viewPoint.x, viewPoint.y, 5, 0, 2 * Math.PI );
-      context.fillStyle = '#000000';
-      context.fill();
+      if ( projectile.sampleNumber === this.selectedSampleProperty.value ) {
+        context.beginPath();
+        const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
 
-      // Draw a highlight glint on the circle
-      context.beginPath();
-      context.arc( viewPoint.x + 1.5, viewPoint.y - 1.5, 2, 0, 2 * Math.PI );
-      context.fillStyle = '#cccccc';
-      context.fill();
+        // Draw a black circle
+        context.beginPath();
+        context.arc( viewPoint.x, viewPoint.y, 5, 0, 2 * Math.PI );
+        context.fillStyle = '#000000';
+        context.fill();
+
+        // Draw a highlight glint on the circle
+        context.beginPath();
+        context.arc( viewPoint.x + 1.5, viewPoint.y - 1.5, 2, 0, 2 * Math.PI );
+        context.fillStyle = '#cccccc';
+        context.fill();
+      }
     }
   }
 }

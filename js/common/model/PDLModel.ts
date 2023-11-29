@@ -22,6 +22,7 @@ import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -63,6 +64,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   // In the VSM screens, the field can be chosen, then the launcher can be chosen independently within that field.
   // In the Sampling screen, choosing a launcher + number of samples combination determines the field uniquely.
   public abstract launcherTypeProperty: TProperty<number>;
+  public abstract selectedSampleProperty: TReadOnlyProperty<number>;
 
   public constructor( providedOptions: PDLModelOptions<T> ) {
 

@@ -48,6 +48,9 @@ export default class Projectile {
   // Initial height of the projectile in meters
   public launchHeight: number | null;
 
+  // The sample number associated with this projectile
+  public sampleNumber: number;
+
   // The horizontal scale of the projectile, 1 for un-flipped, -1 for flipped
   public scaleX: 1 | -1;
 
@@ -66,7 +69,8 @@ export default class Projectile {
     timeAirborne = 0,
     launchAngle: number | null = null,
     launchSpeed: number | null = null,
-    launchHeight: number | null = null
+    launchHeight: number | null = null,
+    sampleNumber = 0
   ) {
     this.screenIdentifier = screenIdentifier;
     this.fieldNumber = fieldNumber;
@@ -80,6 +84,7 @@ export default class Projectile {
     this.launchAngle = launchAngle;
     this.launchSpeed = launchSpeed;
     this.launchHeight = launchHeight;
+    this.sampleNumber = sampleNumber;
   }
 
   public step( field: Field, dt: number ): void {

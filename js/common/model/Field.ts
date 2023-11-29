@@ -137,14 +137,13 @@ export default class Field extends PhetioObject {
     };
   }
 
-  protected createProjectile(): Projectile {
+  protected createProjectile( sampleNumber: number ): Projectile {
     const speedVariation = 1;
-    const launchAngle = this.launcherAngleProperty.value + dotRandom.nextGaussian() * 5;
+    const launchAngle = this.launcherAngleProperty.value + dotRandom.nextGaussian() * 5; // in degrees
     const launchSpeed = 25 + dotRandom.nextGaussian() * speedVariation;
 
-    // TODO: Let's use radians https://github.com/phetsims/projectile-data-lab/issues/7
     // TODO: Get the field number and screen identifier correct. See https://github.com/phetsims/projectile-data-lab/issues/7
-    return new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value );
+    return new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value, sampleNumber );
   }
 
   public static FieldIO = new IOType( 'FieldIO', {
