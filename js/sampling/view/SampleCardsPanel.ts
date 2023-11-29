@@ -12,7 +12,6 @@ import angleUpSolidShape from '../../../../sherpa/js/fontawesome-5/angleUpSolidS
 import angleDownSolidShape from '../../../../sherpa/js/fontawesome-5/angleDownSolidShape.js';
 import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
 import Panel from '../../../../sun/js/Panel.js';
-import Utils from '../../../../dot/js/Utils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import SamplingField from '../model/SamplingField.js';
@@ -54,35 +53,33 @@ export default class SampleCardsPanel extends PDLPanel {
 
     const carousel = new Panel( node );
 
+    const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
+      return new RectangularPushButton( {
+        tandem: options.tandem.createTandem( type + 'Button' ),
+        content: new Path( type === 'increment' ? angleUpSolidShape : angleDownSolidShape, { fill: 'white', scale: 0.05 } ),
+        buttonAppearanceStrategy: FlatAppearanceStrategy,
+        buttonAppearanceStrategyOptions: {
+          lineWidth: 0
+        },
+        listener: () => {
+          const proposedValue = selectedSampleProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
+          if ( proposedValue >= 1 && proposedValue <= sampleCountProperty.value ) {
+            selectedSampleProperty.value = proposedValue;
+          }
+        },
+        fireOnHold: true,
+        fireOnHoldInterval: 50
+      } );
+    };
+
     const upDownButtons = new VBox( {
       spacing: 3,
       children: [
-        new RectangularPushButton( {
-          tandem: options.tandem.createTandem( 'upButton' ),
-          content: new Path( angleUpSolidShape, { fill: 'white', scale: 0.05 } ),
-          buttonAppearanceStrategy: FlatAppearanceStrategy,
-          buttonAppearanceStrategyOptions: {
-            lineWidth: 0
-          },
-          listener: () => {
-            selectedSampleProperty.value = Utils.clamp( selectedSampleProperty.value + 1, 0, sampleCountProperty.value );
-          },
-          fireOnHold: true,
-          fireOnHoldInterval: 100
-        } ),
-        new RectangularPushButton( {
-          tandem: options.tandem.createTandem( 'downButton' ),
-          content: new Path( angleDownSolidShape, { fill: 'white', scale: 0.05 } ),
-          buttonAppearanceStrategy: FlatAppearanceStrategy,
-          buttonAppearanceStrategyOptions: {
-            lineWidth: 0
-          },
-          listener: () => {
-            selectedSampleProperty.value = Utils.clamp( selectedSampleProperty.value - 1, 0, sampleCountProperty.value );
-          }
-        } )
+        createIncrementDecrementButton( 'increment' ),
+        createIncrementDecrementButton( 'decrement' )
       ]
     } );
+
 
     super( new PDLPanelSection( patternStringProperty, new HBox( {
       spacing: 5,
