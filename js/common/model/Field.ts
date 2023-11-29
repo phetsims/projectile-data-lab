@@ -141,9 +141,15 @@ export default class Field extends PhetioObject {
     const speedVariation = 1;
     const launchAngle = this.launcherAngleProperty.value + dotRandom.nextGaussian() * 5; // in degrees
     const launchSpeed = 25 + dotRandom.nextGaussian() * speedVariation;
+    const landedImageIndex = dotRandom.nextInt( 3 );
+
+    // If the projectile type is not a cannonball, set scaleX to either 1 or -1
+    const projectileScaleX = this.projectileTypeProperty.value === 'CANNONBALL' ? 1 : dotRandom.nextBoolean() ? 1 : -1;
 
     // TODO: Get the field number and screen identifier correct. See https://github.com/phetsims/projectile-data-lab/issues/7
-    return new Projectile( -1, 'sources', 0, 0, 'CANNONBALL', 'AIRBORNE', 1, 0, 0, launchAngle, launchSpeed, this.launcherHeightProperty.value, sampleNumber );
+    return new Projectile( -1, 'sources', 0, 0, this.projectileTypeProperty.value,
+      'AIRBORNE', projectileScaleX, landedImageIndex, 0, launchAngle, launchSpeed,
+      this.launcherHeightProperty.value, sampleNumber );
   }
 
   public static FieldIO = new IOType( 'FieldIO', {

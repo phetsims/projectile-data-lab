@@ -16,9 +16,18 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import PDLColors from '../PDLColors.js';
 import Projectile from '../model/Projectile.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import cannonball_png from '../../../images/cannonball_png.js';
+import pumpkin_png from '../../../images/pumpkin_png.js';
+import piano_png from '../../../images/piano_png.js';
+import pumpkinLanded1_png from '../../../images/pumpkinLanded1_png.js';
+import pumpkinLanded2_png from '../../../images/pumpkinLanded2_png.js';
+import pumpkinLanded3_png from '../../../images/pumpkinLanded3_png.js';
+import pianoLanded_png from '../../../images/pianoLanded_png.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
+
+const PUMPKIN_LANDED_IMAGES = [ pumpkinLanded1_png, pumpkinLanded2_png, pumpkinLanded3_png ];
 
 export default class PDLCanvasNode<T extends Field> extends CanvasNode {
   public constructor(
@@ -104,22 +113,48 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
       const projectile = projectiles[ i ];
 
       if ( projectile.sampleNumber === this.selectedSampleProperty.value ) {
-        context.beginPath();
-        const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
 
-        // Draw a black circle
-        context.beginPath();
-        context.arc( viewPoint.x, viewPoint.y, 5, 0, 2 * Math.PI );
-        context.fillStyle = '#000000';
-        context.fill();
-
-        // Draw a highlight glint on the circle
-        context.beginPath();
-        context.arc( viewPoint.x + 1.5, viewPoint.y - 1.5, 2, 0, 2 * Math.PI );
-        context.fillStyle = '#cccccc';
-        context.fill();
+        this.drawProjectile( context, projectile );
       }
     }
+  }
+
+  private drawProjectile( context: CanvasRenderingContext2D, projectile: Projectile ): void {
+
+    const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
+
+    const isLanded = projectile.phase === 'LANDED';
+
+    let image: HTMLImageElement;
+
+    switch( projectile.type ) {
+      case 'PUMPKIN':
+        image = isLanded ? PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ] : pumpkin_png;
+        break;
+      case 'TOY_PIANO':
+        image = isLanded ? pianoLanded_png : piano_png;
+        break;
+      default:
+        image = cannonball_png;
+        break;
+    }
+
+    // Save the current state of the canvas
+    context.save();
+
+    // Move to the center of where we want to draw our image
+    context.translate( viewPoint.x, viewPoint.y );
+
+    // Scale context horizontally by -1; this flips the context horizontally
+    context.scale( projectile.scaleX, 1 );
+
+    // Draw the image on the flipped context
+    // Since the context is flipped, adjust the position by negating half of the width
+    context.drawImage( image, -image.width / 2, -image.height / 2 );
+
+    // Restore the context to its original state
+    context.restore();
+
   }
 }
 
