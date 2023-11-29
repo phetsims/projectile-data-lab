@@ -119,23 +119,25 @@ export default class Projectile {
   }
 
   public setLanded( field: Field ): void {
-
     this.phase = 'LANDED';
 
-    let timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
-    let landedX = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
-    let landedY = 0;
+    const landedX = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
 
     if ( landedX > PDLConstants.MAX_FIELD_DISTANCE ) {
-      const deltaHeightToLandBelowField = this.launchHeight! - PDLConstants.BELOW_FIELD_LANDING_Y;
-      timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, deltaHeightToLandBelowField );
-      landedX = Projectile.getProjectileX( this.launchSpeed!, this.launchAngle!, timeAirborne );
-      landedY = PDLConstants.BELOW_FIELD_LANDING_Y;
-    }
 
-    this.timeAirborne = timeAirborne;
-    this.x = landedX;
-    this.y = landedY;
+      // If the projectile goes past the field, simulate that it was launched from a higher height to calculate the
+      // total time of flight to land below the field.
+      const deltaHeightToLandBelowField = this.launchHeight! - PDLConstants.BELOW_FIELD_LANDING_Y;
+
+      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, deltaHeightToLandBelowField );
+      this.x = Projectile.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
+      this.y = PDLConstants.BELOW_FIELD_LANDING_Y;
+    }
+    else {
+      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+      this.x = landedX;
+      this.y = 0;
+    }
 
     field.projectileLandedEmitter.emit( this );
   }
