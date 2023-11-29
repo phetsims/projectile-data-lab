@@ -21,6 +21,7 @@ type SelfOptions = EmptySelfOptions;
 
 type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
+// TODO: These should be properties that can be customized via PhET-IO - see https://github.com/phetsims/projectile-data-lab/issues/7
 const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
 
 export default class SamplingModel extends PDLModel<SamplingField> {

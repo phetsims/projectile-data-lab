@@ -41,9 +41,15 @@ export default class SamplingField extends Field {
 
     this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
 
-    // Use a fractional power to increase the total time as the sample size increases,
-    // so that larger samples take longer but not too long.
-    const totalSampleTime = 0.4 * Math.pow( this.sampleSize, 0.5 ); // seconds
+    // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
+    const totalSampleTime =
+      this.sampleSize === 2 ? 0.5 :
+      this.sampleSize === 5 ? 0.75 :
+      this.sampleSize === 15 ? 0.85 :
+      this.sampleSize === 40 ? 1 :
+      0;
+
+    assert && assert( totalSampleTime > 0, 'totalSampleTime should be greater than 0' );
 
     this.timeBetweenProjectiles = totalSampleTime / this.sampleSize;
 
