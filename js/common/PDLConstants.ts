@@ -55,11 +55,11 @@ const PDLConstants = {
 
   LAUNCHER_CONFIGS: [
     new LauncherConfig( 24, 0.2, 0.8 ),
-    new LauncherConfig( 24, 0.2, 0.8 ),
-    new LauncherConfig( 24, 0.2, 0.8 ),
-    new LauncherConfig( 24, 0.2, 0.8 ),
-    new LauncherConfig( 24, 0.2, 0.8 ),
-    new LauncherConfig( 24, 0.2, 0.8 )
+    new LauncherConfig( 24, 0.001, 5 ),
+    new LauncherConfig( 24, 1, 0.01 ),
+    new LauncherConfig( 27.4, 0.15, 0.8 ),
+    new LauncherConfig( 27.6, 0.15, 0.8 ),
+    new LauncherConfig( 24, 1, 3 )
   ],
 
   // The projectile source images are scaled by this factor when drawing them on the canvas
