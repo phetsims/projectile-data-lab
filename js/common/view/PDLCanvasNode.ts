@@ -147,8 +147,10 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
     // Move to the center of where we want to draw our image
     context.translate( viewPoint.x, viewPoint.y );
 
+    const scaleMagnitude = 0.15;
+
     // Scale context horizontally by -1; this flips the context horizontally
-    context.scale( projectile.scaleX, 1 );
+    context.scale( projectile.scaleX * scaleMagnitude, scaleMagnitude );
 
     // Draw the image on the flipped context
     // Since the context is flipped, adjust the position by negating half of the width
