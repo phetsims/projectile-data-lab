@@ -15,6 +15,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
 import SampleCardsPanel from './SampleCardsPanel.js';
+import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -50,6 +51,13 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         tandem: options.tandem.createTandem( 'accordionBox' )
       } );
     this.addChild( accordionBox );
+
+    this.behindProjectilesLayer.addChild( new SamplingFieldSignNode(
+      model.fieldProperty,
+      this.modelViewTransform,
+      model.selectedSampleProperty,
+      model.numberOfSamplesProperty
+    ) );
 
     // Position the time control node so that the play/pause button is centered at the 50-meter mark
     ManualConstraint.create( this, [ accordionBox ], accordionBoxProxy => {

@@ -24,11 +24,13 @@ type StringsType = {
   'configurationStringProperty': LocalizedStringProperty;
   'projectile10kgStringProperty': LocalizedStringProperty;
   'launcherStringProperty': LocalizedStringProperty;
+  'launcherNumberPatternStringProperty': LocalizedStringProperty;
   'histogramStringProperty': LocalizedStringProperty;
   'distributionStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'fieldValuePatternStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
+  'sampleSizeValuePatternStringProperty': LocalizedStringProperty;
   'pathsStringProperty': LocalizedStringProperty;
   'launchSpeedStringProperty': LocalizedStringProperty;
   'launchAngleStringProperty': LocalizedStringProperty;
