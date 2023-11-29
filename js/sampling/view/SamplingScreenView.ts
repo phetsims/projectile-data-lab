@@ -30,9 +30,10 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       tandem: options.tandem.createTandem( 'samplingLaunchPanel' )
     } );
 
-    const sampleCardsPanel = new SampleCardsPanel( model.fieldProperty, model.selectedSampleProperty, model.numberOfSamplesProperty, {
-      tandem: options.tandem.createTandem( 'sampleCardsPanel' )
-    } );
+    const sampleCardsPanel = new SampleCardsPanel( model.fieldProperty, model.selectedSampleProperty, model.numberOfSamplesProperty,
+      model.numberOfCompletedSamplesProperty, {
+        tandem: options.tandem.createTandem( 'sampleCardsPanel' )
+      } );
 
     this.addChild( new VBox( {
       align: 'left',

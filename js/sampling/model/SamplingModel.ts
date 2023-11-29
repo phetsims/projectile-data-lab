@@ -29,6 +29,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly numberOfSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly launcherTypeProperty: NumberProperty;
 
   public constructor( providedOptions: SamplingModelOptions ) {
@@ -77,6 +78,10 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       // The up/down carousel card changes the selected sample, so this is bidirectional
       bidirectional: true,
       derive: t => t.selectedSampleProperty
+    } );
+
+    this.numberOfCompletedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+      derive: t => t.numberOfCompletedSamplesProperty
     } );
   }
 

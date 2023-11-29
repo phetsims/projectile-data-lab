@@ -4,6 +4,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Projectile from '../../common/model/Projectile.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model.
@@ -20,6 +21,7 @@ export default class SamplingField extends Field {
   private elapsedTime = 0;
   public readonly numberOfSamplesProperty: NumberProperty;
   public readonly selectedSampleProperty: NumberProperty;
+  public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
   public currentLandedCount = 0;
   public timeBetweenProjectiles: number;
@@ -36,6 +38,8 @@ export default class SamplingField extends Field {
       tandem: options.tandem.createTandem( 'selectedSampleProperty' ),
       phetioDocumentation: 'the selected sample'
     } );
+
+    this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
 
     const TIME_BETWEEN_PROJECTILES = 0.5; // seconds
 
@@ -73,9 +77,28 @@ export default class SamplingField extends Field {
 
       if ( this.currentLandedCount === this.sampleSize ) {
 
-        // TODO: Signify that the sample is complete, and update the card, see https://github.com/phetsims/projectile-data-lab/issues/7
+        this.numberOfCompletedSamplesProperty.value++;
       }
     }
+  }
+
+  // When the eraser button is pressed, clear the selected Field's projectiles.
+  public override clearProjectiles(): void {
+    super.clearProjectiles();
+
+    this.elapsedTime = 0;
+    this.numberOfSamplesProperty.reset();
+    this.selectedSampleProperty.reset();
+    this.currentLandedCount = 0;
+
+    this.numberOfCompletedSamplesProperty.reset();
+  }
+
+  // Get the projectiles that are within the currently selected sample.
+  public getSelectedProjectiles(): Projectile[] {
+
+    // Rewrite the above with filter
+    return this.projectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
   }
 }
 

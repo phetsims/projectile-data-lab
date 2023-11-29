@@ -16,6 +16,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import SamplingField from '../model/SamplingField.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -27,7 +28,12 @@ type SampleCardsPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class SampleCardsPanel extends PDLPanel {
 
-  public constructor( samplingFieldProperty: TReadOnlyProperty<SamplingField>, selectedSampleProperty: TProperty<number>, sampleCountProperty: TReadOnlyProperty<number>, options: SampleCardsPanelOptions ) {
+  public constructor(
+    samplingFieldProperty: TReadOnlyProperty<SamplingField>,
+    selectedSampleProperty: TProperty<number>,
+    sampleCountProperty: TReadOnlyProperty<number>,
+    numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
+    options: SampleCardsPanelOptions ) {
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNofMPatternStringProperty, {
 
@@ -37,17 +43,24 @@ export default class SampleCardsPanel extends PDLPanel {
     } );
 
     const createPage = () => {
+      const field = samplingFieldProperty.value;
+      const projectiles = field.getSelectedProjectiles();
+      const values = projectiles.map( projectile => projectile.x );
+
+      const meanString = values.length === 0 ? '?' : Utils.toFixedNumber( _.mean( values ), 1 );
+
       return new VBox( {
+        align: 'left',
         children: [
-          new Text( 'Launcher ' + samplingFieldProperty.value.launcher ),
+          new Text( 'Launcher: ' + samplingFieldProperty.value.launcher ),
           new Text( 'Sample Size: ' + samplingFieldProperty.value.sampleSize ),
-          new Text( 'Mean: 65.2 m' )
+          new Text( `Mean: ${meanString} m` )
         ]
       } );
     };
     const node = new Node();
 
-    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, sampleCountProperty ], () => {
+    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, sampleCountProperty, numberOfCompletedSamplesProperty ], () => {
       node.children = [ createPage() ];
     } );
 
