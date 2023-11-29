@@ -18,9 +18,6 @@ import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Projectile from '../../common/model/Projectile.js';
-import Field from '../../common/model/Field.js';
 import VSMField from '../model/VSMField.js';
 import VSMFieldSignNode from './VSMFieldSignNode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
@@ -97,17 +94,6 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
     model.stopwatch.positionProperty.setInitialValue( stopwatchStartingPosition );
     model.stopwatch.positionProperty.reset();
 
-    const mostRecentProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, Field>( model.fieldProperty, {
-      derive: 'mostRecentlyLaunchedProjectileProperty'
-    } );
-
-    const mostRecentLaunchSpeedProperty = new DerivedProperty( [ mostRecentProjectileProperty ], projectile => {
-      return projectile ? projectile.launchSpeed : null;
-    } );
-    const mostRecentLaunchAngleProperty = new DerivedProperty( [ mostRecentProjectileProperty ], projectile => {
-      return projectile ? projectile.launchAngle : null;
-    } );
-
     const isLauncherRaisedProperty: TReadOnlyProperty<boolean> = new DerivedProperty( [ model.launcherConfigurationProperty ],
       launcherConfiguration => {
         return launcherConfiguration === 'ANGLE_0';
@@ -115,22 +101,56 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
 
     // Create the heat map tools
     const speedToolNode = new SpeedToolNode( {
-      visibleProperty: model.isLaunchSpeedVisibleProperty, sourceDataProperty: mostRecentLaunchSpeedProperty,
+      visibleProperty: model.isLaunchSpeedVisibleProperty,
       x: originPosition.x, y: originPosition.y
     } );
 
     const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
-      visibleProperty: model.isLaunchAngleVisibleProperty, sourceDataProperty: mostRecentLaunchAngleProperty,
+      visibleProperty: model.isLaunchAngleVisibleProperty,
       x: originPosition.x, y: originPosition.y,
       initialNeedleValue: model.launcherAngleProperty.value
     } );
 
-    // If the projectiles are cleared, clear the heat map tools
+
     model.fields.forEach( field => {
+
+      // When one projectile is launched, update the heat map tools
+      field.projectileLaunchedEmitter.addListener( projectile => {
+        if ( model.fieldProperty.value === field ) {
+
+          speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
+          speedToolNode.updateNeedleAndText( projectile.launchSpeed );
+
+          angleToolNode.updateHeatMapWithData( projectile.launchAngle );
+          angleToolNode.setNeedleForValue( projectile.launchAngle );
+        }
+      } );
+
+      // If the projectiles are cleared, clear the heat map tools
       field.projectilesClearedEmitter.addListener( () => {
         speedToolNode.clear();
         angleToolNode.clear();
       } );
+    } );
+
+    // When the field changes, restore the entire state of the heat maps.
+    model.fieldProperty.link( field => {
+
+      speedToolNode.clear();
+      angleToolNode.clear();
+
+      field.projectiles.forEach( projectile => {
+        speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
+        angleToolNode.updateHeatMapWithData( projectile.launchAngle );
+      } );
+      if ( field.projectiles.length > 0 ) {
+        speedToolNode.updateNeedleAndText( field.projectiles[ field.projectiles.length - 1 ].launchSpeed );
+        angleToolNode.setNeedleForValue( field.projectiles[ field.projectiles.length - 1 ].launchAngle );
+      }
+      else {
+
+        // TODO: https://github.com/phetsims/projectile-data-lab/issues/7 set back to initial state if there are no projectiles
+      }
     } );
 
     model.launcherHeightProperty.link( launcherHeight => {

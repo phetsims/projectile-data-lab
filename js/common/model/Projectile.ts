@@ -36,17 +36,17 @@ export default class Projectile {
   // The type of the projectile - CANNONBALL, PUMPKIN or TOY_PIANO
   public type: ProjectileType;
 
-  // Phase of the projectile's flight - LOADED, AIRBORNE, LANDED
+  // Phase of the projectile's flight - AIRBORNE, LANDED
   public phase: ProjectilePhase;
 
   // Initial angle of the projectile in degrees
-  public launchAngle: number | null;
+  public launchAngle: number;
 
   // Initial speed of the projectile in meters per second
-  public launchSpeed: number | null;
+  public launchSpeed: number;
 
   // Initial height of the projectile in meters
-  public launchHeight: number | null;
+  public launchHeight: number;
 
   // The sample number associated with this projectile
   public sampleNumber: number;
@@ -64,13 +64,13 @@ export default class Projectile {
     x: number,
     y: number,
     type: ProjectileType,
-    phase: ProjectilePhase = 'LOADED',
-    scaleX: 1 | -1 = 1,
-    landedImageIndex = 0,
-    timeAirborne = 0,
-    launchAngle: number | null = null,
-    launchSpeed: number | null = null,
-    launchHeight: number | null = null
+    phase: ProjectilePhase,
+    scaleX: 1 | -1,
+    landedImageIndex: number,
+    timeAirborne: number,
+    launchAngle: number,
+    launchSpeed: number,
+    launchHeight: number
   ) {
     this.screenIdentifier = screenIdentifier;
     this.fieldNumber = fieldNumber;
@@ -91,8 +91,8 @@ export default class Projectile {
     if ( this.phase === 'AIRBORNE' || this.phase === 'AIRBORNE_BELOW_FIELD' ) {
       this.timeAirborne += dt;
 
-      this.x = Projectile.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
-      this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne )!;
+      this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
+      this.y = Projectile.getProjectileY( this.launchSpeed, this.launchAngle, this.launchHeight, this.timeAirborne )!;
 
       if ( this.phase === 'AIRBORNE' ) {
         if ( this.y <= 0 ) {
@@ -101,9 +101,9 @@ export default class Projectile {
           }
           else {
             this.phase = 'LANDED';
-            this.x = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+            this.x = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
             this.y = 0;
-            this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! )!;
+            this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
           }
 
           field.projectileLandedEmitter.emit( this );
@@ -121,20 +121,20 @@ export default class Projectile {
   public setLanded( field: Field ): void {
     this.phase = 'LANDED';
 
-    const landedX = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+    const landedX = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
 
     if ( landedX > PDLConstants.MAX_FIELD_DISTANCE ) {
 
       // If the projectile goes past the field, simulate that it was launched from a higher height to calculate the
       // total time of flight to land below the field.
-      const deltaHeightToLandBelowField = this.launchHeight! - PDLConstants.BELOW_FIELD_LANDING_Y;
+      const deltaHeightToLandBelowField = this.launchHeight - PDLConstants.BELOW_FIELD_LANDING_Y;
 
-      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, deltaHeightToLandBelowField );
-      this.x = Projectile.getProjectileX( this.launchSpeed!, this.launchAngle!, this.timeAirborne );
+      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, deltaHeightToLandBelowField );
+      this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
       this.y = PDLConstants.BELOW_FIELD_LANDING_Y;
     }
     else {
-      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
       this.x = landedX;
       this.y = 0;
     }
@@ -248,9 +248,9 @@ export type ProjectileStateObject = {
   scaleX: 1 | -1;
   landedImageIndex: number;
   timeAirborne: number;
-  launchAngle: number | null;
-  launchSpeed: number | null;
-  launchHeight: number | null;
+  launchAngle: number;
+  launchSpeed: number;
+  launchHeight: number;
 };
 
 projectileDataLab.register( 'Projectile', Projectile );

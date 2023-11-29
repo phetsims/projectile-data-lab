@@ -9,8 +9,6 @@ import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringPrope
 import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
@@ -24,7 +22,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
  */
 
 type SelfOptions = {
-  sourceDataProperty: TReadOnlyProperty<number | null>;
   titleStringProperty: LocalizedStringProperty;
   unitsStringProperty: LocalizedStringProperty;
   displayOffset: Vector2;
@@ -69,11 +66,14 @@ export default class HeatMapToolNode extends Node {
   protected readonly needleNode: Node;
 
   protected readonly valueReadoutNode: Node;
+  private readonly valueReadout: Text;
 
   // TODO: Find a way to move this into AngleToolNode - see https://github.com/phetsims/projectile-data-lab/issues/7
   protected readonly labelsBelowHorizontal: Text[] = [];
   protected readonly tickMarksBelowHorizontal: Path[] = [];
   protected readonly heatNodesBelowHorizontal: Path[] = [];
+  private readonly minAngle: number;
+  private readonly maxAngle: number;
 
   public constructor( providedOptions: HeatMapToolNodeOptions ) {
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {
@@ -119,24 +119,15 @@ export default class HeatMapToolNode extends Node {
 
     this.needleNode = this.createNeedleNode( options.needleShape );
 
-    // TODO: Use PatternStringProperty for adding a space before m/s but not degrees - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const valueReadoutStringProperty = new DerivedProperty( [ options.sourceDataProperty ], data => {
-      if ( data === null ) {
-        return '—';
-      }
-      const dataRounded = Utils.toFixed( data, 1 );
-      return dataRounded.toString() + options.unitsStringProperty.value;
-    } );
-
     this.valueReadoutNode = new Node( { x: 0, y: options.valueReadoutY } );
-    const valueReadout = new Text( valueReadoutStringProperty, {
+    this.valueReadout = new Text( 'NO DATA', {
       centerX: 0,
       centerY: 0,
       font: PDLConstants.PRIMARY_FONT
     } );
 
     // Create a background rectangle for the value readout
-    const valueReadoutBounds = valueReadout.bounds.dilatedXY( 8, 2 );
+    const valueReadoutBounds = this.valueReadout.bounds.dilatedXY( 8, 2 );
     const valueReadoutBackground = new Rectangle( valueReadoutBounds, {
       fill: '#ECECEC',
       stroke: 'black',
@@ -145,11 +136,11 @@ export default class HeatMapToolNode extends Node {
     } );
 
     this.valueReadoutNode.addChild( valueReadoutBackground );
-    this.valueReadoutNode.addChild( valueReadout );
+    this.valueReadoutNode.addChild( this.valueReadout );
 
-    ManualConstraint.create( this.valueReadoutNode, [ valueReadout ], valueReadoutProxy => {
+    ManualConstraint.create( this.valueReadoutNode, [ this.valueReadout ], valueReadoutProxy => {
       valueReadoutProxy.x = -0.5 * valueReadoutProxy.width;
-      valueReadoutBackground.setRectBounds( valueReadout.bounds.dilatedXY( 8, 2 ) );
+      valueReadoutBackground.setRectBounds( this.valueReadout.bounds.dilatedXY( 8, 2 ) );
     } );
 
     this.displayNode.addChild( this.bodyBackNode );
@@ -160,22 +151,26 @@ export default class HeatMapToolNode extends Node {
     this.displayNode.addChild( this.needleNode );
     this.displayNode.addChild( this.valueReadoutNode );
 
-    const needleAngleForValue = ( value: number ): number => {
-      return -Utils.linear( this.minValue, this.maxValue, options.minAngle, options.maxAngle, value );
-    };
+    this.minAngle = options.minAngle;
+    this.maxAngle = options.maxAngle;
 
-    const setNeedleRotation = ( value: number ): void => {
-      this.needleNode.setRotation( Utils.toRadians( needleAngleForValue( value ) ) );
-    };
+    this.setNeedleRotation( options.initialNeedleValue );
+  }
 
-    setNeedleRotation( options.initialNeedleValue );
+  public setNeedleRotation( value: number ): void {
+    const needleAngle = -Utils.linear( this.minValue, this.maxValue, this.minAngle, this.maxAngle, value );
+    this.needleNode.setRotation( Utils.toRadians( needleAngle ) );
+  }
 
-    options.sourceDataProperty.lazyLink( data => {
-      if ( data !== null ) {
-        setNeedleRotation( data );
-        this.updateHeatMapWithData( data );
-      }
-    } );
+  public updateNeedleAndText( value: number ): void {
+
+    const dataRounded = Utils.toFixed( value, 1 );
+
+    // TODO: Use PatternStringProperty, see https://github.com/phetsims/projectile-data-lab/issues/7
+    const valueText = dataRounded.toString() + 'units';
+    this.valueReadout.setString( valueText );
+
+    this.setNeedleRotation( value );
   }
 
   private createHeatNodes( minAngle: number, heatNodeArcLength: number, innerRadius: number, outerRadius: number, isClockwise: boolean ): Path[] {
@@ -299,7 +294,7 @@ export default class HeatMapToolNode extends Node {
   }
 
   // updateHeatMapWithData updates the opacity of each heat node based on the number of values in the bin
-  private updateHeatMapWithData( data: number ): void {
+  public updateHeatMapWithData( data: number ): void {
     const minOpacity = 0.2;
     const index = Math.floor( ( data - this.minValue ) / this.binWidth );
 

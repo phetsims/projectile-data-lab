@@ -3,6 +3,8 @@
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import Projectile from '../../common/model/Projectile.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -15,6 +17,12 @@ type SelfOptions = EmptySelfOptions;
 export type VSMFieldOptions = SelfOptions & FieldOptions;
 
 export default class VSMField extends Field {
+  public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
+    parameters: [ {
+      name: 'projectile',
+      valueType: Projectile
+    } ]
+  } );
 
   public constructor( options: VSMFieldOptions ) {
     super( options );
@@ -23,7 +31,8 @@ export default class VSMField extends Field {
   public launchProjectile(): void {
     const projectile = this.createProjectile( 0 );
     this.projectiles.push( projectile );
-    this.mostRecentlyLaunchedProjectileProperty.value = projectile;
+
+    this.projectileLaunchedEmitter.emit( projectile );
   }
 
   public step( dt: number ): void {
