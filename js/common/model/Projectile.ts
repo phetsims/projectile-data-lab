@@ -106,8 +106,7 @@ export default class Projectile {
       }
 
       if ( this.phase === 'AIRBORNE_BELOW_FIELD' ) {
-        // TODO: Avoid magic numbers - see https://github.com/phetsims/projectile-data-lab/issues/7
-        if ( this.y <= -15 ) {
+        if ( this.y <= PDLConstants.BELOW_FIELD_LANDING_Y ) {
           this.phase = 'LANDED';
         }
       }
@@ -118,23 +117,23 @@ export default class Projectile {
 
     this.phase = 'LANDED';
 
-    this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
-    this.x = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+    let timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+    let landedX = Projectile.getHorizontalRange( this.launchSpeed!, this.launchAngle!, this.launchHeight! );
+    let landedY = 0;
 
-    if ( this.x > PDLConstants.MAX_FIELD_DISTANCE ) {
-
-      // TODO: Help on the time airborne, note how it overlaps with the magic number in step(), see https://github.com/phetsims/projectile-data-lab/issues/7
-      this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne * 2 );
+    if ( landedX > PDLConstants.MAX_FIELD_DISTANCE ) {
+      const deltaHeightToLandBelowField = this.launchHeight! - PDLConstants.BELOW_FIELD_LANDING_Y;
+      timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed!, this.launchAngle!, deltaHeightToLandBelowField );
+      landedX = Projectile.getProjectileX( this.launchSpeed!, this.launchAngle!, timeAirborne );
+      landedY = PDLConstants.BELOW_FIELD_LANDING_Y;
     }
-    else {
-      this.y = Projectile.getProjectileY( this.launchSpeed!, this.launchAngle!, this.launchHeight!, this.timeAirborne );
-    }
 
-    this.phase = 'LANDED';
+    this.timeAirborne = timeAirborne;
+    this.x = landedX;
+    this.y = landedY;
 
     field.projectileLandedEmitter.emit( this );
   }
-
 
   public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
     valueType: Projectile,
