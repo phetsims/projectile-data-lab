@@ -41,7 +41,7 @@ export class PDLScreenView<T extends Field> extends ScreenView {
 
   private readonly launcher;
 
-  protected readonly behindProjectilesLayer;
+  protected readonly behindProjectilesLayer = new Node();
 
   protected readonly resetAllButton;
   protected readonly timeControlNode;
@@ -91,8 +91,6 @@ export class PDLScreenView<T extends Field> extends ScreenView {
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'resetAllButton' )
     } );
-
-    this.behindProjectilesLayer = new Node();
 
     const fieldBack = new FieldNode( model.binWidthProperty, { x: fieldX, y: fieldY } );
     const fieldFront = new FieldNode( model.binWidthProperty, { isBottomHalf: true, x: fieldX, y: fieldY } );
@@ -179,13 +177,14 @@ export class PDLScreenView<T extends Field> extends ScreenView {
         canvasBounds: canvasBounds
       } );
 
-    this.behindProjectilesLayer.addChild( fieldBack );
-    this.behindProjectilesLayer.addChild( this.launcher );
-    this.behindProjectilesLayer.addChild( fieldFront );
-    this.behindProjectilesLayer.addChild( fieldOverlayNode );
-
     this.addChild( backgroundNode );
+    this.addChild( fieldBack );
+    this.addChild( this.launcher );
+    this.addChild( fieldFront );
+    this.addChild( fieldOverlayNode );
+
     this.addChild( this.behindProjectilesLayer );
+
     this.addChild( projectileCanvas );
     this.addChild( this.launchButton );
     this.addChild( this.launchControlRadioButtonGroup );
