@@ -45,6 +45,8 @@ export default class SamplingField extends Field {
 
     // constant time per sample, independent of sample size
     this.timeBetweenProjectiles = TIME_BETWEEN_PROJECTILES / this.sampleSize;
+
+    this.launcherTypeProperty.value = launcher;
   }
 
   public createLandedProjectile(): void {
