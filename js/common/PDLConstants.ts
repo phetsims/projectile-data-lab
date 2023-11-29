@@ -62,6 +62,9 @@ const PDLConstants = {
     new LauncherConfig( 24, 0.2, 0.8 )
   ],
 
+  // The projectile source images are scaled by this factor when drawing them on the canvas
+  PROJECTILE_IMAGE_SCALE_FACTOR: 0.15,
+
   HEATMAP_TOOL_LABEL_FONT: new PhetFont( 11 ),
   PRIMARY_FONT: new PhetFont( 13 ),
   FIELD_LABEL_FONT: new PhetFont( 16 ),

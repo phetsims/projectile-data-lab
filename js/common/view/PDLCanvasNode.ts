@@ -23,6 +23,7 @@ import pumpkinLanded1_png from '../../../images/pumpkinLanded1_png.js';
 import pumpkinLanded2_png from '../../../images/pumpkinLanded2_png.js';
 import pumpkinLanded3_png from '../../../images/pumpkinLanded3_png.js';
 import pianoLanded_png from '../../../images/pianoLanded_png.js';
+import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
@@ -147,10 +148,8 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
     // Move to the center of where we want to draw our image
     context.translate( viewPoint.x, viewPoint.y );
 
-    const scaleMagnitude = 0.15;
-
     // Scale context horizontally by -1; this flips the context horizontally
-    context.scale( projectile.scaleX * scaleMagnitude, scaleMagnitude );
+    context.scale( projectile.scaleX * PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR, PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR );
 
     // Draw the image on the flipped context
     // Since the context is flipped, adjust the position by negating half of the width
