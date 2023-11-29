@@ -137,11 +137,6 @@ export default class Field extends PhetioObject {
     };
   }
 
-  public step( dt: number ): void {
-    this.projectiles.forEach( projectile => projectile.step( this, dt ) );
-    this.projectilesChangedEmitter.emit();
-  }
-
   protected createProjectile(): Projectile {
     const speedVariation = 1;
     const launchAngle = this.launcherAngleProperty.value + dotRandom.nextGaussian() * 5;

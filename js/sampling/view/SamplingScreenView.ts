@@ -10,10 +10,11 @@ import SamplingModel from '../model/SamplingModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import SamplingLaunchPanel from './SamplingLaunchPanel.js';
-import { ManualConstraint, Rectangle } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
+import SampleCardsPanel from './SampleCardsPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -28,7 +29,17 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     const samplingLaunchPanel = new SamplingLaunchPanel( model.launcherTypeProperty, model.sampleSizeProperty, {
       tandem: options.tandem.createTandem( 'samplingLaunchPanel' )
     } );
-    this.addChild( samplingLaunchPanel );
+
+    const sampleCardsPanel = new SampleCardsPanel( model.fieldProperty, model.selectedSampleProperty, model.numberOfSamplesProperty, {
+      tandem: options.tandem.createTandem( 'sampleCardsPanel' )
+    } );
+
+    this.addChild( new VBox( {
+      align: 'left',
+      spacing: 5,
+      stretch: true,
+      children: [ samplingLaunchPanel, sampleCardsPanel ]
+    } ) );
 
     const accordionBox = new SamplingAccordionBox(
       new Rectangle( 0, 0, 500, 200, { fill: '#ccffcc' } ), {

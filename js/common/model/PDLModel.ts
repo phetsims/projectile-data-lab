@@ -21,6 +21,7 @@ import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -54,13 +55,14 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
 
-  // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
-  public readonly launcherTypeProperty: DynamicProperty<number, number, T>;
-
   public readonly launcherAngleProperty: DynamicProperty<number, number, T>;
   public readonly launcherHeightProperty: DynamicProperty<number, number, T>;
 
   public readonly isPathsVisibleProperty: BooleanProperty;
+
+  // In the VSM screens, the field can be chosen, then the launcher can be chosen independently within that field.
+  // In the Sampling screen, choosing a launcher + number of samples combination determines the field uniquely.
+  public abstract launcherTypeProperty: TProperty<number>;
 
   public constructor( providedOptions: PDLModelOptions<T> ) {
 
@@ -114,11 +116,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, T>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.projectileTypeProperty
-    } );
-
-    this.launcherTypeProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
-      bidirectional: true,
-      derive: t => t.launcherTypeProperty
     } );
 
     this.launcherAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {

@@ -25,6 +25,11 @@ export default class VSMField extends Field {
     this.projectiles.push( projectile );
     this.mostRecentlyLaunchedProjectileProperty.value = projectile;
   }
+
+  public step( dt: number ): void {
+    this.projectiles.forEach( projectile => projectile.step( this, dt ) );
+    this.projectilesChangedEmitter.emit();
+  }
 }
 
 projectileDataLab.register( 'VSMField', VSMField );

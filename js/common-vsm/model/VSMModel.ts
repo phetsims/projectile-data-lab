@@ -17,6 +17,7 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import VSMField from './VSMField.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -37,6 +38,9 @@ export default class VSMModel extends PDLModel<VSMField> {
   public readonly measuringTapeBasePositionProperty;
   public readonly measuringTapeTipPositionProperty;
 
+  // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
+  public readonly launcherTypeProperty: DynamicProperty<number, number, VSMField>;
+
   public constructor( providedOptions: VSMModelOptions ) {
 
     const fields = _.range( 1, 9 ).map( i => {
@@ -51,6 +55,11 @@ export default class VSMModel extends PDLModel<VSMField> {
       isPathsVisible: false
     }, providedOptions );
     super( options );
+
+    this.launcherTypeProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: 'launcherTypeProperty'
+    } );
 
     this.isLaunchAngleVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isLaunchAngleVisibleProperty' )

@@ -14,27 +14,31 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import SamplingField from './SamplingField.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
+const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
+
 export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly sampleSizeProperty: Property<number>;
 
-  private elapsedTime = 0;
-  private currentSampleCount: number | null = null;
+  public readonly numberOfSamplesProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly launcherTypeProperty: NumberProperty;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
     const fields: SamplingField[] = [];
     const NUM_LAUNCHERS = 6;
-    const NUM_SAMPLE_SIZES = 4;
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
-      for ( let j = 0; j < NUM_SAMPLE_SIZES; j++ ) {
-        const fieldNumber = 1 + j + i * NUM_SAMPLE_SIZES;
-        fields.push( new SamplingField( {
+      for ( let j = 0; j < SAMPLE_SIZES.length; j++ ) {
+        const fieldNumber = 1 + j + i * SAMPLE_SIZES.length;
+        fields.push( new SamplingField( i + 1, SAMPLE_SIZES[ j ], {
           tandem: providedOptions.tandem.createTandem( 'field' + fieldNumber )
         } ) );
       }
@@ -49,44 +53,39 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     super( options );
 
     this.sampleSizeProperty = new Property<number>( 2, {
-      validValues: [ 2, 5, 15, 40 ],
+      validValues: SAMPLE_SIZES,
       tandem: options.tandem.createTandem( 'sampleSizeProperty' ),
       phetioDocumentation: 'This property configures the number of projectiles in a sample',
       phetioValueType: NumberIO
     } );
 
-    // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
-    // TODO: Fix reentrant error - see https://github.com/phetsims/projectile-data-lab/issues/7
+    this.launcherTypeProperty = new NumberProperty( 1 );
+
+    // // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
+    // // TODO: Fix reentrant error - see https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ this.sampleSizeProperty, this.launcherTypeProperty ], ( sampleSize, launcherType ) => {
-      // Get the index of sampleSize in the validValues array
-      // const numSampleSizes = this.sampleSizeProperty.validValues!.length;
-      // const sampleSizeIndex = this.sampleSizeProperty.validValues!.indexOf( sampleSize );
-      // const fieldNumber = sampleSizeIndex + ( launcherType - 1 ) * numSampleSizes;
-      // this.fieldProperty.value = this.fields[ fieldNumber ];
+      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcher === launcherType )!;
+      this.fieldProperty.value = field;
+    } );
+
+    this.numberOfSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+      derive: t => t.numberOfSamplesProperty
+    } );
+
+    this.selectedSampleProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+
+      // The up/down carousel card changes the selected sample, so this is bidirectional
+      bidirectional: true,
+      derive: t => t.selectedSampleProperty
     } );
   }
 
-  // TODO: Should this move to SamplingField? See https://github.com/phetsims/projectile-data-lab/issues/7
   public launchButtonPressed(): void {
-    this.fieldProperty.value.createLandedProjectile();
-    this.currentSampleCount = 1;
-    this.elapsedTime = 0;
+    this.fieldProperty.value.launchButtonPressed();
   }
 
   public step( dt: number ): void {
-
-    const TIME_BETWEEN_PROJECTILES = 0.5; // seconds
-
-    // constant time per sample, independent of sample size
-    const timeBetweenProjectiles = TIME_BETWEEN_PROJECTILES / this.sampleSizeProperty.value;
-
-    this.elapsedTime += dt;
-
-    while ( typeof this.currentSampleCount === 'number' && this.currentSampleCount < this.sampleSizeProperty.value && ( this.elapsedTime - timeBetweenProjectiles > 0 ) ) {
-      this.fieldProperty.value.createLandedProjectile();
-      this.currentSampleCount++;
-      this.elapsedTime -= timeBetweenProjectiles;
-    }
+    this.fieldProperty.value.step( dt );
   }
 
   /**
