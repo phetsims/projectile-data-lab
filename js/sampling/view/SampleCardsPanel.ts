@@ -16,6 +16,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import SamplingField from '../model/SamplingField.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -47,7 +48,7 @@ export default class SampleCardsPanel extends PDLPanel {
     };
     const node = new Node();
 
-    samplingFieldProperty.link( samplingField => {
+    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, sampleCountProperty ], () => {
       node.children = [ createPage() ];
     } );
 

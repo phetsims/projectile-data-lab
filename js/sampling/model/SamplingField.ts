@@ -48,6 +48,8 @@ export default class SamplingField extends Field {
     projectile.setLanded( this );
 
     this.projectiles.push( projectile );
+
+    // TODO: Do we need this in SamplingField? See https://github.com/phetsims/projectile-data-lab/issues/7
     this.mostRecentlyLaunchedProjectileProperty.value = projectile;
     this.projectilesChangedEmitter.emit();
   }
@@ -67,6 +69,14 @@ export default class SamplingField extends Field {
       this.createLandedProjectile();
       this.currentLandedCount++;
       this.elapsedTime -= this.timeBetweenProjectiles;
+
+      if ( this.currentLandedCount === this.sampleSize ) {
+        this.numberOfSamplesProperty.value++;
+
+        if ( this.selectedSampleProperty.value === 0 ) {
+          this.selectedSampleProperty.value = 1;
+        }
+      }
     }
   }
 }
