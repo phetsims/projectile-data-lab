@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
+import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';

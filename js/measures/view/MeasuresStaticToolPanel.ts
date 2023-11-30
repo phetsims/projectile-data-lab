@@ -2,7 +2,7 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import StaticToolPanel, { StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
-import { PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
+import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';

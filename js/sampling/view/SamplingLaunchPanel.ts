@@ -1,12 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
+import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
 import SampleSizeSection from './SampleSizeSection.js';
-import { PDLLaunchPanel } from '../../common/view/panels/PDLLaunchPanel.js';
+import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 /**

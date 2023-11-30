@@ -1,12 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
-import projectileDataLab from '../../../projectileDataLab.js';
-import PhetioProperty from '../../../../../axon/js/PhetioProperty.js';
-import PDLText from '../PDLText.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLText from './PDLText.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)

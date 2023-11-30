@@ -4,7 +4,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/panels/PDLPanelSection.js';
+import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLText from '../../common/view/PDLText.js';
 

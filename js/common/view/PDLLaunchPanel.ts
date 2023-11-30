@@ -6,13 +6,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
-import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../../projectileDataLab.js';
-import { Node, VBox } from '../../../../../scenery/js/imports.js';
-import WithRequired from '../../../../../phet-core/js/types/WithRequired.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import { Node, VBox } from '../../../../scenery/js/imports.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
 import SectionLauncherType from './SectionLauncherType.js';
-import PhetioProperty from '../../../../../axon/js/PhetioProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;

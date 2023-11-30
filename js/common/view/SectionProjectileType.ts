@@ -1,13 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
-import projectileDataLab from '../../../projectileDataLab.js';
-import { Text } from '../../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup from '../../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import { Text } from '../../../../scenery/js/imports.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import { ProjectileType } from '../../model/ProjectileType.js';
-import ProjectileDataLabStrings from '../../../ProjectileDataLabStrings.js';
-import PhetioProperty from '../../../../../axon/js/PhetioProperty.js';
+import { ProjectileType } from '../model/ProjectileType.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)

@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { PDLPanel, PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
-import PDLPanelSection from '../../common/view/panels/PDLPanelSection.js';
+import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
+import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';

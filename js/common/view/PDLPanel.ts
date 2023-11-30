@@ -6,12 +6,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
-import optionize, { EmptySelfOptions } from '../../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../../projectileDataLab.js';
-import Panel, { PanelOptions } from '../../../../../sun/js/Panel.js';
-import { Node } from '../../../../../scenery/js/imports.js';
-import WithRequired from '../../../../../phet-core/js/types/WithRequired.js';
-import PDLColors from '../../PDLColors.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PDLColors from '../PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLPanelOptions = SelfOptions & WithRequired<PanelOptions, 'tandem'>;

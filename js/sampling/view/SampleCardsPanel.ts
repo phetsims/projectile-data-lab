@@ -2,9 +2,9 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLPanelSection from '../../common/view/panels/PDLPanelSection.js';
+import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { PDLPanel, PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
+import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import { HBox, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
