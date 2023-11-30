@@ -69,7 +69,7 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
       basePositionProperty: model.measuringTapeBasePositionProperty,
       tipPositionProperty: model.measuringTapeTipPositionProperty,
       lineColor: new Color( 255, 255, 0 ),
-      tapeLineWidth: 3,
+      tapeLineWidth: 2,
       isBaseCrosshairRotating: false,
       isTipCrosshairRotating: false,
 
