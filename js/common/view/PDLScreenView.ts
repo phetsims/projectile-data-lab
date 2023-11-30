@@ -106,7 +106,6 @@ export class PDLScreenView<T extends Field> extends ScreenView {
       {}
     );
 
-
     // Create the launch button
     this.launchButton = new RectangularPushButton( {
       content: new Image( launchButton_png ),
@@ -122,24 +121,21 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     } );
 
     const radioButtonLabelMaxWidth = 180;
-    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.isContinuousLaunchProperty, [
-      {
-        value: false,
-        createNode: () => new Text( ProjectileDataLabStrings.singleLaunchStringProperty, {
-          font: PDLConstants.LAUNCH_CONTROL_FONT,
-          maxWidth: radioButtonLabelMaxWidth
-        } ),
-        tandemName: 'singleLaunchRadioButton'
-      },
-      {
-        value: true,
-        createNode: () => new Text( ProjectileDataLabStrings.continuousLaunchStringProperty, {
-          font: PDLConstants.LAUNCH_CONTROL_FONT,
-          maxWidth: radioButtonLabelMaxWidth
-        } ),
-        tandemName: 'continuousLaunchRadioButton'
-      }
-    ], {
+    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.isContinuousLaunchProperty, [ {
+      value: false,
+      createNode: () => new Text( ProjectileDataLabStrings.singleLaunchStringProperty, {
+        font: PDLConstants.LAUNCH_CONTROL_FONT,
+        maxWidth: radioButtonLabelMaxWidth
+      } ),
+      tandemName: 'singleLaunchRadioButton'
+    }, {
+      value: true,
+      createNode: () => new Text( ProjectileDataLabStrings.continuousLaunchStringProperty, {
+        font: PDLConstants.LAUNCH_CONTROL_FONT,
+        maxWidth: radioButtonLabelMaxWidth
+      } ),
+      tandemName: 'continuousLaunchRadioButton'
+    } ], {
       left: this.launchButton.right + 15,
       centerY: this.launchButton.centerY,
       spacing: 10,
