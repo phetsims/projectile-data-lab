@@ -1,12 +1,14 @@
 // Copyright 2023, University of Colorado Boulder
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { Node, Text } from '../../../../scenery/js/imports.js';
 import PDLAccordionBox, { PDLAccordionBoxOptions } from '../../common/view/PDLAccordionBox.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import HistogramNode from './HistogramNode.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -23,8 +25,12 @@ export type VSMAccordionBoxOptions =
 
 export default class VSMAccordionBox extends PDLAccordionBox {
 
-  public constructor( comboBoxParent: Node, providedOptions: VSMAccordionBoxOptions ) {
-    const contentNode = new Rectangle( 0, 0, 500, 200, { fill: '#ffcccc' } );
+  public constructor( binWidthProperty: TReadOnlyProperty<number>, comboBoxParent: Node, providedOptions: VSMAccordionBoxOptions ) {
+
+    const histogramNode = new HistogramNode( binWidthProperty, {
+      tandem: providedOptions.tandem.createTandem( 'histogramNode' )
+    } );
+
     const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
         font: PDLConstants.PRIMARY_FONT
@@ -32,7 +38,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
       maxWidth: 500
     }, providedOptions );
 
-    super( comboBoxParent, contentNode, options );
+    super( comboBoxParent, histogramNode, options );
   }
 }
 
