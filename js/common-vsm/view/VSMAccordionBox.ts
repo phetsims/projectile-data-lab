@@ -23,7 +23,7 @@ export type VSMAccordionBoxOptions =
 
 export default class VSMAccordionBox extends PDLAccordionBox {
 
-  public constructor( contentNode: Node, providedOptions: VSMAccordionBoxOptions ) {
+  public constructor( comboBoxParent: Node, contentNode: Node, providedOptions: VSMAccordionBoxOptions ) {
     const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
         font: PDLConstants.PRIMARY_FONT
@@ -31,7 +31,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
       maxWidth: 500
     }, providedOptions );
 
-    super( contentNode, options );
+    super( comboBoxParent, contentNode, options );
   }
 }
 

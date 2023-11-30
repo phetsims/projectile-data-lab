@@ -53,7 +53,7 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
 
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const accordionBox = new VSMAccordionBox(
+    const accordionBox = new VSMAccordionBox( this,
       new Rectangle( 0, 0, 500, 200, { fill: '#ffcccc' } ), {
         expandedProperty: model.isHistogramShowingProperty,
         binWidthProperty: model.binWidthProperty,

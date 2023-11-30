@@ -43,7 +43,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       children: [ samplingLaunchPanel, sampleCardsPanel ]
     } ) );
 
-    const accordionBox = new SamplingAccordionBox(
+    const accordionBox = new SamplingAccordionBox( this,
       new Rectangle( 0, 0, 500, 200, { fill: '#ccffcc' } ), {
         expandedProperty: model.isHistogramShowingProperty,
         binWidthProperty: model.binWidthProperty,

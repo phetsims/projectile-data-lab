@@ -26,7 +26,7 @@ export type PDLAccordionBoxOptions =
   & WithRequired<AccordionBoxOptions, 'tandem'>;
 
 export default class PDLAccordionBox extends AccordionBox {
-  public constructor( content: Node, providedOptions: PDLAccordionBoxOptions ) {
+  public constructor( comboBoxParent: Node, content: Node, providedOptions: PDLAccordionBoxOptions ) {
 
     const margin = 10;
 
@@ -69,7 +69,7 @@ export default class PDLAccordionBox extends AccordionBox {
       align: 'left'
     } );
 
-    const binWidthComboBox = new ComboBox( providedOptions.binWidthProperty, comboBoxItems, comboBoxContainer, {
+    const binWidthComboBox = new ComboBox( providedOptions.binWidthProperty, comboBoxItems, comboBoxParent, {
       listPosition: 'below',
       tandem: providedOptions.tandem.createTandem( 'binWidthComboBox' )
     } );
