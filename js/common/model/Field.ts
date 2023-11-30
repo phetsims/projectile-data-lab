@@ -17,6 +17,7 @@ import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -43,6 +44,8 @@ export default abstract class Field extends PhetioObject {
 
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launchHeightProperty: Property<number>;
+
+  public readonly isContinuousLaunchingProperty: BooleanProperty;
 
   public readonly projectiles: Projectile[] = [];
 
@@ -103,6 +106,10 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: NumberIO
     } );
 
+    this.isContinuousLaunchingProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' )
+    } );
+
     this.launchSpeedAverageProperty = new Property<number>( 25, {
       tandem: Tandem.OPT_OUT
     } );
@@ -155,6 +162,7 @@ export default abstract class Field extends PhetioObject {
   }
 
   public reset(): void {
+    this.isContinuousLaunchingProperty.reset();
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
     this.launcherTypeProperty.reset();

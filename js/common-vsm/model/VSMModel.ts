@@ -15,10 +15,10 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -107,17 +107,18 @@ export default class VSMModel extends PDLModel<VSMField> {
 
   public step( dt: number ): void {
 
+    if ( !this.isPlayingProperty.value ) {
+      return;
+    }
+
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' &&
-         this.isContinuousLaunchingProperty.value &&
-         dotRandom.nextDouble() < 0.05 &&
-         this.isPlayingProperty.value ) {
+         this.isContinuousLaunchingProperty.value && this.fieldProperty.value.timeElapsedSinceLastLaunch > PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES ) {
       this.fieldProperty.value.launchButtonPressed();
     }
-    if ( this.isPlayingProperty.value ) {
-      this.fieldProperty.value.step( dt );
-    }
+
+    this.fieldProperty.value.step( dt );
 
     if ( this.stopwatch.isRunningProperty.value ) {
       this.stopwatch.step( dt );

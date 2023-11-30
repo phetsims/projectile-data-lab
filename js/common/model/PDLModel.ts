@@ -59,6 +59,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public readonly launcherAngleProperty: DynamicProperty<number, number, T>;
   public readonly launcherHeightProperty: DynamicProperty<number, number, T>;
+  public readonly isContinuousLaunchingProperty: DynamicProperty<boolean, boolean, T>;
 
   public readonly isPathsVisibleProperty: BooleanProperty;
 
@@ -66,8 +67,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   // In the Sampling screen, choosing a launcher + number of samples combination determines the field uniquely.
   public abstract launcherTypeProperty: TProperty<number>;
   public abstract selectedSampleProperty: TReadOnlyProperty<number>;
-
-  public readonly isContinuousLaunchingProperty: Property<boolean>;
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
 
@@ -134,17 +133,18 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       derive: t => t.launchHeightProperty
     } );
 
+    this.isContinuousLaunchingProperty = new DynamicProperty<boolean, boolean, T>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.isContinuousLaunchingProperty
+    } );
+
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {
       tandem: providedOptions.tandem.createTandem( 'isPathsVisibleProperty' )
     } );
 
-    this.isContinuousLaunchingProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' )
-    } );
-
     this.launchModeProperty.link( launchMode => {
       if ( launchMode === 'single' ) {
-        this.isContinuousLaunchingProperty.value = false;
+        this.fieldProperty.value.isContinuousLaunchingProperty.value = false;
       }
     } );
   }
@@ -157,12 +157,11 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       if ( !this.isContinuousLaunchingProperty.value ) {
         this.fieldProperty.value.launchButtonPressed();
       }
-      this.isContinuousLaunchingProperty.value = !this.isContinuousLaunchingProperty.value;
+      this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
     }
   }
 
   public reset(): void {
-    this.isContinuousLaunchingProperty.reset();
     this.launchModeProperty.reset();
     this.isHistogramShowingProperty.reset();
     this.binWidthProperty.reset();

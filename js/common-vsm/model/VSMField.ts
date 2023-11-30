@@ -17,6 +17,8 @@ type SelfOptions = EmptySelfOptions;
 export type VSMFieldOptions = SelfOptions & FieldOptions;
 
 export default class VSMField extends Field {
+  public timeElapsedSinceLastLaunch = 0;
+
   public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
     parameters: [ {
       name: 'projectile',
@@ -29,6 +31,8 @@ export default class VSMField extends Field {
   }
 
   public override launchButtonPressed(): void {
+    this.timeElapsedSinceLastLaunch = 0;
+
     const projectile = this.createProjectile( 0 );
     this.projectiles.push( projectile );
 
@@ -36,6 +40,8 @@ export default class VSMField extends Field {
   }
 
   public step( dt: number ): void {
+    this.timeElapsedSinceLastLaunch += dt;
+
     this.projectiles.forEach( projectile => projectile.step( this, dt ) );
     this.projectilesChangedEmitter.emit();
   }

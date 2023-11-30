@@ -111,12 +111,11 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     );
 
     // Create the launch button
-    const launchIconToggleNode = new ToggleNode<boolean, Image>( new DerivedProperty(
-      [ model.launchModeProperty ], launchMode => launchMode === 'single' ), [ {
-      value: true,
+    const launchIconToggleNode = new ToggleNode<'single' | 'continuous', Image>( model.launchModeProperty, [ {
+      value: 'single',
       createNode: () => new Image( launchButtonSingle_png )
     }, {
-      value: false,
+      value: 'continuous',
       createNode: () => new Image( launchButtonContinuous_png )
     } ], {} );
 
