@@ -17,6 +17,7 @@ import TProperty from '../../../../axon/js/TProperty.js';
 import SamplingField from '../model/SamplingField.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import Utils from '../../../../dot/js/Utils.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -81,7 +82,10 @@ export default class SampleCardsPanel extends PDLPanel {
           }
         },
         fireOnHold: true,
-        fireOnHoldInterval: 50
+        fireOnHoldInterval: 50,
+        enabledProperty: new DerivedProperty( [ selectedSampleProperty, sampleCountProperty ], ( selectedSample, sampleCount ) => {
+          return ( type === 'increment' ) ? selectedSample < sampleCount : selectedSample > 1;
+        } )
       } );
     };
 
