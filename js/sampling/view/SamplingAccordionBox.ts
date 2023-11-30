@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, Text } from '../../../../scenery/js/imports.js';
+import { Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import PDLAccordionBox, { PDLAccordionBoxOptions } from '../../common/view/PDLAccordionBox.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -23,7 +23,8 @@ export type SamplingAccordionBoxOptions =
 
 export default class SamplingAccordionBox extends PDLAccordionBox {
 
-  public constructor( comboBoxParent: Node, contentNode: Node, providedOptions: SamplingAccordionBoxOptions ) {
+  public constructor( comboBoxParent: Node, providedOptions: SamplingAccordionBoxOptions ) {
+    const contentNode = new Rectangle( 0, 0, 500, 200, { fill: '#ccffcc' } );
     const options = optionize<SamplingAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.distributionStringProperty, {
         font: PDLConstants.PRIMARY_FONT

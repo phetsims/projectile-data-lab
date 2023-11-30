@@ -10,7 +10,7 @@ import SamplingModel from '../model/SamplingModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import SamplingLaunchPanel from './SamplingLaunchPanel.js';
-import { ManualConstraint, Rectangle, VBox } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
@@ -43,13 +43,12 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       children: [ samplingLaunchPanel, sampleCardsPanel ]
     } ) );
 
-    const accordionBox = new SamplingAccordionBox( this,
-      new Rectangle( 0, 0, 500, 200, { fill: '#ccffcc' } ), {
-        expandedProperty: model.isHistogramShowingProperty,
-        binWidthProperty: model.binWidthProperty,
-        top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
-        tandem: options.tandem.createTandem( 'accordionBox' )
-      } );
+    const accordionBox = new SamplingAccordionBox( this, {
+      expandedProperty: model.isHistogramShowingProperty,
+      binWidthProperty: model.binWidthProperty,
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: options.tandem.createTandem( 'accordionBox' )
+    } );
     this.addChild( accordionBox );
 
     this.behindProjectilesLayer.addChild( new SamplingFieldSignNode(

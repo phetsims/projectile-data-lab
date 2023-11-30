@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, ManualConstraint, Rectangle } from '../../../../scenery/js/imports.js';
+import { Color, ManualConstraint } from '../../../../scenery/js/imports.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import VSMModel from '../model/VSMModel.js';
@@ -53,13 +53,12 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
 
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const accordionBox = new VSMAccordionBox( this,
-      new Rectangle( 0, 0, 500, 200, { fill: '#ffcccc' } ), {
-        expandedProperty: model.isHistogramShowingProperty,
-        binWidthProperty: model.binWidthProperty,
-        top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
-        tandem: options.tandem.createTandem( 'accordionBox' )
-      } );
+    const accordionBox = new VSMAccordionBox( this, {
+      expandedProperty: model.isHistogramShowingProperty,
+      binWidthProperty: model.binWidthProperty,
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      tandem: options.tandem.createTandem( 'accordionBox' )
+    } );
 
     // Create a MeasuringTapeNode to measure distance
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
