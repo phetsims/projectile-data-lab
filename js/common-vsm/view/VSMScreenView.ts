@@ -122,7 +122,7 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
           speedToolNode.updateNeedleAndText( projectile.launchSpeed );
 
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
-          angleToolNode.setNeedleForValue( projectile.launchAngle );
+          angleToolNode.updateNeedleAndText( projectile.launchAngle );
         }
       } );
 
@@ -145,7 +145,7 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
       } );
       if ( field.projectiles.length > 0 ) {
         speedToolNode.updateNeedleAndText( field.projectiles[ field.projectiles.length - 1 ].launchSpeed );
-        angleToolNode.setNeedleForValue( field.projectiles[ field.projectiles.length - 1 ].launchAngle );
+        angleToolNode.updateNeedleAndText( field.projectiles[ field.projectiles.length - 1 ].launchAngle );
       }
       else {
 
@@ -159,7 +159,7 @@ export class VSMScreenView extends PDLScreenView<VSMField> {
       speedToolNode.y = launcherY;
     } );
     model.launcherAngleProperty.link( launcherAngle => {
-      angleToolNode.setNeedleForValue( launcherAngle );
+      angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 
     model.launcherConfigurationProperty.link( launcherConfiguration => {

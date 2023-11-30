@@ -41,8 +41,9 @@ type StringsType = {
   'stopwatchStringProperty': LocalizedStringProperty;
   'intervalToolStringProperty': LocalizedStringProperty;
   'metersStringProperty': LocalizedStringProperty;
-  'metersPerSecondStringProperty': LocalizedStringProperty;
-  'degreesStringProperty': LocalizedStringProperty;
+  'longDashStringProperty': LocalizedStringProperty;
+  'metersPerSecondPatternStringProperty': LocalizedStringProperty;
+  'degreesPatternStringProperty': LocalizedStringProperty;
   'nEqualsProjectileCountPatternStringProperty': LocalizedStringProperty;
   'nEqualsSampleSizePatternStringProperty': LocalizedStringProperty;
   'sampleNofMPatternStringProperty': LocalizedStringProperty;

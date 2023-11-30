@@ -20,7 +20,7 @@ import PDLColors from '../../common/PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
+  'displayOffset' | 'readoutPatternStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
   | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
   | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'minorTickMarkIncrement' | 'valueReadoutY'
   | 'majorTickMarkLength' | 'minorTickMarkLength'>;
@@ -83,8 +83,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       majorTickMarkLength: 5,
       minorTickMarkLength: 3,
       valueReadoutY: bodyRadius * Math.sin( Utils.toRadians( totalAngleOverhang ) ),
-      titleStringProperty: ProjectileDataLabStrings.launchSpeedStringProperty,
-      unitsStringProperty: ProjectileDataLabStrings.metersPerSecondStringProperty,
+      readoutPatternStringProperty: ProjectileDataLabStrings.metersPerSecondPatternStringProperty,
       isClockwise: true
     }, providedOptions );
     super( options );

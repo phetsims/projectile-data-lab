@@ -22,7 +22,7 @@ import PDLColors from '../../common/PDLColors.js';
 type SelfOptions = EmptySelfOptions;
 
 export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'titleStringProperty' | 'unitsStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
+  'displayOffset' | 'readoutPatternStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
   | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
   | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'majorTickMarkLength' | 'valueReadoutY'>;
 
@@ -88,8 +88,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       isWithInnerTickMarks: true,
       majorTickMarkLength: 5,
       valueReadoutY: VALUE_READOUT_Y_MAGNITUDE,
-      titleStringProperty: ProjectileDataLabStrings.launchAngleStringProperty,
-      unitsStringProperty: ProjectileDataLabStrings.degreesStringProperty
+      readoutPatternStringProperty: ProjectileDataLabStrings.degreesPatternStringProperty
     }, providedOptions );
     super( options );
 
