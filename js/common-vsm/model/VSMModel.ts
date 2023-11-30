@@ -109,7 +109,10 @@ export default class VSMModel extends PDLModel<VSMField> {
 
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 : 1 );
 
-    if ( this.isContinuousLaunchProperty.value && dotRandom.nextDouble() < 0.05 && this.isPlayingProperty.value ) {
+    if ( this.launchAmountProperty.value === 'continuous' &&
+         this.isContinuousLaunchingProperty.value &&
+         dotRandom.nextDouble() < 0.05 &&
+         this.isPlayingProperty.value ) {
       this.fieldProperty.value.launchProjectile();
     }
     if ( this.isPlayingProperty.value ) {
@@ -122,7 +125,15 @@ export default class VSMModel extends PDLModel<VSMField> {
   }
 
   public override launchButtonPressed(): void {
-    this.fieldProperty.value.launchProjectile();
+    if ( this.launchAmountProperty.value === 'single' ) {
+      this.fieldProperty.value.launchProjectile();
+    }
+    else {
+      if ( !this.isContinuousLaunchingProperty.value ) {
+        this.fieldProperty.value.launchProjectile();
+      }
+      this.isContinuousLaunchingProperty.value = !this.isContinuousLaunchingProperty.value;
+    }
   }
 
   public override reset(): void {

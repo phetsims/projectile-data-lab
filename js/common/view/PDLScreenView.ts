@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Image, Node, Text } from '../../../../scenery/js/imports.js';
+import { Image, Node, Path, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -30,6 +30,9 @@ import PDLCanvasNode from './PDLCanvasNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Field from '../model/Field.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -107,8 +110,20 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     );
 
     // Create the launch button
+    const launchIcon = new Image( launchButton_png );
+    const launchButtonToggleNode = new ToggleNode<boolean, Node>( new DerivedProperty( [
+      model.isContinuousLaunchingProperty,
+      model.launchAmountProperty
+    ], ( isContinuousLaunching, launchAmountProperty ) => isContinuousLaunching && launchAmountProperty === 'continuous' ), [ {
+      value: false,
+      createNode: () => launchIcon
+    }, {
+      value: true,
+      createNode: () => new Path( stopSolidShape, { fill: 'black', maxWidth: 50 } )
+    } ], {} );
+
     this.launchButton = new RectangularPushButton( {
-      content: new Image( launchButton_png ),
+      content: launchButtonToggleNode,
       left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
       baseColor: PDLColors.launchButtonColorProperty,
@@ -121,15 +136,15 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     } );
 
     const radioButtonLabelMaxWidth = 180;
-    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.isContinuousLaunchProperty, [ {
-      value: false,
+    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchAmountProperty, [ {
+      value: 'single' as const,
       createNode: () => new Text( ProjectileDataLabStrings.singleLaunchStringProperty, {
         font: PDLConstants.LAUNCH_CONTROL_FONT,
         maxWidth: radioButtonLabelMaxWidth
       } ),
       tandemName: 'singleLaunchRadioButton'
     }, {
-      value: true,
+      value: 'continuous' as const,
       createNode: () => new Text( ProjectileDataLabStrings.continuousLaunchStringProperty, {
         font: PDLConstants.LAUNCH_CONTROL_FONT,
         maxWidth: radioButtonLabelMaxWidth

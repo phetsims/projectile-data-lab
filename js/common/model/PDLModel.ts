@@ -23,6 +23,7 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -33,8 +34,8 @@ export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem
 
 export default abstract class PDLModel<T extends Field> implements TModel {
 
-  // isContinuousLaunchProperty is true when the launcher is in continuous launch (rapid fire) mode.
-  public readonly isContinuousLaunchProperty: Property<boolean>;
+  // single launch vs continuous launch (rapid fire) mode.
+  public readonly launchAmountProperty: Property<'single' | 'continuous'>;
 
   // isHistogramShowingProperty is true when the accordion box containing the histogram is open.
   public readonly isHistogramShowingProperty: Property<boolean>;
@@ -66,12 +67,15 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public abstract launcherTypeProperty: TProperty<number>;
   public abstract selectedSampleProperty: TReadOnlyProperty<number>;
 
+  public readonly isContinuousLaunchingProperty: Property<boolean>;
+
   protected constructor( providedOptions: PDLModelOptions<T> ) {
 
-    this.isContinuousLaunchProperty = new Property<boolean>( false, {
-      tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchProperty' ),
+    this.launchAmountProperty = new Property<'single' | 'continuous'>( 'single', {
+      validValues: [ 'single', 'continuous' ],
+      tandem: providedOptions.tandem.createTandem( 'launchAmountProperty' ),
       phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
-      phetioValueType: BooleanIO
+      phetioValueType: StringUnionIO( [ 'single', 'continuous' ] as const )
     } );
 
     this.isHistogramShowingProperty = new Property<boolean>( false, {
@@ -133,12 +137,23 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {
       tandem: providedOptions.tandem.createTandem( 'isPathsVisibleProperty' )
     } );
+
+    this.isContinuousLaunchingProperty = new BooleanProperty( false, {
+      tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' )
+    } );
+
+    this.launchAmountProperty.link( launchAmount => {
+      if ( launchAmount === 'single' ) {
+        this.isContinuousLaunchingProperty.value = false;
+      }
+    } );
   }
 
   public abstract launchButtonPressed(): void;
 
   public reset(): void {
-    this.isContinuousLaunchProperty.reset();
+    this.isContinuousLaunchingProperty.reset();
+    this.launchAmountProperty.reset();
     this.isHistogramShowingProperty.reset();
     this.binWidthProperty.reset();
     this.isPlayingProperty.reset();
