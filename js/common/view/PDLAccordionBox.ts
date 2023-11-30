@@ -43,12 +43,9 @@ export default class PDLAccordionBox extends AccordionBox {
       } );
     }
 
-    const contentContainer = new VBox( {
-      children: [
-        content
-      ],
-      spacing: margin,
-      align: 'left'
+    const binWidthComboBox = new ComboBox( providedOptions.binWidthProperty, comboBoxItems, comboBoxParent, {
+      listPosition: 'below',
+      tandem: providedOptions.tandem.createTandem( 'binWidthComboBox' )
     } );
 
     const labelAndComboBoxContainer = new HBox( {
@@ -59,24 +56,23 @@ export default class PDLAccordionBox extends AccordionBox {
             topMargin: PDLConstants.PRIMARY_FONT.getNumericSize() / 2,
             rightMargin: margin
           }
+        } ),
+        new VBox( {
+          children: [ binWidthComboBox ],
+          align: 'left'
         } )
       ],
       align: 'top'
     } );
 
-    const comboBoxContainer = new VBox( {
-      children: [],
+    const contentContainer = new VBox( {
+      children: [
+        content,
+        labelAndComboBoxContainer
+      ],
+      spacing: margin,
       align: 'left'
     } );
-
-    const binWidthComboBox = new ComboBox( providedOptions.binWidthProperty, comboBoxItems, comboBoxParent, {
-      listPosition: 'below',
-      tandem: providedOptions.tandem.createTandem( 'binWidthComboBox' )
-    } );
-
-    comboBoxContainer.addChild( binWidthComboBox );
-    labelAndComboBoxContainer.addChild( comboBoxContainer );
-    contentContainer.addChild( labelAndComboBoxContainer );
 
     const options = optionize<PDLAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       titleAlignX: 'left',
