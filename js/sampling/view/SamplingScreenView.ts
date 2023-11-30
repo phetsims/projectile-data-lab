@@ -48,6 +48,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       expandedProperty: model.isHistogramShowingProperty,
       binWidthProperty: model.binWidthProperty,
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      centerX: this.layoutBounds.centerX,
       tandem: options.tandem.createTandem( 'accordionBox' )
     } );
     this.addChild( accordionBox );
@@ -58,11 +59,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       model.selectedSampleProperty,
       model.numberOfSamplesProperty
     ) );
-
-    // Position the time control node so that the play/pause button is centered at the 50-meter mark
-    ManualConstraint.create( this, [ accordionBox ], accordionBoxProxy => {
-      accordionBoxProxy.centerX = this.layoutBounds.centerX;
-    } );
 
     // layout
     ManualConstraint.create(
