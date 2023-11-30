@@ -37,9 +37,10 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
 
     this.addChild( new VBox( {
-      align: 'left',
-      spacing: 5,
       stretch: true,
+      spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,
+      left: PDLConstants.SCREEN_VIEW_X_MARGIN,
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
       children: [ samplingLaunchPanel, sampleCardsPanel ]
     } ) );
 

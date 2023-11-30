@@ -13,17 +13,14 @@ import WithRequired from '../../../../../phet-core/js/types/WithRequired.js';
 import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
 import SectionLauncherType from './SectionLauncherType.js';
 import PhetioProperty from '../../../../../axon/js/PhetioProperty.js';
-import PDLConstants from '../../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
 export class PDLLaunchPanel extends PDLPanel {
   public constructor( launcherProperty: PhetioProperty<number>, children: Node[], providedOptions: PDLLaunchPanelOptions ) {
-    const options = optionize<PDLLaunchPanelOptions, SelfOptions, PDLPanelOptions>()( {
-      left: PDLConstants.SCREEN_VIEW_X_MARGIN,
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
-    }, providedOptions );
+
+    const options = optionize<PDLLaunchPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
 
     const launcherTypeSection = new SectionLauncherType( launcherProperty, {
       tandem: providedOptions.tandem

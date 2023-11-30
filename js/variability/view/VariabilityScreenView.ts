@@ -11,7 +11,7 @@ import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
 import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
-import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
+import { VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -47,16 +47,12 @@ export default class VariabilityScreenView extends VSMScreenView {
       } );
     const rightVBox = new VBox( {
       stretch: true,
+      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
+      top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
       spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,
       children: [ staticToolPanel, interactiveToolPanel, fieldPanel ]
     } );
     this.addChild( rightVBox );
-
-    // Layout
-    ManualConstraint.create( this, [ rightVBox ], rightVBoxProxy => {
-      rightVBoxProxy.right = this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN;
-      rightVBoxProxy.top = this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
-    } );
 
     this.pdomControlAreaNode.pdomOrder = [
       variabilityLaunchPanel,

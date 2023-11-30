@@ -4,12 +4,13 @@ import { PDLPanelOptions } from '../../common/view/panels/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
 import SectionLauncherConfiguration from '../../common/view/panels/SectionLauncherConfiguration.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import SectionProjectileType from '../../common/view/panels/SectionProjectileType.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
-import { PDLLaunchPanel } from '../../common/view/panels/PDLLaunchPanel.js';
+import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/panels/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -26,6 +27,11 @@ export default class VSMLaunchPanel extends PDLLaunchPanel {
                       launcherTypeProperty: PhetioProperty<number>,
                       providedOptions: VSMLaunchPanelOptions ) {
 
+    const options = optionize<VSMLaunchPanelOptions, SelfOptions, PDLLaunchPanelOptions>()( {
+      left: PDLConstants.SCREEN_VIEW_X_MARGIN,
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
+    }, providedOptions );
+
     const launcherConfigurationSection = new SectionLauncherConfiguration( configurationProperty, {
       tandem: providedOptions.tandem
     } );
@@ -40,7 +46,7 @@ export default class VSMLaunchPanel extends PDLLaunchPanel {
     content.push( projectileTypeSection );
     content.push( new HSeparator( { stroke: Color.BLACK } ) );
 
-    super( launcherTypeProperty, content, providedOptions );
+    super( launcherTypeProperty, content, options );
   }
 }
 projectileDataLab.register( 'VSMLaunchPanel', VSMLaunchPanel );
