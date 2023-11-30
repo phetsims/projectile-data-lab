@@ -142,7 +142,8 @@ export default class HeatMapToolNode extends Node {
     this.valueReadout = new Text( readoutStringProperty, {
       centerX: 0,
       centerY: 0,
-      font: PDLConstants.PRIMARY_FONT
+      font: PDLConstants.PRIMARY_FONT,
+      maxWidth: 60
     } );
 
     // Create a background rectangle for the value readout
@@ -159,7 +160,10 @@ export default class HeatMapToolNode extends Node {
 
     ManualConstraint.create( this.valueReadoutNode, [ this.valueReadout ], valueReadoutProxy => {
       valueReadoutProxy.x = -0.5 * valueReadoutProxy.width;
-      valueReadoutBackground.setRectBounds( this.valueReadout.bounds.dilatedXY( 8, 2 ) );
+      valueReadoutProxy.centerY = 0;
+      const rectWidth = valueReadoutProxy.width + 16;
+      valueReadoutBackground.setRectWidth( rectWidth );
+      valueReadoutBackground.setRectX( -0.5 * rectWidth );
     } );
 
     this.displayNode.addChild( this.bodyBackNode );
