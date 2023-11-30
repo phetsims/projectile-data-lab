@@ -187,7 +187,6 @@ export default abstract class Field extends PhetioObject {
   }
 
   public abstract launchButtonPressed(): void;
-
   public toStateObject(): object {
     return {
       projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )

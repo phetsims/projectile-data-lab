@@ -35,7 +35,7 @@ export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem
 export default abstract class PDLModel<T extends Field> implements TModel {
 
   // single launch vs continuous launch (rapid fire) mode.
-  public readonly launchAmountProperty: Property<'single' | 'continuous'>;
+  public readonly launchModeProperty: Property<'single' | 'continuous'>;
 
   // isHistogramShowingProperty is true when the accordion box containing the histogram is open.
   public readonly isHistogramShowingProperty: Property<boolean>;
@@ -71,9 +71,9 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
 
-    this.launchAmountProperty = new Property<'single' | 'continuous'>( 'single', {
+    this.launchModeProperty = new Property<'single' | 'continuous'>( 'single', {
       validValues: [ 'single', 'continuous' ],
-      tandem: providedOptions.tandem.createTandem( 'launchAmountProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
       phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
       phetioValueType: StringUnionIO( [ 'single', 'continuous' ] as const )
     } );
@@ -142,15 +142,15 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' )
     } );
 
-    this.launchAmountProperty.link( launchAmount => {
-      if ( launchAmount === 'single' ) {
+    this.launchModeProperty.link( launchMode => {
+      if ( launchMode === 'single' ) {
         this.isContinuousLaunchingProperty.value = false;
       }
     } );
   }
 
   public launchButtonPressed(): void {
-    if ( this.launchAmountProperty.value === 'single' ) {
+    if ( this.launchModeProperty.value === 'single' ) {
       this.fieldProperty.value.launchButtonPressed();
     }
     else {
@@ -163,7 +163,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public reset(): void {
     this.isContinuousLaunchingProperty.reset();
-    this.launchAmountProperty.reset();
+    this.launchModeProperty.reset();
     this.isHistogramShowingProperty.reset();
     this.binWidthProperty.reset();
     this.isPlayingProperty.reset();

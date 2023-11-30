@@ -21,7 +21,6 @@ import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
 import LauncherNode from './LauncherNode.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import launchButton_png from '../../../images/launchButton_png.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import PDLText from './PDLText.js';
@@ -33,6 +32,8 @@ import Field from '../model/Field.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
+import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -110,13 +111,21 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     );
 
     // Create the launch button
-    const launchIcon = new Image( launchButton_png );
+    const launchIconToggleNode = new ToggleNode<boolean, Image>( new DerivedProperty(
+      [ model.launchModeProperty ], launchMode => launchMode === 'single' ), [ {
+      value: true,
+      createNode: () => new Image( launchButtonSingle_png )
+    }, {
+      value: false,
+      createNode: () => new Image( launchButtonContinuous_png )
+    } ], {} );
+
     const launchButtonToggleNode = new ToggleNode<boolean, Node>( new DerivedProperty( [
       model.isContinuousLaunchingProperty,
-      model.launchAmountProperty
-    ], ( isContinuousLaunching, launchAmountProperty ) => isContinuousLaunching && launchAmountProperty === 'continuous' ), [ {
+      model.launchModeProperty
+    ], ( isContinuousLaunching, launchMode ) => isContinuousLaunching && launchMode === 'continuous' ), [ {
       value: false,
-      createNode: () => launchIcon
+      createNode: () => launchIconToggleNode
     }, {
       value: true,
       createNode: () => new Path( stopSolidShape, { fill: 'black', maxWidth: 50 } )
@@ -136,7 +145,7 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     } );
 
     const radioButtonLabelMaxWidth = 180;
-    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchAmountProperty, [ {
+    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchModeProperty, [ {
       value: 'single' as const,
       createNode: () => new Text( ProjectileDataLabStrings.singleLaunchStringProperty, {
         font: PDLConstants.LAUNCH_CONTROL_FONT,

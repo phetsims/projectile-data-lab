@@ -1,11 +1,19 @@
 {
-  "launchButton.png": {
+  "launchButtonSingle.png": {
     "text": [
       "Copyright 2002-2024 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Amy Rouinfar"
+  },
+  "launchButtonContinuous.png": {
+    "text": [
+      "Copyright 2002-2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Amy Rouinfar and Matthew Blackman"
   },
   "cannonball.png": {
     "text": [

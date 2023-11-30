@@ -109,7 +109,7 @@ export default class VSMModel extends PDLModel<VSMField> {
 
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 : 1 );
 
-    if ( this.launchAmountProperty.value === 'continuous' &&
+    if ( this.launchModeProperty.value === 'continuous' &&
          this.isContinuousLaunchingProperty.value &&
          dotRandom.nextDouble() < 0.05 &&
          this.isPlayingProperty.value ) {
