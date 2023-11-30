@@ -65,7 +65,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       displayOffset: new Vector2( -20, -150 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
-      binWidth: 0.5,
+      binWidth: 0.25,
       minValue: minValue,
       maxValue: maxValue,
       minAngle: 180 + needleAngleOverhang,
@@ -107,9 +107,10 @@ export default class SpeedToolNode extends HeatMapToolNode {
   }
 
   public setForIsLauncherRaised( isLauncherRaised: boolean ): void {
-    const speedToolY = isLauncherRaised ? 120 : -150;
+    const speedToolX = isLauncherRaised ? -45 : -20;
+    const speedToolY = isLauncherRaised ? 180 : -150;
 
-    this.displayOffset = new Vector2( this.displayOffset.x, speedToolY );
+    this.displayOffset = new Vector2( speedToolX, speedToolY );
 
     const connectingWireShape = this.connectingWireShapeForIsRaised( isLauncherRaised );
     this.connectingWire.removeAllChildren();
@@ -117,6 +118,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
     } ) );
 
+    this.displayNode.setX( speedToolX );
     this.displayNode.setY( speedToolY );
   }
 

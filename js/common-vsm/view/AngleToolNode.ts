@@ -72,7 +72,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       displayOffset: Vector2.ZERO,
       bodyShape: bodyShape,
       needleShape: needleShape,
-      binWidth: 2,
+      binWidth: 1,
       minValue: minAngle,
       maxValue: maxAngle,
       minAngle: minAngle,
