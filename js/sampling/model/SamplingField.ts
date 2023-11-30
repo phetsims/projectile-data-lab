@@ -17,12 +17,15 @@ export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
 export default class SamplingField extends Field {
 
-  private elapsedTime = 0;
+  private elapsedTimeIntraSample = 0;
   public readonly numberOfSamplesProperty: NumberProperty;
   public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
   public currentLandedCount = 0;
   public timeBetweenProjectiles: number;
+  public currentTime = 0;
+  public lastSampleCompletionTime: number | null = null;
+  private interSampleTime = 0.5;
 
   public constructor( public readonly launcher: number, public readonly sampleSize: number, options: SamplingFieldOptions ) {
     super( options );
@@ -65,21 +68,30 @@ export default class SamplingField extends Field {
     this.numberOfSamplesProperty.value++;
     this.createLandedProjectile();
     this.currentLandedCount = 1;
-    this.elapsedTime = 0;
+    this.elapsedTimeIntraSample = 0;
   }
 
-  public step( dt: number ): void {
+  public step( dt: number, isContinuousLaunching: boolean ): void {
 
-    this.elapsedTime += dt;
+    this.currentTime += dt;
+    this.elapsedTimeIntraSample += dt;
 
-    while ( this.currentLandedCount > 0 && this.currentLandedCount < this.sampleSize && ( this.elapsedTime - this.timeBetweenProjectiles > 0 ) ) {
+    if ( isContinuousLaunching && this.lastSampleCompletionTime !== null ) {
+      const timeSinceLastSampleCompleted = this.currentTime - this.lastSampleCompletionTime;
+      if ( isContinuousLaunching && timeSinceLastSampleCompleted >= this.interSampleTime ) {
+        this.launchButtonPressed();
+        this.lastSampleCompletionTime = null;
+      }
+    }
+
+    while ( this.currentLandedCount > 0 && this.currentLandedCount < this.sampleSize && ( this.elapsedTimeIntraSample - this.timeBetweenProjectiles > 0 ) ) {
       this.createLandedProjectile();
       this.currentLandedCount++;
-      this.elapsedTime -= this.timeBetweenProjectiles;
+      this.elapsedTimeIntraSample -= this.timeBetweenProjectiles;
 
       if ( this.currentLandedCount === this.sampleSize ) {
-
         this.numberOfCompletedSamplesProperty.value++;
+        this.lastSampleCompletionTime = this.currentTime;
       }
     }
   }
@@ -88,11 +100,14 @@ export default class SamplingField extends Field {
   public override clearProjectiles(): void {
     super.clearProjectiles();
 
-    this.elapsedTime = 0;
+    this.elapsedTimeIntraSample = 0;
     this.numberOfSamplesProperty.reset();
     this.currentLandedCount = 0;
 
     this.numberOfCompletedSamplesProperty.reset();
+
+    this.currentTime = 0;
+    this.lastSampleCompletionTime = null;
   }
 }
 

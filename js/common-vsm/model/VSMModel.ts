@@ -113,7 +113,7 @@ export default class VSMModel extends PDLModel<VSMField> {
          this.isContinuousLaunchingProperty.value &&
          dotRandom.nextDouble() < 0.05 &&
          this.isPlayingProperty.value ) {
-      this.fieldProperty.value.launchProjectile();
+      this.fieldProperty.value.launchButtonPressed();
     }
     if ( this.isPlayingProperty.value ) {
       this.fieldProperty.value.step( dt );
@@ -121,18 +121,6 @@ export default class VSMModel extends PDLModel<VSMField> {
 
     if ( this.stopwatch.isRunningProperty.value ) {
       this.stopwatch.step( dt );
-    }
-  }
-
-  public override launchButtonPressed(): void {
-    if ( this.launchAmountProperty.value === 'single' ) {
-      this.fieldProperty.value.launchProjectile();
-    }
-    else {
-      if ( !this.isContinuousLaunchingProperty.value ) {
-        this.fieldProperty.value.launchProjectile();
-      }
-      this.isContinuousLaunchingProperty.value = !this.isContinuousLaunchingProperty.value;
     }
   }
 

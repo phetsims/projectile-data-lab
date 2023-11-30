@@ -86,12 +86,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     } );
   }
 
-  public launchButtonPressed(): void {
-    this.fieldProperty.value.launchButtonPressed();
-  }
-
   public step( dt: number ): void {
-    this.fieldProperty.value.step( dt );
+    this.fieldProperty.value.step( dt, this.isContinuousLaunchingProperty.value );
   }
 
   /**

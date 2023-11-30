@@ -28,7 +28,7 @@ export default class VSMField extends Field {
     super( options );
   }
 
-  public launchProjectile(): void {
+  public override launchButtonPressed(): void {
     const projectile = this.createProjectile( 0 );
     this.projectiles.push( projectile );
 

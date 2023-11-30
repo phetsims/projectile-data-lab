@@ -21,7 +21,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class Field extends PhetioObject {
+export default abstract class Field extends PhetioObject {
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
@@ -172,12 +172,6 @@ export default class Field extends PhetioObject {
     this.selectedSampleProperty.reset();
   }
 
-  public toStateObject(): object {
-    return {
-      projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
-    };
-  }
-
   protected createProjectile( sampleNumber: number ): Projectile {
     const launchAngle = this.launchAngleAverageProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
     const launchSpeed = this.launchSpeedAverageProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
@@ -190,6 +184,14 @@ export default class Field extends PhetioObject {
     return new Projectile( 'sources', -1, sampleNumber, 0, 0, this.projectileTypeProperty.value,
       'AIRBORNE', projectileScaleX, landedImageIndex, 0, launchAngle, launchSpeed,
       this.launchHeightProperty.value );
+  }
+
+  public abstract launchButtonPressed(): void;
+
+  public toStateObject(): object {
+    return {
+      projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
+    };
   }
 
   public static FieldIO = new IOType( 'FieldIO', {
