@@ -44,7 +44,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
     fieldProperty.link( updateProjectileCountProperty );
 
     // Create the field sign
-    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( 95, 0 ) );
+    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( 94, 0 ) );
 
     const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
       x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y

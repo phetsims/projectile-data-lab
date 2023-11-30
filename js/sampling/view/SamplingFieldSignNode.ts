@@ -23,7 +23,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
                       sampleCountProperty: TReadOnlyProperty<number>,
                       providedOptions?: VSMFieldSignNodeOptions ) {
 
-    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( 95, 0 ) );
+    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( 92, 0 ) );
 
     const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
       x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y
@@ -45,13 +45,14 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     } );
 
     const fieldSignTextContainer = new VBox( {
-      align: 'left',
+      align: 'center',
+      spacing: 2,
       children: [
         new Text( fieldSignStringProperty, { font: PDLConstants.PRIMARY_FONT } ),
         new Text( sampleSizeStringProperty, { font: PDLConstants.PRIMARY_FONT } ),
         new Text( patternStringProperty, { font: PDLConstants.PRIMARY_FONT } )
       ],
-      maxWidth: modelViewTransform.modelToViewDeltaX( 6 )
+      maxWidth: modelViewTransform.modelToViewDeltaX( 11 )
     } );
 
     super( fieldSignTextContainer, options );

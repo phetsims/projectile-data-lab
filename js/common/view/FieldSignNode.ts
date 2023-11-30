@@ -31,11 +31,11 @@ export default class FieldSignNode extends Node {
   }
 
   private drawSign( ): void {
-    const signMarginX = 8;
-    const signMarginY = 2;
-    const signOffsetY = 35;
+    const signMarginX = 10;
+    const signMarginY = 4;
+    const signOffsetY = 40;
     const signPostTopExtension = 5;
-    const signPostWidth = 6;
+    const signPostWidth = 7;
 
     const signRect = this.textNode.bounds.dilatedXY( signMarginX, signMarginY );
     const sign = new Rectangle( signRect, { fill: PDLColors.fieldSignColorProperty, cornerRadius: 1 } );
