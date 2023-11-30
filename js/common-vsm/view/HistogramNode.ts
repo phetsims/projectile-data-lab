@@ -16,6 +16,8 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import HistogramBarPlot from './HistogramBarPlot.js';
 import Field from '../../common/model/Field.js';
+import PlusMinusZoomButtonGroup from '../../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -72,6 +74,11 @@ export default class HistogramNode extends Node {
       ]
     } );
 
+    const verticalTickMarkSet = new TickMarkSet( chartTransform, Orientation.VERTICAL, 5, { edge: 'min' } );
+    const verticalTickLabelSet = new TickLabelSet( chartTransform, Orientation.VERTICAL, 5, {
+      edge: 'min',
+      createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
+    } );
     const chartNode = new Node( {
       children: [
 
@@ -82,11 +89,8 @@ export default class HistogramNode extends Node {
         chartClip,
 
         // Major ticks on the y-axis
-        new TickMarkSet( chartTransform, Orientation.VERTICAL, 5, { edge: 'min' } ),
-        new TickLabelSet( chartTransform, Orientation.VERTICAL, 5, {
-          edge: 'min',
-          createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
-        } ),
+        verticalTickMarkSet,
+        verticalTickLabelSet,
 
         new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 10, { edge: 'min' } ),
         new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 10, {
@@ -104,14 +108,30 @@ export default class HistogramNode extends Node {
       histogramBarPlot.update();
     } );
 
-    this.children = [
+    const zoomLevelProperty = new NumberProperty( 0, {
+      range: new Range( -2, 2 )
+    } );
+    const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
+      tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
+      orientation: 'vertical',
+      bottom: chartTransform.viewHeight,
+      spacing: 4,
+      buttonOptions: {
+        stroke: 'black',
+        lineWidth: 1,
+        cornerRadius: 2
+      }
+    } );
 
+    this.children = [
+      zoomButtonGroup,
       // TODO: No vbox needed, right? or maybe labels, see https://github.com/phetsims/projectile-data-lab/issues/7
       new VBox( {
         align: 'left',
         resize: false,
         spacing: 20,
-        children: [ chartNode ]
+        children: [ chartNode ],
+        left: zoomButtonGroup.right + 5
       } )
     ];
     this.mutate( options );
@@ -156,6 +176,7 @@ export default class HistogramNode extends Node {
 
       // Convert the map to an array of Vector2
       const histogramArray: Vector2[] = [];
+
       for ( const [ bin, count ] of histogram ) {
         histogramArray.push( new Vector2( bin, count ) );
       }
@@ -166,6 +187,31 @@ export default class HistogramNode extends Node {
     // When the field or bin width changes, redraw the histogram
     fieldProperty.link( () => updateHistogram() );
     binWidthProperty.link( () => updateHistogram() );
+    zoomLevelProperty.link( () => {
+
+      const zoomLevel = zoomLevelProperty.value;
+
+      const scale =
+        zoomLevel === -2 ? 4 :
+        zoomLevel === -1 ? 2 :
+        zoomLevel === 0 ? 1 :
+        zoomLevel === 1 ? 1 / 2 :
+        zoomLevel === 2 ? 1 / 4 :
+        1;
+
+      chartTransform.modelYRange = new Range( 0, 25 * scale );
+
+      chartTransform.changedEmitter.emit();
+
+      verticalTickMarkSet.setSpacing(
+        scale === 1 / 4 ? 1 :
+        scale === 4 ? 10 :
+        5 );
+      verticalTickLabelSet.setSpacing( scale === 1 / 4 ? 1 :
+                                       scale === 4 ? 10 :
+                                       5 );
+      updateHistogram();
+    } );
   }
 }
 
