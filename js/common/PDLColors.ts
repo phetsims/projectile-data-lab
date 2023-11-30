@@ -28,6 +28,10 @@ const PDLColors = {
     default: '#B6D2FF'
   } ),
 
+  panelColorProperty: new ProfileColorProperty( projectileDataLab, 'panelFill', {
+    default: '#fefefe'
+  } ),
+
   launchButtonColorProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonFill', {
     default: '#ea2621'
   } ),

@@ -16,6 +16,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Property from '../../../../axon/js/Property.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import PDLConstants from '../PDLConstants.js';
+import PDLColors from '../PDLColors.js';
 
 type SelfOptions = {
   binWidthProperty: Property<number>;
@@ -75,6 +76,7 @@ export default class PDLAccordionBox extends AccordionBox {
     } );
 
     const options = optionize<PDLAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
+      fill: PDLColors.panelColorProperty,
       titleAlignX: 'left',
       titleXSpacing: margin,
       buttonXMargin: margin,
