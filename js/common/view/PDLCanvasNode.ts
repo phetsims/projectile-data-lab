@@ -82,8 +82,8 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
           let pathStarted = false;
 
           const drawLineToProjectileAtTime = ( t: number ): void => {
-            const pathX = Projectile.getProjectileX( projectile.launchSpeed!, projectile.launchAngle!, t );
-            const pathY = Projectile.getProjectileY( projectile.launchSpeed!, projectile.launchAngle!, projectile.launchHeight!, t );
+            const pathX = Projectile.getProjectileX( projectile.launchSpeed, projectile.launchAngle, t );
+            const pathY = Projectile.getProjectileY( projectile.launchSpeed, projectile.launchAngle, projectile.launchHeight, t );
             const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
 
             if ( !pathStarted ) {
