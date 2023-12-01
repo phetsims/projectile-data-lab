@@ -8,7 +8,7 @@ import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import SamplingModel from '../model/SamplingModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { PDLScreenView } from '../../common/view/PDLScreenView.js';
+import PDLScreenView from '../../common/view/PDLScreenView.js';
 import SamplingLaunchPanel from './SamplingLaunchPanel.js';
 import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -16,6 +16,7 @@ import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
 import SampleCardsPanel from './SampleCardsPanel.js';
 import SamplingFieldSignNode from './SamplingFieldSignNode.js';
+import LauncherNode from '../../common/view/LauncherNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -23,9 +24,21 @@ type SamplingScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
+  protected readonly launcherNode: LauncherNode;
+
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
     const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
+
+    this.launcherNode = new LauncherNode(
+      this.modelViewTransform,
+      model.launcherAngleProperty,
+      model.launcherHeightProperty,
+      model.presetLauncherProperty,
+      {}
+    );
+
+    this.launcherLayer.addChild( this.launcherNode );
 
     const samplingLaunchPanel = new SamplingLaunchPanel( model.presetLauncherProperty, model.sampleSizeProperty, {
       tandem: options.tandem.createTandem( 'samplingLaunchPanel' )

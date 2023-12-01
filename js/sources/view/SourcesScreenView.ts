@@ -12,10 +12,11 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import SourcesLaunchPanel from './SourcesLaunchPanel.js';
 import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
 import { VBox } from '../../../../scenery/js/imports.js';
-import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
+import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
+import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -23,9 +24,21 @@ type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class SourcesScreenView extends VSMScreenView {
 
+  protected readonly launcherNode: CustomLauncherNode;
+
   public constructor( model: SourcesModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
+
+    this.launcherNode = new CustomLauncherNode(
+      this.modelViewTransform,
+      model.launcherAngleProperty,
+      model.launcherHeightProperty,
+      model.presetLauncherProperty,
+      {}
+    );
+
+    this.launcherLayer.addChild( this.launcherNode );
 
     const sourcesLaunchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
       model.customLauncherTypeProperty, model.angleStabilizerProperty, { tandem: options.tandem.createTandem( 'sourcesLaunchPanel' ) } );

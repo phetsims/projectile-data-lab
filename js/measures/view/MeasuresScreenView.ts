@@ -10,11 +10,12 @@ import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
 import { VBox } from '../../../../scenery/js/imports.js';
-import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
+import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
 import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
+import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -22,9 +23,21 @@ type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class MeasuresScreenView extends VSMScreenView {
 
+  protected readonly launcherNode: CustomLauncherNode;
+
   public constructor( model: MeasuresModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
+
+    this.launcherNode = new CustomLauncherNode(
+      this.modelViewTransform,
+      model.launcherAngleProperty,
+      model.launcherHeightProperty,
+      model.presetLauncherProperty,
+      {}
+    );
+
+    this.launcherLayer.addChild( this.launcherNode );
 
     const measuresLaunchPanel = new MeasuresLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
       model.isLauncherCustomProperty, model.presetLauncherProperty, model.customLauncherTypeProperty, model.angleStabilizerProperty, {

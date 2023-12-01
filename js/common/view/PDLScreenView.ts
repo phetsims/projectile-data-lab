@@ -19,7 +19,6 @@ import GradientBackgroundNode from '../../../../scenery-phet/js/GradientBackgrou
 import FieldNode from './FieldNode.js';
 import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
-import LauncherNode from './LauncherNode.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
@@ -34,17 +33,19 @@ import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.j
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
 import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
+import LauncherNode from './LauncherNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export class PDLScreenView<T extends Field> extends ScreenView {
+export default abstract class PDLScreenView<T extends Field> extends ScreenView {
 
   protected readonly modelViewTransform;
 
-  private readonly launcher;
-
+  protected readonly launcherLayer = new Node();
   protected readonly behindProjectilesLayer = new Node();
+
+  protected abstract readonly launcherNode: LauncherNode;
 
   protected readonly resetAllButton;
 
@@ -53,7 +54,7 @@ export class PDLScreenView<T extends Field> extends ScreenView {
   protected readonly eraserButton: EraserButton;
   protected readonly noAirResistanceText: PDLText;
 
-  public constructor( model: PDLModel<T>, options: PDLScreenViewOptions ) {
+  protected constructor( model: PDLModel<T>, options: PDLScreenViewOptions ) {
     super( options );
 
     const fieldX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X;
@@ -101,15 +102,6 @@ export class PDLScreenView<T extends Field> extends ScreenView {
     const fieldOverlayNode = new FieldOverlayNode( this.modelViewTransform, {} );
     fieldOverlayNode.x = fieldX;
     fieldOverlayNode.y = fieldY;
-
-    this.launcher = new LauncherNode(
-      this.modelViewTransform,
-      model.launcherAngleProperty,
-      model.launcherHeightProperty,
-      model.presetLauncherProperty,
-      {}
-    );
-
     // Create the launch button
     const launchIconToggleNode = new ToggleNode<'single' | 'continuous', Image>( model.launchModeProperty, [ {
       value: 'single',
@@ -188,7 +180,7 @@ export class PDLScreenView<T extends Field> extends ScreenView {
 
     this.addChild( backgroundNode );
     this.addChild( fieldBack );
-    this.addChild( this.launcher );
+    this.addChild( this.launcherLayer );
     this.addChild( fieldFront );
     this.addChild( fieldOverlayNode );
 

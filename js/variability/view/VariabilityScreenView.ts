@@ -12,10 +12,11 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
 import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
 import { VBox } from '../../../../scenery/js/imports.js';
-import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
+import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
+import LauncherNode from '../../common/view/LauncherNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -23,9 +24,21 @@ type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class VariabilityScreenView extends VSMScreenView {
 
+  protected readonly launcherNode: LauncherNode;
+
   public constructor( model: VariabilityModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
+
+    this.launcherNode = new LauncherNode(
+      this.modelViewTransform,
+      model.launcherAngleProperty,
+      model.launcherHeightProperty,
+      model.presetLauncherProperty,
+      {}
+    );
+
+    this.launcherLayer.addChild( this.launcherNode );
 
     const variabilityLaunchPanel = new VariabilityLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, model.presetLauncherProperty, {
       tandem: options.tandem.createTandem( 'variabilityLaunchPanel' )

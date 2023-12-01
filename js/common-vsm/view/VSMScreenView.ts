@@ -3,7 +3,6 @@
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Color, ManualConstraint } from '../../../../scenery/js/imports.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import { PDLScreenView } from '../../common/view/PDLScreenView.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import VSMAccordionBox from './VSMAccordionBox.js';
@@ -21,6 +20,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VSMField from '../model/VSMField.js';
 import VSMFieldSignNode from './VSMFieldSignNode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
+import PDLScreenView from '../../common/view/PDLScreenView.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -32,11 +32,11 @@ import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export class VSMScreenView extends PDLScreenView<VSMField> {
+export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
 
   protected readonly timeControlNode;
 
-  public constructor( model: VSMModel, options: VSMScreenViewOptions ) {
+  protected constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
