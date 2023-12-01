@@ -59,7 +59,7 @@ export default class LauncherNode extends Node {
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
                       launcherAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
-                      launcherTypeProperty: TProperty<number>,
+                      presetLauncherProperty: TProperty<number>,
                       providedOptions: LauncherNodeOptions ) {
 
     const launcherX = modelViewTransform.modelToViewX( 0 );
@@ -95,8 +95,8 @@ export default class LauncherNode extends Node {
       this.updateLauncherHeight( launcherHeight );
     } );
 
-    launcherTypeProperty.link( launcherType => {
-      this.updateLauncherType( launcherType );
+    presetLauncherProperty.link( presetLauncher => {
+      this.updatePresetLauncher( presetLauncher );
     } );
   }
 
@@ -111,15 +111,15 @@ export default class LauncherNode extends Node {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
-  private updateLauncherType( type: number ): void {
+  private updatePresetLauncher( type: number ): void {
     this.launcherBarrel.removeAllChildren();
     this.launcherGraphicsForType( type ).forEach( launcherGraphics => {
       this.launcherBarrel.addChild( launcherGraphics );
     } );
   }
 
-  private launcherGraphicsForType( launcherType: number ): Node[] {
-    const barrelFillColorProperty = PDLColors.launcherFillColorProperties[ launcherType - 1 ];
+  private launcherGraphicsForType( presetLauncher: number ): Node[] {
+    const barrelFillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
     const barrelFillDarkColorProperty = new DerivedProperty( [ barrelFillColorProperty ],
       color => color.darkerColor( 0.8 ) );
 

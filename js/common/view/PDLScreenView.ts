@@ -106,7 +106,7 @@ export class PDLScreenView<T extends Field> extends ScreenView {
       this.modelViewTransform,
       model.launcherAngleProperty,
       model.launcherHeightProperty,
-      model.launcherTypeProperty,
+      model.presetLauncherProperty,
       {}
     );
 

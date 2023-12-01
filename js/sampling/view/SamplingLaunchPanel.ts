@@ -5,10 +5,10 @@ import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import SampleSizeSection from './SampleSizeSection.js';
+import SectionSampleSize from './SectionSampleSize.js';
 import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import SectionLauncherType from '../../common/view/SectionLauncherType.js';
+import SectionPresetLauncher from '../../common/view/SectionPresetLauncher.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -21,15 +21,15 @@ type SamplingLaunchPanelOptions = SelfOptions & PDLPanelOptions;
 export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
   public constructor( launcherProperty: PhetioProperty<number>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
-    const launcherTypeSection = new SectionLauncherType( launcherProperty, {
+    const presetLauncherSection = new SectionPresetLauncher( launcherProperty, {
       tandem: providedOptions.tandem
     } );
 
-    const sampleSizeSection = new SampleSizeSection( sampleSizeProperty, {
+    const sampleSizeSection = new SectionSampleSize( sampleSizeProperty, {
       tandem: providedOptions.tandem
     } );
 
-    const content: Node[] = [ launcherTypeSection, sampleSizeSection ];
+    const content: Node[] = [ presetLauncherSection, sampleSizeSection ];
 
     super( content, providedOptions );
   }

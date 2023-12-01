@@ -31,7 +31,7 @@ export default abstract class Field extends PhetioObject {
   // TODO: Does every field need a launcher type property, or just the VSM fields? - see https://github.com/phetsims/projectile-data-lab/issues/7
   // (Because the sampling field has a single launcher type per field)
   // Launcher type is the number of the active launcher, from 1-6
-  public readonly launcherTypeProperty: Property<number>;
+  public readonly presetLauncherProperty: Property<number>;
 
   public readonly launchSpeedAverageProperty: Property<number>;
 
@@ -99,9 +99,9 @@ export default abstract class Field extends PhetioObject {
 
     // TODO: Keep in mind that in screens 2-3 it will have more sub-data structure, see https://github.com/phetsims/projectile-data-lab/issues/7
     // TODO: That may be done in another Property in Screen 2 + 3, see https://github.com/phetsims/projectile-data-lab/issues/7
-    this.launcherTypeProperty = new Property<number>( 1, {
+    this.presetLauncherProperty = new Property<number>( 1, {
       validValues: _.range( 1, 7 ),
-      tandem: providedOptions.tandem.createTandem( 'launcherTypeProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'presetLauncherProperty' ),
       phetioDocumentation: 'This property configures the active launcher by number.',
       phetioValueType: NumberIO
     } );
@@ -148,8 +148,8 @@ export default abstract class Field extends PhetioObject {
     } );
 
     // Note: This is incorrect for the custom launcher ('Sources' and 'Measures' screens)
-    this.launcherTypeProperty.link( launcherType => {
-      const launcherProperties = PDLConstants.LAUNCHER_CONFIGS[ launcherType - 1 ];
+    this.presetLauncherProperty.link( presetLauncher => {
+      const launcherProperties = PDLConstants.LAUNCHER_CONFIGS[ presetLauncher - 1 ];
       this.launchSpeedAverageProperty.value = launcherProperties.speedAverage;
       this.launchSpeedStandardDeviationProperty.value = launcherProperties.speedStandardDeviation;
       this.launchAngleStandardDeviationProperty.value = launcherProperties.angleStandardDeviation;
@@ -165,7 +165,7 @@ export default abstract class Field extends PhetioObject {
     this.isContinuousLaunchingProperty.reset();
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
-    this.launcherTypeProperty.reset();
+    this.presetLauncherProperty.reset();
 
     this.clearProjectiles();
   }

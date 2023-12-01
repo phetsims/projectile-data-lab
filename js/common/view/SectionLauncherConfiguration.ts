@@ -15,11 +15,11 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type LauncherConfigurationSectionOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionLauncherConfigurationOptions = SelfOptions & PDLPanelSectionOptions;
 
 export default class SectionLauncherConfiguration extends PDLPanelSection {
 
-  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, providedOptions: LauncherConfigurationSectionOptions ) {
+  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, providedOptions: SectionLauncherConfigurationOptions ) {
     const launcherConfigurationRadioButtonGroup = new RectangularRadioButtonGroup( launcherConfigurationProperty, [ {
       value: 'ANGLE_30' as const,
       tandemName: 'angleThirtyRadioButton',

@@ -14,29 +14,29 @@ import PDLText from './PDLText.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type ProjectileTypeSectionOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionProjectileTypeOptions = SelfOptions & PDLPanelSectionOptions;
 
-export default class SectionLauncherType extends PDLPanelSection {
+export default class SectionPresetLauncher extends PDLPanelSection {
 
-  public constructor( launcherTypeProperty: PhetioProperty<number>, providedOptions: ProjectileTypeSectionOptions ) {
+  public constructor( presetLauncherProperty: PhetioProperty<number>, providedOptions: SectionProjectileTypeOptions ) {
     // TODO: Try to use Array.map for this without type errors - see https://github.com/phetsims/projectile-data-lab/issues/5
-    const launcherTypeRadioButtonGroupItems: RectangularRadioButtonGroupItem<number>[] = [];
+    const presetLauncherRadioButtonGroupItems: RectangularRadioButtonGroupItem<number>[] = [];
 
     // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/7
-    _.range( 1, 7 ).forEach( launcherType => {
-      launcherTypeRadioButtonGroupItems.push( {
-        value: launcherType,
-        tandemName: `launcherType${launcherType}RadioButton`,
-        createNode: () => new PDLText( launcherType.toString() )
+    _.range( 1, 7 ).forEach( presetLauncher => {
+      presetLauncherRadioButtonGroupItems.push( {
+        value: presetLauncher,
+        tandemName: `presetLauncher${presetLauncher}RadioButton`,
+        createNode: () => new PDLText( presetLauncher.toString() )
       } );
     } );
 
-    const launcherTypeRadioButtonGroup = new RectangularRadioButtonGroup( launcherTypeProperty, launcherTypeRadioButtonGroupItems, {
-      tandem: providedOptions.tandem.createTandem( 'launcherTypeRadioButtonGroup' ),
+    const presetLauncherRadioButtonGroup = new RectangularRadioButtonGroup( presetLauncherProperty, presetLauncherRadioButtonGroupItems, {
+      tandem: providedOptions.tandem.createTandem( 'presetLauncherRadioButtonGroup' ),
       orientation: 'horizontal'
     } );
-    super( ProjectileDataLabStrings.launcherStringProperty, launcherTypeRadioButtonGroup, providedOptions );
+    super( ProjectileDataLabStrings.launcherStringProperty, presetLauncherRadioButtonGroup, providedOptions );
   }
 }
 
-projectileDataLab.register( 'SectionLauncherType', SectionLauncherType );
+projectileDataLab.register( 'SectionPresetLauncher', SectionPresetLauncher );

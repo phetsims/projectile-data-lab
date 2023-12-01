@@ -15,11 +15,11 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type ProjectileTypeSectionOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionProjectileTypeOptions = SelfOptions & PDLPanelSectionOptions;
 
 export default class SectionProjectileType extends PDLPanelSection {
 
-  public constructor( projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: ProjectileTypeSectionOptions ) {
+  public constructor( projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: SectionProjectileTypeOptions ) {
     const projectileTypeRadioButtonGroup = new RectangularRadioButtonGroup( projectileTypeProperty, [ {
       value: 'CANNONBALL' as const,
       tandemName: 'cannonballRadioButton',

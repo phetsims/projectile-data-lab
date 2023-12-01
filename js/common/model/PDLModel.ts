@@ -65,7 +65,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   // In the VSM screens, the field can be chosen, then the launcher can be chosen independently within that field.
   // In the Sampling screen, choosing a launcher + number of samples combination determines the field uniquely.
-  public abstract launcherTypeProperty: TProperty<number>;
+  public abstract presetLauncherProperty: TProperty<number>;
   public abstract selectedSampleProperty: TReadOnlyProperty<number>;
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {

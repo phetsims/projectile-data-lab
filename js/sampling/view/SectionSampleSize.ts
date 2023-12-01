@@ -14,11 +14,11 @@ import PDLText from '../../common/view/PDLText.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SampleSizeSectionOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionSampleSizeOptions = SelfOptions & PDLPanelSectionOptions;
 
-export default class SampleSizeSection extends PDLPanelSection {
+export default class SectionSampleSize extends PDLPanelSection {
 
-  public constructor( sampleSizeProperty: Property<number>, providedOptions: SampleSizeSectionOptions ) {
+  public constructor( sampleSizeProperty: Property<number>, providedOptions: SectionSampleSizeOptions ) {
 
     // TODO: Try to use Array.map for this without type errors - see https://github.com/phetsims/projectile-data-lab/issues/5
     const sampleSizeRadioButtonGroupItems: RectangularRadioButtonGroupItem<number>[] = [];
@@ -39,4 +39,4 @@ export default class SampleSizeSection extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'SampleSizeSection', SampleSizeSection );
+projectileDataLab.register( 'SectionSampleSize', SectionSampleSize );

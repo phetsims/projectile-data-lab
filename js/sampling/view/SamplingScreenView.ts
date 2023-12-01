@@ -27,7 +27,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
 
-    const samplingLaunchPanel = new SamplingLaunchPanel( model.launcherTypeProperty, model.sampleSizeProperty, {
+    const samplingLaunchPanel = new SamplingLaunchPanel( model.presetLauncherProperty, model.sampleSizeProperty, {
       tandem: options.tandem.createTandem( 'samplingLaunchPanel' )
     } );
 

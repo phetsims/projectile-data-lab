@@ -6,7 +6,7 @@ import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import SectionLauncherType from '../../common/view/SectionLauncherType.js';
+import SectionPresetLauncher from '../../common/view/SectionPresetLauncher.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -18,13 +18,13 @@ type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class VariabilityLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, projectileTypeProperty: PhetioProperty<ProjectileType>, launcherTypeProperty: PhetioProperty<number>, providedOptions: VariabilityLaunchPanelOptions ) {
+  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, projectileTypeProperty: PhetioProperty<ProjectileType>, presetLauncherProperty: PhetioProperty<number>, providedOptions: VariabilityLaunchPanelOptions ) {
 
-    const launcherTypeSection = new SectionLauncherType( launcherTypeProperty, {
+    const presetLauncherSection = new SectionPresetLauncher( presetLauncherProperty, {
       tandem: providedOptions.tandem
     } );
 
-    super( [ launcherTypeSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+    super( [ presetLauncherSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'VariabilityLaunchPanel', VariabilityLaunchPanel );

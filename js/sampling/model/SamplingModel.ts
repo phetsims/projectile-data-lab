@@ -31,7 +31,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly numberOfSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly launcherTypeProperty: NumberProperty;
+  public readonly presetLauncherProperty: NumberProperty;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
@@ -61,12 +61,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioValueType: NumberIO
     } );
 
-    this.launcherTypeProperty = new NumberProperty( 1 );
+    this.presetLauncherProperty = new NumberProperty( 1 );
 
     // // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
     // // TODO: Fix reentrant error - see https://github.com/phetsims/projectile-data-lab/issues/7
-    Multilink.multilink( [ this.sampleSizeProperty, this.launcherTypeProperty ], ( sampleSize, launcherType ) => {
-      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcher === launcherType )!;
+    Multilink.multilink( [ this.sampleSizeProperty, this.presetLauncherProperty ], ( sampleSize, presetLauncher ) => {
+      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcher === presetLauncher )!;
       this.fieldProperty.value = field;
     } );
 
@@ -96,7 +96,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public override reset(): void {
     super.reset();
     this.sampleSizeProperty.reset();
-    this.launcherTypeProperty.reset();
+    this.presetLauncherProperty.reset();
   }
 }
 
