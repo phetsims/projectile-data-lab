@@ -57,6 +57,8 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
 
+  public abstract presetLauncherProperty: TProperty<number>;
+
   public readonly launcherAngleProperty: DynamicProperty<number, number, T>;
   public readonly launcherHeightProperty: DynamicProperty<number, number, T>;
   public readonly isContinuousLaunchingProperty: DynamicProperty<boolean, boolean, T>;
@@ -65,7 +67,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   // In the VSM screens, the field can be chosen, then the launcher can be chosen independently within that field.
   // In the Sampling screen, choosing a launcher + number of samples combination determines the field uniquely.
-  public abstract presetLauncherProperty: TProperty<number>;
   public abstract selectedSampleProperty: TReadOnlyProperty<number>;
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
