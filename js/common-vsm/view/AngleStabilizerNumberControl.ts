@@ -9,18 +9,17 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
-import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberControl, { NumberControlOptions } from '../../../../scenery-phet/js/NumberControl.js';
-import { Text, TextOptions } from '../../../../scenery/js/imports.js';
+import { Text } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
+// TODO: Get tandem working - see https://github.com/phetsims/projectile-data-lab/issues/7
 type SelfOptions = EmptySelfOptions;
-type AngleStabilizerNumberControlOptions = SelfOptions & NumberControlOptions;
+type AngleStabilizerNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
 
 export default class AngleStabilizerNumberControl extends NumberControl {
 
@@ -30,10 +29,14 @@ export default class AngleStabilizerNumberControl extends NumberControl {
    * @param valueProperty - the Property that is set and linked to
    * @param range - range for the valueProperty value
    */
-  public constructor( titleString: LocalizedStringProperty, valueProperty: PhetioProperty<number>, range: Range, providedOptions: AngleStabilizerNumberControlOptions ) {
+  public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStabilizerNumberControlOptions ) {
+
+    // TODO: Find a way to get the range from the angleStabilizerProperty - see https://github.com/phetsims/projectile-data-lab/issues/7
+    const range = new Range( 0, 10 );
 
     // TODO: Center the title and remove the number display - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const options = optionize<AngleStabilizerNumberControlOptions, EmptySelfOptions, NumberControlOptions>()( {
+    const options = optionize<AngleStabilizerNumberControlOptions, SelfOptions, NumberControlOptions>()( {
+      layoutOptions: { topMargin: 7 },
       titleNodeOptions: {
         maxWidth: 120
       },
@@ -60,7 +63,7 @@ export default class AngleStabilizerNumberControl extends NumberControl {
       } )
     }, providedOptions );
 
-    super( titleString, valueProperty, range, options );
+    super( ProjectileDataLabStrings.angleStabilizerStringProperty, valueProperty, range, options );
   }
 }
 

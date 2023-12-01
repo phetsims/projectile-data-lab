@@ -7,9 +7,7 @@ import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSM
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { CustomLauncherType } from '../../common-vsm/model/CustomLauncherType.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import SectionCustomLauncher from '../../common-vsm/view/SectionCustomLauncher.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -30,9 +28,7 @@ export default class SourcesLaunchPanel extends VSMLaunchPanel {
     const customLauncherTypeSection = new SectionCustomLauncher( customLauncherTypeProperty,
       angleStabilizerProperty, { tandem: providedOptions.tandem } );
 
-    const content: Node[] = [ customLauncherTypeSection ];
-
-    super( content, launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+    super( [ customLauncherTypeSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );

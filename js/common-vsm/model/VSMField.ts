@@ -10,7 +10,7 @@ import { CustomLauncherType, CustomLauncherTypeValues } from './CustomLauncherTy
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -23,6 +23,7 @@ type SelfOptions = EmptySelfOptions;
 export type VSMFieldOptions = SelfOptions & FieldOptions;
 
 export default class VSMField extends Field {
+  public readonly isLauncherCustomProperty: Property<boolean>;
   public readonly customLauncherTypeProperty: Property<CustomLauncherType>;
   public readonly angleStabilizerProperty: NumberProperty;
 
@@ -37,6 +38,12 @@ export default class VSMField extends Field {
 
   public constructor( providedOptions: VSMFieldOptions ) {
     super( providedOptions );
+
+    this.isLauncherCustomProperty = new Property<boolean>( false, {
+      tandem: providedOptions.tandem.createTandem( 'isLauncherCustomProperty' ),
+      phetioDocumentation: 'This property is true when the custom launcher is selected.',
+      phetioValueType: BooleanIO
+    } );
 
     this.customLauncherTypeProperty = new Property<CustomLauncherType>( 'SPRING', {
       validValues: CustomLauncherTypeValues,

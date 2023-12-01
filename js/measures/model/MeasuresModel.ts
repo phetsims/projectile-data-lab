@@ -12,12 +12,16 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common-vsm/model/VSMModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import VSMField from '../../common-vsm/model/VSMField.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export default class MeasuresModel extends VSMModel {
+
+  public readonly isLauncherCustomProperty: DynamicProperty<boolean, boolean, VSMField>;
 
   // Static tool visibility
   public readonly isDataMeasuresVisibleProperty: BooleanProperty;
@@ -29,6 +33,12 @@ export default class MeasuresModel extends VSMModel {
 
   public constructor( providedOptions: PDLModelOptions ) {
     super( providedOptions );
+
+    this.isLauncherCustomProperty = new DynamicProperty<boolean, boolean, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.isLauncherCustomProperty
+    } );
+
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isIntervalToolVisibleProperty' )
     } );
