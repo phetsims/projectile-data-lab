@@ -60,6 +60,8 @@ export default abstract class Field extends PhetioObject {
 
   public readonly selectedSampleProperty: NumberProperty;
 
+  public readonly abstract identifier: string;
+
   public constructor( providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,
@@ -188,13 +190,16 @@ export default abstract class Field extends PhetioObject {
     // If the projectile type is not a cannonball, set scaleX to either 1 or -1
     const projectileScaleX = this.projectileTypeProperty.value === 'CANNONBALL' ? 1 : dotRandom.nextBoolean() ? 1 : -1;
 
-    // TODO: Get the field number and screen identifier correct. See https://github.com/phetsims/projectile-data-lab/issues/7
-    return new Projectile( 'sources', -1, sampleNumber, 0, 0, this.projectileTypeProperty.value,
+    const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
+    const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
+
+    return new Projectile( screenTandemName, this.identifier, sampleNumber, 0, 0, this.projectileTypeProperty.value,
       'AIRBORNE', projectileScaleX, landedImageIndex, 0, launchAngle, launchSpeed,
       this.launchHeightProperty.value );
   }
 
   public abstract launchProjectile(): void;
+
   public toStateObject(): object {
     return {
       projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )

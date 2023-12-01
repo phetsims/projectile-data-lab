@@ -11,6 +11,7 @@ import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
+import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -36,7 +37,7 @@ export default class VSMField extends Field {
     } ]
   } );
 
-  public constructor( providedOptions: VSMFieldOptions ) {
+  public constructor( public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
     super( providedOptions );
 
     this.isLauncherCustomProperty = new Property<boolean>( false, {

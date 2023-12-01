@@ -11,6 +11,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import Field from './Field.js';
 import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
 import { ProjectilePhase, ProjectilePhaseValues } from './ProjectilePhase.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -24,7 +25,7 @@ export default class Projectile {
 
   public screenIdentifier: ScreenIdentifier;
 
-  public fieldNumber: number;
+  public fieldIdentifier: string;
 
   // The x and y coordinates of the projectile relative to the launch position, in meters
   public x: number;
@@ -59,7 +60,7 @@ export default class Projectile {
 
   public constructor(
     screenIdentifier: ScreenIdentifier,
-    fieldNumber: number,
+    fieldIdentifier: string,
     sampleNumber: number,
     x: number,
     y: number,
@@ -73,7 +74,7 @@ export default class Projectile {
     launchHeight: number
   ) {
     this.screenIdentifier = screenIdentifier;
-    this.fieldNumber = fieldNumber;
+    this.fieldIdentifier = fieldIdentifier;
     this.x = x;
     this.y = y;
     this.type = type;
@@ -146,7 +147,7 @@ export default class Projectile {
     valueType: Projectile,
     stateSchema: {
       screenIdentifier: StringUnionIO( ScreenIdentifierValues ),
-      fieldNumber: NumberIO,
+      fieldIdentifier: StringIO,
       sampleNumber: NumberIO,
       x: NumberIO,
       y: NumberIO,
@@ -162,7 +163,7 @@ export default class Projectile {
     toStateObject: ( projectile: Projectile ): ProjectileStateObject => {
       return {
         screenIdentifier: projectile.screenIdentifier,
-        fieldNumber: projectile.fieldNumber,
+        fieldIdentifier: projectile.fieldIdentifier,
         sampleNumber: projectile.sampleNumber,
         x: projectile.x,
         y: projectile.y,
@@ -179,7 +180,7 @@ export default class Projectile {
     fromStateObject: ( stateObject: ProjectileStateObject ) => {
       return new Projectile(
         stateObject.screenIdentifier,
-        stateObject.fieldNumber,
+        stateObject.fieldIdentifier,
         stateObject.sampleNumber,
         stateObject.x,
         stateObject.y,
@@ -239,7 +240,7 @@ export default class Projectile {
 
 export type ProjectileStateObject = {
   screenIdentifier: ScreenIdentifier;
-  fieldNumber: number;
+  fieldIdentifier: string;
   sampleNumber: number;
   x: number;
   y: number;

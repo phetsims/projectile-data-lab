@@ -20,6 +20,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import { CustomLauncherType } from './CustomLauncherType.js';
+import { VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -50,9 +51,10 @@ export default class VSMModel extends PDLModel<VSMField> {
 
   public constructor( providedOptions: VSMModelOptions ) {
 
-    const fields = _.range( 1, 9 ).map( i => {
-      return new VSMField( {
-        tandem: providedOptions.tandem.createTandem( 'field' + i )
+    const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
+    const fields = VSMFieldIdentifierValues.map( identifier => {
+      return new VSMField( identifier, {
+        tandem: fieldsTandem.createTandem( identifier )
       } );
     } );
 

@@ -16,6 +16,7 @@ type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
 export default class SamplingField extends Field {
+  public override identifier: string;
 
   private elapsedTimeIntraSample = 0;
   public readonly numberOfSamplesProperty: NumberProperty;
@@ -29,6 +30,8 @@ export default class SamplingField extends Field {
 
   public constructor( public readonly launcher: number, public readonly sampleSize: number, options: SamplingFieldOptions ) {
     super( options );
+
+    this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );
 
     this.numberOfSamplesProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'numberOfSamplesProperty' ),
