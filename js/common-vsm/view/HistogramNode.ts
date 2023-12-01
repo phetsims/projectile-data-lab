@@ -1,4 +1,4 @@
-// Copyright 2020-2022, University of Colorado Boulder
+// Copyright 2023, University of Colorado Boulder
 
 import { Node, NodeOptions, Text, VBox } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
