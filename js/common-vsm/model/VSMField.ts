@@ -8,6 +8,9 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import { CustomLauncherType, CustomLauncherTypeValues } from './CustomLauncherType.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Range from '../../../../dot/js/Range.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -21,6 +24,8 @@ export type VSMFieldOptions = SelfOptions & FieldOptions;
 
 export default class VSMField extends Field {
   public readonly customLauncherTypeProperty: Property<CustomLauncherType>;
+  public readonly angleStabilizerProperty: NumberProperty;
+
   public timeElapsedSinceLastLaunch = 0;
 
   public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
@@ -38,6 +43,12 @@ export default class VSMField extends Field {
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeProperty' ),
       phetioDocumentation: 'This property configures the mechanism of the custom launcher.',
       phetioValueType: StringUnionIO( CustomLauncherTypeValues )
+    } );
+
+    this.angleStabilizerProperty = new NumberProperty( 1, {
+      range: new Range( 0, 10 ),
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerProperty' ),
+      phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
     } );
   }
 

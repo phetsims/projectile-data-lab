@@ -44,6 +44,7 @@ export default class VSMModel extends PDLModel<VSMField> {
   public readonly presetLauncherProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly customLauncherTypeProperty: DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>;
+  public readonly angleStabilizerProperty: DynamicProperty<number, number, VSMField>;
 
   public selectedSampleProperty: TReadOnlyProperty<number> = new Property( 0 );
 
@@ -70,6 +71,11 @@ export default class VSMModel extends PDLModel<VSMField> {
     this.customLauncherTypeProperty = new DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.customLauncherTypeProperty
+    } );
+
+    this.angleStabilizerProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.angleStabilizerProperty
     } );
 
     this.isLaunchAngleVisibleProperty = new BooleanProperty( false, {

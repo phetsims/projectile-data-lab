@@ -9,6 +9,7 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { CustomLauncherType } from '../../common-vsm/model/CustomLauncherType.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import SectionCustomLauncher from '../../common-vsm/view/SectionCustomLauncher.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -23,11 +24,11 @@ export default class SourcesLaunchPanel extends VSMLaunchPanel {
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
                       projectileTypeProperty: PhetioProperty<ProjectileType>,
                       customLauncherTypeProperty: PhetioProperty<CustomLauncherType>,
+                      angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SourcesLaunchPanelOptions ) {
 
-    const customLauncherTypeSection = new SectionCustomLauncher( customLauncherTypeProperty, {
-      tandem: providedOptions.tandem
-    } );
+    const customLauncherTypeSection = new SectionCustomLauncher( customLauncherTypeProperty,
+      angleStabilizerProperty, { tandem: providedOptions.tandem } );
 
     const content: Node[] = [ customLauncherTypeSection ];
 
