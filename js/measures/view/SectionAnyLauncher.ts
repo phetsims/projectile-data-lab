@@ -32,13 +32,13 @@ export default class SectionAnyLauncher extends PDLPanelSection {
 
     const radioButtonItems: AquaRadioButtonGroupItem<boolean>[] = [ {
       createNode: () => new Text( 'Standard' ),
-      value: false
-    },
-      {
-        createNode: () => new Text( 'Custom' ),
-        value: true
-      } ];
-
+      value: false,
+      tandemName: 'standardLauncherRadioButton'
+    }, {
+      createNode: () => new Text( 'Custom' ),
+      value: true,
+      tandemName: 'customLauncherRadioButton'
+    } ];
 
     // TODO: Find out how to get types to conform between dynamic property and boolean property for radio button group - see https://github.com/phetsims/projectile-data-lab/issues/7
     const isLauncherCustomTempProperty = new BooleanProperty( false );
@@ -53,7 +53,8 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       spacing: 30,
       left: 50,
       centerY: 0,
-      maxWidth: 150
+      maxWidth: 150,
+      tandem: providedOptions.tandem.createTandem( 'isLauncherCustomRadioButtonGroup' )
     } );
 
     // TODO: Factor this out here and in SectionPresetLauncher - see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -74,11 +75,11 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     } );
 
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
-      tandem: providedOptions.tandem
+      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' )
     } );
 
     const angleStabilizerNumberControl = new AngleStabilizerNumberControl( angleStabilizerProperty, {
-      tandem: providedOptions.tandem
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' )
     } );
 
     const customLauncherControls = new VBox( {

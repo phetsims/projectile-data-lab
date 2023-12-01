@@ -23,12 +23,12 @@ export default class SectionCustomLauncher extends PDLPanelSection {
   public constructor( customLauncherTypeProperty: PhetioProperty<CustomLauncherType>,
                       angleStabilizerProperty: PhetioProperty<number>, providedOptions: SectionCustomLauncherOptions ) {
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
-      tandem: providedOptions.tandem
+      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' )
     } );
 
     const angleStabilizerNumberControl = new AngleStabilizerNumberControl( angleStabilizerProperty, {
-        tandem: providedOptions.tandem
-      } );
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' )
+    } );
 
     const contentContainer = new VBox( { children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ], spacing: 5, stretch: true } );
 
