@@ -152,11 +152,11 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public launchButtonPressed(): void {
     if ( this.launchModeProperty.value === 'single' ) {
-      this.fieldProperty.value.launchButtonPressed();
+      this.fieldProperty.value.launchProjectile();
     }
     else {
       if ( !this.isContinuousLaunchingProperty.value ) {
-        this.fieldProperty.value.launchButtonPressed();
+        this.fieldProperty.value.launchProjectile();
       }
       this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
     }

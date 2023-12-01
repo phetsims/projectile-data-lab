@@ -194,7 +194,7 @@ export default abstract class Field extends PhetioObject {
       this.launchHeightProperty.value );
   }
 
-  public abstract launchButtonPressed(): void;
+  public abstract launchProjectile(): void;
   public toStateObject(): object {
     return {
       projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )

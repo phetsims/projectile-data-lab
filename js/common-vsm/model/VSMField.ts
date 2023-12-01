@@ -59,7 +59,7 @@ export default class VSMField extends Field {
     } );
   }
 
-  public override launchButtonPressed(): void {
+  public override launchProjectile(): void {
     this.timeElapsedSinceLastLaunch = 0;
 
     const projectile = this.createProjectile( 0 );

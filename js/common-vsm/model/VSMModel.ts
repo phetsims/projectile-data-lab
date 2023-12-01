@@ -130,7 +130,7 @@ export default class VSMModel extends PDLModel<VSMField> {
 
     if ( this.launchModeProperty.value === 'continuous' &&
          this.isContinuousLaunchingProperty.value && this.fieldProperty.value.timeElapsedSinceLastLaunch > PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES ) {
-      this.fieldProperty.value.launchButtonPressed();
+      this.fieldProperty.value.launchProjectile();
     }
 
     this.fieldProperty.value.step( dt );
