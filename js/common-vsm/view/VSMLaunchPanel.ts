@@ -2,15 +2,14 @@
 
 import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Color, HSeparator, Node } from '../../../../scenery/js/imports.js';
 import SectionLauncherConfiguration from '../../common/view/SectionLauncherConfiguration.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import SectionProjectileType from '../../common/view/SectionProjectileType.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
-import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
+import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import PDLConstants from '../../common/PDLConstants.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -22,15 +21,8 @@ export type VSMLaunchPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class VSMLaunchPanel extends PDLLaunchPanel {
 
-  public constructor( configurationProperty: PhetioProperty<LauncherConfiguration>,
-                      projectileTypeProperty: PhetioProperty<ProjectileType>,
-                      launcherTypeProperty: PhetioProperty<number>,
-                      providedOptions: VSMLaunchPanelOptions ) {
-
-    const options = optionize<VSMLaunchPanelOptions, SelfOptions, PDLLaunchPanelOptions>()( {
-      left: PDLConstants.SCREEN_VIEW_X_MARGIN,
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
-    }, providedOptions );
+  public constructor( content: Node[], configurationProperty: PhetioProperty<LauncherConfiguration>,
+                      projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: VSMLaunchPanelOptions ) {
 
     const launcherConfigurationSection = new SectionLauncherConfiguration( configurationProperty, {
       tandem: providedOptions.tandem
@@ -40,13 +32,7 @@ export default class VSMLaunchPanel extends PDLLaunchPanel {
       tandem: providedOptions.tandem
     } );
 
-    const content: Node[] = [];
-    content.push( launcherConfigurationSection );
-    content.push( new HSeparator( { stroke: Color.BLACK } ) );
-    content.push( projectileTypeSection );
-    content.push( new HSeparator( { stroke: Color.BLACK } ) );
-
-    super( launcherTypeProperty, content, options );
+    super( [ launcherConfigurationSection, projectileTypeSection, ...content ], providedOptions );
   }
 }
 projectileDataLab.register( 'VSMLaunchPanel', VSMLaunchPanel );

@@ -8,13 +8,13 @@ import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import SourcesLaunchPanel from '../../sources/view/SourcesLaunchPanel.js';
 import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
 import { VBox } from '../../../../scenery/js/imports.js';
 import { VSMScreenView } from '../../common-vsm/view/VSMScreenView.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
 import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
+import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +26,7 @@ export default class MeasuresScreenView extends VSMScreenView {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
 
-    const measuresLaunchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, model.launcherTypeProperty, {
+    const measuresLaunchPanel = new MeasuresLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, {
       tandem: options.tandem.createTandem( 'measuresLaunchPanel' )
     } );
     this.addChild( measuresLaunchPanel );

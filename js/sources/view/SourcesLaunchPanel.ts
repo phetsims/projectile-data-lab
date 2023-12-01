@@ -17,8 +17,9 @@ type SourcesLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class SourcesLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, projectileTypeProperty: PhetioProperty<ProjectileType>, launcherTypeProperty: PhetioProperty<number>, providedOptions: SourcesLaunchPanelOptions ) {
-    super( launcherConfigurationProperty, projectileTypeProperty, launcherTypeProperty, providedOptions );
+  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
+                      projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: SourcesLaunchPanelOptions ) {
+    super( [], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );

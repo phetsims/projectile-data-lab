@@ -8,26 +8,32 @@
  */
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Node, VBox } from '../../../../scenery/js/imports.js';
+import { Color, HSeparator, Node, VBox } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
-import SectionLauncherType from './SectionLauncherType.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
 export class PDLLaunchPanel extends PDLPanel {
-  public constructor( launcherProperty: PhetioProperty<number>, children: Node[], providedOptions: PDLLaunchPanelOptions ) {
+  public constructor( children: Node[], providedOptions: PDLLaunchPanelOptions ) {
 
-    const options = optionize<PDLLaunchPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
+    const options = optionize<PDLLaunchPanelOptions, SelfOptions, PDLPanelOptions>()( {
+      left: PDLConstants.SCREEN_VIEW_X_MARGIN,
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
+    }, providedOptions );
 
-    const launcherTypeSection = new SectionLauncherType( launcherProperty, {
-      tandem: providedOptions.tandem
+    // Add a separator between each of the children, but not after the last one
+    const childrenWithSeparators: Node[] = [];
+    children.forEach( ( child, index ) => {
+      childrenWithSeparators.push( child );
+      if ( index < children.length - 1 ) {
+        childrenWithSeparators.push( new HSeparator( { stroke: Color.BLACK } ) );
+      }
     } );
-    children.push( launcherTypeSection );
 
-    const contentContainer = new VBox( { children: children, spacing: 5, stretch: true, align: 'left' } );
+    const contentContainer = new VBox( { children: childrenWithSeparators, spacing: 5, stretch: true } );
     super( contentContainer, options );
   }
 }
