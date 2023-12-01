@@ -8,7 +8,6 @@ import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPa
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import HorizontalAquaRadioButtonGroup from '../../../../sun/js/HorizontalAquaRadioButtonGroup.js';
 import { CustomLauncherType } from '../../common-vsm/model/CustomLauncherType.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
@@ -40,14 +39,8 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       tandemName: 'customLauncherRadioButton'
     } ];
 
-    // TODO: Find out how to get types to conform between dynamic property and boolean property for radio button group - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const isLauncherCustomTempProperty = new BooleanProperty( false );
-    isLauncherCustomProperty.link( isLauncherCustom => {
-      isLauncherCustomTempProperty.value = isLauncherCustom;
-    } );
-
     // radio button group, horizontally layout
-    const isLauncherCustomRadioButtonGroup = new HorizontalAquaRadioButtonGroup( isLauncherCustomTempProperty, radioButtonItems, {
+    const isLauncherCustomRadioButtonGroup = new HorizontalAquaRadioButtonGroup( isLauncherCustomProperty, radioButtonItems, {
       radioButtonOptions: { radius: 8 },
       touchAreaYDilation: 15,
       spacing: 30,
@@ -87,7 +80,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       spacing: 5, stretch: true, topMargin: 8
     } );
 
-    const launcherControlsToggleNode = new ToggleNode<boolean, Node>( isLauncherCustomTempProperty, [ {
+    const launcherControlsToggleNode = new ToggleNode<boolean, Node>( isLauncherCustomProperty, [ {
       value: false,
       createNode: () => presetLauncherRadioButtonGroup
     }, {
