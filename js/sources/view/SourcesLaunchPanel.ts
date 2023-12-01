@@ -6,6 +6,9 @@ import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import { CustomLauncherType } from '../../common-vsm/model/CustomLauncherType.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import SectionCustomLauncher from '../../common-vsm/view/SectionCustomLauncher.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -18,8 +21,17 @@ type SourcesLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 export default class SourcesLaunchPanel extends VSMLaunchPanel {
 
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
-                      projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: SourcesLaunchPanelOptions ) {
-    super( [], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+                      projectileTypeProperty: PhetioProperty<ProjectileType>,
+                      customLauncherTypeProperty: PhetioProperty<CustomLauncherType>,
+                      providedOptions: SourcesLaunchPanelOptions ) {
+
+    const customLauncherTypeSection = new SectionCustomLauncher( customLauncherTypeProperty, {
+      tandem: providedOptions.tandem
+    } );
+
+    const content: Node[] = [ customLauncherTypeSection ];
+
+    super( content, launcherConfigurationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );

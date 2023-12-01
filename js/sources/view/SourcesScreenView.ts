@@ -2,6 +2,7 @@
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
@@ -26,9 +27,8 @@ export default class SourcesScreenView extends VSMScreenView {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model, options );
 
-    const sourcesLaunchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, {
-      tandem: options.tandem.createTandem( 'sourcesLaunchPanel' )
-    } );
+    const sourcesLaunchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
+      model.customLauncherTypeProperty, { tandem: options.tandem.createTandem( 'sourcesLaunchPanel' ) } );
     this.addChild( sourcesLaunchPanel );
 
     const fieldPanel = new VSMFieldPanel( model.fieldProperty, {

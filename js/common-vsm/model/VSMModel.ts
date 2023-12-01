@@ -19,6 +19,7 @@ import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import { CustomLauncherType } from './CustomLauncherType.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -41,6 +42,9 @@ export default class VSMModel extends PDLModel<VSMField> {
 
   // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
   public readonly presetLauncherProperty: DynamicProperty<number, number, VSMField>;
+
+  public readonly customLauncherTypeProperty: DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>;
+
   public selectedSampleProperty: TReadOnlyProperty<number> = new Property( 0 );
 
   public constructor( providedOptions: VSMModelOptions ) {
@@ -61,6 +65,11 @@ export default class VSMModel extends PDLModel<VSMField> {
     this.presetLauncherProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,
       derive: 'presetLauncherProperty'
+    } );
+
+    this.customLauncherTypeProperty = new DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.customLauncherTypeProperty
     } );
 
     this.isLaunchAngleVisibleProperty = new BooleanProperty( false, {
