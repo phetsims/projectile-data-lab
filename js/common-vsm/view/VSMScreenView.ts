@@ -99,17 +99,16 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       } );
 
     // Create the heat map tools
-    const speedToolNode = new SpeedToolNode( {
+    const speedToolNode = new SpeedToolNode( isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchSpeedVisibleProperty,
       x: originPosition.x, y: originPosition.y
     } );
 
     const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchAngleVisibleProperty,
-      x: originPosition.x, y: originPosition.y,
-      initialNeedleValue: model.launcherAngleProperty.value
+      initialNeedleValue: model.launcherAngleProperty.value,
+      x: originPosition.x, y: originPosition.y
     } );
-
 
     model.fields.forEach( field => {
 
@@ -154,16 +153,11 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
 
     model.launcherHeightProperty.link( launcherHeight => {
       const launcherY = this.modelViewTransform.modelToViewY( launcherHeight );
-      angleToolNode.y = launcherY;
       speedToolNode.y = launcherY;
+      angleToolNode.y = launcherY;
     } );
     model.launcherAngleProperty.link( launcherAngle => {
       angleToolNode.setInitialNeedleValue( launcherAngle );
-    } );
-
-    model.launcherConfigurationProperty.link( launcherConfiguration => {
-      const isLauncherRaised = launcherConfiguration === 'ANGLE_0';
-      speedToolNode.setForIsLauncherRaised( isLauncherRaised );
     } );
 
     this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
@@ -174,8 +168,8 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
 
     this.addChild( accordionBox );
     this.addChild( stopwatchNode );
-    this.addChild( speedToolNode );
     this.addChild( angleToolNode );
+    this.addChild( speedToolNode );
     this.addChild( measuringTapeNode );
 
     // Position the time control node so that the play/pause button is centered at the 50-meter mark

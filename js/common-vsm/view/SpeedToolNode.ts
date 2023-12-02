@@ -10,6 +10,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import { Circle, Path, Node } from '../../../../scenery/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The SpeedToolNode is a static tool that displays a heat map representation of speed data.
@@ -29,7 +30,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
   private displayOffset: Vector2;
 
-  public constructor( providedOptions: SpeedToolNodeOptions ) {
+  public constructor( isLauncherRaised: TReadOnlyProperty<boolean>, providedOptions: SpeedToolNodeOptions ) {
 
     const bodyRadius = 60;
     const needleLength = 55;
@@ -104,9 +105,13 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
     launcherCircle.moveToBack();
     this.connectingWire.moveToBack();
+
+    isLauncherRaised.link( isRaised => {
+      this.setForIsLauncherRaised( isRaised );
+    } );
   }
 
-  public setForIsLauncherRaised( isLauncherRaised: boolean ): void {
+  private setForIsLauncherRaised( isLauncherRaised: boolean ): void {
     const speedToolX = isLauncherRaised ? -45 : -20;
     const speedToolY = isLauncherRaised ? 180 : -150;
 
