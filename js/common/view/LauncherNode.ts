@@ -10,6 +10,11 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import { Shape } from '../../../../kite/js/imports.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import LauncherFlashNode from './LauncherFlashNode.js';
+import Animation from '../../../../twixt/js/Animation.js';
+import Easing from '../../../../twixt/js/Easing.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -52,6 +57,7 @@ const SUPPORT_BAR_HEIGHT = 150;
 export default class LauncherNode extends Node {
 
   // The launcher barrel contains all graphics that rotate with launch angle.
+  private readonly launcherBarrelContainer: Node;
   private readonly launcherBarrel: Node;
 
   private readonly guideRailBolt: Node;
@@ -65,13 +71,16 @@ export default class LauncherNode extends Node {
     const launcherX = modelViewTransform.modelToViewX( 0 );
     const launcherY = modelViewTransform.modelToViewY( 0 );
 
-    const launcher = new Node();
+    const launcherBarrelContainer = new Node();
 
-    const defaultOptions = { x: launcherX, y: launcherY, children: [ launcher ] };
+    const defaultOptions = { x: launcherX, y: launcherY, children: [ launcherBarrelContainer ] };
     const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
-    this.launcherBarrel = launcher;
+    this.launcherBarrelContainer = launcherBarrelContainer;
+
+    this.launcherBarrel = new Node();
+    this.launcherBarrelContainer.addChild( this.launcherBarrel );
 
     const launcherFrameBack = this.launcherFrameBack();
     const launcherFrameFront = this.launcherFrameFront();
@@ -100,8 +109,45 @@ export default class LauncherNode extends Node {
     } );
   }
 
+  // TODO: Check this for memory leaks - see https://github.com/phetsims/projectile-data-lab/issues/7
+  public playLaunchAnimation(): void {
+    const launcherFlashNode = new LauncherFlashNode( {
+      x: BARREL_LENGTH_AFTER_ORIGIN, y: 0,
+      opacity: 0
+    } );
+
+    this.launcherBarrelContainer.addChild( launcherFlashNode );
+    launcherFlashNode.moveToBack();
+
+    const scaleProperty = new NumberProperty( 1 );
+    scaleProperty.lazyLink( scale => {
+      launcherFlashNode.setScaleMagnitude( scale );
+    } );
+
+    const launcherFlashAnimation = new Animation( {
+      duration: 0.35,
+      targets: [ {
+        property: scaleProperty,
+        from: 1,
+        to: dotRandom.nextDoubleBetween( 9, 12 ),
+        easing: Easing.QUARTIC_OUT
+      }, {
+        property: launcherFlashNode.opacityProperty,
+        from: 0.55,
+        to: 0,
+        easing: Easing.QUARTIC_OUT
+      } ]
+    } );
+
+    launcherFlashAnimation.endedEmitter.addListener( () => {
+      this.launcherBarrelContainer.removeChild( launcherFlashNode );
+    } );
+
+    launcherFlashAnimation.start();
+  }
+
   private updateLauncherAngle( angle: number ): void {
-    this.launcherBarrel.setRotation( Utils.toRadians( -angle ) );
+    this.launcherBarrelContainer.setRotation( Utils.toRadians( -angle ) );
 
     this.guideRailBolt.centerX = -BARREL_LENGTH_BEFORE_ORIGIN * Math.cos( Utils.toRadians( angle ) );
     this.guideRailBolt.centerY = BARREL_LENGTH_BEFORE_ORIGIN * Math.sin( Utils.toRadians( angle ) );
@@ -113,6 +159,7 @@ export default class LauncherNode extends Node {
 
   private updatePresetLauncher( type: number ): void {
     this.launcherBarrel.removeAllChildren();
+
     this.launcherGraphicsForType( type ).forEach( launcherGraphics => {
       this.launcherBarrel.addChild( launcherGraphics );
     } );
