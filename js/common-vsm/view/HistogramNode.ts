@@ -18,6 +18,7 @@ import HistogramBarPlot from './HistogramBarPlot.js';
 import Field from '../../common/model/Field.js';
 import PlusMinusZoomButtonGroup from '../../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -36,7 +37,7 @@ export default class HistogramNode extends Node {
     const chartTransform = new ChartTransform( {
       viewWidth: 520,
       viewHeight: 210,
-      modelXRange: new Range( 0, 100 ),
+      modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );
 
