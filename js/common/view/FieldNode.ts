@@ -119,7 +119,11 @@ export default class FieldNode extends Node {
     const fieldBoundsBottomHalfWithStroke = fieldBoundsBottomHalf.dilatedX( 0.5 * PDLConstants.FIELD_BORDER_LINE_WIDTH )
       .dilatedY( 0.25 * PDLConstants.FIELD_BORDER_LINE_WIDTH ).shiftedY( 0.25 * PDLConstants.FIELD_BORDER_LINE_WIDTH );
 
-    const rectBounds = options.isBottomHalf ? fieldBoundsBottomHalfWithStroke : fieldBoundsWithStroke;
+    const leftSideShowingFactor = 0.1;
+    const insetXAmount = -PDLConstants.FIELD_WIDTH * ( 1 - leftSideShowingFactor ) / 2;
+    const leftSide = fieldBoundsBottomHalfWithStroke.dilatedX( insetXAmount ).shiftedX( insetXAmount );
+
+    const rectBounds = options.isBottomHalf ? leftSide : fieldBoundsWithStroke;
     const rectBoundsTransformed = Shape.bounds( rectBounds ).nonlinearTransformed( {
       pointMap: PDLUtils.transformField
     } );

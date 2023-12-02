@@ -64,7 +64,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ), new Vector2( originX, fieldY ), PDLConstants.PIXELS_TO_DISTANCE );
 
-    const backgroundNode = new GradientBackgroundNode(
+    const background = new GradientBackgroundNode(
       0,
       0,
       1,
@@ -77,8 +77,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     // This instance lives for the lifetime of the simulation, so we don't need to remove this listener
     this.visibleBoundsProperty.link( visibleBounds => {
-      backgroundNode.translation = visibleBounds.leftTop;
-      backgroundNode.setScaleMagnitude( visibleBounds.width, visibleBounds.height );
+      background.translation = visibleBounds.leftTop;
+      background.setScaleMagnitude( visibleBounds.width, visibleBounds.height );
     } );
 
     this.noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
@@ -99,9 +99,12 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     const fieldBack = new FieldNode( model.binWidthProperty, { x: fieldX, y: fieldY } );
     const fieldFront = new FieldNode( model.binWidthProperty, { isBottomHalf: true, x: fieldX, y: fieldY } );
-    const fieldOverlayNode = new FieldOverlayNode( this.modelViewTransform, {} );
-    fieldOverlayNode.x = fieldX;
-    fieldOverlayNode.y = fieldY;
+    const fieldOverlayBack = new FieldOverlayNode( this.modelViewTransform, { } );
+    const fieldOverlayFront = new FieldOverlayNode( this.modelViewTransform, { isLeftSide: true } );
+    fieldOverlayBack.x = fieldX;
+    fieldOverlayBack.y = fieldY;
+    fieldOverlayFront.x = fieldX;
+    fieldOverlayFront.y = fieldY;
     // Create the launch button
     const launchIconToggleNode = new ToggleNode<'single' | 'continuous', Image>( model.launchModeProperty, [ {
       value: 'single',
@@ -178,15 +181,14 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
         canvasBounds: canvasBounds
       } );
 
-    this.addChild( backgroundNode );
+    this.addChild( background );
     this.addChild( fieldBack );
+    this.addChild( fieldOverlayBack );
+    this.addChild( this.behindProjectilesLayer );
+    this.addChild( projectileCanvas );
     this.addChild( this.launcherLayer );
     this.addChild( fieldFront );
-    this.addChild( fieldOverlayNode );
-
-    this.addChild( this.behindProjectilesLayer );
-
-    this.addChild( projectileCanvas );
+    this.addChild( fieldOverlayFront );
     this.addChild( this.launchButton );
     this.addChild( this.launchControlRadioButtonGroup );
     this.addChild( this.noAirResistanceText );

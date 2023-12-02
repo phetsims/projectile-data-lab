@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { Node, NodeOptions, Path, Circle, Text } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLColors from '../PDLColors.js';
@@ -18,13 +18,16 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  isLeftSide?: boolean;
+};
 type FieldOverlayNodeOptions = SelfOptions & NodeOptions;
 
 export default class FieldOverlayNode extends Node {
   public constructor( modelViewTransform: ModelViewTransform2, providedOptions: FieldOverlayNodeOptions ) {
 
     const numTotalDashes = 30;
+    const numDashesToDraw = providedOptions.isLeftSide ? 3 : numTotalDashes;
 
     // Subtract 1 to make the dashed part of the right edge line up with the right side of the field
     const dashLength = modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE ) / ( 2 * numTotalDashes - 1 );
@@ -34,7 +37,7 @@ export default class FieldOverlayNode extends Node {
 
     const originX = modelViewTransform.modelToViewDeltaX( -PDLConstants.MAX_FIELD_DISTANCE / 2 );
 
-    for ( let i = 0; i < numTotalDashes; i++ ) {
+    for ( let i = 0; i < numDashesToDraw; i++ ) {
       const dashX = originX + i * ( 2 * dashLength );
       dashedLineShape.rect( dashX, -0.5 * PDLConstants.FIELD_CENTER_LINE_WIDTH, dashLength, PDLConstants.FIELD_CENTER_LINE_WIDTH );
     }
@@ -44,11 +47,6 @@ export default class FieldOverlayNode extends Node {
     } );
 
     const dashedLine = new Path( dashedLineTransformed, {
-      fill: PDLColors.fieldBorderStrokeColorProperty
-    } );
-
-    const originCircle = new Circle( PDLConstants.FIELD_CENTER_LINE_WIDTH, {
-      x: originX,
       fill: PDLColors.fieldBorderStrokeColorProperty
     } );
 
@@ -79,7 +77,22 @@ export default class FieldOverlayNode extends Node {
       distanceLabels.push( textLabel );
     }
 
-    super( { children: [ originCircle, dashedLine, ...distanceLabels ] } );
+    const childContainer = new Node( { children: [ dashedLine, ...distanceLabels ] } );
+
+    // If this is the left side overlay in front of the launcher, add the origin circle
+    if ( providedOptions.isLeftSide ) {
+      childContainer.addChild( new Circle( PDLConstants.FIELD_CENTER_LINE_WIDTH, {
+        x: originX,
+        fill: PDLColors.fieldBorderStrokeColorProperty
+      } ) );
+    }
+
+    const options = optionize<FieldOverlayNodeOptions, SelfOptions, NodeOptions>()( {
+      children: [ childContainer ],
+      isLeftSide: false
+    }, providedOptions );
+
+    super( options );
   }
 }
 projectileDataLab.register( 'FieldOverlayNode', FieldOverlayNode );
