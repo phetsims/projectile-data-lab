@@ -4,7 +4,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import projectileDataLab from '../../projectileDataLab.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { Path } from '../../../../scenery/js/imports.js';
+import { Path, Node } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
@@ -29,24 +29,31 @@ export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptio
 
 const VALUE_READOUT_Y_MAGNITUDE = 17;
 
+const MIN_ANGLE_GROUND = 0;
+const MAX_ANGLE_GROUND = 90;
+const MIN_ANGLE_RAISED = -40;
+const MAX_ANGLE_RAISED = 40;
+
 export default class AngleToolNode extends HeatMapToolNode {
-  public constructor( isNegativeAnglesShowingProperty: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
+
+  private readonly elementsForGround: Node[] = [];
+  private readonly elementsForRaised: Node[] = [];
+
+  public constructor( isRaisedProperty: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
 
     const innerBodyRadius = 70;
     const outerBodyRadius = 100;
-    const minAngle = -20;
-    const maxAngle = 90;
 
-    const bodyShapeForShowNegativeAngles = ( innerBodyRadius: number, outerBodyRadius: number, minAngle: number, maxAngle: number, showNegativeAngles: boolean ) => {
-      const minAngleToShow = showNegativeAngles ? minAngle : 0;
-      const outerCircle = new Shape().arc( 0, 0, outerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngleToShow ) ).lineTo( 0, 0 );
-      const innerCircle = new Shape().arc( 0, 0, innerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngleToShow ) ).lineTo( 0, 0 );
+    const bodyShapeForIsRaised = ( innerBodyRadius: number, outerBodyRadius: number, isRaised: boolean ) => {
+      const minAngle = isRaised ? MIN_ANGLE_RAISED : MIN_ANGLE_GROUND;
+      const maxAngle = isRaised ? MAX_ANGLE_RAISED : MAX_ANGLE_GROUND;
+      const outerCircle = new Shape().arc( 0, 0, outerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
+      const innerCircle = new Shape().arc( 0, 0, innerBodyRadius, Utils.toRadians( -maxAngle ), Utils.toRadians( -minAngle ) ).lineTo( 0, 0 );
       return outerCircle.shapeDifference( innerCircle ).close();
     };
 
     // Create the body shape
-    const bodyShape = bodyShapeForShowNegativeAngles( innerBodyRadius, outerBodyRadius, minAngle, maxAngle,
-      isNegativeAnglesShowingProperty.value );
+    const bodyShape = bodyShapeForIsRaised( innerBodyRadius, outerBodyRadius, isRaisedProperty.value );
 
     // Create the needle shape
     const needleLength = 76;
@@ -67,6 +74,9 @@ export default class AngleToolNode extends HeatMapToolNode {
 
     // Create a shape that is the union of the three needle shapes
     const needleShape = Shape.union( [ needleBaseShape, needleArmShape, needleTipShape ] );
+
+    const minAngle = Math.min( MIN_ANGLE_GROUND, MIN_ANGLE_RAISED );
+    const maxAngle = Math.max( MAX_ANGLE_GROUND, MAX_ANGLE_RAISED );
 
     const options = optionize<AngleToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
       displayOffset: Vector2.ZERO,
@@ -92,15 +102,40 @@ export default class AngleToolNode extends HeatMapToolNode {
     }, providedOptions );
     super( options );
 
-    isNegativeAnglesShowingProperty.link( isNegativeAnglesShowing => {
-      const bodyShape = bodyShapeForShowNegativeAngles( innerBodyRadius, outerBodyRadius, minAngle, maxAngle, isNegativeAnglesShowing );
+    const rotatedElements = [ ...this.heatNodes, ...this.tickMarks ];
+    rotatedElements.forEach( rotatedElement => {
+      const elementAngle = -Utils.toDegrees( rotatedElement.rotation );
+      if ( elementAngle > MIN_ANGLE_GROUND && elementAngle < MAX_ANGLE_GROUND ) { this.elementsForGround.push( rotatedElement ); }
+      if ( elementAngle > MIN_ANGLE_RAISED && elementAngle < MAX_ANGLE_RAISED ) { this.elementsForRaised.push( rotatedElement ); }
+    } );
+
+    this.labels.forEach( label => {
+      const labelAngularDisplacement = Math.atan2( label.centerY, label.centerX );
+      const labelAngle = _.round( -Utils.toDegrees( labelAngularDisplacement ) );
+      if ( labelAngle > MIN_ANGLE_GROUND && labelAngle < MAX_ANGLE_GROUND ) { this.elementsForGround.push( label ); }
+      if ( labelAngle > MIN_ANGLE_RAISED && labelAngle < MAX_ANGLE_RAISED ) { this.elementsForRaised.push( label ); }
+    } );
+
+    isRaisedProperty.link( isRaised => {
+      const bodyShape = bodyShapeForIsRaised( innerBodyRadius, outerBodyRadius, isRaised );
       this.drawBodyNodes( bodyShape );
-      this.heatNodesBelowHorizontal.forEach( heatNode => heatNode.setVisible( isNegativeAnglesShowing ) );
-      this.labelsBelowHorizontal.forEach( label => label.setVisible( isNegativeAnglesShowing ) );
-      this.tickMarksBelowHorizontal.forEach( tickMark => tickMark.setVisible( isNegativeAnglesShowing ) );
+
+      // Set the visibility of the elements that are in this.elementsForRaised but not in this.elementsForGround to isRaised
+      this.elementsForRaised.forEach( element => {
+        if ( !this.elementsForGround.includes( element ) ) {
+          element.setVisible( isRaised );
+        }
+      } );
+
+      // Set the visibility of the elements that are in this.elementsForGround but not in this.elementsForRaised to !isRaised
+      this.elementsForGround.forEach( element => {
+        if ( !this.elementsForRaised.includes( element ) ) {
+          element.setVisible( !isRaised );
+        }
+      } );
 
       // Move the value readout node to the other side of the needle
-      this.valueReadoutNode.y = isNegativeAnglesShowing ? -VALUE_READOUT_Y_MAGNITUDE : VALUE_READOUT_Y_MAGNITUDE;
+      this.valueReadoutNode.y = isRaised ? -VALUE_READOUT_Y_MAGNITUDE : VALUE_READOUT_Y_MAGNITUDE;
     } );
   }
 

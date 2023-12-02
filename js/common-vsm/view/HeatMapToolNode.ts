@@ -64,7 +64,9 @@ export default class HeatMapToolNode extends Node {
 
   private initialNeedleValue: number;
 
-  private readonly heatNodes: Path[] = [];
+  protected readonly heatNodes: Path[] = [];
+  protected readonly tickMarks: Path[] = [];
+  protected readonly labels: Text[] = [];
 
   // The display node contains all the graphical elements of the heat map tool, excluding any connector graphics
   protected displayNode: Node;
@@ -76,10 +78,6 @@ export default class HeatMapToolNode extends Node {
   protected readonly valueReadoutNode: Node;
   private readonly valueReadout: Text;
 
-  // TODO: Find a way to move this into AngleToolNode - see https://github.com/phetsims/projectile-data-lab/issues/7
-  protected readonly labelsBelowHorizontal: Text[] = [];
-  protected readonly tickMarksBelowHorizontal: Path[] = [];
-  protected readonly heatNodesBelowHorizontal: Path[] = [];
   private readonly minAngle: number;
   private readonly maxAngle: number;
 
@@ -112,17 +110,17 @@ export default class HeatMapToolNode extends Node {
     this.heatNodes = this.createHeatNodes( -options.minAngle, heatNodeArcLength, options.innerHeatNodeRadius,
       options.outerHeatNodeRadius, options.isClockwise );
 
-    const labels = this.createLabels( options.minLabeledValue, options.maxLabeledValue, options.labeledValueIncrement,
+    this.labels = this.createLabels( options.minLabeledValue, options.maxLabeledValue, options.labeledValueIncrement,
       options.labelDistanceFromCenter, options.labelMinAngle, options.labelMaxAngle );
 
-    const tickMarks = this.createMajorTickMarks( options.minLabeledValue, options.maxLabeledValue,
+    this.tickMarks = this.createMajorTickMarks( options.minLabeledValue, options.maxLabeledValue,
       options.labeledValueIncrement, options.labelMinAngle, options.labelMaxAngle, options.majorTickMarkLength,
       options.isWithInnerTickMarks, options.innerHeatNodeRadius, options.outerHeatNodeRadius );
 
     if ( options.isWithMinorTickMarks ) {
       const minorTickMarks = this.createMinorTickMarks( options.minValue, options.maxValue, options.minAngle,
         options.maxAngle, options.minorTickMarkIncrement, options.minorTickMarkLength, options.outerHeatNodeRadius );
-      tickMarks.push( ...minorTickMarks );
+      this.tickMarks.push( ...minorTickMarks );
     }
 
     this.bodyBackNode = new Path( options.bodyShape, { fill: PDLColors.heatMapBodyFillColorProperty } );
@@ -168,8 +166,8 @@ export default class HeatMapToolNode extends Node {
 
     this.displayNode.addChild( this.bodyBackNode );
     this.heatNodes.forEach( heatNode => this.displayNode.addChild( heatNode ) );
-    labels.forEach( label => this.displayNode.addChild( label ) );
-    tickMarks.forEach( tickMark => this.displayNode.addChild( tickMark ) );
+    this.labels.forEach( label => this.displayNode.addChild( label ) );
+    this.tickMarks.forEach( tickMark => this.displayNode.addChild( tickMark ) );
     this.displayNode.addChild( this.bodyFrontNode );
     this.displayNode.addChild( this.needleNode );
     this.displayNode.addChild( this.valueReadoutNode );
@@ -219,10 +217,6 @@ export default class HeatMapToolNode extends Node {
       heatNode.rotateAround( Vector2.ZERO, Utils.toRadians( heatNodeAngle ) );
       heatNodes.push( heatNode );
 
-      if ( heatNodeAngle > 0 ) {
-        this.heatNodesBelowHorizontal.push( heatNode );
-      }
-
       // Initialize the number of values in each bin to 0
       this.numValuesInBin.push( 0 );
     }
@@ -242,10 +236,6 @@ export default class HeatMapToolNode extends Node {
         font: PDLConstants.HEATMAP_TOOL_LABEL_FONT
       } );
       labels.push( label );
-
-      if ( i <= 0 ) {
-        this.labelsBelowHorizontal.push( label );
-      }
     }
 
     return labels;
@@ -266,10 +256,6 @@ export default class HeatMapToolNode extends Node {
       outerMajorTickMark.rotateAround( Vector2.ZERO, tickMarkAngle );
       majorTickMarks.push( outerMajorTickMark );
 
-      if ( i <= 0 ) {
-        this.tickMarksBelowHorizontal.push( outerMajorTickMark );
-      }
-
       if ( isWithInnerTickMarks ) {
         const innerMajorTickMark = new Path( new Shape().moveTo( innerRadius, 0 ).lineTo( innerRadius + majorTickMarkLength, 0 ), {
           stroke: PDLColors.heatMapBodyStrokeColorProperty,
@@ -277,10 +263,6 @@ export default class HeatMapToolNode extends Node {
         } );
         innerMajorTickMark.rotateAround( Vector2.ZERO, tickMarkAngle );
         majorTickMarks.push( innerMajorTickMark );
-
-        if ( i <= 0 ) {
-          this.tickMarksBelowHorizontal.push( innerMajorTickMark );
-        }
       }
     }
 
