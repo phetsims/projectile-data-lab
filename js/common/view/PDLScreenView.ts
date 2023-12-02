@@ -127,6 +127,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     this.launchButton = new RectangularPushButton( {
       content: launchButtonToggleNode,
+      fireOnDown: true,
       left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
       baseColor: PDLColors.launchButtonColorProperty,
