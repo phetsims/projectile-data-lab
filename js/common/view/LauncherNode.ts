@@ -124,16 +124,26 @@ export default class LauncherNode extends Node {
       launcherFlashNode.setScaleMagnitude( scale );
     } );
 
+    const minDuration = 0.4;
+    const maxDuration = 0.6;
+    const minScaleFinal = 10;
+    const maxScaleFinal = 14;
+    const flashStrength = dotRandom.nextDouble();
+
+    // TODO: Use lerp utility if possible - see https://github.com/phetsims/projectile-data-lab/issues/7
+    const duration = minDuration + flashStrength * ( maxDuration - minDuration );
+    const scaleFinal = minScaleFinal + flashStrength * ( maxScaleFinal - minScaleFinal );
+
     const launcherFlashAnimation = new Animation( {
-      duration: 0.35,
+      duration: duration,
       targets: [ {
         property: scaleProperty,
         from: 1,
-        to: dotRandom.nextDoubleBetween( 9, 12 ),
+        to: scaleFinal,
         easing: Easing.QUARTIC_OUT
       }, {
         property: launcherFlashNode.opacityProperty,
-        from: 0.55,
+        from: 0.35,
         to: 0,
         easing: Easing.QUARTIC_OUT
       } ]
