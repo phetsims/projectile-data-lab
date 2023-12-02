@@ -10,11 +10,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import { Shape } from '../../../../kite/js/imports.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import LauncherFlashNode from './LauncherFlashNode.js';
 import Animation from '../../../../twixt/js/Animation.js';
-import Easing from '../../../../twixt/js/Easing.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -57,10 +53,11 @@ const SUPPORT_BAR_HEIGHT = 150;
 export default class LauncherNode extends Node {
 
   // The launcher barrel contains all graphics that rotate with launch angle.
-  private readonly launcherBarrelContainer: Node;
   private readonly launcherBarrel: Node;
 
   private readonly guideRailBolt: Node;
+
+  private barrelRotationAnimation?: Animation;
 
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
                       launcherAngleProperty: TProperty<number>,
@@ -71,33 +68,27 @@ export default class LauncherNode extends Node {
     const launcherX = modelViewTransform.modelToViewX( 0 );
     const launcherY = modelViewTransform.modelToViewY( 0 );
 
-    const launcherBarrelContainer = new Node();
-
-    const defaultOptions = { x: launcherX, y: launcherY, children: [ launcherBarrelContainer ] };
+    const defaultOptions = { x: launcherX, y: launcherY };
     const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
-    this.launcherBarrelContainer = launcherBarrelContainer;
-
     this.launcherBarrel = new Node();
-    this.launcherBarrelContainer.addChild( this.launcherBarrel );
 
     const launcherFrameBack = this.launcherFrameBack();
     const launcherFrameFront = this.launcherFrameFront();
-    this.addChild( launcherFrameBack );
-    this.addChild( launcherFrameFront );
-
-    launcherFrameBack.moveToBack();
 
     this.guideRailBolt = new Path( Shape.regularPolygon( 6, 1.2 * GUIDE_SLOT_WIDTH ), {
       fill: PDLColors.launcherGuideBoltColorProperty,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
 
+    this.addChild( launcherFrameBack );
+    this.addChild( this.launcherBarrel );
+    this.addChild( launcherFrameFront );
     this.addChild( this.guideRailBolt );
 
     launcherAngleProperty.link( launcherAngle => {
-      this.updateLauncherAngle( launcherAngle );
+      this.setBarrelRotation( launcherAngle );
     } );
 
     launcherHeightProperty.link( launcherHeight => {
@@ -109,55 +100,8 @@ export default class LauncherNode extends Node {
     } );
   }
 
-  // TODO: Check this for memory leaks - see https://github.com/phetsims/projectile-data-lab/issues/7
-  public playLaunchAnimation(): void {
-    const launcherFlashNode = new LauncherFlashNode( {
-      x: BARREL_LENGTH_AFTER_ORIGIN, y: 0,
-      opacity: 0
-    } );
-
-    this.launcherBarrelContainer.addChild( launcherFlashNode );
-    launcherFlashNode.moveToBack();
-
-    const scaleProperty = new NumberProperty( 1 );
-    scaleProperty.lazyLink( scale => {
-      launcherFlashNode.setScaleMagnitude( scale );
-    } );
-
-    const minDuration = 0.4;
-    const maxDuration = 0.6;
-    const minScaleFinal = 10;
-    const maxScaleFinal = 14;
-    const flashStrength = dotRandom.nextDouble();
-
-    // TODO: Use lerp utility if possible - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const duration = minDuration + flashStrength * ( maxDuration - minDuration );
-    const scaleFinal = minScaleFinal + flashStrength * ( maxScaleFinal - minScaleFinal );
-
-    const launcherFlashAnimation = new Animation( {
-      duration: duration,
-      targets: [ {
-        property: scaleProperty,
-        from: 1,
-        to: scaleFinal,
-        easing: Easing.QUARTIC_OUT
-      }, {
-        property: launcherFlashNode.opacityProperty,
-        from: 0.35,
-        to: 0,
-        easing: Easing.QUARTIC_OUT
-      } ]
-    } );
-
-    launcherFlashAnimation.endedEmitter.addListener( () => {
-      this.launcherBarrelContainer.removeChild( launcherFlashNode );
-    } );
-
-    launcherFlashAnimation.start();
-  }
-
-  private updateLauncherAngle( angle: number ): void {
-    this.launcherBarrelContainer.setRotation( Utils.toRadians( -angle ) );
+  public setBarrelRotation( angle: number ): void {
+    this.launcherBarrel.setRotation( Utils.toRadians( -angle ) );
 
     this.guideRailBolt.centerX = -BARREL_LENGTH_BEFORE_ORIGIN * Math.cos( Utils.toRadians( angle ) );
     this.guideRailBolt.centerY = BARREL_LENGTH_BEFORE_ORIGIN * Math.sin( Utils.toRadians( angle ) );

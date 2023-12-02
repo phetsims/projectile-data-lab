@@ -122,7 +122,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
           angleToolNode.updateNeedleAndText( projectile.launchAngle );
 
-          this.launcherNode.playLaunchAnimation();
+          this.launcherNode.setBarrelRotation( projectile.launchAngle );
         }
       } );
 
