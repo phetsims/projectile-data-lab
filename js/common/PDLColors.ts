@@ -48,6 +48,10 @@ const PDLColors = {
     default: new Color( 0x701AC3, 0.15 )
   } ),
 
+  pathStrokeMostRecentProjectileColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeMostRecentProjectile', {
+    default: new Color( 0xCC4DE7, 1 )
+  } ),
+
   fieldLineStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineStroke', {
     default: '#70D1A4'
   } ),

@@ -119,15 +119,13 @@ export default class Projectile {
 
       if ( this.phase === 'AIRBORNE_BELOW_FIELD' ) {
         if ( this.y <= PDLConstants.BELOW_FIELD_LANDING_Y ) {
-          this.phase = 'LANDED';
+          this.phase = 'LANDED_BELOW_FIELD';
         }
       }
     }
   }
 
   public setLanded( field: Field ): void {
-    this.phase = 'LANDED';
-
     const landedX = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
 
     if ( landedX > PDLConstants.MAX_FIELD_DISTANCE ) {
@@ -136,11 +134,13 @@ export default class Projectile {
       // total time of flight to land below the field.
       const deltaHeightToLandBelowField = this.launchHeight - PDLConstants.BELOW_FIELD_LANDING_Y;
 
+      this.phase = 'LANDED_BELOW_FIELD';
       this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, deltaHeightToLandBelowField );
       this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
       this.y = PDLConstants.BELOW_FIELD_LANDING_Y;
     }
     else {
+      this.phase = 'LANDED';
       this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
       this.x = landedX;
       this.y = 0;

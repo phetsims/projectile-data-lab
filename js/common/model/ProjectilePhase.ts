@@ -1,5 +1,5 @@
 // Copyright 2023, University of Colorado Boulder
 
-export const ProjectilePhaseValues = [ 'AIRBORNE', 'LANDED', 'AIRBORNE_BELOW_FIELD' ] as const;
+export const ProjectilePhaseValues = [ 'AIRBORNE', 'LANDED', 'AIRBORNE_BELOW_FIELD', 'LANDED_BELOW_FIELD' ] as const;
 
 export type ProjectilePhase = typeof ProjectilePhaseValues[number];

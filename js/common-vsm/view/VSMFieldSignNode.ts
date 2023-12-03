@@ -29,8 +29,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
     const projectileCountProperty = new NumberProperty( 0 );
     const updateProjectileCountProperty = () => {
       const projectiles = fieldProperty.value.projectiles.filter(
-        projectile => projectile.phase === 'LANDED' ||
-                      projectile.phase === 'AIRBORNE_BELOW_FIELD'
+        projectile => projectile.phase === 'LANDED' || projectile.phase === 'AIRBORNE_BELOW_FIELD' || projectile.phase === 'LANDED_BELOW_FIELD'
       );
       projectileCountProperty.value = projectiles.length;
     };

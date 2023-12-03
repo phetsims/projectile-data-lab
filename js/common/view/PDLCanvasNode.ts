@@ -73,57 +73,79 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
    * Draws into the canvas.
    */
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
-
-    const projectiles = this.fieldProperty.value.getProjectilesInCurrentSample();
-
-    const strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
-
-    // Render the paths. Draw a purple line from the projectile t=0 to the current position.
     // REVIEW: If performance is a problem, use a persistent canvas and just add on to it (for the paths layer)
-    if ( this.isPathsVisibleProperty.value ) {
-      for ( let i = 0; i < projectiles.length; i++ ) {
-        const projectile = projectiles[ i ];
 
-        context.beginPath();
-        let pathStarted = false;
+    // Order of drawing:
+    // 1: Trajectories that are not for the most recent landed projectile (if paths are visible)
+    // 2: Landed projectiles that are not the most recent
+    // 3: Trajectory for most recent landed projectile (if paths are visible)
+    // 4: Flying projectiles
+    // 5: Most recent landed projectile
 
-        const drawLineToProjectileAtTime = ( t: number ): void => {
-          const pathX = Projectile.getProjectileX( projectile.launchSpeed, projectile.launchAngle, t );
-          const pathY = Projectile.getProjectileY( projectile.launchSpeed, projectile.launchAngle, projectile.launchHeight, t );
-          const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
+    const drawPathForProjectile = ( projectile: Projectile ) => {
+      context.beginPath();
+      let pathStarted = false;
 
-          if ( !pathStarted ) {
-            context.moveTo( viewPoint.x, viewPoint.y );
-            pathStarted = true;
-          }
+      const drawLineToProjectileAtTime = ( t: number ): void => {
+        const pathX = Projectile.getProjectileX( projectile.launchSpeed, projectile.launchAngle, t );
+        const pathY = Projectile.getProjectileY( projectile.launchSpeed, projectile.launchAngle, projectile.launchHeight, t );
+        const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
 
-          context.lineTo( viewPoint.x, viewPoint.y );
-        };
-
-        for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
-          drawLineToProjectileAtTime( t );
+        if ( !pathStarted ) {
+          context.moveTo( viewPoint.x, viewPoint.y );
+          pathStarted = true;
         }
 
-        drawLineToProjectileAtTime( projectile.timeAirborne );
+        context.lineTo( viewPoint.x, viewPoint.y );
+      };
 
-        context.strokeStyle = strokeStyle;
-        context.lineWidth = 2;
-        context.stroke();
+      for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
+        drawLineToProjectileAtTime( t );
+      }
+
+      drawLineToProjectileAtTime( projectile.timeAirborne );
+      context.stroke();
+    };
+
+    const projectiles = this.fieldProperty.value.getProjectilesInCurrentSample();
+    const mostRecentLandedProjectile: Projectile | null = projectiles.find( projectile => projectile.isMostRecentLanded ) || null;
+
+    // Render the paths for the projectiles that are not the most recent landed projectile
+    if ( this.isPathsVisibleProperty.value ) {
+      context.lineWidth = 2;
+      context.strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
+
+      for ( let i = 0; i < projectiles.length; i++ ) {
+        const projectile = projectiles[ i ];
+        if ( !projectile.isMostRecentLanded ) {
+          drawPathForProjectile( projectile );
+        }
       }
     }
 
-    let mostRecentLandedProjectile: Projectile | null = null;
-
+    // Draw the projectiles that have landed, but are not the most recent
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
-      if ( projectile.isMostRecentLanded ) {
-        mostRecentLandedProjectile = projectile;
-        continue;
+      if ( projectile.phase === 'LANDED' && !projectile.isMostRecentLanded ) {
+        this.drawProjectile( context, projectile );
       }
-      this.drawProjectile( context, projectile );
     }
 
-    // Draw the most recent landed projectile on top
+    // Draw the path for the most recent landed projectile
+    if ( this.isPathsVisibleProperty.value && mostRecentLandedProjectile ) {
+      context.strokeStyle = PDLColors.pathStrokeMostRecentProjectileColorProperty.value.toCSS();
+      drawPathForProjectile( mostRecentLandedProjectile );
+    }
+
+    // Draw the flying projectiles
+    for ( let i = 0; i < projectiles.length; i++ ) {
+      const projectile = projectiles[ i ];
+      if ( projectile.phase === 'AIRBORNE' || projectile.phase === 'AIRBORNE_BELOW_FIELD' ) {
+        this.drawProjectile( context, projectile );
+      }
+    }
+
+    // Draw the most recent landed projectile
     if ( mostRecentLandedProjectile ) {
       this.drawProjectile( context, mostRecentLandedProjectile );
     }
