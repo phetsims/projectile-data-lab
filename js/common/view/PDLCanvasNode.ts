@@ -23,12 +23,18 @@ import pumpkinLanded1_png from '../../../images/pumpkinLanded1_png.js';
 import pumpkinLanded2_png from '../../../images/pumpkinLanded2_png.js';
 import pumpkinLanded3_png from '../../../images/pumpkinLanded3_png.js';
 import pianoLanded_png from '../../../images/pianoLanded_png.js';
+import cannonballDark_png from '../../../images/cannonballDark_png.js';
+import pumpkinLanded1Dark_png from '../../../images/pumpkinLanded1Dark_png.js';
+import pumpkinLanded2Dark_png from '../../../images/pumpkinLanded2Dark_png.js';
+import pumpkinLanded3Dark_png from '../../../images/pumpkinLanded3Dark_png.js';
+import pianoLandedDark_png from '../../../images/pianoLandedDark_png.js';
 import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLCanvasOptions = SelfOptions & CanvasNodeOptions;
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkinLanded1_png, pumpkinLanded2_png, pumpkinLanded3_png ];
+const PUMPKIN_LANDED_DARK_IMAGES = [ pumpkinLanded1Dark_png, pumpkinLanded2Dark_png, pumpkinLanded3Dark_png ];
 
 export default class PDLCanvasNode<T extends Field> extends CanvasNode {
   public constructor(
@@ -78,38 +84,48 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
       for ( let i = 0; i < projectiles.length; i++ ) {
         const projectile = projectiles[ i ];
 
-          context.beginPath();
-          let pathStarted = false;
+        context.beginPath();
+        let pathStarted = false;
 
-          const drawLineToProjectileAtTime = ( t: number ): void => {
-            const pathX = Projectile.getProjectileX( projectile.launchSpeed, projectile.launchAngle, t );
-            const pathY = Projectile.getProjectileY( projectile.launchSpeed, projectile.launchAngle, projectile.launchHeight, t );
-            const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
+        const drawLineToProjectileAtTime = ( t: number ): void => {
+          const pathX = Projectile.getProjectileX( projectile.launchSpeed, projectile.launchAngle, t );
+          const pathY = Projectile.getProjectileY( projectile.launchSpeed, projectile.launchAngle, projectile.launchHeight, t );
+          const viewPoint = this.modelViewTransform.modelToViewXY( pathX, pathY );
 
-            if ( !pathStarted ) {
-              context.moveTo( viewPoint.x, viewPoint.y );
-              pathStarted = true;
-            }
-
-            context.lineTo( viewPoint.x, viewPoint.y );
-          };
-
-          for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
-            drawLineToProjectileAtTime( t );
+          if ( !pathStarted ) {
+            context.moveTo( viewPoint.x, viewPoint.y );
+            pathStarted = true;
           }
 
-          drawLineToProjectileAtTime( projectile.timeAirborne );
+          context.lineTo( viewPoint.x, viewPoint.y );
+        };
 
-          context.strokeStyle = strokeStyle;
-          context.lineWidth = 2;
-          context.stroke();
+        for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
+          drawLineToProjectileAtTime( t );
+        }
+
+        drawLineToProjectileAtTime( projectile.timeAirborne );
+
+        context.strokeStyle = strokeStyle;
+        context.lineWidth = 2;
+        context.stroke();
       }
     }
 
-    // Render the projectiles
+    let mostRecentLandedProjectile: Projectile | null = null;
+
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
+      if ( projectile.isMostRecentLanded ) {
+        mostRecentLandedProjectile = projectile;
+        continue;
+      }
       this.drawProjectile( context, projectile );
+    }
+
+    // Draw the most recent landed projectile on top
+    if ( mostRecentLandedProjectile ) {
+      this.drawProjectile( context, mostRecentLandedProjectile );
     }
   }
 
@@ -119,21 +135,27 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
 
     const isLanded = projectile.phase === 'LANDED';
 
+    // Use dark image for landed projectiles, except for the most recent one
+    const isMostRecentLanded = projectile.isMostRecentLanded;
+
     let image: HTMLImageElement;
 
     switch( projectile.type ) {
       case 'PUMPKIN':
-        image = isLanded ? PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ] : pumpkin_png;
+        if ( isLanded ) {
+          image = isMostRecentLanded ? PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ] : PUMPKIN_LANDED_DARK_IMAGES[ projectile.landedImageIndex ];
+        }
+        else {
+          image = pumpkin_png;
+        }
         break;
-      case 'TOY_PIANO':
-        image = isLanded ? pianoLanded_png : piano_png;
+      case 'PIANO':
+        image = isLanded ? ( isMostRecentLanded ? pianoLanded_png : pianoLandedDark_png ) : piano_png;
         break;
       default:
-        image = cannonball_png;
+        image = isLanded && !isMostRecentLanded ? cannonballDark_png : cannonball_png;
         break;
     }
-
-    // TODO: Is this too slow? If so, should we cache the flipped images or use separate image files for flipped x? - see https://github.com/phetsims/projectile-data-lab/issues/7
 
     // Save the current state of the canvas
     context.save();
@@ -141,8 +163,8 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
     // Move to the center of where we want to draw our image
     context.translate( viewPoint.x, viewPoint.y );
 
-    // Scale context horizontally by -1; this flips the context horizontally
-    context.scale( projectile.scaleX * PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR, PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR );
+    const imageScaleX = projectile.isFlippedHorizontally ? -1 : 1;
+    context.scale( imageScaleX * PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR, PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR );
 
     // Draw the image on the flipped context
     // Since the context is flipped, adjust the position by negating half of the width
@@ -150,7 +172,6 @@ export default class PDLCanvasNode<T extends Field> extends CanvasNode {
 
     // Restore the context to its original state
     context.restore();
-
   }
 }
 

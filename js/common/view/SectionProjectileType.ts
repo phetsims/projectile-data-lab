@@ -29,9 +29,9 @@ export default class SectionProjectileType extends PDLPanelSection {
       tandemName: 'pumpkinRadioButton',
       createNode: () => new Text( 'Pumpkin' )
     }, {
-      value: 'TOY_PIANO' as const,
-      tandemName: 'toyPianoRadioButton',
-      createNode: () => new Text( 'Toy Piano' )
+      value: 'PIANO' as const,
+      tandemName: 'pianoRadioButton',
+      createNode: () => new Text( 'Piano' )
     } ], {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
       orientation: 'horizontal'

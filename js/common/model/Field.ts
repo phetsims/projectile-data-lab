@@ -187,14 +187,14 @@ export default abstract class Field extends PhetioObject {
     const launchSpeed = this.launchSpeedAverageProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
-    // If the projectile type is not a cannonball, set scaleX to either 1 or -1
-    const projectileScaleX = this.projectileTypeProperty.value === 'CANNONBALL' ? 1 : dotRandom.nextBoolean() ? 1 : -1;
+    // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
+    const isFlippedHorizontally = this.projectileTypeProperty.value === 'CANNONBALL' ? false : dotRandom.nextBoolean();
 
     const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
 
     return new Projectile( screenTandemName, this.identifier, sampleNumber, 0, 0, this.projectileTypeProperty.value,
-      'AIRBORNE', projectileScaleX, landedImageIndex, 0, launchAngle, launchSpeed,
+      'AIRBORNE', false, isFlippedHorizontally, landedImageIndex, 0, launchAngle, launchSpeed,
       this.launchHeightProperty.value );
   }
 

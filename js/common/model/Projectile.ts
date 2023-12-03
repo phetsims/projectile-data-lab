@@ -12,6 +12,7 @@ import Field from './Field.js';
 import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
 import { ProjectilePhase, ProjectilePhaseValues } from './ProjectilePhase.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -34,7 +35,7 @@ export default class Projectile {
   // timeAirborne is the time the projectile has been airborne since launch, in seconds
   public timeAirborne: number;
 
-  // The type of the projectile - CANNONBALL, PUMPKIN or TOY_PIANO
+  // The type of the projectile - CANNONBALL, PUMPKIN or PIANO
   public type: ProjectileType;
 
   // Phase of the projectile's flight - AIRBORNE, LANDED
@@ -53,10 +54,13 @@ export default class Projectile {
   public sampleNumber: number;
 
   // The horizontal scale of the projectile, 1 for un-flipped, -1 for flipped
-  public scaleX: 1 | -1;
+  public isFlippedHorizontally: boolean;
 
   // The index of the image to display when the projectile has landed
   public landedImageIndex: number;
+
+  // Whether this is the most recent projectile to land
+  public isMostRecentLanded: boolean;
 
   public constructor(
     screenIdentifier: ScreenIdentifier,
@@ -66,7 +70,8 @@ export default class Projectile {
     y: number,
     type: ProjectileType,
     phase: ProjectilePhase,
-    scaleX: 1 | -1,
+    isMostRecentLanded: boolean,
+    isFlippedHorizontally: boolean,
     landedImageIndex: number,
     timeAirborne: number,
     launchAngle: number,
@@ -79,7 +84,8 @@ export default class Projectile {
     this.y = y;
     this.type = type;
     this.phase = phase;
-    this.scaleX = scaleX;
+    this.isMostRecentLanded = isMostRecentLanded;
+    this.isFlippedHorizontally = isFlippedHorizontally;
     this.landedImageIndex = landedImageIndex;
     this.timeAirborne = timeAirborne;
     this.launchAngle = launchAngle;
@@ -153,7 +159,8 @@ export default class Projectile {
       y: NumberIO,
       type: StringUnionIO( ProjectileTypeValues ),
       phase: StringUnionIO( ProjectilePhaseValues ),
-      scaleX: NumberIO,
+      isMostRecentLanded: BooleanIO,
+      isFlippedHorizontally: BooleanIO,
       landedImageIndex: NumberIO,
       timeAirborne: NumberIO,
       launchAngle: NullableIO( NumberIO ),
@@ -169,7 +176,8 @@ export default class Projectile {
         y: projectile.y,
         type: projectile.type,
         phase: projectile.phase,
-        scaleX: projectile.scaleX,
+        isMostRecentLanded: projectile.isMostRecentLanded,
+        isFlippedHorizontally: projectile.isFlippedHorizontally,
         landedImageIndex: projectile.landedImageIndex,
         timeAirborne: projectile.timeAirborne,
         launchAngle: projectile.launchAngle,
@@ -186,7 +194,8 @@ export default class Projectile {
         stateObject.y,
         stateObject.type,
         stateObject.phase,
-        stateObject.scaleX,
+        stateObject.isMostRecentLanded,
+        stateObject.isFlippedHorizontally,
         stateObject.landedImageIndex,
         stateObject.timeAirborne,
         stateObject.launchAngle,
@@ -246,7 +255,8 @@ export type ProjectileStateObject = {
   y: number;
   type: ProjectileType;
   phase: ProjectilePhase;
-  scaleX: 1 | -1;
+  isMostRecentLanded: boolean;
+  isFlippedHorizontally: boolean;
   landedImageIndex: number;
   timeAirborne: number;
   launchAngle: number;

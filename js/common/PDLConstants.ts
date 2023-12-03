@@ -38,7 +38,7 @@ const PDLConstants = {
   FIELD_LABEL_TOP_MARGIN: 2,
   FIELD_SIGN_CENTER_Y: 447,
 
-  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.3, // seconds
+  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.4, // seconds
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
   // FIELD_SCALING_FACTOR_HORIZONTAL can be any value between 0-Number.POSITIVE_INFINITY.
