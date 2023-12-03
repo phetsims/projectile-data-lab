@@ -12,6 +12,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -61,6 +62,9 @@ export default class VSMField extends Field {
   }
 
   public override launchProjectile(): void {
+    if ( this.projectiles.length >= PDLConstants.MAX_PROJECTILES_PER_FIELD ) {
+      return;
+    }
     this.timeElapsedSinceLastLaunch = 0;
 
     const projectile = this.createProjectile( 0 );

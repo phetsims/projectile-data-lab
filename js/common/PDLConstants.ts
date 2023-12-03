@@ -19,10 +19,13 @@ const PDLConstants = {
   SCREEN_VIEW_X_MARGIN: 10,
   SCREEN_VIEW_Y_MARGIN: 10,
 
+  MAX_PROJECTILES_PER_FIELD: 500,
+  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.1, // seconds
+
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,
   FIELD_LINE_NUMBER_INCREMENT: 10,
-  RAISED_LAUNCHER_HEIGHT: 15,
+  RAISED_LAUNCHER_HEIGHT: 18,
   BELOW_FIELD_LANDING_Y: -15, // The landing point below the field, for projectiles that land beyond MAX_FIELD_DISTANCE
   FREEFALL_ACCELERATION: 9.81,
 
@@ -37,8 +40,6 @@ const PDLConstants = {
   FIELD_LINE_NUMBERED_WIDTH: 2.5,
   FIELD_LABEL_TOP_MARGIN: 2,
   FIELD_SIGN_CENTER_Y: 447,
-
-  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.4, // seconds
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
   // FIELD_SCALING_FACTOR_HORIZONTAL can be any value between 0-Number.POSITIVE_INFINITY.
