@@ -40,7 +40,7 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
     // 4: Flying projectiles
     // 5: Most recent landed projectile
 
-    const projectiles = this.fieldProperty.value.getProjectilesInCurrentSample();
+    const projectiles = this.fieldProperty.value.projectiles;
     const mostRecentLandedProjectile: Projectile | null = projectiles.find( projectile => projectile.isMostRecentLanded ) || null;
 
 // Render the paths for the projectiles that are not the most recent landed projectile

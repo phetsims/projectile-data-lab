@@ -4,6 +4,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Projectile from '../../common/model/Projectile.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model.
@@ -55,14 +56,15 @@ export default class SamplingField extends Field {
     this.presetLauncherProperty.value = launcher;
   }
 
+  public getProjectilesInCurrentSample(): Projectile[] {
+    return this.projectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
+  }
+
   public createLandedProjectile(): void {
     const projectile = this.createProjectile( this.numberOfSamplesProperty.value );
     projectile.setLanded( this );
 
     this.projectiles.push( projectile );
-
-    // TODO: Do we need this in SamplingField? See https://github.com/phetsims/projectile-data-lab/issues/7
-    this.mostRecentlyLaunchedProjectileProperty.value = projectile;
     this.projectilesChangedEmitter.emit();
   }
 

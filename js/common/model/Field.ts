@@ -158,12 +158,6 @@ export default abstract class Field extends PhetioObject {
     } );
   }
 
-  // Get the projectiles that are within the currently selected sample.
-  // TODO: Do we still need this since PDLCanvasNode is split up? - see https://github.com/phetsims/projectile-data-lab/issues/7
-  public getProjectilesInCurrentSample(): Projectile[] {
-    return this.projectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
-  }
-
   public reset(): void {
     this.isContinuousLaunchingProperty.reset();
     this.launcherConfigurationProperty.reset();
