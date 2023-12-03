@@ -41,8 +41,8 @@ export default class AngleToolNode extends HeatMapToolNode {
 
   public constructor( isRaisedProperty: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
 
-    const innerBodyRadius = 70;
-    const outerBodyRadius = 100;
+    const innerBodyRadius = 60;
+    const outerBodyRadius = 95;
 
     const bodyShapeForIsRaised = ( innerBodyRadius: number, outerBodyRadius: number, isRaised: boolean ) => {
       const minAngle = isRaised ? MIN_ANGLE_RAISED : MIN_ANGLE_GROUND;
