@@ -24,7 +24,6 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import PDLText from './PDLText.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import PDLCanvasNode from './PDLCanvasNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Field from '../model/Field.js';
@@ -41,8 +40,10 @@ type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
 export default abstract class PDLScreenView<T extends Field> extends ScreenView {
 
   protected readonly modelViewTransform;
+  protected readonly canvasBounds: Bounds2;
 
   protected readonly launcherLayer = new Node();
+  protected readonly projectileCanvasLayer = new Node();
   protected readonly behindProjectilesLayer = new Node();
 
   protected abstract readonly launcherNode: LauncherNode;
@@ -63,6 +64,11 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     this.modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ), new Vector2( originX, fieldY ), PDLConstants.PIXELS_TO_DISTANCE );
+
+    // Expand the canvas bounds so that the projectile paths are not clipped if they go beyond the field
+    const canvasMarginRight = this.modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE / 2 );
+    this.canvasBounds = ScreenView.DEFAULT_LAYOUT_BOUNDS.dilatedX( canvasMarginRight / 2 )
+      .shiftedX( canvasMarginRight / 2 );
 
     const background = new GradientBackgroundNode(
       0,
@@ -172,21 +178,11 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       tandem: options.tandem.createTandem( 'eraserButton' )
     } );
 
-    // Expand the canvas bounds so that the projectile paths are not clipped if they go beyond the field
-    const canvasMarginRight = this.modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE / 2 );
-    const canvasBounds = ScreenView.DEFAULT_LAYOUT_BOUNDS.dilatedX( canvasMarginRight / 2 )
-      .shiftedX( canvasMarginRight / 2 );
-
-    const projectileCanvas = new PDLCanvasNode( model.fieldProperty, model.isPathsVisibleProperty, this.modelViewTransform,
-      model.selectedSampleProperty, {
-        canvasBounds: canvasBounds
-      } );
-
     this.addChild( background );
     this.addChild( fieldBack );
     this.addChild( fieldOverlayBack );
     this.addChild( this.behindProjectilesLayer );
-    this.addChild( projectileCanvas );
+    this.addChild( this.projectileCanvasLayer );
     this.addChild( this.launcherLayer );
     this.addChild( fieldFront );
     this.addChild( fieldOverlayFront );

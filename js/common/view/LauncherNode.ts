@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
@@ -27,28 +27,29 @@ const BARREL_LENGTH_AFTER_ORIGIN = 15;
 
 const BARREL_BASE_WIDTH = 45;
 const BARREL_NOZZLE_WIDTH = 28;
-const BARREL_BASE_PAST_BOLT_FACTOR = 0.25; // The fraction of the barrel base radius that extends past the bolt
+const BARREL_BASE_PAST_BOLT_FACTOR = 0.05; // The fraction of the barrel base radius that extends past the bolt
 
 const ANGLE_PAST_BOTTOM_VERTICAL = 15;
 const ANGLE_PAST_TOP_HORIZONTAL = 30;
 
-const GUIDE_RAIL_WIDTH = 27;
-const GUIDE_RAIL_INNER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN - 0.5 * GUIDE_RAIL_WIDTH;
-const GUIDE_RAIL_OUTER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN + 0.5 * GUIDE_RAIL_WIDTH;
-const GUIDE_RAIL_CENTER_RADIUS = 0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS );
+const GUIDE_SLOT_WIDTH = 5.8;
+const GUIDE_SLOT_INSET_ANGLE = 10;
+const GUIDE_SLOT_INNER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN - 0.5 * GUIDE_SLOT_WIDTH;
+const GUIDE_SLOT_OUTER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN + 0.5 * GUIDE_SLOT_WIDTH;
+
+const GUIDE_RAIL_WIDTH = 31;
+const GUIDE_RAIL_OFFSET_FACTOR = 0.35;
+const GUIDE_RAIL_INNER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN - ( 0.5 - GUIDE_RAIL_OFFSET_FACTOR / 2 ) * GUIDE_RAIL_WIDTH;
+const GUIDE_RAIL_OUTER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN + ( 0.5 + GUIDE_RAIL_OFFSET_FACTOR / 2 ) * GUIDE_RAIL_WIDTH;
+
 const GUIDE_RAIL_MIN_ANGLE = Utils.toRadians( 90 - ANGLE_PAST_BOTTOM_VERTICAL );
 const GUIDE_RAIL_MAX_ANGLE = Utils.toRadians( 180 + ANGLE_PAST_TOP_HORIZONTAL );
-
-const GUIDE_SLOT_WIDTH = 5;
-const GUIDE_SLOT_INSET_ANGLE = 10;
 const GUIDE_SLOT_MIN_ANGLE = GUIDE_RAIL_MIN_ANGLE + Utils.toRadians( GUIDE_SLOT_INSET_ANGLE );
 const GUIDE_SLOT_MAX_ANGLE = GUIDE_RAIL_MAX_ANGLE - Utils.toRadians( GUIDE_SLOT_INSET_ANGLE );
-const GUIDE_SLOT_INNER_RADIUS = GUIDE_RAIL_CENTER_RADIUS - 0.5 * GUIDE_SLOT_WIDTH;
-const GUIDE_SLOT_OUTER_RADIUS = GUIDE_RAIL_CENTER_RADIUS + 0.5 * GUIDE_SLOT_WIDTH;
 
 const SUPPORT_BAR_CENTER_X = -20;
 const SUPPORT_BAR_WIDTH = 25;
-const SUPPORT_BAR_HEIGHT = 150;
+const SUPPORT_BAR_HEIGHT = 200;
 
 export default class LauncherNode extends Node {
 
@@ -77,7 +78,7 @@ export default class LauncherNode extends Node {
     const launcherFrameBack = this.launcherFrameBack();
     const launcherFrameFront = this.launcherFrameFront();
 
-    this.guideRailBolt = new Path( Shape.regularPolygon( 6, 1.2 * GUIDE_SLOT_WIDTH ), {
+    this.guideRailBolt = new Circle( 0.9 * GUIDE_SLOT_WIDTH, {
       fill: PDLColors.launcherGuideBoltColorProperty,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
@@ -176,7 +177,7 @@ export default class LauncherNode extends Node {
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
       color => color.darkerColor( 0.8 ) );
 
-    const FRAME_BAR_WIDTH = 5;
+    const FRAME_BAR_WIDTH = 4;
 
     const frameBarTop = new Rectangle( 0, -FRAME_BAR_WIDTH, GUIDE_RAIL_INNER_RADIUS, FRAME_BAR_WIDTH, {
       fill: frameFillColorProperty,
@@ -222,8 +223,8 @@ export default class LauncherNode extends Node {
       .lineTo( 0, 0 ).close();
 
     // Add the circular end caps to the guide slot
-    const guideRailSlotTopEndPosition = new Vector2( GUIDE_RAIL_CENTER_RADIUS, 0 ).rotate( GUIDE_SLOT_MIN_ANGLE );
-    const guideRailSlotBottomEndPosition = new Vector2( GUIDE_RAIL_CENTER_RADIUS, 0 ).rotate( GUIDE_SLOT_MAX_ANGLE );
+    const guideRailSlotTopEndPosition = new Vector2( BARREL_LENGTH_BEFORE_ORIGIN, 0 ).rotate( GUIDE_SLOT_MIN_ANGLE );
+    const guideRailSlotBottomEndPosition = new Vector2( BARREL_LENGTH_BEFORE_ORIGIN, 0 ).rotate( GUIDE_SLOT_MAX_ANGLE );
 
     // TODO: Why can't this be 0.5? - see https://github.com/phetsims/projectile-data-lab/issues/7
     const guideRailSlotTopEndCap = new Shape().circle( guideRailSlotTopEndPosition.x, guideRailSlotTopEndPosition.y,
@@ -241,8 +242,7 @@ export default class LauncherNode extends Node {
       color => color.darkerColor( 0.8 ) );
 
     const guideRailFillGradient = new RadialGradient( 0, 0, GUIDE_RAIL_INNER_RADIUS, 0, 0, GUIDE_RAIL_OUTER_RADIUS );
-    guideRailFillGradient.addColorStop( 0, guideRailFillDarkColorProperty );
-    guideRailFillGradient.addColorStop( 0.3, guideRailFillColorProperty );
+    guideRailFillGradient.addColorStop( 0, guideRailFillColorProperty );
     guideRailFillGradient.addColorStop( 0.7, guideRailFillColorProperty );
     guideRailFillGradient.addColorStop( 1, guideRailFillDarkColorProperty );
 

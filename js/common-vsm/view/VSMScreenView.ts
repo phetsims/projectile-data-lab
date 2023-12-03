@@ -21,6 +21,7 @@ import VSMField from '../model/VSMField.js';
 import VSMFieldSignNode from './VSMFieldSignNode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import PDLScreenView from '../../common/view/PDLScreenView.js';
+import VSMCanvasNode from './VSMCanvasNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -38,6 +39,12 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
 
   protected constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
+
+    const projectileCanvas = new VSMCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
+      this.modelViewTransform, model.selectedSampleProperty, {
+        canvasBounds: this.canvasBounds
+      } );
+    this.projectileCanvasLayer.addChild( projectileCanvas );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),
