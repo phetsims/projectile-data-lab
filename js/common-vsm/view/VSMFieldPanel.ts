@@ -42,7 +42,9 @@ export default class VSMFieldPanel extends PDLPanel {
       // preferredWidth: 120
     } );
 
-    super( new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, fieldRadioButtonGroup ), options );
+    super( new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, fieldRadioButtonGroup, {
+      tandem: options.tandem.createTandem( 'fieldPanelSection' ) // TODO: Unnecessary tandem? See https://github.com/phetsims/projectile-data-lab/issues/7
+    } ), options );
   }
 }
 

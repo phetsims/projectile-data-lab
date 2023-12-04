@@ -101,7 +101,9 @@ export default class SampleCardsPanel extends PDLPanel {
     super( new PDLPanelSection( patternStringProperty, new HBox( {
       spacing: 5,
       children: [ carousel, upDownButtons ]
-    } ) ) );
+    } ), {
+      tandem: options.tandem.createTandem( 'sampleNofMPatternSection' )
+    } ) );
   }
 }
 
