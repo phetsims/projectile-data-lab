@@ -55,6 +55,7 @@ export default class MeasuresModel extends VSMModel {
             field.launchAngleStandardDeviationProperty.value = angleStabilizer;
           }
           else {
+            // TODO: Does measures model need to know about the preset launcher? - see https://github.com/phetsims/projectile-data-lab/issues/7
             // Set the launch angle standard deviation to the value for the preset launcher.
             field.launchAngleStandardDeviationProperty.value = PDLConstants.LAUNCHER_CONFIGS[ this.presetLauncherProperty.value - 1 ].angleStandardDeviation;
           }
