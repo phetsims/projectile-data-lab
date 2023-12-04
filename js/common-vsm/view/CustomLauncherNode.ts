@@ -7,7 +7,7 @@ import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
 import { CustomLauncherType } from '../model/CustomLauncherType.js';
-import { Image } from '../../../../scenery/js/imports.js';
+import { Node, Image } from '../../../../scenery/js/imports.js';
 import spring_png from '../../../images/spring_png.js';
 import pressure_png from '../../../images/pressure_png.js';
 import explosion_png from '../../../images/explosion_png.js';
@@ -48,11 +48,20 @@ export default class CustomLauncherNode extends LauncherNode {
     launcherTypeSymbol.image = explosion_png;
     this.launcherBarrel.addChild( launcherTypeSymbol );
 
+    const customLauncherFrameFront = new Node( {
+      visibleProperty: isLauncherCustomProperty
+    } );
+    this.addChild( customLauncherFrameFront );
+    this.guideRailBolt.moveToFront();
+
+    const customLauncherFrameFrontGraphics = this.launcherFrameFrontGraphicsForType( 1, 11 );
+    customLauncherFrameFrontGraphics.forEach( graphic => customLauncherFrameFront.addChild( graphic ) );
+
     isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {
       if ( isCustom && ( !prevIsCustom || prevIsCustom === null ) ) {
         // Set the graphics for preset launcher 1 for now
         this.updatePresetLauncher( 1 );
-        this.launcherFrameFront.opacity = 0.5;
+        this.launcherFrameFront.opacity = 0.3;
       }
       else if ( !isCustom && prevIsCustom ) {
         this.updatePresetLauncher( presetLauncherProperty.value );

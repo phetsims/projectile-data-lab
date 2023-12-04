@@ -55,10 +55,10 @@ export default class LauncherNode extends Node {
 
   protected readonly launcherBarrel: Node;
   protected readonly launcherFrameFront: Node;
+  protected readonly guideRailBolt: Node;
+
   private readonly launcherBarrelGraphics: Node;
   private readonly launcherFrameBack: Node;
-
-  private readonly guideRailBolt: Node;
 
   private barrelRotationAnimation?: Animation;
 
@@ -230,7 +230,7 @@ export default class LauncherNode extends Node {
     return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
   }
 
-  private launcherFrameFrontGraphicsForType( presetLauncher: number ): Node[] {
+  protected launcherFrameFrontGraphicsForType( presetLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
     const fillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
     const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
@@ -238,7 +238,7 @@ export default class LauncherNode extends Node {
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
       color => color.darkerColor( 0.8 ) );
 
-    const guideRailOuterShape = this.guideRailOuterShape();
+    const guideRailOuterShape = this.guideRailOuterShape( outerRadiusCutoff );
     const guideRailShape = guideRailOuterShape.shapeDifference( this.guideRailInnerShape() );
 
     const guideSlotOuterShape = new Shape().arc( 0, 0, GUIDE_SLOT_OUTER_RADIUS, GUIDE_SLOT_MIN_ANGLE, GUIDE_SLOT_MAX_ANGLE )
@@ -279,8 +279,8 @@ export default class LauncherNode extends Node {
       .lineTo( 0, 0 ).close();
   }
 
-  private guideRailOuterShape(): Shape {
-    return new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
+  private guideRailOuterShape( outerRadiusCutoff = 0 ): Shape {
+    return new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS - outerRadiusCutoff, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
       .lineTo( 0, 0 ).close();
   }
 }
