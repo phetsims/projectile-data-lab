@@ -11,6 +11,7 @@ import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common-vsm/model/VSMModel.js';
+import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/CustomLauncherType.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -25,6 +26,10 @@ export default class SourcesModel extends VSMModel {
     this.fields.forEach( field => {
       field.angleStabilizerProperty.link( angleStabilizer => {
         field.launchAngleStandardDeviationProperty.value = angleStabilizer;
+      } );
+      field.customLauncherTypeProperty.link( customLauncherType => {
+        field.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( customLauncherType );
+        field.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( customLauncherType );
       } );
     } );
   }
