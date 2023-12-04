@@ -9,7 +9,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMFieldPanel from '../../common-vsm/view/VSMFieldPanel.js';
-import { VBox } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
@@ -24,6 +24,7 @@ type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 export default class MeasuresScreenView extends VSMScreenView {
 
   protected readonly launcherNode: CustomLauncherNode;
+  protected readonly launchPanel: MeasuresLaunchPanel;
 
   public constructor( model: MeasuresModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -42,11 +43,11 @@ export default class MeasuresScreenView extends VSMScreenView {
 
     this.launcherLayer.addChild( this.launcherNode );
 
-    const measuresLaunchPanel = new MeasuresLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
+    this.launchPanel = new MeasuresLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
       model.isLauncherCustomProperty, model.presetLauncherProperty, model.customLauncherTypeProperty, model.angleStabilizerProperty, {
-        tandem: options.tandem.createTandem( 'measuresLaunchPanel' )
+        tandem: options.tandem.createTandem( 'launchPanel' )
       } );
-    this.addChild( measuresLaunchPanel );
+    this.addChild( this.launchPanel );
 
     const fieldPanel = new VSMFieldPanel( model.fieldProperty, {
       tandem: options.tandem.createTandem( 'fieldPanel' )
@@ -68,14 +69,26 @@ export default class MeasuresScreenView extends VSMScreenView {
       stretch: true,
       top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
-      spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,
+      spacing: PDLConstants.INTER_PANEL_SPACING,
       children: [ staticToolPanel, interactiveToolPanel, fieldPanel ]
     } );
     this.addChild( rightVBox );
 
+    // TODO: Don't repeat this in each screen view - see https://github.com/phetsims/projectile-data-lab/issues/7
+    ManualConstraint.create(
+      this,
+      [ this.accordionBox, this.launchPanel, rightVBox ],
+      ( accordionBoxProxy, launchPanelProxy, rightVBoxProxy ) => {
+        accordionBoxProxy.left = launchPanelProxy.right + PDLConstants.INTER_PANEL_SPACING;
+        const accordionBoxWidth = rightVBoxProxy.left - launchPanelProxy.right - 2 * PDLConstants.INTER_PANEL_SPACING;
+        accordionBoxProxy.maxWidth = accordionBoxWidth;
+        accordionBoxProxy.preferredWidth = accordionBoxWidth;
+      } );
+
+
     // Keyboard order
     this.pdomControlAreaNode.pdomOrder = [
-      measuresLaunchPanel,
+      this.launchPanel,
       this.launchButton,
       this.launchControlRadioButtonGroup,
       this.timeControlNode,

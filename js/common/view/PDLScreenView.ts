@@ -33,6 +33,8 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
 import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
 import LauncherNode from './LauncherNode.js';
+import { PDLLaunchPanel } from './PDLLaunchPanel.js';
+import PDLAccordionBox from './PDLAccordionBox.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -48,11 +50,13 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
   protected abstract readonly launcherNode: LauncherNode;
 
-  protected readonly resetAllButton;
+  protected abstract readonly launchPanel: PDLLaunchPanel;
+  protected abstract readonly accordionBox: PDLAccordionBox;
 
   protected readonly launchButton;
   protected readonly launchControlRadioButtonGroup;
   protected readonly eraserButton: EraserButton;
+  protected readonly resetAllButton;
   protected readonly noAirResistanceText: PDLText;
 
   protected constructor( model: PDLModel<T>, options: PDLScreenViewOptions ) {

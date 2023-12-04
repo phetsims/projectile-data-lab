@@ -75,7 +75,7 @@ const PDLConstants = {
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
 
-  INTER_PANEL_VERTICAL_SPACING: 5
+  INTER_PANEL_SPACING: 5
 } as const;
 
 projectileDataLab.register( 'PDLConstants', PDLConstants );

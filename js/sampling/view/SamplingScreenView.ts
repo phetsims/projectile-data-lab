@@ -26,6 +26,8 @@ type SamplingScreenViewOptions = SelfOptions & ScreenViewOptions;
 export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
   protected readonly launcherNode: LauncherNode;
+  protected readonly launchPanel: SamplingLaunchPanel;
+  protected readonly accordionBox: SamplingAccordionBox;
 
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
     const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -47,8 +49,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     this.launcherLayer.addChild( this.launcherNode );
 
-    const samplingLaunchPanel = new SamplingLaunchPanel( model.presetLauncherProperty, model.sampleSizeProperty, {
-      tandem: options.tandem.createTandem( 'samplingLaunchPanel' )
+    this.launchPanel = new SamplingLaunchPanel( model.presetLauncherProperty, model.sampleSizeProperty, {
+      tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 
     const sampleCardsPanel = new SampleCardsPanel( model.fieldProperty, model.selectedSampleProperty, model.numberOfSamplesProperty,
@@ -58,20 +60,20 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     this.addChild( new VBox( {
       stretch: true,
-      spacing: PDLConstants.INTER_PANEL_VERTICAL_SPACING,
+      spacing: PDLConstants.INTER_PANEL_SPACING,
       left: PDLConstants.SCREEN_VIEW_X_MARGIN,
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      children: [ samplingLaunchPanel, sampleCardsPanel ]
+      children: [ this.launchPanel, sampleCardsPanel ]
     } ) );
 
-    const accordionBox = new SamplingAccordionBox( this, {
+    this.accordionBox = new SamplingAccordionBox( this, {
       expandedProperty: model.isHistogramShowingProperty,
       binWidthProperty: model.binWidthProperty,
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
       centerX: this.layoutBounds.centerX,
       tandem: options.tandem.createTandem( 'accordionBox' )
     } );
-    this.addChild( accordionBox );
+    this.addChild( this.accordionBox );
 
     this.behindProjectilesLayer.addChild( new SamplingFieldSignNode(
       model.fieldProperty,
@@ -83,6 +85,16 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     // layout
     ManualConstraint.create(
       this,
+      [ this.accordionBox, this.launchPanel ],
+      ( accordionBoxProxy, launchPanelProxy ) => {
+        accordionBoxProxy.left = launchPanelProxy.right + PDLConstants.INTER_PANEL_SPACING;
+        const accordionBoxWidth = this.layoutBounds.right - launchPanelProxy.right - PDLConstants.INTER_PANEL_SPACING - PDLConstants.SCREEN_VIEW_Y_MARGIN;
+        accordionBoxProxy.maxWidth = accordionBoxWidth;
+        accordionBoxProxy.preferredWidth = accordionBoxWidth;
+      } );
+
+    ManualConstraint.create(
+      this,
       [ this.noAirResistanceText, this.resetAllButton ],
       ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
         noAirResistanceTextProxy.right = resetAllButtonProxy.left - 100;
@@ -90,7 +102,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       }
     );
 
-    this.pdomControlAreaNode.pdomOrder = [ samplingLaunchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [ this.launchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.resetAllButton ];
   }
 }
 

@@ -34,7 +34,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
 
     const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
-        font: PDLConstants.PRIMARY_FONT
+        font: PDLConstants.LAUNCH_CONTROL_FONT
       } ),
       maxWidth: 500
     }, providedOptions );

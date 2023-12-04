@@ -34,8 +34,8 @@ type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
-
   protected readonly timeControlNode;
+  protected readonly accordionBox: VSMAccordionBox;
 
   protected constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
@@ -60,7 +60,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
 
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.binWidthProperty, this, {
+    this.accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.binWidthProperty, this, {
       expandedProperty: model.isHistogramShowingProperty,
       binWidthProperty: model.binWidthProperty,
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
@@ -175,16 +175,11 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       this.modelViewTransform
     ) );
 
-    this.addChild( accordionBox );
+    this.addChild( this.accordionBox );
     this.addChild( stopwatchNode );
     this.addChild( angleToolNode );
     this.addChild( speedToolNode );
     this.addChild( measuringTapeNode );
-
-    // Position the time control node so that the play/pause button is centered at the 50-meter mark
-    ManualConstraint.create( this, [ accordionBox ], accordionBoxProxy => {
-      accordionBoxProxy.centerX = this.layoutBounds.centerX;
-    } );
 
     // layout
     ManualConstraint.create(
@@ -203,6 +198,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
       timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
+
   }
 }
 
