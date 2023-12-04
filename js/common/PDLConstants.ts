@@ -21,6 +21,7 @@ const PDLConstants = {
 
   MAX_PROJECTILES_PER_FIELD: 500,
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.1, // seconds
+  MAX_ANGLE_STANDARD_DEVIATION: 10, // degrees
 
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,

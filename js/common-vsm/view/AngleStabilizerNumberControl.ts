@@ -16,6 +16,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 // TODO: Get tandem working - see https://github.com/phetsims/projectile-data-lab/issues/7
 type SelfOptions = EmptySelfOptions;
@@ -32,7 +33,7 @@ export default class AngleStabilizerNumberControl extends NumberControl {
   public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStabilizerNumberControlOptions ) {
 
     // TODO: Find a way to get the range from the angleStabilizerProperty - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const range = new Range( 0, 10 );
+    const range = new Range( 0, PDLConstants.MAX_ANGLE_STANDARD_DEVIATION );
 
     // TODO: Center the title and remove the number display - see https://github.com/phetsims/projectile-data-lab/issues/7
     const options = optionize<AngleStabilizerNumberControlOptions, SelfOptions, NumberControlOptions>()( {

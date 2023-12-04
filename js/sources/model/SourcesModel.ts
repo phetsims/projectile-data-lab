@@ -21,6 +21,12 @@ export default class SourcesModel extends VSMModel {
   public constructor( providedOptions: PDLModelOptions ) {
 
     super( providedOptions );
+
+    this.fields.forEach( field => {
+      field.angleStabilizerProperty.link( angleStabilizer => {
+        field.launchAngleStandardDeviationProperty.value = angleStabilizer;
+      } );
+    } );
   }
 }
 

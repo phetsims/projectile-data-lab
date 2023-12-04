@@ -55,7 +55,7 @@ export default class VSMField extends Field {
     } );
 
     this.angleStabilizerProperty = new NumberProperty( 1, {
-      range: new Range( 0, 10 ),
+      range: new Range( 0, PDLConstants.MAX_ANGLE_STANDARD_DEVIATION ),
       tandem: providedOptions.tandem.createTandem( 'angleStabilizerProperty' ),
       phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
     } );

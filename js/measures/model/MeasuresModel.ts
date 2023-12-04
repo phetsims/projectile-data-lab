@@ -14,6 +14,8 @@ import VSMModel from '../../common-vsm/model/VSMModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -44,6 +46,19 @@ export default class MeasuresModel extends VSMModel {
 
     this.isDataMeasuresVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isDataMeasuresVisibleProperty' )
+    } );
+
+    this.fields.forEach( field => {
+      Multilink.multilink( [ this.isLauncherCustomProperty, this.angleStabilizerProperty ],
+        ( isLauncherCustom, angleStabilizer ) => {
+          if ( isLauncherCustom ) {
+            field.launchAngleStandardDeviationProperty.value = angleStabilizer;
+          }
+          else {
+            // Set the launch angle standard deviation to the value for the preset launcher.
+            field.launchAngleStandardDeviationProperty.value = PDLConstants.LAUNCHER_CONFIGS[ this.presetLauncherProperty.value - 1 ].angleStandardDeviation;
+          }
+        } );
     } );
   }
 }
