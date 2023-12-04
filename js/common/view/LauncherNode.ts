@@ -53,7 +53,8 @@ const SUPPORT_BAR_HEIGHT = 200;
 
 export default class LauncherNode extends Node {
 
-  private readonly launcherBarrel: Node;
+  protected readonly launcherBarrel: Node;
+  private readonly launcherBarrelGraphics: Node;
   private readonly launcherFrameBack: Node;
   private readonly launcherFrameFront: Node;
 
@@ -75,6 +76,9 @@ export default class LauncherNode extends Node {
     super( options );
 
     this.launcherBarrel = new Node();
+    this.launcherBarrelGraphics = new Node();
+    this.launcherBarrel.addChild( this.launcherBarrelGraphics );
+
     this.launcherFrameBack = new Node();
     this.launcherFrameFront = new Node();
 
@@ -112,10 +116,10 @@ export default class LauncherNode extends Node {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
-  private updatePresetLauncher( type: number ): void {
-    this.launcherBarrel.removeAllChildren();
-    this.launcherBarrelGraphicsForType( type ).forEach( launcherGraphics => {
-      this.launcherBarrel.addChild( launcherGraphics );
+  protected updatePresetLauncher( type: number ): void {
+    this.launcherBarrelGraphics.removeAllChildren();
+    this.launcherBarrelGraphicsForType( type ).forEach( launcherBarrelGraphics => {
+      this.launcherBarrelGraphics.addChild( launcherBarrelGraphics );
     } );
 
     this.launcherFrameBack.removeAllChildren();
@@ -127,7 +131,6 @@ export default class LauncherNode extends Node {
     this.launcherFrameFrontGraphicsForType( type ).forEach( launcherFrameFrontGraphics => {
       this.launcherFrameFront.addChild( launcherFrameFrontGraphics );
     } );
-
   }
 
   private launcherBarrelGraphicsForType( presetLauncher: number ): Node[] {
