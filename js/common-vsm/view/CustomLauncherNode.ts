@@ -48,13 +48,15 @@ export default class CustomLauncherNode extends LauncherNode {
     launcherTypeSymbol.image = explosion_png;
     this.launcherBarrel.addChild( launcherTypeSymbol );
 
-    isLauncherCustomProperty.lazyLink( isCustom => {
-      if ( isCustom ) {
+    isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {
+      if ( isCustom && ( !prevIsCustom || prevIsCustom === null ) ) {
         // Set the graphics for preset launcher 1 for now
         this.updatePresetLauncher( 1 );
+        this.launcherFrameFront.opacity = 0.5;
       }
-      else {
+      else if ( !isCustom && prevIsCustom ) {
         this.updatePresetLauncher( presetLauncherProperty.value );
+        this.launcherFrameFront.opacity = 1;
       }
     } );
 

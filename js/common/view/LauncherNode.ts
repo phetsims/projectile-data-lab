@@ -54,9 +54,9 @@ const SUPPORT_BAR_HEIGHT = 200;
 export default class LauncherNode extends Node {
 
   protected readonly launcherBarrel: Node;
+  protected readonly launcherFrameFront: Node;
   private readonly launcherBarrelGraphics: Node;
   private readonly launcherFrameBack: Node;
-  private readonly launcherFrameFront: Node;
 
   private readonly guideRailBolt: Node;
 
@@ -215,9 +215,14 @@ export default class LauncherNode extends Node {
     supportBarFillGradient.addColorStop( 0.6, frameFillDarkColorProperty );
     supportBarFillGradient.addColorStop( 1, frameFillDarkerColorProperty );
 
-    const supportBar = new Rectangle( -0.5 * SUPPORT_BAR_WIDTH, 0, SUPPORT_BAR_WIDTH, SUPPORT_BAR_HEIGHT, {
-      x: SUPPORT_BAR_CENTER_X,
-      y: 0.5 * ( GUIDE_SLOT_OUTER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
+    const supportBarRect = new Shape().rect(
+      SUPPORT_BAR_CENTER_X - 0.5 * SUPPORT_BAR_WIDTH,
+      0.5 * ( GUIDE_SLOT_OUTER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
+      SUPPORT_BAR_WIDTH,
+      SUPPORT_BAR_HEIGHT );
+    const supportBarShape = supportBarRect.shapeDifference( this.guideRailOuterShape() );
+
+    const supportBar = new Path( supportBarShape, {
       fill: supportBarFillGradient,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
@@ -233,8 +238,7 @@ export default class LauncherNode extends Node {
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
       color => color.darkerColor( 0.8 ) );
 
-    const guideRailOuterShape = new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
-      .lineTo( 0, 0 ).close();
+    const guideRailOuterShape = this.guideRailOuterShape();
     const guideRailShape = guideRailOuterShape.shapeDifference( this.guideRailInnerShape() );
 
     const guideSlotOuterShape = new Shape().arc( 0, 0, GUIDE_SLOT_OUTER_RADIUS, GUIDE_SLOT_MIN_ANGLE, GUIDE_SLOT_MAX_ANGLE )
@@ -272,6 +276,11 @@ export default class LauncherNode extends Node {
 
   private guideRailInnerShape(): Shape {
     return new Shape().arc( 0, 0, GUIDE_RAIL_INNER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
+      .lineTo( 0, 0 ).close();
+  }
+
+  private guideRailOuterShape(): Shape {
+    return new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
       .lineTo( 0, 0 ).close();
   }
 }

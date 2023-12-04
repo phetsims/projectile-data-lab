@@ -81,7 +81,6 @@ export default class SourcesScreenView extends VSMScreenView {
         accordionBoxProxy.preferredWidth = accordionBoxWidth;
       } );
 
-
     this.pdomControlAreaNode.pdomOrder = [
       this.launchPanel,
       this.launchButton,
