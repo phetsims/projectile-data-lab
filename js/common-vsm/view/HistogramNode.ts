@@ -37,7 +37,7 @@ export default class HistogramNode extends Node {
     const chartTransform = new ChartTransform( {
       viewWidth: 520,
       viewHeight: 210,
-      modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
+      modelXRange: new Range( PDLConstants.MIN_HISTOGRAM_DISTANCE, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );
 
@@ -58,17 +58,20 @@ export default class HistogramNode extends Node {
 
     const histogramBarPlot = new HistogramBarPlot( chartTransform, binWidthProperty );
 
+    // Changes based on the zoom level
+    const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, { stroke: 'lightGray' } );
+
     // Changes based on the bin width
-    const binWidthGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, { stroke: 'lightGray' } );
+    const verticalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, { stroke: 'lightGray' } );
+
 
     const chartClip = new Node( {
       clipArea: chartBackground.getShape(),
       children: [
 
         // Minor grid lines
-        new GridLineSet( chartTransform, Orientation.VERTICAL, 5, { stroke: 'lightGray' } ),
-        new GridLineSet( chartTransform, Orientation.HORIZONTAL, 10, { stroke: 'lightGray' } ),
-        binWidthGridLines,
+        horizontalGridLines,
+        verticalGridLines,
 
         // Some data
         histogramBarPlot
@@ -105,22 +108,30 @@ export default class HistogramNode extends Node {
     } );
 
     binWidthProperty.link( binWidth => {
-      binWidthGridLines.setSpacing( binWidth );
+      verticalGridLines.setSpacing( binWidth );
       histogramBarPlot.update();
     } );
 
-    const zoomLevelProperty = new NumberProperty( 0, {
-      range: new Range( -2, 2 )
-    } );
+    const maxCounts = [ 500, 200, 100, 50, 20 ];
+    const tickSpacings = [ 50, 20, 10, 10, 5 ];
+    const maxZoomLevel = maxCounts.length - 1;
+
+    const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
     const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',
       bottom: chartTransform.viewHeight,
-      spacing: 4,
+      spacing: 5,
+      layoutOptions: {
+        rightMargin: 10
+      },
+      iconOptions: {
+        scale: 1.6
+      },
       buttonOptions: {
         stroke: 'black',
         lineWidth: 1,
-        cornerRadius: 2
+        cornerRadius: 3
       }
     } );
 
@@ -190,27 +201,15 @@ export default class HistogramNode extends Node {
     binWidthProperty.link( () => updateHistogram() );
     zoomLevelProperty.link( () => {
 
-      const zoomLevel = zoomLevelProperty.value;
+      const maxCount = maxCounts[ zoomLevelProperty.value ];
 
-      const scale =
-        zoomLevel === -2 ? 4 :
-        zoomLevel === -1 ? 2 :
-        zoomLevel === 0 ? 1 :
-        zoomLevel === 1 ? 1 / 2 :
-        zoomLevel === 2 ? 1 / 4 :
-        1;
-
-      chartTransform.modelYRange = new Range( 0, 25 * scale );
-
+      chartTransform.modelYRange = new Range( 0, maxCount );
       chartTransform.changedEmitter.emit();
 
-      verticalTickMarkSet.setSpacing(
-        scale === 1 / 4 ? 1 :
-        scale === 4 ? 10 :
-        5 );
-      verticalTickLabelSet.setSpacing( scale === 1 / 4 ? 1 :
-                                       scale === 4 ? 10 :
-                                       5 );
+      const tickSpacing = tickSpacings[ zoomLevelProperty.value ];
+      verticalTickMarkSet.setSpacing( tickSpacing );
+      verticalTickLabelSet.setSpacing( tickSpacing );
+      // horizontalGridLines.setSpacing( tickSpacing );
       updateHistogram();
     } );
   }
