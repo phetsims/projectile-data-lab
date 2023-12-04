@@ -9,7 +9,6 @@ import Property from '../../../../axon/js/Property.js';
 import { CustomLauncherType, CustomLauncherTypeValues } from './CustomLauncherType.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Range from '../../../../dot/js/Range.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -55,7 +54,7 @@ export default class VSMField extends Field {
     } );
 
     this.angleStabilizerProperty = new NumberProperty( 1, {
-      range: new Range( 0, PDLConstants.MAX_ANGLE_STANDARD_DEVIATION ),
+      range: PDLConstants.ANGLE_STABILIZER_RANGE,
       tandem: providedOptions.tandem.createTandem( 'angleStabilizerProperty' ),
       phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
     } );

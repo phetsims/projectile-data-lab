@@ -9,10 +9,13 @@
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import LauncherConfig from './LauncherConfig.js';
+import Range from '../../../dot/js/Range.js';
 
 const maxFieldDistance = 100;
 const fieldWidth = 870;
 const pixelsToDistance = fieldWidth / maxFieldDistance;
+
+const MAX_ANGLE_STANDARD_DEVIATION = 10; // degrees
 
 const PDLConstants = {
 
@@ -21,7 +24,7 @@ const PDLConstants = {
 
   MAX_PROJECTILES_PER_FIELD: 500,
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.1, // seconds
-  MAX_ANGLE_STANDARD_DEVIATION: 10, // degrees
+  MAX_ANGLE_STANDARD_DEVIATION: MAX_ANGLE_STANDARD_DEVIATION, // degrees
 
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,
@@ -76,7 +79,8 @@ const PDLConstants = {
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
 
-  INTER_PANEL_SPACING: 5
+  INTER_PANEL_SPACING: 5,
+  ANGLE_STABILIZER_RANGE: new Range( 0, MAX_ANGLE_STANDARD_DEVIATION )
 } as const;
 
 projectileDataLab.register( 'PDLConstants', PDLConstants );

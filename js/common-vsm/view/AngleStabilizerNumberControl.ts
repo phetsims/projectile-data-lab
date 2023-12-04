@@ -8,7 +8,6 @@
  */
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
-import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import NumberControl, { NumberControlOptions } from '../../../../scenery-phet/js/NumberControl.js';
 import { Text } from '../../../../scenery/js/imports.js';
@@ -18,22 +17,14 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 
-// TODO: Get tandem working - see https://github.com/phetsims/projectile-data-lab/issues/7
 type SelfOptions = EmptySelfOptions;
 type AngleStabilizerNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
 
 export default class AngleStabilizerNumberControl extends NumberControl {
 
-  /**
-   * Auxiliary function that creates a NumberControl
-   * @param labelString - label for the parameter
-   * @param valueProperty - the Property that is set and linked to
-   * @param range - range for the valueProperty value
-   */
   public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStabilizerNumberControlOptions ) {
 
-    // TODO: Find a way to get the range from the angleStabilizerProperty - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const range = new Range( 0, PDLConstants.MAX_ANGLE_STANDARD_DEVIATION );
+    const range = PDLConstants.ANGLE_STABILIZER_RANGE;
 
     // TODO: Center the title and remove the number display - see https://github.com/phetsims/projectile-data-lab/issues/7
     const options = optionize<AngleStabilizerNumberControlOptions, SelfOptions, NumberControlOptions>()( {
