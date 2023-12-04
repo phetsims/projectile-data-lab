@@ -43,17 +43,13 @@ export default class HistogramNode extends Node {
 
     const chartBackground = new ChartRectangle( chartTransform, {
       fill: 'white',
-      stroke: 'black',
-      cornerXRadius: 6,
-      cornerYRadius: 6
+      stroke: 'black'
     } );
 
     // Show the frame in front, so it overlaps the bottom of the bars
     const chartFrame = new ChartRectangle( chartTransform, {
       fill: null,
-      stroke: 'black',
-      cornerXRadius: 6,
-      cornerYRadius: 6
+      stroke: 'black'
     } );
 
     const histogramBarPlot = new HistogramBarPlot( chartTransform, binWidthProperty );
