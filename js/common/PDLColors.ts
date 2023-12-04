@@ -62,23 +62,23 @@ const PDLColors = {
     } ),
 
     new ProfileColorProperty( projectileDataLab, 'launcher2Fill', {
-      default: '#E82126'
+      default: '#ffca3a'
     } ),
 
     new ProfileColorProperty( projectileDataLab, 'launcher3Fill', {
-      default: '#6D16C1'
+      default: '#ff494e'
     } ),
 
     new ProfileColorProperty( projectileDataLab, 'launcher4Fill', {
-      default: '#D424E2'
+      default: '#7ad926'
     } ),
 
     new ProfileColorProperty( projectileDataLab, 'launcher5Fill', {
-      default: '#237BE5'
+      default: '#1992d4'
     } ),
 
     new ProfileColorProperty( projectileDataLab, 'launcher6Fill', {
-      default: '#E88A1A'
+      default: '#b77dee'
     } )
   ],
 

@@ -22,7 +22,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 type SelfOptions = EmptySelfOptions;
 type LauncherNodeOptions = SelfOptions & NodeOptions;
 
-const BARREL_LENGTH_BEFORE_ORIGIN = 95;
+const BARREL_LENGTH_BEFORE_ORIGIN = 88;
 const BARREL_LENGTH_AFTER_ORIGIN = 15;
 
 const BARREL_BASE_WIDTH = 45;
@@ -32,13 +32,13 @@ const BARREL_BASE_PAST_BOLT_FACTOR = 0.05; // The fraction of the barrel base ra
 const ANGLE_PAST_BOTTOM_VERTICAL = 15;
 const ANGLE_PAST_TOP_HORIZONTAL = 30;
 
-const GUIDE_SLOT_WIDTH = 5.8;
+const GUIDE_SLOT_WIDTH = 5.6;
 const GUIDE_SLOT_INSET_ANGLE = 10;
 const GUIDE_SLOT_INNER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN - 0.5 * GUIDE_SLOT_WIDTH;
 const GUIDE_SLOT_OUTER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN + 0.5 * GUIDE_SLOT_WIDTH;
 
-const GUIDE_RAIL_WIDTH = 31;
-const GUIDE_RAIL_OFFSET_FACTOR = 0.35;
+const GUIDE_RAIL_WIDTH = 27;
+const GUIDE_RAIL_OFFSET_FACTOR = 0.4;
 const GUIDE_RAIL_INNER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN - ( 0.5 - GUIDE_RAIL_OFFSET_FACTOR / 2 ) * GUIDE_RAIL_WIDTH;
 const GUIDE_RAIL_OUTER_RADIUS = BARREL_LENGTH_BEFORE_ORIGIN + ( 0.5 + GUIDE_RAIL_OFFSET_FACTOR / 2 ) * GUIDE_RAIL_WIDTH;
 
@@ -48,13 +48,14 @@ const GUIDE_SLOT_MIN_ANGLE = GUIDE_RAIL_MIN_ANGLE + Utils.toRadians( GUIDE_SLOT_
 const GUIDE_SLOT_MAX_ANGLE = GUIDE_RAIL_MAX_ANGLE - Utils.toRadians( GUIDE_SLOT_INSET_ANGLE );
 
 const SUPPORT_BAR_CENTER_X = -20;
-const SUPPORT_BAR_WIDTH = 25;
+const SUPPORT_BAR_WIDTH = 30;
 const SUPPORT_BAR_HEIGHT = 200;
 
 export default class LauncherNode extends Node {
 
-  // The launcher barrel contains all graphics that rotate with launch angle.
   private readonly launcherBarrel: Node;
+  private readonly launcherFrameBack: Node;
+  private readonly launcherFrameFront: Node;
 
   private readonly guideRailBolt: Node;
 
@@ -74,18 +75,17 @@ export default class LauncherNode extends Node {
     super( options );
 
     this.launcherBarrel = new Node();
-
-    const launcherFrameBack = this.launcherFrameBack();
-    const launcherFrameFront = this.launcherFrameFront();
+    this.launcherFrameBack = new Node();
+    this.launcherFrameFront = new Node();
 
     this.guideRailBolt = new Circle( 0.9 * GUIDE_SLOT_WIDTH, {
       fill: PDLColors.launcherGuideBoltColorProperty,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
 
-    this.addChild( launcherFrameBack );
+    this.addChild( this.launcherFrameBack );
     this.addChild( this.launcherBarrel );
-    this.addChild( launcherFrameFront );
+    this.addChild( this.launcherFrameFront );
     this.addChild( this.guideRailBolt );
 
     launcherAngleProperty.link( launcherAngle => {
@@ -114,13 +114,23 @@ export default class LauncherNode extends Node {
 
   private updatePresetLauncher( type: number ): void {
     this.launcherBarrel.removeAllChildren();
-
-    this.launcherGraphicsForType( type ).forEach( launcherGraphics => {
+    this.launcherBarrelGraphicsForType( type ).forEach( launcherGraphics => {
       this.launcherBarrel.addChild( launcherGraphics );
     } );
+
+    this.launcherFrameBack.removeAllChildren();
+    this.launcherFrameBackGraphicsForType( type ).forEach( launcherFrameBackGraphics => {
+      this.launcherFrameBack.addChild( launcherFrameBackGraphics );
+    } );
+
+    this.launcherFrameFront.removeAllChildren();
+    this.launcherFrameFrontGraphicsForType( type ).forEach( launcherFrameFrontGraphics => {
+      this.launcherFrameFront.addChild( launcherFrameFrontGraphics );
+    } );
+
   }
 
-  private launcherGraphicsForType( presetLauncher: number ): Node[] {
+  private launcherBarrelGraphicsForType( presetLauncher: number ): Node[] {
     const barrelFillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
     const barrelFillDarkColorProperty = new DerivedProperty( [ barrelFillColorProperty ],
       color => color.darkerColor( 0.8 ) );
@@ -168,13 +178,17 @@ export default class LauncherNode extends Node {
     return [ barrel, launcherEndRect ];
   }
 
-  private launcherFrameBack(): Node {
+  private launcherFrameBackGraphicsForType( presetLauncher: number ): Node[] {
     const frameBackground = new Path( this.guideRailInnerShape(), {
       fill: PDLColors.launcherFrameBackgroundColorProperty
     } );
 
-    const frameFillColorProperty = PDLColors.launcherFillColorProperties[ 0 ];
+    const fillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
+    const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
+      color => color.darkerColor( 0.8 ) );
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
+      color => color.darkerColor( 0.8 ) );
+    const frameFillDarkerColorProperty = new DerivedProperty( [ frameFillDarkColorProperty ],
       color => color.darkerColor( 0.8 ) );
 
     const FRAME_BAR_WIDTH = 4;
@@ -193,10 +207,10 @@ export default class LauncherNode extends Node {
     frameBarBottom.rotateAround( Vector2.ZERO, GUIDE_RAIL_MIN_ANGLE );
 
     const supportBarFillGradient = new LinearGradient( -0.5 * SUPPORT_BAR_WIDTH, 0, 0.5 * SUPPORT_BAR_WIDTH, 0 );
-    supportBarFillGradient.addColorStop( 0, frameFillDarkColorProperty );
-    supportBarFillGradient.addColorStop( 0.4, frameFillColorProperty );
-    supportBarFillGradient.addColorStop( 0.6, frameFillColorProperty );
-    supportBarFillGradient.addColorStop( 1, frameFillDarkColorProperty );
+    supportBarFillGradient.addColorStop( 0, frameFillDarkerColorProperty );
+    supportBarFillGradient.addColorStop( 0.4, frameFillDarkColorProperty );
+    supportBarFillGradient.addColorStop( 0.6, frameFillDarkColorProperty );
+    supportBarFillGradient.addColorStop( 1, frameFillDarkerColorProperty );
 
     const supportBar = new Rectangle( -0.5 * SUPPORT_BAR_WIDTH, 0, SUPPORT_BAR_WIDTH, SUPPORT_BAR_HEIGHT, {
       x: SUPPORT_BAR_CENTER_X,
@@ -205,14 +219,17 @@ export default class LauncherNode extends Node {
       stroke: PDLColors.launcherStrokeColorProperty
     } );
 
-    const frameBack = new Node( {
-      children: [ supportBar, frameBackground, frameBarTop, frameBarBottom ]
-    } );
-
-    return frameBack;
+    return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
   }
 
-  private launcherFrameFront(): Node {
+  private launcherFrameFrontGraphicsForType( presetLauncher: number ): Node[] {
+
+    const fillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
+    const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
+      color => color.darkerColor( 0.8 ) );
+    const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
+      color => color.darkerColor( 0.8 ) );
+
     const guideRailOuterShape = new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
       .lineTo( 0, 0 ).close();
     const guideRailShape = guideRailOuterShape.shapeDifference( this.guideRailInnerShape() );
@@ -237,25 +254,17 @@ export default class LauncherNode extends Node {
 
     const guideRailWithSlotShape = guideRailShape.shapeDifference( guideSlotShape );
 
-    const guideRailFillColorProperty = PDLColors.launcherFillColorProperties[ 0 ];
-    const guideRailFillDarkColorProperty = new DerivedProperty( [ guideRailFillColorProperty ],
-      color => color.darkerColor( 0.8 ) );
-
     const guideRailFillGradient = new RadialGradient( 0, 0, GUIDE_RAIL_INNER_RADIUS, 0, 0, GUIDE_RAIL_OUTER_RADIUS );
-    guideRailFillGradient.addColorStop( 0, guideRailFillColorProperty );
-    guideRailFillGradient.addColorStop( 0.7, guideRailFillColorProperty );
-    guideRailFillGradient.addColorStop( 1, guideRailFillDarkColorProperty );
+    guideRailFillGradient.addColorStop( 0, frameFillColorProperty );
+    guideRailFillGradient.addColorStop( 0.7, frameFillColorProperty );
+    guideRailFillGradient.addColorStop( 1, frameFillDarkColorProperty );
 
     const guideRail = new Path( guideRailWithSlotShape, {
       fill: guideRailFillGradient,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
 
-    const frameFront = new Node( {
-      children: [ guideRail ]
-    } );
-
-    return frameFront;
+    return [ guideRail ];
   }
 
   private guideRailInnerShape(): Shape {
