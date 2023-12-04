@@ -33,7 +33,6 @@ export default class SectionProjectileType extends PDLPanelSection {
       tandemName: 'pianoRadioButton',
       createNode: () => new Text( 'Piano' )
     } ], {
-      tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
       orientation: 'horizontal'
     } );
     super( ProjectileDataLabStrings.projectile10kgStringProperty, projectileTypeRadioButtonGroup, providedOptions );
