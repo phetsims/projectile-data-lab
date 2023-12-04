@@ -162,9 +162,7 @@ export default class HistogramNode extends Node {
 
           // TODO: Do we want to add an incremental render, to do the minimal amount of work? https://github.com/phetsims/projectile-data-lab/issues/7
           // How much complexity would that add? How bad is the performance now? Should we be rendering this with canvas anyways?
-          const t = Date.now();
           updateHistogram();
-          console.log( 'updateHistogram took ' + ( Date.now() - t ) + 'ms' );
         }
       } );
 
