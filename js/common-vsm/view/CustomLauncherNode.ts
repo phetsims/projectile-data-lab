@@ -1,16 +1,17 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { NodeOptions } from '../../../../scenery/js/imports.js';
+import { NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import LauncherNode from '../../common/view/LauncherNode.js';
+import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN } from '../../common/view/LauncherNode.js';
 import { CustomLauncherType } from '../model/CustomLauncherType.js';
 import { Node, Image } from '../../../../scenery/js/imports.js';
 import spring_png from '../../../images/spring_png.js';
 import pressure_png from '../../../images/pressure_png.js';
 import explosion_png from '../../../images/explosion_png.js';
+import PDLColors from '../../common/PDLColors.js';
 
 /**
  * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
@@ -48,13 +49,24 @@ export default class CustomLauncherNode extends LauncherNode {
     launcherTypeSymbol.image = explosion_png;
     this.launcherBarrel.addChild( launcherTypeSymbol );
 
+    // Add the launch angle limiter - the piece sticking out of the back of the launcher.
+    const launchAngleLimiterLength = 19;
+    const launchAngleLimiterWidth = 5;
+    const launchAngleLimiter = new Rectangle( -BARREL_LENGTH_BEFORE_ORIGIN - launchAngleLimiterLength, -0.5 * launchAngleLimiterWidth,
+      launchAngleLimiterLength, launchAngleLimiterWidth, {
+        fill: PDLColors.launcherFillColorProperties[ 0 ],
+        stroke: PDLColors.launcherStrokeColorProperty,
+        cornerRadius: 2
+      } );
+    this.launcherBarrel.addChild( launchAngleLimiter );
+
     const customLauncherFrameFront = new Node( {
       visibleProperty: isLauncherCustomProperty
     } );
     this.addChild( customLauncherFrameFront );
     this.guideRailBolt.moveToFront();
 
-    const customLauncherFrameFrontGraphics = this.launcherFrameFrontGraphicsForType( 1, 11 );
+    const customLauncherFrameFrontGraphics = this.launcherFrameFrontGraphicsForType( 1, 10.5 );
     customLauncherFrameFrontGraphics.forEach( graphic => customLauncherFrameFront.addChild( graphic ) );
 
     isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {

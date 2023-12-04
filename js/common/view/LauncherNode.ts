@@ -22,7 +22,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 type SelfOptions = EmptySelfOptions;
 type LauncherNodeOptions = SelfOptions & NodeOptions;
 
-const BARREL_LENGTH_BEFORE_ORIGIN = 88;
+export const BARREL_LENGTH_BEFORE_ORIGIN = 88;
 const BARREL_LENGTH_AFTER_ORIGIN = 15;
 
 const BARREL_BASE_WIDTH = 45;
