@@ -15,7 +15,6 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
   public constructor( arePathsVisibleProperty: Property<boolean>, isLaunchAngleVisibleProperty: Property<boolean>,
                       isLaunchSpeedVisibleProperty: Property<boolean>,
                       isDataMeasuresVisibleProperty: Property<boolean>,
-                      isIdealDistributionVisibleProperty: Property<boolean>,
                       providedOptions: PDLPanelOptions ) {
 
     const options = optionize<PDLPanelOptions, SelfOptions, MeasuresStaticToolPanelOptions>()( {
@@ -24,11 +23,6 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
           property: isDataMeasuresVisibleProperty,
           createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
           tandemName: 'dataMeasuresCheckbox'
-        },
-        {
-          property: isIdealDistributionVisibleProperty,
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.idealDistributionStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
-          tandemName: 'idealDistributionCheckbox'
         }
       ]
     }, providedOptions );

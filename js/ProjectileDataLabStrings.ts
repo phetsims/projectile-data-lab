@@ -38,7 +38,6 @@ type StringsType = {
   'launchSpeedStringProperty': LocalizedStringProperty;
   'launchAngleStringProperty': LocalizedStringProperty;
   'dataMeasuresStringProperty': LocalizedStringProperty;
-  'idealDistributionStringProperty': LocalizedStringProperty;
   'targetStringProperty': LocalizedStringProperty;
   'measuringTapeStringProperty': LocalizedStringProperty;
   'stopwatchStringProperty': LocalizedStringProperty;

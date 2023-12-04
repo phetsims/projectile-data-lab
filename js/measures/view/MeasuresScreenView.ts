@@ -33,7 +33,10 @@ export default class MeasuresScreenView extends VSMScreenView {
       this.modelViewTransform,
       model.launcherAngleProperty,
       model.launcherHeightProperty,
+      model.isLauncherCustomProperty,
       model.presetLauncherProperty,
+      model.customLauncherTypeProperty,
+      model.angleStabilizerProperty,
       {}
     );
 
@@ -51,8 +54,7 @@ export default class MeasuresScreenView extends VSMScreenView {
 
     const staticToolPanel = new MeasuresStaticToolPanel( model.isPathsVisibleProperty, model.isLaunchAngleVisibleProperty,
       model.isLaunchSpeedVisibleProperty,
-      model.isDataMeasuresVisibleProperty,
-      model.isIdealDistributionVisibleProperty, {
+      model.isDataMeasuresVisibleProperty, {
         tandem: options.tandem.createTandem( 'staticToolPanel' )
       } );
     const interactiveToolPanel = new MeasuresInteractiveToolPanel(

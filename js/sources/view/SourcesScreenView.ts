@@ -16,6 +16,7 @@ import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
+import Property from '../../../../axon/js/Property.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -34,7 +35,10 @@ export default class SourcesScreenView extends VSMScreenView {
       this.modelViewTransform,
       model.launcherAngleProperty,
       model.launcherHeightProperty,
-      model.presetLauncherProperty,
+      new Property( true ),
+      new Property( 1 ),
+      model.customLauncherTypeProperty,
+      model.angleStabilizerProperty,
       {}
     );
 

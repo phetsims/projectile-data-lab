@@ -25,7 +25,6 @@ export default class MeasuresModel extends VSMModel {
 
   // Static tool visibility
   public readonly isDataMeasuresVisibleProperty: BooleanProperty;
-  public readonly isIdealDistributionVisibleProperty: BooleanProperty;
 
   public readonly isIntervalToolVisibleProperty: BooleanProperty;
 
@@ -45,9 +44,6 @@ export default class MeasuresModel extends VSMModel {
 
     this.isDataMeasuresVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isDataMeasuresVisibleProperty' )
-    } );
-    this.isIdealDistributionVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isIdealDistributionVisibleProperty' )
     } );
   }
 }
