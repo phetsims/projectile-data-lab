@@ -9,53 +9,51 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import NumberControl, { NumberControlOptions } from '../../../../scenery-phet/js/NumberControl.js';
-import { Text } from '../../../../scenery/js/imports.js';
+import { NumberControlOptions } from '../../../../scenery-phet/js/NumberControl.js';
+import { Text, VBox } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import PDLText from '../../common/view/PDLText.js';
+import HSlider from '../../../../sun/js/HSlider.js';
 
 type SelfOptions = EmptySelfOptions;
 type AngleStabilizerNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
 
-export default class AngleStabilizerNumberControl extends NumberControl {
+export default class AngleStabilizerNumberControl extends VBox {
 
   public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStabilizerNumberControlOptions ) {
 
     const range = PDLConstants.ANGLE_STABILIZER_RANGE;
 
-    // TODO: Center the title and remove the number display - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const options = optionize<AngleStabilizerNumberControlOptions, SelfOptions, NumberControlOptions>()( {
-      layoutOptions: { topMargin: 7 },
-      titleNodeOptions: {
-        maxWidth: 120
-      },
-      numberDisplayOptions: {
-        enabled: false
-      },
-      sliderOptions: {
-        majorTickLength: 12,
-        minorTickLength: 5,
-        minorTickSpacing: 1,
-        tickLabelSpacing: 2,
-        trackSize: new Dimension2( 50, 0.5 ),
-        thumbSize: new Dimension2( 13, 22 ),
-        thumbTouchAreaXDilation: 6,
-        thumbTouchAreaYDilation: 4, // smaller to prevent overlap with above number spinner buttons
-        majorTicks: [
-          { value: range.min, label: new Text( ProjectileDataLabStrings.angleStabilizerNarrowStringProperty ) },
-          { value: range.max, label: new Text( ProjectileDataLabStrings.angleStabilizerWideStringProperty ) }
-        ]
-      },
-      includeArrowButtons: false,
-      layoutFunction: NumberControl.createLayoutFunction4( {
-        sliderPadding: 5
-      } )
-    }, providedOptions );
+    const options = optionize<AngleStabilizerNumberControlOptions, SelfOptions, NumberControlOptions>()( {}, providedOptions );
 
-    super( ProjectileDataLabStrings.angleStabilizerStringProperty, valueProperty, range, options );
+    const angleStabilizerSlider = new HSlider( valueProperty, range, {
+      layoutOptions: {
+        stretch: true
+      },
+      tandem: options.tandem.createTandem( 'angleStabilizerSlider' ),
+      majorTickLength: 12,
+      minorTickLength: 5,
+      tickLabelSpacing: 2,
+      trackSize: new Dimension2( 50, 0.5 ),
+      thumbSize: new Dimension2( 13, 22 ),
+      thumbTouchAreaXDilation: 6,
+      thumbTouchAreaYDilation: 4 // smaller to prevent overlap with above number spinner buttons
+    } );
+    angleStabilizerSlider.addMajorTick( range.min, new Text( ProjectileDataLabStrings.angleStabilizerNarrowStringProperty ) );
+    angleStabilizerSlider.addMajorTick( range.max, new Text( ProjectileDataLabStrings.angleStabilizerWideStringProperty ) );
+    for ( let i = 1; i < range.max; i++ ) {
+      angleStabilizerSlider.addMinorTick( i );
+    }
+    super( {
+      children: [
+        new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty ),
+        angleStabilizerSlider
+      ]
+    } );
   }
 }
 
