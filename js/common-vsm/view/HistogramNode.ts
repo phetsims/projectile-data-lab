@@ -149,7 +149,7 @@ export default class HistogramNode extends Node {
       const xValues = fieldProperty.value.projectiles
         .filter( projectile => projectile.phase === 'LANDED' || projectile.phase === 'AIRBORNE_BELOW_FIELD' || projectile.phase === 'LANDED_BELOW_FIELD' )
         .map( projectile => projectile.x );
-      const histogramData = createHistogram( xValues, binWidthProperty.value );
+      const histogramData = HistogramNode.getHistogramValues( xValues, binWidthProperty.value );
       histogramBarPlot.setDataSet( histogramData );
     };
 
@@ -162,35 +162,14 @@ export default class HistogramNode extends Node {
 
           // TODO: Do we want to add an incremental render, to do the minimal amount of work? https://github.com/phetsims/projectile-data-lab/issues/7
           // How much complexity would that add? How bad is the performance now? Should we be rendering this with canvas anyways?
+          const t = Date.now();
           updateHistogram();
+          console.log( 'updateHistogram took ' + ( Date.now() - t ) + 'ms' );
         }
       } );
 
       field.projectilesClearedEmitter.addListener( () => updateHistogram() );
     } );
-
-    function createHistogram( xValues: number[], binWidth: number ): Vector2[] {
-      const histogram = new Map<number, number>();
-
-      for ( const x of xValues ) {
-
-        // Calculate the bin for this value
-        // REVIEW: Is this how you want to calculate the bin?
-        const bin = Math.floor( x / binWidth ) * binWidth;
-
-        // Update the count for this bin
-        histogram.set( bin, ( histogram.get( bin ) || 0 ) + 1 );
-      }
-
-      // Convert the map to an array of Vector2
-      const histogramArray: Vector2[] = [];
-
-      for ( const [ bin, count ] of histogram ) {
-        histogramArray.push( new Vector2( bin, count ) );
-      }
-
-      return histogramArray;
-    }
 
     // When the field or bin width changes, redraw the histogram
     fieldProperty.link( () => updateHistogram() );
@@ -209,6 +188,30 @@ export default class HistogramNode extends Node {
       updateHistogram();
     } );
   }
+
+  private static getHistogramValues( xValues: number[], binWidth: number ): Vector2[] {
+    const histogram = new Map<number, number>();
+
+    for ( const x of xValues ) {
+
+      // Calculate the bin for this value
+      // REVIEW: Is this how you want to calculate the bin?
+      const bin = Math.floor( x / binWidth ) * binWidth;
+
+      // Update the count for this bin
+      histogram.set( bin, ( histogram.get( bin ) || 0 ) + 1 );
+    }
+
+    // Convert the map to an array of Vector2
+    const histogramArray: Vector2[] = [];
+
+    for ( const [ bin, count ] of histogram ) {
+      histogramArray.push( new Vector2( bin, count ) );
+    }
+
+    return histogramArray;
+  }
 }
+
 
 bamboo.register( 'HistogramNode', HistogramNode );

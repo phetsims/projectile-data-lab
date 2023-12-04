@@ -19,7 +19,8 @@ export type BarPlotOptions = SelfOptions & NodeOptions;
 export default class HistogramBarPlot extends Node {
 
   public dataSet: Vector2[] = [];
-  public readonly rectangles: Rectangle[] = [];
+  public readonly bars: Rectangle[] = [];
+  public readonly blocks: Rectangle[] = [];
 
   public constructor( public readonly chartTransform: ChartTransform, public readonly binWidthProperty: TReadOnlyProperty<number>, providedOptions?: BarPlotOptions ) {
 
@@ -42,29 +43,88 @@ export default class HistogramBarPlot extends Node {
   public update(): void {
     const barRed = new Color( 206, 46, 35 );
 
-    // Add one rectangle per data point.
-    while ( this.rectangles.length < this.dataSet.length ) {
+    // Add one rectangle per histogram bin
+    while ( this.bars.length < this.dataSet.length ) {
       const rectangle = new Rectangle( 0, 0, 0, 0, {
-        fill: barRed
+        fill: barRed,
+        stroke: 'black',
+        lineWidth: 1
       } );
-      this.rectangles.push( rectangle );
+      this.bars.push( rectangle );
       this.addChild( rectangle );
     }
 
-    // If any data points were removed, remove any extra rectangles.
-    while ( this.rectangles.length > this.dataSet.length ) {
-      const rectangle = this.rectangles.pop()!;
+    // If any data points were removed, remove any extra bars.
+    while ( this.bars.length > this.dataSet.length ) {
+      const rectangle = this.bars.pop()!;
       this.removeChild( rectangle );
     }
 
-    for ( let i = 0; i < this.rectangles.length; i++ ) {
+    const totalYValues = this.dataSet.reduce( ( sum, vector ) => sum + vector.y, 0 );
+    while ( this.blocks.length < totalYValues ) {
+      const block = new Rectangle( 0, 0, 0, 0, {
+        fill: barRed,
+        stroke: 'black',
+        lineWidth: 1
+      } );
+      this.blocks.push( block );
+      this.addChild( block );
+    }
+
+    // If totalYValues decreased, remove any extra interior lines.
+    while ( this.blocks.length > totalYValues ) {
+      const block = this.blocks.pop()!;
+      this.removeChild( block );
+    }
+
+    for ( let i = 0; i < this.bars.length; i++ ) {
       const barHeight = Math.abs( this.chartTransform.modelToViewDeltaY( this.dataSet[ i ].y ) );
-      this.rectangles[ i ].setRect(
+      this.bars[ i ].setRect(
         this.chartTransform.modelToViewX( this.dataSet[ i ].x ),
         this.chartTransform.modelToViewY( 0 ) - barHeight,
         this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value ),
         barHeight
       );
+    }
+    let blockIndex = 0;
+    for ( let i = 0; i < this.dataSet.length; i++ ) {
+      const barX = this.chartTransform.modelToViewX( this.dataSet[ i ].x );
+      const barWidth = this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value );
+
+      // Calculate the number of blocks needed for this bar
+      const numberOfBlocks = Math.round( this.dataSet[ i ].y );
+
+      // Initial y position for the first block in this bar
+      let blockY = this.chartTransform.modelToViewY( 0 );
+
+      // Height of a block in view coordinates
+      const blockHeight = Math.abs( this.chartTransform.modelToViewDeltaY( 1 ) );
+
+      // Position and stack blocks for this bar
+      for ( let j = 0; j < numberOfBlocks; j++ ) {
+        if ( blockIndex >= this.blocks.length ) {
+          // Add a new block if needed
+          const block = new Rectangle( 0, 0, barWidth, blockHeight, {
+            fill: barRed,
+            stroke: 'black',
+            lineWidth: 1
+          } );
+          this.blocks.push( block );
+          this.addChild( block );
+        }
+
+        // Position the block
+        blockY -= blockHeight; // Move up for each new block
+        this.blocks[ blockIndex ].setRect( barX, blockY, barWidth, blockHeight );
+
+        blockIndex++;
+      }
+    }
+
+    // Remove any extra blocks
+    while ( this.blocks.length > blockIndex ) {
+      const block = this.blocks.pop()!;
+      this.removeChild( block );
     }
   }
 }
