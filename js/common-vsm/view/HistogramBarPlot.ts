@@ -6,6 +6,7 @@ import { Color, Node, NodeOptions, Rectangle } from '../../../../scenery/js/impo
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import bamboo from '../../../../bamboo/js/bamboo.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
 
 /**
  * Shows bars or blocks for histogram-related numerical data.
@@ -92,7 +93,7 @@ export default class HistogramBarPlot extends Node {
       const barWidth = this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value );
 
       // Calculate the number of blocks needed for this bar
-      const numberOfBlocks = Math.round( this.dataSet[ i ].y );
+      const numberOfBlocks = Utils.roundSymmetric( this.dataSet[ i ].y );
 
       // Initial y position for the first block in this bar
       let blockY = this.chartTransform.modelToViewY( 0 );
