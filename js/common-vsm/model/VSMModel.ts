@@ -21,6 +21,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import { CustomLauncherType } from './CustomLauncherType.js';
 import { VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
+import Projectile from '../../common/model/Projectile.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -50,7 +51,12 @@ export default class VSMModel extends PDLModel<VSMField> {
   public readonly angleStabilizerProperty: DynamicProperty<number, number, VSMField>;
 
   // TODO: Do we still need this in VSMModel now that we have VSMCanvasNode? - see see https://github.com/phetsims/projectile-data-lab/issues/7
-  public selectedSampleProperty: TReadOnlyProperty<number> = new Property( 0 );
+  // TODO: Or maybe always create it and only instrument in in the sampling screen? see https://github.com/phetsims/projectile-data-lab/issues/7
+  public readonly selectedSampleProperty: TReadOnlyProperty<number> = new Property( 0 );
+
+  public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, VSMField>;
+  public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;
+  public readonly landedProjectileCountProperty: DynamicProperty<number, number, VSMField>;
 
   public constructor( providedOptions: VSMModelOptions ) {
 
@@ -81,6 +87,19 @@ export default class VSMModel extends PDLModel<VSMField> {
     this.angleStabilizerProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.angleStabilizerProperty
+    } );
+
+    this.selectedProjectileNumberProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.selectedProjectileNumberProperty
+    } );
+
+    this.selectedProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, VSMField>( this.fieldProperty, {
+      derive: t => t.selectedProjectileProperty
+    } );
+
+    this.landedProjectileCountProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+      derive: t => t.landedProjectileCountProperty
     } );
 
     this.isLaunchAngleVisibleProperty = new BooleanProperty( false, {

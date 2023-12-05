@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
@@ -14,10 +14,10 @@ import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js
 import Panel from '../../../../sun/js/Panel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import SamplingField from '../model/SamplingField.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Projectile from '../../common/model/Projectile.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -25,48 +25,50 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SampleCardsPanelOptions = SelfOptions & PDLPanelOptions;
+type ProjectileSelectorPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
-export default class SampleCardsPanel extends PDLPanel {
+export default class ProjectileSelectorPanel extends PDLPanel {
 
   public constructor(
-    samplingFieldProperty: TReadOnlyProperty<SamplingField>,
-    selectedSampleProperty: TProperty<number>,
-    sampleCountProperty: TReadOnlyProperty<number>,
-    numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
-    options: SampleCardsPanelOptions ) {
+    selectedProjectileNumberProperty: TProperty<number>,
+    landedProjectileCountProperty: TReadOnlyProperty<number>,
+    selectedProjectileProperty: TReadOnlyProperty<Projectile | null>,
+    providedOptions: ProjectileSelectorPanelOptions ) {
 
-    const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
+    const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
+
+    const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.projectileNumberOfCountPatternStringProperty, {
 
       // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
-      number: selectedSampleProperty,
-      count: sampleCountProperty
+      number: selectedProjectileNumberProperty,
+      count: landedProjectileCountProperty
     } );
 
     const createPage = () => {
-      const field = samplingFieldProperty.value;
-      const projectiles = field.getProjectilesInCurrentSample();
-      const values = projectiles.map( projectile => projectile.x );
-
-      const meanString = values.length === 0 ? '?' : Utils.toFixedNumber( _.mean( values ), 1 );
+      // const field = samplingFieldProperty.value;
+      // const projectiles = field.getProjectilesInCurrentSample();
+      // const values = projectiles.map( projectile => projectile.x );
+      //
+      // const meanString = values.length === 0 ? '?' : Utils.toFixedNumber( _.mean( values ), 1 );
 
       return new VBox( {
         align: 'left',
         children: [
-          new Text( 'Launcher: ' + samplingFieldProperty.value.launcher ),
-          new Text( 'Sample Size: ' + samplingFieldProperty.value.sampleSize ),
-          new Text( `Mean: ${meanString} m` )
+          new Text( 'hello world: ' )
+          // new Text( 'Sample Size: ' + samplingFieldProperty.value.sampleSize ),
+          // new Text( `Mean: ${meanString} m` )
         ]
       } );
     };
     const node = new Node();
 
-    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, sampleCountProperty, numberOfCompletedSamplesProperty ], () => {
+    Multilink.multilink( [ selectedProjectileNumberProperty, landedProjectileCountProperty, selectedProjectileProperty ], () => {
       node.children = [ createPage() ];
     } );
 
     const carousel = new Panel( node );
 
+    // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/7
     const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
       return new RectangularPushButton( {
         tandem: options.tandem.createTandem( type + 'Button' ),
@@ -76,14 +78,14 @@ export default class SampleCardsPanel extends PDLPanel {
           lineWidth: 0
         },
         listener: () => {
-          const proposedValue = selectedSampleProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
-          if ( proposedValue >= 1 && proposedValue <= sampleCountProperty.value ) {
-            selectedSampleProperty.value = proposedValue;
+          const proposedValue = selectedProjectileNumberProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
+          if ( proposedValue >= 1 && proposedValue <= landedProjectileCountProperty.value ) {
+            selectedProjectileNumberProperty.value = proposedValue;
           }
         },
         fireOnHold: true,
         fireOnHoldInterval: 50,
-        enabledProperty: new DerivedProperty( [ selectedSampleProperty, sampleCountProperty ], ( selectedSample, sampleCount ) => {
+        enabledProperty: new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty ], ( selectedSample, sampleCount ) => {
           return ( type === 'increment' ) ? selectedSample < sampleCount : selectedSample > 1;
         } )
       } );
@@ -102,9 +104,9 @@ export default class SampleCardsPanel extends PDLPanel {
       spacing: 5,
       children: [ carousel, upDownButtons ]
     } ), {
-      tandem: options.tandem.createTandem( 'sampleCardsPanelSection' )
-    } ) );
+      tandem: options.tandem.createTandem( 'sampleNumberOfCountPatternSection' )
+    } ), options );
   }
 }
 
-projectileDataLab.register( 'SampleCardsPanel', SampleCardsPanel );
+projectileDataLab.register( 'ProjectileSelectorPanel', ProjectileSelectorPanel );

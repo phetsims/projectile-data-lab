@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, Color, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { Color, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -21,6 +21,7 @@ import VSMFieldSignNode from './VSMFieldSignNode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import PDLScreenView from '../../common/view/PDLScreenView.js';
 import VSMCanvasNode from './VSMCanvasNode.js';
+import ProjectileSelectorPanel from './ProjectileSelectorPanel.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -36,6 +37,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
+  private readonly projectileSelectorPanel: ProjectileSelectorPanel;
 
   protected constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
@@ -174,8 +176,19 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 
+    this.projectileSelectorPanel = new ProjectileSelectorPanel(
+      model.selectedProjectileNumberProperty,
+      model.landedProjectileCountProperty,
+      model.selectedProjectileProperty, {
+        tandem: options.tandem.createTandem( 'projectileSelectorPanel' ),
+        center: this.layoutBounds.center
+      }
+    );
+    this.addChild( this.projectileSelectorPanel );
+
     this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
       model.fieldProperty,
+      model.landedProjectileCountProperty,
       model.fields,
       this.modelViewTransform
     ) );

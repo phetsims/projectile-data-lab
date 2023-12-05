@@ -48,7 +48,8 @@ type StringsType = {
   'degreesPatternStringProperty': LocalizedStringProperty;
   'nEqualsProjectileCountPatternStringProperty': LocalizedStringProperty;
   'nEqualsSampleSizePatternStringProperty': LocalizedStringProperty;
-  'sampleNofMPatternStringProperty': LocalizedStringProperty;
+  'sampleNumberOfCountPatternStringProperty': LocalizedStringProperty;
+  'projectileNumberOfCountPatternStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;

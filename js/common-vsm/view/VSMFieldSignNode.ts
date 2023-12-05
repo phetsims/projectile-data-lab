@@ -12,35 +12,16 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
 export default class VSMFieldSignNode extends FieldSignNode {
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
+                      landedProjectileCountProperty: TReadOnlyProperty<number>,
                       fields: Field[],
                       modelViewTransform: ModelViewTransform2,
                       providedOptions?: VSMFieldSignNodeOptions ) {
-
-    // REVIEW: Should projectileCountProperty move to the model?
-
-    // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
-    const projectileCountProperty = new NumberProperty( 0 );
-    const updateProjectileCountProperty = () => {
-      const projectiles = fieldProperty.value.projectiles.filter(
-        projectile => projectile.phase === 'LANDED' || projectile.phase === 'AIRBORNE_BELOW_FIELD' || projectile.phase === 'LANDED_BELOW_FIELD'
-      );
-      projectileCountProperty.value = projectiles.length;
-    };
-
-    // Listen to each of the fields for changes to their projectiles
-    fields.forEach( field => {
-      field.projectileLandedEmitter.addListener( updateProjectileCountProperty );
-      field.projectilesClearedEmitter.addListener( updateProjectileCountProperty );
-    } );
-
-    fieldProperty.link( updateProjectileCountProperty );
 
     // Create the field sign
     const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( 94, 0 ) );
@@ -56,7 +37,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
     } );
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.nEqualsProjectileCountPatternStringProperty, {
-      projectileCount: projectileCountProperty
+      projectileCount: landedProjectileCountProperty
     } );
 
     const fieldNumberText = new Text( fieldSignStringProperty, { font: PDLConstants.PRIMARY_FONT } );
