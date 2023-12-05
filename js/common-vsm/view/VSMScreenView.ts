@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, ManualConstraint } from '../../../../scenery/js/imports.js';
+import { Node, Color, ManualConstraint } from '../../../../scenery/js/imports.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -10,7 +10,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import SpeedToolNode from './SpeedToolNode.js';
 import AngleToolNode from './AngleToolNode.js';
 import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
@@ -36,6 +35,7 @@ type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
+  protected readonly toolsLayer: Node = new Node();
 
   protected constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
@@ -67,7 +67,8 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       tandem: options.tandem.createTandem( 'accordionBox' )
     } );
 
-    // Create a MeasuringTapeNode to measure distance
+    const measuringTapeContainer = new Node();
+
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
       visibleProperty: model.isMeasuringTapeVisibleProperty,
       modelViewTransform: this.modelViewTransform,
@@ -79,14 +80,19 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       tapeLineWidth: 2,
       isBaseCrosshairRotating: false,
       isTipCrosshairRotating: false,
-
       textColor: 'black',
-      textBackgroundColor: 'rgba( 255, 255, 255, 0.6 )', // translucent white background
+      textBackgroundColor: 'white',
+      textBackgroundCornerRadius: 5,
+      textBackgroundXMargin: 3,
+      textBackgroundYMargin: 2,
+      textPosition: new Vector2( 0, 32 ),
       significantFigures: 1,
-      textFont: new PhetFont( { size: 16, weight: 'bold' } ),
+      textFont: PDLConstants.MEASURING_TAPE_FONT,
       tandem: options.tandem.createTandem( 'measuringTapeNode' ),
       phetioDocumentation: 'The node for the measuring tape'
     } );
+
+    measuringTapeContainer.addChild( measuringTapeNode );
 
     const stopwatchNode = new StopwatchNode( model.stopwatch, {
       visibleProperty: model.isStopwatchVisibleProperty,
@@ -173,11 +179,24 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       this.modelViewTransform
     ) );
 
+    this.toolsLayer.addChild( stopwatchNode );
+    this.toolsLayer.addChild( angleToolNode );
+    this.toolsLayer.addChild( speedToolNode );
+    this.toolsLayer.addChild( measuringTapeContainer );
+
     this.addChild( this.accordionBox );
-    this.addChild( stopwatchNode );
-    this.addChild( angleToolNode );
-    this.addChild( speedToolNode );
-    this.addChild( measuringTapeNode );
+    this.addChild( this.toolsLayer );
+
+    // When the launcher is raised, move the speed tool to the front, otherwise move the measuring tape to the front.
+    // This is so that the speed tool readout is not obscured by the measuring tape.
+    isLauncherRaisedProperty.lazyLink( isLauncherRaised => {
+      if ( isLauncherRaised ) {
+        speedToolNode.moveToFront();
+      }
+      else {
+        measuringTapeContainer.moveToFront();
+      }
+    } );
 
     // layout
     ManualConstraint.create(
@@ -196,7 +215,6 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
       timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
-
   }
 }
 

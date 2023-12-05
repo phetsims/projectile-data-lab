@@ -112,8 +112,8 @@ export default class SpeedToolNode extends HeatMapToolNode {
   }
 
   private setForIsLauncherRaised( isLauncherRaised: boolean ): void {
-    const speedToolX = isLauncherRaised ? -45 : -20;
-    const speedToolY = isLauncherRaised ? 180 : -150;
+    const speedToolX = -20;
+    const speedToolY = isLauncherRaised ? 110 : -150;
 
     this.displayOffset = new Vector2( speedToolX, speedToolY );
 

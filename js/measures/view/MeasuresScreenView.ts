@@ -74,6 +74,8 @@ export default class MeasuresScreenView extends VSMScreenView {
     } );
     this.addChild( rightVBox );
 
+    this.toolsLayer.moveToFront();
+
     // TODO: Don't repeat this in each screen view - see https://github.com/phetsims/projectile-data-lab/issues/7
     ManualConstraint.create(
       this,
