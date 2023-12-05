@@ -27,7 +27,8 @@ export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptio
   | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'majorTickMarkLength' | 'valueReadoutY'>;
 
 
-const VALUE_READOUT_Y_MAGNITUDE = 17;
+const VALUE_READOUT_Y_GROUND = 13;
+const VALUE_READOUT_Y_RAISED = -29;
 
 const MIN_ANGLE_GROUND = 0;
 const MAX_ANGLE_GROUND = 90;
@@ -97,7 +98,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       labelMaxAngle: maxAngle - 10,
       isWithInnerTickMarks: true,
       majorTickMarkLength: 5,
-      valueReadoutY: VALUE_READOUT_Y_MAGNITUDE,
+      valueReadoutY: VALUE_READOUT_Y_GROUND,
       readoutPatternStringProperty: ProjectileDataLabStrings.degreesPatternStringProperty
     }, providedOptions );
     super( options );
@@ -134,8 +135,8 @@ export default class AngleToolNode extends HeatMapToolNode {
         }
       } );
 
-      // Move the value readout node to the other side of the needle
-      this.valueReadoutNode.y = isRaised ? -VALUE_READOUT_Y_MAGNITUDE : VALUE_READOUT_Y_MAGNITUDE;
+      this.valueReadoutNode.x = isRaised ? 0.45 * innerBodyRadius : 0.5 * innerBodyRadius;
+      this.valueReadoutNode.y = isRaised ? VALUE_READOUT_Y_RAISED : VALUE_READOUT_Y_GROUND;
     } );
   }
 
