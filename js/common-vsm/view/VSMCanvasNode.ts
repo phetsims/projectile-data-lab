@@ -71,7 +71,7 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
     // Draw the flying projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
       const projectile = projectiles[ i ];
-      if ( projectile.phase === 'AIRBORNE' || projectile.phase === 'AIRBORNE_BELOW_FIELD' ) {
+      if ( projectile.phase === 'AIRBORNE' ) {
         this.drawProjectile( context, projectile, false );
       }
     }

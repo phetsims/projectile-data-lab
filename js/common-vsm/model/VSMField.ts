@@ -82,9 +82,7 @@ export default class VSMField extends Field {
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
     this.landedProjectileCountProperty = new NumberProperty( 0 );
     const updateProjectileCountProperty = () => {
-      const projectiles = this.projectiles.filter(
-        projectile => projectile.phase === 'LANDED' || projectile.phase === 'AIRBORNE_BELOW_FIELD' || projectile.phase === 'LANDED_BELOW_FIELD'
-      );
+      const projectiles = this.projectiles.filter( projectile => projectile.phase === 'LANDED' );
       this.landedProjectileCountProperty.value = projectiles.length;
     };
 

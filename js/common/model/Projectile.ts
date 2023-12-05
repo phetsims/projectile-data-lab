@@ -90,56 +90,30 @@ export default class Projectile {
   }
 
   public step( field: Field, dt: number ): void {
-    if ( this.phase === 'AIRBORNE' || this.phase === 'AIRBORNE_BELOW_FIELD' ) {
+    if ( this.phase === 'AIRBORNE' ) {
       this.timeAirborne += dt;
 
       this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
       this.y = Projectile.getProjectileY( this.launchSpeed, this.launchAngle, this.launchHeight, this.timeAirborne )!;
 
-      if ( this.phase === 'AIRBORNE' ) {
-        if ( this.y <= 0 ) {
-          if ( this.x > PDLConstants.MAX_FIELD_DISTANCE ) {
-            this.phase = 'AIRBORNE_BELOW_FIELD';
-          }
-          else {
-            this.phase = 'LANDED';
-            this.x = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
-            this.y = 0;
-            this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
-          }
-
-          field.projectileLandedEmitter.emit( this );
-        }
+      if ( this.y <= 0 ) {
+        this.phase = 'LANDED';
+        this.x = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
+        this.y = 0;
+        this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
       }
 
-      if ( this.phase === 'AIRBORNE_BELOW_FIELD' ) {
-        if ( this.y <= PDLConstants.BELOW_FIELD_LANDING_Y ) {
-          this.phase = 'LANDED_BELOW_FIELD';
-        }
-      }
+      field.projectileLandedEmitter.emit( this );
     }
   }
 
   public setLanded( field: Field ): void {
     const landedX = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
 
-    if ( landedX > PDLConstants.MAX_FIELD_DISTANCE ) {
-
-      // If the projectile goes past the field, simulate that it was launched from a higher height to calculate the
-      // total time of flight to land below the field.
-      const deltaHeightToLandBelowField = this.launchHeight - PDLConstants.BELOW_FIELD_LANDING_Y;
-
-      this.phase = 'LANDED_BELOW_FIELD';
-      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, deltaHeightToLandBelowField );
-      this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
-      this.y = PDLConstants.BELOW_FIELD_LANDING_Y;
-    }
-    else {
-      this.phase = 'LANDED';
-      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
-      this.x = landedX;
-      this.y = 0;
-    }
+    this.phase = 'LANDED';
+    this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
+    this.x = landedX;
+    this.y = 0;
 
     field.projectileLandedEmitter.emit( this );
   }

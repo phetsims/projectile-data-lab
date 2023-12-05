@@ -41,16 +41,12 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     context.strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
 
     for ( let i = 0; i < projectiles.length; i++ ) {
-      const projectile = projectiles[ i ];
-      this.drawPathForProjectile( context, projectile );
+      this.drawPathForProjectile( context, projectiles[ i ] );
     }
 
-    // Draw the  projectiles
+    // Draw the projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
-      const projectile = projectiles[ i ];
-      if ( projectile.phase !== 'LANDED_BELOW_FIELD' ) {
-        this.drawProjectile( context, projectile, false );
-      }
+      this.drawProjectile( context, projectiles[ i ], false );
     }
   }
 }

@@ -33,7 +33,6 @@ const PDLConstants = {
   MAX_FIELD_DISTANCE: maxFieldDistance,
   FIELD_LINE_NUMBER_INCREMENT: 10,
   RAISED_LAUNCHER_HEIGHT: 18,
-  BELOW_FIELD_LANDING_Y: -15, // The landing point below the field, for projectiles that land beyond MAX_FIELD_DISTANCE
   FREEFALL_ACCELERATION: 9.81,
   MIN_HISTOGRAM_DISTANCE: 10,
 
