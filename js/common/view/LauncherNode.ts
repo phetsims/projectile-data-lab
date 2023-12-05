@@ -120,17 +120,9 @@ export default class LauncherNode extends Node {
   }
 
   protected updatePresetLauncher( type: number ): void {
-    this.launcherBarrelGraphicsForType( type ).forEach( launcherBarrelGraphics => {
-      this.launcherBarrelGraphics.children = [ launcherBarrelGraphics ];
-    } );
-
-    this.launcherFrameBackGraphicsForType( type ).forEach( launcherFrameBackGraphics => {
-      this.launcherFrameBack.children = [ launcherFrameBackGraphics ];
-    } );
-
-    this.launcherFrameFrontGraphicsForType( type ).forEach( launcherFrameFrontGraphics => {
-      this.launcherFrameFront.children = [ launcherFrameFrontGraphics ];
-    } );
+    this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( type );
+    this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( type );
+    this.launcherFrameFront.children = this.launcherFrameFrontGraphicsForType( type );
   }
 
   private launcherBarrelGraphicsForType( presetLauncher: number ): Node[] {

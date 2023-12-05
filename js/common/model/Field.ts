@@ -56,8 +56,6 @@ export default abstract class Field extends PhetioObject {
 
   public readonly projectilesClearedEmitter;
 
-  public readonly mostRecentlyLaunchedProjectileProperty: Property<Projectile | null>;
-
   public readonly selectedSampleProperty: NumberProperty;
 
   public readonly abstract identifier: string;
@@ -139,9 +137,6 @@ export default abstract class Field extends PhetioObject {
       phetioDocumentation: 'The selected sample being shown on the field.'
     } );
 
-    // Note: this is not phet-io instrumented, but when a Field is restored from phet-io we must set this property
-    this.mostRecentlyLaunchedProjectileProperty = new Property<Projectile | null>( null );
-
     this.launcherConfigurationProperty.link( configuration => {
 
       // REVIEW: Should these be DerivedProperties? YES
@@ -174,7 +169,6 @@ export default abstract class Field extends PhetioObject {
     this.projectilesChangedEmitter.emit();
     this.projectilesClearedEmitter.emit();
 
-    this.mostRecentlyLaunchedProjectileProperty.reset();
     this.selectedSampleProperty.reset();
   }
 
