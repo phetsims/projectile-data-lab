@@ -216,7 +216,6 @@ export default class Projectile {
            - 0.5 * PDLConstants.FREEFALL_ACCELERATION * timeAirborne * timeAirborne;
   }
 
-  // TODO: launchHeight could be inferred from the launcher configuration. See https://github.com/phetsims/projectile-data-lab/issues/7
   public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
