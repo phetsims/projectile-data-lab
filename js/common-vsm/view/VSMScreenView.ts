@@ -67,6 +67,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       tandem: options.tandem.createTandem( 'accordionBox' )
     } );
 
+    // TODO: This needs to be incoirporated into keyboard navigation - see https://github.com/phetsims/projectile-data-lab/issues/7
     const measuringTapeContainer = new Node();
 
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
