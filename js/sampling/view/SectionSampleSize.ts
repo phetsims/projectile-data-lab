@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
@@ -20,15 +20,12 @@ export default class SectionSampleSize extends PDLPanelSection {
 
   public constructor( sampleSizeProperty: Property<number>, providedOptions: SectionSampleSizeOptions ) {
 
-    // TODO: Try to use Array.map for this without type errors - see https://github.com/phetsims/projectile-data-lab/issues/5
-    const sampleSizeRadioButtonGroupItems: RectangularRadioButtonGroupItem<number>[] = [];
-
-    sampleSizeProperty.validValues?.forEach( sampleSize => {
-      sampleSizeRadioButtonGroupItems.push( {
+    const sampleSizeRadioButtonGroupItems = sampleSizeProperty.validValues!.map( sampleSize => {
+      return {
         value: sampleSize,
         tandemName: `sampleSize${sampleSize}RadioButton`,
         createNode: () => new PDLText( sampleSize.toString() )
-      } );
+      };
     } );
 
     const sampleSizeRadioButtonGroup = new RectangularRadioButtonGroup( sampleSizeProperty, sampleSizeRadioButtonGroupItems, {

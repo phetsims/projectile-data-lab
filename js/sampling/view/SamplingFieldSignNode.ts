@@ -38,8 +38,6 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     } );
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNofMPatternStringProperty, {
-
-      // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
       selected: selectedSampleProperty,
       count: sampleCountProperty
     } );

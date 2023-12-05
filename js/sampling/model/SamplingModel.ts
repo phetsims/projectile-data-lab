@@ -22,6 +22,7 @@ type SelfOptions = EmptySelfOptions;
 type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
 // TODO: These should be properties that can be customized via PhET-IO - see https://github.com/phetsims/projectile-data-lab/issues/7
+// What should happen when the phet-io client changes the sampling size for a field with partial or complete data?
 const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
 
 export default class SamplingModel extends PDLModel<SamplingField> {
@@ -63,8 +64,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
     this.presetLauncherProperty = new NumberProperty( 1 );
 
-    // // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
-    // // TODO: Fix reentrant error - see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ this.sampleSizeProperty, this.presetLauncherProperty ], ( sampleSize, presetLauncher ) => {
       const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcher === presetLauncher )!;
       this.fieldProperty.value = field;
