@@ -84,7 +84,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioValueType: BooleanIO
     } );
 
-    this.binWidthProperty = new Property<number>( 1, {
+    this.binWidthProperty = new Property<number>( 2, {
       validValues: [ 1, 2, 5, 10 ],
       tandem: providedOptions.tandem.createTandem( 'binWidthProperty' ),
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',

@@ -30,7 +30,7 @@ const BARREL_NOZZLE_WIDTH = 28;
 const BARREL_BASE_PAST_BOLT_FACTOR = 0.05; // The fraction of the barrel base radius that extends past the bolt
 
 const ANGLE_PAST_BOTTOM_VERTICAL = 15;
-const ANGLE_PAST_TOP_HORIZONTAL = 30;
+const ANGLE_PAST_TOP_HORIZONTAL = 35;
 
 const GUIDE_SLOT_WIDTH = 5.6;
 const GUIDE_SLOT_INSET_ANGLE = 10;
