@@ -1,6 +1,12 @@
 // Copyright 2023, University of Colorado Boulder
 
-// REVIEW: Do we want to use this pattern for our enums, or EnumerationValue? I didn't know we would have to put 'as const' at other usage sites too.
 export const LauncherConfigurationValues = [ 'ANGLE_30', 'ANGLE_45', 'ANGLE_60', 'ANGLE_0' ] as const;
+
+const angles = [ 30, 45, 60, 0 ];
+
+// Export a mapping that returns the numrical value of the launcher configuration.
+export const AngleForConfiguration = ( configuration: LauncherConfiguration ): number => {
+  return angles[ LauncherConfigurationValues.indexOf( configuration ) ];
+};
 
 export type LauncherConfiguration = typeof LauncherConfigurationValues[number];

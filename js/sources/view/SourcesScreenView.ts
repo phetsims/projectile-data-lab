@@ -34,6 +34,7 @@ export default class SourcesScreenView extends VSMScreenView {
 
     this.launcherNode = new CustomLauncherNode(
       this.modelViewTransform,
+      model.launcherConfigurationProperty,
       model.launcherAngleProperty,
       model.launcherHeightProperty,
       new Property( true ),

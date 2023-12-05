@@ -32,6 +32,7 @@ export default class MeasuresScreenView extends VSMScreenView {
 
     this.launcherNode = new CustomLauncherNode(
       this.modelViewTransform,
+      model.launcherConfigurationProperty,
       model.launcherAngleProperty,
       model.launcherHeightProperty,
       model.isLauncherCustomProperty,
