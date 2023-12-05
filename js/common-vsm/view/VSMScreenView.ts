@@ -37,7 +37,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
-  private readonly projectileSelectorPanel: ProjectileSelectorPanel;
+  protected readonly projectileSelectorPanel: ProjectileSelectorPanel;
 
   protected constructor( model: VSMModel, options: VSMScreenViewOptions ) {
     super( model, options );
@@ -156,14 +156,15 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       speedToolNode.clear();
       angleToolNode.clear();
 
-      field.projectiles.forEach( projectile => {
+      const projectiles = field.getAllProjectiles();
+      projectiles.forEach( projectile => {
         speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
         angleToolNode.updateHeatMapWithData( projectile.launchAngle );
       } );
 
-      if ( field.projectiles.length > 0 ) {
-        speedToolNode.updateNeedleAndText( field.projectiles[ field.projectiles.length - 1 ].launchSpeed );
-        angleToolNode.updateNeedleAndText( field.projectiles[ field.projectiles.length - 1 ].launchAngle );
+      if ( projectiles.length > 0 ) {
+        speedToolNode.updateNeedleAndText( projectiles[ projectiles.length - 1 ].launchSpeed );
+        angleToolNode.updateNeedleAndText( projectiles[ projectiles.length - 1 ].launchAngle );
       }
     } );
 
@@ -180,11 +181,9 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       model.selectedProjectileNumberProperty,
       model.landedProjectileCountProperty,
       model.selectedProjectileProperty, {
-        tandem: options.tandem.createTandem( 'projectileSelectorPanel' ),
-        center: this.layoutBounds.center
+        tandem: options.tandem.createTandem( 'projectileSelectorPanel' )
       }
     );
-    this.addChild( this.projectileSelectorPanel );
 
     this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
       model.fieldProperty,

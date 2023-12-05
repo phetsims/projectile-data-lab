@@ -18,6 +18,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -47,11 +48,14 @@ export default abstract class Field extends PhetioObject {
 
   public readonly isContinuousLaunchingProperty: BooleanProperty;
 
-  public readonly projectiles: Projectile[] = [];
+  // NOTE: Make sure no Projectile appears in both arrays at the same time
+
+  // TODO: Move airborneParticles to VSM????????? See https://github.com/phetsims/projectile-data-lab/issues/7
+  public readonly airborneProjectiles: Projectile[] = [];
+  public readonly landedProjectiles: Projectile[] = [];
 
   public readonly projectilesChangedEmitter = new Emitter();
 
-  // REVIEW: Do we really want and need this as a redundant emitter?
   public readonly projectileLandedEmitter;
 
   public readonly projectilesClearedEmitter;
@@ -74,7 +78,20 @@ export default abstract class Field extends PhetioObject {
         valueType: Projectile,
         phetioType: Projectile.ProjectileIO
       } ],
-      tandem: options.tandem.createTandem( 'projectileLandedEmitter' )
+      tandem: options.tandem.createTandem( 'projectileLandedEmitter' ),
+
+      // We must update the arrays before anything else, see below.
+      hasListenerOrderDependencies: true
+    } );
+
+    this.projectileLandedEmitter.addListener( projectile => {
+
+      assert && assert( this.airborneProjectiles.includes( projectile ), 'projectile should be in airborneProjectiles' );
+      assert && assert( !this.landedProjectiles.includes( projectile ), 'projectile should be in airborneProjectiles' );
+
+      arrayRemove( this.airborneProjectiles, projectile );
+      this.landedProjectiles.push( projectile );
+
     } );
 
     this.projectilesClearedEmitter = new Emitter();
@@ -153,6 +170,14 @@ export default abstract class Field extends PhetioObject {
     } );
   }
 
+  public getTotalProjectileCount(): number {
+    return this.airborneProjectiles.length + this.landedProjectiles.length;
+  }
+
+  public getAllProjectiles(): Projectile[] {
+    return [ ...this.airborneProjectiles, ...this.landedProjectiles ];
+  }
+
   public reset(): void {
     this.isContinuousLaunchingProperty.reset();
 
@@ -164,7 +189,8 @@ export default abstract class Field extends PhetioObject {
   }
 
   public clearProjectiles(): void {
-    this.projectiles.length = 0;
+    this.airborneProjectiles.length = 0;
+    this.landedProjectiles.length = 0;
 
     this.projectilesChangedEmitter.emit();
     this.projectilesClearedEmitter.emit();
@@ -184,7 +210,7 @@ export default abstract class Field extends PhetioObject {
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
 
     return new Projectile( screenTandemName, this.identifier, sampleNumber, 0, 0, this.projectileTypeProperty.value,
-      'AIRBORNE', isFlippedHorizontally, landedImageIndex, 0, launchAngle, launchSpeed,
+      isFlippedHorizontally, landedImageIndex, 0, launchAngle, launchSpeed,
       this.launchHeightProperty.value );
   }
 
@@ -192,7 +218,8 @@ export default abstract class Field extends PhetioObject {
 
   public toStateObject(): object {
     return {
-      projectiles: this.projectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
+      airborneProjectiles: this.airborneProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) ),
+      landedProjectiles: this.landedProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
     };
   }
 
@@ -201,13 +228,21 @@ export default abstract class Field extends PhetioObject {
     documentation: 'A field in the Projectile Data Lab', // TODO: https://github.com/phetsims/projectile-data-lab/issues/7 document fully
     defaultDeserializationMethod: 'applyState',
     stateSchema: {
-      projectiles: ArrayIO( Projectile.ProjectileIO )
+      airborneProjectiles: ArrayIO( Projectile.ProjectileIO ),
+      landedProjectiles: ArrayIO( Projectile.ProjectileIO )
     },
     toStateObject: field => field.toStateObject(),
-    applyState: ( field, stateObject ) => {
-      field.projectiles.length = 0;
-      stateObject.projectiles.forEach( ( projectileStateObject: ProjectileStateObject ) => {
-        field.projectiles.push( Projectile.ProjectileIO.fromStateObject( projectileStateObject ) );
+    applyState: ( field: Field, stateObject ) => {
+
+      field.airborneProjectiles.length = 0;
+      field.landedProjectiles.length = 0;
+
+      stateObject.airborneProjectiles.forEach( ( projectileStateObject: ProjectileStateObject ) => {
+        field.airborneProjectiles.push( Projectile.ProjectileIO.fromStateObject( projectileStateObject ) );
+      } );
+
+      stateObject.landedProjectiles.forEach( ( projectileStateObject: ProjectileStateObject ) => {
+        field.landedProjectiles.push( Projectile.ProjectileIO.fromStateObject( projectileStateObject ) );
       } );
     }
   } );

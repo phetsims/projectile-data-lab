@@ -60,14 +60,14 @@ export default class SamplingField extends Field {
   }
 
   public getProjectilesInCurrentSample(): Projectile[] {
-    return this.projectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
+    return this.landedProjectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
   }
 
   public createLandedProjectile(): void {
     const projectile = this.createProjectile( this.numberOfSamplesProperty.value );
-    projectile.setLanded( this );
+    projectile.setLanded();
 
-    this.projectiles.push( projectile );
+    this.landedProjectiles.push( projectile );
     this.projectilesChangedEmitter.emit();
   }
 

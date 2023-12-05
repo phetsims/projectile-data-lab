@@ -46,7 +46,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
     // Draw the projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
-      this.drawProjectile( context, projectiles[ i ], false );
+      this.drawProjectile( context, projectiles[ i ], true, false );
     }
   }
 }

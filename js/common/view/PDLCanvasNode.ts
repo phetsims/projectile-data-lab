@@ -94,10 +94,9 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     context.stroke();
   }
 
-  protected drawProjectile( context: CanvasRenderingContext2D, projectile: Projectile, isDarkened: boolean ): void {
+  protected drawProjectile( context: CanvasRenderingContext2D, projectile: Projectile, isLanded: boolean, isDarkened: boolean ): void {
 
     const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
-    const isLanded = projectile.phase === 'LANDED';
     let image: HTMLImageElement;
 
     switch( projectile.type ) {

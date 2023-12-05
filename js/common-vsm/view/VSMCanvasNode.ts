@@ -40,7 +40,8 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
     // 4: Flying projectiles
     // 5: Most recent landed projectile
 
-    const projectiles = this.fieldProperty.value.projectiles;
+    const landedProjectiles = this.fieldProperty.value.landedProjectiles;
+    const airborneProjectiles = this.fieldProperty.value.airborneProjectiles;
     const highlightedProjectile: Projectile | null = this.fieldProperty.value.selectedProjectileProperty.value;
 
     // Render the paths for the projectiles that are not the most recent landed projectile
@@ -48,7 +49,7 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
       context.lineWidth = 2;
       context.strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
 
-      projectiles.forEach( projectile => {
+      this.fieldProperty.value.getAllProjectiles().forEach( projectile => {
         if ( projectile !== highlightedProjectile ) {
           this.drawPathForProjectile( context, projectile );
         }
@@ -56,9 +57,9 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
     }
 
     // Draw the projectiles that have landed, but are not the most recent
-    projectiles.forEach( projectile => {
-      if ( projectile.phase === 'LANDED' && projectile !== highlightedProjectile ) {
-        this.drawProjectile( context, projectile, true );
+    landedProjectiles.forEach( projectile => {
+      if ( projectile !== highlightedProjectile ) {
+        this.drawProjectile( context, projectile, true, true );
       }
     } );
 
@@ -69,16 +70,13 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
     }
 
     // Draw the flying projectiles
-    for ( let i = 0; i < projectiles.length; i++ ) {
-      const projectile = projectiles[ i ];
-      if ( projectile.phase === 'AIRBORNE' ) {
-        this.drawProjectile( context, projectile, false );
-      }
+    for ( let i = 0; i < airborneProjectiles.length; i++ ) {
+      this.drawProjectile( context, airborneProjectiles[ i ], false, false );
     }
 
     // Draw the most recent landed projectile
     if ( highlightedProjectile ) {
-      this.drawProjectile( context, highlightedProjectile, false );
+      this.drawProjectile( context, highlightedProjectile, true, false );
     }
   }
 }

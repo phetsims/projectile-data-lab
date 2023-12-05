@@ -67,7 +67,7 @@ export default class SourcesScreenView extends VSMScreenView {
       top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
       spacing: PDLConstants.INTER_PANEL_SPACING,
-      children: [ staticToolPanel, interactiveToolPanel, fieldPanel ]
+      children: [ staticToolPanel, interactiveToolPanel, fieldPanel, this.projectileSelectorPanel ]
     } );
     this.addChild( rightVBox );
 

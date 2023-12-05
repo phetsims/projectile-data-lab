@@ -5,7 +5,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Path, VBox } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import angleUpSolidShape from '../../../../sherpa/js/fontawesome-5/angleUpSolidShape.js';
@@ -54,9 +54,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       return new VBox( {
         align: 'left',
         children: [
-          new Text( 'hello world: ' )
-          // new Text( 'Sample Size: ' + samplingFieldProperty.value.sampleSize ),
-          // new Text( `Mean: ${meanString} m` )
+          // new Text( '' )
         ]
       } );
     };

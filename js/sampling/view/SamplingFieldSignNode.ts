@@ -38,7 +38,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     } );
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
-      selected: selectedSampleProperty,
+      number: selectedSampleProperty,
       count: sampleCountProperty
     } );
 

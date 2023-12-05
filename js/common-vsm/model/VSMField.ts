@@ -53,7 +53,7 @@ export default class VSMField extends Field {
 
     this.selectedProjectileProperty = new DerivedProperty( [ this.selectedProjectileNumberProperty ],
       highlightedProjectileNumber => {
-        return this.projectiles[ highlightedProjectileNumber - 1 ] || null;
+        return this.landedProjectiles[ highlightedProjectileNumber - 1 ] || null;
       } );
 
     this.isLauncherCustomProperty = new Property<boolean>( false, {
@@ -76,14 +76,13 @@ export default class VSMField extends Field {
     } );
 
     this.projectileLandedEmitter.addListener( projectile => {
-      this.selectedProjectileNumberProperty.value = this.projectiles.indexOf( projectile ) + 1;
+      this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
     } );
 
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
     this.landedProjectileCountProperty = new NumberProperty( 0 );
     const updateProjectileCountProperty = () => {
-      const projectiles = this.projectiles.filter( projectile => projectile.phase === 'LANDED' );
-      this.landedProjectileCountProperty.value = projectiles.length;
+      this.landedProjectileCountProperty.value = this.landedProjectiles.length;
     };
 
     // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
@@ -92,13 +91,13 @@ export default class VSMField extends Field {
   }
 
   public override launchProjectile(): void {
-    if ( this.projectiles.length >= PDLConstants.MAX_PROJECTILES_PER_FIELD ) {
+    if ( this.getTotalProjectileCount() >= PDLConstants.MAX_PROJECTILES_PER_FIELD ) {
       return;
     }
     this.timeElapsedSinceLastLaunch = 0;
 
     const projectile = this.createProjectile( 0 );
-    this.projectiles.push( projectile );
+    this.airborneProjectiles.push( projectile );
 
     this.projectileLaunchedEmitter.emit( projectile );
   }
@@ -106,7 +105,7 @@ export default class VSMField extends Field {
   public step( dt: number ): void {
     this.timeElapsedSinceLastLaunch += dt;
 
-    this.projectiles.forEach( projectile => projectile.step( this, dt ) );
+    this.airborneProjectiles.forEach( projectile => projectile.step( this, dt ) );
     this.projectilesChangedEmitter.emit();
   }
 

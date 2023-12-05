@@ -10,7 +10,6 @@ import PDLConstants from '../PDLConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Field from './Field.js';
 import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
-import { ProjectilePhase, ProjectilePhaseValues } from './ProjectilePhase.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 
@@ -38,9 +37,6 @@ export default class Projectile {
   // The type of the projectile - CANNONBALL, PUMPKIN or PIANO
   public type: ProjectileType;
 
-  // Phase of the projectile's flight - AIRBORNE, LANDED
-  public phase: ProjectilePhase;
-
   // Initial angle of the projectile in degrees
   public launchAngle: number;
 
@@ -66,7 +62,6 @@ export default class Projectile {
     x: number,
     y: number,
     type: ProjectileType,
-    phase: ProjectilePhase,
     isFlippedHorizontally: boolean,
     landedImageIndex: number,
     timeAirborne: number,
@@ -79,7 +74,6 @@ export default class Projectile {
     this.x = x;
     this.y = y;
     this.type = type;
-    this.phase = phase;
     this.isFlippedHorizontally = isFlippedHorizontally;
     this.landedImageIndex = landedImageIndex;
     this.timeAirborne = timeAirborne;
@@ -90,32 +84,24 @@ export default class Projectile {
   }
 
   public step( field: Field, dt: number ): void {
-    if ( this.phase === 'AIRBORNE' ) {
-      this.timeAirborne += dt;
+    this.timeAirborne += dt;
 
-      this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
-      this.y = Projectile.getProjectileY( this.launchSpeed, this.launchAngle, this.launchHeight, this.timeAirborne )!;
+    this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
+    this.y = Projectile.getProjectileY( this.launchSpeed, this.launchAngle, this.launchHeight, this.timeAirborne )!;
 
-      if ( this.y <= 0 ) {
-        this.phase = 'LANDED';
-        this.x = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
-        this.y = 0;
-        this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
-      }
-
+    if ( this.y <= 0 ) {
+      this.x = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
+      this.y = 0;
+      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
       field.projectileLandedEmitter.emit( this );
     }
   }
 
-  public setLanded( field: Field ): void {
+  public setLanded(): void {
     const landedX = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
-
-    this.phase = 'LANDED';
     this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
     this.x = landedX;
     this.y = 0;
-
-    field.projectileLandedEmitter.emit( this );
   }
 
   public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
@@ -127,7 +113,6 @@ export default class Projectile {
       x: NumberIO,
       y: NumberIO,
       type: StringUnionIO( ProjectileTypeValues ),
-      phase: StringUnionIO( ProjectilePhaseValues ),
       isFlippedHorizontally: BooleanIO,
       landedImageIndex: NumberIO,
       timeAirborne: NumberIO,
@@ -143,7 +128,6 @@ export default class Projectile {
         x: projectile.x,
         y: projectile.y,
         type: projectile.type,
-        phase: projectile.phase,
         isFlippedHorizontally: projectile.isFlippedHorizontally,
         landedImageIndex: projectile.landedImageIndex,
         timeAirborne: projectile.timeAirborne,
@@ -160,7 +144,6 @@ export default class Projectile {
         stateObject.x,
         stateObject.y,
         stateObject.type,
-        stateObject.phase,
         stateObject.isFlippedHorizontally,
         stateObject.landedImageIndex,
         stateObject.timeAirborne,
@@ -219,7 +202,6 @@ export type ProjectileStateObject = {
   x: number;
   y: number;
   type: ProjectileType;
-  phase: ProjectilePhase;
   isFlippedHorizontally: boolean;
   landedImageIndex: number;
   timeAirborne: number;

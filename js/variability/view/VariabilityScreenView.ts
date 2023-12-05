@@ -64,7 +64,7 @@ export default class VariabilityScreenView extends VSMScreenView {
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
       top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
       spacing: PDLConstants.INTER_PANEL_SPACING,
-      children: [ staticToolPanel, interactiveToolPanel, fieldPanel ]
+      children: [ staticToolPanel, interactiveToolPanel, fieldPanel, this.projectileSelectorPanel ]
     } );
     this.addChild( rightVBox );
 

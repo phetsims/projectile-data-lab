@@ -139,8 +139,7 @@ export default class HistogramNode extends Node {
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {
-      const xValues = fieldProperty.value.projectiles
-        .filter( projectile => projectile.phase === 'LANDED' )
+      const xValues = fieldProperty.value.landedProjectiles
         .map( projectile => projectile.x );
       const histogramData = HistogramNode.getHistogramValues( xValues, binWidthProperty.value );
       histogramBarPlot.setDataSet( histogramData );
