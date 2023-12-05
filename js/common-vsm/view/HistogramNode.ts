@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Node, NodeOptions, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
