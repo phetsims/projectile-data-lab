@@ -14,7 +14,6 @@ import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
