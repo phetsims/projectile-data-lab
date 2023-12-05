@@ -11,7 +11,8 @@ import logGlobal from '../../../phet-core/js/logGlobal.js';
 import projectileDataLab from '../projectileDataLab.js';
 
 const SCHEMA_MAP = {
-  //TODO add schemas for query parameters, see https://github.com/phetsims/projectile-data-lab/issues/4
+  // TODO add schemas for query parameters, see https://github.com/phetsims/projectile-data-lab/issues/4
+  // Should this be validValues: histogram: [ 'binWidth', 'numberOfBins' ]?
 };
 
 const PDLQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );

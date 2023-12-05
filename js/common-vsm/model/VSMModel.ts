@@ -42,6 +42,7 @@ export default class VSMModel extends PDLModel<VSMField> {
   public readonly measuringTapeTipPositionProperty;
 
   // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
+  // Did we decide on this?
   public readonly presetLauncherProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly customLauncherTypeProperty: DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>;

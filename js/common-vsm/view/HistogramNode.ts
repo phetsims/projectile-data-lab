@@ -133,14 +133,7 @@ export default class HistogramNode extends Node {
 
     this.children = [
       zoomButtonGroup,
-      // TODO: No vbox needed, right? or maybe labels, see https://github.com/phetsims/projectile-data-lab/issues/7
-      new VBox( {
-        align: 'left',
-        resize: false,
-        spacing: 20,
-        children: [ chartNode ],
-        left: zoomButtonGroup.right + 5
-      } )
+      chartNode.mutate( { left: zoomButtonGroup.right + 5 } )
     ];
     this.mutate( options );
 
