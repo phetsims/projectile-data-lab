@@ -123,16 +123,6 @@ export default class VSMModel extends PDLModel<VSMField> {
         this.stopwatch.isRunningProperty.value = false;
       }
     } );
-
-    // For each field, add a listener to the projectileLandedEmitter that updates the projectiles' isMostRecentLanded
-    this.fields.forEach( field => {
-      field.projectileLandedEmitter.addListener( projectile => {
-        field.projectiles.forEach( projectile => {
-          projectile.isMostRecentLanded = false;
-        } );
-        projectile.isMostRecentLanded = true;
-      } );
-    } );
   }
 
   public step( dt: number ): void {

@@ -59,9 +59,6 @@ export default class Projectile {
   // The index of the image to display when the projectile has landed
   public landedImageIndex: number;
 
-  // Whether this is the most recent projectile to land
-  public isMostRecentLanded: boolean;
-
   public constructor(
     screenIdentifier: ScreenIdentifier,
     fieldIdentifier: string,
@@ -70,7 +67,6 @@ export default class Projectile {
     y: number,
     type: ProjectileType,
     phase: ProjectilePhase,
-    isMostRecentLanded: boolean,
     isFlippedHorizontally: boolean,
     landedImageIndex: number,
     timeAirborne: number,
@@ -84,7 +80,6 @@ export default class Projectile {
     this.y = y;
     this.type = type;
     this.phase = phase;
-    this.isMostRecentLanded = isMostRecentLanded;
     this.isFlippedHorizontally = isFlippedHorizontally;
     this.landedImageIndex = landedImageIndex;
     this.timeAirborne = timeAirborne;
@@ -159,7 +154,6 @@ export default class Projectile {
       y: NumberIO,
       type: StringUnionIO( ProjectileTypeValues ),
       phase: StringUnionIO( ProjectilePhaseValues ),
-      isMostRecentLanded: BooleanIO,
       isFlippedHorizontally: BooleanIO,
       landedImageIndex: NumberIO,
       timeAirborne: NumberIO,
@@ -176,7 +170,6 @@ export default class Projectile {
         y: projectile.y,
         type: projectile.type,
         phase: projectile.phase,
-        isMostRecentLanded: projectile.isMostRecentLanded,
         isFlippedHorizontally: projectile.isFlippedHorizontally,
         landedImageIndex: projectile.landedImageIndex,
         timeAirborne: projectile.timeAirborne,
@@ -194,7 +187,6 @@ export default class Projectile {
         stateObject.y,
         stateObject.type,
         stateObject.phase,
-        stateObject.isMostRecentLanded,
         stateObject.isFlippedHorizontally,
         stateObject.landedImageIndex,
         stateObject.timeAirborne,
@@ -254,7 +246,6 @@ export type ProjectileStateObject = {
   y: number;
   type: ProjectileType;
   phase: ProjectilePhase;
-  isMostRecentLanded: boolean;
   isFlippedHorizontally: boolean;
   landedImageIndex: number;
   timeAirborne: number;

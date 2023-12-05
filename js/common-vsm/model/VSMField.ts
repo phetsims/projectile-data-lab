@@ -12,6 +12,8 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -30,6 +32,9 @@ export default class VSMField extends Field {
 
   public timeElapsedSinceLastLaunch = 0;
 
+  private highlightedProjectileNumberProperty;
+  public readonly highlightedProjectileProperty: TReadOnlyProperty<Projectile | null>;
+
   public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
     parameters: [ {
       name: 'projectile',
@@ -39,6 +44,16 @@ export default class VSMField extends Field {
 
   public constructor( public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
     super( providedOptions );
+
+    this.highlightedProjectileNumberProperty = new NumberProperty( 0, {
+      tandem: providedOptions.tandem.createTandem( 'highlightedProjectileNumberProperty' ),
+      phetioDocumentation: 'This property is the number of the highlighted projectile, in order of landing. Zero means no projectile is highlighted.'
+    } );
+
+    this.highlightedProjectileProperty = new DerivedProperty( [ this.highlightedProjectileNumberProperty ],
+      highlightedProjectileNumber => {
+        return this.projectiles[ highlightedProjectileNumber - 1 ] || null;
+      } );
 
     this.isLauncherCustomProperty = new Property<boolean>( false, {
       tandem: providedOptions.tandem.createTandem( 'isLauncherCustomProperty' ),
@@ -57,6 +72,10 @@ export default class VSMField extends Field {
       range: PDLConstants.ANGLE_STABILIZER_RANGE,
       tandem: providedOptions.tandem.createTandem( 'angleStabilizerProperty' ),
       phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
+    } );
+
+    this.projectileLandedEmitter.addListener( projectile => {
+      this.highlightedProjectileNumberProperty.value = this.projectiles.indexOf( projectile ) + 1;
     } );
   }
 
@@ -85,6 +104,12 @@ export default class VSMField extends Field {
     this.isLauncherCustomProperty.reset();
     this.customLauncherTypeProperty.reset();
     this.angleStabilizerProperty.reset();
+  }
+
+  public override clearProjectiles(): void {
+    super.clearProjectiles();
+
+    this.highlightedProjectileNumberProperty.reset();
   }
 }
 

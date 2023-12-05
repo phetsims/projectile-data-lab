@@ -41,33 +41,31 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
     // 5: Most recent landed projectile
 
     const projectiles = this.fieldProperty.value.projectiles;
-    const mostRecentLandedProjectile: Projectile | null = projectiles.find( projectile => projectile.isMostRecentLanded ) || null;
+    const highlightedProjectile: Projectile | null = this.fieldProperty.value.highlightedProjectileProperty.value;
 
-// Render the paths for the projectiles that are not the most recent landed projectile
+    // Render the paths for the projectiles that are not the most recent landed projectile
     if ( this.isPathsVisibleProperty.value ) {
       context.lineWidth = 2;
       context.strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
 
-      for ( let i = 0; i < projectiles.length; i++ ) {
-        const projectile = projectiles[ i ];
-        if ( !projectile.isMostRecentLanded ) {
+      projectiles.forEach( projectile => {
+        if ( projectile !== highlightedProjectile ) {
           this.drawPathForProjectile( context, projectile );
         }
-      }
+      } );
     }
 
     // Draw the projectiles that have landed, but are not the most recent
-    for ( let i = 0; i < projectiles.length; i++ ) {
-      const projectile = projectiles[ i ];
-      if ( projectile.phase === 'LANDED' && !projectile.isMostRecentLanded ) {
+    projectiles.forEach( projectile => {
+      if ( projectile.phase === 'LANDED' && projectile !== highlightedProjectile ) {
         this.drawProjectile( context, projectile, true );
       }
-    }
+    } );
 
     // Draw the path for the most recent landed projectile
-    if ( this.isPathsVisibleProperty.value && mostRecentLandedProjectile ) {
+    if ( this.isPathsVisibleProperty.value && highlightedProjectile ) {
       context.strokeStyle = PDLColors.pathStrokeMostRecentProjectileColorProperty.value.toCSS();
-      this.drawPathForProjectile( context, mostRecentLandedProjectile );
+      this.drawPathForProjectile( context, highlightedProjectile );
     }
 
     // Draw the flying projectiles
@@ -78,9 +76,9 @@ export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
       }
     }
 
-// Draw the most recent landed projectile
-    if ( mostRecentLandedProjectile ) {
-      this.drawProjectile( context, mostRecentLandedProjectile, false );
+    // Draw the most recent landed projectile
+    if ( highlightedProjectile ) {
+      this.drawProjectile( context, highlightedProjectile, false );
     }
   }
 }

@@ -184,7 +184,7 @@ export default abstract class Field extends PhetioObject {
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
 
     return new Projectile( screenTandemName, this.identifier, sampleNumber, 0, 0, this.projectileTypeProperty.value,
-      'AIRBORNE', false, isFlippedHorizontally, landedImageIndex, 0, launchAngle, launchSpeed,
+      'AIRBORNE', isFlippedHorizontally, landedImageIndex, 0, launchAngle, launchSpeed,
       this.launchHeightProperty.value );
   }
 
