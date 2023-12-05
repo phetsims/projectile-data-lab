@@ -118,10 +118,9 @@ export default class SpeedToolNode extends HeatMapToolNode {
     this.displayOffset = new Vector2( speedToolX, speedToolY );
 
     const connectingWireShape = this.connectingWireShapeForIsRaised( isLauncherRaised );
-    this.connectingWire.removeAllChildren();
-    this.connectingWire.addChild( new Path( connectingWireShape, {
+    this.connectingWire.children = [ new Path( connectingWireShape, {
       stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
-    } ) );
+    } ) ];
 
     this.displayNode.setX( speedToolX );
     this.displayNode.setY( speedToolY );

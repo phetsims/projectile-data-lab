@@ -26,6 +26,9 @@ const PDLConstants = {
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.1, // seconds
   MAX_ANGLE_STANDARD_DEVIATION: MAX_ANGLE_STANDARD_DEVIATION, // degrees
 
+  // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
+  ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS: 3,
+
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,
   FIELD_LINE_NUMBER_INCREMENT: 10,

@@ -16,6 +16,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import { AngleForConfiguration, LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
@@ -77,17 +78,14 @@ export default class CustomLauncherNode extends LauncherNode {
 
     this.addChild( this.angleStabilizersContainer );
     this.angleStabilizersContainer.moveToBack();
-    this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value, 3 * angleStabilizerProperty.value ) );
+    this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizerProperty.value ) );
 
     // Move the guide rail bolt to the front so that it is not covered by the launcher frame.
     this.guideRailBolt.moveToFront();
 
     //TODO: Do we want to add a 'push' effect on the launcher when reducing the angle stabilizer gap? - see https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ launcherConfigurationProperty, angleStabilizerProperty ], ( launcherConfiguration, angleStabilizer ) => {
-
-      //TODO: Check this for memory leaks - see https://github.com/phetsims/projectile-data-lab/issues/7
-      this.angleStabilizersContainer.removeAllChildren();
-      this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfiguration, 3 * angleStabilizer ) );
+      this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
     } );
 
     isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {

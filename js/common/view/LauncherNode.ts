@@ -120,19 +120,16 @@ export default class LauncherNode extends Node {
   }
 
   protected updatePresetLauncher( type: number ): void {
-    this.launcherBarrelGraphics.removeAllChildren();
     this.launcherBarrelGraphicsForType( type ).forEach( launcherBarrelGraphics => {
-      this.launcherBarrelGraphics.addChild( launcherBarrelGraphics );
+      this.launcherBarrelGraphics.children = [ launcherBarrelGraphics ];
     } );
 
-    this.launcherFrameBack.removeAllChildren();
     this.launcherFrameBackGraphicsForType( type ).forEach( launcherFrameBackGraphics => {
-      this.launcherFrameBack.addChild( launcherFrameBackGraphics );
+      this.launcherFrameBack.children = [ launcherFrameBackGraphics ];
     } );
 
-    this.launcherFrameFront.removeAllChildren();
     this.launcherFrameFrontGraphicsForType( type ).forEach( launcherFrameFrontGraphics => {
-      this.launcherFrameFront.addChild( launcherFrameFrontGraphics );
+      this.launcherFrameFront.children = [ launcherFrameFrontGraphics ];
     } );
   }
 
