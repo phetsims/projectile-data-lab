@@ -27,6 +27,8 @@ export default class SamplingField extends Field {
   public timeBetweenProjectiles: number;
   public currentTime = 0;
   public lastSampleCompletionTime: number | null = null;
+
+  // TODO: In 'continuous' mode, this should be 0.2 - see https://github.com/phetsims/projectile-data-lab/issues/7
   private interSampleTime = 0.5;
 
   public constructor( public readonly launcher: number, public readonly sampleSize: number, options: SamplingFieldOptions ) {
@@ -51,6 +53,7 @@ export default class SamplingField extends Field {
 
     assert && assert( totalSampleTime > 0, 'totalSampleTime should be greater than 0' );
 
+    // TODO: In 'continuous' mode, totalSampleTime should be 0.2 - see https://github.com/phetsims/projectile-data-lab/issues/7
     this.timeBetweenProjectiles = totalSampleTime / this.sampleSize;
 
     this.presetLauncherProperty.value = launcher;
