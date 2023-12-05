@@ -5,7 +5,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, Node, Path, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Image, Node, Path, VBox } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import angleUpSolidShape from '../../../../sherpa/js/fontawesome-5/angleUpSolidShape.js';
@@ -18,6 +18,14 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Projectile from '../../common/model/Projectile.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import pianoLanded_png from '../../../images/pianoLanded_png.js';
+import cannonball_png from '../../../images/cannonball_png.js';
+import pumpkinLanded1_png from '../../../images/pumpkinLanded1_png.js';
+import pumpkinLanded2_png from '../../../images/pumpkinLanded2_png.js';
+import pumpkinLanded3_png from '../../../images/pumpkinLanded3_png.js';
+import Matrix3 from '../../../../dot/js/Matrix3.js';
+
+const PUMPKIN_LANDED_IMAGES = [ pumpkinLanded1_png, pumpkinLanded2_png, pumpkinLanded3_png ];
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -50,13 +58,26 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       // const values = projectiles.map( projectile => projectile.x );
       //
       // const meanString = values.length === 0 ? '?' : Utils.toFixedNumber( _.mean( values ), 1 );
+      const projectile = selectedProjectileProperty.value;
 
-      return new VBox( {
-        align: 'left',
-        children: [
-          // new Text( '' )
-        ]
-      } );
+      if ( projectile ) {
+
+        const imagePNG = projectile.type === 'PUMPKIN' ? PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ] :
+                         projectile.type === 'PIANO' ? pianoLanded_png :
+                         cannonball_png;
+
+        const image = new Image( imagePNG, {
+          scale: 0.5
+        } );
+
+        return new Node( {
+          children: [ image ],
+          matrix: Matrix3.scale( projectile.isFlippedHorizontally ? -1 : 1, 1 )
+        } );
+      }
+      else {
+        return new Node();
+      }
     };
     const node = new Node();
 
