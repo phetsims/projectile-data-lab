@@ -43,11 +43,13 @@ export default class VSMModel extends PDLModel<VSMField> {
 
   // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
   // Did we decide on this?
+  // Number is lightweight in the code, but is it best for selecting a launcher via PhET-IO?
   public readonly presetLauncherProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly customLauncherTypeProperty: DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>;
   public readonly angleStabilizerProperty: DynamicProperty<number, number, VSMField>;
 
+  // TODO: Do we still need this in VSMModel now that we have VSMCanvasNode? - see see https://github.com/phetsims/projectile-data-lab/issues/7
   public selectedSampleProperty: TReadOnlyProperty<number> = new Property( 0 );
 
   public constructor( providedOptions: VSMModelOptions ) {
@@ -155,6 +157,7 @@ export default class VSMModel extends PDLModel<VSMField> {
 
   public override reset(): void {
     super.reset();
+
     this.isLaunchAngleVisibleProperty.reset();
     this.isLaunchSpeedVisibleProperty.reset();
 

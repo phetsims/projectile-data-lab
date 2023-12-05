@@ -68,6 +68,13 @@ export default class MeasuresModel extends VSMModel {
         } );
     } );
   }
+
+  public override reset(): void {
+    super.reset();
+
+    this.isDataMeasuresVisibleProperty.reset();
+    this.isIntervalToolVisibleProperty.reset();
+  }
 }
 
 projectileDataLab.register( 'MeasuresModel', MeasuresModel );

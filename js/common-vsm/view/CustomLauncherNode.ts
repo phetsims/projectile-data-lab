@@ -42,8 +42,6 @@ export default class CustomLauncherNode extends LauncherNode {
     const launcherTypeSymbol = new Image( launcherType, {
       visibleProperty: isLauncherCustomProperty,
       scale: 0.22,
-      centerX: -this.launcherBarrel.width / 2,
-      centerY: 0,
       rotation: Math.PI / 2
     } );
     launcherTypeSymbol.image = explosion_png;
@@ -83,7 +81,7 @@ export default class CustomLauncherNode extends LauncherNode {
 
     customLauncherTypeProperty.link( launcherType => {
       launcherTypeSymbol.image = this.getImageKeyForCustomLauncherType( launcherType );
-      launcherTypeSymbol.centerX = -this.launcherBarrel.width / 2;
+      launcherTypeSymbol.centerX = -0.43 * this.launcherBarrel.width;
       launcherTypeSymbol.centerY = 0;
     } );
   }

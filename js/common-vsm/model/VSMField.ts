@@ -78,6 +78,14 @@ export default class VSMField extends Field {
     this.projectiles.forEach( projectile => projectile.step( this, dt ) );
     this.projectilesChangedEmitter.emit();
   }
+
+  public override reset(): void {
+    super.reset();
+
+    this.isLauncherCustomProperty.reset();
+    this.customLauncherTypeProperty.reset();
+    this.angleStabilizerProperty.reset();
+  }
 }
 
 projectileDataLab.register( 'VSMField', VSMField );

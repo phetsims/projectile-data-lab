@@ -160,6 +160,7 @@ export default abstract class Field extends PhetioObject {
 
   public reset(): void {
     this.isContinuousLaunchingProperty.reset();
+
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
     this.presetLauncherProperty.reset();
