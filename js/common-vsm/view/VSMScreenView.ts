@@ -143,6 +143,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
     // When the field changes, restore the entire state of the heat maps.
     model.fieldProperty.link( field => {
 
+      // Sets to initial conditions (remains at initial conditions if there are no projectiles)
       speedToolNode.clear();
       angleToolNode.clear();
 
@@ -150,13 +151,10 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
         speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
         angleToolNode.updateHeatMapWithData( projectile.launchAngle );
       } );
+
       if ( field.projectiles.length > 0 ) {
         speedToolNode.updateNeedleAndText( field.projectiles[ field.projectiles.length - 1 ].launchSpeed );
         angleToolNode.updateNeedleAndText( field.projectiles[ field.projectiles.length - 1 ].launchAngle );
-      }
-      else {
-
-        // TODO: https://github.com/phetsims/projectile-data-lab/issues/7 set back to initial state if there are no projectiles
       }
     } );
 
