@@ -85,14 +85,14 @@ export default class VSMField extends Field {
       this.landedProjectileCountProperty.value = this.landedProjectiles.length;
     };
 
-    // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
-    // But in that case we will need to track this data another way.
-    this.projectileLandedEmitter.addListener( updateProjectileCountProperty );
-
-    // Repaint the canvas if the selected projectile changes, even if time is paused
+    // If the selected projectile is changed, repaint the canvas even if time is paused
     this.selectedProjectileProperty.lazyLink( () => {
       this.projectilesChangedEmitter.emit();
     } );
+
+    // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
+    // But in that case we will need to track this data another way.
+    this.projectileLandedEmitter.addListener( updateProjectileCountProperty );
   }
 
   public override launchProjectile(): void {
