@@ -133,9 +133,10 @@ export default class LauncherNode extends Node {
   }
 
   private launcherBarrelGraphicsForType( presetLauncher: number ): Node[] {
-    const barrelFillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
-    const barrelFillDarkColorProperty = new DerivedProperty( [ barrelFillColorProperty ],
+    const barrelPrimaryColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ].primary;
+    const barrelPrimaryDarkColorProperty = new DerivedProperty( [ barrelPrimaryColorProperty ],
       color => color.darkerColor( 0.8 ) );
+    const barrelSecondaryColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ].secondary;
 
     const barrelBaseRadius = 0.5 * BARREL_BASE_WIDTH;
     const barrelBaseX = -BARREL_LENGTH_BEFORE_ORIGIN + ( 1 - BARREL_BASE_PAST_BOLT_FACTOR ) * barrelBaseRadius;
@@ -152,10 +153,10 @@ export default class LauncherNode extends Node {
     const barrelShape = barrelBaseShape.shapeUnion( barrelNozzleShape );
 
     const barrelFillGradient = new LinearGradient( 0, -barrelBaseRadius, 0, barrelBaseRadius );
-    barrelFillGradient.addColorStop( 0, barrelFillDarkColorProperty );
-    barrelFillGradient.addColorStop( 0.4, barrelFillColorProperty );
-    barrelFillGradient.addColorStop( 0.6, barrelFillColorProperty );
-    barrelFillGradient.addColorStop( 1, barrelFillDarkColorProperty );
+    barrelFillGradient.addColorStop( 0, barrelPrimaryDarkColorProperty );
+    barrelFillGradient.addColorStop( 0.4, barrelPrimaryColorProperty );
+    barrelFillGradient.addColorStop( 0.6, barrelPrimaryColorProperty );
+    barrelFillGradient.addColorStop( 1, barrelPrimaryDarkColorProperty );
 
     const barrel = new Path( barrelShape, {
       fill: barrelFillGradient,
@@ -170,7 +171,7 @@ export default class LauncherNode extends Node {
       -0.5 * launcherEndRectWidth,
       launcherEndRectLength,
       launcherEndRectWidth, {
-        fill: barrelFillDarkColorProperty,
+        fill: barrelSecondaryColorProperty,
         stroke: PDLColors.launcherStrokeColorProperty,
         lineWidth: 1,
         cornerRadius: 0.1 * launcherEndRectLength
@@ -185,7 +186,7 @@ export default class LauncherNode extends Node {
       fill: PDLColors.launcherFrameBackgroundColorProperty
     } );
 
-    const fillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
+    const fillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ].secondary;
     const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
       color => color.darkerColor( 0.8 ) );
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
@@ -231,7 +232,7 @@ export default class LauncherNode extends Node {
 
   protected launcherFrameFrontGraphicsForType( presetLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
-    const fillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ];
+    const fillColorProperty = PDLColors.launcherFillColorProperties[ presetLauncher - 1 ].secondary;
     const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
       color => color.darkerColor( 0.8 ) );
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],

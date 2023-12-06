@@ -57,29 +57,30 @@ const PDLColors = {
   } ),
 
   launcherFillColorProperties: [
-    new ProfileColorProperty( projectileDataLab, 'launcher1Fill', {
-      default: '#908C99'
-    } ),
-
-    new ProfileColorProperty( projectileDataLab, 'launcher2Fill', {
-      default: '#ffca3a'
-    } ),
-
-    new ProfileColorProperty( projectileDataLab, 'launcher3Fill', {
-      default: '#ff494e'
-    } ),
-
-    new ProfileColorProperty( projectileDataLab, 'launcher4Fill', {
-      default: '#7ad926'
-    } ),
-
-    new ProfileColorProperty( projectileDataLab, 'launcher5Fill', {
-      default: '#1992d4'
-    } ),
-
-    new ProfileColorProperty( projectileDataLab, 'launcher6Fill', {
-      default: '#b77dee'
-    } )
+    {
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher1Primary', { default: '#908C99' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher1Secondary', { default: '#828089' } )
+    },
+    {
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher2Primary', { default: '#CE0909' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher2Secondary', { default: '#AA210B' } )
+    },
+    {
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher3Primary', { default: '#F2680A' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher3Secondary', { default: '#C9620D' } )
+    },
+    {
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher4Primary', { default: '#FAA613' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher4Secondary', { default: '#DDA417' } )
+    },
+    {
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher5Primary', { default: '#7EC62A' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher5Secondary', { default: '#5EA01F' } )
+    },
+    {
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher6Primary', { default: '#A833B9' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher6Secondary', { default: '#812B9E' } )
+    }
   ],
 
   launcherStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherStroke', {

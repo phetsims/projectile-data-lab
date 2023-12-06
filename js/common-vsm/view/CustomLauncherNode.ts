@@ -70,7 +70,7 @@ export default class CustomLauncherNode extends LauncherNode {
     const launchAngleLimiterLength = 19;
     const launchAngleLimiter = new Rectangle( -BARREL_LENGTH_BEFORE_ORIGIN - launchAngleLimiterLength, -0.5 * LAUNCH_ANGLE_LIMITER_WIDTH,
       launchAngleLimiterLength, LAUNCH_ANGLE_LIMITER_WIDTH, {
-        fill: PDLColors.launcherFillColorProperties[ 0 ],
+        fill: PDLColors.launcherFillColorProperties[ 0 ].primary,
         stroke: PDLColors.launcherStrokeColorProperty,
         cornerRadius: 2
       } );
