@@ -90,10 +90,18 @@ export default class CustomLauncherNode extends LauncherNode {
     const gearTop = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
     const gearBottom = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
 
-    const gearTopContainer = new Node( { x: gearToOriginDistance * Math.cos( gearTopAngle ),
-      y: gearToOriginDistance * Math.sin( gearTopAngle ), children: [ gearTop ] } );
-    const gearBottomContainer = new Node( { x: gearToOriginDistance * Math.cos( gearBottomAngle ),
-      y: gearToOriginDistance * Math.sin( gearBottomAngle ), children: [ gearBottom ] } );
+    const gearTopContainer = new Node( {
+      visibleProperty: isLauncherCustomProperty,
+      x: gearToOriginDistance * Math.cos( gearTopAngle ),
+      y: gearToOriginDistance * Math.sin( gearTopAngle ),
+      children: [ gearTop ]
+    } );
+    const gearBottomContainer = new Node( {
+      visibleProperty: isLauncherCustomProperty,
+      x: gearToOriginDistance * Math.cos( gearBottomAngle ),
+      y: gearToOriginDistance * Math.sin( gearBottomAngle ),
+      children: [ gearBottom ]
+    } );
 
     this.addChild( gearTopContainer );
     this.addChild( gearBottomContainer );
