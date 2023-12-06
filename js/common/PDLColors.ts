@@ -91,11 +91,11 @@ const PDLColors = {
   } ),
 
   launcherGuideBoltInnerColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherGuideBoltInner', {
-    default: '#999999'
+    default: '#888888'
   } ),
 
   launcherGuideBoltOuterColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherGuideBoltOuter', {
-    default: '#cccccc'
+    default: '#aaaaaa'
   } ),
 
   fieldSignColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignFill', {
