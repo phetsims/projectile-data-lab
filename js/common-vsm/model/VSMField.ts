@@ -14,6 +14,7 @@ import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -30,7 +31,7 @@ export default class VSMField extends Field {
   public readonly customLauncherTypeProperty: Property<CustomLauncherType>;
   public readonly angleStabilizerProperty: NumberProperty;
 
-  public timeElapsedSinceLastLaunch = Infinity;
+  public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
 
   public readonly selectedProjectileNumberProperty: NumberProperty;
   public readonly selectedProjectileProperty: TReadOnlyProperty<Projectile | null>;
@@ -99,7 +100,6 @@ export default class VSMField extends Field {
     if ( this.getTotalProjectileCount() >= PDLConstants.MAX_PROJECTILES_PER_FIELD ) {
       return;
     }
-    this.timeElapsedSinceLastLaunch = 0;
 
     const projectile = this.createProjectile( 0 );
     this.airborneProjectiles.push( projectile );
@@ -108,7 +108,6 @@ export default class VSMField extends Field {
   }
 
   public step( dt: number ): void {
-    this.timeElapsedSinceLastLaunch += dt;
 
     // If any projectiles were airborne at the beginning of the step, repaint the canvas at the end
     const numInitialAirborneProjectiles = this.airborneProjectiles.length;
@@ -129,13 +128,14 @@ export default class VSMField extends Field {
     this.isLauncherCustomProperty.reset();
     this.customLauncherTypeProperty.reset();
     this.angleStabilizerProperty.reset();
+    this.continuousLaunchTimer.reset();
   }
 
   public override clearProjectiles(): void {
     super.clearProjectiles();
 
     // Reset the time elapsed since the last launch so that continuous mode can immediately launch a projectile
-    this.timeElapsedSinceLastLaunch = Infinity;
+    this.continuousLaunchTimer.setZeroTimeRemaining();
 
     this.selectedProjectileNumberProperty.reset();
     this.landedProjectileCountProperty.reset();

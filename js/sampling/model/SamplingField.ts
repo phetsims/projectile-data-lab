@@ -5,6 +5,7 @@ import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Projectile from '../../common/model/Projectile.js';
+import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model.
@@ -16,20 +17,19 @@ import Projectile from '../../common/model/Projectile.js';
 type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
+const WITHIN_SAMPLE_TIME_CONTINUOUS = 0.2;
+
 export default class SamplingField extends Field {
   public override identifier: string;
 
-  private elapsedTimeIntraSample = 0;
+  private readonly withinSampleTimer: PDLEventTimer;
+  private readonly betweenSamplesTimer = new PDLEventTimer( 0.2 );
+
   public readonly numberOfSamplesProperty: NumberProperty;
   public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
-  public currentLandedCount = 0;
-  public timeBetweenProjectiles: number;
-  public currentTime = 0;
-  public lastSampleCompletionTime: number | null = null;
-
-  // TODO: In 'continuous' mode, this should be 0.2 - see https://github.com/phetsims/projectile-data-lab/issues/7
-  private interSampleTime = 0.5;
+  private currentLandedCount = 0;
+  private readonly singleModeWithinSamplePeriod: number;
 
   public constructor( public readonly launcher: number, public readonly sampleSize: number, options: SamplingFieldOptions ) {
     super( options );
@@ -53,8 +53,9 @@ export default class SamplingField extends Field {
 
     assert && assert( totalSampleTime > 0, 'totalSampleTime should be greater than 0' );
 
-    // TODO: In 'continuous' mode, totalSampleTime should be 0.2 - see https://github.com/phetsims/projectile-data-lab/issues/7
-    this.timeBetweenProjectiles = totalSampleTime / this.sampleSize;
+    this.singleModeWithinSamplePeriod = totalSampleTime / this.sampleSize;
+
+    this.withinSampleTimer = new PDLEventTimer( this.singleModeWithinSamplePeriod );
 
     this.presetLauncherProperty.value = launcher;
   }
@@ -69,53 +70,57 @@ export default class SamplingField extends Field {
 
     this.landedProjectiles.push( projectile );
     this.projectilesChangedEmitter.emit();
+    this.currentLandedCount++;
   }
 
   public startNewSample(): void {
     this.selectedSampleProperty.value++;
     this.numberOfSamplesProperty.value++;
+    this.currentLandedCount = 0;
     this.createLandedProjectile();
-    this.currentLandedCount = 1;
-    this.elapsedTimeIntraSample = 0;
+
+    this.betweenSamplesTimer.stop();
+    this.withinSampleTimer.restart();
   }
 
+  // TODO: Some of this logic should be called from SamplingModel, like we do in VSMModel.step (maybe?) https://github.com/phetsims/projectile-data-lab/issues/7
   public step( dt: number, isContinuousLaunching: boolean ): void {
 
-    this.currentTime += dt;
-    this.elapsedTimeIntraSample += dt;
-
-    if ( isContinuousLaunching && this.lastSampleCompletionTime !== null ) {
-      const timeSinceLastSampleCompleted = this.currentTime - this.lastSampleCompletionTime;
-      if ( isContinuousLaunching && timeSinceLastSampleCompleted >= this.interSampleTime ) {
+    if ( isContinuousLaunching ) {
+      this.betweenSamplesTimer.step( dt, () => {
         this.startNewSample();
-        this.lastSampleCompletionTime = null;
-      }
+      } );
     }
 
-    while ( this.currentLandedCount > 0 && this.currentLandedCount < this.sampleSize && ( this.elapsedTimeIntraSample - this.timeBetweenProjectiles > 0 ) ) {
+    this.withinSampleTimer.step( dt, () => {
+
       this.createLandedProjectile();
-      this.currentLandedCount++;
-      this.elapsedTimeIntraSample -= this.timeBetweenProjectiles;
 
       if ( this.currentLandedCount === this.sampleSize ) {
         this.numberOfCompletedSamplesProperty.value++;
-        this.lastSampleCompletionTime = this.currentTime;
+
+        // Finished a sample, schedule the next one to begin soon
+        this.withinSampleTimer.stop();
+        this.betweenSamplesTimer.restart();
       }
-    }
+    } );
   }
 
   // When the eraser button is pressed, clear the selected Field's projectiles.
   public override clearProjectiles(): void {
     super.clearProjectiles();
 
-    this.elapsedTimeIntraSample = 0;
     this.numberOfSamplesProperty.reset();
     this.currentLandedCount = 0;
 
     this.numberOfCompletedSamplesProperty.reset();
 
-    this.currentTime = 0;
-    this.lastSampleCompletionTime = null;
+    this.withinSampleTimer.stop();
+    this.betweenSamplesTimer.stop();
+  }
+
+  public setLaunchMode( launchMode: 'single' | 'continuous' ): void {
+    this.withinSampleTimer.setPeriod( launchMode === 'single' ? this.singleModeWithinSamplePeriod : WITHIN_SAMPLE_TIME_CONTINUOUS / this.sampleSize );
   }
 }
 

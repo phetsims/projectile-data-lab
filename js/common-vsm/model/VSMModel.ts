@@ -18,7 +18,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import { CustomLauncherType } from './CustomLauncherType.js';
 import { VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
 import Projectile from '../../common/model/Projectile.js';
@@ -142,14 +141,6 @@ export default class VSMModel extends PDLModel<VSMField> {
         this.stopwatch.isRunningProperty.value = false;
       }
     } );
-
-
-    // If we stop continuous launching, reset the time elapsed since the last launch so that the next launch is not delayed.
-    this.isContinuousLaunchingProperty.lazyLink( isContinuousLaunching => {
-      if ( !isContinuousLaunching ) {
-        this.fieldProperty.value.timeElapsedSinceLastLaunch = Infinity;
-      }
-    } );
   }
 
   public override launchButtonPressed(): void {
@@ -157,10 +148,13 @@ export default class VSMModel extends PDLModel<VSMField> {
       this.fieldProperty.value.launchProjectile();
     }
     else {
-      if ( !this.isContinuousLaunchingProperty.value ) {
-        this.fieldProperty.value.launchProjectile();
-      }
+
       this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
+
+      if ( this.isContinuousLaunchingProperty.value ) {
+        this.fieldProperty.value.launchProjectile();
+        this.fieldProperty.value.continuousLaunchTimer.restart();
+      }
     }
   }
 
@@ -173,9 +167,11 @@ export default class VSMModel extends PDLModel<VSMField> {
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' &&
-         this.isContinuousLaunchingProperty.value &&
-         this.fieldProperty.value.timeElapsedSinceLastLaunch > PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES ) {
-      this.fieldProperty.value.launchProjectile();
+         this.isContinuousLaunchingProperty.value ) {
+
+      this.fieldProperty.value.continuousLaunchTimer.step( dt, () => {
+        this.fieldProperty.value.launchProjectile();
+      } );
     }
 
     this.fieldProperty.value.step( dt );

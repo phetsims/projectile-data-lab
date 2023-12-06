@@ -84,6 +84,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     this.numberOfCompletedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
       derive: t => t.numberOfCompletedSamplesProperty
     } );
+
+    // When the launch mode changes, update the timing between projectiles within a sample.
+    this.launchModeProperty.link( launchMode => {
+      this.fields.forEach( field => field.setLaunchMode( launchMode ) );
+    } );
   }
 
   public override launchButtonPressed(): void {
@@ -100,6 +105,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public step( dt: number ): void {
     this.fieldProperty.value.step( dt, this.isContinuousLaunchingProperty.value );
+  }
+
+  public override clearCurrentField(): void {
+    super.clearCurrentField();
+    this.isContinuousLaunchingProperty.reset();
   }
 
   /**
