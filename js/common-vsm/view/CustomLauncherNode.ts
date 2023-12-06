@@ -124,11 +124,11 @@ export default class CustomLauncherNode extends LauncherNode {
       // If the second
       if ( isCustom ) { // && ( !prevIsCustom || prevIsCustom === null ) ) {
         this.updatePresetLauncher( 1 );
-        this.launcherFrameFront.visible = false;
+        this.launcherFrameFront.opacity = 0.2; // Do not set invisible because of 60 degree launch.
       }
       else { //if ( !isCustom && prevIsCustom ) {
         this.updatePresetLauncher( presetLauncherProperty.value );
-        this.launcherFrameFront.visible = true;
+        this.launcherFrameFront.opacity = 1;
       }
     } );
 

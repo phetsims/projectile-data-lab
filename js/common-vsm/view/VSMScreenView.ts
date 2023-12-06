@@ -177,6 +177,14 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 
+    // If the angle stabilizer is changed, re-center the launcher so that there is no overlap between the two.
+    // Do not do this during a continuous launch, because it causes flicker.
+    model.angleStabilizerProperty.lazyLink( angleStabilizer => {
+      if ( !model.isContinuousLaunchingProperty.value ) {
+        this.launcherNode.setBarrelRotation( model.launcherAngleProperty.value );
+      }
+    } );
+
     this.projectileSelectorPanel = new ProjectileSelectorPanel(
       model.selectedProjectileNumberProperty,
       model.landedProjectileCountProperty,
