@@ -137,12 +137,6 @@ export default class CustomLauncherNode extends LauncherNode {
       launcherTypeSymbol.centerX = -0.43 * this.launcherBarrel.width;
       launcherTypeSymbol.centerY = 0;
     } );
-
-    // Reset the barrel rotation when the angle stabilizer gap is changed to avoid overlap between the two.
-    angleStabilizerProperty.lazyLink( () => {
-      //TODO: This is causing flicker during continuous launch. How to fix? - see https://github.com/phetsims/projectile-data-lab/issues/7
-      //this.setBarrelRotation( AngleForConfiguration( launcherConfigurationProperty.value ) );
-    } );
   }
 
   private getAngleStabilizers( launcherConfiguration: LauncherConfiguration, gapWidth: number ): Node {
