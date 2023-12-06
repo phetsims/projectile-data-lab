@@ -81,6 +81,11 @@ export default class VariabilityScreenView extends VSMScreenView {
         accordionBoxProxy.preferredWidth = accordionBoxWidth;
       } );
 
+    this.visibleBoundsProperty.link( visibleBounds => {
+      this.launchPanel.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      rightVBox.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
+
     this.pdomControlAreaNode.pdomOrder = [
       this.launchPanel,
       this.launchButton,

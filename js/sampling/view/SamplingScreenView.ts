@@ -58,13 +58,15 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         tandem: options.tandem.createTandem( 'sampleCardsPanel' )
       } );
 
-    this.addChild( new VBox( {
+    const launcherSampleSizePanel = new VBox( {
       stretch: true,
       spacing: PDLConstants.INTER_PANEL_SPACING,
       left: PDLConstants.SCREEN_VIEW_X_MARGIN,
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
       children: [ this.launchPanel, sampleCardsPanel ]
-    } ) );
+    } );
+
+    this.addChild( launcherSampleSizePanel );
 
     this.accordionBox = new SamplingAccordionBox( this, {
       expandedProperty: model.isHistogramShowingProperty,
@@ -83,6 +85,11 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     ) );
 
     // layout
+    this.visibleBoundsProperty.link( visibleBounds => {
+      this.accordionBox.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      launcherSampleSizePanel.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
+
     ManualConstraint.create(
       this,
       [ this.accordionBox, this.launchPanel ],

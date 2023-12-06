@@ -65,7 +65,6 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
     this.accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.binWidthProperty, this, {
       expandedProperty: model.isHistogramShowingProperty,
       binWidthProperty: model.binWidthProperty,
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
       tandem: options.tandem.createTandem( 'accordionBox' )
     } );
 
@@ -235,6 +234,10 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       const playPauseCenterOffsetX = 0.5 * this.timeControlNode.width - this.timeControlNode.getPlayPauseButtonCenter().x;
       timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
       timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
+
+    this.visibleBoundsProperty.link( visibleBounds => {
+      this.accordionBox.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
   }
 }
