@@ -181,7 +181,6 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       model.selectedProjectileNumberProperty,
       model.landedProjectileCountProperty,
       model.selectedProjectileProperty, {
-        visible: false,
         tandem: options.tandem.createTandem( 'projectileSelectorPanel' )
       }
     );
