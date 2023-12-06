@@ -139,16 +139,16 @@ export default class CustomLauncherNode extends LauncherNode {
     } );
   }
 
-  private getAngleStabilizers( launcherConfiguration: LauncherConfiguration, gapWidth: number ): Node {
+  private getAngleStabilizers( launcherConfiguration: LauncherConfiguration, separationWidth: number ): Node {
     // positive x-direction is zero, clockwise is positive;
     // Min angle is the bottom of the guide rail, max angle is the top of the guide rail
     const centralAngle = Utils.toRadians( 180 - AngleForConfiguration( launcherConfiguration ) );
 
     // The minimum gap is angle of an arc length LAUNCH_ANGLE_LIMITER_WIDTH at radius GUIDE_RAIL_OUTER_RADIUS
-    const minGap = 0.6 * LAUNCH_ANGLE_LIMITER_WIDTH / GUIDE_RAIL_OUTER_RADIUS;
-    const gapWidthRadians = minGap + Utils.toRadians( gapWidth );
-    const topInnerAngle = centralAngle + gapWidthRadians;
-    const bottomInnerAngle = centralAngle - gapWidthRadians;
+    const minimumStabilizerGap = LAUNCH_ANGLE_LIMITER_WIDTH / GUIDE_RAIL_OUTER_RADIUS;
+    const angleOffsetRadians = 0.6 * minimumStabilizerGap + Utils.toRadians( separationWidth );
+    const topInnerAngle = centralAngle + angleOffsetRadians;
+    const bottomInnerAngle = centralAngle - angleOffsetRadians;
 
     const topInnerArc = new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS - GUIDE_RAIL_OUTER_CUTOFF, topInnerAngle, GUIDE_RAIL_MAX_ANGLE )
       .lineTo( 0, 0 ).close();

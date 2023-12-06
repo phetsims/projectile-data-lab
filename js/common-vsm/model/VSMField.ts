@@ -88,6 +88,11 @@ export default class VSMField extends Field {
     // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
     // But in that case we will need to track this data another way.
     this.projectileLandedEmitter.addListener( updateProjectileCountProperty );
+
+    // Repaint the canvas if the selected projectile changes, even if time is paused
+    this.selectedProjectileProperty.lazyLink( () => {
+      this.projectilesChangedEmitter.emit();
+    } );
   }
 
   public override launchProjectile(): void {
@@ -105,8 +110,18 @@ export default class VSMField extends Field {
   public step( dt: number ): void {
     this.timeElapsedSinceLastLaunch += dt;
 
-    this.airborneProjectiles.forEach( projectile => projectile.step( this, dt ) );
-    this.projectilesChangedEmitter.emit();
+    // Only redraw the canvas if at least one projectile has changed
+    let hasAnyProjectileChanged = false;
+
+    this.airborneProjectiles.forEach( projectile => {
+      const hasProjectileChanged = projectile.stepReturnHasChanged( this, dt );
+      hasAnyProjectileChanged = hasAnyProjectileChanged || hasProjectileChanged;
+    } );
+
+    // If any projectiles have changed, repaint the canvas
+    if ( hasAnyProjectileChanged ) {
+      this.projectilesChangedEmitter.emit();
+    }
   }
 
   public override reset(): void {
