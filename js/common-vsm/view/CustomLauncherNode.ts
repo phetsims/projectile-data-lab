@@ -51,14 +51,20 @@ export default class CustomLauncherNode extends LauncherNode {
 
     super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, presetLauncherProperty, providedOptions );
 
-    const launcherType = this.getImageKeyForCustomLauncherType( customLauncherTypeProperty.value );
-    const launcherTypeSymbol = new Image( launcherType, {
+    const launcherTypeIcon = new Image( this.getImageKeyForCustomLauncherType( customLauncherTypeProperty.value ), {
+      centerX: 0,
+      centerY: 0
+    } );
+    const launcherTypeIconContainer = new Node( {
+      x: -0.65 * BARREL_LENGTH_BEFORE_ORIGIN,
+      y: 0,
+      children: [ launcherTypeIcon ],
       visibleProperty: isLauncherCustomProperty,
-      scale: 0.22,
+      scale: 0.2,
       rotation: Math.PI / 2
     } );
-    launcherTypeSymbol.image = explosion_png;
-    this.launcherBarrel.addChild( launcherTypeSymbol );
+
+    this.launcherBarrel.addChild( launcherTypeIconContainer );
 
     // Add the launch angle limiter - the piece sticking out of the back of the launcher.
     const launchAngleLimiterLength = 19;
@@ -133,9 +139,9 @@ export default class CustomLauncherNode extends LauncherNode {
     } );
 
     customLauncherTypeProperty.link( launcherType => {
-      launcherTypeSymbol.image = this.getImageKeyForCustomLauncherType( launcherType );
-      launcherTypeSymbol.centerX = -0.43 * this.launcherBarrel.width;
-      launcherTypeSymbol.centerY = 0;
+      launcherTypeIcon.image = this.getImageKeyForCustomLauncherType( launcherType );
+      launcherTypeIcon.centerX = 0;
+      launcherTypeIcon.centerY = 0;
     } );
   }
 
