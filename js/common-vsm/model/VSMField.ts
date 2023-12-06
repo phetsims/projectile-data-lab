@@ -110,13 +110,14 @@ export default class VSMField extends Field {
   public step( dt: number ): void {
     this.timeElapsedSinceLastLaunch += dt;
 
+    // If any projectiles were airborne at the beginning of the step, repaint the canvas at the end
     const numInitialAirborneProjectiles = this.airborneProjectiles.length;
 
     this.airborneProjectiles.forEach( projectile => {
       projectile.step( this, dt );
     } );
 
-    // If any projectiles were airborne at the beginning of the step, repaint the canvas
+    // Repaint if any projectiles were airborne at the beginning of the step
     if ( numInitialAirborneProjectiles ) {
       this.projectilesChangedEmitter.emit();
     }
