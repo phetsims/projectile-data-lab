@@ -111,21 +111,24 @@ export default class CustomLauncherNode extends LauncherNode {
 
     //TODO: Do we want to add a 'push' effect on the launcher when reducing the angle stabilizer gap? - see https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ launcherConfigurationProperty, angleStabilizerProperty ], ( launcherConfiguration, angleStabilizer ) => {
-      const gearRotationFactor = 0.4;
-      gearTopContainer.rotation = gearRotationFactor * angleStabilizer;
-      gearBottomContainer.rotation = -gearRotationFactor * angleStabilizer;
+      const launcherAngle = AngleForConfiguration( launcherConfiguration );
+      const rotationFactor = 0.4;
+      gearTopContainer.rotation = rotationFactor * ( launcherAngle + angleStabilizer );
+      gearBottomContainer.rotation = rotationFactor * ( launcherAngle - angleStabilizer );
       this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
     } );
 
     isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {
-      if ( isCustom && ( !prevIsCustom || prevIsCustom === null ) ) {
-        // Set the graphics for preset launcher 1 for now
+      // TODO: Confirm that this is the right way to handle this - see https://github.com/phetsims/projectile-data-lab/issues/7
+      // If setting to custom, set the graphics for preset launcher 1
+      // If the second
+      if ( isCustom ) { // && ( !prevIsCustom || prevIsCustom === null ) ) {
         this.updatePresetLauncher( 1 );
-        this.launcherFrameFront.opacity = 0.3;
+        this.launcherFrameFront.visible = false;
       }
-      else if ( !isCustom && prevIsCustom ) {
+      else { //if ( !isCustom && prevIsCustom ) {
         this.updatePresetLauncher( presetLauncherProperty.value );
-        this.launcherFrameFront.opacity = 1;
+        this.launcherFrameFront.visible = true;
       }
     } );
 
