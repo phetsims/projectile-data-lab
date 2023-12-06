@@ -152,6 +152,18 @@ export default class VSMModel extends PDLModel<VSMField> {
     } );
   }
 
+  public override launchButtonPressed(): void {
+    if ( this.launchModeProperty.value === 'single' ) {
+      this.fieldProperty.value.launchProjectile();
+    }
+    else {
+      if ( !this.isContinuousLaunchingProperty.value ) {
+        this.fieldProperty.value.launchProjectile();
+      }
+      this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
+    }
+  }
+
   public step( dt: number ): void {
 
     if ( !this.isPlayingProperty.value ) {
@@ -161,7 +173,8 @@ export default class VSMModel extends PDLModel<VSMField> {
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' &&
-         this.isContinuousLaunchingProperty.value && this.fieldProperty.value.timeElapsedSinceLastLaunch > PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES ) {
+         this.isContinuousLaunchingProperty.value &&
+         this.fieldProperty.value.timeElapsedSinceLastLaunch > PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES ) {
       this.fieldProperty.value.launchProjectile();
     }
 

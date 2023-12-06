@@ -95,7 +95,7 @@ export default class VSMField extends Field {
     this.projectileLandedEmitter.addListener( updateProjectileCountProperty );
   }
 
-  public override launchProjectile(): void {
+  public launchProjectile(): void {
     if ( this.getTotalProjectileCount() >= PDLConstants.MAX_PROJECTILES_PER_FIELD ) {
       return;
     }

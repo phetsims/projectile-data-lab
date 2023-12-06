@@ -86,6 +86,18 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     } );
   }
 
+  public override launchButtonPressed(): void {
+    if ( this.launchModeProperty.value === 'single' ) {
+      this.fieldProperty.value.startNewSample();
+    }
+    else {
+      if ( !this.isContinuousLaunchingProperty.value ) {
+        this.fieldProperty.value.startNewSample();
+      }
+      this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
+    }
+  }
+
   public step( dt: number ): void {
     this.fieldProperty.value.step( dt, this.isContinuousLaunchingProperty.value );
   }

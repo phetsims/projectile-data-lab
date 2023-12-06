@@ -71,7 +71,7 @@ export default class SamplingField extends Field {
     this.projectilesChangedEmitter.emit();
   }
 
-  public launchProjectile(): void {
+  public startNewSample(): void {
     this.selectedSampleProperty.value++;
     this.numberOfSamplesProperty.value++;
     this.createLandedProjectile();
@@ -87,7 +87,7 @@ export default class SamplingField extends Field {
     if ( isContinuousLaunching && this.lastSampleCompletionTime !== null ) {
       const timeSinceLastSampleCompleted = this.currentTime - this.lastSampleCompletionTime;
       if ( isContinuousLaunching && timeSinceLastSampleCompleted >= this.interSampleTime ) {
-        this.launchProjectile();
+        this.startNewSample();
         this.lastSampleCompletionTime = null;
       }
     }
