@@ -40,11 +40,17 @@ export default class HistogramCanvasPainter extends CanvasPainter {
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
 
+    context.save();
     context.fillStyle = PDLColors.histogramBarFillColorProperty.value.toCSS();
 
     context.strokeStyle = PDLColors.histogramBarStrokeColorProperty.value.toCSS();
 
-    context.lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.1 ) );
+    const lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.15 ) );
+
+    // Canvas cannot render a lineWidth < 1 (it rounds up to 1), so we scale the canvas to compensate
+    const scaleFactor = 1 / lineWidth;
+    context.scale( 1 / scaleFactor, 1 / scaleFactor );
+    context.lineWidth = 1;
 
     const histogram = new Map<number, number>();
     const binWidth = this.binWidthProperty.value;
@@ -65,9 +71,11 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const width = this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value );
       const height = Math.abs( this.chartTransform.modelToViewDeltaY( 1 ) );
 
-      context.fillRect( x, y, width, height );
-      context.strokeRect( x, y, width, height );
+      context.fillRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
+      context.strokeRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
     }
+
+    context.restore();
   }
 }
 
