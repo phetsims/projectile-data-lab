@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.0-dev.3 Tue Dec 05 2023 19:55:12 GMT-0500 (Eastern Standard Time)",
+  "comment": "# projectile-data-lab 1.0.0-dev.4 Tue Dec 05 2023 20:25:10 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "94831413cd4dd4dc27c2a1aebbcafd3987934a99",
     "branch": "main"
@@ -61,7 +61,7 @@
     "branch": "main"
   },
   "projectile-data-lab": {
-    "sha": "eabe2c94ce934d5f0cd02f77205a217b523b8b7c",
+    "sha": "60beec69cf137600a45f2ef8fe04603ea91b2715",
     "branch": "main"
   },
   "query-string-machine": {
