@@ -30,7 +30,7 @@ export default class VSMField extends Field {
   public readonly customLauncherTypeProperty: Property<CustomLauncherType>;
   public readonly angleStabilizerProperty: NumberProperty;
 
-  public timeElapsedSinceLastLaunch = 0;
+  public timeElapsedSinceLastLaunch = Infinity;
 
   public readonly selectedProjectileNumberProperty: NumberProperty;
   public readonly selectedProjectileProperty: TReadOnlyProperty<Projectile | null>;
@@ -134,6 +134,9 @@ export default class VSMField extends Field {
 
   public override clearProjectiles(): void {
     super.clearProjectiles();
+
+    // Reset the time elapsed since the last launch so that continuous mode can immediately launch a projectile
+    this.timeElapsedSinceLastLaunch = Infinity;
 
     this.selectedProjectileNumberProperty.reset();
     this.landedProjectileCountProperty.reset();

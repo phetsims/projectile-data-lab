@@ -142,6 +142,14 @@ export default class VSMModel extends PDLModel<VSMField> {
         this.stopwatch.isRunningProperty.value = false;
       }
     } );
+
+
+    // If we stop continuous launching, reset the time elapsed since the last launch so that the next launch is not delayed.
+    this.isContinuousLaunchingProperty.lazyLink( isContinuousLaunching => {
+      if ( !isContinuousLaunching ) {
+        this.fieldProperty.value.timeElapsedSinceLastLaunch = Infinity;
+      }
+    } );
   }
 
   public step( dt: number ): void {
