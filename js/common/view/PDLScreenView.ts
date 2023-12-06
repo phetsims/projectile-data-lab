@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Image, Node, Path, Text } from '../../../../scenery/js/imports.js';
+import { Image, Node, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -28,13 +28,13 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Field from '../model/Field.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
 import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
 import LauncherNode from './LauncherNode.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 import PDLAccordionBox from './PDLAccordionBox.js';
+import stopButton_png from '../../../images/stopButton_png.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -132,7 +132,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       createNode: () => launchIconToggleNode
     }, {
       value: true,
-      createNode: () => new Path( stopSolidShape, { fill: 'black', maxWidth: 50 } )
+      createNode: () => new Image( stopButton_png )
     } ], {} );
 
     this.launchButton = new RectangularPushButton( {
