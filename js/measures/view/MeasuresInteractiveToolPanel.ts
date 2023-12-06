@@ -13,7 +13,6 @@ type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOpt
 
 export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
   public constructor(
-    isTargetVisibleProperty: BooleanProperty,
     isMeasuringTapeVisibleProperty: BooleanProperty,
     isStopwatchVisibleProperty: BooleanProperty,
     isIntervalToolVisibleProperty: BooleanProperty,
@@ -29,7 +28,7 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
       ]
     }, providedOptions );
 
-    super( isTargetVisibleProperty, isMeasuringTapeVisibleProperty, isStopwatchVisibleProperty, options );
+    super( isMeasuringTapeVisibleProperty, isStopwatchVisibleProperty, options );
   }
 }
 

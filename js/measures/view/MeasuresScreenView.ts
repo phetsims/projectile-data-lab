@@ -60,7 +60,6 @@ export default class MeasuresScreenView extends VSMScreenView {
         tandem: options.tandem.createTandem( 'staticToolPanel' )
       } );
     const interactiveToolPanel = new MeasuresInteractiveToolPanel(
-      model.isTargetVisibleProperty,
       model.isMeasuringTapeVisibleProperty,
       model.isStopwatchVisibleProperty,
       model.isIntervalToolVisibleProperty, {

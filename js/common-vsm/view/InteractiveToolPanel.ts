@@ -26,7 +26,6 @@ export type InteractiveToolPanelOptions = SelfOptions & PDLPanelOptions;
 export default class InteractiveToolPanel extends PDLPanel {
 
   public constructor(
-    isTargetVisibleProperty: BooleanProperty,
     isMeasuringTapeVisibleProperty: BooleanProperty,
     isStopwatchVisibleProperty: BooleanProperty,
     providedOptions: InteractiveToolPanelOptions ) {
@@ -35,19 +34,16 @@ export default class InteractiveToolPanel extends PDLPanel {
       additionalVerticalCheckboxGroupItems: []
     }, providedOptions );
 
-    const checkboxGroup = new VerticalCheckboxGroup( [ {
-      property: isTargetVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.targetStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
-      tandemName: 'targetCheckbox'
-    }, {
-      property: isMeasuringTapeVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
-      tandemName: 'measuringTapeCheckbox'
-    }, {
-      property: isStopwatchVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) ),
-      tandemName: 'stopwatchCheckbox'
-    },
+    const checkboxGroup = new VerticalCheckboxGroup( [
+      {
+        property: isMeasuringTapeVisibleProperty,
+        createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
+        tandemName: 'measuringTapeCheckbox'
+      }, {
+        property: isStopwatchVisibleProperty,
+        createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) ),
+        tandemName: 'stopwatchCheckbox'
+      },
       ...options.additionalVerticalCheckboxGroupItems
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' )

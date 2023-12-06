@@ -32,7 +32,6 @@ export default class VSMModel extends PDLModel<VSMField> {
   public readonly isLaunchSpeedVisibleProperty: BooleanProperty;
 
   // Interactive tool visibility
-  public readonly isTargetVisibleProperty: BooleanProperty;
   public readonly isMeasuringTapeVisibleProperty: BooleanProperty;
   public readonly isStopwatchVisibleProperty: BooleanProperty;
 
@@ -109,10 +108,6 @@ export default class VSMModel extends PDLModel<VSMField> {
       tandem: providedOptions.tandem.createTandem( 'isLaunchSpeedVisibleProperty' )
     } );
 
-    this.isTargetVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isTargetVisibleProperty' )
-    } );
-
     this.isMeasuringTapeVisibleProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isMeasuringTapeVisibleProperty' )
     } );
@@ -187,7 +182,6 @@ export default class VSMModel extends PDLModel<VSMField> {
     this.isLaunchAngleVisibleProperty.reset();
     this.isLaunchSpeedVisibleProperty.reset();
 
-    this.isTargetVisibleProperty.reset();
     this.isMeasuringTapeVisibleProperty.reset();
     this.isStopwatchVisibleProperty.reset();
 
