@@ -17,6 +17,7 @@ import { AngleForConfiguration, LauncherConfiguration } from '../../common/model
 import Utils from '../../../../dot/js/Utils.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import gear_png from '../../../images/gear_png.js';
 
 /**
  * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
@@ -80,11 +81,31 @@ export default class CustomLauncherNode extends LauncherNode {
     this.angleStabilizersContainer.moveToBack();
     this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizerProperty.value ) );
 
+    const gearImageScale = 0.2;
+    const gearAngleInset = Utils.toRadians( 6 );
+    const gearTopAngle = GUIDE_RAIL_MAX_ANGLE - gearAngleInset;
+    const gearBottomAngle = GUIDE_RAIL_MIN_ANGLE + gearAngleInset;
+    const gearToOriginDistance = GUIDE_RAIL_OUTER_RADIUS - 1.6 * GUIDE_RAIL_OUTER_CUTOFF;
+
+    const gearTop = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
+    const gearBottom = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
+
+    const gearTopContainer = new Node( { x: gearToOriginDistance * Math.cos( gearTopAngle ),
+      y: gearToOriginDistance * Math.sin( gearTopAngle ), children: [ gearTop ] } );
+    const gearBottomContainer = new Node( { x: gearToOriginDistance * Math.cos( gearBottomAngle ),
+      y: gearToOriginDistance * Math.sin( gearBottomAngle ), children: [ gearBottom ] } );
+
+    this.addChild( gearTopContainer );
+    this.addChild( gearBottomContainer );
+
     // Move the guide rail bolt to the front so that it is not covered by the launcher frame.
     this.guideRailBolt.moveToFront();
 
     //TODO: Do we want to add a 'push' effect on the launcher when reducing the angle stabilizer gap? - see https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ launcherConfigurationProperty, angleStabilizerProperty ], ( launcherConfiguration, angleStabilizer ) => {
+      const gearRotationFactor = 0.4;
+      gearTopContainer.rotation = gearRotationFactor * angleStabilizer;
+      gearBottomContainer.rotation = -gearRotationFactor * angleStabilizer;
       this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
     } );
 
@@ -119,8 +140,8 @@ export default class CustomLauncherNode extends LauncherNode {
     const centralAngle = Utils.toRadians( 180 - AngleForConfiguration( launcherConfiguration ) );
 
     // The minimum gap is angle of an arc length LAUNCH_ANGLE_LIMITER_WIDTH at radius GUIDE_RAIL_OUTER_RADIUS
-    const minGap = LAUNCH_ANGLE_LIMITER_WIDTH / GUIDE_RAIL_OUTER_RADIUS;
-    const gapWidthRadians = Utils.toRadians( gapWidth + minGap );
+    const minGap = 0.6 * LAUNCH_ANGLE_LIMITER_WIDTH / GUIDE_RAIL_OUTER_RADIUS;
+    const gapWidthRadians = minGap + Utils.toRadians( gapWidth );
     const topInnerAngle = centralAngle + gapWidthRadians;
     const bottomInnerAngle = centralAngle - gapWidthRadians;
 
