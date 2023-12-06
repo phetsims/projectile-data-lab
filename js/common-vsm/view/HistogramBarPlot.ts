@@ -46,7 +46,6 @@ export default class HistogramBarPlot extends Node {
 
   public update(): void {
     const lineWidth = this.lineWidthForZoomLevel( this.zoomLevelProperty.value );
-    console.log( 'lineWidth ' + lineWidth );
 
     // Add one rectangle per histogram bin
     while ( this.bars.length < this.dataSet.length ) {
