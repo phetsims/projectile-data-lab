@@ -2,7 +2,6 @@
 
 import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -14,11 +13,12 @@ import bamboo from '../../../../bamboo/js/bamboo.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import HistogramBarPlot from './HistogramBarPlot.js';
 import Field from '../../common/model/Field.js';
 import PlusMinusZoomButtonGroup from '../../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import HistogramCanvasPainter from './HistogramCanvasPainter.js';
+import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -48,7 +48,6 @@ export default class HistogramNode extends Node {
       modelYRange: new Range( 0, 25 )
     } );
 
-
     const chartBackground = new ChartRectangle( chartTransform, {
       fill: 'white',
       stroke: 'black'
@@ -60,7 +59,7 @@ export default class HistogramNode extends Node {
       stroke: 'black'
     } );
 
-    const histogramBarPlot = new HistogramBarPlot( chartTransform, binWidthProperty, zoomLevelProperty );
+    const histogramPainter = new HistogramCanvasPainter( chartTransform, binWidthProperty );
 
     // Changes based on the zoom level
     const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, { stroke: 'lightGray' } );
@@ -68,7 +67,7 @@ export default class HistogramNode extends Node {
     // Changes based on the bin width
     const verticalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, { stroke: 'lightGray' } );
 
-
+    const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ] );
     const chartClip = new Node( {
       clipArea: chartBackground.getShape(),
       children: [
@@ -78,7 +77,7 @@ export default class HistogramNode extends Node {
         verticalGridLines,
 
         // Some data
-        histogramBarPlot
+        chartCanvasNode
       ]
     } );
 
@@ -113,7 +112,11 @@ export default class HistogramNode extends Node {
 
     binWidthProperty.link( binWidth => {
       verticalGridLines.setSpacing( binWidth );
-      histogramBarPlot.update();
+      chartCanvasNode.update();
+    } );
+
+    chartTransform.changedEmitter.addListener( () => {
+      chartCanvasNode.update();
     } );
 
     const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
@@ -142,10 +145,8 @@ export default class HistogramNode extends Node {
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {
-      const xValues = fieldProperty.value.landedProjectiles
-        .map( projectile => projectile.x );
-      const histogramData = HistogramNode.getHistogramValues( xValues, binWidthProperty.value );
-      histogramBarPlot.setDataSet( histogramData );
+      histogramPainter.setProjectiles( fieldProperty.value.landedProjectiles );
+      chartCanvasNode.update();
     };
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
@@ -171,8 +172,7 @@ export default class HistogramNode extends Node {
 
       const maxCount = maxCounts[ zoomLevelProperty.value ];
 
-      chartTransform.modelYRange = new Range( 0, maxCount );
-      chartTransform.changedEmitter.emit();
+      chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
       const tickSpacing = tickSpacings[ zoomLevelProperty.value ];
       verticalTickMarkSet.setSpacing( tickSpacing );
@@ -181,30 +181,6 @@ export default class HistogramNode extends Node {
       updateHistogram();
     } );
   }
-
-  private static getHistogramValues( xValues: number[], binWidth: number ): Vector2[] {
-    const histogram = new Map<number, number>();
-
-    for ( const x of xValues ) {
-
-      // Calculate the bin for this value
-      // REVIEW: Is this how you want to calculate the bin?
-      const bin = Math.floor( x / binWidth ) * binWidth;
-
-      // Update the count for this bin
-      histogram.set( bin, ( histogram.get( bin ) || 0 ) + 1 );
-    }
-
-    // Convert the map to an array of Vector2
-    const histogramArray: Vector2[] = [];
-
-    for ( const [ bin, count ] of histogram ) {
-      histogramArray.push( new Vector2( bin, count ) );
-    }
-
-    return histogramArray;
-  }
 }
-
 
 bamboo.register( 'HistogramNode', HistogramNode );
