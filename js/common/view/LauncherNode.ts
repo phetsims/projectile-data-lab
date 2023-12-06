@@ -85,10 +85,17 @@ export default class LauncherNode extends Node {
     this.launcherFrameBack = new Node();
     this.launcherFrameFront = new Node();
 
-    this.guideRailBolt = new Circle( 0.9 * GUIDE_SLOT_WIDTH, {
-      fill: PDLColors.launcherGuideBoltColorProperty,
+    const outerCircleRadius = GUIDE_SLOT_WIDTH;
+    const innerCircleRadius = 0.5 * GUIDE_SLOT_WIDTH;
+    const guideBoltOuterCircle = new Circle( outerCircleRadius, {
+      fill: PDLColors.launcherGuideBoltOuterColorProperty,
       stroke: PDLColors.launcherStrokeColorProperty
     } );
+    const guideBoltInnerCircle = new Circle( innerCircleRadius, {
+      fill: PDLColors.launcherGuideBoltInnerColorProperty
+    } );
+
+    this.guideRailBolt = new Node( { children: [ guideBoltOuterCircle, guideBoltInnerCircle ] } );
 
     this.addChild( this.launcherFrameBack );
     this.addChild( this.launcherBarrel );
