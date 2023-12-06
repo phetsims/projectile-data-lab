@@ -62,24 +62,24 @@ const PDLColors = {
       secondary: new ProfileColorProperty( projectileDataLab, 'launcher1Secondary', { default: '#828089' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher2Primary', { default: '#CE0909' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher2Secondary', { default: '#AA210B' } )
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher2Primary', { default: '#de0e0e' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher2Secondary', { default: '#d53b07' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher3Primary', { default: '#F2680A' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher3Secondary', { default: '#C9620D' } )
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher3Primary', { default: '#ffcf08' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher3Secondary', { default: '#ff9900' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher4Primary', { default: '#FAA613' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher4Secondary', { default: '#DDA417' } )
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher4Primary', { default: '#9EC62A' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher4Secondary', { default: '#44902f' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher5Primary', { default: '#7EC62A' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher5Secondary', { default: '#5EA01F' } )
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher5Primary', { default: '#4d93d9' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher5Secondary', { default: '#349cb6' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher6Primary', { default: '#A833B9' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher6Secondary', { default: '#812B9E' } )
+      primary: new ProfileColorProperty( projectileDataLab, 'launcher6Primary', { default: '#c369d0' } ),
+      secondary: new ProfileColorProperty( projectileDataLab, 'launcher6Secondary', { default: '#a4399e' } )
     }
   ],
 
