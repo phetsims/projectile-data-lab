@@ -34,12 +34,20 @@ export default class HistogramNode extends Node {
   public constructor( fieldProperty: TReadOnlyProperty<Field>, fields: Field[], binWidthProperty: TReadOnlyProperty<number>, options: HistogramNodeOptions ) {
     super();
 
+    // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
+    const maxCounts = [ 500, 200, 100, 50, 20 ];
+    const maxZoomLevel = maxCounts.length - 1;
+    const tickSpacings = [ 50, 20, 10, 10, 5 ];
+
+    const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
+
     const chartTransform = new ChartTransform( {
       viewWidth: 520,
       viewHeight: 210,
       modelXRange: new Range( PDLConstants.MIN_HISTOGRAM_DISTANCE, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );
+
 
     const chartBackground = new ChartRectangle( chartTransform, {
       fill: 'white',
@@ -52,7 +60,7 @@ export default class HistogramNode extends Node {
       stroke: 'black'
     } );
 
-    const histogramBarPlot = new HistogramBarPlot( chartTransform, binWidthProperty );
+    const histogramBarPlot = new HistogramBarPlot( chartTransform, binWidthProperty, zoomLevelProperty );
 
     // Changes based on the zoom level
     const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, { stroke: 'lightGray' } );
@@ -108,11 +116,6 @@ export default class HistogramNode extends Node {
       histogramBarPlot.update();
     } );
 
-    const maxCounts = [ 500, 200, 100, 50, 20 ];
-    const tickSpacings = [ 50, 20, 10, 10, 5 ];
-    const maxZoomLevel = maxCounts.length - 1;
-
-    const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
     const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',

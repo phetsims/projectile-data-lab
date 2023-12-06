@@ -120,6 +120,14 @@ const PDLColors = {
 
   speedToolConnectorColorProperty: new ProfileColorProperty( projectileDataLab, 'speedToolConnector', {
     default: '#363F82'
+  } ),
+
+  histogramBarFillColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramBarFill', {
+    default: '#D22D32'
+  } ),
+
+  histogramBarStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramBarStroke', {
+    default: '#EC6F5E'
   } )
 };
 

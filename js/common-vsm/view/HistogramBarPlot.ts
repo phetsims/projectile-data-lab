@@ -2,11 +2,13 @@
 
 import Vector2 from '../../../../dot/js/Vector2.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
-import { Color, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import bamboo from '../../../../bamboo/js/bamboo.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
+import PDLColors from '../../common/PDLColors.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * Shows bars or blocks for histogram-related numerical data.
@@ -23,7 +25,8 @@ export default class HistogramBarPlot extends Node {
   public readonly bars: Rectangle[] = [];
   public readonly blocks: Rectangle[] = [];
 
-  public constructor( public readonly chartTransform: ChartTransform, public readonly binWidthProperty: TReadOnlyProperty<number>, providedOptions?: BarPlotOptions ) {
+  public constructor( public readonly chartTransform: ChartTransform, public readonly binWidthProperty: TReadOnlyProperty<number>,
+                      private readonly zoomLevelProperty: NumberProperty, providedOptions?: BarPlotOptions ) {
 
     super( providedOptions );
 
@@ -42,14 +45,15 @@ export default class HistogramBarPlot extends Node {
   }
 
   public update(): void {
-    const barRed = new Color( 206, 46, 35 );
+    const lineWidth = this.lineWidthForZoomLevel( this.zoomLevelProperty.value );
+    console.log( 'lineWidth ' + lineWidth );
 
     // Add one rectangle per histogram bin
     while ( this.bars.length < this.dataSet.length ) {
       const rectangle = new Rectangle( 0, 0, 0, 0, {
-        fill: barRed,
-        stroke: 'black',
-        lineWidth: 1
+        fill: PDLColors.histogramBarFillColorProperty,
+        stroke: PDLColors.histogramBarStrokeColorProperty,
+        lineWidth: lineWidth
       } );
       this.bars.push( rectangle );
       this.addChild( rectangle );
@@ -64,9 +68,9 @@ export default class HistogramBarPlot extends Node {
     const totalYValues = this.dataSet.reduce( ( sum, vector ) => sum + vector.y, 0 );
     while ( this.blocks.length < totalYValues ) {
       const block = new Rectangle( 0, 0, 0, 0, {
-        fill: barRed,
-        stroke: 'black',
-        lineWidth: 1
+        fill: PDLColors.histogramBarFillColorProperty,
+        stroke: PDLColors.histogramBarStrokeColorProperty,
+        lineWidth: lineWidth
       } );
       this.blocks.push( block );
       this.addChild( block );
@@ -106,9 +110,9 @@ export default class HistogramBarPlot extends Node {
         if ( blockIndex >= this.blocks.length ) {
           // Add a new block if needed
           const block = new Rectangle( 0, 0, barWidth, blockHeight, {
-            fill: barRed,
-            stroke: 'black',
-            lineWidth: 1
+            fill: PDLColors.histogramBarFillColorProperty,
+            stroke: PDLColors.histogramBarStrokeColorProperty,
+            lineWidth: lineWidth
           } );
           this.blocks.push( block );
           this.addChild( block );
@@ -127,6 +131,12 @@ export default class HistogramBarPlot extends Node {
       const block = this.blocks.pop()!;
       this.removeChild( block );
     }
+  }
+
+  private lineWidthForZoomLevel( zoomLevel: number ): number {
+    // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
+    const lineWidths = [ 0, 0.1, 0.5, 1, 2 ];
+    return lineWidths[ zoomLevel ];
   }
 }
 
