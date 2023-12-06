@@ -62,7 +62,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       stretch: true,
       spacing: PDLConstants.INTER_PANEL_SPACING,
       left: PDLConstants.SCREEN_VIEW_X_MARGIN,
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
       children: [ this.launchPanel, sampleCardsPanel ]
     } );
 
@@ -71,7 +70,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.accordionBox = new SamplingAccordionBox( this, {
       expandedProperty: model.isHistogramShowingProperty,
       binWidthProperty: model.binWidthProperty,
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
       centerX: this.layoutBounds.centerX,
       tandem: options.tandem.createTandem( 'accordionBox' )
     } );
