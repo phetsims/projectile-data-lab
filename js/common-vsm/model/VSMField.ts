@@ -110,16 +110,14 @@ export default class VSMField extends Field {
   public step( dt: number ): void {
     this.timeElapsedSinceLastLaunch += dt;
 
-    // Only redraw the canvas if at least one projectile has changed
-    let hasAnyProjectileChanged = false;
+    const numInitialAirborneProjectiles = this.airborneProjectiles.length;
 
     this.airborneProjectiles.forEach( projectile => {
-      const hasProjectileChanged = projectile.stepReturnHasChanged( this, dt );
-      hasAnyProjectileChanged = hasAnyProjectileChanged || hasProjectileChanged;
+      projectile.step( this, dt );
     } );
 
-    // If any projectiles have changed, repaint the canvas
-    if ( hasAnyProjectileChanged ) {
+    // If any projectiles were airborne at the beginning of the step, repaint the canvas
+    if ( numInitialAirborneProjectiles ) {
       this.projectilesChangedEmitter.emit();
     }
   }

@@ -83,31 +83,21 @@ export default class Projectile {
     this.sampleNumber = sampleNumber;
   }
 
-  public stepReturnHasChanged( field: Field, dt: number ): boolean {
+  public step( field: Field, dt: number ): void {
     this.timeAirborne += dt;
 
-    const newX = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
-    const newY = Projectile.getProjectileY( this.launchSpeed, this.launchAngle, this.launchHeight, this.timeAirborne )!;
-
-    const hasChanged = newX !== this.x || newY !== this.y;
-
-    this.x = newX;
-    this.y = newY;
+    this.x = Projectile.getProjectileX( this.launchSpeed, this.launchAngle, this.timeAirborne );
+    this.y = Projectile.getProjectileY( this.launchSpeed, this.launchAngle, this.launchHeight, this.timeAirborne )!;
 
     if ( this.y <= 0 ) {
-      this.x = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
-      this.y = 0;
-      this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
+      this.setLanded();
       field.projectileLandedEmitter.emit( this );
     }
-
-    return hasChanged;
   }
 
   public setLanded(): void {
-    const landedX = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
     this.timeAirborne = Projectile.getTotalFlightTime( this.launchSpeed, this.launchAngle, this.launchHeight );
-    this.x = landedX;
+    this.x = Projectile.getHorizontalRange( this.launchSpeed, this.launchAngle, this.launchHeight );
     this.y = 0;
   }
 
