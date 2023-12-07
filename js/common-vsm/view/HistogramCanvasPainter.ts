@@ -21,6 +21,7 @@ export type BarPlotOptions = SelfOptions & NodeOptions;
 export default class HistogramCanvasPainter extends CanvasPainter {
 
   private projectiles: Projectile[] = [];
+  private selectedProjectile: Projectile | null = null;
 
   public constructor(
     public readonly chartTransform: ChartTransform,
@@ -34,16 +35,29 @@ export default class HistogramCanvasPainter extends CanvasPainter {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  public setProjectiles( projectiles: Projectile[] ): void {
+  public setProjectiles( projectiles: Projectile[], selectedProjectile: Projectile | null ): void {
     this.projectiles = projectiles;
+    this.selectedProjectile = selectedProjectile;
   }
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
 
-    context.save();
-    context.fillStyle = PDLColors.histogramBarFillColorProperty.value.toCSS();
+    const HIGHLIGHT_WITH_COLOR_INVERSION = true;
+    const HIGHLIGHT_WITH_WHITE_DOT = false;
 
-    context.strokeStyle = PDLColors.histogramBarStrokeColorProperty.value.toCSS();
+    context.save();
+
+    const setColors = ( isHighlighted: boolean ) => {
+      if ( isHighlighted ) {
+        context.fillStyle = PDLColors.histogramBarStrokeColorProperty.value.toCSS();
+        context.strokeStyle = PDLColors.histogramBarFillColorProperty.value.toCSS();
+      }
+      else {
+        context.fillStyle = PDLColors.histogramBarFillColorProperty.value.toCSS();
+        context.strokeStyle = PDLColors.histogramBarStrokeColorProperty.value.toCSS();
+      }
+    };
+    setColors( false );
 
     const lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.15 ) );
 
@@ -71,8 +85,23 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const width = this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value );
       const height = Math.abs( this.chartTransform.modelToViewDeltaY( 1 ) );
 
+      if ( this.selectedProjectile === projectile && HIGHLIGHT_WITH_COLOR_INVERSION ) { setColors( true ); }
+
       context.fillRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
       context.strokeRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
+
+      if ( this.selectedProjectile === projectile && HIGHLIGHT_WITH_COLOR_INVERSION ) { setColors( false );}
+
+      if ( this.selectedProjectile === projectile && HIGHLIGHT_WITH_WHITE_DOT ) {
+
+        // draw a white dot in the middle of the rectangle
+        context.save();
+        context.beginPath();
+        context.arc( x * scaleFactor + width * scaleFactor / 2, y * scaleFactor + height * scaleFactor / 2, 1.2, 0, 2 * Math.PI );
+        context.fillStyle = 'white';
+        context.fill();
+        context.restore();
+      }
     }
 
     context.restore();

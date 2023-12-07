@@ -9,7 +9,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import HistogramNode from './HistogramNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Field from '../../common/model/Field.js';
+import VSMField from '../model/VSMField.js';
 
 /**
  * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -26,7 +26,7 @@ export type VSMAccordionBoxOptions =
 
 export default class VSMAccordionBox extends PDLAccordionBox {
 
-  public constructor( fieldProperty: TReadOnlyProperty<Field>, fields: Field[], binWidthProperty: TReadOnlyProperty<number>, comboBoxParent: Node, providedOptions: VSMAccordionBoxOptions ) {
+  public constructor( fieldProperty: TReadOnlyProperty<VSMField>, fields: VSMField[], binWidthProperty: TReadOnlyProperty<number>, comboBoxParent: Node, providedOptions: VSMAccordionBoxOptions ) {
 
     const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, {
       tandem: providedOptions.tandem.createTandem( 'histogramNode' )

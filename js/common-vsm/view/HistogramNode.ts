@@ -19,6 +19,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
+import VSMField from '../model/VSMField.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -31,7 +32,11 @@ type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class HistogramNode extends Node {
 
-  public constructor( fieldProperty: TReadOnlyProperty<Field>, fields: Field[], binWidthProperty: TReadOnlyProperty<number>, options: HistogramNodeOptions ) {
+  public constructor(
+    fieldProperty: TReadOnlyProperty<Field>,
+    fields: Field[],
+    binWidthProperty: TReadOnlyProperty<number>,
+    options: HistogramNodeOptions ) {
     super();
 
     // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -145,24 +150,23 @@ export default class HistogramNode extends Node {
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {
-      histogramPainter.setProjectiles( fieldProperty.value.landedProjectiles );
+
+      // TODO: When reusing this code for the sampling screen, consider how to handle selectedProjectileProperty, see https://github.com/phetsims/projectile-data-lab/issues/7
+      histogramPainter.setProjectiles( fieldProperty.value.landedProjectiles, fieldProperty.value instanceof VSMField ? fieldProperty.value.selectedProjectileProperty.value : null );
       chartCanvasNode.update();
     };
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
     fields.forEach( field => {
 
-      // When one projectile lands, update the histogram
-      field.projectileLandedEmitter.addListener( () => {
-        if ( fieldProperty.value === field ) {
-
-          // TODO: Do we want to add an incremental render, to do the minimal amount of work? https://github.com/phetsims/projectile-data-lab/issues/7
-          // How much complexity would that add? How bad is the performance now? Should we be rendering this with canvas anyways?
-          updateHistogram();
-        }
-      } );
-
+      // When one projectile lands or is cleared, update the histogram
+      field.projectileLandedEmitter.addListener( () => updateHistogram() );
       field.projectilesClearedEmitter.addListener( () => updateHistogram() );
+
+      // For VSM, redraw when the selected projectile changes
+      if ( field instanceof VSMField ) {
+        field.selectedProjectileProperty.link( () => updateHistogram() );
+      }
     } );
 
     // When the field or bin width changes, redraw the histogram
