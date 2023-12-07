@@ -112,7 +112,10 @@ export default class PDLAccordionBox extends AccordionBox {
 
     const barBlockSwitch = new ABSwitch( histogramRepresentationProperty, 'blocks', new PDLText( 'Blocks' ), 'bars', new PDLText( 'Bars' ), {
       tandem: providedOptions.tandem.createTandem( 'barBlockSwitch' ),
-      spacing: margin
+      spacing: margin,
+      toggleSwitchOptions: {
+        maxWidth: 30
+      }
     } );
 
     labelAndComboBoxContainer.leftTop = content.leftBottom.plusXY( margin, margin );
