@@ -28,11 +28,13 @@ export default class MeasuresLaunchPanel extends VSMLaunchPanel {
                       providedOptions: MeasuresLaunchPanelOptions ) {
 
 
-    const anyLauncherSection = new SectionAnyLauncher( isLauncherCustomProperty, presetLauncherProperty,
-      customLauncherTypeProperty, angleStabilizerProperty, { tandem: providedOptions.tandem } );
+    const launcherSection = new SectionAnyLauncher( isLauncherCustomProperty, presetLauncherProperty,
+      customLauncherTypeProperty, angleStabilizerProperty, {
+        tandem: providedOptions.tandem.createTandem( 'launcherSection' )
+      } );
 
 
-    super( [ anyLauncherSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+    super( [ launcherSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'MeasuresLaunchPanel', MeasuresLaunchPanel );

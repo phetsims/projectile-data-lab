@@ -25,11 +25,11 @@ export default class VSMLaunchPanel extends PDLLaunchPanel {
                       projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: VSMLaunchPanelOptions ) {
 
     const launcherConfigurationSection = new SectionLauncherConfiguration( configurationProperty, {
-      tandem: providedOptions.tandem
+      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationSection' )
     } );
 
     const projectileTypeSection = new SectionProjectileType( projectileTypeProperty, {
-      tandem: providedOptions.tandem
+      tandem: providedOptions.tandem.createTandem( 'projectileTypeSection' )
     } );
 
     super( [ launcherConfigurationSection, projectileTypeSection, ...content ], providedOptions );

@@ -21,15 +21,15 @@ type SamplingLaunchPanelOptions = SelfOptions & PDLPanelOptions;
 export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
   public constructor( launcherProperty: PhetioProperty<number>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
-    const presetLauncherSection = new SectionPresetLauncher( launcherProperty, {
-      tandem: providedOptions.tandem
+    const launcherSection = new SectionPresetLauncher( launcherProperty, {
+      tandem: providedOptions.tandem.createTandem( 'launcherSection' )
     } );
 
     const sampleSizeSection = new SectionSampleSize( sampleSizeProperty, {
-      tandem: providedOptions.tandem
+      tandem: providedOptions.tandem.createTandem( 'sampleSizeSection' )
     } );
 
-    const content: Node[] = [ presetLauncherSection, sampleSizeSection ];
+    const content: Node[] = [ launcherSection, sampleSizeSection ];
 
     super( content, providedOptions );
   }

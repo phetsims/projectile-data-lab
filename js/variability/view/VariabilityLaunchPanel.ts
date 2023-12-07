@@ -21,7 +21,7 @@ export default class VariabilityLaunchPanel extends VSMLaunchPanel {
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, projectileTypeProperty: PhetioProperty<ProjectileType>, presetLauncherProperty: PhetioProperty<number>, providedOptions: VariabilityLaunchPanelOptions ) {
 
     const presetLauncherSection = new SectionPresetLauncher( presetLauncherProperty, {
-      tandem: providedOptions.tandem
+      tandem: providedOptions.tandem.createTandem( 'presetLauncherSection' )
     } );
 
     super( [ presetLauncherSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
