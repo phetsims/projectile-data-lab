@@ -10,7 +10,7 @@
 
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Property from '../../../../axon/js/Property.js';
@@ -22,6 +22,8 @@ import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Utils from '../../../../dot/js/Utils.js';
+import ABSwitch from '../../../../sun/js/ABSwitch.js';
+import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -34,6 +36,7 @@ export default class PDLAccordionBox extends AccordionBox {
                       content: Node,
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
+                      histogramRepresentationProperty: Property<HistogramRepresentation>,
                       providedOptions: PDLAccordionBoxOptions ) {
 
     const margin = 10;
@@ -76,6 +79,9 @@ export default class PDLAccordionBox extends AccordionBox {
     const labelAndComboBoxContainer = new HBox( {
       align: 'center',
       children: [
+
+        // Use a separate ToggleNode for each one, so they don't change location on the screen when changing between
+        // strategies
         new ToggleNode( BIN_STRATEGY_PROPERTY, [ {
           value: 'binWidth',
           createNode: () => new PDLText( 'Bin width:' )
@@ -104,13 +110,20 @@ export default class PDLAccordionBox extends AccordionBox {
       ]
     } );
 
-    const contentContainer = new VBox( {
+    const barBlockSwitch = new ABSwitch( histogramRepresentationProperty, 'blocks', new PDLText( 'Blocks' ), 'bars', new PDLText( 'Bars' ), {
+      tandem: providedOptions.tandem.createTandem( 'barBlockSwitch' ),
+      spacing: margin
+    } );
+
+    labelAndComboBoxContainer.leftTop = content.leftBottom.plusXY( margin, margin );
+    barBlockSwitch.rightTop = content.rightBottom.plusXY( -margin, margin );
+
+    const contentContainer = new Node( {
       children: [
         content,
-        labelAndComboBoxContainer
-      ],
-      spacing: margin,
-      align: 'left'
+        labelAndComboBoxContainer,
+        barBlockSwitch
+      ]
     } );
 
     const options = optionize<PDLAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {

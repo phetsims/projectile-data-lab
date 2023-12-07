@@ -8,6 +8,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Property from '../../../../axon/js/Property.js';
+import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -27,6 +28,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
   public constructor( comboBoxParent: Node,
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
+                      histogramRepresentationProperty: Property<HistogramRepresentation>,
                       providedOptions: SamplingAccordionBoxOptions ) {
     const contentNode = new Rectangle( 0, 0, 500, 200, { fill: '#ccffcc' } );
     const options = optionize<SamplingAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
@@ -35,7 +37,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
       } )
     }, providedOptions );
 
-    super( comboBoxParent, contentNode, selectedBinWidthProperty, selectedTotalBinsProperty, options );
+    super( comboBoxParent, contentNode, selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty, options );
   }
 }
 

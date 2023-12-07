@@ -24,6 +24,13 @@ import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
+/**
+ * The Field is the area where projectiles are launched and land. Each Field manages its own configuration, sequencing,
+ * and projectiles.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
 export default abstract class Field extends PhetioObject {
 
   public readonly launchModeProperty: Property<LaunchMode>;
@@ -67,7 +74,7 @@ export default abstract class Field extends PhetioObject {
 
   public readonly abstract identifier: string;
 
-  public constructor( providedOptions: FieldOptions ) {
+  protected constructor( providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,
       phetioState: true

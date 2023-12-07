@@ -73,14 +73,21 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
 
     const accordionBoxWidth = this.topRightUIContainer.left - launchPanel.right - 2 * PDLConstants.INTER_PANEL_SPACING;
 
-    this.accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.selectedBinWidthProperty, model.selectedTotalBinsProperty, model.binWidthProperty, this, {
-      expandedProperty: model.isHistogramShowingProperty,
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
-      minWidth: accordionBoxWidth,
-      maxWidth: accordionBoxWidth,
-      tandem: options.tandem.createTandem( 'accordionBox' )
-    } );
+    this.accordionBox = new VSMAccordionBox(
+      model.fieldProperty,
+      model.fields,
+      model.selectedBinWidthProperty,
+      model.selectedTotalBinsProperty,
+      model.binWidthProperty,
+      this,
+      model.histogramRepresentationProperty, {
+        expandedProperty: model.isHistogramShowingProperty,
+        top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
+        left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
+        minWidth: accordionBoxWidth,
+        maxWidth: accordionBoxWidth,
+        tandem: options.tandem.createTandem( 'accordionBox' )
+      } );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),

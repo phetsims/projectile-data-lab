@@ -27,6 +27,8 @@ import { LaunchMode } from './LaunchMode.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PDLConstants from '../PDLConstants.js';
+import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -52,6 +54,8 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   // Current bin width, selecting from the two strategies: binWidth or totalBins (see above)
   public readonly binWidthProperty: TReadOnlyProperty<number>;
+
+  public readonly histogramRepresentationProperty: Property<HistogramRepresentation>;
 
   // Whether the simulation is playing (animating via the step() function)
   public readonly isPlayingProperty: Property<boolean>;
@@ -110,6 +114,12 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       ( binStrategy, selectedBinWidth, totalBins ) => {
         return binStrategy === 'binWidth' ? selectedBinWidth : PDLConstants.MAX_FIELD_DISTANCE / totalBins;
       } );
+
+    this.histogramRepresentationProperty = new StringUnionProperty<HistogramRepresentation>( 'blocks', {
+      validValues: HistogramRepresentationValues,
+      tandem: providedOptions.tandem.createTandem( 'histogramRepresentationProperty' ),
+      phetioDocumentation: 'This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
+    } );
 
     this.isPlayingProperty = new BooleanProperty( true, {
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),

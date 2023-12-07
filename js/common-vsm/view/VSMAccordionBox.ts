@@ -11,6 +11,7 @@ import HistogramNode from './HistogramNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VSMField from '../model/VSMField.js';
 import Property from '../../../../axon/js/Property.js';
+import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 
 /**
  * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -34,6 +35,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
     selectedTotalBinsProperty: Property<number>,
     binWidthProperty: TReadOnlyProperty<number>,
     comboBoxParent: Node,
+    histogramRepresentationProperty: Property<HistogramRepresentation>,
     providedOptions: VSMAccordionBoxOptions ) {
 
     const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, {
@@ -47,7 +49,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
       maxWidth: 500
     }, providedOptions );
 
-    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, options );
+    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty, options );
   }
 }
 
