@@ -17,6 +17,9 @@ import Property from '../../../../axon/js/Property.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLColors from '../PDLColors.js';
+import PDLText from './PDLText.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 
 type SelfOptions = {
   binWidthProperty: Property<number>;
@@ -51,17 +54,20 @@ export default class PDLAccordionBox extends AccordionBox {
 
     const labelAndComboBoxContainer = new HBox( {
       children: [
-        new Text( 'Bin width:', {
-          font: PDLConstants.PRIMARY_FONT,
+        new ToggleNode( BIN_STRATEGY_PROPERTY, [ {
+          value: 'binWidth',
+          createNode: () => new PDLText( 'Bin width (m)' )
+        }, {
+          value: 'totalBins',
+          createNode: () => new PDLText( 'Total bins' )
+        } ], {
+          alignChildren: ToggleNode.RIGHT,
           layoutOptions: {
             topMargin: PDLConstants.PRIMARY_FONT.getNumericSize() / 2,
             rightMargin: margin
           }
         } ),
-        new VBox( {
-          children: [ binWidthComboBox ],
-          align: 'left'
-        } )
+        binWidthComboBox
       ],
       align: 'top'
     } );
