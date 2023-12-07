@@ -22,8 +22,10 @@ export type MeasuresFieldOptions = SelfOptions & FieldOptions;
 
 export default class MeasuresField extends VSMField {
 
+  // This property represents the average distance (horizontal displacement) of landed projectiles.
   public readonly landedDistanceAverageProperty: Property<number | null>;
 
+  // This property represents the standard deviation of the distance (horizontal displacement) of landed projectiles.
   public readonly landedDistanceStandardDeviationProperty: Property<number | null>;
 
   public constructor( identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
