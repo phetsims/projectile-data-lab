@@ -42,22 +42,10 @@ export default class HistogramCanvasPainter extends CanvasPainter {
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
 
-    const HIGHLIGHT_WITH_COLOR_INVERSION = true;
-    const HIGHLIGHT_WITH_WHITE_DOT = false;
-
     context.save();
 
-    const setColors = ( isHighlighted: boolean ) => {
-      if ( isHighlighted ) {
-        context.fillStyle = PDLColors.histogramBarStrokeColorProperty.value.toCSS();
-        context.strokeStyle = PDLColors.histogramBarFillColorProperty.value.toCSS();
-      }
-      else {
-        context.fillStyle = PDLColors.histogramBarFillColorProperty.value.toCSS();
-        context.strokeStyle = PDLColors.histogramBarStrokeColorProperty.value.toCSS();
-      }
-    };
-    setColors( false );
+    context.fillStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
+    context.strokeStyle = PDLColors.histogramDataStrokeColorProperty.value.toCSS();
 
     const lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.15 ) );
 
@@ -85,21 +73,20 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const width = this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value );
       const height = Math.abs( this.chartTransform.modelToViewDeltaY( 1 ) );
 
-      if ( this.selectedProjectile === projectile && HIGHLIGHT_WITH_COLOR_INVERSION ) { setColors( true ); }
-
       context.fillRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
       context.strokeRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
 
-      if ( this.selectedProjectile === projectile && HIGHLIGHT_WITH_COLOR_INVERSION ) { setColors( false );}
-
-      if ( this.selectedProjectile === projectile && HIGHLIGHT_WITH_WHITE_DOT ) {
+      if ( this.selectedProjectile === projectile ) {
 
         // draw a white dot in the middle of the rectangle
         context.save();
         context.beginPath();
-        context.arc( x * scaleFactor + width * scaleFactor / 2, y * scaleFactor + height * scaleFactor / 2, 1.2, 0, 2 * Math.PI );
+        context.arc( x * scaleFactor + width * scaleFactor / 2, y * scaleFactor + height * scaleFactor / 2, 3.3 * scaleFactor, 0, 2 * Math.PI );
         context.fillStyle = 'white';
+        context.strokeStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
+        context.lineWidth = 1.5 * scaleFactor;
         context.fill();
+        context.stroke();
         context.restore();
       }
     }

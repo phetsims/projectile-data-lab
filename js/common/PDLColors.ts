@@ -127,12 +127,12 @@ const PDLColors = {
     default: '#363F82'
   } ),
 
-  histogramBarFillColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramBarFill', {
+  histogramDataFillColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramDataFill', {
     default: '#D22D32'
   } ),
 
-  histogramBarStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramBarStroke', {
-    default: '#EC6F5E'
+  histogramDataStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramDataStroke', {
+    default: '#EE8B5E'
   } )
 };
 
