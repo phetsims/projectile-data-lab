@@ -9,7 +9,7 @@
  */
 
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -23,22 +23,24 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Utils from '../../../../dot/js/Utils.js';
 
-type SelfOptions = {
-  binWidthProperty: Property<number>;
-};
+type SelfOptions = EmptySelfOptions;
 
 export type PDLAccordionBoxOptions =
   SelfOptions
   & WithRequired<AccordionBoxOptions, 'tandem'>;
 
 export default class PDLAccordionBox extends AccordionBox {
-  public constructor( comboBoxParent: Node, content: Node, providedOptions: PDLAccordionBoxOptions ) {
+  public constructor( comboBoxParent: Node,
+                      content: Node,
+                      selectedBinWidthProperty: Property<number>,
+                      selectedTotalBinsProperty: Property<number>,
+                      providedOptions: PDLAccordionBoxOptions ) {
 
     const margin = 10;
 
     class BinWidthComboBox extends ComboBox<number> {
       public constructor() {
-        const validBinWidths = providedOptions.binWidthProperty.validValues ?? [];
+        const validBinWidths = selectedBinWidthProperty.validValues ?? [];
         const comboBoxItems = validBinWidths.map( binWidth => {
           return {
             value: binWidth,
@@ -48,7 +50,7 @@ export default class PDLAccordionBox extends AccordionBox {
             tandemName: `binWidth${binWidth}Item`
           };
         } );
-        super( providedOptions.binWidthProperty, comboBoxItems, comboBoxParent, {
+        super( selectedBinWidthProperty, comboBoxItems, comboBoxParent, {
           listPosition: 'below',
           tandem: providedOptions.tandem.createTandem( 'binWidthComboBox' )
         } );
@@ -57,15 +59,14 @@ export default class PDLAccordionBox extends AccordionBox {
 
     class TotalBinsComboBox extends ComboBox<number> {
       public constructor() {
-        const validTotalBins = [ 1, 2, 5, 10, 20, 25, 50, 100 ];
-        const comboBoxItems = validTotalBins.map( totalBins => {
+        const comboBoxItems = ( selectedTotalBinsProperty.validValues ?? [] ).map( totalBins => {
           return {
             value: totalBins,
             createNode: () => new PDLText( Utils.toFixed( totalBins, 0 ) ),
             tandemName: `totalBins${totalBins}Item`
           };
         } );
-        super( providedOptions.binWidthProperty, comboBoxItems, comboBoxParent, {
+        super( selectedTotalBinsProperty, comboBoxItems, comboBoxParent, {
           listPosition: 'below',
           tandem: providedOptions.tandem.createTandem( 'totalBinsComboBox' )
         } );

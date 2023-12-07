@@ -10,6 +10,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import HistogramNode from './HistogramNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VSMField from '../model/VSMField.js';
+import Property from '../../../../axon/js/Property.js';
 
 /**
  * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -22,11 +23,18 @@ import VSMField from '../model/VSMField.js';
 type SelfOptions = EmptySelfOptions;
 
 export type VSMAccordionBoxOptions =
-  SelfOptions & WithRequired<PDLAccordionBoxOptions, 'tandem' | 'binWidthProperty'>;
+  SelfOptions & WithRequired<PDLAccordionBoxOptions, 'tandem'>;
 
 export default class VSMAccordionBox extends PDLAccordionBox {
 
-  public constructor( fieldProperty: TReadOnlyProperty<VSMField>, fields: VSMField[], binWidthProperty: TReadOnlyProperty<number>, comboBoxParent: Node, providedOptions: VSMAccordionBoxOptions ) {
+  public constructor(
+    fieldProperty: TReadOnlyProperty<VSMField>,
+    fields: VSMField[],
+    selectedBinWidthProperty: Property<number>,
+    selectedTotalBinsProperty: Property<number>,
+    binWidthProperty: TReadOnlyProperty<number>,
+    comboBoxParent: Node,
+    providedOptions: VSMAccordionBoxOptions ) {
 
     const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, {
       tandem: providedOptions.tandem.createTandem( 'histogramNode' )
@@ -39,7 +47,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
       maxWidth: 500
     }, providedOptions );
 
-    super( comboBoxParent, histogramNode, options );
+    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, options );
   }
 }
 

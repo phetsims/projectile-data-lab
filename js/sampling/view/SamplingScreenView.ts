@@ -67,9 +67,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     this.addChild( launcherSampleSizePanel );
 
-    this.accordionBox = new SamplingAccordionBox( this, {
+    this.accordionBox = new SamplingAccordionBox( this, model.selectedBinWidthProperty, model.selectedTotalBinsProperty, {
       expandedProperty: model.isHistogramShowingProperty,
-      binWidthProperty: model.binWidthProperty,
       centerX: this.layoutBounds.centerX,
       tandem: options.tandem.createTandem( 'accordionBox' )
     } );

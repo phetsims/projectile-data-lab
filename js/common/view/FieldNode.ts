@@ -6,10 +6,10 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLColors from '../PDLColors.js';
-import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PDLUtils from '../PDLUtils.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The FieldNode is the floating horizontal surface on which projectiles land. Its elements are drawn using a nonlinear
@@ -20,6 +20,7 @@ import PDLUtils from '../PDLUtils.js';
  */
 
 type SelfOptions = {
+
   // Is this the bottom half of the field? If so, it will be clipped to the bottom half of the field.
   isBottomHalf?: boolean;
 };
@@ -33,7 +34,7 @@ export default class FieldNode extends Node {
   // The field
   private fieldBorder: Node;
 
-  public constructor( binWidthProperty: Property<number>, providedOptions: FieldNodeOptions ) {
+  public constructor( binWidthProperty: TReadOnlyProperty<number>, providedOptions: FieldNodeOptions ) {
 
     const fieldBounds = new Bounds2(
       -0.5 * PDLConstants.FIELD_WIDTH,

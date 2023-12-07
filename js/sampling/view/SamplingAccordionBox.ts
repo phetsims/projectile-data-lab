@@ -7,6 +7,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import Property from '../../../../axon/js/Property.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -19,11 +20,14 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 type SelfOptions = EmptySelfOptions;
 
 export type SamplingAccordionBoxOptions =
-  SelfOptions & WithRequired<PDLAccordionBoxOptions, 'tandem' | 'binWidthProperty'>;
+  SelfOptions & WithRequired<PDLAccordionBoxOptions, 'tandem'>;
 
 export default class SamplingAccordionBox extends PDLAccordionBox {
 
-  public constructor( comboBoxParent: Node, providedOptions: SamplingAccordionBoxOptions ) {
+  public constructor( comboBoxParent: Node,
+                      selectedBinWidthProperty: Property<number>,
+                      selectedTotalBinsProperty: Property<number>,
+                      providedOptions: SamplingAccordionBoxOptions ) {
     const contentNode = new Rectangle( 0, 0, 500, 200, { fill: '#ccffcc' } );
     const options = optionize<SamplingAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.distributionStringProperty, {
@@ -31,7 +35,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
       } )
     }, providedOptions );
 
-    super( comboBoxParent, contentNode, options );
+    super( comboBoxParent, contentNode, selectedBinWidthProperty, selectedTotalBinsProperty, options );
   }
 }
 

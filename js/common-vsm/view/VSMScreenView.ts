@@ -73,9 +73,8 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
 
     const accordionBoxWidth = this.topRightUIContainer.left - launchPanel.right - 2 * PDLConstants.INTER_PANEL_SPACING;
 
-    this.accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.binWidthProperty, this, {
+    this.accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.selectedBinWidthProperty, model.selectedTotalBinsProperty, model.binWidthProperty, this, {
       expandedProperty: model.isHistogramShowingProperty,
-      binWidthProperty: model.binWidthProperty,
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
       left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
       minWidth: accordionBoxWidth,

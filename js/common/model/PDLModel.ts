@@ -24,6 +24,9 @@ import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { LaunchMode } from './LaunchMode.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
+import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -38,7 +41,17 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly isHistogramShowingProperty: Property<boolean>;
 
   // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
-  public readonly binWidthProperty: Property<number>;
+  // The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
+  // depending on the BIN_STRATEGY_PROPERTY.
+  public readonly selectedBinWidthProperty: Property<number>;
+
+  // Total bins represents the number of bins in the histogram.
+  // The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
+  // depending on the BIN_STRATEGY_PROPERTY.
+  public readonly selectedTotalBinsProperty: Property<number>;
+
+  // Current bin width, selecting from the two strategies: binWidth or totalBins (see above)
+  public readonly binWidthProperty: TReadOnlyProperty<number>;
 
   // Whether the simulation is playing (animating via the step() function)
   public readonly isPlayingProperty: Property<boolean>;
@@ -79,12 +92,24 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioValueType: BooleanIO
     } );
 
-    this.binWidthProperty = new Property<number>( 2, {
+    this.selectedBinWidthProperty = new Property<number>( 2, {
       validValues: [ 1, 2, 5, 10 ],
-      tandem: providedOptions.tandem.createTandem( 'binWidthProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',
       phetioValueType: NumberIO
     } );
+
+    this.selectedTotalBinsProperty = new Property<number>( 10, {
+      validValues: [ 1, 2, 5, 10, 20, 25, 50, 100 ],
+      tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
+      phetioDocumentation: 'This property configures the total number of bins in the histogram.',
+      phetioValueType: NumberIO
+    } );
+
+    this.binWidthProperty = new DerivedProperty( [ BIN_STRATEGY_PROPERTY, this.selectedBinWidthProperty, this.selectedTotalBinsProperty ],
+      ( binStrategy, selectedBinWidth, totalBins ) => {
+        return binStrategy === 'binWidth' ? selectedBinWidth : PDLConstants.MAX_FIELD_DISTANCE / totalBins;
+      } );
 
     this.isPlayingProperty = new BooleanProperty( true, {
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
@@ -157,7 +182,8 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public reset(): void {
     this.launchModeProperty.reset();
     this.isHistogramShowingProperty.reset();
-    this.binWidthProperty.reset();
+    this.selectedBinWidthProperty.reset();
+    this.selectedTotalBinsProperty.reset();
     this.isPlayingProperty.reset();
     this.timeSpeedProperty.reset();
 
