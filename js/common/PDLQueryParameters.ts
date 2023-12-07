@@ -9,13 +9,30 @@
 
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import projectileDataLab from '../projectileDataLab.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import StringUnionProperty from '../../../axon/js/StringUnionProperty.js';
+import { BinStrategy, BinStrategyValues } from './BinStrategy.js';
 
 const SCHEMA_MAP = {
-  // TODO add schemas for query parameters, see https://github.com/phetsims/projectile-data-lab/issues/4
-  // Should this be validValues: histogram: [ 'binWidth', 'numberOfBins' ]?
+  binStrategy: {
+    type: 'string' as const,
+    validValues: BinStrategyValues,
+    defaultValue: 'binWidth',
+    public: true
+  }
 };
 
 const PDLQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
+
+const binStrategy = PDLQueryParameters.binStrategy as BinStrategy; // TODO: QSM not being nice https://github.com/phetsims/projectile-data-lab/issues/7
+
+// the top checkboxes are left aligned with the play area checkboxes, so their max width is smaller to accommodate
+// for the accordion box margin
+export const BIN_STRATEGY_PROPERTY = new StringUnionProperty<BinStrategy>( binStrategy, {
+  validValues: BinStrategyValues,
+  tandem: Tandem.PREFERENCES.createTandem( 'binStrategyProperty' ),
+  phetioFeatured: true
+} );
 
 // The schema map is a read-only part of the public API, in case schema details (e.g. validValues) are needed elsewhere.
 PDLQueryParameters.SCHEMA_MAP = SCHEMA_MAP;

@@ -10,3 +10,7 @@ Field.
 
 For simulation-specific enumerations, we use the string literal union pattern. See LauncherConfiguration.ts for an
 example.
+
+### Disposal
+
+Everything in the simulation is statically allocated and there is no need for disposal.
