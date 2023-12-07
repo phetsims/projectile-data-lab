@@ -20,8 +20,8 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 type SelfOptions = EmptySelfOptions;
 type VSMCanvasNodeOptions = SelfOptions & PDLCanvasNodeOptions;
 
-export default class VSMCanvasNode extends PDLCanvasNode<VSMField> {
-  public constructor( fieldProperty: Property<VSMField>, isPathsVisibleProperty: Property<boolean>,
+export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> {
+  public constructor( fieldProperty: Property<T>, isPathsVisibleProperty: Property<boolean>,
                       modelViewTransform: ModelViewTransform2, selectedSampleProperty: TReadOnlyProperty<number>,
                       providedOptions: VSMCanvasNodeOptions ) {
 

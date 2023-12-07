@@ -14,12 +14,13 @@ import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
+import VSMField from '../../common-vsm/model/VSMField.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class VariabilityScreenView extends VSMScreenView {
+export default class VariabilityScreenView extends VSMScreenView<VSMField> {
 
   protected readonly launcherNode: LauncherNode;
 

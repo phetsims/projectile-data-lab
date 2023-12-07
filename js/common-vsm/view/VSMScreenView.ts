@@ -37,16 +37,16 @@ import FieldSelectorPanel from './FieldSelectorPanel.js';
 type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
+export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly launchPanel: VSMLaunchPanel;
-  protected readonly fieldPanel: FieldSelectorPanel;
+  protected readonly fieldSelectorPanel: FieldSelectorPanel<VSMField>;
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorPanel: ProjectileSelectorPanel;
   protected readonly topRightUIContainer: VBox;
 
-  protected constructor( model: VSMModel,
+  protected constructor( model: VSMModel<T>,
                          launchPanel: VSMLaunchPanel,
                          staticToolPanel: StaticToolPanel,
                          interactiveToolPanel: InteractiveToolPanel,
@@ -228,9 +228,9 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       }
     } );
 
-    this.fieldPanel = new FieldSelectorPanel( model.fieldProperty, {
+    this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {
       maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
-      tandem: options.tandem.createTandem( 'fieldPanel' )
+      tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
     } );
 
     this.projectileSelectorPanel = new ProjectileSelectorPanel(
@@ -254,7 +254,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       bottom: this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN,
       left: this.layoutBounds.centerX - 100,
       maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
-      children: [ this.fieldPanel, this.projectileSelectorPanel, this.timeControlNode ]
+      children: [ this.fieldSelectorPanel, this.projectileSelectorPanel, this.timeControlNode ]
     } );
 
     this.toolsLayer.addChild( stopwatchNode );
@@ -284,7 +284,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       this.launchPanel,
       this.launchButton,
       this.launchControlRadioButtonGroup,
-      this.fieldPanel,
+      this.fieldSelectorPanel,
       this.projectileSelectorPanel,
       this.timeControlNode,
       this.resetAllButton,

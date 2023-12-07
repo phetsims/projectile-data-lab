@@ -13,12 +13,13 @@ import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
 import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
+import MeasuresField from '../model/MeasuresField.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class MeasuresScreenView extends VSMScreenView {
+export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
   protected readonly launcherNode: CustomLauncherNode;
 

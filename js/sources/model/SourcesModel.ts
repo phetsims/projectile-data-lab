@@ -12,18 +12,27 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common-vsm/model/VSMModel.js';
 import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/CustomLauncherType.js';
+import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import VSMField from '../../common-vsm/model/VSMField.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class SourcesModel extends VSMModel {
+export default class SourcesModel extends VSMModel<VSMField> {
 
   public constructor( providedOptions: PDLModelOptions ) {
 
-    super( providedOptions );
+    const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
+    const fields = VSMFieldIdentifierValues.map( identifier => {
+      return new VSMField( identifier, {
+        tandem: fieldsTandem.createTandem( identifier )
+      } );
+    } );
 
-    this.fields.forEach( field => {
+    super( fields, providedOptions );
+
+    fields.forEach( field => {
       field.angleStabilizerProperty.link( angleStabilizer => {
         field.launchAngleStandardDeviationProperty.value = angleStabilizer;
       } );

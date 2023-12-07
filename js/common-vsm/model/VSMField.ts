@@ -76,24 +76,20 @@ export default class VSMField extends Field {
       phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
     } );
 
-    this.projectileLandedEmitter.addListener( projectile => {
-      this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
-    } );
-
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
     this.landedProjectileCountProperty = new NumberProperty( 0 );
-    const updateProjectileCountProperty = () => {
+
+    // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
+    // But in that case we will need to track this data another way.
+    this.projectileLandedEmitter.addListener( projectile => {
+      this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
       this.landedProjectileCountProperty.value = this.landedProjectiles.length;
-    };
+    } );
 
     // If the selected projectile is changed, repaint the canvas even if time is paused
     this.selectedProjectileProperty.lazyLink( () => {
       this.projectilesChangedEmitter.emit();
     } );
-
-    // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
-    // But in that case we will need to track this data another way.
-    this.projectileLandedEmitter.addListener( updateProjectileCountProperty );
   }
 
   public launchProjectile(): void {

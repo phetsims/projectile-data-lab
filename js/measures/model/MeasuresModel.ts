@@ -17,24 +17,50 @@ import VSMField from '../../common-vsm/model/VSMField.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/CustomLauncherType.js';
+import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import MeasuresField from './MeasuresField.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class MeasuresModel extends VSMModel {
+export default class MeasuresModel extends VSMModel<MeasuresField> {
+
+  private landedDistanceAverageProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+
+  private landedDistanceStandardDeviationProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   public readonly isLauncherCustomProperty: DynamicProperty<boolean, boolean, VSMField>;
 
   // Static tool visibility
   public readonly isDataMeasuresVisibleProperty: BooleanProperty;
-
   public readonly isIntervalToolVisibleProperty: BooleanProperty;
 
-  // public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration,Field,Field>;
-
   public constructor( providedOptions: PDLModelOptions ) {
-    super( providedOptions );
+    const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
+    const fields = VSMFieldIdentifierValues.map( identifier => {
+      return new MeasuresField( identifier, {
+        tandem: fieldsTandem.createTandem( identifier )
+      } );
+    } );
+
+    super( fields, providedOptions );
+
+    this.landedDistanceAverageProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
+      derive: t => t.landedDistanceAverageProperty
+    } );
+
+    this.landedDistanceStandardDeviationProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
+      derive: t => t.landedDistanceStandardDeviationProperty
+    } );
+
+    this.landedDistanceAverageProperty.link( landedDistance => {
+      console.log( 'landedDistanceAverageProperty changed to ' + landedDistance );
+    } );
+
+    this.landedDistanceStandardDeviationProperty.link( landedDistance => {
+      console.log( 'landedDistanceStandardDeviationProperty changed to ' + landedDistance );
+    } );
 
     this.isLauncherCustomProperty = new DynamicProperty<boolean, boolean, VSMField>( this.fieldProperty, {
       bidirectional: true,
@@ -49,7 +75,7 @@ export default class MeasuresModel extends VSMModel {
       tandem: providedOptions.tandem.createTandem( 'isDataMeasuresVisibleProperty' )
     } );
 
-    this.fields.forEach( field => {
+    fields.forEach( field => {
       Multilink.multilink( [ this.isLauncherCustomProperty, this.customLauncherTypeProperty, this.angleStabilizerProperty ],
         ( isLauncherCustom, customLauncherType, angleStabilizer ) => {
           if ( isLauncherCustom ) {

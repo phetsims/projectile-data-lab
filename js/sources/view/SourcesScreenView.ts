@@ -15,12 +15,13 @@ import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import Property from '../../../../axon/js/Property.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
+import VSMField from '../../common-vsm/model/VSMField.js';
 
 type SelfOptions = EmptySelfOptions;
 
 type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class SourcesScreenView extends VSMScreenView {
+export default class SourcesScreenView extends VSMScreenView<VSMField> {
 
   protected readonly launcherNode: CustomLauncherNode;
 

@@ -19,8 +19,8 @@ import VSMField from '../model/VSMField.js';
 type SelfOptions = EmptySelfOptions;
 type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 
-export default class FieldSelectorPanel extends PDLPanel {
-  public constructor( fieldProperty: Property<VSMField>, providedOptions: FieldPanelOptions ) {
+export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
+  public constructor( fieldProperty: Property<T>, providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN

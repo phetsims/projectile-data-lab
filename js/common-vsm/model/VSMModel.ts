@@ -19,13 +19,12 @@ import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { CustomLauncherType } from './CustomLauncherType.js';
-import { VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
 import Projectile from '../../common/model/Projectile.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMModelOptions = SelfOptions & StrictOmit<PDLModelOptions<VSMField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
+export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
 
-export default class VSMModel extends PDLModel<VSMField> {
+export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
   // Static tool visibility
   public readonly isLaunchAngleVisibleProperty: BooleanProperty;
@@ -56,16 +55,9 @@ export default class VSMModel extends PDLModel<VSMField> {
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;
   public readonly landedProjectileCountProperty: DynamicProperty<number, number, VSMField>;
 
-  public constructor( providedOptions: VSMModelOptions ) {
+  public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
 
-    const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
-    const fields = VSMFieldIdentifierValues.map( identifier => {
-      return new VSMField( identifier, {
-        tandem: fieldsTandem.createTandem( identifier )
-      } );
-    } );
-
-    const options = optionize<VSMModelOptions, SelfOptions, PDLModelOptions<VSMField>>()( {
+    const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],
       fields: fields,
       isPathsVisible: false
