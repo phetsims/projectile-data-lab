@@ -9,6 +9,9 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 type SelfOptions = EmptySelfOptions;
 type PDLTextOptions = SelfOptions & TextOptions;
 
+/**
+ * PDLText is a Text with the default font for the Projectile Data Lab.
+ */
 export default class PDLText extends Text {
   public constructor( text: TReadOnlyProperty<string> | string, providedOptions?: PDLTextOptions ) {
     const options = optionize<PDLTextOptions, SelfOptions, TextOptions>()( {
@@ -17,4 +20,5 @@ export default class PDLText extends Text {
     super( text, options );
   }
 }
+
 projectileDataLab.register( 'PDLText', PDLText );
