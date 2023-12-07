@@ -25,7 +25,7 @@ const PDLColors = {
   } ),
 
   screenBackgroundBottomColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundBottom', {
-    default: '#B6D2FF'
+    default: '#b7caec'
   } ),
 
   panelColorProperty: new ProfileColorProperty( projectileDataLab, 'panelFill', {
