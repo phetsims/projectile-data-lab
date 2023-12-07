@@ -48,7 +48,7 @@ export default class HistogramNode extends Node {
 
     const chartTransform = new ChartTransform( {
       viewWidth: 520,
-      viewHeight: 210,
+      viewHeight: 180,
       modelXRange: new Range( PDLConstants.MIN_HISTOGRAM_DISTANCE, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );
@@ -67,10 +67,12 @@ export default class HistogramNode extends Node {
     const histogramPainter = new HistogramCanvasPainter( chartTransform, binWidthProperty );
 
     // Changes based on the zoom level
-    const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, { stroke: 'lightGray' } );
+    const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, { stroke: 'lightGray',
+    lineWidth: 0.8 } );
 
     // Changes based on the bin width
-    const verticalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, { stroke: 'lightGray' } );
+    const verticalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, { stroke: 'lightGray',
+    lineWidth: 0.8 } );
 
     const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ] );
     const chartClip = new Node( {

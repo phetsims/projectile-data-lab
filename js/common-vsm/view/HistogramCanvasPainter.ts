@@ -57,8 +57,15 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     const histogram = new Map<number, number>();
     const binWidth = this.binWidthProperty.value;
 
+    const blockWidth = this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value );
+    const blockHeight = Math.abs( this.chartTransform.modelToViewDeltaY( 1 ) );
+
+    let highlightDotX = null;
+    let highlightDotY = null;
+
     for ( let i = 0; i < this.projectiles.length; i++ ) {
       const projectile = this.projectiles[ i ];
+      const isHighlighted = this.selectedProjectile === projectile;
 
       // Calculate the bin for this value
       // REVIEW: Is this how you want to calculate the bin?
@@ -70,25 +77,34 @@ export default class HistogramCanvasPainter extends CanvasPainter {
 
       const x = this.chartTransform.modelToViewX( bin );
       const y = this.chartTransform.modelToViewY( binCount );
-      const width = this.chartTransform.modelToViewDeltaX( this.binWidthProperty.value );
-      const height = Math.abs( this.chartTransform.modelToViewDeltaY( 1 ) );
 
-      context.fillRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
-      context.strokeRect( x * scaleFactor, y * scaleFactor, width * scaleFactor, height * scaleFactor );
-
-      if ( this.selectedProjectile === projectile ) {
-
-        // draw a white dot in the middle of the rectangle
-        context.save();
-        context.beginPath();
-        context.arc( x * scaleFactor + width * scaleFactor / 2, y * scaleFactor + height * scaleFactor / 2, 3.3 * scaleFactor, 0, 2 * Math.PI );
-        context.fillStyle = 'white';
-        context.strokeStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
-        context.lineWidth = 1.5 * scaleFactor;
-        context.fill();
-        context.stroke();
-        context.restore();
+      if ( isHighlighted ) {
+        context.fillStyle = PDLColors.histogramDataStrokeColorProperty.value.toCSS();
       }
+
+      context.fillRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
+      context.strokeRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
+
+      // Set the fillStyle back to the default
+      if ( isHighlighted ) {
+        context.fillStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
+      }
+
+      if ( isHighlighted ) {
+        highlightDotX = x;
+        highlightDotY = y;
+      }
+    }
+
+    // draw a white dot in the middle of the highlighted block, on top of the all the data blocks
+    if ( highlightDotX !== null && highlightDotY !== null ) {
+      context.beginPath();
+      context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, 3.3 * scaleFactor, 0, 2 * Math.PI );
+      context.fillStyle = 'white';
+      context.strokeStyle = PDLColors.histogramDataStrokeColorProperty.value.toCSS();
+      context.lineWidth = 1.5 * scaleFactor;
+      context.fill();
+      context.stroke();
     }
 
     context.restore();
