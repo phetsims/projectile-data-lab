@@ -139,7 +139,7 @@ export default class FieldNode extends Node {
 
     for ( let i = 0; i < totalFieldLines; i++ ) {
       const x = -0.5 * PDLConstants.FIELD_WIDTH + deltaX * ( i + 1 );
-      const isNumberedLine = ( i + 1 ) * binWidth % PDLConstants.FIELD_LINE_NUMBER_INCREMENT === 0;
+      const isNumberedLine = ( i + 1 ) * binWidth % PDLConstants.FIELD_LABEL_INCREMENT === 0;
       const strokeColorProperty =
         isNumberedLine ?
         PDLColors.fieldBorderStrokeColorProperty :

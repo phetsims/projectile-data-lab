@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { HBox, Image, Node, Text } from '../../../../scenery/js/imports.js';
+import { HBox, Image, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -34,7 +34,6 @@ import launchButtonContinuous_png from '../../../images/launchButtonContinuous_p
 import LauncherNode from './LauncherNode.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 import PDLAccordionBox from './PDLAccordionBox.js';
-import stopButton_png from '../../../images/stopButton_png.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
@@ -143,7 +142,13 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       createNode: () => launchIconToggleNode
     }, {
       value: true,
-      createNode: () => new Image( stopButton_png )
+      createNode: () => new Rectangle( 0, 0, 50, 50, {
+        fill: 'black',
+        stroke: 'white',
+        lineWidth: 2,
+        cornerRadius: 5,
+        opacity: 0.75 // Adjusts the color of the icon to look more like part of the button
+      } )
     } ], {} );
 
     this.launchButton = new RectangularPushButton( {

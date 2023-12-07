@@ -52,12 +52,12 @@ export default class FieldOverlayNode extends Node {
 
     // Create the numbered distance labels
     const distanceLabels: Text[] = [];
-    const totalDistanceLabels = ( PDLConstants.MAX_FIELD_DISTANCE - PDLConstants.FIELD_LINE_NUMBER_INCREMENT )
-                                / PDLConstants.FIELD_LINE_NUMBER_INCREMENT;
+    const totalDistanceLabels = ( PDLConstants.MAX_FIELD_DISTANCE - PDLConstants.FIELD_LABEL_INCREMENT )
+                                / PDLConstants.FIELD_LABEL_INCREMENT;
     const distanceLabelY = PDLConstants.FIELD_LABEL_TOP_MARGIN + 0.5 * PDLConstants.FIELD_HEIGHT;
 
     for ( let i = 0; i <= totalDistanceLabels; i++ ) {
-      const distance = ( i + 1 ) * PDLConstants.FIELD_LINE_NUMBER_INCREMENT;
+      const distance = ( i + 1 ) * PDLConstants.FIELD_LABEL_INCREMENT;
       const distanceLabelX = originX + modelViewTransform.modelToViewDeltaX( distance );
 
       // Apply the perspective transform to the label offset so that it is positioned relative to the bottom of the field
@@ -72,7 +72,7 @@ export default class FieldOverlayNode extends Node {
                  distancePositionTransformed.bounds.left,
         top: distancePositionTransformed.bounds.bottom + PDLConstants.FIELD_LABEL_TOP_MARGIN,
         font: PDLConstants.FIELD_LABEL_FONT,
-        maxWidth: modelViewTransform.modelToViewDeltaX( PDLConstants.FIELD_LINE_NUMBER_INCREMENT ) * 0.9 // Add a horizontal margin
+        maxWidth: modelViewTransform.modelToViewDeltaX( PDLConstants.FIELD_LABEL_INCREMENT ) * 0.9 // Add a horizontal margin
       } );
       distanceLabels.push( textLabel );
     }

@@ -25,7 +25,7 @@ import ProjectileSelectorPanel from './ProjectileSelectorPanel.js';
 import StaticToolPanel from './StaticToolPanel.js';
 import InteractiveToolPanel from './InteractiveToolPanel.js';
 import VSMLaunchPanel from './VSMLaunchPanel.js';
-import VSMFieldPanel from './VSMFieldPanel.js';
+import FieldSelectorPanel from './FieldSelectorPanel.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -39,7 +39,7 @@ type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
   protected readonly launchPanel: VSMLaunchPanel;
-  protected readonly fieldPanel: VSMFieldPanel;
+  protected readonly fieldPanel: FieldSelectorPanel;
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
@@ -222,7 +222,7 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       }
     } );
 
-    this.fieldPanel = new VSMFieldPanel( model.fieldProperty, {
+    this.fieldPanel = new FieldSelectorPanel( model.fieldProperty, {
       maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
       tandem: options.tandem.createTandem( 'fieldPanel' )
     } );

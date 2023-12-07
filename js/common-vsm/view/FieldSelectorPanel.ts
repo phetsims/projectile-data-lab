@@ -19,7 +19,7 @@ import VSMField from '../model/VSMField.js';
 type SelfOptions = EmptySelfOptions;
 type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 
-export default class VSMFieldPanel extends PDLPanel {
+export default class FieldSelectorPanel extends PDLPanel {
   public constructor( fieldProperty: Property<VSMField>, providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
@@ -53,4 +53,4 @@ export default class VSMFieldPanel extends PDLPanel {
   }
 }
 
-projectileDataLab.register( 'VSMFieldPanel', VSMFieldPanel );
+projectileDataLab.register( 'FieldSelectorPanel', FieldSelectorPanel );

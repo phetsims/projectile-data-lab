@@ -49,7 +49,7 @@ export default class HistogramNode extends Node {
     const chartTransform = new ChartTransform( {
       viewWidth: 520,
       viewHeight: 180,
-      modelXRange: new Range( PDLConstants.MIN_HISTOGRAM_DISTANCE, PDLConstants.MAX_FIELD_DISTANCE ),
+      modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );
 
@@ -88,7 +88,7 @@ export default class HistogramNode extends Node {
       ]
     } );
 
-    const verticalTickMarkSet = new TickMarkSet( chartTransform, Orientation.VERTICAL, 5, { edge: 'min' } );
+    const verticalTickMarkSet = new TickMarkSet( chartTransform, Orientation.VERTICAL, 5, { edge: 'min', extent: 8 } );
     const verticalTickLabelSet = new TickLabelSet( chartTransform, Orientation.VERTICAL, 5, {
       edge: 'min',
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
@@ -106,8 +106,8 @@ export default class HistogramNode extends Node {
         verticalTickMarkSet,
         verticalTickLabelSet,
 
-        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, 10, { edge: 'min' } ),
-        new TickLabelSet( chartTransform, Orientation.HORIZONTAL, 10, {
+        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, { edge: 'min', extent: 8 } ),
+        new TickLabelSet( chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, {
           edge: 'min',
           createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
         } ),
