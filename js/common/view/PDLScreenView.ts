@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Image, Node, Text } from '../../../../scenery/js/imports.js';
+import { HBox, Image, Node, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -53,6 +53,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected abstract readonly launchPanel: PDLLaunchPanel;
   protected abstract readonly accordionBox: PDLAccordionBox;
 
+  protected readonly bottomUIContainer: HBox;
+
   protected readonly launchButton;
   protected readonly launchControlRadioButtonGroup;
   protected readonly eraserButton: EraserButton;
@@ -85,13 +87,22 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       1
     );
 
-    // This instance lives for the lifetime of the simulation, so we don't need to remove this listener
     this.visibleBoundsProperty.link( visibleBounds => {
       background.translation = visibleBounds.leftTop;
       background.setScaleMagnitude( visibleBounds.width, visibleBounds.height );
     } );
 
+    this.bottomUIContainer = new HBox( {
+      spacing: PDLConstants.INTER_PANEL_SPACING,
+      bottom: this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN
+    } );
+
     this.noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
+      layoutOptions: {
+        align: 'right'
+      },
+      right: this.layoutBounds.maxX - PDLConstants.SCREEN_VIEW_X_MARGIN,
+      bottom: PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION,
       font: PDLConstants.NO_AIR_RESISTANCE_FONT,
       maxWidth: 200
     } );

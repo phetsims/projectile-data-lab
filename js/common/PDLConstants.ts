@@ -19,8 +19,11 @@ const MAX_ANGLE_STANDARD_DEVIATION = 10; // degrees
 
 const PDLConstants = {
 
-  SCREEN_VIEW_X_MARGIN: 10,
-  SCREEN_VIEW_Y_MARGIN: 10,
+  SCREEN_VIEW_X_MARGIN: 8,
+  SCREEN_VIEW_Y_MARGIN: 8,
+  BOTTOM_UI_HEIGHT: 55,
+  INTER_PANEL_SPACING: 5,
+  BOTTOM_UI_SPACING: 20,
 
   MAX_PROJECTILES_PER_FIELD: 500,
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.1, // seconds
@@ -45,8 +48,9 @@ const PDLConstants = {
   FIELD_CENTER_LINE_WIDTH: 2,
   FIELD_LINE_WIDTH: 2,
   FIELD_LINE_NUMBERED_WIDTH: 2.5,
-  FIELD_LABEL_TOP_MARGIN: 2,
+  FIELD_LABEL_TOP_MARGIN: 1,
   FIELD_SIGN_CENTER_Y: 447,
+  FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION: 60,
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
   // FIELD_SCALING_FACTOR_HORIZONTAL can be any value between 0-Number.POSITIVE_INFINITY.
@@ -77,12 +81,11 @@ const PDLConstants = {
 
   HEATMAP_TOOL_LABEL_FONT: new PhetFont( 11 ),
   PRIMARY_FONT: new PhetFont( 13 ),
-  FIELD_LABEL_FONT: new PhetFont( 16 ),
+  FIELD_LABEL_FONT: new PhetFont( 15 ),
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
 
-  INTER_PANEL_SPACING: 5,
   ANGLE_STABILIZER_RANGE: new Range( 0, MAX_ANGLE_STANDARD_DEVIATION )
 } as const;
 

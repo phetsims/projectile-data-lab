@@ -43,9 +43,12 @@ export default class ProjectileSelectorPanel extends PDLPanel {
     selectedProjectileProperty: TReadOnlyProperty<Projectile | null>,
     providedOptions: ProjectileSelectorPanelOptions ) {
 
-    const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
+    const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {
+      minWidth: 500
+    }, providedOptions );
 
-    const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.projectileNumberOfCountPatternStringProperty, {
+    // TODO: Use readyForDataProperty instead of patternStringProperty when landedProjectileCountProperty is 0, see https://github.com/phetsims/projectile-data-lab/issues/7
+    const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfCountPatternStringProperty, {
 
       // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
       number: selectedProjectileNumberProperty,
@@ -85,7 +88,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       node.children = [ createPage() ];
     } );
 
-    const carousel = new Panel( node );
+    const carousel = new Panel( node, { maxHeight: 20 } );
 
     // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/7
     const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
@@ -119,12 +122,11 @@ export default class ProjectileSelectorPanel extends PDLPanel {
     } );
 
 
-    super( new PDLPanelSection( patternStringProperty, new HBox( {
+    super( new HBox( {
       spacing: 5,
-      children: [ carousel, upDownButtons ]
-    } ), {
+      children: [ upDownButtons, new PDLPanelSection( patternStringProperty, carousel, options ) ],
       tandem: options.tandem.createTandem( 'sampleNumberOfCountPatternSection' )
-    } ), options );
+    } ) );
   }
 }
 

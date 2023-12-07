@@ -98,15 +98,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         accordionBoxProxy.preferredWidth = accordionBoxWidth;
       } );
 
-    ManualConstraint.create(
-      this,
-      [ this.noAirResistanceText, this.resetAllButton ],
-      ( noAirResistanceTextProxy, resetAllButtonProxy ) => {
-        noAirResistanceTextProxy.right = resetAllButtonProxy.left - 100;
-        noAirResistanceTextProxy.centerY = resetAllButtonProxy.centerY;
-      }
-    );
-
     this.pdomControlAreaNode.pdomOrder = [ this.launchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.resetAllButton ];
   }
 }

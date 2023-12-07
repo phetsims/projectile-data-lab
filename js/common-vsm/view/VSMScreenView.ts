@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { Color, HBox, Node, VBox } from '../../../../scenery/js/imports.js';
 import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -22,6 +22,10 @@ import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import PDLScreenView from '../../common/view/PDLScreenView.js';
 import VSMCanvasNode from './VSMCanvasNode.js';
 import ProjectileSelectorPanel from './ProjectileSelectorPanel.js';
+import StaticToolPanel from './StaticToolPanel.js';
+import InteractiveToolPanel from './InteractiveToolPanel.js';
+import VSMLaunchPanel from './VSMLaunchPanel.js';
+import VSMFieldPanel from './VSMFieldPanel.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -34,19 +38,50 @@ type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
+  protected readonly launchPanel: VSMLaunchPanel;
+  protected readonly fieldPanel: VSMFieldPanel;
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorPanel: ProjectileSelectorPanel;
+  protected readonly topRightUIContainer: VBox;
 
-  protected constructor( model: VSMModel, options: VSMScreenViewOptions ) {
+  protected constructor( model: VSMModel,
+                         launchPanel: VSMLaunchPanel,
+                         staticToolPanel: StaticToolPanel,
+                         interactiveToolPanel: InteractiveToolPanel,
+                         options: VSMScreenViewOptions ) {
     super( model, options );
+
+    this.launchPanel = launchPanel;
+
+    const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
     const projectileCanvas = new VSMCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
       this.modelViewTransform, model.selectedSampleProperty, {
         canvasBounds: this.canvasBounds
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
+
+    this.topRightUIContainer = new VBox( {
+      stretch: true,
+      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
+      top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      spacing: PDLConstants.INTER_PANEL_SPACING,
+      children: [ staticToolPanel, interactiveToolPanel ]
+    } );
+
+    const accordionBoxWidth = this.topRightUIContainer.left - launchPanel.right - 2 * PDLConstants.INTER_PANEL_SPACING;
+
+    this.accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.binWidthProperty, this, {
+      expandedProperty: model.isHistogramShowingProperty,
+      binWidthProperty: model.binWidthProperty,
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
+      minWidth: accordionBoxWidth,
+      maxWidth: accordionBoxWidth,
+      tandem: options.tandem.createTandem( 'accordionBox' )
+    } );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),
@@ -55,20 +90,14 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       },
       timeSpeedProperty: model.timeSpeedProperty,
       timeSpeeds: model.timeSpeedValues,
-      buttonGroupXSpacing: 18
+      buttonGroupXSpacing: 18,
+      layoutOptions: {
+        // TODO: This is a hack to get the time control node to be centered, see https://github.com/phetsims/projectile-data-lab/issues/7
+        leftMargin: 20
+      }
     } );
 
-    this.addChild( this.timeControlNode );
-
-    const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
-
-    this.accordionBox = new VSMAccordionBox( model.fieldProperty, model.fields, model.binWidthProperty, this, {
-      expandedProperty: model.isHistogramShowingProperty,
-      binWidthProperty: model.binWidthProperty,
-      tandem: options.tandem.createTandem( 'accordionBox' )
-    } );
-
-    // TODO: This needs to be incoirporated into keyboard navigation - see https://github.com/phetsims/projectile-data-lab/issues/7
+    // tools
     const measuringTapeContainer = new Node();
 
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
@@ -184,6 +213,11 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       }
     } );
 
+    this.fieldPanel = new VSMFieldPanel( model.fieldProperty, {
+      maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
+      tandem: options.tandem.createTandem( 'fieldPanel' )
+    } );
+
     this.projectileSelectorPanel = new ProjectileSelectorPanel(
       model.selectedProjectileNumberProperty,
       model.landedProjectileCountProperty,
@@ -199,12 +233,24 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       this.modelViewTransform
     ) );
 
+    const bottomUIContainer = new HBox( {
+      spacing: PDLConstants.BOTTOM_UI_SPACING,
+      stretch: true,
+      bottom: this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      left: this.layoutBounds.centerX - 100,
+      maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
+      children: [ this.fieldPanel, this.projectileSelectorPanel, this.timeControlNode ]
+    } );
+
     this.toolsLayer.addChild( stopwatchNode );
     this.toolsLayer.addChild( angleToolNode );
     this.toolsLayer.addChild( speedToolNode );
     this.toolsLayer.addChild( measuringTapeContainer );
 
+    this.addChild( bottomUIContainer );
     this.addChild( this.accordionBox );
+    this.addChild( this.launchPanel );
+    this.addChild( this.topRightUIContainer );
     this.addChild( this.toolsLayer );
 
     // When the launcher is raised, move the speed tool to the front, otherwise move the measuring tape to the front.
@@ -218,27 +264,19 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
       }
     } );
 
-    // layout
-    ManualConstraint.create(
-      this,
-      [ this.noAirResistanceText, this.timeControlNode, this.resetAllButton ],
-      ( noAirResistanceTextProxy, timeControlNodeProxy, resetAllButtonProxy ) => {
-        // Position the no air resistance text so that it is centered between the time control node and the reset all button
-        noAirResistanceTextProxy.centerX = 0.5 * ( timeControlNodeProxy.right + resetAllButtonProxy.left );
-        noAirResistanceTextProxy.centerY = resetAllButtonProxy.centerY;
-      }
-    );
-
-    // Position the time control node so that the play/pause button is centered at the 50-meter mark
-    ManualConstraint.create( this, [ this.timeControlNode ], timeControlNodeProxy => {
-      const playPauseCenterOffsetX = 0.5 * this.timeControlNode.width - this.timeControlNode.getPlayPauseButtonCenter().x;
-      timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
-      timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
-    } );
-
-    this.visibleBoundsProperty.link( visibleBounds => {
-      this.accordionBox.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
-    } );
+    // Keyboard order
+    this.pdomControlAreaNode.pdomOrder = [
+      this.launchPanel,
+      this.launchButton,
+      this.launchControlRadioButtonGroup,
+      this.fieldPanel,
+      this.projectileSelectorPanel,
+      this.timeControlNode,
+      this.resetAllButton,
+      this.eraserButton,
+      staticToolPanel,
+      interactiveToolPanel
+    ];
   }
 }
 

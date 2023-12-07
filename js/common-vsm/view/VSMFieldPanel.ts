@@ -35,7 +35,11 @@ export default class VSMFieldPanel extends PDLPanel {
       };
     } ), {
       tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),
-      orientation: 'horizontal'
+      orientation: 'horizontal',
+      spacing: 5,
+      radioButtonOptions: {
+        preferredWidth: 40
+      }
 
       // TODO: Preferred width is not working to get the wrap, see https://github.com/phetsims/projectile-data-lab/issues/7
       // wrap: true,
@@ -43,6 +47,7 @@ export default class VSMFieldPanel extends PDLPanel {
     } );
 
     super( new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, fieldRadioButtonGroup, {
+      centerContent: true,
       tandem: options.tandem.createTandem( 'fieldPanelSection' ) // TODO: Unnecessary tandem? See https://github.com/phetsims/projectile-data-lab/issues/7
     } ), options );
   }
