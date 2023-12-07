@@ -21,11 +21,11 @@ const PDLColors = {
 
   // Background color for screens in this sim
   screenBackgroundTopColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundTop', {
-    default: '#22a4e7'
+    default: '#29b5ff'
   } ),
 
   screenBackgroundBottomColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundBottom', {
-    default: '#b7caec'
+    default: '#c3d7ff'
   } ),
 
   panelColorProperty: new ProfileColorProperty( projectileDataLab, 'panelFill', {
