@@ -8,6 +8,7 @@ import PDLColors from '../../common/PDLColors.js';
 import CanvasPainter from '../../../../bamboo/js/CanvasPainter.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
+import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 
 /**
  * Shows bars or blocks for histogram-related numerical data.
@@ -23,11 +24,10 @@ export default class HistogramCanvasPainter extends CanvasPainter {
   private projectiles: Projectile[] = [];
   private selectedProjectile: Projectile | null = null;
 
-  public constructor(
-    public readonly chartTransform: ChartTransform,
-    public readonly binWidthProperty: TReadOnlyProperty<number>,
-    providedOptions?: BarPlotOptions ) {
-
+  public constructor( private readonly chartTransform: ChartTransform,
+                      private readonly binWidthProperty: TReadOnlyProperty<number>,
+                      private readonly histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
+                      providedOptions?: BarPlotOptions ) {
     super( providedOptions );
   }
 
@@ -42,10 +42,13 @@ export default class HistogramCanvasPainter extends CanvasPainter {
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
 
+    const histogramRepresentation = this.histogramRepresentationProperty.value;
     context.save();
 
     context.fillStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
-    context.strokeStyle = PDLColors.histogramDataStrokeColorProperty.value.toCSS();
+    context.strokeStyle = histogramRepresentation === 'blocks' ?
+                          PDLColors.histogramDataStrokeColorProperty.value.toCSS() :
+                          PDLColors.histogramDataFillColorProperty.value.toCSS();
 
     const lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.15 ) );
 

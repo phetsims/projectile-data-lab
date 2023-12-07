@@ -20,6 +20,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import VSMField from '../model/VSMField.js';
+import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -32,11 +33,11 @@ type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class HistogramNode extends Node {
 
-  public constructor(
-    fieldProperty: TReadOnlyProperty<Field>,
-    fields: Field[],
-    binWidthProperty: TReadOnlyProperty<number>,
-    options: HistogramNodeOptions ) {
+  public constructor( fieldProperty: TReadOnlyProperty<Field>,
+                      fields: Field[],
+                      binWidthProperty: TReadOnlyProperty<number>,
+                      histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
+                      options: HistogramNodeOptions ) {
     super();
 
     // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -64,15 +65,19 @@ export default class HistogramNode extends Node {
       stroke: 'black'
     } );
 
-    const histogramPainter = new HistogramCanvasPainter( chartTransform, binWidthProperty );
+    const histogramPainter = new HistogramCanvasPainter( chartTransform, binWidthProperty, histogramRepresentationProperty );
 
     // Changes based on the zoom level
-    const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, { stroke: 'lightGray',
-    lineWidth: 0.8 } );
+    const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, {
+      stroke: 'lightGray',
+      lineWidth: 0.8
+    } );
 
     // Changes based on the bin width
-    const verticalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, { stroke: 'lightGray',
-    lineWidth: 0.8 } );
+    const verticalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, {
+      stroke: 'lightGray',
+      lineWidth: 0.8
+    } );
 
     const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ] );
     const chartClip = new Node( {
@@ -123,6 +128,10 @@ export default class HistogramNode extends Node {
     } );
 
     chartTransform.changedEmitter.addListener( () => {
+      chartCanvasNode.update();
+    } );
+
+    histogramRepresentationProperty.link( () => {
       chartCanvasNode.update();
     } );
 
