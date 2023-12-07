@@ -27,7 +27,7 @@ export default class FieldOverlayNode extends Node {
   public constructor( modelViewTransform: ModelViewTransform2, providedOptions: FieldOverlayNodeOptions ) {
 
     const numTotalDashes = 30;
-    const numDashesToDraw = providedOptions.isLeftSide ? 3 : numTotalDashes;
+    const numDashesToDraw = providedOptions.isLeftSide ? 1 : numTotalDashes;
 
     // Subtract 1 to make the dashed part of the right edge line up with the right side of the field
     const dashLength = modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE ) / ( 2 * numTotalDashes - 1 );

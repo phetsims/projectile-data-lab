@@ -43,16 +43,17 @@ export default class ProjectileSelectorPanel extends PDLPanel {
     selectedProjectileProperty: TReadOnlyProperty<Projectile | null>,
     providedOptions: ProjectileSelectorPanelOptions ) {
 
-    const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {
-      minWidth: 500
-    }, providedOptions );
+    const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
 
-    // TODO: Use readyForDataProperty instead of patternStringProperty when landedProjectileCountProperty is 0, see https://github.com/phetsims/projectile-data-lab/issues/7
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfCountPatternStringProperty, {
 
       // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
       number: selectedProjectileNumberProperty,
       count: landedProjectileCountProperty
+    } );
+
+    const titleStringProperty = new DerivedProperty( [ landedProjectileCountProperty, patternStringProperty ], ( landedProjectileCount, patternString ) => {
+      return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : patternString;
     } );
 
     const createPage = () => {
@@ -124,7 +125,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
 
     super( new HBox( {
       spacing: 5,
-      children: [ upDownButtons, new PDLPanelSection( patternStringProperty, carousel, options ) ],
+      children: [ upDownButtons, new PDLPanelSection( titleStringProperty, carousel, options ) ],
       tandem: options.tandem.createTandem( 'sampleNumberOfCountPatternSection' )
     } ) );
   }

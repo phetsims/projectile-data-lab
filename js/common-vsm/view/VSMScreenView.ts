@@ -107,8 +107,9 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
         0, 0, 100, ( PDLConstants.FIELD_CENTER_Y - PDLConstants.SCREEN_VIEW_Y_MARGIN ) / PDLConstants.PIXELS_TO_DISTANCE ),
       basePositionProperty: model.measuringTapeBasePositionProperty,
       tipPositionProperty: model.measuringTapeTipPositionProperty,
-      lineColor: new Color( 255, 255, 0 ),
-      tapeLineWidth: 2,
+      lineColor: new Color( 255, 255, 50 ),
+      crosshairLineWidth: 1.8,
+      tapeLineWidth: 1.8,
       isBaseCrosshairRotating: false,
       isTipCrosshairRotating: false,
       textColor: 'black',
@@ -203,6 +204,14 @@ export default abstract class VSMScreenView extends PDLScreenView<VSMField> {
     } );
     model.launcherAngleProperty.link( launcherAngle => {
       angleToolNode.setInitialNeedleValue( launcherAngle );
+    } );
+
+    // TODO: Get the speed tool bounds to be in the same coordinate system as the measuring tape - see https://github.com/phetsims/projectile-data-lab/issues/7
+    // If the base of the measuring tape is overlapping the active speed and the launcher is raised,
+    // Make the speed tool partially transparent so that we can see the measuring tape.
+    model.measuringTapeBasePositionProperty.link( measuringTapeBasePosition => {
+      const isOverlapping = speedToolNode.bounds.containsPoint( measuringTapeBasePosition );
+      speedToolNode.opacity = isOverlapping && isLauncherRaisedProperty.value ? 0.5 : 1;
     } );
 
     // If the angle stabilizer is changed, re-center the launcher so that there is no overlap between the two.

@@ -32,6 +32,7 @@ type StringsType = {
   'distributionStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'fieldValuePatternStringProperty': LocalizedStringProperty;
+  'noDataStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
   'sampleSizeValuePatternStringProperty': LocalizedStringProperty;
   'pathsStringProperty': LocalizedStringProperty;
