@@ -46,9 +46,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     context.save();
 
     context.fillStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
-    context.strokeStyle = histogramRepresentation === 'blocks' ?
-                          PDLColors.histogramDataStrokeColorProperty.value.toCSS() :
-                          PDLColors.histogramDataFillColorProperty.value.toCSS();
+    context.strokeStyle = PDLColors.histogramDataStrokeColorProperty.value.toCSS();
 
     const lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.15 ) );
 
@@ -81,12 +79,26 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const x = this.chartTransform.modelToViewX( bin );
       const y = this.chartTransform.modelToViewY( binCount );
 
-      context.fillRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
-      context.strokeRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
+      if ( histogramRepresentation === 'blocks' ) {
+        context.fillRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
+        context.strokeRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
+      }
 
       if ( isHighlighted ) {
         highlightDotX = x;
         highlightDotY = y;
+      }
+    }
+
+    if ( histogramRepresentation === 'bars' ) {
+      for ( const [ bin, count ] of histogram ) {
+        const x = this.chartTransform.modelToViewX( bin );
+        const y = this.chartTransform.modelToViewY( 0 );
+        const height = this.chartTransform.modelToViewDeltaY( count );
+
+        const h = Math.abs( height ) * scaleFactor;
+        context.fillRect( x * scaleFactor, y * scaleFactor - h, blockWidth * scaleFactor, h );
+        context.strokeRect( x * scaleFactor, y * scaleFactor - h, blockWidth * scaleFactor, h );
       }
     }
 
@@ -101,8 +113,11 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       context.stroke();
     }
 
+
     context.restore();
   }
+
+
 }
 
 projectileDataLab.register( 'HistogramCanvasPainter', HistogramCanvasPainter );
