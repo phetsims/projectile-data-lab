@@ -47,7 +47,7 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
     } );
 
     super( new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, fieldRadioButtonGroup, {
-      centerContent: true,
+      centerTitleAndContent: true,
       tandem: options.tandem.createTandem( 'fieldPanelSection' ) // TODO: Unnecessary tandem? See https://github.com/phetsims/projectile-data-lab/issues/7
     } ), options );
   }

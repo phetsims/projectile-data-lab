@@ -48,7 +48,7 @@ export default class HistogramNode extends Node {
     const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
 
     const chartTransform = new ChartTransform( {
-      viewWidth: 520,
+      viewWidth: 580,
       viewHeight: 180,
       modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
@@ -140,9 +140,6 @@ export default class HistogramNode extends Node {
       orientation: 'vertical',
       bottom: chartTransform.viewHeight,
       spacing: 5,
-      layoutOptions: {
-        rightMargin: 10
-      },
       iconOptions: {
         scale: 1.6
       },
@@ -155,7 +152,7 @@ export default class HistogramNode extends Node {
 
     this.children = [
       zoomButtonGroup,
-      chartNode.mutate( { left: zoomButtonGroup.right + 5 } )
+      chartNode.mutate( { left: zoomButtonGroup.right + 13 } )
     ];
     this.mutate( options );
 

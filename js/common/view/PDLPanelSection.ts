@@ -16,21 +16,27 @@ import PDLText from './PDLText.js';
  */
 
 type SelfOptions = {
-  centerContent?: boolean;
+  centerTitleAndContent?: boolean;
 };
 export type PDLPanelSectionOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
 
 export default class PDLPanelSection extends VBox {
 
   public constructor( titleString: TReadOnlyProperty<string>, content: Node, providedOptions: PDLPanelSectionOptions ) {
-    const options = optionize<PDLPanelSectionOptions, SelfOptions, VBoxOptions>()( {
-      centerContent: false
-    }, providedOptions );
+
+    const align = providedOptions.centerTitleAndContent ? 'center' : 'left';
     const title = new PDLText( titleString, {
       maxWidth: 250
     } );
 
-    super( { children: [ title, content ], align: options.centerContent ? 'center' : 'left', spacing: 8, tandem: options.tandem } );
+    const options = optionize<PDLPanelSectionOptions, SelfOptions, VBoxOptions>()( {
+      children: [ title, content ],
+      centerTitleAndContent: false,
+      align: align,
+      spacing: 8
+    }, providedOptions );
+
+    super( options );
   }
 }
 projectileDataLab.register( 'PDLPanelSection', PDLPanelSection );
