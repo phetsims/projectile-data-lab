@@ -19,11 +19,14 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
+import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
 export default abstract class Field extends PhetioObject {
+
+  public readonly launchModeProperty: Property<LaunchMode>;
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
@@ -121,6 +124,13 @@ export default abstract class Field extends PhetioObject {
       tandem: providedOptions.tandem.createTandem( 'presetLauncherProperty' ),
       phetioDocumentation: 'This property configures the active launcher by number.',
       phetioValueType: NumberIO
+    } );
+
+    this.launchModeProperty = new Property<LaunchMode>( 'single', {
+      validValues: LaunchModeValues,
+      tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
+      phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
+      phetioValueType: StringUnionIO( LaunchModeValues )
     } );
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {

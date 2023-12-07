@@ -23,7 +23,7 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
+import { LaunchMode } from './LaunchMode.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -33,9 +33,6 @@ type SelfOptions<T extends Field> = {
 export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem };
 
 export default abstract class PDLModel<T extends Field> implements TModel {
-
-  // single launch vs continuous launch (rapid fire) mode.
-  public readonly launchModeProperty: Property<'single' | 'continuous'>;
 
   // isHistogramShowingProperty is true when the accordion box containing the histogram is open.
   public readonly isHistogramShowingProperty: Property<boolean>;
@@ -54,7 +51,12 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly fields: T[];
 
   public readonly fieldProperty: Property<T>;
+
+  // single launch vs continuous launch (rapid fire) mode.
+  public readonly launchModeProperty: DynamicProperty<LaunchMode, LaunchMode, T>;
+
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
+
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
 
   public abstract presetLauncherProperty: TProperty<number>;
@@ -70,13 +72,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public abstract selectedSampleProperty: TReadOnlyProperty<number>;
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
-
-    this.launchModeProperty = new Property<'single' | 'continuous'>( 'single', {
-      validValues: [ 'single', 'continuous' ],
-      tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
-      phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
-      phetioValueType: StringUnionIO( [ 'single', 'continuous' ] as const )
-    } );
 
     this.isHistogramShowingProperty = new Property<boolean>( false, {
       tandem: providedOptions.tandem.createTandem( 'isHistogramShowingProperty' ),
@@ -114,6 +109,11 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
       // TODO: Fix reentrant error - see https://github.com/phetsims/projectile-data-lab/issues/7
       reentrant: true
+    } );
+
+    this.launchModeProperty = new DynamicProperty<LaunchMode, LaunchMode, T>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.launchModeProperty
     } );
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
