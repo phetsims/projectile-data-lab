@@ -109,5 +109,8 @@
   },
   "numberOfCountPattern": {
     "value": "{{number}} of {{count}}"
+  },
+  "binWidthMPattern": {
+    "value": "{{binWidth}} m"
   }
 }

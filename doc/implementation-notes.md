@@ -14,3 +14,15 @@ example.
 ### Disposal
 
 Everything in the simulation is statically allocated and there is no need for disposal.
+
+### Strings
+
+The string keys are designed as a camel-cased version of the English translation as of the 1.0 release. For example:
+
+```json
+"binWidthMPattern": {
+    "value": "{{binWidth}} m"
+  }
+```
+
+Note that if the English strings are changed after 1.0, the keys will not be updated.
