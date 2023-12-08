@@ -168,7 +168,7 @@ export default class HistogramNode extends Node {
       else if ( field instanceof SamplingField ) {
         const samples = field.getSamples();
         const selectedOne = field.selectedSampleProperty.value;
-        histogramPainter.setProjectiles( samples, samples[ selectedOne ] );
+        histogramPainter.setProjectiles( samples, samples[ selectedOne - 1 ] );
       }
       else {
         assert && assert( false, 'unhandled field type' );
