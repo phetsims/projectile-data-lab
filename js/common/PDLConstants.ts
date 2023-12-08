@@ -67,11 +67,11 @@ const PDLConstants = {
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
   LAUNCHER_CONFIGS: [
-    new LauncherConfig( 26.5, 0.2, 0.5 ),
+    new LauncherConfig( 26.8, 0.2, 0.5 ),
     new LauncherConfig( 20, 4, 0 ),
     new LauncherConfig( 26.8, 0, 8 ),
-    new LauncherConfig( 25, 2, 4 ),
-    new LauncherConfig( 26, 2, 4 ),
+    new LauncherConfig( 25, 1, 4 ),
+    new LauncherConfig( 26, 1, 4 ),
     new LauncherConfig( 20, 4, 8 )
   ],
 
