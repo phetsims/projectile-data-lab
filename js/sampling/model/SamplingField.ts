@@ -128,6 +128,8 @@ export default class SamplingField extends Field {
       this.createLandedProjectile();
       updated = true;
     }
+
+    // Make sure we are pointing at the right sample for the new Projectile
     updated && this.updateCounts();
 
     // Create the first projectile in the new sample.
