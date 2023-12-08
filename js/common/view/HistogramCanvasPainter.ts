@@ -35,7 +35,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  public setProjectiles( data: HistogramData[], selectedData: HistogramData | null ): void {
+  public setHistogramData( data: HistogramData[], selectedData: HistogramData | null ): void {
     this.data = data;
     this.selectedData = selectedData;
   }

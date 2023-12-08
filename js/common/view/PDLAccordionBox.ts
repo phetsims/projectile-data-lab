@@ -24,6 +24,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
+import HistogramIconNode from './HistogramIconNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -110,11 +111,11 @@ export default class PDLAccordionBox extends AccordionBox {
       ]
     } );
 
-    const barBlockSwitch = new ABSwitch( histogramRepresentationProperty, 'blocks', new PDLText( 'Blocks' ), 'bars', new PDLText( 'Bars' ), {
+    const barBlockSwitch = new ABSwitch( histogramRepresentationProperty, 'blocks', new HistogramIconNode( 'blocks' ), 'bars', new HistogramIconNode( 'bars' ), {
       tandem: providedOptions.tandem.createTandem( 'barBlockSwitch' ),
       spacing: margin,
       toggleSwitchOptions: {
-        maxWidth: 30
+        maxWidth: 32
       }
     } );
 

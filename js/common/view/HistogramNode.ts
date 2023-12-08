@@ -164,12 +164,12 @@ export default class HistogramNode extends Node {
       // TODO: When reusing this code for the sampling screen, consider how to handle selectedProjectileProperty, see https://github.com/phetsims/projectile-data-lab/issues/7
       const field = fieldProperty.value;
       if ( field instanceof VSMField ) {
-        histogramPainter.setProjectiles( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
+        histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
       }
       else if ( field instanceof SamplingField ) {
         const samples = field.getSamples();
         const selectedOne = field.selectedSampleProperty.value;
-        histogramPainter.setProjectiles( samples, samples[ selectedOne - 1 ] );
+        histogramPainter.setHistogramData( samples, samples[ selectedOne - 1 ] );
       }
       else {
         assert && assert( false, 'unhandled field type' );
