@@ -19,10 +19,10 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
-import VSMField from '../model/VSMField.js';
-import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import SamplingField from '../../sampling/model/SamplingField.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import VSMField from '../../common-vsm/model/VSMField.js';
+import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.

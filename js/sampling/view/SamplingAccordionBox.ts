@@ -10,7 +10,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
-import HistogramNode from '../../common-vsm/view/HistogramNode.js';
+import HistogramNode from '../../common/view/HistogramNode.js';
 import SamplingField from '../model/SamplingField.js';
 
 /**

@@ -7,11 +7,11 @@ import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import HistogramNode from './HistogramNode.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import VSMField from '../model/VSMField.js';
 import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
+import HistogramNode from '../../common/view/HistogramNode.js';
 
 /**
  * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
