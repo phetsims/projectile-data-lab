@@ -128,7 +128,6 @@ export default class SamplingField extends Field {
     this.updateCounts();
   }
 
-  // TODO: Some of this logic should be called from SamplingModel, like we do in VSMModel.step (maybe?) https://github.com/phetsims/projectile-data-lab/issues/7
   public step( dt: number, isContinuousLaunching: boolean ): void {
 
     if ( isContinuousLaunching ) {
