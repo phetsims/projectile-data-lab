@@ -21,7 +21,10 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
-const WITHIN_SAMPLE_TIME_CONTINUOUS = 0.2;
+// When running in continuous mode, show all projectiles appearing at once. This allows us to compute the mean
+// immediately, and it looks better in the histogram, showing the selected part. There is no flickering. The user
+// can still see data sweep in when in single mode.
+const WITHIN_SAMPLE_TIME_CONTINUOUS = 0;
 
 export default class SamplingField extends Field {
   public override identifier: string;
