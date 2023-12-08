@@ -87,8 +87,8 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
             // TODO: Does measures model need to know about the preset launcher? - see https://github.com/phetsims/projectile-data-lab/issues/7
             // Set the launch angle standard deviation to the value for the preset launcher.
             const launcherConfig = PDLConstants.LAUNCHER_CONFIGS[ this.presetLauncherProperty.value - 1 ];
-            field.launchSpeedAverageProperty.value = launcherConfig.speedAverage;
-            field.launchSpeedStandardDeviationProperty.value = launcherConfig.speedStandardDeviation;
+            field.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( launcherConfig.launcherType );
+            field.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( launcherConfig.launcherType );
             field.launchAngleStandardDeviationProperty.value = launcherConfig.angleStandardDeviation;
           }
         } );

@@ -1,6 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../projectileDataLab.js';
+import { CustomLauncherType } from '../common-vsm/model/CustomLauncherType.js';
 
 /**
  * Defines the configuration for the properties of the launcher.
@@ -10,8 +11,7 @@ import projectileDataLab from '../projectileDataLab.js';
  */
 
 export default class LauncherConfig {
-  public constructor( public readonly speedAverage: number,
-                      public readonly speedStandardDeviation: number,
+  public constructor( public readonly launcherType: CustomLauncherType,
                       public readonly angleStandardDeviation: number ) {
   }
 }

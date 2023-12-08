@@ -67,12 +67,12 @@ const PDLConstants = {
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
   LAUNCHER_CONFIGS: [
-    new LauncherConfig( 26.8, 0.2, 0.5 ),
-    new LauncherConfig( 20, 4, 0 ),
-    new LauncherConfig( 26.8, 0, 8 ),
-    new LauncherConfig( 25, 1, 4 ),
-    new LauncherConfig( 26, 1, 4 ),
-    new LauncherConfig( 20, 4, 8 )
+    new LauncherConfig( 'SPRING', 0.5 ),
+    new LauncherConfig( 'SPRING', 5 ),
+    new LauncherConfig( 'EXPLOSION', 0 ),
+    new LauncherConfig( 'PRESSURE', 2 ),
+    new LauncherConfig( 'PRESSURE', 4 ),
+    new LauncherConfig( 'EXPLOSION', 8 )
   ],
 
   // The projectile source images are scaled by this factor when drawing them on the canvas

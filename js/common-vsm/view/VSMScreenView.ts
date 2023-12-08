@@ -110,7 +110,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       visibleProperty: model.isMeasuringTapeVisibleProperty,
       modelViewTransform: this.modelViewTransform,
       dragBounds: new Bounds2(
-        0, 0, 100, ( PDLConstants.FIELD_CENTER_Y - PDLConstants.SCREEN_VIEW_Y_MARGIN ) / PDLConstants.PIXELS_TO_DISTANCE ),
+        0, 0, 100, this.modelViewTransform.modelToViewY( PDLConstants.SCREEN_VIEW_Y_MARGIN ) ),
       basePositionProperty: model.measuringTapeBasePositionProperty,
       tipPositionProperty: model.measuringTapeTipPositionProperty,
       lineColor: new Color( 255, 255, 50 ),
@@ -128,6 +128,12 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       textFont: PDLConstants.MEASURING_TAPE_FONT,
       tandem: options.tandem.createTandem( 'measuringTapeNode' ),
       phetioDocumentation: 'The node for the measuring tape'
+    } );
+
+    // Allow the measuring tape to be dragged within the visible bounds of the screen, so that outliers can be measured.
+    this.visibleBoundsProperty.link( visibleBounds => {
+      const viewBounds = this.modelViewTransform.viewToModelBounds( visibleBounds.erodedXY( PDLConstants.SCREEN_VIEW_X_MARGIN, PDLConstants.SCREEN_VIEW_Y_MARGIN ) );
+      measuringTapeNode.setDragBounds( new Bounds2( 0, 0, viewBounds.maxX, viewBounds.maxY ) );
     } );
 
     measuringTapeContainer.addChild( measuringTapeNode );
