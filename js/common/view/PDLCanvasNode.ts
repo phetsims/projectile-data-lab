@@ -40,7 +40,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
   public constructor(
     protected readonly fieldProperty: Property<T>,
     protected readonly isPathsVisibleProperty: Property<boolean>,
-    private readonly modelViewTransform: ModelViewTransform2,
+    protected readonly modelViewTransform: ModelViewTransform2,
     private readonly selectedSampleProperty: TReadOnlyProperty<number>,
     providedOptions: PDLCanvasNodeOptions ) {
 
