@@ -199,6 +199,9 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       tandem: options.tandem.createTandem( 'eraserButton' )
     } );
 
+    // Create the effect that the eraser button is next to the field sign
+    this.behindProjectilesLayer.addChild( this.eraserButton );
+
     this.addChild( background );
     this.addChild( fieldBack );
     this.addChild( fieldOverlayBack );
@@ -211,7 +214,6 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( this.launchControlRadioButtonGroup );
     this.addChild( this.noAirResistanceText );
     this.addChild( this.resetAllButton );
-    this.addChild( this.eraserButton );
   }
 
   /**
