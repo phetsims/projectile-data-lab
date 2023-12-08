@@ -41,7 +41,10 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'the number of samples collected'
     } );
 
-    this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
+    this.numberOfCompletedSamplesProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
+      phetioDocumentation: 'the number of samples that have been completed'
+    } );
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     const totalSampleTime =
@@ -66,20 +69,19 @@ export default class SamplingField extends Field {
 
   public getSamples(): { x: number }[] {
     const samples: { x: number }[] = [];
-    for ( let i = 0; i < this.numberOfSamplesProperty.value; i++ ) {
+    for ( let i = 0; i < this.numberOfCompletedSamplesProperty.value; i++ ) {
       const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === i );
-      if ( members.length > 0 ) {
-        const mean = _.mean( members.map( projectile => projectile.x ) );
-        samples.push( {
-          x: mean
-        } );
-      }
+      const mean = _.mean( members.map( projectile => projectile.x ) );
+      assert && assert( !isNaN( mean ), 'mean should not be NaN' );
+      samples.push( {
+        x: mean
+      } );
     }
     return samples;
   }
 
   public createLandedProjectile(): void {
-    const projectile = this.createProjectile( this.numberOfSamplesProperty.value );
+    const projectile = this.createProjectile( this.numberOfCompletedSamplesProperty.value );
     projectile.setLanded();
 
     this.landedProjectiles.push( projectile );
@@ -88,8 +90,9 @@ export default class SamplingField extends Field {
   }
 
   public startNewSample(): void {
-    this.selectedSampleProperty.value++;
+
     this.numberOfSamplesProperty.value++;
+    this.selectedSampleProperty.value = this.numberOfSamplesProperty.value - 1;
     this.currentLandedCount = 0;
     this.createLandedProjectile();
 
