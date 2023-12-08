@@ -6,9 +6,12 @@ import projectileDataLab from '../../projectileDataLab.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Projectile from '../../common/model/Projectile.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
+import HistogramData from '../../common/model/HistogramData.js';
 
 /**
- * The SamplingField is an extension of the Field class that adds fields for the Sampling model.
+ * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
+ * CODAP, the "sample" is a number stored within the Projectile (rather than adding arrays or data structures here).
+ * This allows CODAP students to see projectiles from different samples, or to filter by sample.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -25,26 +28,39 @@ export default class SamplingField extends Field {
   private readonly withinSampleTimer: PDLEventTimer;
   private readonly betweenSamplesTimer = new PDLEventTimer( 0.2 );
 
-  public readonly numberOfSamplesProperty: NumberProperty;
+  // The simulation begins with 0 samples, showing sample 0 of 0. When a sample begins, this number increases. Note:
+  // it may not be
+  public readonly numberOfStartedSamplesProperty: NumberProperty;
+
+  // In order to show an accumulating sample, we must differentiate between the total samples and total completed samples.
   public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
-  private currentLandedCount = 0;
+  // private currentLandedCount = 0;
   private readonly singleModeWithinSamplePeriod: number;
 
-  public constructor( public readonly launcher: number, public readonly sampleSize: number, options: SamplingFieldOptions ) {
+  public constructor( public readonly launcher: number,
+                      public readonly sampleSize: number,
+                      options: SamplingFieldOptions ) {
     super( options );
 
     this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );
 
-    this.numberOfSamplesProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'numberOfSamplesProperty' ),
-      phetioDocumentation: 'the number of samples collected'
+    // PhET-iO instrumentation not needed since this is computable from the Projectiles
+    this.numberOfStartedSamplesProperty = new NumberProperty( 0, {
+      // tandem: options.tandem.createTandem( 'numberOfStartedSamplesProperty' ),
+      // phetioDocumentation: 'The number of samples collected'
     } );
 
+    // PhET-iO instrumentation not needed since this is computable from the Projectiles
     this.numberOfCompletedSamplesProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
-      phetioDocumentation: 'the number of samples that have been completed'
+      // tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
+      // phetioDocumentation: 'The number of samples that have been completed'
     } );
+
+    // this.numberOfCompletedSamplesProperty.debug( 'numberOfCompletedSamplesProperty' );
+    // this.numberOfCompletedSamplesProperty.link( () => {
+    //   debugger
+    // });
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     const totalSampleTime =
@@ -63,41 +79,69 @@ export default class SamplingField extends Field {
     this.presetLauncherProperty.value = launcher;
   }
 
-  public getProjectilesInCurrentSample(): Projectile[] {
-    return this.landedProjectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
+  public getProjectilesInSelectedSample(): Projectile[] {
+    return this.getAllProjectiles().filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
   }
 
-  public getSamples(): { x: number }[] {
-    const samples: { x: number }[] = [];
-    for ( let i = 0; i < this.numberOfCompletedSamplesProperty.value; i++ ) {
-      const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === i );
+  /**
+   * Return an array of samples, where each sample is an object with a single property, x, which is the mean of the
+   * projectiles in that sample. This is used for the histogram.
+   */
+  public getSamples(): HistogramData[] {
+    const samples: HistogramData[] = [];
+    for ( let sampleNumber = 1; sampleNumber <= this.numberOfCompletedSamplesProperty.value; sampleNumber++ ) {
+
+      const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === sampleNumber );
+
+      assert && assert( members.length === this.sampleSize, 'members should have the correct length. sampleNumber = ' + sampleNumber + ', members.length = ' + members.length + ', this.sampleSize = ' + this.sampleSize );
+
       const mean = _.mean( members.map( projectile => projectile.x ) );
       assert && assert( !isNaN( mean ), 'mean should not be NaN' );
-      samples.push( {
-        x: mean
-      } );
+
+      samples.push( { x: mean } );
     }
     return samples;
   }
 
+  // NOTE: you probably want to this.updateCounts(); after calling this.
   public createLandedProjectile(): void {
-    const projectile = this.createProjectile( this.numberOfCompletedSamplesProperty.value );
+    const projectile = this.createProjectile( this.numberOfCompletedSamplesProperty.value + 1 );
     projectile.setLanded();
 
     this.landedProjectiles.push( projectile );
     this.projectilesChangedEmitter.emit();
-    this.currentLandedCount++;
+  }
+
+  public updateCounts(): void {
+    const totalProjectiles = this.getTotalProjectileCount();
+
+    const completed = Math.floor( totalProjectiles / this.sampleSize );
+    const started = totalProjectiles % this.sampleSize + completed;
+
+    console.log( 'updateCounts',
+      'totalProjectiles', totalProjectiles,
+      'this.sampleSize', this.sampleSize,
+      'numberOfStartedSamplesProperty', started,
+      'numberOfCompletedSamplesProperty', completed
+    );
+
+    console.log( 'change started' );
+    this.numberOfStartedSamplesProperty.value = started;
+    console.log( '/change started' );
+
+    console.log( 'change completed' );
+    this.numberOfCompletedSamplesProperty.value = completed;
+    console.log( '/change completed' );
   }
 
   public startNewSample(): void {
-
-    this.numberOfSamplesProperty.value++;
-    this.selectedSampleProperty.value = this.numberOfSamplesProperty.value - 1;
-    this.currentLandedCount = 0;
     this.createLandedProjectile();
+    this.selectedSampleProperty.value++;
 
     this.betweenSamplesTimer.stop();
     this.withinSampleTimer.restart();
+
+    this.updateCounts();
   }
 
   // TODO: Some of this logic should be called from SamplingModel, like we do in VSMModel.step (maybe?) https://github.com/phetsims/projectile-data-lab/issues/7
@@ -112,9 +156,9 @@ export default class SamplingField extends Field {
     this.withinSampleTimer.step( dt, () => {
 
       this.createLandedProjectile();
+      this.updateCounts();
 
-      if ( this.currentLandedCount === this.sampleSize ) {
-        this.numberOfCompletedSamplesProperty.value++;
+      if ( this.getTotalProjectileCount() % this.sampleSize === 0 ) {
 
         // Finished a sample, schedule the next one to begin soon
         this.withinSampleTimer.stop();
@@ -127,9 +171,7 @@ export default class SamplingField extends Field {
   public override clearProjectiles(): void {
     super.clearProjectiles();
 
-    this.numberOfSamplesProperty.reset();
-    this.currentLandedCount = 0;
-
+    this.numberOfStartedSamplesProperty.reset();
     this.numberOfCompletedSamplesProperty.reset();
 
     this.withinSampleTimer.stop();

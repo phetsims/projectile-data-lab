@@ -29,7 +29,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly sampleSizeProperty: Property<number>;
 
-  public readonly numberOfSamplesProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly presetLauncherProperty: NumberProperty;
@@ -70,8 +70,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       this.fieldProperty.value = field;
     } );
 
-    this.numberOfSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
-      derive: t => t.numberOfSamplesProperty
+    this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+      derive: t => t.numberOfStartedSamplesProperty
     } );
 
     this.selectedSampleProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {

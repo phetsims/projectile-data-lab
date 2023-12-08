@@ -8,6 +8,7 @@ import PDLColors from '../../common/PDLColors.js';
 import CanvasPainter from '../../../../bamboo/js/CanvasPainter.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
+import HistogramData from '../../common/model/HistogramData.js';
 
 /**
  * Shows bars or blocks for histogram-related numerical data.
@@ -17,11 +18,6 @@ import { HistogramRepresentation } from '../../common/model/HistogramRepresentat
 
 type SelfOptions = EmptySelfOptions;
 export type BarPlotOptions = SelfOptions & NodeOptions;
-
-// Could be a Projectile or a Sample
-type HistogramData = {
-  x: number;
-};
 
 export default class HistogramCanvasPainter extends CanvasPainter {
 

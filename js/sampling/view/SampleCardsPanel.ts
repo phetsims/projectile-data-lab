@@ -45,7 +45,7 @@ export default class SampleCardsPanel extends PDLPanel {
 
     const createPage = () => {
       const field = samplingFieldProperty.value;
-      const projectiles = field.getProjectilesInCurrentSample();
+      const projectiles = field.getProjectilesInSelectedSample();
       const values = projectiles.map( projectile => projectile.x );
 
       const meanString = values.length === 0 ? '?' : Utils.toFixedNumber( _.mean( values ), 1 );

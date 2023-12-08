@@ -34,7 +34,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     // 1: Trajectories
     // 2: Projectiles
 
-    const projectiles = this.fieldProperty.value.getProjectilesInCurrentSample();
+    const projectiles = this.fieldProperty.value.getProjectilesInSelectedSample();
 
     // Draw the paths
     context.lineWidth = 2;
