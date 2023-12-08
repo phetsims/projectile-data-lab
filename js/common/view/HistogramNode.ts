@@ -106,9 +106,6 @@ export default class HistogramNode extends Node {
         // Background
         chartBackground,
 
-        // Clipped contents
-        chartClip,
-
         // Major ticks on the y-axis
         verticalTickMarkSet,
         verticalTickLabelSet,
@@ -120,7 +117,10 @@ export default class HistogramNode extends Node {
         } ),
 
         // Background
-        chartFrame
+        chartFrame,
+
+        // Clipped contents
+        chartClip
       ]
     } );
 
