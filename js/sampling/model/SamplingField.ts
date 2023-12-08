@@ -7,6 +7,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Projectile from '../../common/model/Projectile.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 import HistogramData from '../../common/model/HistogramData.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -68,6 +69,10 @@ export default class SamplingField extends Field {
 
     this.presetLauncherProperty.value = launcher;
     this.updateCounts();
+
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+      this.updateCounts();
+    } );
   }
 
   public getProjectilesInSelectedSample(): Projectile[] {

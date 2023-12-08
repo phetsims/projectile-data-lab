@@ -22,6 +22,7 @@ import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import VSMField from '../model/VSMField.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import SamplingField from '../../sampling/model/SamplingField.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -191,6 +192,10 @@ export default class HistogramNode extends Node {
         field.selectedSampleProperty.link( () => updateHistogram() );
         field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
       }
+    } );
+
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+      updateHistogram();
     } );
 
     // When the field or bin width changes, redraw the histogram
