@@ -49,7 +49,7 @@ export default class HistogramNode extends Node {
     const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
 
     const chartTransform = new ChartTransform( {
-      viewWidth: 580,
+      viewWidth: 620,
       viewHeight: 180,
       modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
