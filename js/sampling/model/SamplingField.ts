@@ -64,6 +64,20 @@ export default class SamplingField extends Field {
     return this.landedProjectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
   }
 
+  public getSamples(): { x: number }[] {
+    const samples: { x: number }[] = [];
+    for ( let i = 0; i < this.numberOfSamplesProperty.value; i++ ) {
+      const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === i );
+      if ( members.length > 0 ) {
+        const mean = _.mean( members.map( projectile => projectile.x ) );
+        samples.push( {
+          x: mean
+        } );
+      }
+    }
+    return samples;
+  }
+
   public createLandedProjectile(): void {
     const projectile = this.createProjectile( this.numberOfSamplesProperty.value );
     projectile.setLanded();

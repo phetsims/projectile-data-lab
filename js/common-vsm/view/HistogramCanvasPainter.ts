@@ -7,7 +7,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLColors from '../../common/PDLColors.js';
 import CanvasPainter from '../../../../bamboo/js/CanvasPainter.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import Projectile from '../../common/model/Projectile.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 
 /**
@@ -19,10 +18,15 @@ import { HistogramRepresentation } from '../../common/model/HistogramRepresentat
 type SelfOptions = EmptySelfOptions;
 export type BarPlotOptions = SelfOptions & NodeOptions;
 
+// Could be a Projectile or a Sample
+type HistogramData = {
+  x: number;
+};
+
 export default class HistogramCanvasPainter extends CanvasPainter {
 
-  private projectiles: Projectile[] = [];
-  private selectedProjectile: Projectile | null = null;
+  private data: HistogramData[] = [];
+  private selectedData: HistogramData | null = null;
 
   public constructor( private readonly chartTransform: ChartTransform,
                       private readonly binWidthProperty: TReadOnlyProperty<number>,
@@ -35,9 +39,9 @@ export default class HistogramCanvasPainter extends CanvasPainter {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  public setProjectiles( projectiles: Projectile[], selectedProjectile: Projectile | null ): void {
-    this.projectiles = projectiles;
-    this.selectedProjectile = selectedProjectile;
+  public setProjectiles( data: HistogramData[], selectedData: HistogramData | null ): void {
+    this.data = data;
+    this.selectedData = selectedData;
   }
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
@@ -64,9 +68,9 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     let highlightDotX = null;
     let highlightDotY = null;
 
-    for ( let i = 0; i < this.projectiles.length; i++ ) {
-      const projectile = this.projectiles[ i ];
-      const isHighlighted = this.selectedProjectile === projectile;
+    for ( let i = 0; i < this.data.length; i++ ) {
+      const projectile = this.data[ i ];
+      const isHighlighted = this.selectedData === projectile;
 
       // Calculate the bin for this value
       // REVIEW: Is this how you want to calculate the bin?
@@ -103,21 +107,21 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     }
 
     // draw a white dot in the middle of the highlighted block, on top of the all the data blocks
-    if ( highlightDotX !== null && highlightDotY !== null ) {
-      context.beginPath();
-      context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, 3 * scaleFactor, 0, 2 * Math.PI );
-      context.fillStyle = 'white';
-      context.strokeStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
-      context.lineWidth = scaleFactor;
-      context.fill();
-      context.stroke();
+    // TODO: Clean up now that we know we don't want to show the highlight in the bars mode, see https://github.com/phetsims/projectile-data-lab/issues/7
+    if ( histogramRepresentation === 'blocks' ) {
+      if ( highlightDotX !== null && highlightDotY !== null ) {
+        context.beginPath();
+        context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, 3 * scaleFactor, 0, 2 * Math.PI );
+        context.fillStyle = 'white';
+        context.strokeStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
+        context.lineWidth = scaleFactor;
+        context.fill();
+        context.stroke();
+      }
     }
-
 
     context.restore();
   }
-
-
 }
 
 projectileDataLab.register( 'HistogramCanvasPainter', HistogramCanvasPainter );

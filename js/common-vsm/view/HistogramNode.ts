@@ -21,6 +21,7 @@ import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import VSMField from '../model/VSMField.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
+import SamplingField from '../../sampling/model/SamplingField.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -160,7 +161,18 @@ export default class HistogramNode extends Node {
     const updateHistogram = () => {
 
       // TODO: When reusing this code for the sampling screen, consider how to handle selectedProjectileProperty, see https://github.com/phetsims/projectile-data-lab/issues/7
-      histogramPainter.setProjectiles( fieldProperty.value.landedProjectiles, fieldProperty.value instanceof VSMField ? fieldProperty.value.selectedProjectileProperty.value : null );
+      const field = fieldProperty.value;
+      if ( field instanceof VSMField ) {
+        histogramPainter.setProjectiles( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
+      }
+      else if ( field instanceof SamplingField ) {
+        const samples = field.getSamples();
+        const selectedOne = field.selectedSampleProperty.value;
+        histogramPainter.setProjectiles( samples, samples[ selectedOne ] );
+      }
+      else {
+        assert && assert( false, 'unhandled field type' );
+      }
       chartCanvasNode.update();
     };
 
@@ -174,6 +186,10 @@ export default class HistogramNode extends Node {
       // For VSM, redraw when the selected projectile changes
       if ( field instanceof VSMField ) {
         field.selectedProjectileProperty.link( () => updateHistogram() );
+      }
+      else if ( field instanceof SamplingField ) {
+        field.selectedSampleProperty.link( () => updateHistogram() );
+        field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
       }
     } );
 
