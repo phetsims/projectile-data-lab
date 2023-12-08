@@ -28,11 +28,12 @@ export default class SamplingField extends Field {
   private readonly withinSampleTimer: PDLEventTimer;
   private readonly betweenSamplesTimer = new PDLEventTimer( 0.2 );
 
-  // The simulation begins with 0 samples, showing sample 0 of 0. When a sample begins, this number increases. Note:
-  // it may not be
+  // The simulation begins with 0 samples, showing sample 0 of 0. When a sample begins, this number increases. This is
+  // a convenience Property to simplify the user interface -- it is fully computable from the Projectiles.
   public readonly numberOfStartedSamplesProperty: NumberProperty;
 
   // In order to show an accumulating sample, we must differentiate between the total samples and total completed samples.
+  // This is a convenience Property to simplify the user interface -- it is fully computable from the Projectiles.
   public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
   // private currentLandedCount = 0;
@@ -46,21 +47,10 @@ export default class SamplingField extends Field {
     this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );
 
     // PhET-iO instrumentation not needed since this is computable from the Projectiles
-    this.numberOfStartedSamplesProperty = new NumberProperty( 0, {
-      // tandem: options.tandem.createTandem( 'numberOfStartedSamplesProperty' ),
-      // phetioDocumentation: 'The number of samples collected'
-    } );
+    this.numberOfStartedSamplesProperty = new NumberProperty( 0 );
 
     // PhET-iO instrumentation not needed since this is computable from the Projectiles
-    this.numberOfCompletedSamplesProperty = new NumberProperty( 0, {
-      // tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
-      // phetioDocumentation: 'The number of samples that have been completed'
-    } );
-
-    // this.numberOfCompletedSamplesProperty.debug( 'numberOfCompletedSamplesProperty' );
-    // this.numberOfCompletedSamplesProperty.link( () => {
-    //   debugger
-    // });
+    this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     const totalSampleTime =
@@ -77,6 +67,7 @@ export default class SamplingField extends Field {
     this.withinSampleTimer = new PDLEventTimer( this.singleModeWithinSamplePeriod );
 
     this.presetLauncherProperty.value = launcher;
+    this.updateCounts();
   }
 
   public getProjectilesInSelectedSample(): Projectile[] {
@@ -118,20 +109,8 @@ export default class SamplingField extends Field {
     const completed = Math.floor( totalProjectiles / this.sampleSize );
     const started = totalProjectiles % this.sampleSize + completed;
 
-    console.log( 'updateCounts',
-      'totalProjectiles', totalProjectiles,
-      'this.sampleSize', this.sampleSize,
-      'numberOfStartedSamplesProperty', started,
-      'numberOfCompletedSamplesProperty', completed
-    );
-
-    console.log( 'change started' );
     this.numberOfStartedSamplesProperty.value = started;
-    console.log( '/change started' );
-
-    console.log( 'change completed' );
     this.numberOfCompletedSamplesProperty.value = completed;
-    console.log( '/change completed' );
   }
 
   public startNewSample(): void {
@@ -176,6 +155,8 @@ export default class SamplingField extends Field {
 
     this.withinSampleTimer.stop();
     this.betweenSamplesTimer.stop();
+
+    this.updateCounts();
   }
 
   public setLaunchMode( launchMode: 'single' | 'continuous' ): void {

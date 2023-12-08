@@ -48,7 +48,8 @@ export default class SampleCardsPanel extends PDLPanel {
       const projectiles = field.getProjectilesInSelectedSample();
       const values = projectiles.map( projectile => projectile.x );
 
-      const meanString = values.length === 0 ? '?' : Utils.toFixedNumber( _.mean( values ), 1 );
+      // Only show the value for a full sample
+      const meanString = projectiles.length === field.sampleSize ? Utils.toFixedNumber( _.mean( values ), 1 ) : '?';
 
       return new VBox( {
         align: 'left',
@@ -96,7 +97,6 @@ export default class SampleCardsPanel extends PDLPanel {
         createIncrementDecrementButton( 'decrement' )
       ]
     } );
-
 
     super( new PDLPanelSection( patternStringProperty, new HBox( {
       spacing: 5,
