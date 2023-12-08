@@ -108,14 +108,14 @@ export default class SamplingField extends Field {
     this.projectilesChangedEmitter.emit();
   }
 
-  public updateCounts(): void {
+  public override updateCounts(): void {
     const totalProjectiles = this.getTotalProjectileCount();
 
     const completed = Math.floor( totalProjectiles / this.sampleSize );
-    const started = totalProjectiles % this.sampleSize + completed;
+    const hasStartedAnUnfinishedSample = totalProjectiles % this.sampleSize !== 0;
 
-    this.numberOfStartedSamplesProperty.value = started;
     this.numberOfCompletedSamplesProperty.value = completed;
+    this.numberOfStartedSamplesProperty.value = completed + ( hasStartedAnUnfinishedSample ? 1 : 0 );
   }
 
   public startNewSample(): void {

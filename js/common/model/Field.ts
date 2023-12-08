@@ -205,9 +205,16 @@ export default abstract class Field extends PhetioObject {
     this.clearProjectiles();
   }
 
+  protected updateCounts(): void {
+
+    // Available for override in subclasses that must update before triggering emitters
+  }
+
   public clearProjectiles(): void {
     this.airborneProjectiles.length = 0;
     this.landedProjectiles.length = 0;
+
+    this.updateCounts();
 
     this.projectilesChangedEmitter.emit();
     this.projectilesClearedEmitter.emit();
