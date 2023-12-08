@@ -119,6 +119,18 @@ export default class SamplingField extends Field {
   }
 
   public startNewSample(): void {
+
+    // Any time we start a new sample, if an old sample was in-progress, we must complete it immediately/synchronously
+    // before starting the new one. Typically, this would only happen when the user clicks the launch button while
+    // continuous launching is enabled.
+    let updated = false;
+    while ( this.getTotalProjectileCount() % this.sampleSize !== 0 ) {
+      this.createLandedProjectile();
+      updated = true;
+    }
+    updated && this.updateCounts();
+
+    // Create the first projectile in the new sample.
     this.createLandedProjectile();
     this.selectedSampleProperty.value++;
 
