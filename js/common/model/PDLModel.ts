@@ -104,7 +104,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
 
     this.selectedTotalBinsProperty = new Property<number>( 10, {
-      validValues: [ 1, 2, 5, 10, 20, 25, 50, 100 ],
+      validValues: [ 10, 20, 50, 100 ],
       tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
       phetioDocumentation: 'This property configures the total number of bins in the histogram.',
       phetioValueType: NumberIO
