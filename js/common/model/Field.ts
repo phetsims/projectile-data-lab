@@ -107,7 +107,7 @@ export default abstract class Field extends PhetioObject {
 
     this.projectilesClearedEmitter = new Emitter();
 
-    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_30', {
+    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_45', {
 
       // TODO: On the sampling screen, only allow valid value of 30.  So make the LauncherConfigurationValues an option passed in, see https://github.com/phetsims/projectile-data-lab/issues/7
       validValues: LauncherConfigurationValues,

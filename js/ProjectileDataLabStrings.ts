@@ -28,6 +28,8 @@ type StringsType = {
   'angleStabilizerStringProperty': LocalizedStringProperty;
   'angleStabilizerNarrowStringProperty': LocalizedStringProperty;
   'angleStabilizerWideStringProperty': LocalizedStringProperty;
+  'mysteryStringProperty': LocalizedStringProperty;
+  'customStringProperty': LocalizedStringProperty;
   'histogramStringProperty': LocalizedStringProperty;
   'distributionStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
