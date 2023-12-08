@@ -9,7 +9,8 @@ import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_
 import { CustomLauncherType } from '../model/CustomLauncherType.js';
 import { Node, Image } from '../../../../scenery/js/imports.js';
 import spring_png from '../../../images/spring_png.js';
-import pressure_png from '../../../images/pressure_png.js';
+import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
+import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
 import explosion_png from '../../../images/explosion_png.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -55,10 +56,13 @@ export default class CustomLauncherNode extends LauncherNode {
       centerX: 0,
       centerY: 0
     } );
+
+    const pressureNeedleIcon = new Image( pressureNeedle_png, { centerX: -11, centerY: 0, rotation: -Math.PI / 2 } );
+
     const launcherTypeIconContainer = new Node( {
       x: -0.65 * BARREL_LENGTH_BEFORE_ORIGIN,
       y: 0,
-      children: [ launcherTypeIcon ],
+      children: [ launcherTypeIcon, pressureNeedleIcon ],
       visibleProperty: isLauncherCustomProperty,
       scale: 0.2,
       rotation: Math.PI / 2
@@ -140,8 +144,11 @@ export default class CustomLauncherNode extends LauncherNode {
 
     customLauncherTypeProperty.link( launcherType => {
       launcherTypeIcon.image = this.getImageKeyForCustomLauncherType( launcherType );
+      launcherTypeIcon.rotation = launcherType === 'PRESSURE' ? -Math.PI / 2 : launcherType === 'EXPLOSION' ? Math.PI / 2 : 0;
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
+
+      pressureNeedleIcon.visible = launcherType === 'PRESSURE';
     } );
   }
 
@@ -178,7 +185,7 @@ export default class CustomLauncherNode extends LauncherNode {
       case 'SPRING':
         return spring_png;
       case 'PRESSURE':
-        return pressure_png;
+        return pressureWithoutNeedle_png;
       default: //case 'EXPLOSION':
         return explosion_png;
     }

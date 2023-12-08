@@ -15,7 +15,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import spring_png from '../../../images/spring_png.js';
-import pressure_png from '../../../images/pressure_png.js';
+import pressureWithNeedle_png from '../../../images/pressureWithNeedle_png.js';
 import explosion_png from '../../../images/explosion_png.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -32,7 +32,7 @@ export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadio
       }, {
         value: 'PRESSURE' as const,
         tandemName: 'pressureRadioButton',
-        createNode: () => new Image( pressure_png, { scale: 0.18 } )
+        createNode: () => new Image( pressureWithNeedle_png, { scale: 0.18 } )
       }, {
         value: 'EXPLOSION' as const,
         tandemName: 'explosionRadioButton',

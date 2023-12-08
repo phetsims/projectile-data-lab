@@ -119,7 +119,23 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Matthew Blackman"
   },
-  "pressure.png": {
+  "pressureWithNeedle.png": {
+    "text": [
+      "Copyright 2002-2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
+  },
+  "pressureWithoutNeedle.png": {
+    "text": [
+      "Copyright 2002-2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
+  },
+  "pressureNeedle.png": {
     "text": [
       "Copyright 2002-2024 University of Colorado Boulder"
     ],
