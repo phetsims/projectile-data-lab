@@ -7,39 +7,46 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Text } from '../../../../scenery/js/imports.js';
+import { Image } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { CustomLauncherType } from '../model/CustomLauncherType.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import spring_png from '../../../images/spring_png.js';
+import pressure_png from '../../../images/pressure_png.js';
+import explosion_png from '../../../images/explosion_png.js';
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
 
 export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadioButtonGroup<CustomLauncherType> {
-  public constructor( customLauncherTypeProperty: PhetioProperty<CustomLauncherType>, providedOptions:CustomLauncherTypeRadioButtonGroupOptions ) {
+  public constructor( customLauncherTypeProperty: PhetioProperty<CustomLauncherType>, providedOptions: CustomLauncherTypeRadioButtonGroupOptions ) {
 
     const items: RectangularRadioButtonGroupItem<CustomLauncherType>[] = [
       {
         value: 'SPRING' as const,
         tandemName: 'springRadioButton',
-        createNode: () => new Text( 'Spring' )
+        createNode: () => new Image( spring_png, { scale: 0.14 } )
       }, {
         value: 'PRESSURE' as const,
         tandemName: 'pressureRadioButton',
-        createNode: () => new Text( 'Pressure' )
+        createNode: () => new Image( pressure_png, { scale: 0.18 } )
       }, {
         value: 'EXPLOSION' as const,
         tandemName: 'explosionRadioButton',
-        createNode: () => new Text( 'Explosion' )
+        createNode: () => new Image( explosion_png, { scale: -0.18 } )
       } ];
 
     super( customLauncherTypeProperty, items, {
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' ),
-      orientation: 'horizontal'
-  } );
+      orientation: 'horizontal',
+      align: 'center',
+      radioButtonOptions: {
+        baseColor: 'white'
+      }
+    } );
   }
 }
 
