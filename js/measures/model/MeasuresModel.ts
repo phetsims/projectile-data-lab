@@ -26,9 +26,9 @@ type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>
 
 export default class MeasuresModel extends VSMModel<MeasuresField> {
 
-  private landedDistanceAverageProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly landedDistanceAverageProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
-  private landedDistanceStandardDeviationProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly landedDistanceStandardDeviationProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   public readonly isLauncherCustomProperty: DynamicProperty<boolean, boolean, VSMField>;
 
@@ -52,14 +52,6 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     this.landedDistanceStandardDeviationProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.landedDistanceStandardDeviationProperty
-    } );
-
-    this.landedDistanceAverageProperty.link( landedDistance => {
-      console.log( 'landedDistanceAverageProperty changed to ' + landedDistance );
-    } );
-
-    this.landedDistanceStandardDeviationProperty.link( landedDistance => {
-      console.log( 'landedDistanceStandardDeviationProperty changed to ' + landedDistance );
     } );
 
     this.isLauncherCustomProperty = new DynamicProperty<boolean, boolean, VSMField>( this.fieldProperty, {

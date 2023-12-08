@@ -46,6 +46,8 @@ type StringsType = {
   'intervalToolStringProperty': LocalizedStringProperty;
   'metersStringProperty': LocalizedStringProperty;
   'longDashStringProperty': LocalizedStringProperty;
+  'meanMPatternStringProperty': LocalizedStringProperty;
+  'standardDeviationMPatternStringProperty': LocalizedStringProperty;
   'metersPerSecondPatternStringProperty': LocalizedStringProperty;
   'degreesPatternStringProperty': LocalizedStringProperty;
   'nEqualsProjectileCountPatternStringProperty': LocalizedStringProperty;

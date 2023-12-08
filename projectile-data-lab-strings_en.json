@@ -98,6 +98,12 @@
   "longDash": {
     "value": "—"
   },
+  "meanMPattern": {
+    "value": "{{mean}} m"
+  },
+  "standardDeviationMPattern": {
+    "value": "{{standardDeviation}} m"
+  },
   "metersPerSecondPattern": {
     "value": "{{value}} m/s"
   },

@@ -14,6 +14,7 @@ import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import MeasuresField from '../model/MeasuresField.js';
+import DataMeasuresFieldOverlay from './DataMeasuresFieldOverlay.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -58,6 +59,15 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     );
 
     this.launcherLayer.addChild( this.launcherNode );
+
+    const dataMeasuresFieldOverlay = new DataMeasuresFieldOverlay(
+      this.modelViewTransform, model.landedDistanceAverageProperty, model.landedDistanceStandardDeviationProperty, {
+        visibleProperty: model.isDataMeasuresVisibleProperty,
+        tandem: options.tandem.createTandem( 'dataMeasuresFieldOverlay' )
+      } );
+
+    this.toolsLayer.addChild( dataMeasuresFieldOverlay );
+    dataMeasuresFieldOverlay.moveToBack();
   }
 }
 
