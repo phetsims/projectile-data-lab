@@ -278,6 +278,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // This is so that the speed tool readout is not obscured by the measuring tape.
     isLauncherRaisedProperty.lazyLink( isLauncherRaised => {
       if ( isLauncherRaised ) {
+        //TODO: Make it impossible to lose the measuring tape behind the speed tool - see https://github.com/phetsims/projectile-data-lab/issues/7
         speedToolNode.moveToFront();
       }
       else {

@@ -9,6 +9,8 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../../common/PDLColors.js';
 import Projectile from '../../common/model/Projectile.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import forceField_png from '../../../images/forceField_png.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * Render the paths and projectiles for the Variability, Sources and Measures screens of Projectile Data Lab.
@@ -34,17 +36,31 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
     // REVIEW: If performance is a problem, use a persistent canvas and just add on to it (for the paths layer)
 
     // Order of drawing:
-    // 1: Trajectories that are not for the most recent landed projectile (if paths are visible)
-    // 2: Landed projectiles that are not the most recent
-    // 3: Trajectory for most recent landed projectile (if paths are visible)
-    // 4: Flying projectiles
-    // 5: Most recent landed projectile
+    // 1. Force field graphics for landed outliers
+    // 2: Trajectories that are not for the most recent landed projectile (if paths are visible)
+    // 3: Landed projectiles that are not the most recent
+    // 4: Trajectory for most recent landed projectile (if paths are visible)
+    // 5: Flying projectiles
+    // 6: Most recent landed projectile
 
     const landedProjectiles = this.fieldProperty.value.landedProjectiles;
     const airborneProjectiles = this.fieldProperty.value.airborneProjectiles;
     const highlightedProjectile: Projectile | null = this.fieldProperty.value.selectedProjectileProperty.value;
 
-    // Render the paths for the projectiles that are not the most recent landed projectile
+    // 1. Force field graphics for landed outliers
+    landedProjectiles.forEach( projectile => {
+      if ( projectile.x > 100 ) {
+        // TODO: Improve readability and/or performance here? - see https://github.com/phetsims/projectile-data-lab/issues/7
+        const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
+        context.save();
+        context.translate( viewPoint.x, viewPoint.y );
+        context.scale( PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR, PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR );
+        context.drawImage( forceField_png, -forceField_png.width / 2, -forceField_png.height / 4 );
+        context.restore();
+      }
+    } );
+
+    // 2. Trajectories that are not for the most recent landed projectile (if paths are visible)
     if ( this.isPathsVisibleProperty.value ) {
       context.lineWidth = 2;
       context.strokeStyle = PDLColors.pathStrokeColorProperty.value.toCSS();
@@ -56,25 +72,25 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
       } );
     }
 
-    // Draw the projectiles that have landed, but are not the most recent
+    // 3: Landed projectiles that are not the most recent
     landedProjectiles.forEach( projectile => {
       if ( projectile !== highlightedProjectile ) {
         this.drawProjectile( context, projectile, true, true );
       }
     } );
 
-    // Draw the path for the most recent landed projectile
+    // 4: Trajectory for most recent landed projectile (if paths are visible)
     if ( this.isPathsVisibleProperty.value && highlightedProjectile ) {
       context.strokeStyle = PDLColors.pathStrokeMostRecentProjectileColorProperty.value.toCSS();
       this.drawPathForProjectile( context, highlightedProjectile );
     }
 
-    // Draw the flying projectiles
+    // 5: Flying projectiles
     for ( let i = 0; i < airborneProjectiles.length; i++ ) {
       this.drawProjectile( context, airborneProjectiles[ i ], false, false );
     }
 
-    // Draw the most recent landed projectile
+    // 6: Most recent landed projectile
     if ( highlightedProjectile ) {
       this.drawProjectile( context, highlightedProjectile, true, false );
     }
