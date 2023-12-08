@@ -7,7 +7,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLColors from '../../common/PDLColors.js';
 import CanvasPainter from '../../../../bamboo/js/CanvasPainter.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
+import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import HistogramData from '../../common/model/HistogramData.js';
 
 /**
