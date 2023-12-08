@@ -279,6 +279,14 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       }
     } );
 
+    this.visibleBoundsProperty.link( visibleBounds => {
+      const minY = -200;
+      const topY = Math.max( visibleBounds.top, minY );
+      this.launchPanel.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      this.topRightUIContainer.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
+
     // Keyboard order
     this.pdomControlAreaNode.pdomOrder = [
       this.launchPanel,

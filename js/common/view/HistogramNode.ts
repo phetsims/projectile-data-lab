@@ -51,7 +51,7 @@ export default class HistogramNode extends Node {
 
     const chartTransform = new ChartTransform( {
       viewWidth: 620,
-      viewHeight: 180,
+      viewHeight: 165,
       modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );

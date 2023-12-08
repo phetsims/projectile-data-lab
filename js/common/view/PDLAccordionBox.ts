@@ -39,7 +39,7 @@ export default class PDLAccordionBox extends AccordionBox {
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
                       providedOptions: PDLAccordionBoxOptions ) {
 
-    const margin = 10;
+    const margin = 8;
 
     class BinWidthComboBox extends ComboBox<number> {
       public constructor() {
