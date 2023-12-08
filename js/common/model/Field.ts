@@ -21,6 +21,8 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
 import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/CustomLauncherType.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -55,7 +57,7 @@ export default abstract class Field extends PhetioObject {
   public readonly launchAngleStandardDeviationProperty: Property<number>;
 
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
-  public readonly launchHeightProperty: Property<number>;
+  public readonly launchHeightProperty: TReadOnlyProperty<number>;
 
   public readonly isContinuousLaunchingProperty: BooleanProperty;
 
@@ -114,7 +116,7 @@ export default abstract class Field extends PhetioObject {
 
       // TODO: Do not instrument on the sampling screen, see https://github.com/phetsims/projectile-data-lab/issues/7
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
-      phetioDocumentation: 'This property configures the angle and height of the cannon. When set to ANGLE_0, the cannon is raised.',
+      phetioDocumentation: 'This property configures the angle and height of the cannon. When set to ANGLE_0_RAISED, the cannon is raised.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
     } );
 
@@ -162,9 +164,8 @@ export default abstract class Field extends PhetioObject {
       tandem: Tandem.OPT_OUT
     } );
 
-    this.launchHeightProperty = new Property<number>( 0, {
-      validValues: [ 0, PDLConstants.RAISED_LAUNCHER_HEIGHT ],
-      tandem: Tandem.OPT_OUT
+    this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
+      return configuration === 'ANGLE_0_RAISED' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
 
     this.selectedSampleProperty = new NumberProperty( 0, {
@@ -176,7 +177,6 @@ export default abstract class Field extends PhetioObject {
 
       // REVIEW: Should these be DerivedProperties? YES
       this.launchAngleAverageProperty.value = Field.angleForConfiguration( configuration );
-      this.launchHeightProperty.value = configuration === 'ANGLE_0' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     } );
 
     // Note: This is incorrect for the custom launcher ('Sources' and 'Measures' screens)

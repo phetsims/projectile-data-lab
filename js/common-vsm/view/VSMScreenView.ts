@@ -150,10 +150,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     model.stopwatch.positionProperty.setInitialValue( stopwatchStartingPosition );
     model.stopwatch.positionProperty.reset();
 
-    const isLauncherRaisedProperty: TReadOnlyProperty<boolean> = new DerivedProperty( [ model.launcherConfigurationProperty ],
-      launcherConfiguration => {
-        return launcherConfiguration === 'ANGLE_0';
-      } );
+    const isLauncherRaisedProperty = new DerivedProperty( [ model.launcherHeightProperty ], height => height > 0 );
 
     // Create the heat map tools
     const speedToolNode = new SpeedToolNode( isLauncherRaisedProperty, {

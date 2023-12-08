@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-export const LauncherConfigurationValues = [ 'ANGLE_30', 'ANGLE_45', 'ANGLE_60', 'ANGLE_0' ] as const;
+export const LauncherConfigurationValues = [ 'ANGLE_30', 'ANGLE_45', 'ANGLE_60', 'ANGLE_0_RAISED' ] as const;
 
 const angles = [ 30, 45, 60, 0 ];
 

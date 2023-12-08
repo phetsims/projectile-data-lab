@@ -33,7 +33,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
       tandemName: 'angleSixtyRadioButton',
       createNode: () => new Text( '60' )
     }, {
-      value: 'ANGLE_0' as const,
+      value: 'ANGLE_0_RAISED' as const,
       tandemName: 'angleZeroRadioButton',
       createNode: () => new Text( '0' )
     } ], {
