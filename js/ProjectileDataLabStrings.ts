@@ -55,6 +55,9 @@ type StringsType = {
   'sampleNumberOfCountPatternStringProperty': LocalizedStringProperty;
   'numberOfCountPatternStringProperty': LocalizedStringProperty;
   'binWidthMPatternStringProperty': LocalizedStringProperty;
+  'distanceStringProperty': LocalizedStringProperty;
+  'meanDistanceStringProperty': LocalizedStringProperty;
+  'countStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;

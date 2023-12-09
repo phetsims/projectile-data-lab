@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
@@ -23,6 +23,8 @@ import SamplingField from '../../sampling/model/SamplingField.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
+import PDLText from './PDLText.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -39,6 +41,7 @@ export default class HistogramNode extends Node {
                       fields: Field[],
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
+                      horizontalAxisLabelText: TReadOnlyProperty<string>,
                       options: HistogramNodeOptions ) {
     super();
 
@@ -143,21 +146,44 @@ export default class HistogramNode extends Node {
       bottom: chartTransform.viewHeight,
       spacing: 5,
       iconOptions: {
-        scale: 1.6
+        scale: 1.5
       },
       buttonOptions: {
         stroke: 'black',
         lineWidth: 1,
         cornerRadius: 3
       },
+
+      // Put the minus button on top
+      // REVIEW: Is there an API for this?
       scale: -1
+    } );
+
+    const verticalAxisLabel = new PDLText( ProjectileDataLabStrings.countStringProperty, {
+      rotation: -Math.PI / 2,
+      fontSize: 16
+    } );
+    const horizontalAxisLabel = new PDLText( horizontalAxisLabelText, {
+      fontSize: 16
     } );
 
     this.children = [
       zoomButtonGroup,
-      chartNode.mutate( { left: zoomButtonGroup.right + 13 } )
+      chartNode.mutate( { left: zoomButtonGroup.right + 2 } ),
+      verticalAxisLabel,
+      horizontalAxisLabel
     ];
     this.mutate( options );
+
+    ManualConstraint.create( this, [ chartNode, verticalAxisLabel, zoomButtonGroup ], ( chartNode, verticalAxisLabel, zoomButtonGroup ) => {
+      verticalAxisLabel.centerX = zoomButtonGroup.centerX;
+      verticalAxisLabel.centerY = ( zoomButtonGroup.top + chartNode.top ) / 2;
+    } );
+
+    ManualConstraint.create( this, [ chartNode, horizontalAxisLabel ], ( chartNode, horizontalAxisLabel ) => {
+      horizontalAxisLabel.centerX = chartNode.centerX;
+      horizontalAxisLabel.top = chartNode.bottom;
+    } );
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {

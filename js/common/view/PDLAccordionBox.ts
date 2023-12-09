@@ -111,6 +111,7 @@ export default class PDLAccordionBox extends AccordionBox {
       ]
     } );
 
+    // REVIEW: Why are these controls out here instead of in HistogramNode?
     const barBlockSwitch = new ABSwitch( histogramRepresentationProperty, 'blocks', new HistogramIconNode( 'blocks' ), 'bars', new HistogramIconNode( 'bars' ), {
       tandem: providedOptions.tandem.createTandem( 'barBlockSwitch' ),
       spacing: margin,
@@ -119,8 +120,8 @@ export default class PDLAccordionBox extends AccordionBox {
       }
     } );
 
-    labelAndComboBoxContainer.leftTop = content.leftBottom.plusXY( margin, margin );
-    barBlockSwitch.rightTop = content.rightBottom.plusXY( -margin, margin );
+    labelAndComboBoxContainer.leftTop = content.leftBottom.plusXY( margin, -15 );
+    barBlockSwitch.rightTop = content.rightBottom.plusXY( -margin, -15 );
 
     const contentContainer = new Node( {
       children: [

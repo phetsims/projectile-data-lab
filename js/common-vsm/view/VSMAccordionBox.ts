@@ -38,7 +38,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
     histogramRepresentationProperty: Property<HistogramRepresentation>,
     providedOptions: VSMAccordionBoxOptions ) {
 
-    const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, {
+    const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, ProjectileDataLabStrings.distanceStringProperty, {
       tandem: providedOptions.tandem.createTandem( 'histogramNode' )
     } );
 
