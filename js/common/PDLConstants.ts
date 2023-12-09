@@ -12,7 +12,7 @@ import LauncherConfig from './LauncherConfig.js';
 import Range from '../../../dot/js/Range.js';
 
 const maxFieldDistance = 100;
-const fieldWidth = 870;
+const fieldWidth = 850;
 const pixelsToDistance = fieldWidth / maxFieldDistance;
 
 const MAX_ANGLE_STANDARD_DEVIATION = 8; // degrees
@@ -39,7 +39,7 @@ const PDLConstants = {
   FIELD_LABEL_INCREMENT: 10,
 
   // In view units
-  FIELD_CENTER_OFFSET_X: 32,
+  FIELD_CENTER_OFFSET_X: 44,
   FIELD_CENTER_Y: 500,
   FIELD_HEIGHT: 40,
   FIELD_WIDTH: fieldWidth,

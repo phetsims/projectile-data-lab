@@ -33,7 +33,8 @@ type SelfOptions = EmptySelfOptions;
 type CustomLauncherNodeOptions = SelfOptions & NodeOptions;
 
 // This is how much of the outer guide rail is cut off to make room to show the angle stabilizers.
-const GUIDE_RAIL_OUTER_CUTOFF = 10.5;
+const GUIDE_RAIL_OUTER_CUTOFF = 13;
+const LAUNCH_ANGLE_LIMITER_LENGTH = 16;
 const LAUNCH_ANGLE_LIMITER_WIDTH = 5;
 
 export default class CustomLauncherNode extends LauncherNode {
@@ -60,7 +61,7 @@ export default class CustomLauncherNode extends LauncherNode {
     const pressureNeedleIcon = new Image( pressureNeedle_png, { centerX: -11, centerY: 0, rotation: -Math.PI / 2 } );
 
     const launcherTypeIconContainer = new Node( {
-      x: -0.65 * BARREL_LENGTH_BEFORE_ORIGIN,
+      x: -0.7 * BARREL_LENGTH_BEFORE_ORIGIN,
       y: 0,
       children: [ launcherTypeIcon, pressureNeedleIcon ],
       visibleProperty: isLauncherCustomProperty,
@@ -71,9 +72,9 @@ export default class CustomLauncherNode extends LauncherNode {
     this.launcherBarrel.addChild( launcherTypeIconContainer );
 
     // Add the launch angle limiter - the piece sticking out of the back of the launcher.
-    const launchAngleLimiterLength = 19;
-    const launchAngleLimiter = new Rectangle( -BARREL_LENGTH_BEFORE_ORIGIN - launchAngleLimiterLength, -0.5 * LAUNCH_ANGLE_LIMITER_WIDTH,
-      launchAngleLimiterLength, LAUNCH_ANGLE_LIMITER_WIDTH, {
+    const launchAngleLimiter = new Rectangle( -BARREL_LENGTH_BEFORE_ORIGIN - LAUNCH_ANGLE_LIMITER_LENGTH, -0.5 * LAUNCH_ANGLE_LIMITER_WIDTH,
+      LAUNCH_ANGLE_LIMITER_LENGTH, LAUNCH_ANGLE_LIMITER_WIDTH, {
+        visibleProperty: isLauncherCustomProperty,
         fill: PDLColors.launcherFillColorProperties[ 0 ].primary,
         stroke: PDLColors.launcherStrokeColorProperty,
         cornerRadius: 2
@@ -115,9 +116,6 @@ export default class CustomLauncherNode extends LauncherNode {
 
     this.addChild( gearTopContainer );
     this.addChild( gearBottomContainer );
-
-    // Move the guide rail bolt to the front so that it is not covered by the launcher frame.
-    this.guideRailBolt.moveToFront();
 
     //TODO: Do we want to add a 'push' effect on the launcher when reducing the angle stabilizer gap? - see https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ launcherConfigurationProperty, angleStabilizerProperty ], ( launcherConfiguration, angleStabilizer ) => {
