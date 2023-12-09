@@ -39,31 +39,38 @@ export default class SampleCardsPanel extends PDLPanel {
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
 
       // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
+      // TODO: How to show the finished sample number or selected sample number (but not an in progress sample), see https://github.com/phetsims/projectile-data-lab/issues/7
       number: selectedSampleProperty,
       count: sampleCountProperty
     } );
 
-    const createPage = () => {
+    const node = new Node();
+
+    Multilink.multilink( [
+      samplingFieldProperty, selectedSampleProperty, sampleCountProperty,
+      numberOfCompletedSamplesProperty ], () => {
+
       const field = samplingFieldProperty.value;
       const projectiles = field.getProjectilesInSelectedSample();
       const values = projectiles.map( projectile => projectile.x );
 
       // Only show the value for a full sample
-      const meanString = projectiles.length === field.sampleSize ? Utils.toFixedNumber( _.mean( values ), 1 ) : '?';
+      const isFullSample = projectiles.length === field.sampleSize;
 
-      return new VBox( {
-        align: 'left',
-        children: [
-          new Text( 'Launcher: ' + samplingFieldProperty.value.launcher ),
-          new Text( 'Sample Size: ' + samplingFieldProperty.value.sampleSize ),
-          new Text( `Mean: ${meanString} m` )
-        ]
-      } );
-    };
-    const node = new Node();
+      if ( isFullSample ) {
+        const meanString = isFullSample ? Utils.toFixedNumber( _.mean( values ), 1 ) : '?';
 
-    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, sampleCountProperty, numberOfCompletedSamplesProperty ], () => {
-      node.children = [ createPage() ];
+        const page = new VBox( {
+          align: 'left',
+          children: [
+            new Text( 'Launcher: ' + samplingFieldProperty.value.launcher ),
+            new Text( 'Sample Size: ' + samplingFieldProperty.value.sampleSize ),
+            new Text( `Mean: ${meanString} m` )
+          ]
+        } );
+
+        node.children = [ page ];
+      }
     } );
 
     const carousel = new Panel( node );
