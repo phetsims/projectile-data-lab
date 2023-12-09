@@ -67,14 +67,14 @@ const PDLConstants = {
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
   SPRING_SPEED_MEAN: 25,
-  SPRING_SPEED_SD: 0.5,
+  SPRING_SPEED_SD: 0.8,
   PRESSURE_SPEED_MEAN: 25,
-  PRESSURE_SPEED_SD: 1.5,
+  PRESSURE_SPEED_SD: 1.6,
   EXPLOSION_SPEED_MEAN: 20,
   EXPLOSION_SPEED_SD: 4,
 
   LAUNCHER_CONFIGS: [
-    new LauncherConfig( 'SPRING', 4 ),
+    new LauncherConfig( 'SPRING', 2 ),
     new LauncherConfig( 'SPRING', 8 ),
     new LauncherConfig( 'EXPLOSION', 0 ),
     new LauncherConfig( 'PRESSURE', 2 ),

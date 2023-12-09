@@ -70,7 +70,7 @@ export default class VSMField extends Field {
       phetioValueType: StringUnionIO( CustomLauncherTypeValues )
     } );
 
-    this.angleStabilizerProperty = new NumberProperty( 1, {
+    this.angleStabilizerProperty = new NumberProperty( PDLConstants.LAUNCHER_CONFIGS[ 0 ].angleStandardDeviation, {
       range: PDLConstants.ANGLE_STABILIZER_RANGE,
       tandem: providedOptions.tandem.createTandem( 'angleStabilizerProperty' ),
       phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
