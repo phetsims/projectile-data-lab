@@ -149,7 +149,8 @@ export default class HistogramNode extends Node {
         stroke: 'black',
         lineWidth: 1,
         cornerRadius: 3
-      }
+      },
+      scale: -1
     } );
 
     this.children = [
