@@ -17,6 +17,9 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import StaticToolPanel from './StaticToolPanel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLText from '../../common/view/PDLText.js';
+import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
+import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -34,6 +37,20 @@ export default class InteractiveToolPanel extends PDLPanel {
       additionalVerticalCheckboxGroupItems: []
     }, providedOptions );
 
+    class StopwatchNodeIcon extends Node {
+      public constructor() {
+        const stopwatchNode = new StopwatchNode( new Stopwatch( {
+          tandem: Tandem.OPT_OUT,
+          isVisible: true
+        } ), { tandem: Tandem.OPT_OUT } ).rasterized( { resolution: 1.25 } );
+        super( {
+          children: [ stopwatchNode ],
+          pickable: false,
+          maxWidth: 25
+        } );
+      }
+    }
+
     const checkboxGroup = new VerticalCheckboxGroup( [
       {
         property: isMeasuringTapeVisibleProperty,
@@ -41,7 +58,7 @@ export default class InteractiveToolPanel extends PDLPanel {
         tandemName: 'measuringTapeCheckbox'
       }, {
         property: isStopwatchVisibleProperty,
-        createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) ),
+        createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new StopwatchNodeIcon() ),
         tandemName: 'stopwatchCheckbox'
       },
       ...options.additionalVerticalCheckboxGroupItems
