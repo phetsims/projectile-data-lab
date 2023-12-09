@@ -12,7 +12,9 @@ import Property from '../../../../axon/js/Property.js';
 
 export default class HistogramIconNode extends Node {
   public constructor( histogramRepresentation: HistogramRepresentation ) {
-    super();
+    super( {
+      pickable: true
+    } );
 
     const chartTransform = new ChartTransform( {
       viewWidth: 23,
@@ -30,6 +32,10 @@ export default class HistogramIconNode extends Node {
     const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ], {} );
 
     this.addChild( chartCanvasNode );
+
+    const area = chartCanvasNode.localBounds.dilatedXY( 2, 10 );
+    this.setTouchArea( area );
+    this.setMouseArea( area );
   }
 }
 
