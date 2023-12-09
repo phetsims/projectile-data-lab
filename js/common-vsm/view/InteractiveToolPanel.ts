@@ -54,7 +54,7 @@ export default class InteractiveToolPanel extends PDLPanel {
       }
     }
 
-    class MeasuringTapeIcon extends Node {
+    class MeasuringTapeIconNode extends Node {
       public constructor() {
 
         const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
@@ -82,7 +82,7 @@ export default class InteractiveToolPanel extends PDLPanel {
 
     const checkboxGroup = new VerticalCheckboxGroup( [ {
       property: isMeasuringTapeVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new MeasuringTapeIcon() ),
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new MeasuringTapeIconNode() ),
       tandemName: 'measuringTapeCheckbox'
     }, {
       property: isStopwatchVisibleProperty,
