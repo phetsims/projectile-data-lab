@@ -92,6 +92,8 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     };
 
     for ( let t = 0; t < projectile.timeAirborne; t += 0.02 ) {
+
+      // TODO: Should we use quadraticCurveTo? See https://github.com/phetsims/projectile-data-lab/issues/7
       drawLineToProjectileAtTime( t );
     }
 
