@@ -68,7 +68,7 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
       landedProjectiles.forEach( ( projectile, index ) => {
         if ( projectile !== highlightedProjectile ) {
 
-          const NUM_LANDED_PATHS_TO_SHOW = 18;
+          const NUM_LANDED_PATHS_TO_SHOW = 20;
           const ratio = Math.min( 1, ( numLandedProjectiles - index ) / ( NUM_LANDED_PATHS_TO_SHOW + 1 ) );
           const color = PDLColors.pathStrokeLandedInitialColorProperty.value.blend( PDLColors.pathStrokeLandedFinalColorProperty.value, ratio );
           context.strokeStyle = color.toCSS();
