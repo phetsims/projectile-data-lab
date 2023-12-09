@@ -51,16 +51,15 @@ export default class InteractiveToolPanel extends PDLPanel {
       }
     }
 
-    const checkboxGroup = new VerticalCheckboxGroup( [
-      {
-        property: isMeasuringTapeVisibleProperty,
-        createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
-        tandemName: 'measuringTapeCheckbox'
-      }, {
-        property: isStopwatchVisibleProperty,
-        createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new StopwatchNodeIcon() ),
-        tandemName: 'stopwatchCheckbox'
-      },
+    const checkboxGroup = new VerticalCheckboxGroup( [ {
+      property: isMeasuringTapeVisibleProperty,
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
+      tandemName: 'measuringTapeCheckbox'
+    }, {
+      property: isStopwatchVisibleProperty,
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new StopwatchNodeIcon() ),
+      tandemName: 'stopwatchCheckbox'
+    },
       ...options.additionalVerticalCheckboxGroupItems
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' )
