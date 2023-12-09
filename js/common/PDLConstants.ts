@@ -26,7 +26,7 @@ const PDLConstants = {
   BOTTOM_UI_SPACING: 20,
 
   MAX_PROJECTILES_PER_FIELD: 500,
-  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.1, // seconds
+  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.3, // seconds
   MAX_ANGLE_STANDARD_DEVIATION: MAX_ANGLE_STANDARD_DEVIATION, // degrees
 
   // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
@@ -67,8 +67,8 @@ const PDLConstants = {
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
   LAUNCHER_CONFIGS: [
-    new LauncherConfig( 'SPRING', 0.5 ),
-    new LauncherConfig( 'SPRING', 5 ),
+    new LauncherConfig( 'SPRING', 1 ),
+    new LauncherConfig( 'SPRING', 8 ),
     new LauncherConfig( 'EXPLOSION', 0 ),
     new LauncherConfig( 'PRESSURE', 2 ),
     new LauncherConfig( 'PRESSURE', 4 ),

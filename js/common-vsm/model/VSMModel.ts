@@ -58,7 +58,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
 
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
-      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.SLOW ],
+      timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
       fields: fields,
       isPathsVisible: false
     }, providedOptions );
@@ -151,7 +151,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       return;
     }
 
-    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.SLOW ? 0.5 : 1 );
+    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 2 : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' &&
          this.isContinuousLaunchingProperty.value ) {
