@@ -5,7 +5,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import PDLConstants from '../PDLConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Field from './Field.js';
@@ -113,9 +112,9 @@ export default class Projectile {
       isFlippedHorizontally: BooleanIO,
       landedImageIndex: NumberIO,
       timeAirborne: NumberIO,
-      launchAngle: NullableIO( NumberIO ),
-      launchSpeed: NullableIO( NumberIO ),
-      launchHeight: NullableIO( NumberIO )
+      launchAngle: NumberIO,
+      launchSpeed: NumberIO,
+      launchHeight: NumberIO
     },
     toStateObject: ( projectile: Projectile ): ProjectileStateObject => {
       return {
