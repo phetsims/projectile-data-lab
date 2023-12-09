@@ -96,6 +96,7 @@ export default class StaticToolPanel extends PDLPanel {
 
   public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
     return new HBox( {
+      spacing: 10,
       stretch: true, children: [ new PDLText( label, {
         maxWidth: 200
       } ), icon ]
