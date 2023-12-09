@@ -9,7 +9,7 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { HBox, Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { Color, HBox, Node } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -20,6 +20,9 @@ import PDLText from '../../common/view/PDLText.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
+import Property from '../../../../axon/js/Property.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -51,9 +54,35 @@ export default class InteractiveToolPanel extends PDLPanel {
       }
     }
 
+    class MeasuringTapeIcon extends Node {
+      public constructor() {
+
+        const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
+          visibleProperty: new BooleanProperty( true ),
+          tipPositionProperty: new Property<Vector2>( new Vector2( 14, 0 ) ),
+          lineColor: new Color( 0, 0, 0 ),
+          crosshairLineWidth: 1.8,
+          tapeLineWidth: 1.8,
+
+          // MeasuringTapeNode does not support hiding the text. This is our "hack" to hide it.
+          // REVIEW: Do we want to change common code support for that? Or try a font of 0?
+          textMaxWidth: 1E-6,
+
+          tandem: Tandem.OPT_OUT
+        } ).rasterized( {
+          resolution: 1.25
+        } );
+        super( {
+          children: [ measuringTapeNode ],
+          pickable: false,
+          maxWidth: 25
+        } );
+      }
+    }
+
     const checkboxGroup = new VerticalCheckboxGroup( [ {
       property: isMeasuringTapeVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new MeasuringTapeIcon() ),
       tandemName: 'measuringTapeCheckbox'
     }, {
       property: isStopwatchVisibleProperty,
