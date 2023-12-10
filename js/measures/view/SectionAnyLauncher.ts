@@ -1,14 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Node, VBox } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
-import HorizontalAquaRadioButtonGroup from '../../../../sun/js/HorizontalAquaRadioButtonGroup.js';
 import { CustomLauncherType } from '../../common-vsm/model/CustomLauncherType.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 import AngleStabilizerNumberControl from '../../common-vsm/view/AngleStabilizerNumberControl.js';
