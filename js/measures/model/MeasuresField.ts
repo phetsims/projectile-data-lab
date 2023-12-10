@@ -58,6 +58,12 @@ export default class MeasuresField extends VSMField {
     } );
     return count > 0 ? Math.sqrt( sum / count ) : 0;
   }
+
+  public override clearProjectiles(): void {
+    super.clearProjectiles();
+    this.landedDistanceAverageProperty.value = null;
+    this.landedDistanceStandardDeviationProperty.value = null;
+  }
 }
 
 projectileDataLab.register( 'MeasuresField', MeasuresField );

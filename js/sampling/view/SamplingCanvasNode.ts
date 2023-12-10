@@ -64,7 +64,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
       context.lineTo( viewPoint.x - SIDE_LENGTH / 2, viewPoint.y - height ); // Line to bottom-left vertex
       context.lineTo( viewPoint.x + SIDE_LENGTH / 2, viewPoint.y - height ); // Line to bottom-right vertex
       context.closePath();
-      context.fillStyle = 'rgb(227,0,173)'; // TODO: Move to color file, see https://github.com/phetsims/projectile-data-lab/issues/7
+      context.fillStyle = PDLColors.meanMarkerColorProperty.value.toCSS();
       context.fill();
 
       // And add a black stroke around it

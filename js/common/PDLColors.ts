@@ -141,6 +141,10 @@ const PDLColors = {
 
   histogramDataStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramDataStroke', {
     default: '#EE8B5E'
+  } ),
+
+  meanMarkerColorProperty: new ProfileColorProperty( projectileDataLab, 'meanMarker', {
+    default: '#E300AD'
   } )
 };
 
