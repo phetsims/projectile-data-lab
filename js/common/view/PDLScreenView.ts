@@ -97,13 +97,13 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     } );
 
     this.noAirResistanceText = new PDLText( ProjectileDataLabStrings.noAirResistanceStringProperty, {
-      layoutOptions: {
-        align: 'right'
-      },
-      right: this.layoutBounds.maxX - PDLConstants.SCREEN_VIEW_X_MARGIN,
       bottom: PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION,
       font: PDLConstants.NO_AIR_RESISTANCE_FONT,
-      maxWidth: 200
+      maxWidth: 160
+    } );
+
+    ProjectileDataLabStrings.noAirResistanceStringProperty.link( () => {
+      this.noAirResistanceText.right = this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN;
     } );
 
     this.resetAllButton = new ResetAllButton( {
