@@ -14,6 +14,7 @@ import AngleStabilizerNumberControl from '../../common-vsm/view/AngleStabilizerN
 import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -21,7 +22,7 @@ import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioBu
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionAnyLauncherOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
 export default class SectionAnyLauncher extends PDLPanelSection {
 

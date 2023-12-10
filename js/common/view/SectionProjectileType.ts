@@ -11,6 +11,7 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import piano_png from '../../../images/piano_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -18,7 +19,7 @@ import pumpkin_png from '../../../images/pumpkin_png.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionProjectileTypeOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionProjectileTypeOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
 export default class SectionProjectileType extends PDLPanelSection {
 

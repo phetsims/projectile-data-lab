@@ -8,6 +8,7 @@ import { LauncherConfiguration } from '../model/LauncherConfiguration.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -15,7 +16,7 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionLauncherConfigurationOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionLauncherConfigurationOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
 export default class SectionLauncherConfiguration extends PDLPanelSection {
 

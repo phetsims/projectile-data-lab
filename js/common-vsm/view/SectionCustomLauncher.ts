@@ -9,6 +9,7 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { CustomLauncherType } from '../model/CustomLauncherType.js';
 import AngleStabilizerNumberControl from './AngleStabilizerNumberControl.js';
 import CustomLauncherTypeRadioButtonGroup from './CustomLauncherTypeRadioButtonGroup.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -16,7 +17,7 @@ import CustomLauncherTypeRadioButtonGroup from './CustomLauncherTypeRadioButtonG
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionCustomLauncherOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionCustomLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
 export default class SectionCustomLauncher extends PDLPanelSection {
 

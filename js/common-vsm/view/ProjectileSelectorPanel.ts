@@ -125,9 +125,11 @@ export default class ProjectileSelectorPanel extends PDLPanel {
 
     super( new HBox( {
       spacing: 5,
-      children: [ upDownButtons, new PDLPanelSection( titleStringProperty, carousel, options ) ],
+      children: [ upDownButtons, new PDLPanelSection( titleStringProperty, carousel ) ],
       tandem: options.tandem.createTandem( 'sampleNumberOfCountPatternSection' )
-    } ) );
+    } ), {
+      tandem: options.tandem
+    } );
   }
 }
 

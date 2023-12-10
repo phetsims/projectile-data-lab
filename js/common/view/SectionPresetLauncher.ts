@@ -7,6 +7,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLText from './PDLText.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -14,7 +15,7 @@ import PDLText from './PDLText.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionProjectileTypeOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionProjectileTypeOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
 export default class SectionPresetLauncher extends PDLPanelSection {
 

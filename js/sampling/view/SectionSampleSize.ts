@@ -7,6 +7,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLText from '../../common/view/PDLText.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -14,7 +15,7 @@ import PDLText from '../../common/view/PDLText.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionSampleSizeOptions = SelfOptions & PDLPanelSectionOptions;
+type SectionSampleSizeOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
 export default class SectionSampleSize extends PDLPanelSection {
 

@@ -3,7 +3,6 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import { Node, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLText from './PDLText.js';
 
@@ -16,15 +15,17 @@ import PDLText from './PDLText.js';
  */
 
 type SelfOptions = {
+
+  // TODO: Please review this option: see https://github.com/phetsims/projectile-data-lab/issues/7
   centerTitleAndContent?: boolean;
 };
-export type PDLPanelSectionOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
+export type PDLPanelSectionOptions = SelfOptions & VBoxOptions;
 
 export default class PDLPanelSection extends VBox {
 
-  public constructor( titleString: TReadOnlyProperty<string>, content: Node, providedOptions: PDLPanelSectionOptions ) {
+  public constructor( titleString: TReadOnlyProperty<string>, content: Node, providedOptions?: PDLPanelSectionOptions ) {
 
-    const align = providedOptions.centerTitleAndContent ? 'center' : 'left';
+    const align = providedOptions && providedOptions.centerTitleAndContent ? 'center' : 'left';
     const title = new PDLText( titleString, {
       maxWidth: 160
     } );
