@@ -19,6 +19,7 @@ import PDLText from './PDLText.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { PDLPanel } from './PDLPanel.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 export default class SimulationPreferencesContentNode extends PreferencesPanelContentNode {
 
@@ -27,11 +28,11 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     const binStrategyControlTandem = tandem.createTandem( 'binStrategyControl' );
 
     const binTypeRadioButtonGroup = new PDLPanel( new VerticalAquaRadioButtonGroup<BinStrategy>( BIN_STRATEGY_PROPERTY, [ {
-      createNode: () => new PDLText( 'Bin Width', { fontSize: 14 } ),
+      createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, { fontSize: 14 } ),
       value: 'binWidth',
       tandemName: 'binWidthRadioButton'
     }, {
-      createNode: () => new PDLText( 'Total Bins', { fontSize: 14 } ),
+      createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, { fontSize: 14 } ),
       value: 'totalBins',
       tandemName: 'totalBinsRadioButton'
     } ], {
@@ -42,8 +43,8 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
       phetioVisiblePropertyInstrumented: false
     } ) );
 
-    const title = new PDLText( 'Histogram Bins', PreferencesDialogConstants.CONTROL_LABEL_OPTIONS );
-    const description = new RichText( 'The histogram offers two customization options for its data representation. You can either choose to define the width of the bins or specify the total number of bins in the histogram.', PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
+    const title = new PDLText( ProjectileDataLabStrings.histogramBinsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS );
+    const description = new RichText( ProjectileDataLabStrings.histogramBinsPreferenceDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS );
 
     const binStrategyControl = new PreferencesControl( {
       labelNode: title,

@@ -58,6 +58,10 @@ type StringsType = {
   'distanceStringProperty': LocalizedStringProperty;
   'meanDistanceStringProperty': LocalizedStringProperty;
   'countStringProperty': LocalizedStringProperty;
+  'binWidthStringProperty': LocalizedStringProperty;
+  'totalBinsStringProperty': LocalizedStringProperty;
+  'histogramBinsStringProperty': LocalizedStringProperty;
+  'histogramBinsPreferenceDescriptionStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;
