@@ -59,12 +59,14 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       derive: t => t.isLauncherCustomProperty
     } );
 
+    const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
+
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isIntervalToolVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isIntervalToolVisibleProperty' )
     } );
 
     this.isDataMeasuresVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isDataMeasuresVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isDataMeasuresVisibleProperty' )
     } );
 
     fields.forEach( field => {

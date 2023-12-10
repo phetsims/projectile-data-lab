@@ -80,7 +80,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       model.binWidthProperty,
       this,
       model.histogramRepresentationProperty, {
-        expandedProperty: model.isHistogramShowingProperty,
+        expandedProperty: model.isHistogramVisibleProperty,
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
         minWidth: accordionBoxWidth,

@@ -92,30 +92,34 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       derive: t => t.landedProjectileCountProperty
     } );
 
+    const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
+
     this.isLaunchAngleVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isLaunchAngleVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isLaunchAngleVisibleProperty' )
     } );
 
     this.isLaunchSpeedVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isLaunchSpeedVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isLaunchSpeedVisibleProperty' )
     } );
 
     this.isMeasuringTapeVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isMeasuringTapeVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isMeasuringTapeVisibleProperty' )
     } );
 
+    const measuringTapeTandem = providedOptions.tandem.createTandem( 'measuringTape' );
+
     this.measuringTapeBasePositionProperty = new Property<Vector2>( new Vector2( 0, 0 ), {
-      tandem: providedOptions.tandem.createTandem( 'measuringTapeBasePositionProperty' ),
+      tandem: measuringTapeTandem.createTandem( 'basePositionProperty' ),
       phetioValueType: Vector2.Vector2IO
     } );
 
     this.measuringTapeTipPositionProperty = new Property<Vector2>( new Vector2( 50, 0 ), {
-      tandem: providedOptions.tandem.createTandem( 'measuringTapeTipPositionProperty' ),
+      tandem: measuringTapeTandem.createTandem( 'tipPositionProperty' ),
       phetioValueType: Vector2.Vector2IO
     } );
 
     this.isStopwatchVisibleProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isStopwatchVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isStopwatchVisibleProperty' )
     } );
 
     this.stopwatch = new Stopwatch( {

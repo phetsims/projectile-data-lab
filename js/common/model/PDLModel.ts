@@ -39,8 +39,8 @@ export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem
 
 export default abstract class PDLModel<T extends Field> implements TModel {
 
-  // isHistogramShowingProperty is true when the accordion box containing the histogram is open.
-  public readonly isHistogramShowingProperty: Property<boolean>;
+  // isHistogramVisibleProperty is true when the accordion box containing the histogram is open.
+  public readonly isHistogramVisibleProperty: Property<boolean>;
 
   // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
   // The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
@@ -90,22 +90,26 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
 
-    this.isHistogramShowingProperty = new Property<boolean>( false, {
-      tandem: providedOptions.tandem.createTandem( 'isHistogramShowingProperty' ),
+    const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
+
+    this.isHistogramVisibleProperty = new Property<boolean>( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'isHistogramVisibleProperty' ),
       phetioDocumentation: 'This property indicates whether the histogram is showing.',
       phetioValueType: BooleanIO
     } );
 
+    const histogramTandem = providedOptions.tandem.createTandem( 'histogram' );
+
     this.selectedBinWidthProperty = new Property<number>( 2, {
       validValues: [ 1, 2, 5, 10 ],
-      tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
+      tandem: histogramTandem.createTandem( 'selectedBinWidthProperty' ),
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',
       phetioValueType: NumberIO
     } );
 
     this.selectedTotalBinsProperty = new Property<number>( 10, {
       validValues: [ 10, 20, 50, 100 ],
-      tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
+      tandem: histogramTandem.createTandem( 'selectedTotalBinsProperty' ),
       phetioDocumentation: 'This property configures the total number of bins in the histogram.',
       phetioValueType: NumberIO
     } );
@@ -117,7 +121,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.histogramRepresentationProperty = new StringUnionProperty<HistogramRepresentation>( 'blocks', {
       validValues: HistogramRepresentationValues,
-      tandem: providedOptions.tandem.createTandem( 'histogramRepresentationProperty' ),
+      tandem: histogramTandem.createTandem( 'representationProperty' ),
       phetioDocumentation: 'This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
     } );
 
@@ -177,7 +181,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {
-      tandem: providedOptions.tandem.createTandem( 'isPathsVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isPathsVisibleProperty' )
     } );
 
     this.launchModeProperty.link( launchMode => {
@@ -191,7 +195,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public reset(): void {
     this.launchModeProperty.reset();
-    this.isHistogramShowingProperty.reset();
+    this.isHistogramVisibleProperty.reset();
     this.selectedBinWidthProperty.reset();
     this.selectedTotalBinsProperty.reset();
     this.isPlayingProperty.reset();
