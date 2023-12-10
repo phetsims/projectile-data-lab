@@ -98,7 +98,7 @@ export default class StaticToolPanel extends PDLPanel {
     return new HBox( {
       spacing: 10,
       stretch: true, children: [ new PDLText( label, {
-        maxWidth: 200
+        maxWidth: 90
       } ), icon ]
     } );
   }

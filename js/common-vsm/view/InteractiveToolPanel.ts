@@ -99,7 +99,7 @@ export default class InteractiveToolPanel extends PDLPanel {
   public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
     return new HBox( {
       stretch: true, children: [ new PDLText( label, {
-        maxWidth: 200
+        maxWidth: 90
       } ), icon ]
     } );
   }

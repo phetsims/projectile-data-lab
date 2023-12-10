@@ -26,7 +26,7 @@ export default class PDLPanelSection extends VBox {
 
     const align = providedOptions.centerTitleAndContent ? 'center' : 'left';
     const title = new PDLText( titleString, {
-      maxWidth: 250
+      maxWidth: 160
     } );
 
     const options = optionize<PDLPanelSectionOptions, SelfOptions, VBoxOptions>()( {

@@ -10,7 +10,7 @@
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { NumberControlOptions } from '../../../../scenery-phet/js/NumberControl.js';
-import { Text, VBox } from '../../../../scenery/js/imports.js';
+import { VBox } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -43,14 +43,22 @@ export default class AngleStabilizerNumberControl extends VBox {
       thumbTouchAreaXDilation: 6,
       thumbTouchAreaYDilation: 4 // smaller to prevent overlap with above number spinner buttons
     } );
-    angleStabilizerSlider.addMajorTick( range.min, new Text( ProjectileDataLabStrings.angleStabilizerNarrowStringProperty ) );
-    angleStabilizerSlider.addMajorTick( range.max, new Text( ProjectileDataLabStrings.angleStabilizerWideStringProperty ) );
+    angleStabilizerSlider.addMajorTick( range.min, new PDLText( ProjectileDataLabStrings.angleStabilizerNarrowStringProperty, {
+      fontSize: 10,
+      maxWidth: 60
+    } ) );
+    angleStabilizerSlider.addMajorTick( range.max, new PDLText( ProjectileDataLabStrings.angleStabilizerWideStringProperty, {
+      fontSize: 10,
+      maxWidth: 60
+    } ) );
     for ( let i = 1; i < range.max; i++ ) {
       angleStabilizerSlider.addMinorTick( i );
     }
     super( {
       children: [
-        new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty ),
+        new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty, {
+          maxWidth: 150
+        } ),
         angleStabilizerSlider
       ]
     } );

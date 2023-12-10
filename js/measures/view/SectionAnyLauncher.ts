@@ -14,6 +14,7 @@ import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLaun
 import AngleStabilizerNumberControl from '../../common-vsm/view/AngleStabilizerNumberControl.js';
 import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -29,25 +30,29 @@ export default class SectionAnyLauncher extends PDLPanelSection {
                       customLauncherTypeProperty: PhetioProperty<CustomLauncherType>, angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
-    // TODO: Use ABSwitch - see see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: Use ABSwitch - see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: SR: I converted to VerticalAquaRadioButtonGroup to help with i18n and layout, we can discuss as needed, see see https://github.com/phetsims/projectile-data-lab/issues/7
     const radioButtonItems: AquaRadioButtonGroupItem<boolean>[] = [ {
-      createNode: () => new Text( ProjectileDataLabStrings.mysteryStringProperty ),
+      createNode: () => new PDLText( ProjectileDataLabStrings.mysteryStringProperty, {
+        fontSize: 12,
+        maxWidth: 120
+      } ),
       value: false,
       tandemName: 'standardLauncherRadioButton'
     }, {
-      createNode: () => new Text( ProjectileDataLabStrings.customStringProperty ),
+      createNode: () => new PDLText( ProjectileDataLabStrings.customStringProperty, {
+        fontSize: 12,
+        maxWidth: 120
+      } ),
       value: true,
       tandemName: 'customLauncherRadioButton'
     } ];
 
-    // radio button group, horizontally layout
-    const isLauncherCustomRadioButtonGroup = new HorizontalAquaRadioButtonGroup( isLauncherCustomProperty, radioButtonItems, {
+    // radio button group, vertically layout so that i18n text has enough space to grow to the right.
+    const isLauncherCustomRadioButtonGroup = new VerticalAquaRadioButtonGroup( isLauncherCustomProperty, radioButtonItems, {
       radioButtonOptions: { radius: 8 },
       touchAreaYDilation: 15,
-      spacing: 30,
-      left: 50,
-      centerY: 0,
-      maxWidth: 150,
+      spacing: 4,
       tandem: providedOptions.tandem.createTandem( 'isLauncherCustomRadioButtonGroup' )
     } );
 
