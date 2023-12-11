@@ -49,7 +49,7 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
 
     // 1. Force field graphics for landed outliers
     landedProjectiles.forEach( projectile => {
-      if ( projectile.x > 100 ) {
+      if ( projectile.x > 100 || projectile.x < 0 ) {
         const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
         context.save();
         context.translate( viewPoint.x, viewPoint.y );
