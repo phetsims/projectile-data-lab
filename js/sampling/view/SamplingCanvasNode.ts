@@ -31,26 +31,28 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
     // Order of drawing:
-    // 1: Trajectories
-    // 2: Projectiles
+    // 1. Force field graphics for outliers
+    // 2: Trajectories
+    // 3: Projectiles
 
     const projectiles = this.fieldProperty.value.getProjectilesInSelectedSample();
 
-    // Draw the paths
+    // 1. Force field graphics for landed outliers are drawn in PDLCanvasNode
+    super.drawOutlierGraphicsForLandedProjectiles( projectiles, context );
+
+    // 2. Trajectories
     context.lineWidth = 2;
     context.strokeStyle = PDLColors.pathStrokeLandedInitialColorProperty.value.toCSS();
-
     for ( let i = 0; i < projectiles.length; i++ ) {
       this.drawPathForProjectile( context, projectiles[ i ] );
     }
 
-    // Draw the projectiles
+    // 3. Projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
       this.drawProjectile( context, projectiles[ i ], true, false );
     }
 
     // Draw the mean marker (if the sample is complete)
-    // TODO: Wait another fire time before showing it, see https://github.com/phetsims/projectile-data-lab/issues/7
     if ( projectiles.length === this.fieldProperty.value.sampleSize ) {
       const meanX = _.mean( projectiles.map( projectile => projectile.x ) );
       const viewPoint = this.modelViewTransform.modelToViewXY( meanX, 0 );

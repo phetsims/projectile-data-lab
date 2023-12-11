@@ -28,6 +28,7 @@ import pumpkinLanded1Dark_png from '../../../images/pumpkinLanded1Dark_png.js';
 import pumpkinLanded2Dark_png from '../../../images/pumpkinLanded2Dark_png.js';
 import pumpkinLanded3Dark_png from '../../../images/pumpkinLanded3Dark_png.js';
 import pianoLandedDark_png from '../../../images/pianoLandedDark_png.js';
+import forceField_png from '../../../images/forceField_png.js';
 import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -72,6 +73,21 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     selectedSampleProperty.link( myBoundListener );
 
     this.modelViewTransform = modelViewTransform;
+  }
+
+  protected drawOutlierGraphicsForLandedProjectiles( landedProjectiles: Projectile[], context: CanvasRenderingContext2D ): void {
+
+    // Force field graphics for landed outliers
+    landedProjectiles.forEach( projectile => {
+      if ( projectile.x > 100 || projectile.x < 0 ) {
+        const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
+        context.save();
+        context.translate( viewPoint.x, viewPoint.y );
+        context.scale( PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR, PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR );
+        context.drawImage( forceField_png, -forceField_png.width / 2, -forceField_png.height / 4 );
+        context.restore();
+      }
+    } );
   }
 
   protected drawPathForProjectile( context: CanvasRenderingContext2D, projectile: Projectile ): void {

@@ -9,8 +9,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../../common/PDLColors.js';
 import Projectile from '../../common/model/Projectile.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import forceField_png from '../../../images/forceField_png.js';
-import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * Render the paths and projectiles for the Variability, Sources and Measures screens of Projectile Data Lab.
@@ -47,17 +45,8 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
     const airborneProjectiles = this.fieldProperty.value.airborneProjectiles;
     const highlightedProjectile: Projectile | null = this.fieldProperty.value.selectedProjectileProperty.value;
 
-    // 1. Force field graphics for landed outliers
-    landedProjectiles.forEach( projectile => {
-      if ( projectile.x > 100 || projectile.x < 0 ) {
-        const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
-        context.save();
-        context.translate( viewPoint.x, viewPoint.y );
-        context.scale( PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR, PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR );
-        context.drawImage( forceField_png, -forceField_png.width / 2, -forceField_png.height / 4 );
-        context.restore();
-      }
-    } );
+    // 1. Force field graphics for landed outliers are drawn in PDLCanvasNode
+    super.drawOutlierGraphicsForLandedProjectiles( landedProjectiles, context );
 
     // 2. Landed trajectories that are not for the most recent landed projectile (if paths are visible)
     if ( this.isPathsVisibleProperty.value ) {
