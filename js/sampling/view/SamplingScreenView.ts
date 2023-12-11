@@ -95,6 +95,14 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       launcherSampleSizePanel.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
+    // Allow the top content to go above the dev bounds, but not too far
+    this.visibleBoundsProperty.link( visibleBounds => {
+      const minY = PDLConstants.ABOVE_DEV_BOUNDS_TOP;
+      const topY = Math.max( visibleBounds.top, minY );
+      launcherSampleSizePanel.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
+
     ManualConstraint.create(
       this,
       [ this.accordionBox, this.launchPanel ],

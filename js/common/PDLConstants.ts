@@ -92,7 +92,10 @@ const PDLConstants = {
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
 
-  ANGLE_STABILIZER_RANGE: new Range( 0, MAX_ANGLE_STANDARD_DEVIATION )
+  ANGLE_STABILIZER_RANGE: new Range( 0, MAX_ANGLE_STANDARD_DEVIATION ),
+
+  // Allow the top content to go above the dev bounds, but not too far
+  ABOVE_DEV_BOUNDS_TOP: -200
 } as const;
 
 projectileDataLab.register( 'PDLConstants', PDLConstants );

@@ -282,8 +282,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       }
     } );
 
+    // Allow the top content to go above the dev bounds, but not too far
     this.visibleBoundsProperty.link( visibleBounds => {
-      const minY = -200;
+      const minY = PDLConstants.ABOVE_DEV_BOUNDS_TOP;
       const topY = Math.max( visibleBounds.top, minY );
       this.launchPanel.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
       this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
