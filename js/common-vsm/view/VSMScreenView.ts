@@ -2,7 +2,6 @@
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Color, HBox, Node, VBox } from '../../../../scenery/js/imports.js';
-import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import VSMAccordionBox from './VSMAccordionBox.js';
@@ -18,7 +17,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VSMField from '../model/VSMField.js';
 import VSMFieldSignNode from './VSMFieldSignNode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import PDLScreenView from '../../common/view/PDLScreenView.js';
+import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
 import VSMCanvasNode from './VSMCanvasNode.js';
 import ProjectileSelectorPanel from './ProjectileSelectorPanel.js';
 import StaticToolPanel from './StaticToolPanel.js';
@@ -34,7 +33,7 @@ import FieldSelectorPanel from './FieldSelectorPanel.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type VSMScreenViewOptions = SelfOptions & ScreenViewOptions;
+type VSMScreenViewOptions = SelfOptions & PDLScreenViewOptions;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly launchPanel: VSMLaunchPanel;

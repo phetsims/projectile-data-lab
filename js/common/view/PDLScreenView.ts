@@ -34,9 +34,10 @@ import launchButtonContinuous_png from '../../../images/launchButtonContinuous_p
 import LauncherNode from './LauncherNode.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 import PDLAccordionBox from './PDLAccordionBox.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
-type PDLScreenViewOptions = SelfOptions & ScreenViewOptions;
+export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
 
 export default abstract class PDLScreenView<T extends Field> extends ScreenView {
 
