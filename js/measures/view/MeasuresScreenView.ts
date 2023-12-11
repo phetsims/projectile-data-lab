@@ -14,8 +14,9 @@ import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import MeasuresField from '../model/MeasuresField.js';
-import DataMeasuresFieldOverlay from './DataMeasuresFieldOverlay.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DataMeasuresOverlay from './DataMeasuresOverlay.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import MeasuresHistogramNode from './MeasuresHistogramNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -45,7 +46,19 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    super( model, launchPanel, staticToolPanel, interactiveToolPanel, options );
+    const histogramNode = new MeasuresHistogramNode(
+      model.fieldProperty,
+      model.fields,
+      model.binWidthProperty,
+      model.histogramRepresentationProperty,
+      ProjectileDataLabStrings.distanceStringProperty,
+      model.isDataMeasuresVisibleProperty,
+      model.landedDistanceAverageProperty,
+      model.landedDistanceStandardDeviationProperty, {
+        tandem: options.tandem.createTandem( 'histogramNode' )
+      } );
+
+    super( model, launchPanel, staticToolPanel, interactiveToolPanel, histogramNode, options );
 
     this.launcherNode = new CustomLauncherNode(
       this.modelViewTransform,
@@ -61,15 +74,8 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
     this.launcherLayer.addChild( this.launcherNode );
 
-    const isDataMeasuresVisibleProperty = new DerivedProperty(
-      [ model.isDataMeasuresVisibleProperty, model.landedDistanceAverageProperty ],
-      ( isDataMeasuresVisible, landedDistanceAverage ) => {
-        return isDataMeasuresVisible && landedDistanceAverage !== null;
-      } );
-
-    const dataMeasuresFieldOverlay = new DataMeasuresFieldOverlay(
-      this.modelViewTransform, model.landedDistanceAverageProperty, model.landedDistanceStandardDeviationProperty, {
-        visibleProperty: isDataMeasuresVisibleProperty,
+    const dataMeasuresFieldOverlay = new DataMeasuresOverlay( this.modelViewTransform,
+      model.landedDistanceAverageProperty, model.landedDistanceStandardDeviationProperty, 50, model.isDataMeasuresVisibleProperty, {
         tandem: options.tandem.createTandem( 'dataMeasuresFieldOverlay' )
       } );
 

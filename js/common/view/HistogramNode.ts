@@ -9,7 +9,6 @@ import GridLineSet from '../../../../bamboo/js/GridLineSet.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
-import bamboo from '../../../../bamboo/js/bamboo.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -25,6 +24,7 @@ import VSMField from '../../common-vsm/model/VSMField.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import PDLText from './PDLText.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -33,9 +33,12 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
+export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class HistogramNode extends Node {
+
+  protected readonly chartNode: Node;
+  protected readonly chartTransform: ChartTransform;
 
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
@@ -52,39 +55,39 @@ export default class HistogramNode extends Node {
 
     const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
 
-    const chartTransform = new ChartTransform( {
+    this.chartTransform = new ChartTransform( {
       viewWidth: 620,
       viewHeight: 165,
       modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );
 
-    const chartBackground = new ChartRectangle( chartTransform, {
+    const chartBackground = new ChartRectangle( this.chartTransform, {
       fill: 'white',
       stroke: 'black'
     } );
 
     // Show the frame in front, so it overlaps the bottom of the bars
-    const chartFrame = new ChartRectangle( chartTransform, {
+    const chartFrame = new ChartRectangle( this.chartTransform, {
       fill: null,
       stroke: 'black'
     } );
 
-    const histogramPainter = new HistogramCanvasPainter( chartTransform, binWidthProperty, histogramRepresentationProperty );
+    const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty );
 
     // Changes based on the zoom level
-    const horizontalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 5, {
+    const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {
       stroke: 'lightGray',
       lineWidth: 0.8
     } );
 
     // Changes based on the bin width
-    const verticalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, {
+    const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: 'lightGray',
       lineWidth: 0.8
     } );
 
-    const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ] );
+    const chartCanvasNode = new ChartCanvasNode( this.chartTransform, [ histogramPainter ] );
     const chartClip = new Node( {
       clipArea: chartBackground.getShape(),
       children: [
@@ -98,12 +101,12 @@ export default class HistogramNode extends Node {
       ]
     } );
 
-    const verticalTickMarkSet = new TickMarkSet( chartTransform, Orientation.VERTICAL, 5, { edge: 'min', extent: 8 } );
-    const verticalTickLabelSet = new TickLabelSet( chartTransform, Orientation.VERTICAL, 5, {
+    const verticalTickMarkSet = new TickMarkSet( this.chartTransform, Orientation.VERTICAL, 5, { edge: 'min', extent: 8 } );
+    const verticalTickLabelSet = new TickLabelSet( this.chartTransform, Orientation.VERTICAL, 5, {
       edge: 'min',
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
     } );
-    const chartNode = new Node( {
+    this.chartNode = new Node( {
       children: [
 
         // Background
@@ -113,8 +116,8 @@ export default class HistogramNode extends Node {
         verticalTickMarkSet,
         verticalTickLabelSet,
 
-        new TickMarkSet( chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, { edge: 'min', extent: 8 } ),
-        new TickLabelSet( chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, {
+        new TickMarkSet( this.chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, { edge: 'min', extent: 8 } ),
+        new TickLabelSet( this.chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, {
           edge: 'min',
           createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
         } ),
@@ -132,7 +135,7 @@ export default class HistogramNode extends Node {
       chartCanvasNode.update();
     } );
 
-    chartTransform.changedEmitter.addListener( () => {
+    this.chartTransform.changedEmitter.addListener( () => {
       chartCanvasNode.update();
     } );
 
@@ -143,7 +146,7 @@ export default class HistogramNode extends Node {
     const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',
-      bottom: chartTransform.viewHeight,
+      bottom: this.chartTransform.viewHeight,
       spacing: 5,
       iconOptions: {
         scale: 1.5
@@ -169,20 +172,20 @@ export default class HistogramNode extends Node {
 
     this.children = [
       zoomButtonGroup,
-      chartNode.mutate( { left: zoomButtonGroup.right + 2 } ),
+      this.chartNode.mutate( { left: zoomButtonGroup.right + 2 } ),
       verticalAxisLabel,
       horizontalAxisLabel
     ];
     this.mutate( options );
 
-    ManualConstraint.create( this, [ chartNode, verticalAxisLabel, zoomButtonGroup ], ( chartNode, verticalAxisLabel, zoomButtonGroup ) => {
+    ManualConstraint.create( this, [ this.chartNode, verticalAxisLabel, zoomButtonGroup ], ( chartNodeProxy, verticalAxisLabel, zoomButtonGroup ) => {
       verticalAxisLabel.centerX = zoomButtonGroup.centerX;
-      verticalAxisLabel.centerY = ( zoomButtonGroup.top + chartNode.top ) / 2;
+      verticalAxisLabel.centerY = ( zoomButtonGroup.top + chartNodeProxy.top ) / 2;
     } );
 
-    ManualConstraint.create( this, [ chartNode, horizontalAxisLabel ], ( chartNode, horizontalAxisLabel ) => {
-      horizontalAxisLabel.centerX = chartNode.centerX;
-      horizontalAxisLabel.top = chartNode.bottom;
+    ManualConstraint.create( this, [ this.chartNode, horizontalAxisLabel ], ( chartNodeProxy, horizontalAxisLabel ) => {
+      horizontalAxisLabel.centerX = chartNodeProxy.centerX;
+      horizontalAxisLabel.top = chartNodeProxy.bottom;
     } );
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
@@ -232,7 +235,7 @@ export default class HistogramNode extends Node {
 
       const maxCount = maxCounts[ zoomLevelProperty.value ];
 
-      chartTransform.setModelYRange( new Range( 0, maxCount ) );
+      this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
       const tickSpacing = tickSpacings[ zoomLevelProperty.value ];
       verticalTickMarkSet.setSpacing( tickSpacing );
@@ -243,4 +246,4 @@ export default class HistogramNode extends Node {
   }
 }
 
-bamboo.register( 'HistogramNode', HistogramNode );
+projectileDataLab.register( 'HistogramNode', HistogramNode );

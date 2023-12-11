@@ -34,13 +34,10 @@ export default class VSMAccordionBox extends PDLAccordionBox {
     selectedBinWidthProperty: Property<number>,
     selectedTotalBinsProperty: Property<number>,
     binWidthProperty: TReadOnlyProperty<number>,
+    histogramNode: HistogramNode,
     comboBoxParent: Node,
     histogramRepresentationProperty: Property<HistogramRepresentation>,
     providedOptions: VSMAccordionBoxOptions ) {
-
-    const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, ProjectileDataLabStrings.distanceStringProperty, {
-      tandem: providedOptions.tandem.createTandem( 'histogramNode' )
-    } );
 
     const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {

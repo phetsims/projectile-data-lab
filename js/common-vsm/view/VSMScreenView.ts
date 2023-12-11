@@ -25,6 +25,7 @@ import InteractiveToolPanel from './InteractiveToolPanel.js';
 import VSMLaunchPanel from './VSMLaunchPanel.js';
 import FieldSelectorPanel from './FieldSelectorPanel.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import HistogramNode from '../../common/view/HistogramNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -49,6 +50,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
                          launchPanel: VSMLaunchPanel,
                          staticToolPanel: StaticToolPanel,
                          interactiveToolPanel: InteractiveToolPanel,
+                         histogramNode: HistogramNode,
                          options: VSMScreenViewOptions ) {
     super( model, options );
 
@@ -86,6 +88,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       model.selectedBinWidthProperty,
       model.selectedTotalBinsProperty,
       model.binWidthProperty,
+      histogramNode,
       this,
       model.histogramRepresentationProperty, {
         expandedProperty: model.isHistogramVisibleProperty,

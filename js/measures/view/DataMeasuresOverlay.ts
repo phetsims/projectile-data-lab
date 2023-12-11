@@ -11,10 +11,13 @@ import { Shape } from '../../../../kite/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 
 /**
- * The DataMeasuresFieldOverlay shows the graphics for the visual representation of the average and standard deviation
+ * The DataMeasuresOverlay shows the graphics for the visual representation of the average and standard deviation
  * of the landed projectiles. It has a mean marker, a mean line, and two standard deviation lines with arrows.
+ * It is used in both the field overlay and histogram overlay components on the Measures screen.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -23,10 +26,12 @@ import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 type SelfOptions = EmptySelfOptions;
 export type DataMeasuresFieldOverlayOptions = SelfOptions & NodeOptions;
 
-export default class DataMeasuresFieldOverlay extends Node {
-  public constructor( modelViewTransform: ModelViewTransform2,
+export default class DataMeasuresOverlay extends Node {
+  public constructor( modelViewTransform: ModelViewTransform2 | ChartTransform,
                       landedDistanceAverageProperty: PhetioProperty<number | null>,
                       landedDistanceStandardDeviationProperty: PhetioProperty<number | null>,
+                      totalHeight: number,
+                      isVisibleProperty: BooleanProperty,
                       providedOptions: DataMeasuresFieldOverlayOptions ) {
 
     const origin = modelViewTransform.modelToViewPosition( Vector2.ZERO );
@@ -48,29 +53,27 @@ export default class DataMeasuresFieldOverlay extends Node {
       stroke: 'black'
     } );
 
-    const lineLength = 50;
-
-    const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - lineLength ), {
+    const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
       visibleProperty: isStandardDeviationVisibleProperty,
       stroke: 'black',
       lineCap: 'round',
-      lineWidth: 2
+      lineWidth: 1.5
     } );
-    const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - lineLength ), {
+    const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
       visibleProperty: isStandardDeviationVisibleProperty,
       stroke: 'black',
       lineCap: 'round',
-      lineWidth: 2
+      lineWidth: 1.5
     } );
-    const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanMarkerHeight ).lineTo( 0, origin.y - lineLength ), {
+    const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanMarkerHeight ).lineTo( 0, origin.y - totalHeight ), {
       visibleProperty: isStandardDeviationVisibleProperty,
       stroke: 'black',
       lineCap: 'round',
-      lineWidth: 1
+      lineWidth: 1.5
     } );
 
-    const meanLineLength = lineLength - meanMarkerHeight;
-    const arrowY = origin.y - lineLength + meanLineLength / 2; // Put the arrow in the middle of the mean line
+    const meanLineLength = totalHeight - meanMarkerHeight;
+    const arrowY = origin.y - totalHeight + meanLineLength / 2; // Put the arrow in the middle of the mean line
     const arrowOptions = {
       visibleProperty: isStandardDeviationVisibleProperty,
       doubleHead: true,
@@ -100,7 +103,15 @@ export default class DataMeasuresFieldOverlay extends Node {
         }
       } );
 
+    const isSelfVisibleProperty = new DerivedProperty(
+      [ isVisibleProperty, landedDistanceAverageProperty ],
+      ( isVisible, landedDistanceAverage ) => {
+        return isVisible && landedDistanceAverage !== null;
+      } );
+
+
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
+      visibleProperty: isSelfVisibleProperty,
       children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, meanMarker ]
     }, providedOptions );
 
@@ -108,4 +119,4 @@ export default class DataMeasuresFieldOverlay extends Node {
   }
 }
 
-projectileDataLab.register( 'DataMeasuresFieldOverlay', DataMeasuresFieldOverlay );
+projectileDataLab.register( 'DataMeasuresOverlay', DataMeasuresOverlay );

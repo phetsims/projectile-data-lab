@@ -15,6 +15,8 @@ import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import HistogramNode from '../../common/view/HistogramNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -40,7 +42,12 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    super( model, launchPanel, staticToolPanel, interactiveToolPanel, options );
+    const histogramNode = new HistogramNode( model.fieldProperty, model.fields, model.binWidthProperty,
+      model.histogramRepresentationProperty, ProjectileDataLabStrings.distanceStringProperty, {
+        tandem: options.tandem.createTandem( 'histogramNode' )
+      } );
+
+    super( model, launchPanel, staticToolPanel, interactiveToolPanel, histogramNode, options );
 
     this.launcherNode = new LauncherNode(
       this.modelViewTransform,
