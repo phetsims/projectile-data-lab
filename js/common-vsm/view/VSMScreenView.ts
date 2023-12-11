@@ -24,6 +24,7 @@ import StaticToolPanel from './StaticToolPanel.js';
 import InteractiveToolPanel from './InteractiveToolPanel.js';
 import VSMLaunchPanel from './VSMLaunchPanel.js';
 import FieldSelectorPanel from './FieldSelectorPanel.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -33,7 +34,7 @@ import FieldSelectorPanel from './FieldSelectorPanel.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type VSMScreenViewOptions = SelfOptions & PDLScreenViewOptions;
+type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly launchPanel: VSMLaunchPanel;
@@ -61,12 +62,20 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
 
+    this.projectileSelectorPanel = new ProjectileSelectorPanel(
+      model.selectedProjectileNumberProperty,
+      model.landedProjectileCountProperty,
+      model.selectedProjectileProperty, {
+        tandem: options.tandem.createTandem( 'projectileSelectorPanel' )
+      }
+    );
+
     this.topRightUIContainer = new VBox( {
       stretch: true,
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
       top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
       spacing: PDLConstants.INTER_PANEL_SPACING,
-      children: [ staticToolPanel, interactiveToolPanel ]
+      children: [ staticToolPanel, interactiveToolPanel, this.projectileSelectorPanel ]
     } );
 
     const accordionBoxWidth = this.topRightUIContainer.left - launchPanel.right - 2 * PDLConstants.INTER_PANEL_SPACING;
@@ -234,14 +243,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
     } );
 
-    this.projectileSelectorPanel = new ProjectileSelectorPanel(
-      model.selectedProjectileNumberProperty,
-      model.landedProjectileCountProperty,
-      model.selectedProjectileProperty, {
-        tandem: options.tandem.createTandem( 'projectileSelectorPanel' )
-      }
-    );
-
     this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
       model.fieldProperty,
       model.landedProjectileCountProperty,
@@ -255,7 +256,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       bottom: this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN,
       left: this.layoutBounds.centerX - 100,
       maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
-      children: [ this.fieldSelectorPanel, this.projectileSelectorPanel, this.timeControlNode ]
+      children: [ this.fieldSelectorPanel, this.timeControlNode ]
     } );
 
     this.toolsLayer.addChild( stopwatchNode );

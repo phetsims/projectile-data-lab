@@ -53,7 +53,7 @@ const PDLColors = {
   } ),
 
   pathStrokeLandedFinalColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedFinal', {
-    default: new Color( 0x701AC3, 0 )
+    default: new Color( 0x701AC3, 0.1 )
   } ),
 
   pathStrokeHighlightedColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeHighlighted', {
