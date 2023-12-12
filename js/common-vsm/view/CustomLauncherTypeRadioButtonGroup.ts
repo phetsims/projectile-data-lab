@@ -10,7 +10,7 @@
 import { Image } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import { CustomLauncherType } from '../model/CustomLauncherType.js';
+import { LauncherMechanism } from '../model/LauncherMechanism.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -21,10 +21,10 @@ import explosion_png from '../../../images/explosion_png.js';
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
 
-export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadioButtonGroup<CustomLauncherType> {
-  public constructor( customLauncherTypeProperty: PhetioProperty<CustomLauncherType>, providedOptions: CustomLauncherTypeRadioButtonGroupOptions ) {
+export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadioButtonGroup<LauncherMechanism> {
+  public constructor( customLauncherTypeProperty: PhetioProperty<LauncherMechanism>, providedOptions: CustomLauncherTypeRadioButtonGroupOptions ) {
 
-    const items: RectangularRadioButtonGroupItem<CustomLauncherType>[] = [
+    const items: RectangularRadioButtonGroupItem<LauncherMechanism>[] = [
       {
         value: 'SPRING' as const,
         tandemName: 'springRadioButton',

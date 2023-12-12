@@ -20,7 +20,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
-import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/CustomLauncherType.js';
+import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/LauncherMechanism.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
@@ -192,8 +192,8 @@ export default abstract class Field extends PhetioObject {
     // Note: This is incorrect for the custom launcher ('Sources' and 'Measures' screens)
     this.presetLauncherProperty.link( presetLauncher => {
       const launcherConfig = PDLConstants.LAUNCHER_CONFIGS[ presetLauncher - 1 ];
-      this.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( launcherConfig.launcherType );
-      this.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( launcherConfig.launcherType );
+      this.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( launcherConfig.launcherMechanism );
+      this.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( launcherConfig.launcherMechanism );
       this.launchAngleStandardDeviationProperty.value = launcherConfig.angleStandardDeviation;
     } );
   }

@@ -8,7 +8,7 @@ import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPa
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
-import { CustomLauncherType } from '../../common-vsm/model/CustomLauncherType.js';
+import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 import AngleStabilizerNumberControl from '../../common-vsm/view/AngleStabilizerNumberControl.js';
 import PDLText from '../../common/view/PDLText.js';
@@ -27,7 +27,7 @@ type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptio
 export default class SectionAnyLauncher extends PDLPanelSection {
 
   public constructor( isLauncherCustomProperty: PhetioProperty<boolean>, presetLauncherProperty: PhetioProperty<number>,
-                      customLauncherTypeProperty: PhetioProperty<CustomLauncherType>, angleStabilizerProperty: PhetioProperty<number>,
+                      customLauncherTypeProperty: PhetioProperty<LauncherMechanism>, angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
     // TODO: Use ABSwitch - see https://github.com/phetsims/projectile-data-lab/issues/7

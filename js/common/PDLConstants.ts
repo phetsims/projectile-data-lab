@@ -8,7 +8,7 @@
 
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import LauncherConfig from './LauncherConfig.js';
+import PresetLauncherConfiguration from './PresetLauncherConfiguration.js';
 import Range from '../../../dot/js/Range.js';
 
 const maxFieldDistance = 100;
@@ -74,12 +74,12 @@ const PDLConstants = {
   EXPLOSION_SPEED_SD: 4,
 
   LAUNCHER_CONFIGS: [
-    new LauncherConfig( 'SPRING', 2 ),
-    new LauncherConfig( 'SPRING', 8 ),
-    new LauncherConfig( 'EXPLOSION', 0 ),
-    new LauncherConfig( 'PRESSURE', 2 ),
-    new LauncherConfig( 'PRESSURE', 4 ),
-    new LauncherConfig( 'EXPLOSION', 8 )
+    new PresetLauncherConfiguration( 'SPRING', 2 ),
+    new PresetLauncherConfiguration( 'SPRING', 8 ),
+    new PresetLauncherConfiguration( 'EXPLOSION', 0 ),
+    new PresetLauncherConfiguration( 'PRESSURE', 2 ),
+    new PresetLauncherConfiguration( 'PRESSURE', 4 ),
+    new PresetLauncherConfiguration( 'EXPLOSION', 8 )
   ],
 
   // The projectile source images are scaled by this factor when drawing them on the canvas

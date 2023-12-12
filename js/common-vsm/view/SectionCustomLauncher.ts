@@ -6,7 +6,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import { CustomLauncherType } from '../model/CustomLauncherType.js';
+import { LauncherMechanism } from '../model/LauncherMechanism.js';
 import AngleStabilizerNumberControl from './AngleStabilizerNumberControl.js';
 import CustomLauncherTypeRadioButtonGroup from './CustomLauncherTypeRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -21,7 +21,7 @@ type SectionCustomLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOp
 
 export default class SectionCustomLauncher extends PDLPanelSection {
 
-  public constructor( customLauncherTypeProperty: PhetioProperty<CustomLauncherType>,
+  public constructor( customLauncherTypeProperty: PhetioProperty<LauncherMechanism>,
                       angleStabilizerProperty: PhetioProperty<number>, providedOptions: SectionCustomLauncherOptions ) {
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' )

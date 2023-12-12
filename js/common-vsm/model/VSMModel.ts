@@ -18,7 +18,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { CustomLauncherType } from './CustomLauncherType.js';
+import { LauncherMechanism } from './LauncherMechanism.js';
 import Projectile from '../../common/model/Projectile.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -44,7 +44,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   // Number is lightweight in the code, but is it best for selecting a launcher via PhET-IO?
   public readonly presetLauncherProperty: DynamicProperty<number, number, VSMField>;
 
-  public readonly customLauncherTypeProperty: DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>;
+  public readonly customLauncherTypeProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>;
   public readonly angleStabilizerProperty: DynamicProperty<number, number, VSMField>;
 
   // TODO: Do we still need this in VSMModel now that we have VSMCanvasNode? - see see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -69,7 +69,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       derive: 'presetLauncherProperty'
     } );
 
-    this.customLauncherTypeProperty = new DynamicProperty<CustomLauncherType, CustomLauncherType, VSMField>( this.fieldProperty, {
+    this.customLauncherTypeProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.customLauncherTypeProperty
     } );

@@ -6,7 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS } from '../../common/view/LauncherNode.js';
-import { CustomLauncherType } from '../model/CustomLauncherType.js';
+import { LauncherMechanism } from '../model/LauncherMechanism.js';
 import { Node, Image } from '../../../../scenery/js/imports.js';
 import spring_png from '../../../images/spring_png.js';
 import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
@@ -47,7 +47,7 @@ export default class CustomLauncherNode extends LauncherNode {
                       launcherHeightProperty: TProperty<number>,
                       isLauncherCustomProperty: TProperty<boolean>,
                       presetLauncherProperty: TProperty<number>,
-                      customLauncherTypeProperty: TProperty<CustomLauncherType>,
+                      customLauncherTypeProperty: TProperty<LauncherMechanism>,
                       angleStabilizerProperty: TProperty<number>,
                       providedOptions: CustomLauncherNodeOptions ) {
 
@@ -178,7 +178,7 @@ export default class CustomLauncherNode extends LauncherNode {
     return new Node( { children: [ angleStabilizerTop, angleStabilizerBottom ] } );
   }
 
-  private getImageKeyForCustomLauncherType( customLauncherType: CustomLauncherType ): HTMLImageElement {
+  private getImageKeyForCustomLauncherType( customLauncherType: LauncherMechanism ): HTMLImageElement {
     switch( customLauncherType ) {
       case 'SPRING':
         return spring_png;

@@ -6,7 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import { CustomLauncherType, CustomLauncherTypeValues } from './CustomLauncherType.js';
+import { LauncherMechanism, CustomLauncherTypeValues } from './LauncherMechanism.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
@@ -28,7 +28,7 @@ export type VSMFieldOptions = SelfOptions & FieldOptions;
 
 export default class VSMField extends Field {
   public readonly isLauncherCustomProperty: Property<boolean>;
-  public readonly customLauncherTypeProperty: Property<CustomLauncherType>;
+  public readonly customLauncherTypeProperty: Property<LauncherMechanism>;
   public readonly angleStabilizerProperty: NumberProperty;
 
   public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
@@ -63,7 +63,7 @@ export default class VSMField extends Field {
       phetioValueType: BooleanIO
     } );
 
-    this.customLauncherTypeProperty = new Property<CustomLauncherType>( 'SPRING', {
+    this.customLauncherTypeProperty = new Property<LauncherMechanism>( 'SPRING', {
       validValues: CustomLauncherTypeValues,
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeProperty' ),
       phetioDocumentation: 'This property configures the mechanism of the custom launcher.',

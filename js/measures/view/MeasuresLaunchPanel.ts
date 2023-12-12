@@ -6,7 +6,7 @@ import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import { CustomLauncherType } from '../../common-vsm/model/CustomLauncherType.js';
+import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import SectionAnyLauncher from './SectionAnyLauncher.js';
 
 /**
@@ -23,7 +23,7 @@ export default class MeasuresLaunchPanel extends VSMLaunchPanel {
                       projectileTypeProperty: PhetioProperty<ProjectileType>,
                       isLauncherCustomProperty: PhetioProperty<boolean>,
                       presetLauncherProperty: PhetioProperty<number>,
-                      customLauncherTypeProperty: PhetioProperty<CustomLauncherType>,
+                      customLauncherTypeProperty: PhetioProperty<LauncherMechanism>,
                       angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: MeasuresLaunchPanelOptions ) {
 
