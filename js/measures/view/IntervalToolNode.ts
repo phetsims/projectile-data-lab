@@ -79,7 +79,7 @@ export default class IntervalToolNode extends Node {
         return new Vector2( intervalTool.edge1, 0 );
       },
       set value( v: Vector2 ) {
-        intervalTool.setEdge1( v.x );
+        intervalTool.edge1 = v.x;
       }
     };
 
@@ -88,7 +88,7 @@ export default class IntervalToolNode extends Node {
         return new Vector2( intervalTool.edge2, 0 );
       },
       set value( v: Vector2 ) {
-        intervalTool.setEdge2( v.x );
+        intervalTool.edge2 = v.x;
       }
     };
 

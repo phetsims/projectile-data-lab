@@ -9,63 +9,70 @@ const min = 0;
 
 export default class IntervalTool {
 
-
-  public edge1: number;
-  public edge2: number;
+  private _edge1: number;
+  private _edge2: number;
   public readonly changedEmitter = new Emitter();
 
   public constructor() {
-    this.edge1 = 10;
-    this.edge2 = 30;
+    this._edge1 = 10;
+    this._edge2 = 30;
 
     this.changedEmitter = new Emitter();
   }
 
-  public setEdge1( value: number ): void {
+  public set edge1( value: number ) {
     const clamped = Utils.clamp( value, min, max );
     if ( clamped !== this.edge1 ) {
-      this.edge1 = clamped;
+      this._edge1 = clamped;
       this.changedEmitter.emit();
     }
   }
 
-  public setEdge2( value: number ): void {
+  public get edge1(): number {
+    return this._edge1;
+  }
+
+  public set edge2( value: number ) {
     const clamped = Utils.clamp( value, min, max );
-    if ( clamped !== this.edge2 ) {
-      this.edge2 = clamped;
+    if ( clamped !== this._edge2 ) {
+      this._edge2 = clamped;
       this.changedEmitter.emit();
     }
+  }
+
+  public get edge2(): number {
+    return this._edge2;
   }
 
   public get center(): number {
-    return ( this.edge1 + this.edge2 ) / 2;
+    return ( this._edge1 + this._edge2 ) / 2;
   }
 
   public set center( value: number ) {
     if ( value !== this.center ) {
       const delta = value - this.center;
-      const separation = this.edge2 - this.edge1;
-      this.edge1 += delta;
-      this.edge2 += delta;
+      const separation = this._edge2 - this._edge1;
+      this._edge1 += delta;
+      this._edge2 += delta;
 
       if ( this.edge1 > max ) {
-        this.edge1 = max;
-        this.edge2 = max + separation;
+        this._edge1 = max;
+        this._edge2 = max + separation;
       }
 
-      if ( this.edge2 > max ) {
-        this.edge2 = max;
-        this.edge1 = max - separation;
+      if ( this._edge2 > max ) {
+        this._edge2 = max;
+        this._edge1 = max - separation;
       }
 
       if ( this.edge1 < min ) {
-        this.edge1 = min;
-        this.edge2 = min + separation;
+        this._edge1 = min;
+        this._edge2 = min + separation;
       }
 
-      if ( this.edge2 < min ) {
-        this.edge2 = min;
-        this.edge1 = min - separation;
+      if ( this._edge2 < min ) {
+        this._edge2 = min;
+        this._edge1 = min - separation;
       }
 
       this.changedEmitter.emit();
