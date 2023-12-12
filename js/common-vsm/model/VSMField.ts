@@ -105,6 +105,11 @@ export default class VSMField extends Field {
       this.projectilesChangedEmitter.emit();
     } );
 
+    // If the launch configuration is changed, re-center the launcher.
+    this.configuredLaunchAngleProperty.lazyLink( configuredLaunchAngle => {
+      this.launcherAngleProperty.value = configuredLaunchAngle;
+    } );
+
     // If the angle stabilizer is changed, re-center the launcher so that there is no overlap between the two.
     // Do not do this during a continuous launch, because it causes flicker.
     this.angleStabilizerProperty.lazyLink( angleStabilizer => {
