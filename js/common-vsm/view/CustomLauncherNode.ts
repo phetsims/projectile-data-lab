@@ -6,7 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS } from '../../common/view/LauncherNode.js';
-import { LauncherMechanism } from '../model/LauncherMechanism.js';
+import { LauncherMechanism, MeanLaunchSpeedForMechanism } from '../model/LauncherMechanism.js';
 import { Node, Image } from '../../../../scenery/js/imports.js';
 import spring_png from '../../../images/spring_png.js';
 import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
@@ -59,12 +59,13 @@ export default class CustomLauncherNode extends LauncherNode {
       centerY: 0
     } );
 
-    const pressureNeedleIcon = new Image( pressureNeedle_png, { centerX: -11, centerY: 0, rotation: -Math.PI / 2 } );
+    const pressureNeedleIcon = new Image( pressureNeedle_png, { x: -13.5, y: -40 } );
+    const pressureNeedleNode = new Node( { children: [ pressureNeedleIcon ] } );
 
     const launcherTypeIconContainer = new Node( {
       x: -0.7 * BARREL_LENGTH_BEFORE_ORIGIN,
       y: 0,
-      children: [ launcherTypeIcon, pressureNeedleIcon ],
+      children: [ launcherTypeIcon, pressureNeedleNode ],
       visibleProperty: isLauncherCustomProperty,
       scale: 0.2,
       rotation: Math.PI / 2
@@ -118,7 +119,6 @@ export default class CustomLauncherNode extends LauncherNode {
     this.addChild( gearTopContainer );
     this.addChild( gearBottomContainer );
 
-    //TODO: Do we want to add a 'push' effect on the launcher when reducing the angle stabilizer gap? - see https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ launcherConfigurationProperty, angleStabilizerProperty ], ( launcherConfiguration, angleStabilizer ) => {
       const launcherAngle = AngleForConfiguration( launcherConfiguration );
       const rotationFactor = 0.4;
@@ -127,8 +127,8 @@ export default class CustomLauncherNode extends LauncherNode {
       this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
     } );
 
+    // TODO: Confirm that this is the right way to handle this - see https://github.com/phetsims/projectile-data-lab/issues/7
     isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {
-      // TODO: Confirm that this is the right way to handle this - see https://github.com/phetsims/projectile-data-lab/issues/7
       // If setting to custom, set the graphics for preset launcher 1
       // If the second
       if ( isCustom ) { // && ( !prevIsCustom || prevIsCustom === null ) ) {
@@ -147,11 +147,15 @@ export default class CustomLauncherNode extends LauncherNode {
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
 
-      pressureNeedleIcon.visible = launcherType === 'PRESSURE';
+      pressureNeedleNode.visible = launcherType === 'PRESSURE';
     } );
 
     latestLaunchSpeedProperty.link( launchSpeed => {
-      console.log( launchSpeed );
+      const maxAngle = 80;
+      const meanSpeed = MeanLaunchSpeedForMechanism( customLauncherTypeProperty.value );
+      const maxSpeed = 30;
+      const needleDeltaRotation = maxAngle * ( launchSpeed - meanSpeed ) / ( maxSpeed - meanSpeed );
+      pressureNeedleNode.rotation = Utils.toRadians( needleDeltaRotation ) - Math.PI / 2;
     } );
   }
 
