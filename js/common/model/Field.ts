@@ -6,7 +6,7 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Property from '../../../../axon/js/Property.js';
-import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
+import { AngleForConfiguration, LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -40,6 +40,21 @@ export default abstract class Field extends PhetioObject {
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
+  // The current angle of the launcher, in degrees
+  public readonly launcherAngleProperty: Property<number>;
+
+  // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
+  public readonly configuredLaunchAngleProperty: TReadOnlyProperty<number>;
+
+  public readonly launchAngleStandardDeviationProperty: Property<number>;
+
+  // Launcher height is the vertical distance between the launch point and the origin, in field units.
+  public readonly launchHeightProperty: TReadOnlyProperty<number>;
+
+  public readonly launchSpeedAverageProperty: Property<number>;
+
+  public readonly launchSpeedStandardDeviationProperty: Property<number>;
+
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
   // TODO: Does every field need a launcher type property, or just the VSM fields? - see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -47,23 +62,11 @@ export default abstract class Field extends PhetioObject {
   // Launcher type is the number of the active launcher, from 1-6
   public readonly presetLauncherProperty: Property<number>;
 
-  public readonly launchSpeedAverageProperty: Property<number>;
-
-  public readonly launchSpeedStandardDeviationProperty: Property<number>;
-
-  // Launcher angle is the number of degrees between the launcher and the horizontal axis.
-  public readonly launchAngleAverageProperty: Property<number>;
-
-  public readonly launchAngleStandardDeviationProperty: Property<number>;
-
-  // Launcher height is the vertical distance between the launch point and the origin, in field units.
-  public readonly launchHeightProperty: TReadOnlyProperty<number>;
-
   public readonly isContinuousLaunchingProperty: BooleanProperty;
 
   // NOTE: Make sure no Projectile appears in both arrays at the same time
 
-  // TODO: Move airborneParticles to VSM????????? See https://github.com/phetsims/projectile-data-lab/issues/7
+  // TODO: Move airborneParticles to VSM????????? - see https://github.com/phetsims/projectile-data-lab/issues/7
   public readonly airborneProjectiles: Projectile[] = [];
   public readonly landedProjectiles: Projectile[] = [];
 
@@ -116,8 +119,34 @@ export default abstract class Field extends PhetioObject {
 
       // TODO: Do not instrument on the sampling screen, see https://github.com/phetsims/projectile-data-lab/issues/7
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
-      phetioDocumentation: 'This property configures the angle and height of the cannon. When set to ANGLE_0_RAISED, the cannon is raised.',
+      phetioDocumentation: 'This property configures the height and mean launch angle of the launcher. When set to ANGLE_0_RAISED, the launcher is raised.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
+    } );
+
+    this.configuredLaunchAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
+      configuration => {
+        return AngleForConfiguration( configuration );
+      } );
+
+    this.launcherAngleProperty = new Property<number>( this.configuredLaunchAngleProperty.value, {
+      tandem: providedOptions.tandem.createTandem( 'launcherAngleProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
+      + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.'
+    } );
+
+    this.launchAngleStandardDeviationProperty = new Property<number>( 0, {
+      tandem: providedOptions.tandem.createTandem( 'launchAngleStandardDeviationProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This property is the standard deviation of the launch angle in degrees.'
+    } );
+
+    this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
+      return configuration === 'ANGLE_0_RAISED' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
+    }, {
+      tandem: providedOptions.tandem.createTandem( 'launchHeightProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This property is the initial height of launched projectiles in meters.'
     } );
 
     this.projectileTypeProperty = new Property<ProjectileType>( 'CANNONBALL', {
@@ -155,28 +184,9 @@ export default abstract class Field extends PhetioObject {
       tandem: Tandem.OPT_OUT
     } );
 
-    this.launchAngleAverageProperty = new Property<number>( 30, {
-      validValues: [ 0, 30, 45, 60 ],
-      tandem: Tandem.OPT_OUT
-    } );
-
-    this.launchAngleStandardDeviationProperty = new Property<number>( 0, {
-      tandem: Tandem.OPT_OUT
-    } );
-
-    this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
-      return configuration === 'ANGLE_0_RAISED' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
-    } );
-
     this.selectedSampleProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'selectedSampleProperty' ),
       phetioDocumentation: 'The selected sample being shown on the field.'
-    } );
-
-    this.launcherConfigurationProperty.link( configuration => {
-
-      // REVIEW: Should these be DerivedProperties? YES
-      this.launchAngleAverageProperty.value = Field.angleForConfiguration( configuration );
     } );
 
     // Note: This is incorrect for the custom launcher ('Sources' and 'Measures' screens)
@@ -224,7 +234,7 @@ export default abstract class Field extends PhetioObject {
   }
 
   protected createProjectile( sampleNumber: number ): Projectile {
-    const launchAngle = this.launchAngleAverageProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
+    const launchAngle = this.configuredLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
     const launchSpeed = this.launchSpeedAverageProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
@@ -269,19 +279,6 @@ export default abstract class Field extends PhetioObject {
       } );
     }
   } );
-
-  private static angleForConfiguration( configuration: LauncherConfiguration ): number {
-    switch( configuration ) {
-      case 'ANGLE_45':
-        return 45;
-      case 'ANGLE_60':
-        return 60;
-      case 'ANGLE_30':
-        return 30;
-      default:
-        return 0;
-    }
-  }
 }
 
 projectileDataLab.register( 'Field', Field );

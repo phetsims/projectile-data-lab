@@ -81,7 +81,7 @@ export default class LauncherNode extends Node {
     this.addChild( this.launcherFrameFront );
 
     launcherAngleProperty.link( launcherAngle => {
-      this.setBarrelRotation( launcherAngle );
+      this.launcherBarrel.setRotation( Utils.toRadians( -launcherAngle ) );
     } );
 
     launcherHeightProperty.link( launcherHeight => {
@@ -92,10 +92,6 @@ export default class LauncherNode extends Node {
       this.updatePresetLauncher( presetLauncher );
     } );
   }
-
-  public setBarrelRotation( angle: number ): void {
-    this.launcherBarrel.setRotation( Utils.toRadians( -angle ) );
-   }
 
   private updateLauncherHeight( height: number ): void {
     this.y = this.modelViewTransform.modelToViewY( height );

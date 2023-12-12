@@ -185,8 +185,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
           angleToolNode.updateNeedleAndText( projectile.launchAngle );
-
-          this.launcherNode.setBarrelRotation( projectile.launchAngle );
         }
       } );
 
@@ -231,14 +229,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     model.measuringTapeBasePositionProperty.link( measuringTapeBasePosition => {
       const isOverlapping = speedToolNode.bounds.containsPoint( measuringTapeBasePosition );
       speedToolNode.opacity = isOverlapping && isLauncherRaisedProperty.value ? 0.5 : 1;
-    } );
-
-    // If the angle stabilizer is changed, re-center the launcher so that there is no overlap between the two.
-    // Do not do this during a continuous launch, because it causes flicker.
-    model.angleStabilizerProperty.lazyLink( angleStabilizer => {
-      if ( !model.isContinuousLaunchingProperty.value ) {
-        this.launcherNode.setBarrelRotation( model.launcherAngleProperty.value );
-      }
     } );
 
     this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {

@@ -90,6 +90,14 @@ export default class VSMField extends Field {
     this.selectedProjectileProperty.lazyLink( () => {
       this.projectilesChangedEmitter.emit();
     } );
+
+    // If the angle stabilizer is changed, re-center the launcher so that there is no overlap between the two.
+    // Do not do this during a continuous launch, because it causes flicker.
+    this.angleStabilizerProperty.lazyLink( angleStabilizer => {
+      if ( !this.isContinuousLaunchingProperty.value ) {
+        this.launcherAngleProperty.value = this.configuredLaunchAngleProperty.value;
+      }
+    } );
   }
 
   public launchProjectile(): void {
@@ -99,6 +107,8 @@ export default class VSMField extends Field {
 
     const projectile = this.createProjectile( 0 );
     this.airborneProjectiles.push( projectile );
+
+    this.launcherAngleProperty.value = projectile.launchAngle;
 
     this.projectileLaunchedEmitter.emit( projectile );
   }
