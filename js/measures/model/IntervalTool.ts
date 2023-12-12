@@ -8,7 +8,8 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 
 const max = 100;
 const min = 0;
@@ -24,8 +25,9 @@ export default class IntervalTool extends PhetioObject {
   private _edge1: number;
   private _edge2: number;
   public readonly changedEmitter = new Emitter();
+  public readonly dataFractionProperty: Property<number | null>;
 
-  public constructor( public readonly dataFractionProperty: TReadOnlyProperty<number | null>, providedOptions: IntervalToolOptions ) {
+  public constructor( providedOptions: IntervalToolOptions ) {
 
     const options = optionize<IntervalToolOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: IntervalTool.IntervalToolIO
@@ -34,6 +36,12 @@ export default class IntervalTool extends PhetioObject {
     super( options );
     this._edge1 = DEFAULT_EDGE_1;
     this._edge2 = DEFAULT_EDGE_2;
+
+    this.dataFractionProperty = new Property<number | null>( null, {
+      tandem: options.tandem.createTandem( 'dataFractionProperty' ),
+      phetioDocumentation: 'The fraction of data within the interval tool',
+      phetioValueType: NullableIO( NumberIO )
+    } );
 
     this.changedEmitter = new Emitter();
   }

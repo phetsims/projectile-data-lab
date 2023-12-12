@@ -20,7 +20,6 @@ import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../co
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import MeasuresField from './MeasuresField.js';
 import IntervalTool from './IntervalTool.js';
-import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -91,8 +90,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
         } );
     } );
 
-    const dataFractionProperty = new Property<number | null>( null );
-    this.intervalTool = new IntervalTool( dataFractionProperty, {
+    this.intervalTool = new IntervalTool( {
       tandem: providedOptions.tandem.createTandem( 'intervalTool' )
     } );
 
@@ -104,7 +102,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       const count = field.landedProjectiles.filter( projectile => {
         return projectile.x >= min && projectile.x <= max;
       } ).length;
-      dataFractionProperty.value = field.landedProjectiles.length === 0 ? null : count / field.landedProjectiles.length;
+      this.intervalTool.dataFractionProperty.value = field.landedProjectiles.length === 0 ? null : count / field.landedProjectiles.length;
     };
 
     updateIntervalToolDataPercentage();
