@@ -109,7 +109,7 @@ export default class HeatMapToolNode extends Node {
     const totalBins = ( options.maxValue - options.minValue ) / options.binWidth;
     const heatNodeArcLength = totalDeltaAngle / totalBins;
 
-    this.heatNodes = this.createHeatNodes( -options.minAngle, heatNodeArcLength, options.innerHeatNodeRadius,
+    this.heatNodes = options.isIcon ? [] : this.createHeatNodes( -options.minAngle, heatNodeArcLength, options.innerHeatNodeRadius,
       options.outerHeatNodeRadius, options.isClockwise );
 
     this.labels = this.createLabels( options.minLabeledValue, options.maxLabeledValue, options.labeledValueIncrement,
