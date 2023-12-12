@@ -20,6 +20,7 @@ import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../co
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import MeasuresField from './MeasuresField.js';
 import IntervalTool from './IntervalTool.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -90,9 +91,29 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
         } );
     } );
 
-    this.intervalTool = new IntervalTool( {
+    const dataFractionProperty = new Property<number | null>( null );
+    this.intervalTool = new IntervalTool( dataFractionProperty, {
       tandem: providedOptions.tandem.createTandem( 'intervalTool' )
     } );
+
+    // Compute the percent of data within the interval tool, only considering the landedProjectiles.
+    const updateIntervalToolDataPercentage = () => {
+      const min = Math.min( this.intervalTool.edge1, this.intervalTool.edge2 );
+      const max = Math.max( this.intervalTool.edge1, this.intervalTool.edge2 );
+      const field = this.fieldProperty.value;
+      const count = field.landedProjectiles.filter( projectile => {
+        return projectile.x >= min && projectile.x <= max;
+      } ).length;
+      dataFractionProperty.value = field.landedProjectiles.length === 0 ? null : count / field.landedProjectiles.length;
+    };
+
+    updateIntervalToolDataPercentage();
+
+    this.fields.forEach( field => {
+      field.projectileLandedEmitter.addListener( updateIntervalToolDataPercentage );
+    } );
+    this.fieldProperty.link( field => updateIntervalToolDataPercentage() );
+    this.intervalTool.changedEmitter.addListener( updateIntervalToolDataPercentage );
   }
 
   public override reset(): void {
@@ -100,6 +121,8 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     this.isDataMeasuresVisibleProperty.reset();
     this.isIntervalToolVisibleProperty.reset();
+
+    this.intervalTool.reset();
   }
 }
 

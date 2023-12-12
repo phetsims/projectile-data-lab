@@ -62,6 +62,7 @@ type StringsType = {
   'totalBinsStringProperty': LocalizedStringProperty;
   'histogramBinsStringProperty': LocalizedStringProperty;
   'histogramBinsPreferenceDescriptionStringProperty': LocalizedStringProperty;
+  'intervalToolPercentStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;
