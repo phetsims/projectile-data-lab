@@ -34,7 +34,7 @@ type CustomLauncherNodeOptions = SelfOptions & NodeOptions;
 
 // This is how much of the outer guide rail is cut off to make room to show the angle stabilizers.
 const GUIDE_RAIL_OUTER_CUTOFF = 13;
-const LAUNCH_ANGLE_LIMITER_LENGTH = 16;
+const LAUNCH_ANGLE_LIMITER_LENGTH = 17;
 const LAUNCH_ANGLE_LIMITER_WIDTH = 5;
 
 export default class CustomLauncherNode extends LauncherNode {
@@ -96,7 +96,7 @@ export default class CustomLauncherNode extends LauncherNode {
     const gearAngleInset = Utils.toRadians( 6 );
     const gearTopAngle = GUIDE_RAIL_MAX_ANGLE - gearAngleInset;
     const gearBottomAngle = GUIDE_RAIL_MIN_ANGLE + gearAngleInset;
-    const gearToOriginDistance = GUIDE_RAIL_OUTER_RADIUS - 1.6 * GUIDE_RAIL_OUTER_CUTOFF;
+    const gearToOriginDistance = GUIDE_RAIL_OUTER_RADIUS - 1.5 * GUIDE_RAIL_OUTER_CUTOFF;
 
     const gearTop = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
     const gearBottom = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
