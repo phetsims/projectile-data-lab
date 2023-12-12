@@ -3,17 +3,31 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Utils from '../../../../dot/js/Utils.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 const max = 100;
 const min = 0;
 
-export default class IntervalTool {
+type SelfOptions = EmptySelfOptions;
+type IntervalToolOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
+
+export default class IntervalTool extends PhetioObject {
 
   private _edge1: number;
   private _edge2: number;
   public readonly changedEmitter = new Emitter();
 
-  public constructor() {
+  public constructor( providedOptions: IntervalToolOptions ) {
+
+    const options = optionize<IntervalToolOptions, SelfOptions, PhetioObjectOptions>()( {
+      phetioType: IntervalTool.IntervalToolIO
+    }, providedOptions );
+
+    super( options );
     this._edge1 = 10;
     this._edge2 = 30;
 
@@ -78,5 +92,22 @@ export default class IntervalTool {
       this.changedEmitter.emit();
     }
   }
+
+  private static IntervalToolIO = new IOType( 'IntervalToolIO', {
+    valueType: IntervalTool,
+    stateSchema: {
+      edge1: NumberIO,
+      edge2: NumberIO
+    },
+    applyState: ( intervalTool: IntervalTool, stateObject: IntervalToolStateObject ) => {
+      intervalTool.edge1 = stateObject.edge1;
+      intervalTool.edge2 = stateObject.edge2;
+    }
+  } );
 }
+
+type IntervalToolStateObject = {
+  edge1: number;
+  edge2: number;
+};
 projectileDataLab.register( 'IntervalTool', IntervalTool );

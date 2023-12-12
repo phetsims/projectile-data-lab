@@ -90,7 +90,9 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
         } );
     } );
 
-    this.intervalTool = new IntervalTool();
+    this.intervalTool = new IntervalTool( {
+      tandem: providedOptions.tandem.createTandem( 'intervalTool' )
+    } );
   }
 
   public override reset(): void {
