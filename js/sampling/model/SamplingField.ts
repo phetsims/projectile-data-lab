@@ -137,7 +137,10 @@ export default class SamplingField extends Field {
 
     // Create the first projectile in the new sample.
     this.createLandedProjectile();
-    this.selectedSampleProperty.value++;
+
+    // Show the new sample in the selector panel. Note this means if sample 2/8 was selected, then we
+    // create a new one, it will jump to 9/9. This is the desired behavior.
+    this.selectedSampleProperty.value = this.numberOfStartedSamplesProperty.value + 1;
 
     this.betweenSamplesTimer.stop();
     this.withinSampleTimer.restart();
