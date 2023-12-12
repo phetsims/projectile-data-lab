@@ -43,6 +43,8 @@ export default class StaticToolPanel extends PDLPanel {
     class PathsIcon extends Node {
       public constructor() {
 
+        const PATH_ICON_HEIGHT = 18;
+
         class MyCanvasNode extends CanvasNode {
           public constructor( options: CanvasNodeOptions ) {
             super( options );
@@ -50,25 +52,22 @@ export default class StaticToolPanel extends PDLPanel {
 
           public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
-            // For debugging, fill the entire background of the canvas with yellow
-            // context.fillStyle = 'yellow';
-            // context.fillRect( 0, 0, 20, 20 );
-
             const color = PDLColors.pathStrokeHighlightedColorProperty.value.toCSS();
             context.save();
             context.strokeStyle = color;
             context.lineWidth = 1.5;
+            context.lineCap = 'round';
 
             context.beginPath();
-            context.moveTo( -ICON_WIDTH / 2, 18 );
-            context.quadraticCurveTo( 0, -18, ICON_WIDTH / 2, 18 );
+            context.moveTo( -ICON_WIDTH / 2, PATH_ICON_HEIGHT );
+            context.quadraticCurveTo( 0, -PATH_ICON_HEIGHT, ICON_WIDTH / 2, PATH_ICON_HEIGHT );
             context.stroke();
             context.restore();
           }
         }
 
         const canvasNode = new MyCanvasNode( {
-          canvasBounds: new Bounds2( -ICON_WIDTH / 2, 0, ICON_WIDTH / 2, 18 )
+          canvasBounds: new Bounds2( -ICON_WIDTH / 2, 0, ICON_WIDTH / 2, PATH_ICON_HEIGHT )
         } );
         super( {
           children: [ canvasNode ],
