@@ -16,7 +16,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/LauncherMechanism.js';
+import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import MeasuresField from './MeasuresField.js';
 import IntervalTool from './IntervalTool.js';
@@ -75,16 +75,16 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       Multilink.multilink( [ this.isLauncherCustomProperty, this.customLauncherTypeProperty, this.angleStabilizerProperty ],
         ( isLauncherCustom, customLauncherType, angleStabilizer ) => {
           if ( isLauncherCustom ) {
-            field.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( customLauncherType );
-            field.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( customLauncherType );
+            field.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( customLauncherType );
+            field.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( customLauncherType );
             field.launchAngleStandardDeviationProperty.value = angleStabilizer;
           }
           else {
             // TODO: Does measures model need to know about the preset launcher? - see https://github.com/phetsims/projectile-data-lab/issues/7
             // Set the launch angle standard deviation to the value for the preset launcher.
             const launcherConfig = PDLConstants.LAUNCHER_CONFIGS[ this.presetLauncherProperty.value - 1 ];
-            field.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( launcherConfig.launcherMechanism );
-            field.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( launcherConfig.launcherMechanism );
+            field.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
+            field.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
             field.launchAngleStandardDeviationProperty.value = launcherConfig.angleStandardDeviation;
           }
         } );

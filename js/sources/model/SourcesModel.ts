@@ -11,7 +11,7 @@ import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common-vsm/model/VSMModel.js';
-import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/LauncherMechanism.js';
+import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 
@@ -37,8 +37,8 @@ export default class SourcesModel extends VSMModel<VSMField> {
         field.launchAngleStandardDeviationProperty.value = angleStabilizer;
       } );
       field.customLauncherTypeProperty.link( customLauncherType => {
-        field.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( customLauncherType );
-        field.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( customLauncherType );
+        field.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( customLauncherType );
+        field.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( customLauncherType );
       } );
     } );
   }

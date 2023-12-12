@@ -49,6 +49,7 @@ export default class CustomLauncherNode extends LauncherNode {
                       presetLauncherProperty: TProperty<number>,
                       customLauncherTypeProperty: TProperty<LauncherMechanism>,
                       angleStabilizerProperty: TProperty<number>,
+                      latestLaunchSpeedProperty: TProperty<number>,
                       providedOptions: CustomLauncherNodeOptions ) {
 
     super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, presetLauncherProperty, providedOptions );
@@ -147,6 +148,10 @@ export default class CustomLauncherNode extends LauncherNode {
       launcherTypeIcon.centerY = 0;
 
       pressureNeedleIcon.visible = launcherType === 'PRESSURE';
+    } );
+
+    latestLaunchSpeedProperty.link( launchSpeed => {
+      console.log( launchSpeed );
     } );
   }
 

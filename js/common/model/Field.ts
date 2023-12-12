@@ -10,7 +10,6 @@ import { AngleForConfiguration, LauncherConfiguration, LauncherConfigurationValu
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLConstants from '../PDLConstants.js';
 import Projectile, { ProjectileStateObject } from './Projectile.js';
 import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
@@ -20,7 +19,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
-import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/LauncherMechanism.js';
+import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
@@ -51,7 +50,8 @@ export default abstract class Field extends PhetioObject {
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launchHeightProperty: TReadOnlyProperty<number>;
 
-  public readonly launchSpeedAverageProperty: Property<number>;
+  // The mean speed of a projectile launched by the launcher, in meters per second
+  public readonly meanLaunchSpeedProperty: Property<number>;
 
   public readonly launchSpeedStandardDeviationProperty: Property<number>;
 
@@ -132,13 +132,15 @@ export default abstract class Field extends PhetioObject {
       tandem: providedOptions.tandem.createTandem( 'launcherAngleProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
-      + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.'
+                           + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.',
+      phetioValueType: NumberIO
     } );
 
     this.launchAngleStandardDeviationProperty = new Property<number>( 0, {
       tandem: providedOptions.tandem.createTandem( 'launchAngleStandardDeviationProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'This property is the standard deviation of the launch angle in degrees.'
+      phetioDocumentation: 'This property is the standard deviation of the launch angle in degrees.',
+      phetioValueType: NumberIO
     } );
 
     this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
@@ -146,7 +148,8 @@ export default abstract class Field extends PhetioObject {
     }, {
       tandem: providedOptions.tandem.createTandem( 'launchHeightProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'This property is the initial height of launched projectiles in meters.'
+      phetioDocumentation: 'This property is the initial height of launched projectiles in meters.',
+      phetioValueType: NumberIO
     } );
 
     this.projectileTypeProperty = new Property<ProjectileType>( 'CANNONBALL', {
@@ -176,12 +179,22 @@ export default abstract class Field extends PhetioObject {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' )
     } );
 
-    this.launchSpeedAverageProperty = new Property<number>( 25, {
-      tandem: Tandem.OPT_OUT
+    // TODO: These should be based on whether the launcher is custom or not, see https://github.com/phetsims/projectile-data-lab/issues/7
+    const initialMeanLaunchSpeed = MeanLaunchSpeedForMechanism( 'SPRING' );
+    const initialSDLaunchSpeed = SDLaunchSpeedForMechanism( 'SPRING' );
+
+    this.meanLaunchSpeedProperty = new Property<number>( initialMeanLaunchSpeed, {
+      tandem: providedOptions.tandem.createTandem( 'meanLaunchSpeedProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This property configures the mean launch speed of the launcher.',
+      phetioValueType: NumberIO
     } );
 
-    this.launchSpeedStandardDeviationProperty = new Property<number>( 0, {
-      tandem: Tandem.OPT_OUT
+    this.launchSpeedStandardDeviationProperty = new Property<number>( initialSDLaunchSpeed, {
+      tandem: providedOptions.tandem.createTandem( 'launchSpeedStandardDeviationProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This property is the standard deviation of the launch speed, in meters per second.',
+      phetioValueType: NumberIO
     } );
 
     this.selectedSampleProperty = new NumberProperty( 0, {
@@ -192,8 +205,8 @@ export default abstract class Field extends PhetioObject {
     // Note: This is incorrect for the custom launcher ('Sources' and 'Measures' screens)
     this.presetLauncherProperty.link( presetLauncher => {
       const launcherConfig = PDLConstants.LAUNCHER_CONFIGS[ presetLauncher - 1 ];
-      this.launchSpeedAverageProperty.value = CustomLauncherSpeedForType( launcherConfig.launcherMechanism );
-      this.launchSpeedStandardDeviationProperty.value = CustomLauncherSpeedSDForType( launcherConfig.launcherMechanism );
+      this.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
+      this.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
       this.launchAngleStandardDeviationProperty.value = launcherConfig.angleStandardDeviation;
     } );
   }
@@ -235,7 +248,7 @@ export default abstract class Field extends PhetioObject {
 
   protected createProjectile( sampleNumber: number ): Projectile {
     const launchAngle = this.configuredLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
-    const launchSpeed = this.launchSpeedAverageProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
+    const launchSpeed = this.meanLaunchSpeedProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly

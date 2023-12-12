@@ -6,7 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import { LauncherMechanism, CustomLauncherTypeValues } from './LauncherMechanism.js';
+import { LauncherMechanism, LauncherMechanismValues } from './LauncherMechanism.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
@@ -15,6 +15,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -27,8 +28,14 @@ type SelfOptions = EmptySelfOptions;
 export type VSMFieldOptions = SelfOptions & FieldOptions;
 
 export default class VSMField extends Field {
+
+  // The most recent speed of a projectile launched by the launcher, in meters per second
+  public readonly latestLaunchSpeedProperty: Property<number>;
+
   public readonly isLauncherCustomProperty: Property<boolean>;
+
   public readonly customLauncherTypeProperty: Property<LauncherMechanism>;
+
   public readonly angleStabilizerProperty: NumberProperty;
 
   public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
@@ -47,6 +54,13 @@ export default class VSMField extends Field {
   public constructor( public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
     super( providedOptions );
 
+    this.latestLaunchSpeedProperty = new Property<number>( this.meanLaunchSpeedProperty.value, {
+      tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This property is the latest launch speed, in meters per second. When a projectile is launched, this is set to the launch speed.',
+      phetioValueType: NumberIO
+    } );
+
     this.selectedProjectileNumberProperty = new NumberProperty( 0, {
       tandem: providedOptions.tandem.createTandem( 'selectedProjectileNumberProperty' ),
       phetioDocumentation: 'This property is the number of the selected projectile, in order of landing. This number is 1-indexed, and 0 means no projectile is selected.'
@@ -64,10 +78,10 @@ export default class VSMField extends Field {
     } );
 
     this.customLauncherTypeProperty = new Property<LauncherMechanism>( 'SPRING', {
-      validValues: CustomLauncherTypeValues,
+      validValues: LauncherMechanismValues,
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeProperty' ),
       phetioDocumentation: 'This property configures the mechanism of the custom launcher.',
-      phetioValueType: StringUnionIO( CustomLauncherTypeValues )
+      phetioValueType: StringUnionIO( LauncherMechanismValues )
     } );
 
     this.angleStabilizerProperty = new NumberProperty( PDLConstants.LAUNCHER_CONFIGS[ 0 ].angleStandardDeviation, {
@@ -109,6 +123,7 @@ export default class VSMField extends Field {
     this.airborneProjectiles.push( projectile );
 
     this.launcherAngleProperty.value = projectile.launchAngle;
+    this.latestLaunchSpeedProperty.value = projectile.launchSpeed;
 
     this.projectileLaunchedEmitter.emit( projectile );
   }

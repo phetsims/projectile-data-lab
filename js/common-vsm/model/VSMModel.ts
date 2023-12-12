@@ -44,6 +44,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   // Number is lightweight in the code, but is it best for selecting a launcher via PhET-IO?
   public readonly presetLauncherProperty: DynamicProperty<number, number, VSMField>;
 
+  public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, VSMField>;
+
   public readonly customLauncherTypeProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>;
   public readonly angleStabilizerProperty: DynamicProperty<number, number, VSMField>;
 
@@ -63,6 +65,11 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       isPathsVisible: false
     }, providedOptions );
     super( options );
+
+    this.latestLaunchSpeedProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.latestLaunchSpeedProperty
+    } );
 
     this.presetLauncherProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,

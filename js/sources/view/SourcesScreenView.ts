@@ -58,19 +58,11 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
       new Property( 1 ),
       model.customLauncherTypeProperty,
       model.angleStabilizerProperty,
+      model.latestLaunchSpeedProperty,
       {}
     );
 
     this.launcherLayer.addChild( this.launcherNode );
-
-    model.fields.forEach( field => {
-      field.projectileLaunchedEmitter.addListener( projectile => {
-        if ( model.fieldProperty.value === field ) {
-          // TODO: (Also in measures screen) Update the pressure gauge - see https://github.com/phetsims/projectile-data-lab/issues/7
-          // this.launcherNode.setLaunchSpeed( projectile.launchSpeed );
-        }
-      } );
-    } );
   }
 }
 

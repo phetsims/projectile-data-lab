@@ -70,6 +70,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.presetLauncherProperty,
       model.customLauncherTypeProperty,
       model.angleStabilizerProperty,
+      model.latestLaunchSpeedProperty,
       {}
     );
 
