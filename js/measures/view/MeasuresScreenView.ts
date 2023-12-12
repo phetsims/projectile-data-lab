@@ -17,6 +17,7 @@ import MeasuresField from '../model/MeasuresField.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import MeasuresHistogramNode from './MeasuresHistogramNode.js';
+import IntervalToolNode from './IntervalToolNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -80,7 +81,14 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       } );
 
     this.toolsLayer.addChild( dataMeasuresFieldOverlay );
+
+    // REVIEW: Is it really an overlay if it is in the back? Also, should we have a dedicated layer for it?
     dataMeasuresFieldOverlay.moveToBack();
+
+    const intervalToolNode = new IntervalToolNode( model.intervalTool, this.modelViewTransform, model.isIntervalToolVisibleProperty, {
+      tandem: options.tandem.createTandem( 'intervalToolNode' )
+    } );
+    this.toolsLayer.addChild( intervalToolNode );
   }
 }
 

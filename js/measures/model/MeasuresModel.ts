@@ -19,6 +19,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import { CustomLauncherSpeedForType, CustomLauncherSpeedSDForType } from '../../common-vsm/model/LauncherMechanism.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import MeasuresField from './MeasuresField.js';
+import IntervalTool from './IntervalTool.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -35,6 +36,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
   // Static tool visibility
   public readonly isDataMeasuresVisibleProperty: BooleanProperty;
   public readonly isIntervalToolVisibleProperty: BooleanProperty;
+  public readonly intervalTool: IntervalTool;
 
   public constructor( providedOptions: PDLModelOptions ) {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
@@ -87,6 +89,8 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
           }
         } );
     } );
+
+    this.intervalTool = new IntervalTool();
   }
 
   public override reset(): void {
