@@ -9,7 +9,7 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { CanvasNode, CanvasNodeOptions, HBox, Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { CanvasNode, CanvasNodeOptions, HBox, Node } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import PDLText from '../../common/view/PDLText.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -18,11 +18,15 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PDLColors from '../../common/PDLColors.js';
+import AngleToolNode from './AngleToolNode.js';
+import SpeedToolNode from './SpeedToolNode.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
 };
 export type StaticToolPanelOptions = SelfOptions & PDLPanelOptions;
+
+export const ICON_WIDTH = 24;
 
 export default class StaticToolPanel extends PDLPanel {
 
@@ -56,20 +60,54 @@ export default class StaticToolPanel extends PDLPanel {
             context.lineWidth = 1.5;
 
             context.beginPath();
-            context.moveTo( 0, 18 );
-            context.quadraticCurveTo( 10, -18, 18, 18 );
+            context.moveTo( -ICON_WIDTH / 2, 18 );
+            context.quadraticCurveTo( 0, -18, ICON_WIDTH / 2, 18 );
             context.stroke();
             context.restore();
           }
         }
 
         const canvasNode = new MyCanvasNode( {
-          canvasBounds: new Bounds2( 0, 0, 18, 18 )
+          canvasBounds: new Bounds2( -ICON_WIDTH / 2, 0, ICON_WIDTH / 2, 18 )
         } );
         super( {
           children: [ canvasNode ],
           pickable: false,
-          maxWidth: 25
+          maxWidth: ICON_WIDTH
+        } );
+      }
+    }
+
+    class AngleToolIconNode extends Node {
+      public constructor() {
+
+        const angleToolNode = new AngleToolNode( new Property( false ), {
+          isIcon: true,
+          initialNeedleValue: 45
+        } ).rasterized( {
+          resolution: 1.25
+        } );
+        super( {
+          children: [ angleToolNode ],
+          pickable: false,
+          maxWidth: ICON_WIDTH
+        } );
+      }
+    }
+
+    class SpeedToolIconNode extends Node {
+      public constructor() {
+
+        const speedToolNode = new SpeedToolNode( new Property( false ), {
+          isIcon: true
+        } )
+          .rasterized( {
+            resolution: 1.25
+          } );
+        super( {
+          children: [ speedToolNode ],
+          pickable: false,
+          maxWidth: ICON_WIDTH
         } );
       }
     }
@@ -80,11 +118,11 @@ export default class StaticToolPanel extends PDLPanel {
       tandemName: 'pathsCheckbox'
     }, {
       property: isLaunchAngleVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchAngleStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'green' } ) ),
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchAngleStringProperty, new AngleToolIconNode() ),
       tandemName: 'launchAngleCheckbox'
     }, {
       property: isLaunchSpeedVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchSpeedStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'blue' } ) ),
+      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchSpeedStringProperty, new SpeedToolIconNode() ),
       tandemName: 'launchSpeedCheckbox'
     },
       ...options.additionalVerticalCheckboxGroupItems

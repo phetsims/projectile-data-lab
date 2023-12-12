@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -19,7 +19,9 @@ import PDLColors from '../../common/PDLColors.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  isIcon?: boolean;
+};
 
 export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
   'displayOffset' | 'readoutPatternStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
@@ -99,7 +101,8 @@ export default class AngleToolNode extends HeatMapToolNode {
       isWithInnerTickMarks: true,
       majorTickMarkLength: 5,
       valueReadoutY: VALUE_READOUT_Y_GROUND,
-      readoutPatternStringProperty: ProjectileDataLabStrings.degreesPatternStringProperty
+      readoutPatternStringProperty: ProjectileDataLabStrings.degreesPatternStringProperty,
+      isIcon: false
     }, providedOptions );
     super( options );
 

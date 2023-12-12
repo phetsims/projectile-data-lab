@@ -52,6 +52,7 @@ type SelfOptions = {
   isWithInnerTickMarks?: boolean;
   initialNeedleValue?: number;
   isClockwise?: boolean;
+  isIcon?: boolean;
 };
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
@@ -89,7 +90,8 @@ export default class HeatMapToolNode extends Node {
       minorTickMarkIncrement: 0,
       minorTickMarkLength: 0,
       initialNeedleValue: 0,
-      isClockwise: false
+      isClockwise: false,
+      isIcon: false
     }, providedOptions );
     super( options );
 
@@ -170,7 +172,10 @@ export default class HeatMapToolNode extends Node {
     this.tickMarks.forEach( tickMark => this.displayNode.addChild( tickMark ) );
     this.displayNode.addChild( this.bodyFrontNode );
     this.displayNode.addChild( this.needleNode );
-    this.displayNode.addChild( this.valueReadoutNode );
+
+    if ( !options.isIcon ) {
+      this.displayNode.addChild( this.valueReadoutNode );
+    }
 
     this.minAngle = options.minAngle;
     this.maxAngle = options.maxAngle;

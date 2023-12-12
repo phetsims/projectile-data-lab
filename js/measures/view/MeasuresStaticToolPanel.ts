@@ -1,12 +1,15 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import StaticToolPanel, { StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
+import StaticToolPanel, { ICON_WIDTH, StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
 import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Property from '../../../../axon/js/Property.js';
+import DataMeasuresOverlay from './DataMeasuresOverlay.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
@@ -17,11 +20,29 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
                       isDataMeasuresVisibleProperty: Property<boolean>,
                       providedOptions: PDLPanelOptions ) {
 
+    class DataMeasuresIconNode extends Node {
+      public constructor() {
+
+        const dataMeasuresNode = new DataMeasuresOverlay( new ModelViewTransform2(),
+          new Property( 0 ), new Property( 20 ), ICON_WIDTH, new BooleanProperty( true ), {
+            isIcon: true
+          } )
+          .rasterized( {
+            resolution: 1.25
+          } );
+        super( {
+          children: [ dataMeasuresNode ],
+          pickable: false,
+          maxWidth: ICON_WIDTH
+        } );
+      }
+    }
+
     const options = optionize<PDLPanelOptions, SelfOptions, MeasuresStaticToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
         {
           property: isDataMeasuresVisibleProperty,
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new Rectangle( 0, 0, 12, 12, { fill: 'red' } ) ),
+          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new DataMeasuresIconNode() ),
           tandemName: 'dataMeasuresCheckbox'
         }
       ]

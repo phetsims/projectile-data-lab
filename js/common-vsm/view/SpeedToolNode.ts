@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -19,14 +19,17 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  isIcon?: boolean;
+};
 export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
   'displayOffset' | 'readoutPatternStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
   | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
   | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'minorTickMarkIncrement' | 'valueReadoutY'
   | 'majorTickMarkLength' | 'minorTickMarkLength'>;
 export default class SpeedToolNode extends HeatMapToolNode {
-  private readonly connectingWire;
+
+  private readonly connectingWire?;
 
   private displayOffset: Vector2;
 
@@ -85,11 +88,17 @@ export default class SpeedToolNode extends HeatMapToolNode {
       minorTickMarkLength: 3,
       valueReadoutY: bodyRadius * Math.sin( Utils.toRadians( totalAngleOverhang ) ),
       readoutPatternStringProperty: ProjectileDataLabStrings.metersPerSecondPatternStringProperty,
-      isClockwise: true
+      isClockwise: true,
+      isIcon: false
     }, providedOptions );
     super( options );
 
     this.displayOffset = options.displayOffset;
+
+    // If this is an icon, create the launcher circle or the connecting wire
+    if ( options.isIcon ) {
+      return;
+    }
 
     // Create the graphics for the wire connected to the launcher
     const launcherCircle = new Circle( 4, { fill: 'black' } );
@@ -118,9 +127,12 @@ export default class SpeedToolNode extends HeatMapToolNode {
     this.displayOffset = new Vector2( speedToolX, speedToolY );
 
     const connectingWireShape = this.connectingWireShapeForIsRaised( isLauncherRaised );
-    this.connectingWire.children = [ new Path( connectingWireShape, {
-      stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
-    } ) ];
+
+    if ( this.connectingWire ) {
+      this.connectingWire.children = [ new Path( connectingWireShape, {
+        stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
+      } ) ];
+    }
 
     this.displayNode.setX( speedToolX );
     this.displayNode.setY( speedToolY );

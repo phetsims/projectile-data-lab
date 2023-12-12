@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
@@ -23,7 +23,9 @@ import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  isIcon?: boolean;
+};
 export type DataMeasuresFieldOverlayOptions = SelfOptions & NodeOptions;
 
 export default class DataMeasuresOverlay extends Node {
@@ -40,7 +42,7 @@ export default class DataMeasuresOverlay extends Node {
       return standardDeviation !== null && standardDeviation > 0;
     } );
 
-    const meanMarkerSideLength = 20;
+    const meanMarkerSideLength = providedOptions.isIcon ? 12 : 16;
     const meanMarkerHeight = meanMarkerSideLength * Math.sqrt( 3 ) / 2;
     const meanMarker = new Path( new Shape().polygon( [
 
@@ -57,19 +59,19 @@ export default class DataMeasuresOverlay extends Node {
       visibleProperty: isStandardDeviationVisibleProperty,
       stroke: 'black',
       lineCap: 'round',
-      lineWidth: 1.5
+      lineWidth: 1
     } );
     const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
       visibleProperty: isStandardDeviationVisibleProperty,
       stroke: 'black',
       lineCap: 'round',
-      lineWidth: 1.5
+      lineWidth: 1
     } );
     const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanMarkerHeight ).lineTo( 0, origin.y - totalHeight ), {
       visibleProperty: isStandardDeviationVisibleProperty,
       stroke: 'black',
       lineCap: 'round',
-      lineWidth: 1.5
+      lineWidth: 1
     } );
 
     const meanLineLength = totalHeight - meanMarkerHeight;
@@ -112,7 +114,8 @@ export default class DataMeasuresOverlay extends Node {
 
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
       visibleProperty: isSelfVisibleProperty,
-      children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, meanMarker ]
+      children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, meanMarker ],
+      isIcon: false
     }, providedOptions );
 
     super( options );
