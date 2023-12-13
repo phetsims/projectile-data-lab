@@ -40,10 +40,6 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
       radioButtonOptions: {
         preferredWidth: 40
       }
-
-      // TODO: Preferred width is not working to get the wrap, see https://github.com/phetsims/projectile-data-lab/issues/7
-      // wrap: true,
-      // preferredWidth: 120
     } );
 
     super( new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, fieldRadioButtonGroup, {
