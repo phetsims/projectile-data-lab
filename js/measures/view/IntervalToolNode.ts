@@ -22,7 +22,6 @@ export type IntervalToolNodeOptions = SelfOptions & WithRequired<NodeOptions, 't
 
 const TEXT_PANEL_BOUNDS_DILATION = 5;
 
-// TODO: Move sphere to front when pressed: https://github.com/phetsims/projectile-data-lab/issues/7
 // TODO: Studio autoselect text: https://github.com/phetsims/projectile-data-lab/issues/7
 // TODO: i18n, maxWidth: https://github.com/phetsims/projectile-data-lab/issues/7
 // TODO: Put it behind the data measures display. https://github.com/phetsims/projectile-data-lab/issues/7
@@ -89,7 +88,6 @@ export default class IntervalToolNode extends Node {
     const percentPatternProperty = new PatternStringProperty( ProjectileDataLabStrings.intervalToolPercentStringProperty, {
       percent: nonNullProperty
     } );
-
 
     // TODO: Studio text autoselect, see https://github.com/phetsims/projectile-data-lab/issues/7
     // const displayValueProperty = new DerivedProperty( [ intervalTool.dataFractionProperty, percentPatternProperty ], ( fraction, format ) => {
@@ -187,18 +185,24 @@ export default class IntervalToolNode extends Node {
       tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' )
     } ) );
 
+    const moveToFront = ( node: Node ) => {
+      return () => node.moveToFront();
+    };
+
     edge1Sphere.addInputListener( new DragListener( {
       useInputListenerCursor: true,
       positionProperty: edge1Property,
       transform: modelViewTransform,
-      tandem: providedOptions.tandem.createTandem( 'edge1DragListener' )
+      tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
+      drag: moveToFront( edge1Sphere )
     } ) );
 
     edge2Sphere.addInputListener( new DragListener( {
       useInputListenerCursor: true,
       positionProperty: edge2Property,
       transform: modelViewTransform,
-      tandem: providedOptions.tandem.createTandem( 'edge2DragListener' )
+      tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
+      drag: moveToFront( edge2Sphere )
     } ) );
 
     edge1Sphere.addInputListener( new KeyboardDragListener( {
@@ -206,7 +210,8 @@ export default class IntervalToolNode extends Node {
       shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
       positionProperty: edge1Property,
       transform: modelViewTransform,
-      tandem: providedOptions.tandem.createTandem( 'edge1KeyboardDragListener' )
+      tandem: providedOptions.tandem.createTandem( 'edge1KeyboardDragListener' ),
+      drag: moveToFront( edge1Sphere )
     } ) );
 
     edge2Sphere.addInputListener( new KeyboardDragListener( {
@@ -214,7 +219,8 @@ export default class IntervalToolNode extends Node {
       shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
       positionProperty: edge2Property,
       transform: modelViewTransform,
-      tandem: providedOptions.tandem.createTandem( 'edge2KeyboardDragListener' )
+      tandem: providedOptions.tandem.createTandem( 'edge2KeyboardDragListener' ),
+      drag: moveToFront( edge2Sphere )
     } ) );
   }
 }
