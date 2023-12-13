@@ -113,8 +113,21 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       ( accordionBoxProxy, launchPanelProxy ) => {
         accordionBoxProxy.left = launchPanelProxy.right + PDLConstants.INTER_PANEL_SPACING;
         const accordionBoxWidth = this.layoutBounds.right - launchPanelProxy.right - PDLConstants.INTER_PANEL_SPACING - PDLConstants.SCREEN_VIEW_Y_MARGIN;
-        accordionBoxProxy.maxWidth = accordionBoxWidth;
-        accordionBoxProxy.preferredWidth = accordionBoxWidth;
+
+        // If maxWidth and preferredWidth are both non-null, maxWidth should NOT be smaller than the preferredWidth. If that happens, it would trigger an infinite loop
+        // That is, the maxWidth >= preferredWidth.
+        // Check if the new preferredWidth is smaller than the current maxWidth
+        if ( accordionBoxProxy.maxWidth !== null && accordionBoxWidth <= accordionBoxProxy.maxWidth ) {
+
+          // Safe to set preferredWidth first
+          accordionBoxProxy.preferredWidth = accordionBoxWidth;
+          accordionBoxProxy.maxWidth = accordionBoxWidth;
+        }
+        else {
+          // Set maxWidth first to avoid it being smaller than preferredWidth
+          accordionBoxProxy.maxWidth = accordionBoxWidth;
+          accordionBoxProxy.preferredWidth = accordionBoxWidth;
+        }
       } );
 
     this.pdomControlAreaNode.pdomOrder = [ this.launchPanel, this.launchButton, this.launchControlRadioButtonGroup, this.resetAllButton ];
