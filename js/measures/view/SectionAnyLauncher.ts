@@ -6,7 +6,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
 import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
@@ -15,6 +14,7 @@ import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import LauncherRadioButtonGroupWrapper from '../../common/view/LauncherRadioButtonGroupWrapper.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -56,21 +56,8 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       tandem: providedOptions.tandem.createTandem( 'isLauncherCustomRadioButtonGroup' )
     } );
 
-    // TODO: Factor this out here and in SectionPresetLauncher - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const presetLauncherRadioButtonGroupItems: RectangularRadioButtonGroupItem<number>[] = [];
-
-    // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/7
-    _.range( 1, 7 ).forEach( presetLauncher => {
-      presetLauncherRadioButtonGroupItems.push( {
-        value: presetLauncher,
-        tandemName: `presetLauncher${presetLauncher}RadioButton`,
-        createNode: () => new PDLText( presetLauncher.toString() )
-      } );
-    } );
-
-    const presetLauncherRadioButtonGroup = new RectangularRadioButtonGroup( presetLauncherProperty, presetLauncherRadioButtonGroupItems, {
-      tandem: providedOptions.tandem.createTandem( 'presetLauncherRadioButtonGroup' ),
-      orientation: 'horizontal'
+    const presetLauncherRadioButtonGroupWrapper = new LauncherRadioButtonGroupWrapper( presetLauncherProperty, {
+      tandem: providedOptions.tandem.createTandem( 'presetLauncherRadioButtonGroupWrapper' )
     } );
 
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
@@ -88,7 +75,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
 
     const launcherControlsToggleNode = new ToggleNode<boolean, Node>( isLauncherCustomProperty, [ {
       value: false,
-      createNode: () => presetLauncherRadioButtonGroup
+      createNode: () => presetLauncherRadioButtonGroupWrapper
     }, {
       value: true,
       createNode: () => customLauncherControls
