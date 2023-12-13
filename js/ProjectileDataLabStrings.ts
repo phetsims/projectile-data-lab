@@ -31,7 +31,6 @@ type StringsType = {
   'mysteryStringProperty': LocalizedStringProperty;
   'customStringProperty': LocalizedStringProperty;
   'histogramStringProperty': LocalizedStringProperty;
-  'distributionStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'fieldValuePatternStringProperty': LocalizedStringProperty;
   'noDataStringProperty': LocalizedStringProperty;
