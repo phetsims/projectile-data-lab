@@ -49,7 +49,11 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
     // 3. Projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
-      this.drawProjectile( context, projectiles[ i ], true, false );
+
+      // All projectiles are darkened in the Sampling screen, so they match the look of the majority of the data on the other screens
+      // REVIEW: There is a design request to show flying cannonballs in "single" mode. If we decide to do that, we may
+      // wish to show the undarkened ones while flying through the air, or otherwise try to match the design from screens 1-3
+      this.drawProjectile( context, projectiles[ i ], true, true );
     }
 
     // Draw the mean marker (if the sample is complete)
