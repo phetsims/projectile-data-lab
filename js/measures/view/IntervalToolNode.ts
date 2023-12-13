@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { DragListener, Line, Node, NodeOptions, VBox } from '../../../../scenery/js/imports.js';
+import { DragListener, KeyboardDragListener, Line, Node, NodeOptions, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
@@ -40,7 +40,10 @@ export default class IntervalToolNode extends Node {
       stroke: 'black',
       lineWidth: 3
     } );
+
     const edge1Sphere = new ShadedSphereNode( 20, {
+      focusable: true,
+      tagName: 'div',
       translation: Vector2.ZERO
     } );
     edge1Sphere.touchArea = edge1Sphere.localBounds.dilatedXY( 2, 4 );
@@ -190,16 +193,14 @@ export default class IntervalToolNode extends Node {
       tandem: providedOptions.tandem.createTandem( 'edge2DragListener' )
     } ) );
 
-    //
-    // const keyboardDragListener = new KeyboardDragListener(
-    //   combineOptions<KeyboardDragListenerOptions>( {}, GOConstants.KEYBOARD_DRAG_LISTENER_OPTIONS, {
-    //     positionProperty: projectionScreen.positionProperty,
-    //     dragBoundsProperty: dragBoundsProperty,
-    //     drag: drag,
-    //     transform: modelViewTransform,
-    //     tandem: options.tandem.createTandem( 'keyboardDragListener' )
-    //   } ) );
-    // this.addInputListener( keyboardDragListener );
+    const keyboardDragListener = new KeyboardDragListener( {
+      dragVelocity: 300, // velocity of the Node being dragged, in view coordinates per second
+      shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
+      positionProperty: edge1Property,
+      transform: modelViewTransform,
+      tandem: providedOptions.tandem.createTandem( 'keyboardDragListener' )
+    } );
+    edge1Sphere.addInputListener( keyboardDragListener );
   }
 }
 
