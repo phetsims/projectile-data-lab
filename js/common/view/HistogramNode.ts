@@ -25,6 +25,7 @@ import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import PDLText from './PDLText.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -198,20 +199,26 @@ export default class HistogramNode extends Node {
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {
 
-      const field = fieldProperty.value;
-      if ( field instanceof VSMField ) {
-        histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
+      // Avoid an inconsistent intermediate state while the phet-io state is being set
+      if ( !isSettingPhetioStateProperty.value ) {
+
+        const field = fieldProperty.value;
+        if ( field instanceof VSMField ) {
+          histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
+        }
+        else if ( field instanceof SamplingField ) {
+          const samples = field.getSamples();
+          const selectedOne = field.selectedSampleProperty.value;
+          histogramPainter.setHistogramData( samples, samples[ selectedOne - 1 ] );
+        }
+        else {
+          assert && assert( false, 'unhandled field type' );
+        }
+        chartCanvasNode.update();
       }
-      else if ( field instanceof SamplingField ) {
-        const samples = field.getSamples();
-        const selectedOne = field.selectedSampleProperty.value;
-        histogramPainter.setHistogramData( samples, samples[ selectedOne - 1 ] );
-      }
-      else {
-        assert && assert( false, 'unhandled field type' );
-      }
-      chartCanvasNode.update();
     };
+
+    isSettingPhetioStateProperty.addListener( updateHistogram );
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
     fields.forEach( field => {
