@@ -198,7 +198,6 @@ export default class HistogramNode extends Node {
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {
 
-      // TODO: When reusing this code for the sampling screen, consider how to handle selectedProjectileProperty, see https://github.com/phetsims/projectile-data-lab/issues/7
       const field = fieldProperty.value;
       if ( field instanceof VSMField ) {
         histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );

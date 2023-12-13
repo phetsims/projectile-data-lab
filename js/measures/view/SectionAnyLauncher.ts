@@ -30,8 +30,8 @@ export default class SectionAnyLauncher extends PDLPanelSection {
                       customLauncherTypeProperty: PhetioProperty<LauncherMechanism>, angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
-    // TODO: Use ABSwitch - see https://github.com/phetsims/projectile-data-lab/issues/7
-    // TODO: SR: I converted to VerticalAquaRadioButtonGroup to help with i18n and layout, we can discuss as needed, see see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: Use ABSwitch? - see https://github.com/phetsims/projectile-data-lab/issues/7
+    // I converted to VerticalAquaRadioButtonGroup to help with i18n and layout, we can discuss as needed, see see https://github.com/phetsims/projectile-data-lab/issues/7
     const radioButtonItems: AquaRadioButtonGroupItem<boolean>[] = [ {
       createNode: () => new PDLText( ProjectileDataLabStrings.mysteryStringProperty, {
         fontSize: 12,
