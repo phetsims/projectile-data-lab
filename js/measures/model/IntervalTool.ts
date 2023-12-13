@@ -47,8 +47,8 @@ export default class IntervalTool extends PhetioObject {
   }
 
   public reset(): void {
-    this.edge1 = DEFAULT_EDGE_1;
-    this.edge2 = DEFAULT_EDGE_2;
+    this._edge1 = DEFAULT_EDGE_1;
+    this._edge2 = DEFAULT_EDGE_2;
 
     this.changedEmitter.emit();
   }
