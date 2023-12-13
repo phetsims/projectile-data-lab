@@ -66,7 +66,7 @@ export default abstract class Field extends PhetioObject {
 
   // NOTE: Make sure no Projectile appears in both arrays at the same time
 
-  // TODO: Move airborneParticles to VSM????????? - see https://github.com/phetsims/projectile-data-lab/issues/7
+  // TODO: Move airborneParticles to VSM????????? - see https://github.com/phetsims/projectile-data-lab/issues/7. But designers recently asked for airborne animation in the sampling screen. It is up for discussion.
   public readonly airborneProjectiles: Projectile[] = [];
   public readonly landedProjectiles: Projectile[] = [];
 
@@ -112,9 +112,10 @@ export default abstract class Field extends PhetioObject {
 
     this.projectilesClearedEmitter = new Emitter();
 
-    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'ANGLE_45', {
+    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', {
 
       // TODO: On the sampling screen, only allow valid value of 30.  So make the LauncherConfigurationValues an option passed in, see https://github.com/phetsims/projectile-data-lab/issues/7
+      // Does this go for the initial value as well? Where is that being changed?
       validValues: LauncherConfigurationValues,
 
       // TODO: Do not instrument on the sampling screen, see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -144,7 +145,7 @@ export default abstract class Field extends PhetioObject {
     } );
 
     this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
-      return configuration === 'ANGLE_0_RAISED' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
+      return configuration === 'angle0Raised' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     }, {
       tandem: providedOptions.tandem.createTandem( 'launchHeightProperty' ),
       phetioReadOnly: true,
@@ -152,7 +153,7 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: NumberIO
     } );
 
-    this.projectileTypeProperty = new Property<ProjectileType>( 'CANNONBALL', {
+    this.projectileTypeProperty = new Property<ProjectileType>( 'cannonball', {
       validValues: ProjectileTypeValues,
       tandem: providedOptions.tandem.createTandem( 'projectileTypeProperty' ),
       phetioDocumentation: 'This property configures the type of projectile.',
@@ -180,8 +181,8 @@ export default abstract class Field extends PhetioObject {
     } );
 
     // TODO: These should be based on whether the launcher is custom or not, see https://github.com/phetsims/projectile-data-lab/issues/7
-    const initialMeanLaunchSpeed = MeanLaunchSpeedForMechanism( 'SPRING' );
-    const initialSDLaunchSpeed = SDLaunchSpeedForMechanism( 'SPRING' );
+    const initialMeanLaunchSpeed = MeanLaunchSpeedForMechanism( 'spring' );
+    const initialSDLaunchSpeed = SDLaunchSpeedForMechanism( 'spring' );
 
     this.meanLaunchSpeedProperty = new Property<number>( initialMeanLaunchSpeed, {
       tandem: providedOptions.tandem.createTandem( 'meanLaunchSpeedProperty' ),
@@ -252,7 +253,7 @@ export default abstract class Field extends PhetioObject {
     const landedImageIndex = dotRandom.nextInt( 3 );
 
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
-    const isFlippedHorizontally = this.projectileTypeProperty.value === 'CANNONBALL' ? false : dotRandom.nextBoolean();
+    const isFlippedHorizontally = this.projectileTypeProperty.value === 'cannonball' ? false : dotRandom.nextBoolean();
 
     const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );

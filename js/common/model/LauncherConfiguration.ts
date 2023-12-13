@@ -8,7 +8,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-export const LauncherConfigurationValues = [ 'ANGLE_30', 'ANGLE_45', 'ANGLE_60', 'ANGLE_0_RAISED' ] as const;
+export const LauncherConfigurationValues = [ 'angle30', 'angle45', 'angle60', 'angle0Raised' ] as const;
 
 const meanLaunchAngles = [ 30, 45, 60, 0 ];
 

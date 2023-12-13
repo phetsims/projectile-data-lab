@@ -66,8 +66,8 @@ export default class ProjectileSelectorPanel extends PDLPanel {
 
       if ( projectile ) {
 
-        const imagePNG = projectile.type === 'PUMPKIN' ? PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ] :
-                         projectile.type === 'PIANO' ? pianoLanded_png :
+        const imagePNG = projectile.type === 'pumpkin' ? PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ] :
+                         projectile.type === 'piano' ? pianoLanded_png :
                          cannonball_png;
 
         const image = new Image( imagePNG, {

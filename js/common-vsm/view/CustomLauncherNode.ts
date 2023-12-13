@@ -143,11 +143,11 @@ export default class CustomLauncherNode extends LauncherNode {
 
     customLauncherTypeProperty.link( launcherType => {
       launcherTypeIcon.image = this.getImageKeyForCustomLauncherType( launcherType );
-      launcherTypeIcon.rotation = launcherType === 'PRESSURE' ? -Math.PI / 2 : launcherType === 'EXPLOSION' ? Math.PI / 2 : 0;
+      launcherTypeIcon.rotation = launcherType === 'pressure' ? -Math.PI / 2 : launcherType === 'explosion' ? Math.PI / 2 : 0;
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
 
-      pressureNeedleNode.visible = launcherType === 'PRESSURE';
+      pressureNeedleNode.visible = launcherType === 'pressure';
     } );
 
     latestLaunchSpeedProperty.link( launchSpeed => {
@@ -189,11 +189,11 @@ export default class CustomLauncherNode extends LauncherNode {
 
   private getImageKeyForCustomLauncherType( customLauncherType: LauncherMechanism ): HTMLImageElement {
     switch( customLauncherType ) {
-      case 'SPRING':
+      case 'spring':
         return spring_png;
-      case 'PRESSURE':
+      case 'pressure':
         return pressureWithoutNeedle_png;
-      default: //case 'EXPLOSION':
+      default: //case 'explosion':
         return explosion_png;
     }
   }

@@ -77,7 +77,7 @@ export default class VSMField extends Field {
       phetioValueType: BooleanIO
     } );
 
-    this.customLauncherTypeProperty = new Property<LauncherMechanism>( 'SPRING', {
+    this.customLauncherTypeProperty = new Property<LauncherMechanism>( 'spring', {
       validValues: LauncherMechanismValues,
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeProperty' ),
       phetioDocumentation: 'This property configures the mechanism of the custom launcher.',

@@ -123,7 +123,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     let image: HTMLImageElement;
 
     switch( projectile.type ) {
-      case 'PUMPKIN':
+      case 'pumpkin':
         if ( isLanded ) {
           image = isDarkened ? PUMPKIN_LANDED_DARK_IMAGES[ projectile.landedImageIndex ] : PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ];
         }
@@ -131,7 +131,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
           image = pumpkin_png;
         }
         break;
-      case 'PIANO':
+      case 'piano':
         image = isLanded ? ( isDarkened ? pianoLandedDark_png : pianoLanded_png ) : piano_png;
         break;
       default:

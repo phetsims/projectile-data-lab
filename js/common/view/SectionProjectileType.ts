@@ -26,15 +26,15 @@ export default class SectionProjectileType extends PDLPanelSection {
   public constructor( projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: SectionProjectileTypeOptions ) {
 
     const projectileTypeRadioButtonGroup = new RectangularRadioButtonGroup( projectileTypeProperty, [ {
-      value: 'CANNONBALL' as const,
+      value: 'cannonball' as const,
       tandemName: 'cannonballRadioButton',
       createNode: () => new Image( cannonball_png, { scale: 0.25 } )
     }, {
-      value: 'PUMPKIN' as const,
+      value: 'pumpkin' as const,
       tandemName: 'pumpkinRadioButton',
       createNode: () => new Image( pumpkin_png, { scale: 0.2 } )
     }, {
-      value: 'PIANO' as const,
+      value: 'piano' as const,
       tandemName: 'pianoRadioButton',
       createNode: () => new Image( piano_png, { scale: 0.15 } )
     } ], {

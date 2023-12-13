@@ -26,15 +26,15 @@ export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadio
 
     const items: RectangularRadioButtonGroupItem<LauncherMechanism>[] = [
       {
-        value: 'SPRING' as const,
+        value: 'spring' as const,
         tandemName: 'springRadioButton',
         createNode: () => new Image( spring_png, { scale: 0.14 } )
       }, {
-        value: 'PRESSURE' as const,
+        value: 'pressure' as const,
         tandemName: 'pressureRadioButton',
         createNode: () => new Image( pressureWithNeedle_png, { scale: 0.18 } )
       }, {
-        value: 'EXPLOSION' as const,
+        value: 'explosion' as const,
         tandemName: 'explosionRadioButton',
         createNode: () => new Image( explosion_png, { scale: -0.18 } )
       } ];

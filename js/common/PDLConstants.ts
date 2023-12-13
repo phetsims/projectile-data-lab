@@ -74,12 +74,12 @@ const PDLConstants = {
   EXPLOSION_SPEED_SD: 4,
 
   LAUNCHER_CONFIGS: [
-    new PresetLauncherConfiguration( 'SPRING', 2 ),
-    new PresetLauncherConfiguration( 'SPRING', 8 ),
-    new PresetLauncherConfiguration( 'EXPLOSION', 0 ),
-    new PresetLauncherConfiguration( 'PRESSURE', 2 ),
-    new PresetLauncherConfiguration( 'PRESSURE', 4 ),
-    new PresetLauncherConfiguration( 'EXPLOSION', 8 )
+    new PresetLauncherConfiguration( 'spring', 2 ),
+    new PresetLauncherConfiguration( 'spring', 8 ),
+    new PresetLauncherConfiguration( 'explosion', 0 ),
+    new PresetLauncherConfiguration( 'pressure', 2 ),
+    new PresetLauncherConfiguration( 'pressure', 4 ),
+    new PresetLauncherConfiguration( 'explosion', 8 )
   ],
 
   // The projectile source images are scaled by this factor when drawing them on the canvas

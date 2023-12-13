@@ -30,25 +30,25 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
 
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, providedOptions: SectionLauncherConfigurationOptions ) {
     const launcherConfigurationRadioButtonGroup = new RectangularRadioButtonGroup( launcherConfigurationProperty, [ {
-      value: 'ANGLE_30' as const,
+      value: 'angle30' as const,
       tandemName: 'angleThirtyRadioButton',
       createNode: () => new Image( configurationButton1_png, {
         maxWidth: IMAGE_MAX_WIDTH
       } )
     }, {
-      value: 'ANGLE_45' as const,
+      value: 'angle45' as const,
       tandemName: 'angleFortyFiveRadioButton',
       createNode: () => new Image( configurationButton2_png, {
         maxWidth: IMAGE_MAX_WIDTH
       } )
     }, {
-      value: 'ANGLE_60' as const,
+      value: 'angle60' as const,
       tandemName: 'angleSixtyRadioButton',
       createNode: () => new Image( configurationButton3_png, {
         maxWidth: IMAGE_MAX_WIDTH
       } )
     }, {
-      value: 'ANGLE_0_RAISED' as const,
+      value: 'angle0Raised' as const,
       tandemName: 'angleZeroRadioButton',
       createNode: () => new Image( configurationButton4_png, {
         maxWidth: IMAGE_MAX_WIDTH
