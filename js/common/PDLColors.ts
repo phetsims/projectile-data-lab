@@ -145,6 +145,10 @@ const PDLColors = {
 
   meanMarkerColorProperty: new ProfileColorProperty( projectileDataLab, 'meanMarker', {
     default: '#E300AD'
+  } ),
+
+  histogramIntervalToolFillColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramIntervalToolFill', {
+    default: new Color( 'yellow' ).withAlpha( 0.3 )
   } )
 };
 

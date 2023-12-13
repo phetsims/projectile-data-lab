@@ -39,6 +39,7 @@ export default class HistogramNode extends Node {
 
   protected readonly chartNode: Node;
   protected readonly chartTransform: ChartTransform;
+  protected readonly chartClipLayer: Node;
 
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
@@ -87,6 +88,7 @@ export default class HistogramNode extends Node {
       lineWidth: 0.8
     } );
 
+    this.chartClipLayer = new Node();
     const chartCanvasNode = new ChartCanvasNode( this.chartTransform, [ histogramPainter ] );
     const chartClip = new Node( {
       clipArea: chartBackground.getShape(),
@@ -95,6 +97,8 @@ export default class HistogramNode extends Node {
         // Minor grid lines
         horizontalGridLines,
         verticalGridLines,
+
+        this.chartClipLayer,
 
         // Some data
         chartCanvasNode

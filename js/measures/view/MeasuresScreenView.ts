@@ -55,7 +55,9 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       ProjectileDataLabStrings.distanceStringProperty,
       model.isDataMeasuresVisibleProperty,
       model.landedDistanceAverageProperty,
-      model.landedDistanceStandardDeviationProperty, {
+      model.landedDistanceStandardDeviationProperty,
+      model.intervalTool,
+      model.isIntervalToolVisibleProperty, {
         tandem: options.tandem.createTandem( 'histogramNode' )
       } );
 
