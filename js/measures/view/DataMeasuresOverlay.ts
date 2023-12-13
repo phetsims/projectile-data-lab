@@ -51,8 +51,8 @@ export default class DataMeasuresOverlay extends Node {
       new Vector2( meanMarkerSideLength / 2, origin.y - meanMarkerHeight ),
       new Vector2( 0, origin.y )
     ] ), {
-      fill: PDLColors.meanMarkerColorProperty,
-      stroke: 'black'
+      fill: PDLColors.meanMarkerFillProperty,
+      stroke: PDLColors.meanMarkerStrokeProperty
     } );
 
     const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {

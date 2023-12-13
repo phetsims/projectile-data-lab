@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { ManualConstraint, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { Color, ManualConstraint, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
@@ -46,6 +46,8 @@ export default class HistogramNode extends Node {
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
+                      blockFillProperty: TReadOnlyProperty<Color>,
+                      blockStrokeProperty: TReadOnlyProperty<Color>,
                       options: HistogramNodeOptions ) {
     super();
 
@@ -74,7 +76,8 @@ export default class HistogramNode extends Node {
       stroke: 'black'
     } );
 
-    const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty );
+    const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty,
+      blockFillProperty, blockStrokeProperty );
 
     // Changes based on the zoom level
     const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {

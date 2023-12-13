@@ -37,7 +37,10 @@ export default class MeasuresHistogramNode extends HistogramNode {
                       intervalTool: IntervalTool,
                       intervalToolVisibleProperty: TReadOnlyProperty<boolean>,
                       options: MeasuresHistogramNodeOptions ) {
-    super( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, horizontalAxisLabelText, options );
+    super( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, horizontalAxisLabelText,
+
+      PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty,
+      options );
 
     const dataMeasuresChartOverlay = new DataMeasuresOverlay( this.chartTransform, meanProperty, standardDeviationProperty,
       this.chartTransform.viewHeight, isDataMeasuresVisibleProperty, {

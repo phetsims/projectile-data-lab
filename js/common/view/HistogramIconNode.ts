@@ -5,13 +5,13 @@ import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import Range from '../../../../dot/js/Range.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { ColorProperty, Node } from '../../../../scenery/js/imports.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import Property from '../../../../axon/js/Property.js';
 
 export default class HistogramIconNode extends Node {
-  public constructor( histogramRepresentation: HistogramRepresentation ) {
+  public constructor( blockFillProperty: ColorProperty, blockStrokeProperty: ColorProperty, histogramRepresentation: HistogramRepresentation ) {
     super( {
       pickable: true
     } );
@@ -25,7 +25,8 @@ export default class HistogramIconNode extends Node {
     const histogramPainter = new HistogramCanvasPainter(
       chartTransform,
       new NumberProperty( 1 ),
-      new Property<HistogramRepresentation>( histogramRepresentation )
+      new Property<HistogramRepresentation>( histogramRepresentation ),
+      blockFillProperty, blockStrokeProperty
     );
     const data = [ { x: 0 }, { x: 0 }, { x: 1 }, { x: 1 }, { x: 1 }, { x: 2 } ];
     histogramPainter.setHistogramData( data, data[ 1 ] );

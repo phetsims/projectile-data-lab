@@ -1,10 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
-import { NodeOptions } from '../../../../scenery/js/imports.js';
+import { Color, NodeOptions } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PDLColors from '../../common/PDLColors.js';
 import CanvasPainter from '../../../../bamboo/js/CanvasPainter.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
@@ -27,6 +26,8 @@ export default class HistogramCanvasPainter extends CanvasPainter {
   public constructor( private readonly chartTransform: ChartTransform,
                       private readonly binWidthProperty: TReadOnlyProperty<number>,
                       private readonly histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
+                      private readonly blockFillProperty: TReadOnlyProperty<Color>,
+                      private readonly blockStrokeProperty: TReadOnlyProperty<Color>,
                       providedOptions?: BarPlotOptions ) {
     super( providedOptions );
   }
@@ -45,8 +46,8 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     const histogramRepresentation = this.histogramRepresentationProperty.value;
     context.save();
 
-    context.fillStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
-    context.strokeStyle = PDLColors.histogramDataStrokeColorProperty.value.toCSS();
+    context.fillStyle = this.blockFillProperty.value.toCSS();
+    context.strokeStyle = this.blockStrokeProperty.value.toCSS();
 
     const lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.15 ) );
 
@@ -109,7 +110,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
         context.beginPath();
         context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, 3 * scaleFactor, 0, 2 * Math.PI );
         context.fillStyle = 'white';
-        context.strokeStyle = PDLColors.histogramDataFillColorProperty.value.toCSS();
+        context.strokeStyle = this.blockFillProperty.value.toCSS();
         context.lineWidth = scaleFactor;
         context.fill();
         context.stroke();

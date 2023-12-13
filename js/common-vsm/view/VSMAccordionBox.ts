@@ -12,6 +12,7 @@ import VSMField from '../model/VSMField.js';
 import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
+import PDLColors from '../../common/PDLColors.js';
 
 /**
  * The VSMAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -45,7 +46,9 @@ export default class VSMAccordionBox extends PDLAccordionBox {
       } )
     }, providedOptions );
 
-    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty, options );
+    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty,
+      PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty,
+      options );
   }
 }
 

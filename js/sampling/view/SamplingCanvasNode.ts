@@ -66,12 +66,12 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
       context.lineTo( viewPoint.x - SIDE_LENGTH / 2, viewPoint.y - height ); // Line to bottom-left vertex
       context.lineTo( viewPoint.x + SIDE_LENGTH / 2, viewPoint.y - height ); // Line to bottom-right vertex
       context.closePath();
-      context.fillStyle = PDLColors.meanMarkerColorProperty.value.toCSS();
+      context.fillStyle = PDLColors.meanMarkerFillProperty.value.toCSS();
       context.fill();
 
       // And add a black stroke around it
       context.lineWidth = 1;
-      context.strokeStyle = 'black';
+      context.fillStyle = PDLColors.meanMarkerStrokeProperty.value.toCSS();
       context.stroke();
     }
   }

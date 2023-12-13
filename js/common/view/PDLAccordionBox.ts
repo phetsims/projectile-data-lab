@@ -10,7 +10,7 @@
 
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HBox, Node } from '../../../../scenery/js/imports.js';
+import { ColorProperty, HBox, Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Property from '../../../../axon/js/Property.js';
@@ -38,6 +38,7 @@ export default class PDLAccordionBox extends AccordionBox {
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
+                      blockFillProperty: ColorProperty, blockStrokeProperty: ColorProperty,
                       providedOptions: PDLAccordionBoxOptions ) {
 
     const margin = 8;
@@ -112,13 +113,16 @@ export default class PDLAccordionBox extends AccordionBox {
     } );
 
     // REVIEW: Why are these controls out here instead of in HistogramNode?
-    const barBlockSwitch = new ABSwitch( histogramRepresentationProperty, 'blocks', new HistogramIconNode( 'blocks' ), 'bars', new HistogramIconNode( 'bars' ), {
-      tandem: providedOptions.tandem.createTandem( 'barBlockSwitch' ),
-      spacing: margin,
-      toggleSwitchOptions: {
-        maxWidth: 32
-      }
-    } );
+    const barBlockSwitch = new ABSwitch(
+      histogramRepresentationProperty,
+      'blocks', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
+      'bars', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'bars' ), {
+        tandem: providedOptions.tandem.createTandem( 'barBlockSwitch' ),
+        spacing: margin,
+        toggleSwitchOptions: {
+          maxWidth: 32
+        }
+      } );
 
     labelAndComboBoxContainer.leftTop = content.leftBottom.plusXY( margin, -15 );
     barBlockSwitch.rightTop = content.rightBottom.plusXY( -margin, -15 );

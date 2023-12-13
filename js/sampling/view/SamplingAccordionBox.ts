@@ -12,6 +12,7 @@ import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import SamplingField from '../model/SamplingField.js';
+import PDLColors from '../../common/PDLColors.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -38,9 +39,10 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
     histogramRepresentationProperty: Property<HistogramRepresentation>,
     providedOptions: VSMAccordionBoxOptions ) {
 
-    const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, ProjectileDataLabStrings.meanDistanceStringProperty, {
-      tandem: providedOptions.tandem.createTandem( 'histogramNode' )
-    } );
+    const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, ProjectileDataLabStrings.meanDistanceStringProperty,
+      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, {
+        tandem: providedOptions.tandem.createTandem( 'histogramNode' )
+      } );
 
     const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
@@ -49,7 +51,10 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
       maxWidth: 500
     }, providedOptions );
 
-    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty, options );
+    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty,
+
+      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty,
+      options );
   }
 }
 
