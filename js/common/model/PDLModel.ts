@@ -142,10 +142,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       validValues: this.fields,
       tandem: providedOptions.tandem.createTandem( 'fieldProperty' ),
       phetioDocumentation: 'This property indicates the active field.',
-      phetioValueType: ReferenceIO( Field.FieldIO ),
-
-      // TODO: Fix reentrant error - see https://github.com/phetsims/projectile-data-lab/issues/7
-      reentrant: true
+      phetioValueType: ReferenceIO( Field.FieldIO )
     } );
 
     this.launchModeProperty = new DynamicProperty<LaunchMode, LaunchMode, T>( this.fieldProperty, {
