@@ -134,29 +134,29 @@ export default class IntervalToolNode extends Node {
     };
 
     const update = () => {
-      const viewPoint1 = modelViewTransform.modelToViewXY( intervalTool.edge1, 16 );
-      const viewPoint1Lower = modelViewTransform.modelToViewXY( intervalTool.edge1, 11.5 );
-      const viewPointGround1 = modelViewTransform.modelToViewXY( intervalTool.edge1, 0 );
+      const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1 );
+      const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2 );
 
-      const viewPoint2 = modelViewTransform.modelToViewXY( intervalTool.edge2, 16 );
-      const viewPoint2Lower = modelViewTransform.modelToViewXY( intervalTool.edge2, 11.5 );
-      const viewPointGround2 = modelViewTransform.modelToViewXY( intervalTool.edge2, 0 );
+      const y16 = modelViewTransform.modelToViewY( 16 );
+      const y11_5 = modelViewTransform.modelToViewY( 11.5 );
+      const y0 = modelViewTransform.modelToViewY( 0 );
 
-      edge1Sphere.center = viewPoint1;
-      edge2Sphere.center = viewPoint2;
+      edge1Sphere.center = new Vector2( viewEdge1X, y16 );
+      edge2Sphere.center = new Vector2( viewEdge2X, y16 );
 
-      edge1Line.setLine( viewPoint1.x, viewPoint1.y, viewPointGround1.x, viewPointGround1.y );
-      edge2Line.setLine( viewPoint2.x, viewPoint2.y, viewPointGround2.x, viewPointGround2.y );
+      edge1Line.setLine( viewEdge1X, y16, viewEdge1X, y0 );
+      edge2Line.setLine( viewEdge2X, y16, viewEdge2X, y0 );
 
-      this.arrowNode.setTailAndTip( viewPoint1Lower.x, viewPoint1Lower.y, viewPoint2Lower.x, viewPoint2Lower.y );
+      // Note if the edge1 and edge2 are the same, the arrow will have the empty bounds
+      this.arrowNode.setTailAndTip( viewEdge1X, y11_5, viewEdge2X, y11_5 );
 
       intervalText.string = Utils.toFixed( ( Math.abs( intervalTool.edge2 - intervalTool.edge1 ) ), 1 ) + ' m';
 
       intervalReadout.mouseArea = intervalReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
       intervalReadout.touchArea = intervalReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
 
-      readoutVBox.centerX = this.arrowNode.centerX;
-      readoutVBox.top = this.arrowNode.centerY - intervalReadout.height / 2;
+      readoutVBox.centerX = ( viewEdge1X + viewEdge2X ) / 2;
+      readoutVBox.top = y11_5 - intervalReadout.height / 2;
     };
 
     intervalTool.dataFractionProperty.link( fraction => {
