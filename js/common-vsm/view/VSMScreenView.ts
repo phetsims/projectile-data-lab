@@ -65,7 +65,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
     const projectileCanvas = new VSMCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
-      this.modelViewTransform, model.selectedSampleProperty, {
+      this.modelViewTransform, {
         canvasBounds: this.canvasBounds
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );

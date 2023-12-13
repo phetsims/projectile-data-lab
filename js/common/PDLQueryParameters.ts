@@ -24,7 +24,8 @@ const SCHEMA_MAP = {
 
 const PDLQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
 
-const binStrategy = PDLQueryParameters.binStrategy as BinStrategy; // TODO: QSM not being nice https://github.com/phetsims/projectile-data-lab/issues/7
+// phet-types.d.ts does not support inferring string union types for string query parameters, so we need to cast
+const binStrategy = PDLQueryParameters.binStrategy as BinStrategy;
 
 // the top checkboxes are left aligned with the play area checkboxes, so their max width is smaller to accommodate
 // for the accordion box margin

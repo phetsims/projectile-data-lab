@@ -17,7 +17,6 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { LauncherMechanism } from './LauncherMechanism.js';
 import Projectile from '../../common/model/Projectile.js';
 
@@ -48,10 +47,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
   public readonly customLauncherTypeProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>;
   public readonly angleStabilizerProperty: DynamicProperty<number, number, VSMField>;
-
-  // TODO: Do we still need this in VSMModel now that we have VSMCanvasNode? - see see https://github.com/phetsims/projectile-data-lab/issues/7
-  // TODO: Or maybe always create it and only instrument in in the sampling screen? see https://github.com/phetsims/projectile-data-lab/issues/7
-  public readonly selectedSampleProperty: TReadOnlyProperty<number> = new Property( 0 );
 
   public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, VSMField>;
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;

@@ -38,11 +38,11 @@ const PUMPKIN_LANDED_IMAGES = [ pumpkinLanded1_png, pumpkinLanded2_png, pumpkinL
 const PUMPKIN_LANDED_DARK_IMAGES = [ pumpkinLanded1Dark_png, pumpkinLanded2Dark_png, pumpkinLanded3Dark_png ];
 
 export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode {
-  public constructor(
+  protected constructor(
     protected readonly fieldProperty: Property<T>,
     protected readonly isPathsVisibleProperty: Property<boolean>,
     protected readonly modelViewTransform: ModelViewTransform2,
-    private readonly selectedSampleProperty: TReadOnlyProperty<number>,
+    selectedSampleProperty: TReadOnlyProperty<number> | null,
     providedOptions: PDLCanvasNodeOptions ) {
 
     const options = optionize<PDLCanvasNodeOptions, SelfOptions, CanvasNodeOptions>()( {
@@ -70,7 +70,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
 
     // When the path visibility changes or the selected sample changes, repaint
     isPathsVisibleProperty.link( myBoundListener );
-    selectedSampleProperty.link( myBoundListener );
+    selectedSampleProperty && selectedSampleProperty.link( myBoundListener );
 
     this.modelViewTransform = modelViewTransform;
   }

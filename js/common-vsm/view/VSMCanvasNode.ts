@@ -8,7 +8,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../../common/PDLColors.js';
 import Projectile from '../../common/model/Projectile.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * Render the paths and projectiles for the Variability, Sources and Measures screens of Projectile Data Lab.
@@ -22,12 +21,12 @@ type VSMCanvasNodeOptions = SelfOptions & PDLCanvasNodeOptions;
 
 export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> {
   public constructor( fieldProperty: Property<T>, isPathsVisibleProperty: Property<boolean>,
-                      modelViewTransform: ModelViewTransform2, selectedSampleProperty: TReadOnlyProperty<number>,
+                      modelViewTransform: ModelViewTransform2,
                       providedOptions: VSMCanvasNodeOptions ) {
 
     const options = optionize<VSMCanvasNodeOptions, SelfOptions, PDLCanvasNodeOptions>()( {}, providedOptions );
 
-    super( fieldProperty, isPathsVisibleProperty, modelViewTransform, selectedSampleProperty, options );
+    super( fieldProperty, isPathsVisibleProperty, modelViewTransform, null, options );
   }
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
