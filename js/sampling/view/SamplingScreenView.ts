@@ -18,6 +18,7 @@ import SampleCardsPanel from './SampleCardsPanel.js';
 import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
 import SamplingCanvasNode from './SamplingCanvasNode.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -31,7 +32,10 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
     const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
-    super( model, options );
+    super( model,
+      ProjectileDataLabStrings.singleSampleStringProperty,
+      ProjectileDataLabStrings.continuousSamplingStringProperty,
+      options );
 
     const projectileCanvas = new SamplingCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
       this.modelViewTransform, model.selectedSampleProperty, {

@@ -35,6 +35,7 @@ import LauncherNode from './LauncherNode.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 import PDLAccordionBox from './PDLAccordionBox.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
@@ -61,7 +62,10 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected readonly resetAllButton;
   protected readonly noAirResistanceText: PDLText;
 
-  protected constructor( model: PDLModel<T>, options: PDLScreenViewOptions ) {
+  protected constructor( model: PDLModel<T>,
+                         singleStringProperty: TReadOnlyProperty<string>,
+                         continuousStringProperty: TReadOnlyProperty<string>,
+                         options: PDLScreenViewOptions ) {
     super( options );
 
     const fieldX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X;
@@ -171,14 +175,14 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     const radioButtonLabelMaxWidth = 180;
     this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchModeProperty, [ {
       value: 'single' as const,
-      createNode: () => new Text( ProjectileDataLabStrings.singleLaunchStringProperty, {
+      createNode: () => new Text( singleStringProperty, {
         font: PDLConstants.LAUNCH_CONTROL_FONT,
         maxWidth: radioButtonLabelMaxWidth
       } ),
       tandemName: 'singleLaunchRadioButton'
     }, {
       value: 'continuous' as const,
-      createNode: () => new Text( ProjectileDataLabStrings.continuousLaunchStringProperty, {
+      createNode: () => new Text( continuousStringProperty, {
         font: PDLConstants.LAUNCH_CONTROL_FONT,
         maxWidth: radioButtonLabelMaxWidth
       } ),

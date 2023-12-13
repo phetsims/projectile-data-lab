@@ -20,6 +20,8 @@ type StringsType = {
   };
   'singleLaunchStringProperty': LocalizedStringProperty;
   'continuousLaunchStringProperty': LocalizedStringProperty;
+  'singleSampleStringProperty': LocalizedStringProperty;
+  'continuousSamplingStringProperty': LocalizedStringProperty;
   'noAirResistanceStringProperty': LocalizedStringProperty;
   'configurationStringProperty': LocalizedStringProperty;
   'projectile10kgStringProperty': LocalizedStringProperty;
