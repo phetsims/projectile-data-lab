@@ -90,11 +90,11 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   // In the Sampling screen, choosing a launcher + number of samples combination determines the field uniquely.
   public abstract selectedSampleProperty: TReadOnlyProperty<number>;
 
-  protected constructor( providedOptions: PDLModelOptions<T> ) {
+  protected constructor( isHistogramInitiallyVisible: boolean, providedOptions: PDLModelOptions<T> ) {
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
 
-    this.isHistogramVisibleProperty = new Property<boolean>( false, {
+    this.isHistogramVisibleProperty = new Property<boolean>( isHistogramInitiallyVisible, {
       tandem: visiblePropertiesTandem.createTandem( 'isHistogramVisibleProperty' ),
       phetioDocumentation: 'This property indicates whether the histogram is showing.',
       phetioValueType: BooleanIO

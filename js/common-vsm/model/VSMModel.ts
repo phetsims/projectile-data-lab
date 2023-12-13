@@ -64,7 +64,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       fields: fields,
       isPathsVisible: false
     }, providedOptions );
-    super( options );
+    super( false, options );
 
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,

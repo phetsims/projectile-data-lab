@@ -53,7 +53,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       isPathsVisible: true
     }, providedOptions );
 
-    super( options );
+    super( true, options );
 
     this.sampleSizeProperty = new Property<number>( 2, {
       validValues: SAMPLE_SIZES,
