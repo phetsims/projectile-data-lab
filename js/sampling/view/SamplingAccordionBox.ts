@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, Text } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PDLAccordionBox, { PDLAccordionBoxOptions } from '../../common/view/PDLAccordionBox.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -13,6 +13,7 @@ import { HistogramRepresentation } from '../../common/model/HistogramRepresentat
 import HistogramNode from '../../common/view/HistogramNode.js';
 import SamplingField from '../model/SamplingField.js';
 import PDLColors from '../../common/PDLColors.js';
+import SampleThumbnailNode from './SampleThumbnailNode.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -51,7 +52,24 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
       maxWidth: 500
     }, providedOptions );
 
-    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty,
+    super( comboBoxParent, new HBox( {
+        spacing: 4,
+        children: [ histogramNode,
+          new VBox( {
+            spacing: 4,
+            children: [
+              new SampleThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+              new SampleThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+              new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+              new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty )
+            ]
+          } )
+        ]
+      } ), selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty,
 
       PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty,
       options );
