@@ -146,8 +146,17 @@ const PDLColors = {
   meanMarkerFillProperty: new ProfileColorProperty( projectileDataLab, 'meanMarkerFill', {
     default: '#E300AD'
   } ),
+
   meanMarkerStrokeProperty: new ProfileColorProperty( projectileDataLab, 'meanMarkerStroke', {
-    default: 'black'
+    default: '#000000'
+  } ),
+
+  intervalToolSphereColorProperty: new ProfileColorProperty( projectileDataLab, 'intervalToolSphere', {
+    default: '#ffc537'
+  } ),
+
+  intervalToolLineColorProperty: new ProfileColorProperty( projectileDataLab, 'intervalToolLine', {
+    default: '#8f8f8f'
   } ),
 
   histogramIntervalToolFillColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramIntervalToolFill', {
