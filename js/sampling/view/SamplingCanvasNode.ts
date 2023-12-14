@@ -75,7 +75,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
       // And add a black stroke around it
       context.lineWidth = 1;
-      context.fillStyle = PDLColors.meanMarkerStrokeProperty.value.toCSS();
+      context.strokeStyle = PDLColors.meanMarkerStrokeProperty.value.toCSS();
       context.stroke();
     }
   }
