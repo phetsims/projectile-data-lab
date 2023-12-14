@@ -45,19 +45,15 @@ const PDLColors = {
   } ),
 
   pathStrokeAirborneColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeAirborne', {
-    default: new Color( 0x701AC3, 0.3 )
+    default: new Color( 0x701AC3, 0.8 )
   } ),
 
-  pathStrokeLandedInitialColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedInitial', {
-    default: new Color( 0x701AC3, 0.3 )
-  } ),
-
-  pathStrokeLandedFinalColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedFinal', {
-    default: new Color( 0x701AC3, 0.05 )
+  pathStrokeLandedColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedInitial', {
+    default: new Color( 0xFFFFFF, 0.1 )
   } ),
 
   pathStrokeHighlightedColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeHighlighted', {
-    default: new Color( 0x701AC3, 1 )
+    default: new Color( 0xc926df, 0.8 )
   } ),
 
   fieldLineStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineStroke', {

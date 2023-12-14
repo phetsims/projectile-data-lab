@@ -34,11 +34,12 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
 
     // Order of drawing:
     // 1. Force field graphics for landed outliers
-    // 2: Trajectories that are not for the most recent landed projectile (if paths are visible)
+    // 2: Trajectories for landed projectile that are not the most recent (if paths are visible)
     // 3: Landed projectiles that are not the most recent
     // 4: Trajectory for most recent landed projectile (if paths are visible)
-    // 5: Flying projectiles
-    // 6: Most recent landed projectile
+    // 5: Trajectories for flying projectiles (if paths are visible)
+    // 6: Flying projectiles
+    // 7: Most recent landed projectile
 
     const landedProjectiles = this.fieldProperty.value.landedProjectiles;
     const airborneProjectiles = this.fieldProperty.value.airborneProjectiles;
@@ -47,28 +48,15 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
     // 1. Force field graphics for landed outliers are drawn in PDLCanvasNode
     super.drawOutlierGraphicsForLandedProjectiles( landedProjectiles, context );
 
-    // 2. Landed trajectories that are not for the most recent landed projectile (if paths are visible)
+    // 2: Trajectories for landed projectile that are not the most recent (if paths are visible)
     if ( this.isPathsVisibleProperty.value ) {
-      context.lineWidth = 1.5;
-      context.strokeStyle = PDLColors.pathStrokeLandedInitialColorProperty.value.toCSS();
+      context.lineWidth = 1;
+      context.strokeStyle = PDLColors.pathStrokeLandedColorProperty.value.toCSS();
 
-      const numLandedProjectiles = landedProjectiles.length;
-      landedProjectiles.forEach( ( projectile, index ) => {
+      landedProjectiles.forEach( projectile => {
         if ( projectile !== highlightedProjectile ) {
-
-          const NUM_LANDED_PATHS_TO_SHOW = 20;
-          const ratio = Math.min( 1, ( numLandedProjectiles - index ) / ( NUM_LANDED_PATHS_TO_SHOW + 1 ) );
-          const color = PDLColors.pathStrokeLandedInitialColorProperty.value.blend( PDLColors.pathStrokeLandedFinalColorProperty.value, ratio );
-          context.strokeStyle = color.toCSS();
-
           this.drawPathForProjectile( context, projectile );
         }
-      } );
-
-      context.strokeStyle = PDLColors.pathStrokeAirborneColorProperty.value.toCSS();
-
-      airborneProjectiles.forEach( projectile => {
-        this.drawPathForProjectile( context, projectile );
       } );
     }
 
@@ -85,12 +73,20 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
       this.drawPathForProjectile( context, highlightedProjectile );
     }
 
-    // 5: Flying projectiles
+    // 5: Trajectories for flying projectiles (if paths are visible)
+    if ( this.isPathsVisibleProperty.value ) {
+      context.strokeStyle = PDLColors.pathStrokeAirborneColorProperty.value.toCSS();
+      airborneProjectiles.forEach( projectile => {
+        this.drawPathForProjectile( context, projectile );
+      } );
+    }
+
+    // 6: Flying projectiles
     for ( let i = 0; i < airborneProjectiles.length; i++ ) {
       this.drawProjectile( context, airborneProjectiles[ i ], false, false );
     }
 
-    // 6: Most recent landed projectile
+    // 7: Most recent landed projectile
     if ( highlightedProjectile ) {
       this.drawProjectile( context, highlightedProjectile, true, false );
     }

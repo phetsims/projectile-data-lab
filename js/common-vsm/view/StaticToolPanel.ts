@@ -52,7 +52,7 @@ export default class StaticToolPanel extends PDLPanel {
 
           public override paintCanvas( context: CanvasRenderingContext2D ): void {
 
-            const color = PDLColors.pathStrokeHighlightedColorProperty.value.toCSS();
+            const color = PDLColors.pathStrokeAirborneColorProperty.value.toCSS();
             context.save();
             context.strokeStyle = color;
             context.lineWidth = 1.5;

@@ -26,7 +26,7 @@ const PDLConstants = {
   BOTTOM_UI_SPACING: 20,
 
   MAX_PROJECTILES_PER_FIELD: 500,
-  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.4, // seconds
+  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.6, // seconds
   MAX_ANGLE_STANDARD_DEVIATION: MAX_ANGLE_STANDARD_DEVIATION, // degrees
 
   // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
@@ -67,19 +67,19 @@ const PDLConstants = {
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
   SPRING_SPEED_MEAN: 25,
-  SPRING_SPEED_SD: 0.8,
+  SPRING_SPEED_SD: 0.2,
   PRESSURE_SPEED_MEAN: 25,
-  PRESSURE_SPEED_SD: 1.6,
-  EXPLOSION_SPEED_MEAN: 20,
-  EXPLOSION_SPEED_SD: 4,
+  PRESSURE_SPEED_SD: 0.5,
+  EXPLOSION_SPEED_MEAN: 25,
+  EXPLOSION_SPEED_SD: 1.2,
 
   LAUNCHER_CONFIGS: [
-    new PresetLauncherConfiguration( 'spring', 2 ),
-    new PresetLauncherConfiguration( 'spring', 8 ),
+    new PresetLauncherConfiguration( 'spring', 1 ),
+    new PresetLauncherConfiguration( 'spring', MAX_ANGLE_STANDARD_DEVIATION ),
     new PresetLauncherConfiguration( 'explosion', 0 ),
     new PresetLauncherConfiguration( 'pressure', 2 ),
     new PresetLauncherConfiguration( 'pressure', 4 ),
-    new PresetLauncherConfiguration( 'explosion', 8 )
+    new PresetLauncherConfiguration( 'explosion', MAX_ANGLE_STANDARD_DEVIATION )
   ],
 
   // The projectile source images are scaled by this factor when drawing them on the canvas
