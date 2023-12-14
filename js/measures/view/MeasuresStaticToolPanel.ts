@@ -28,7 +28,7 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
             isIcon: true
           } )
           .rasterized( {
-            resolution: 1.25
+            resolution: 4
           } );
         super( {
           children: [ dataMeasuresNode ],
