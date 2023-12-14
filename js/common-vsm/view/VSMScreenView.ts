@@ -188,6 +188,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
           angleToolNode.updateNeedleAndText( projectile.launchAngle );
+
+          this.launcherNode.playLaunchAnimation();
         }
       } );
 

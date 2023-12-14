@@ -11,6 +11,10 @@ import { Shape } from '../../../../kite/js/imports.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
+import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
+import Easing from '../../../../twixt/js/Easing.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -93,14 +97,51 @@ export default class LauncherNode extends Node {
     } );
   }
 
-  private updateLauncherHeight( height: number ): void {
-    this.y = this.modelViewTransform.modelToViewY( height );
+  // TODO: Check this for memory leaks - see https://github.com/phetsims/projectile-data-lab/issues/7
+  public playLaunchAnimation(): void {
+    const launcherFlashNode = new LauncherFlashNode( {
+      x: BARREL_LENGTH_AFTER_ORIGIN, y: 0,
+      opacity: 0
+    } );
+
+    this.launcherBarrel.addChild( launcherFlashNode );
+    launcherFlashNode.moveToBack();
+
+    const scaleProperty = new NumberProperty( 1 );
+    scaleProperty.lazyLink( scale => {
+      launcherFlashNode.setScaleMagnitude( scale );
+    } );
+
+    const launcherFlashAnimation = new Animation( {
+      duration: 0.35,
+      targets: [ {
+        property: scaleProperty,
+        from: 1,
+        to: dotRandom.nextDoubleBetween( 9, 11 ),
+        easing: Easing.QUADRATIC_OUT
+      }, {
+        property: launcherFlashNode.opacityProperty,
+        from: 0.5,
+        to: 0,
+        easing: Easing.QUADRATIC_OUT
+      } ]
+    } );
+
+    launcherFlashAnimation.endedEmitter.addListener( () => {
+      this.launcherBarrel.removeChild( launcherFlashNode );
+    } );
+
+    launcherFlashAnimation.start();
   }
 
   protected updatePresetLauncher( type: number ): void {
     this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( type );
     this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( type );
     this.launcherFrameFront.children = this.launcherFrameFrontGraphicsForType( type );
+  }
+
+  private updateLauncherHeight( height: number ): void {
+    this.y = this.modelViewTransform.modelToViewY( height );
   }
 
   private launcherBarrelGraphicsForType( presetLauncher: number ): Node[] {
