@@ -51,9 +51,19 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
     // 2: Trajectories for landed projectile that are not the most recent (if paths are visible)
     if ( this.isPathsVisibleProperty.value ) {
       context.lineWidth = 1;
-      context.strokeStyle = PDLColors.pathStrokeLandedColorProperty.value.toCSS();
 
-      landedProjectiles.forEach( projectile => {
+      // Set the path color to be a blend of the initial and final colors, based on the number of projectiles that have landed
+      // This is to avoid the landed paths from becoming too dark when overlapping
+      const numLandedProjectiles = landedProjectiles.length;
+
+      // This is the minimum number of projectiles that will cause the path color to be the final color
+      const PROJECTILES_FOR_FINAL_STROKE_COLOR = 300;
+
+      const colorRatio = Math.min( numLandedProjectiles / PROJECTILES_FOR_FINAL_STROKE_COLOR, 1 );
+      const pathColor = PDLColors.pathStrokeLandedInitialColorProperty.value.blend( PDLColors.pathStrokeLandedFinalColorProperty.value, colorRatio );
+      context.strokeStyle = pathColor.toCSS();
+
+      landedProjectiles.forEach( ( projectile, index ) => {
         if ( projectile !== highlightedProjectile ) {
           this.drawPathForProjectile( context, projectile );
         }

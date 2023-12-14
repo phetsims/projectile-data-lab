@@ -42,7 +42,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
     // 2. Trajectories
     context.lineWidth = 2;
-    context.strokeStyle = PDLColors.pathStrokeLandedColorProperty.value.toCSS();
+    context.strokeStyle = PDLColors.pathStrokeLandedInitialColorProperty.value.toCSS();
     for ( let i = 0; i < projectiles.length; i++ ) {
       this.drawPathForProjectile( context, projectiles[ i ] );
     }
