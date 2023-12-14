@@ -16,6 +16,8 @@ import Utils from '../../../../dot/js/Utils.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type IntervalToolNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
@@ -34,45 +36,44 @@ export default class IntervalToolNode extends Node {
       visibleProperty: isIntervalToolVisible
     } );
 
-    const edge1Line = new Line( Vector2.ZERO, Vector2.ZERO, {
-      stroke: 'black',
-      lineWidth: 3
-    } );
+    const lineOptions = {
+      stroke: PDLColors.intervalToolLineColorProperty,
+      lineWidth: 2
+    };
 
-    const edge1Sphere = new ShadedSphereNode( 20, {
-      focusable: true,
-      tagName: 'div',
-      translation: Vector2.ZERO
-    } );
-    edge1Sphere.touchArea = edge1Sphere.localBounds.dilatedXY( 2, 4 );
-    edge1Sphere.mouseArea = edge1Sphere.localBounds.dilatedXY( 2, 4 );
+    const edge1Line = new Line( Vector2.ZERO, Vector2.ZERO, lineOptions );
+    const edge2Line = new Line( Vector2.ZERO, Vector2.ZERO, lineOptions );
     this.addChild( edge1Line );
-    this.addChild( edge1Sphere );
+    this.addChild( edge2Line );
 
-    const edge2Line = new Line( Vector2.ZERO, Vector2.ZERO, {
-      stroke: 'black',
-      lineWidth: 3
-    } );
-    const edge2Sphere = new ShadedSphereNode( 20, {
+    const sphereOptions = {
+      mainColor: PDLColors.intervalToolSphereColorProperty,
       focusable: true,
       tagName: 'div',
       translation: Vector2.ZERO
-    } );
+    };
+
+    const edge1Sphere = new ShadedSphereNode( 20, sphereOptions );
+    const edge2Sphere = new ShadedSphereNode( 20, sphereOptions );
+
+    edge1Sphere.touchArea = edge1Sphere.localBounds.dilatedXY( 2, 4 );
     edge2Sphere.touchArea = edge2Sphere.localBounds.dilatedXY( 2, 4 );
+
+    edge1Sphere.mouseArea = edge1Sphere.localBounds.dilatedXY( 2, 4 );
     edge2Sphere.mouseArea = edge2Sphere.localBounds.dilatedXY( 2, 4 );
 
-    this.addChild( edge2Line );
+    this.addChild( edge1Sphere );
     this.addChild( edge2Sphere );
 
     this.arrowNode = new ArrowNode( 0, 0, 0, 0, {
       doubleHead: true,
-      tailWidth: 4
+      tailWidth: 3
     } );
 
     this.addChild( this.arrowNode );
 
     const intervalText = new PDLText( '', {
-      fontSize: 16
+      font: PDLConstants.INTERVAL_TOOL_FONT
     } );
     const intervalReadout = new Panel( intervalText );
 
@@ -95,7 +96,7 @@ export default class IntervalToolNode extends Node {
     // } );
 
     const percentReadout = new Panel( new PDLText( percentPatternProperty, {
-      fontSize: 16
+      font: PDLConstants.INTERVAL_TOOL_FONT
     } ) );
     percentPatternProperty.link( () => {
       percentReadout.mouseArea = percentReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
@@ -106,7 +107,7 @@ export default class IntervalToolNode extends Node {
       focusable: true,
       tagName: 'div',
       children: [ intervalReadout, percentReadout ],
-      spacing: 10
+      spacing: 6
     } );
     this.addChild( readoutVBox );
 
@@ -141,18 +142,18 @@ export default class IntervalToolNode extends Node {
       const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1 );
       const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2 );
 
-      const y16 = modelViewTransform.modelToViewY( 16 );
-      const y11_5 = modelViewTransform.modelToViewY( 11.5 );
+      const SPHERE_Y = modelViewTransform.modelToViewY( 16 );
+      const ARROW_Y = modelViewTransform.modelToViewY( 12.5 );
       const y0 = modelViewTransform.modelToViewY( 0 );
 
-      edge1Sphere.center = new Vector2( viewEdge1X, y16 );
-      edge2Sphere.center = new Vector2( viewEdge2X, y16 );
+      edge1Sphere.center = new Vector2( viewEdge1X, SPHERE_Y );
+      edge2Sphere.center = new Vector2( viewEdge2X, SPHERE_Y );
 
-      edge1Line.setLine( viewEdge1X, y16, viewEdge1X, y0 );
-      edge2Line.setLine( viewEdge2X, y16, viewEdge2X, y0 );
+      edge1Line.setLine( viewEdge1X, SPHERE_Y, viewEdge1X, y0 );
+      edge2Line.setLine( viewEdge2X, SPHERE_Y, viewEdge2X, y0 );
 
       // Note if the edge1 and edge2 are the same, the arrow will have the empty bounds
-      this.arrowNode.setTailAndTip( viewEdge1X, y11_5, viewEdge2X, y11_5 );
+      this.arrowNode.setTailAndTip( viewEdge1X, ARROW_Y, viewEdge2X, ARROW_Y );
 
       intervalText.string = Utils.toFixed( ( Math.abs( intervalTool.edge2 - intervalTool.edge1 ) ), 1 ) + ' m';
 
@@ -160,7 +161,7 @@ export default class IntervalToolNode extends Node {
       intervalReadout.touchArea = intervalReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
 
       readoutVBox.centerX = ( viewEdge1X + viewEdge2X ) / 2;
-      readoutVBox.top = y11_5 - intervalReadout.height / 2;
+      readoutVBox.top = ARROW_Y - intervalReadout.height / 2;
     };
 
     intervalTool.dataFractionProperty.link( fraction => update() );

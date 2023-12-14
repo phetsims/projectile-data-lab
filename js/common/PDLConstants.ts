@@ -91,6 +91,7 @@ const PDLConstants = {
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
+  INTERVAL_TOOL_FONT: new PhetFont( 15 ),
 
   ANGLE_STABILIZER_RANGE: new Range( 0, MAX_ANGLE_STANDARD_DEVIATION ),
 
