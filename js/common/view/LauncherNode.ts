@@ -113,15 +113,15 @@ export default class LauncherNode extends Node {
     } );
 
     const launcherFlashAnimation = new Animation( {
-      duration: 0.35,
+      duration: 0.25,
       targets: [ {
         property: scaleProperty,
         from: 1,
-        to: dotRandom.nextDoubleBetween( 9, 11 ),
+        to: dotRandom.nextDoubleBetween( 8, 10 ),
         easing: Easing.QUADRATIC_OUT
       }, {
         property: launcherFlashNode.opacityProperty,
-        from: 0.5,
+        from: 0.4,
         to: 0,
         easing: Easing.QUADRATIC_OUT
       } ]
