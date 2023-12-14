@@ -17,25 +17,26 @@ import PDLColors from '../PDLColors.js';
 import Projectile from '../model/Projectile.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import cannonball_png from '../../../images/cannonball_png.js';
-import pumpkin_png from '../../../images/pumpkin_png.js';
-import piano_png from '../../../images/piano_png.js';
-import pumpkinLanded1_png from '../../../images/pumpkinLanded1_png.js';
-import pumpkinLanded2_png from '../../../images/pumpkinLanded2_png.js';
-import pumpkinLanded3_png from '../../../images/pumpkinLanded3_png.js';
-import pianoLanded_png from '../../../images/pianoLanded_png.js';
+import cannonballHighlighted_png from '../../../images/cannonballHighlighted_png.js';
 import cannonballDark_png from '../../../images/cannonballDark_png.js';
-import pumpkinLanded1Dark_png from '../../../images/pumpkinLanded1Dark_png.js';
-import pumpkinLanded2Dark_png from '../../../images/pumpkinLanded2Dark_png.js';
-import pumpkinLanded3Dark_png from '../../../images/pumpkinLanded3Dark_png.js';
-import pianoLandedDark_png from '../../../images/pianoLandedDark_png.js';
+import pumpkin_png from '../../../images/pumpkin_png.js';
+import pumpkin1Highlighted_png from '../../../images/pumpkin1Highlighted_png.js';
+import pumpkin2Highlighted_png from '../../../images/pumpkin2Highlighted_png.js';
+import pumpkin3Highlighted_png from '../../../images/pumpkin3Highlighted_png.js';
+import pumpkin1Dark_png from '../../../images/pumpkin1Dark_png.js';
+import pumpkin2Dark_png from '../../../images/pumpkin2Dark_png.js';
+import pumpkin3Dark_png from '../../../images/pumpkin3Dark_png.js';
+import piano_png from '../../../images/piano_png.js';
+import pianoHighlighted_png from '../../../images/pianoHighlighted_png.js';
+import pianoDark_png from '../../../images/pianoDark_png.js';
 import forceField_png from '../../../images/forceField_png.js';
 import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
 
-const PUMPKIN_LANDED_IMAGES = [ pumpkinLanded1_png, pumpkinLanded2_png, pumpkinLanded3_png ];
-const PUMPKIN_LANDED_DARK_IMAGES = [ pumpkinLanded1Dark_png, pumpkinLanded2Dark_png, pumpkinLanded3Dark_png ];
+const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
+const PUMPKIN_LANDED_DARK_IMAGES = [ pumpkin1Dark_png, pumpkin2Dark_png, pumpkin3Dark_png ];
 
 export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode {
   protected constructor(
@@ -132,10 +133,10 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
         }
         break;
       case 'piano':
-        image = isLanded ? ( isDarkened ? pianoLandedDark_png : pianoLanded_png ) : piano_png;
+        image = isLanded ? ( isDarkened ? pianoDark_png : pianoHighlighted_png ) : piano_png;
         break;
       default:
-        image = isLanded && isDarkened ? cannonballDark_png : cannonball_png;
+        image = isLanded ? ( isDarkened ? cannonballDark_png : cannonballHighlighted_png ) : cannonball_png;
         break;
     }
 

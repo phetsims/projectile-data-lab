@@ -18,14 +18,14 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Projectile from '../../common/model/Projectile.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import pianoLanded_png from '../../../images/pianoLanded_png.js';
+import pianoHighlighted_png from '../../../images/pianoHighlighted_png.js';
 import cannonball_png from '../../../images/cannonball_png.js';
-import pumpkinLanded1_png from '../../../images/pumpkinLanded1_png.js';
-import pumpkinLanded2_png from '../../../images/pumpkinLanded2_png.js';
-import pumpkinLanded3_png from '../../../images/pumpkinLanded3_png.js';
+import pumpkin1Highlighted_png from '../../../images/pumpkin1Highlighted_png.js';
+import pumpkin2Highlighted_png from '../../../images/pumpkin2Highlighted_png.js';
+import pumpkin3Highlighted_png from '../../../images/pumpkin3Highlighted_png.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 
-const PUMPKIN_LANDED_IMAGES = [ pumpkinLanded1_png, pumpkinLanded2_png, pumpkinLanded3_png ];
+const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -67,7 +67,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       if ( projectile ) {
 
         const imagePNG = projectile.type === 'pumpkin' ? PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ] :
-                         projectile.type === 'piano' ? pianoLanded_png :
+                         projectile.type === 'piano' ? pianoHighlighted_png :
                          cannonball_png;
 
         const image = new Image( imagePNG, {
