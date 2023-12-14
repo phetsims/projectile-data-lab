@@ -13,7 +13,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
 import Easing from '../../../../twixt/js/Easing.js';
 
 /**
@@ -117,7 +116,7 @@ export default class LauncherNode extends Node {
       targets: [ {
         property: scaleProperty,
         from: 1.2,
-        to: dotRandom.nextDoubleBetween( 8, 10 ),
+        to: 10,
         easing: Easing.QUADRATIC_OUT
       }, {
         property: launcherFlashNode.opacityProperty,
