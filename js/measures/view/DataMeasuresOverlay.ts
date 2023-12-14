@@ -28,6 +28,10 @@ type SelfOptions = {
 };
 export type DataMeasuresFieldOverlayOptions = SelfOptions & NodeOptions;
 
+const LINE_WIDTH = 1.5;
+const MIN_SD_FOR_SHOW_SD = 0.2;
+const MIN_SD_FOR_SHOW_ARROWS = 0.8;
+
 export default class DataMeasuresOverlay extends Node {
   public constructor( modelViewTransform: ModelViewTransform2 | ChartTransform,
                       landedDistanceAverageProperty: PhetioProperty<number | null>,
@@ -39,7 +43,11 @@ export default class DataMeasuresOverlay extends Node {
     const origin = modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
     const isStandardDeviationVisibleProperty = new DerivedProperty( [ landedDistanceStandardDeviationProperty ], standardDeviation => {
-      return standardDeviation !== null && standardDeviation > 0;
+      return standardDeviation !== null && standardDeviation > MIN_SD_FOR_SHOW_SD;
+    } );
+
+    const isArrowsVisibleProperty = new DerivedProperty( [ landedDistanceStandardDeviationProperty ], standardDeviation => {
+      return standardDeviation !== null && standardDeviation > MIN_SD_FOR_SHOW_ARROWS;
     } );
 
     const meanMarkerSideLength = providedOptions.isIcon ? 12 : 16;
@@ -55,29 +63,22 @@ export default class DataMeasuresOverlay extends Node {
       stroke: PDLColors.meanMarkerStrokeProperty
     } );
 
-    const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
+    const lineOptions = {
       visibleProperty: isStandardDeviationVisibleProperty,
       stroke: 'black',
-      lineCap: 'round',
-      lineWidth: 1
-    } );
-    const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
-      visibleProperty: isStandardDeviationVisibleProperty,
-      stroke: 'black',
-      lineCap: 'round',
-      lineWidth: 1
-    } );
-    const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanMarkerHeight ).lineTo( 0, origin.y - totalHeight ), {
-      visibleProperty: isStandardDeviationVisibleProperty,
-      stroke: 'black',
-      lineCap: 'round',
-      lineWidth: 1
-    } );
+      lineWidth: LINE_WIDTH
+    };
+
+    const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
+    const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
+    const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanMarkerHeight ).lineTo( 0, origin.y - totalHeight ), lineOptions );
 
     const meanLineLength = totalHeight - meanMarkerHeight;
     const arrowY = origin.y - totalHeight + meanLineLength / 2; // Put the arrow in the middle of the mean line
+
+    // TODO: ArrowNode options documentation could be improved, see https://github.com/phetsims/projectile-data-lab/issues/7
     const arrowOptions = {
-      visibleProperty: isStandardDeviationVisibleProperty,
+      visibleProperty: isArrowsVisibleProperty,
       doubleHead: true,
       headWidth: 5,
       headHeight: 5,
@@ -92,16 +93,20 @@ export default class DataMeasuresOverlay extends Node {
       ( average, standardDeviation ) => {
 
         if ( average !== null && standardDeviation !== null ) {
-          meanMarker.x = modelViewTransform.modelToViewX( average );
-          meanLine.x = modelViewTransform.modelToViewX( average );
+          const meanX = modelViewTransform.modelToViewX( average );
+          const leftX = modelViewTransform.modelToViewX( average - standardDeviation );
+          const rightX = modelViewTransform.modelToViewX( average + standardDeviation );
 
-          leftLine.x = modelViewTransform.modelToViewX( average - standardDeviation );
-          rightLine.x = modelViewTransform.modelToViewX( average + standardDeviation );
+          meanMarker.x = meanX;
+          meanLine.x = meanX;
 
-          leftArrow.setTail( modelViewTransform.modelToViewX( average - standardDeviation ), leftArrow.tailY );
-          leftArrow.setTip( modelViewTransform.modelToViewX( average ), leftArrow.tipY );
-          rightArrow.setTail( modelViewTransform.modelToViewX( average + standardDeviation ), rightArrow.tailY );
-          rightArrow.setTip( modelViewTransform.modelToViewX( average ), rightArrow.tipY );
+          leftLine.x = leftX;
+          rightLine.x = rightX;
+
+          leftArrow.setTail( leftX + LINE_WIDTH, leftArrow.tailY );
+          leftArrow.setTip( meanX - LINE_WIDTH, leftArrow.tipY );
+          rightArrow.setTail( rightX - LINE_WIDTH, rightArrow.tailY );
+          rightArrow.setTip( meanX + LINE_WIDTH, rightArrow.tipY );
         }
       } );
 

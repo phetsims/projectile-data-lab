@@ -120,7 +120,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     // tools
-    const measuringTapeContainer = new Node();
 
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
       visibleProperty: model.isMeasuringTapeVisibleProperty,
@@ -151,8 +150,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       const viewBounds = this.modelViewTransform.viewToModelBounds( visibleBounds.erodedXY( PDLConstants.SCREEN_VIEW_X_MARGIN, PDLConstants.SCREEN_VIEW_Y_MARGIN ) );
       measuringTapeNode.setDragBounds( new Bounds2( 0, 0, viewBounds.maxX, viewBounds.maxY ) );
     } );
-
-    measuringTapeContainer.addChild( measuringTapeNode );
 
     const stopwatchNode = new StopwatchNode( model.stopwatch, {
       visibleProperty: model.isStopwatchVisibleProperty,
@@ -229,14 +226,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 
-    // TODO: Get the speed tool bounds to be in the same coordinate system as the measuring tape - see https://github.com/phetsims/projectile-data-lab/issues/7
-    // If the base of the measuring tape is overlapping the active speed and the launcher is raised,
-    // Make the speed tool partially transparent so that we can see the measuring tape.
-    model.measuringTapeBasePositionProperty.link( measuringTapeBasePosition => {
-      const isOverlapping = speedToolNode.bounds.containsPoint( measuringTapeBasePosition );
-      speedToolNode.opacity = isOverlapping && isLauncherRaisedProperty.value ? 0.5 : 1;
-    } );
-
     this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {
       maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
       tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
@@ -261,25 +250,13 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.toolsLayer.addChild( stopwatchNode );
     this.toolsLayer.addChild( angleToolNode );
     this.toolsLayer.addChild( speedToolNode );
-    this.toolsLayer.addChild( measuringTapeContainer );
+    this.toolsLayer.addChild( measuringTapeNode );
 
     this.addChild( bottomUIContainer );
     this.addChild( this.accordionBox );
     this.addChild( this.launchPanel );
     this.addChild( this.topRightUIContainer );
     this.addChild( this.toolsLayer );
-
-    // When the launcher is raised, move the speed tool to the front, otherwise move the measuring tape to the front.
-    // This is so that the speed tool readout is not obscured by the measuring tape.
-    isLauncherRaisedProperty.lazyLink( isLauncherRaised => {
-      if ( isLauncherRaised ) {
-        //TODO: Make it impossible to lose the measuring tape behind the speed tool - see https://github.com/phetsims/projectile-data-lab/issues/7
-        speedToolNode.moveToFront();
-      }
-      else {
-        measuringTapeContainer.moveToFront();
-      }
-    } );
 
     // Allow the top content to go above the dev bounds, but not too far
     this.visibleBoundsProperty.link( visibleBounds => {

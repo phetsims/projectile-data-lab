@@ -78,20 +78,17 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
     this.launcherLayer.addChild( this.launcherNode );
 
+    const intervalToolNode = new IntervalToolNode( model.intervalTool, this.modelViewTransform, model.isIntervalToolVisibleProperty, {
+      tandem: options.tandem.createTandem( 'intervalToolNode' )
+    } );
+
     const dataMeasuresFieldOverlay = new DataMeasuresOverlay( this.modelViewTransform,
       model.landedDistanceAverageProperty, model.landedDistanceStandardDeviationProperty, 50, model.isDataMeasuresVisibleProperty, {
         tandem: options.tandem.createTandem( 'dataMeasuresFieldOverlay' )
       } );
 
-    this.toolsLayer.addChild( dataMeasuresFieldOverlay );
-
-    // REVIEW: Is it really an overlay if it is in the back? Also, should we have a dedicated layer for it?
-    dataMeasuresFieldOverlay.moveToBack();
-
-    const intervalToolNode = new IntervalToolNode( model.intervalTool, this.modelViewTransform, model.isIntervalToolVisibleProperty, {
-      tandem: options.tandem.createTandem( 'intervalToolNode' )
-    } );
     this.toolsLayer.addChild( intervalToolNode );
+    this.toolsLayer.addChild( dataMeasuresFieldOverlay );
 
     // Keyboard order. TODO: How to eliminate duplication with the parent class? See https://github.com/phetsims/projectile-data-lab/issues/7
     this.pdomControlAreaNode.pdomOrder = [
