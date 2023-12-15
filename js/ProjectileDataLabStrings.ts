@@ -30,8 +30,8 @@ type StringsType = {
   'angleStabilizerStringProperty': LocalizedStringProperty;
   'angleStabilizerNarrowStringProperty': LocalizedStringProperty;
   'angleStabilizerWideStringProperty': LocalizedStringProperty;
-  'mysteryStringProperty': LocalizedStringProperty;
-  'customStringProperty': LocalizedStringProperty;
+  'mysteryLauncherStringProperty': LocalizedStringProperty;
+  'customLauncherStringProperty': LocalizedStringProperty;
   'histogramStringProperty': LocalizedStringProperty;
   'fieldStringProperty': LocalizedStringProperty;
   'fieldValuePatternStringProperty': LocalizedStringProperty;

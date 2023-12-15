@@ -33,14 +33,14 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     // TODO: Use ABSwitch? - see https://github.com/phetsims/projectile-data-lab/issues/7
     // I converted to VerticalAquaRadioButtonGroup to help with i18n and layout, we can discuss as needed, see see https://github.com/phetsims/projectile-data-lab/issues/7
     const radioButtonItems: AquaRadioButtonGroupItem<boolean>[] = [ {
-      createNode: () => new PDLText( ProjectileDataLabStrings.mysteryStringProperty, {
+      createNode: () => new PDLText( ProjectileDataLabStrings.mysteryLauncherStringProperty, {
         fontSize: 12,
         maxWidth: 120
       } ),
       value: false,
       tandemName: 'standardLauncherRadioButton'
     }, {
-      createNode: () => new PDLText( ProjectileDataLabStrings.customStringProperty, {
+      createNode: () => new PDLText( ProjectileDataLabStrings.customLauncherStringProperty, {
         fontSize: 12,
         maxWidth: 120
       } ),
@@ -83,7 +83,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
 
     const contentContainer = new VBox( { children: [ isLauncherCustomRadioButtonGroup, launcherControlsToggleNode ], spacing: 5, stretch: true } );
 
-    super( ProjectileDataLabStrings.launcherStringProperty, contentContainer, providedOptions );
+    super( null, contentContainer, providedOptions );
   }
 }
 

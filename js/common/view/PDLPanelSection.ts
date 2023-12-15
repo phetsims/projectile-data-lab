@@ -18,16 +18,23 @@ export type PDLPanelSectionOptions = SelfOptions & VBoxOptions;
 
 export default class PDLPanelSection extends VBox {
 
-  public constructor( titleString: TReadOnlyProperty<string>, content: Node, providedOptions?: PDLPanelSectionOptions ) {
+  public constructor( titleString: TReadOnlyProperty<string> | null, content: Node, providedOptions?: PDLPanelSectionOptions ) {
 
-    const title = new PDLText( titleString, {
-      maxWidth: 160
-    } );
+    const children: Node[] = [];
+
+    if ( titleString ) {
+      children.push( new PDLText( titleString, {
+        maxWidth: 160,
+        fontSize: 12
+      } ) );
+    }
+
+    children.push( content );
 
     const options = optionize<PDLPanelSectionOptions, SelfOptions, VBoxOptions>()( {
-      children: [ title, content ],
+      children: children,
       align: 'left',
-      spacing: 8
+      spacing: 5
     }, providedOptions );
 
     super( options );
