@@ -96,7 +96,18 @@ export default class VSMField extends Field {
     // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
     // But in that case we will need to track this data another way.
     this.projectileLandedEmitter.addListener( projectile => {
-      this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
+
+      // After a projectile lands, update the selected projectile number and the number of landed projectiles
+      const indexOfNewProjectile = this.landedProjectiles.indexOf( projectile );
+
+      const indexOfPreviouslyLandedProjectile = indexOfNewProjectile - 1;
+      const indexOfSelectedProjectile = this.selectedProjectileNumberProperty.value - 1;
+
+      // However, if the user is not selecting the latest projectile, then don't change the selected projectile
+      if ( indexOfSelectedProjectile === indexOfPreviouslyLandedProjectile ) {
+        this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
+      }
+
       this.landedProjectileCountProperty.value = this.landedProjectiles.length;
     } );
 

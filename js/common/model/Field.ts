@@ -72,9 +72,9 @@ export default abstract class Field extends PhetioObject {
 
   public readonly projectilesChangedEmitter = new Emitter();
 
-  public readonly projectileLandedEmitter;
+  public readonly projectileLandedEmitter: Emitter<[ Projectile ]>;
 
-  public readonly projectilesClearedEmitter;
+  public readonly projectilesClearedEmitter: Emitter;
 
   public readonly selectedSampleProperty: NumberProperty;
 
