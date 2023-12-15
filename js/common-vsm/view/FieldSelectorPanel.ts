@@ -11,7 +11,8 @@ import PDLConstants from '../../common/PDLConstants.js';
 import VSMField from '../model/VSMField.js';
 import Panel from '../../../../sun/js/Panel.js';
 import PDLColors from '../../common/PDLColors.js';
-import { HBox } from '../../../../scenery/js/imports.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -25,9 +26,7 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
   public constructor( fieldProperty: Property<T>, providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      fill: null,
-      stroke: null
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
     }, providedOptions );
 
     // Show radio buttons for the fields
@@ -37,38 +36,34 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         tandemName: 'field' + i + 'RadioButton',
         createNode: () => new Panel( new PDLText( i.toString(), {
           fill: PDLColors.fieldBorderStrokeColorProperty,
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: 'bold'
         } ), {
           fill: null,
           stroke: null,
-          xMargin: 12,
+          xMargin: 6,
           yMargin: 2
         } )
       };
     } ), {
       tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),
       orientation: 'horizontal',
-      spacing: 5,
+      spacing: 2,
       radioButtonOptions: {
         preferredWidth: 40,
         baseColor: PDLColors.fieldFillColorProperty,
         buttonAppearanceStrategyOptions: {
-          selectedStroke: PDLColors.fieldBorderStrokeColorProperty,
+          selectedStroke: 'black',
           deselectedStroke: null
         }
-      }
+      },
+      preferredWidth: 150,
+      lineSpacing: 5,
+      wrap: true,
+      xMargin: 0.5
     } );
 
-    super( new HBox( {
-      spacing: 10,
-      children: [
-        new PDLText( ProjectileDataLabStrings.fieldStringProperty, {
-          fill: 'black',
-          fontSize: 16
-        } ),
-        fieldRadioButtonGroup
-      ]
+    super( new PDLPanelSection( ProjectileDataLabStrings.fieldStringProperty, new Node( { children: [ fieldRadioButtonGroup ] } ), {
     } ), options );
   }
 }

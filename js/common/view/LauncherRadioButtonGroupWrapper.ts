@@ -7,6 +7,7 @@ import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularR
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
+// TODO: What is a Wrapper? Why is this here? Please document or fix: https://github.com/phetsims/projectile-data-lab/issues/7
 export default class LauncherRadioButtonGroupWrapper extends Node {
   public constructor( presetLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/7

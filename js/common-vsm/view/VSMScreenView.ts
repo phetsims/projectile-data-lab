@@ -117,7 +117,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         topMargin: 10
       }
     } );
-    this.topRightUIContainer.addChild( this.timeControlNode );
+    // this.topRightUIContainer.addChild( this.timeControlNode );
 
     // tools
 
@@ -232,6 +232,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
     } );
 
+    this.topRightUIContainer.addChild( this.fieldSelectorPanel );
+
     this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
       model.fieldProperty,
       model.landedProjectileCountProperty,
@@ -242,8 +244,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // TODO: We don't need a container with only one child, see https://github.com/phetsims/projectile-data-lab/issues/7
     const bottomUIContainer = new HBox( {
       bottom: this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      left: this.layoutBounds.centerX - 60,
-      children: [ this.fieldSelectorPanel ]
+      left: this.layoutBounds.centerX + 20,
+      children: [ this.timeControlNode ]
     } );
 
     this.toolsLayer.addChild( stopwatchNode );
