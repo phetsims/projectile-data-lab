@@ -163,11 +163,7 @@ export default class HistogramNode extends Node {
         stroke: 'black',
         lineWidth: 1,
         cornerRadius: 3
-      },
-
-      // Put the minus button on top
-      // REVIEW: Is there an API for this?
-      scale: -1
+      }
     } );
 
     const verticalAxisLabel = new PDLText( ProjectileDataLabStrings.countStringProperty, {
