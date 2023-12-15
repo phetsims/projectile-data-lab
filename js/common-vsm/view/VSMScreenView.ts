@@ -173,7 +173,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchAngleVisibleProperty,
-      initialNeedleValue: model.launcherAngleProperty.value,
+      initialNeedleValue: model.latestLaunchAngleProperty.value,
       x: originPosition.x, y: originPosition.y
     } );
 
@@ -189,7 +189,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
           angleToolNode.updateNeedleAndText( projectile.launchAngle );
 
-          this.launcherNode.playLaunchAnimation();
+          this.launcherNode.playLaunchAnimation( projectile.launchAngle );
         }
       } );
 
@@ -224,7 +224,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       speedToolNode.y = launcherY;
       angleToolNode.y = launcherY;
     } );
-    model.launcherAngleProperty.link( launcherAngle => {
+    model.latestLaunchAngleProperty.link( launcherAngle => {
       angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 

@@ -52,7 +52,7 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
 
     this.launcherNode = new LauncherNode(
       this.modelViewTransform,
-      model.launcherAngleProperty,
+      model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
       model.presetLauncherProperty,
       {}

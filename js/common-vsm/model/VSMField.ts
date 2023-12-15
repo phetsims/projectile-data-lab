@@ -117,15 +117,15 @@ export default class VSMField extends Field {
     } );
 
     // If the launch configuration is changed, re-center the launcher.
-    this.configuredLaunchAngleProperty.lazyLink( configuredLaunchAngle => {
-      this.launcherAngleProperty.value = configuredLaunchAngle;
+    this.meanLaunchAngleProperty.lazyLink( configuredLaunchAngle => {
+      this.latestLaunchAngleProperty.value = configuredLaunchAngle;
     } );
 
     // If the angle stabilizer is changed, re-center the launcher so that there is no overlap between the two.
     // Do not do this during a continuous launch, because it causes flicker.
     this.angleStabilizerProperty.lazyLink( angleStabilizer => {
       if ( !this.isContinuousLaunchingProperty.value ) {
-        this.launcherAngleProperty.value = this.configuredLaunchAngleProperty.value;
+        this.latestLaunchAngleProperty.value = this.meanLaunchAngleProperty.value;
       }
     } );
   }
@@ -138,7 +138,7 @@ export default class VSMField extends Field {
     const projectile = this.createProjectile( 0 );
     this.airborneProjectiles.push( projectile );
 
-    this.launcherAngleProperty.value = projectile.launchAngle;
+    this.latestLaunchAngleProperty.value = projectile.launchAngle;
     this.latestLaunchSpeedProperty.value = projectile.launchSpeed;
 
     this.projectileLaunchedEmitter.emit( projectile );

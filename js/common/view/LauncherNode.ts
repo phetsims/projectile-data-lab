@@ -60,7 +60,7 @@ export default class LauncherNode extends Node {
   private barrelRotationAnimation?: Animation;
 
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
-                      launcherAngleProperty: TProperty<number>,
+                      private readonly meanLaunchAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
                       presetLauncherProperty: TProperty<number>,
                       providedOptions: LauncherNodeOptions ) {
@@ -83,8 +83,9 @@ export default class LauncherNode extends Node {
     this.addChild( this.launcherBarrel );
     this.addChild( this.launcherFrameFront );
 
-    launcherAngleProperty.link( launcherAngle => {
-      this.launcherBarrel.setRotation( Utils.toRadians( -launcherAngle ) );
+    // TODO: Consider a third property - currentAngleProperty - that knows how to handle the mean and animating launcher rotation - see https://github.com/phetsims/projectile-data-lab/issues/7
+    this.meanLaunchAngleProperty.link( meanLaunchAngle => {
+      this.launcherBarrel.setRotation( Utils.toRadians( -meanLaunchAngle ) );
     } );
 
     launcherHeightProperty.link( launcherHeight => {
@@ -97,7 +98,32 @@ export default class LauncherNode extends Node {
   }
 
   // TODO: Check this for memory leaks - see https://github.com/phetsims/projectile-data-lab/issues/7
-  public playLaunchAnimation(): void {
+  public playLaunchAnimation( angle: number ): void {
+
+    this.launcherBarrel.setRotation( Utils.toRadians( -angle ) );
+
+    if ( this.barrelRotationAnimation ) {
+      this.barrelRotationAnimation.stop();
+      this.barrelRotationAnimation = undefined;
+    }
+
+    const rotationProperty = new NumberProperty( this.launcherBarrel.rotation );
+    rotationProperty.lazyLink( rotation => {
+      this.launcherBarrel.setRotation( rotation );
+    } );
+
+    this.barrelRotationAnimation = new Animation( {
+      duration: 0.5,
+      targets: [ {
+        property: rotationProperty,
+        from: this.launcherBarrel.rotation,
+        to: Utils.toRadians( -this.meanLaunchAngleProperty.value ),
+        easing: Easing.polynomialEaseOut( 1.5 )
+      } ]
+    } );
+
+    this.barrelRotationAnimation.start();
+
     const launcherFlashNode = new LauncherFlashNode( {
       x: BARREL_LENGTH_AFTER_ORIGIN, y: 0,
       opacity: 0

@@ -39,11 +39,11 @@ export default abstract class Field extends PhetioObject {
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
-  // The current angle of the launcher, in degrees
-  public readonly launcherAngleProperty: Property<number>;
+  // The most recent launch angle on this field, in degrees
+  public readonly latestLaunchAngleProperty: Property<number>;
 
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
-  public readonly configuredLaunchAngleProperty: TReadOnlyProperty<number>;
+  public readonly meanLaunchAngleProperty: TReadOnlyProperty<number>;
 
   public readonly launchAngleStandardDeviationProperty: Property<number>;
 
@@ -124,13 +124,13 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
     } );
 
-    this.configuredLaunchAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
+    this.meanLaunchAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
       configuration => {
         return AngleForConfiguration( configuration );
       } );
 
-    this.launcherAngleProperty = new Property<number>( this.configuredLaunchAngleProperty.value, {
-      tandem: providedOptions.tandem.createTandem( 'launcherAngleProperty' ),
+    this.latestLaunchAngleProperty = new Property<number>( this.meanLaunchAngleProperty.value, {
+      tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
                            + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.',
@@ -248,7 +248,7 @@ export default abstract class Field extends PhetioObject {
   }
 
   protected createProjectile( sampleNumber: number ): Projectile {
-    const launchAngle = this.configuredLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
+    const launchAngle = this.meanLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
     const launchSpeed = this.meanLaunchSpeedProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 

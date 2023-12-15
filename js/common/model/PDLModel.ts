@@ -78,7 +78,9 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public abstract presetLauncherProperty: TProperty<number>;
 
-  public readonly launcherAngleProperty: DynamicProperty<number, number, T>;
+  public readonly meanLaunchAngleProperty: DynamicProperty<number, number, T>;
+
+  public readonly latestLaunchAngleProperty: DynamicProperty<number, number, T>;
 
   public readonly launcherHeightProperty: DynamicProperty<number, number, T>;
 
@@ -160,9 +162,15 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       derive: t => t.projectileTypeProperty
     } );
 
-    this.launcherAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+    this.meanLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launcherAngleProperty
+      derive: t => t.meanLaunchAngleProperty
+    } );
+
+
+    this.latestLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.latestLaunchAngleProperty
     } );
 
     this.launcherHeightProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {

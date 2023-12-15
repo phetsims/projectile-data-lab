@@ -45,7 +45,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     this.launcherNode = new LauncherNode(
       this.modelViewTransform,
-      model.launcherAngleProperty,
+      model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
       model.presetLauncherProperty,
       {}
