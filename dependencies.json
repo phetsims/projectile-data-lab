@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.0-dev.8 Fri Dec 15 2023 12:51:37 GMT-0500 (Eastern Standard Time)",
+  "comment": "# projectile-data-lab 1.0.0-dev.9 Fri Dec 15 2023 15:13:30 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "47dac8ba80fe19cc82ef8453fb68ddf7c05b363f",
     "branch": "main"
@@ -33,7 +33,7 @@
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "ee56991cbda0a6f3adc7307a0e7c601d0938984b",
+    "sha": "94723d2cf045a9731b3358a17bbab789c2d1a380",
     "branch": "main"
   },
   "phet-core": {
@@ -61,7 +61,7 @@
     "branch": "main"
   },
   "projectile-data-lab": {
-    "sha": "0b7f562258204163708a6937e0aac4482547fcfa",
+    "sha": "ae24cfee4c1726211f2fdbf45c3fbcecb85af8cc",
     "branch": "main"
   },
   "query-string-machine": {
