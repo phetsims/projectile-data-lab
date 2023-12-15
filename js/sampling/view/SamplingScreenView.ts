@@ -40,7 +40,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       options );
 
     const projectileCanvas = new SamplingCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
-      this.modelViewTransform, model.selectedSampleProperty, {
+      model.isContinuousLaunchingProperty, this.modelViewTransform, model.selectedSampleProperty, {
         canvasBounds: this.canvasBounds
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );

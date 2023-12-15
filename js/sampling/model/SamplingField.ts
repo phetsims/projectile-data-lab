@@ -71,10 +71,10 @@ export default class SamplingField extends Field {
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     const totalSampleTime =
-      this.sampleSize === 2 ? 0.7 :
-      this.sampleSize === 5 ? 1.2 :
-      this.sampleSize === 15 ? 2 :
-      this.sampleSize === 40 ? 3 :
+      this.sampleSize === 2 ? 0.5 :
+      this.sampleSize === 5 ? 1 :
+      this.sampleSize === 15 ? 1.5 :
+      this.sampleSize === 40 ? 2 :
       0;
 
     assert && assert( totalSampleTime > 0, 'totalSampleTime should be greater than 0' );

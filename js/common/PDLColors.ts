@@ -61,7 +61,7 @@ const PDLColors = {
   } ),
 
   pathStrokeSamplingColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeSampling', {
-    default: new Color( 0xFFFFFF, 0.7 )
+    default: new Color( 0xFFFFFF, 0.5 )
   } ),
 
   fieldLineStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineStroke', {
