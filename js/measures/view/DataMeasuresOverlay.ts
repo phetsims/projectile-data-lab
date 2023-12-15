@@ -8,15 +8,15 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import PDLColors from '../../common/PDLColors.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
+import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 
 /**
  * The DataMeasuresOverlay shows the graphics for the visual representation of the average and standard deviation
- * of the landed projectiles. It has a mean marker, a mean line, and two standard deviation lines with arrows.
+ * of the landed projectiles. It has a mean indicator node, a mean line, and two standard deviation lines with arrows.
  * It is used in both the field overlay and histogram overlay components on the Measures screen.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -50,18 +50,12 @@ export default class DataMeasuresOverlay extends Node {
       return standardDeviation !== null && standardDeviation > MIN_SD_FOR_SHOW_ARROWS;
     } );
 
-    const meanMarkerSideLength = providedOptions.isIcon ? 12 : 16;
-    const meanMarkerHeight = meanMarkerSideLength * Math.sqrt( 3 ) / 2;
-    const meanMarker = new Path( new Shape().polygon( [
+    const meanIndicatorRadius = providedOptions.isIcon ? 8 : 10;
 
-      // The marker is an equilateral triangle with a side length of meanMarkerSideLength pointing down
-      new Vector2( -meanMarkerSideLength / 2, origin.y - meanMarkerHeight ),
-      new Vector2( meanMarkerSideLength / 2, origin.y - meanMarkerHeight ),
-      new Vector2( 0, origin.y )
-    ] ), {
-      fill: PDLColors.meanMarkerFillProperty,
-      stroke: PDLColors.meanMarkerStrokeProperty
-    } );
+    const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius );
+    meanIndicator.bottom = origin.y;
+
+    const meanIndicatorHeight = meanIndicator.bounds.height;
 
     const lineOptions = {
       visibleProperty: isStandardDeviationVisibleProperty,
@@ -71,9 +65,9 @@ export default class DataMeasuresOverlay extends Node {
 
     const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
     const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
-    const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanMarkerHeight ).lineTo( 0, origin.y - totalHeight ), lineOptions );
+    const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanIndicatorHeight ).lineTo( 0, origin.y - totalHeight ), lineOptions );
 
-    const meanLineLength = totalHeight - meanMarkerHeight;
+    const meanLineLength = totalHeight - meanIndicatorHeight;
     const arrowY = origin.y - totalHeight + meanLineLength / 2; // Put the arrow in the middle of the mean line
 
     // TODO: ArrowNode options documentation could be improved, see https://github.com/phetsims/projectile-data-lab/issues/7
@@ -97,7 +91,7 @@ export default class DataMeasuresOverlay extends Node {
           const leftX = modelViewTransform.modelToViewX( average - standardDeviation );
           const rightX = modelViewTransform.modelToViewX( average + standardDeviation );
 
-          meanMarker.x = meanX;
+          meanIndicator.x = meanX;
           meanLine.x = meanX;
 
           leftLine.x = leftX;
@@ -119,7 +113,7 @@ export default class DataMeasuresOverlay extends Node {
 
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
       visibleProperty: isSelfVisibleProperty,
-      children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, meanMarker ],
+      children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, meanIndicator ],
       isIcon: false
     }, providedOptions );
 
