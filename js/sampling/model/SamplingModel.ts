@@ -28,11 +28,12 @@ const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
 export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly sampleSizeProperty: Property<number>;
+  public readonly presetLauncherProperty: NumberProperty;
 
   public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly presetLauncherProperty: NumberProperty;
+  public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
@@ -83,6 +84,10 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
     this.numberOfCompletedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
       derive: t => t.numberOfCompletedSamplesProperty
+    } );
+
+    this.sampleMeanProperty = new DynamicProperty<number | null, number | null, SamplingField>( this.fieldProperty, {
+      derive: t => t.sampleMeanProperty
     } );
 
     // When the launch mode changes, update the timing between projectiles within a sample.

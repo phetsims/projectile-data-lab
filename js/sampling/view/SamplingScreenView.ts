@@ -19,6 +19,8 @@ import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
 import SamplingCanvasNode from './SamplingCanvasNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -42,6 +44,21 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         canvasBounds: this.canvasBounds
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
+
+    const meanIndicatorVisibleProperty = new DerivedProperty( [ model.sampleMeanProperty ],
+      sampleMean => sampleMean !== null );
+
+    const meanIndicatorNode = new MeanIndicatorNode( 14, {
+      visibleProperty: meanIndicatorVisibleProperty,
+      bottom: this.modelViewTransform.modelToViewY( 0 )
+    } );
+    this.projectileCanvasLayer.addChild( meanIndicatorNode );
+
+    model.sampleMeanProperty.link( mean => {
+      if ( mean !== null ) {
+        meanIndicatorNode.centerX = this.modelViewTransform.modelToViewX( mean );
+      }
+    } );
 
     this.launcherNode = new LauncherNode(
       this.modelViewTransform,

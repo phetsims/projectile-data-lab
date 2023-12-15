@@ -55,29 +55,6 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
       // wish to show the undarkened ones while flying through the air, or otherwise try to match the design from screens 1-3
       this.drawProjectile( context, projectiles[ i ], true, true );
     }
-
-    // Draw the mean marker (if the sample is complete)
-    if ( projectiles.length === this.fieldProperty.value.sampleSize ) {
-      const meanX = _.mean( projectiles.map( projectile => projectile.x ) );
-      const viewPoint = this.modelViewTransform.modelToViewXY( meanX, 0 );
-
-      const SIDE_LENGTH = 20; // Define the side length of the triangle
-      const height = ( Math.sqrt( 3 ) / 2 ) * SIDE_LENGTH; // Calculate the height of the equilateral triangle
-
-      // Draw a purple triangle pointing down at that viewPoint which has {x:number,y:number}
-      context.beginPath();
-      context.moveTo( viewPoint.x, viewPoint.y ); // Move to the top vertex of the triangle
-      context.lineTo( viewPoint.x - SIDE_LENGTH / 2, viewPoint.y - height ); // Line to bottom-left vertex
-      context.lineTo( viewPoint.x + SIDE_LENGTH / 2, viewPoint.y - height ); // Line to bottom-right vertex
-      context.closePath();
-      context.fillStyle = PDLColors.meanMarkerFillProperty.value.toCSS();
-      context.fill();
-
-      // And add a black stroke around it
-      context.lineWidth = 1;
-      context.strokeStyle = PDLColors.meanMarkerStrokeProperty.value.toCSS();
-      context.stroke();
-    }
   }
 }
 
