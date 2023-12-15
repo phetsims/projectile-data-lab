@@ -229,7 +229,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {
-      // maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
       tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
     } );
 
