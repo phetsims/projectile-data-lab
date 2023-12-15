@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.0-dev.9 Fri Dec 15 2023 15:13:30 GMT-0500 (Eastern Standard Time)",
+  "comment": "# projectile-data-lab 1.0.0-dev.10 Fri Dec 15 2023 17:33:32 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "47dac8ba80fe19cc82ef8453fb68ddf7c05b363f",
     "branch": "main"
@@ -33,7 +33,7 @@
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "94723d2cf045a9731b3358a17bbab789c2d1a380",
+    "sha": "0b349b5d04bc42ee71e6fa0280233477d937464a",
     "branch": "main"
   },
   "phet-core": {
@@ -61,7 +61,7 @@
     "branch": "main"
   },
   "projectile-data-lab": {
-    "sha": "ae24cfee4c1726211f2fdbf45c3fbcecb85af8cc",
+    "sha": "56c7ab10ad5239cd49d182d975451b4db7205b76",
     "branch": "main"
   },
   "query-string-machine": {
@@ -85,7 +85,7 @@
     "branch": "main"
   },
   "sun": {
-    "sha": "20b4c237aea470fd7c1453e79324f87ac95040d3",
+    "sha": "11c1c103788fdefeed8f8e0b13218980c1ef826f",
     "branch": "main"
   },
   "tambo": {
