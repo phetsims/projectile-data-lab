@@ -70,9 +70,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
 
-    this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {
-      tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
-    } );
     this.projectileSelectorPanel = new ProjectileSelectorPanel(
       model.selectedProjectileNumberProperty,
       model.landedProjectileCountProperty,
@@ -86,7 +83,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
       top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
       spacing: PDLConstants.INTER_PANEL_SPACING,
-      children: [ staticToolPanel, interactiveToolPanel, this.fieldSelectorPanel, this.projectileSelectorPanel ]
+      children: [ staticToolPanel, interactiveToolPanel, this.projectileSelectorPanel ]
     } );
 
     const accordionBoxWidth = this.topRightUIContainer.left - launchPanel.right - 2 * PDLConstants.INTER_PANEL_SPACING;
@@ -230,6 +227,12 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     model.latestLaunchAngleProperty.link( launcherAngle => {
       angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
+
+    this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {
+      tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
+    } );
+
+    this.topRightUIContainer.addChild( this.fieldSelectorPanel );
 
     this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
       model.fieldProperty,
