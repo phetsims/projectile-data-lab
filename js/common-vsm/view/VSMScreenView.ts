@@ -114,10 +114,10 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       timeSpeeds: model.timeSpeedValues,
       buttonGroupXSpacing: 18,
       layoutOptions: {
-        // TODO: This is a hack to get the time control node to be centered, see https://github.com/phetsims/projectile-data-lab/issues/7
-        leftMargin: 20
+        topMargin: 10
       }
     } );
+    this.topRightUIContainer.addChild( this.timeControlNode );
 
     // tools
 
@@ -229,7 +229,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {
-      maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
+      // maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
       tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
     } );
 
@@ -240,13 +240,11 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       this.modelViewTransform
     ) );
 
+    // TODO: We don't need a container with only one child, see https://github.com/phetsims/projectile-data-lab/issues/7
     const bottomUIContainer = new HBox( {
-      spacing: PDLConstants.BOTTOM_UI_SPACING,
-      stretch: true,
       bottom: this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      left: this.layoutBounds.centerX - 100,
-      maxHeight: PDLConstants.BOTTOM_UI_HEIGHT,
-      children: [ this.fieldSelectorPanel, this.timeControlNode ]
+      left: this.layoutBounds.centerX - 60,
+      children: [ this.fieldSelectorPanel ]
     } );
 
     this.toolsLayer.addChild( stopwatchNode );
