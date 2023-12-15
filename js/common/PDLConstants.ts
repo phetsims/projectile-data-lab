@@ -26,7 +26,7 @@ const PDLConstants = {
   BOTTOM_UI_SPACING: 20,
 
   MAX_PROJECTILES_PER_FIELD: 500,
-  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.6, // seconds
+  MINIMUM_TIME_BETWEEN_LAUNCHES: 0.7, // seconds
   MAX_ANGLE_STANDARD_DEVIATION: MAX_ANGLE_STANDARD_DEVIATION, // degrees
 
   // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
