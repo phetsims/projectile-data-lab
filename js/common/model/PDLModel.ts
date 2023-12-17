@@ -100,7 +100,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     const histogramTandem = providedOptions.tandem.createTandem( 'histogram' );
 
-    this.selectedBinWidthProperty = new Property<number>( 2, {
+    this.selectedBinWidthProperty = new Property<number>( 1, {
       validValues: [ 1, 2, 5, 10 ],
       tandem: histogramTandem.createTandem( 'selectedBinWidthProperty' ),
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',

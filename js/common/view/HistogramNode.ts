@@ -53,7 +53,7 @@ export default class HistogramNode extends Node {
     super();
 
     // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const maxCounts = [ 500, 200, 100, 50, 20 ];
+    const maxCounts = [ 500, 200, 100, 50, 25 ];
     const maxZoomLevel = maxCounts.length - 1;
     const tickSpacings = [ 50, 20, 10, 10, 5 ];
 

@@ -18,6 +18,9 @@ import HistogramData from '../../common/model/HistogramData.js';
 type SelfOptions = EmptySelfOptions;
 export type BarPlotOptions = SelfOptions & NodeOptions;
 
+// The radius of the dot labelling the highlighted block in the 'blocks' representation
+const DOT_RADIUS = 2.4;
+
 export default class HistogramCanvasPainter extends CanvasPainter {
 
   private data: HistogramData[] = [];
@@ -108,7 +111,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     if ( histogramRepresentation === 'blocks' ) {
       if ( highlightDotX !== null && highlightDotY !== null ) {
         context.beginPath();
-        context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, 3 * scaleFactor, 0, 2 * Math.PI );
+        context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, DOT_RADIUS * scaleFactor, 0, 2 * Math.PI );
         context.fillStyle = 'white';
         context.strokeStyle = this.blockFillProperty.value.toCSS();
         context.lineWidth = scaleFactor;
