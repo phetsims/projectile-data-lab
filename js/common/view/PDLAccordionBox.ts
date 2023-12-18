@@ -22,9 +22,7 @@ import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Utils from '../../../../dot/js/Utils.js';
-import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
-import HistogramIconNode from './HistogramIconNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -78,6 +76,7 @@ export default class PDLAccordionBox extends AccordionBox {
       }
     }
 
+    // REVIEW: Why are these controls out here instead of in HistogramNode?
     const labelAndComboBoxContainer = new HBox( {
       align: 'center',
       children: [
@@ -111,27 +110,12 @@ export default class PDLAccordionBox extends AccordionBox {
         } )
       ]
     } );
-
-    // REVIEW: Why are these controls out here instead of in HistogramNode?
-    const barBlockSwitch = new ABSwitch(
-      histogramRepresentationProperty,
-      'blocks', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
-      'bars', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'bars' ), {
-        tandem: providedOptions.tandem.createTandem( 'barBlockSwitch' ),
-        spacing: margin,
-        toggleSwitchOptions: {
-          maxWidth: 32
-        }
-      } );
-
     labelAndComboBoxContainer.leftTop = content.leftBottom.plusXY( margin, -15 );
-    barBlockSwitch.rightTop = content.rightBottom.plusXY( -margin, -15 );
 
     const contentContainer = new Node( {
       children: [
         content,
-        labelAndComboBoxContainer,
-        barBlockSwitch
+        labelAndComboBoxContainer
       ]
     } );
 

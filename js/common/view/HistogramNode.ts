@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { Color, ManualConstraint, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { ColorProperty, ManualConstraint, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
@@ -26,6 +26,9 @@ import PDLText from './PDLText.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
+import ABSwitch from '../../../../sun/js/ABSwitch.js';
+import HistogramIconNode from './HistogramIconNode.js';
+import Property from '../../../../axon/js/Property.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -45,10 +48,10 @@ export default class HistogramNode extends Node {
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
                       binWidthProperty: TReadOnlyProperty<number>,
-                      histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
+                      histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      blockFillProperty: TReadOnlyProperty<Color>,
-                      blockStrokeProperty: TReadOnlyProperty<Color>,
+                      blockFillProperty: ColorProperty,
+                      blockStrokeProperty: ColorProperty,
                       options: HistogramNodeOptions ) {
     super();
 
@@ -252,6 +255,20 @@ export default class HistogramNode extends Node {
       // horizontalGridLines.setSpacing( tickSpacing );
       updateHistogram();
     } );
+
+    const margin = 8;
+    const barBlockSwitch = new ABSwitch(
+      histogramRepresentationProperty,
+      'blocks', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
+      'bars', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'bars' ), {
+        tandem: options.tandem.createTandem( 'barBlockSwitch' ),
+        spacing: margin,
+        toggleSwitchOptions: {
+          maxWidth: 32
+        }
+      } );
+    barBlockSwitch.rightTop = this.chartNode.rightBottom.plusXY( -margin, margin );
+    this.addChild( barBlockSwitch );
   }
 }
 

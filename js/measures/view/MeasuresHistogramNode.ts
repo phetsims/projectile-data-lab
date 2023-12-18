@@ -13,6 +13,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import { Rectangle } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import PDLColors from '../../common/PDLColors.js';
+import Property from '../../../../axon/js/Property.js';
 
 /**
  * The measures histogram node is a histogram node that also shows the mean and standard deviation of the data.
@@ -29,7 +30,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
                       binWidthProperty: TReadOnlyProperty<number>,
-                      histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
+                      histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       isDataMeasuresVisibleProperty: BooleanProperty,
                       meanProperty: PhetioProperty<number | null>,
