@@ -46,9 +46,12 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     // 2. Trajectories
     context.lineWidth = 1;
 
+    const isShowingSampleMean = this.fieldProperty.value.sampleMeanProperty.value !== null;
+
     for ( let i = 0; i < projectiles.length; i++ ) {
       const showHighlightedPath = !this.isContinuousLaunchingProperty.value && i === projectiles.length - 1;
-      const pathStrokeColorProperty = showHighlightedPath ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
+
+      const pathStrokeColorProperty = ( showHighlightedPath && !isShowingSampleMean ) ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
       context.strokeStyle = pathStrokeColorProperty.value.toCSS();
       this.drawPathForProjectile( context, projectiles[ i ] );
     }

@@ -39,11 +39,15 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       ProjectileDataLabStrings.continuousSamplingStringProperty,
       options );
 
-    const projectileCanvas = new SamplingCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
+    const samplingCanvasNode = new SamplingCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
       model.isContinuousLaunchingProperty, this.modelViewTransform, model.selectedSampleProperty, {
         canvasBounds: this.canvasBounds
       } );
-    this.projectileCanvasLayer.addChild( projectileCanvas );
+
+    // When the sample mean takes a value, repaint the canvas to show the paths as all white
+    model.sampleMeanProperty.link( () => samplingCanvasNode.invalidatePaint() );
+
+    this.projectileCanvasLayer.addChild( samplingCanvasNode );
 
     const meanIndicatorVisibleProperty = new DerivedProperty( [ model.sampleMeanProperty ],
       sampleMean => sampleMean !== null );
