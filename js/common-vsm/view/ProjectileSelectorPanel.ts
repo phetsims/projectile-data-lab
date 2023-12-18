@@ -1,15 +1,13 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, Image, Node, Path, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Image, Node, Path } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import angleUpSolidShape from '../../../../sherpa/js/fontawesome-5/angleUpSolidShape.js';
-import angleDownSolidShape from '../../../../sherpa/js/fontawesome-5/angleDownSolidShape.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
 import Panel from '../../../../sun/js/Panel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -24,6 +22,9 @@ import pumpkin1Highlighted_png from '../../../images/pumpkin1Highlighted_png.js'
 import pumpkin2Highlighted_png from '../../../images/pumpkin2Highlighted_png.js';
 import pumpkin3Highlighted_png from '../../../images/pumpkin3Highlighted_png.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
+import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
+import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
+import angleDoubleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleDoubleRightSolidShape.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
@@ -83,52 +84,75 @@ export default class ProjectileSelectorPanel extends PDLPanel {
         return new Node();
       }
     };
-    const node = new Node();
 
-    Multilink.multilink( [ selectedProjectileNumberProperty, landedProjectileCountProperty, selectedProjectileProperty ], () => {
-      node.children = [ createPage() ];
-    } );
-
-    const carousel = new Panel( node, { maxHeight: 20 } );
+    const navigationButtonOptions = {
+      buttonAppearanceStrategy: FlatAppearanceStrategy,
+      buttonAppearanceStrategyOptions: {
+        lineWidth: 0
+      },
+      layoutOptions: {
+        stretch: true
+      }
+    };
 
     // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/7
     const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
-      return new RectangularPushButton( {
-        tandem: options.tandem.createTandem( type + 'Button' ),
-        content: new Path( type === 'increment' ? angleUpSolidShape : angleDownSolidShape, { fill: 'white', scale: 0.05 } ),
-        buttonAppearanceStrategy: FlatAppearanceStrategy,
-        buttonAppearanceStrategyOptions: {
-          lineWidth: 0
-        },
-        listener: () => {
-          const proposedValue = selectedProjectileNumberProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
-          if ( proposedValue >= 1 && proposedValue <= landedProjectileCountProperty.value ) {
-            selectedProjectileNumberProperty.value = proposedValue;
-          }
-        },
-        fireOnHold: true,
-        fireOnHoldInterval: 50,
-        enabledProperty: new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty ], ( selectedSample, sampleCount ) => {
-          return ( type === 'increment' ) ? selectedSample < sampleCount : selectedSample > 1;
-        } )
-      } );
+      return new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
+        {},
+        navigationButtonOptions,
+        {
+          tandem: options.tandem.createTandem( type + 'Button' ),
+          content: new Path( type === 'increment' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.05 } ),
+          listener: () => {
+            const proposedValue = selectedProjectileNumberProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
+            if ( proposedValue >= 1 && proposedValue <= landedProjectileCountProperty.value ) {
+              selectedProjectileNumberProperty.value = proposedValue;
+            }
+          },
+          fireOnHold: true,
+          fireOnHoldInterval: 50,
+          enabledProperty: new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty ], ( selectedSample, sampleCount ) => {
+            return ( type === 'increment' ) ? selectedSample < sampleCount : selectedSample > 1;
+          } )
+        }
+      ) );
     };
 
-    const upDownButtons = new VBox( {
-      spacing: 3,
-      children: [
-        createIncrementDecrementButton( 'increment' ),
-        createIncrementDecrementButton( 'decrement' )
-      ]
-    } );
+    const latestProjectileButton = new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
+      {},
+      navigationButtonOptions,
+      {
+        tandem: options.tandem.createTandem( 'latestProjectileButton' ),
+        content: new Path( angleDoubleRightSolidShape, { fill: 'white', scale: 0.05 } ),
+        listener: () => {
+          selectedProjectileNumberProperty.value = landedProjectileCountProperty.value;
+        },
+        enabledProperty: new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty ], ( selectedProjectileNumber, landedProjectileCount ) => {
+          return selectedProjectileNumber !== landedProjectileCount;
+        } )
+      }
+    ) );
 
+    const projectileImageContainer = new Node();
+    const projectileCardContainer = new Panel( projectileImageContainer, { maxHeight: 20, align: 'center' } );
+    const projectileData = new PDLPanelSection( titleStringProperty, projectileCardContainer, { align: 'center' } );
 
     super( new HBox( {
       spacing: 5,
-      children: [ upDownButtons, new PDLPanelSection( titleStringProperty, carousel ) ],
+      children: [
+        createIncrementDecrementButton( 'decrement' ),
+        projectileData,
+        createIncrementDecrementButton( 'increment' ),
+        latestProjectileButton
+      ],
       tandem: options.tandem.createTandem( 'sampleNumberOfCountPatternSection' )
     } ), {
+      minHeight: 50,
       tandem: options.tandem
+    } );
+
+    Multilink.multilink( [ selectedProjectileNumberProperty, landedProjectileCountProperty, selectedProjectileProperty ], () => {
+      projectileImageContainer.children = [ createPage() ];
     } );
   }
 }
