@@ -157,7 +157,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       return;
     }
 
-    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 2 : 1 );
+    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 6 : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' &&
          this.isContinuousLaunchingProperty.value ) {
