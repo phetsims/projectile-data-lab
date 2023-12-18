@@ -53,26 +53,23 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
     }, providedOptions );
 
     super( comboBoxParent, new HBox( {
-        spacing: 4,
-        children: [ histogramNode,
-          new VBox( {
-            spacing: 4,
-            children: [
-              new SampleThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
-              new SampleThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
-              new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
-              new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-                PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty )
-            ]
-          } )
-        ]
-      } ), selectedBinWidthProperty, selectedTotalBinsProperty, histogramRepresentationProperty,
-
-      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty,
-      options );
+      spacing: 4,
+      children: [ histogramNode,
+        new VBox( {
+          spacing: 4,
+          children: [
+            new SampleThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+            new SampleThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+            new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+            new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty )
+          ]
+        } )
+      ]
+    } ), selectedBinWidthProperty, selectedTotalBinsProperty, options );
   }
 }
 

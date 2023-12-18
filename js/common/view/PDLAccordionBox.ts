@@ -10,7 +10,7 @@
 
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { ColorProperty, HBox, Node } from '../../../../scenery/js/imports.js';
+import { HBox, Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Property from '../../../../axon/js/Property.js';
@@ -22,7 +22,6 @@ import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Utils from '../../../../dot/js/Utils.js';
-import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -35,8 +34,6 @@ export default class PDLAccordionBox extends AccordionBox {
                       content: Node,
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
-                      histogramRepresentationProperty: Property<HistogramRepresentation>,
-                      blockFillProperty: ColorProperty, blockStrokeProperty: ColorProperty,
                       providedOptions: PDLAccordionBoxOptions ) {
 
     const margin = 8;
