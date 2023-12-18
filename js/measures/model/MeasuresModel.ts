@@ -109,6 +109,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     this.fields.forEach( field => {
       field.projectileLandedEmitter.addListener( updateIntervalToolDataPercentage );
+      field.projectilesClearedEmitter.addListener( updateIntervalToolDataPercentage );
     } );
     this.fieldProperty.link( field => updateIntervalToolDataPercentage() );
     this.intervalTool.changedEmitter.addListener( updateIntervalToolDataPercentage );
