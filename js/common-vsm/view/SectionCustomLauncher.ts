@@ -33,7 +33,7 @@ export default class SectionCustomLauncher extends PDLPanelSection {
 
     const contentContainer = new VBox( { children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ], spacing: 5, stretch: true } );
 
-    super( ProjectileDataLabStrings.launcherStringProperty, contentContainer, providedOptions );
+    super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, providedOptions );
   }
 }
 
