@@ -256,18 +256,17 @@ export default class HistogramNode extends Node {
       updateHistogram();
     } );
 
-    const margin = 8;
     const barBlockSwitch = new ABSwitch(
       histogramRepresentationProperty,
       'blocks', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
       'bars', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'bars' ), {
         tandem: options.tandem.createTandem( 'barBlockSwitch' ),
-        spacing: margin,
+        spacing: 8,
         toggleSwitchOptions: {
           maxWidth: 32
         }
       } );
-    barBlockSwitch.rightTop = this.chartNode.rightBottom.plusXY( -margin, margin );
+    barBlockSwitch.rightTop = this.chartNode.rightBottom.plusXY( -8, 10 );
     this.addChild( barBlockSwitch );
   }
 }

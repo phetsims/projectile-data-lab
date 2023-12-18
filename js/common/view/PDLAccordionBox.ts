@@ -38,6 +38,8 @@ export default class PDLAccordionBox extends AccordionBox {
 
     const margin = 8;
 
+    // The bin width and total bins combo boxes are created here since they require a listParent, and hence cannot
+    // be constructed in HistogramNode (which must be constructed before the listParent is created).
     class BinWidthComboBox extends ComboBox<number> {
       public constructor() {
         const validBinWidths = selectedBinWidthProperty.validValues ?? [];
@@ -73,7 +75,6 @@ export default class PDLAccordionBox extends AccordionBox {
       }
     }
 
-    // REVIEW: Why are these controls out here instead of in HistogramNode?
     const labelAndComboBoxContainer = new HBox( {
       align: 'center',
       children: [
@@ -107,7 +108,7 @@ export default class PDLAccordionBox extends AccordionBox {
         } )
       ]
     } );
-    labelAndComboBoxContainer.leftTop = content.leftBottom.plusXY( margin, -15 );
+    labelAndComboBoxContainer.leftBottom = content.leftBottom.plusXY( margin, 0 );
 
     const contentContainer = new Node( {
       children: [
