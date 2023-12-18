@@ -87,7 +87,7 @@ export default class SamplingField extends Field {
 
     this.withinSampleTimer = new PDLEventTimer( this.singleModeWithinSamplePeriod );
 
-    this.presetLauncherProperty.value = launcher;
+    this.mysteryLauncherProperty.value = launcher;
     this.updateCounts();
 
     this.selectedSampleProperty.lazyLink( () => {

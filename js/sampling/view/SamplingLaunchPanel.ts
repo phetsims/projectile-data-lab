@@ -8,7 +8,7 @@ import { Node } from '../../../../scenery/js/imports.js';
 import SectionSampleSize from './SectionSampleSize.js';
 import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import SectionPresetLauncher from '../../common/view/SectionPresetLauncher.js';
+import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -21,7 +21,7 @@ type SamplingLaunchPanelOptions = SelfOptions & PDLPanelOptions;
 export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
   public constructor( launcherProperty: PhetioProperty<number>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
-    const launcherSection = new SectionPresetLauncher( launcherProperty, {
+    const launcherSection = new SectionMysteryLauncher( launcherProperty, {
       tandem: providedOptions.tandem.createTandem( 'launcherSection' )
     } );
 

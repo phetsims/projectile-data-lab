@@ -46,13 +46,13 @@ export default class CustomLauncherNode extends LauncherNode {
                       launcherAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
                       isLauncherCustomProperty: TProperty<boolean>,
-                      presetLauncherProperty: TProperty<number>,
+                      mysteryLauncherProperty: TProperty<number>,
                       customLauncherTypeProperty: TProperty<LauncherMechanism>,
                       angleStabilizerProperty: TProperty<number>,
                       latestLaunchSpeedProperty: TProperty<number>,
                       providedOptions: CustomLauncherNodeOptions ) {
 
-    super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, presetLauncherProperty, providedOptions );
+    super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherProperty, providedOptions );
 
     const launcherTypeIcon = new Image( this.getImageKeyForCustomLauncherType( customLauncherTypeProperty.value ), {
       centerX: 0,
@@ -129,14 +129,14 @@ export default class CustomLauncherNode extends LauncherNode {
 
     // TODO: Confirm that this is the right way to handle this - see https://github.com/phetsims/projectile-data-lab/issues/7
     isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {
-      // If setting to custom, set the graphics for preset launcher 1
+      // If setting to custom, set the graphics for mystery launcher 1
       // If the second
       if ( isCustom ) { // && ( !prevIsCustom || prevIsCustom === null ) ) {
-        this.updatePresetLauncher( 1 );
+        this.updateMysteryLauncher( 1 );
         this.launcherFrameFront.opacity = 0.2; // Do not set invisible because of 60 degree launch.
       }
       else { //if ( !isCustom && prevIsCustom ) {
-        this.updatePresetLauncher( presetLauncherProperty.value );
+        this.updateMysteryLauncher( mysteryLauncherProperty.value );
         this.launcherFrameFront.opacity = 1;
       }
     } );

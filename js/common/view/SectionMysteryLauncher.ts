@@ -14,13 +14,13 @@ import LauncherRadioButtonGroupWrapper from './LauncherRadioButtonGroupWrapper.j
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionProjectileTypeOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type SectionMysteryLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
-export default class SectionPresetLauncher extends PDLPanelSection {
+export default class SectionMysteryLauncher extends PDLPanelSection {
 
-  public constructor( presetLauncherProperty: PhetioProperty<number>, providedOptions: SectionProjectileTypeOptions ) {
-    super( ProjectileDataLabStrings.launcherStringProperty, new LauncherRadioButtonGroupWrapper( presetLauncherProperty, providedOptions ), providedOptions );
+  public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: SectionMysteryLauncherOptions ) {
+    super( ProjectileDataLabStrings.launcherStringProperty, new LauncherRadioButtonGroupWrapper( mysteryLauncherProperty, providedOptions ), providedOptions );
   }
 }
 
-projectileDataLab.register( 'SectionPresetLauncher', SectionPresetLauncher );
+projectileDataLab.register( 'SectionMysteryLauncher', SectionMysteryLauncher );

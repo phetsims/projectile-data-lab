@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * CustomLauncherTypeRadioButtonGroup is a group of radio buttons for selecting between preset and custom launchers
+ * CustomLauncherTypeRadioButtonGroup is a group of radio buttons for selecting between mystery and custom launchers
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

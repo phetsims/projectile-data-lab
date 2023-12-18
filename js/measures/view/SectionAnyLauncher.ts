@@ -26,7 +26,7 @@ type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptio
 
 export default class SectionAnyLauncher extends PDLPanelSection {
 
-  public constructor( isLauncherCustomProperty: PhetioProperty<boolean>, presetLauncherProperty: PhetioProperty<number>,
+  public constructor( isLauncherCustomProperty: PhetioProperty<boolean>, mysteryLauncherProperty: PhetioProperty<number>,
                       customLauncherTypeProperty: PhetioProperty<LauncherMechanism>, angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
@@ -56,8 +56,8 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       tandem: providedOptions.tandem.createTandem( 'isLauncherCustomRadioButtonGroup' )
     } );
 
-    const presetLauncherRadioButtonGroupWrapper = new LauncherRadioButtonGroupWrapper( presetLauncherProperty, {
-      tandem: providedOptions.tandem.createTandem( 'presetLauncherRadioButtonGroupWrapper' )
+    const mysteryLauncherRadioButtonGroupWrapper = new LauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
+      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroupWrapper' )
     } );
 
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
@@ -75,7 +75,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
 
     const launcherControlsToggleNode = new ToggleNode<boolean, Node>( isLauncherCustomProperty, [ {
       value: false,
-      createNode: () => presetLauncherRadioButtonGroupWrapper
+      createNode: () => mysteryLauncherRadioButtonGroupWrapper
     }, {
       value: true,
       createNode: () => customLauncherControls

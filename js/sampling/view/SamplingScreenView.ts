@@ -68,13 +68,13 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.modelViewTransform,
       model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
-      model.presetLauncherProperty,
+      model.mysteryLauncherProperty,
       {}
     );
 
     this.launcherLayer.addChild( this.launcherNode );
 
-    this.launchPanel = new SamplingLaunchPanel( model.presetLauncherProperty, model.sampleSizeProperty, {
+    this.launchPanel = new SamplingLaunchPanel( model.mysteryLauncherProperty, model.sampleSizeProperty, {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 

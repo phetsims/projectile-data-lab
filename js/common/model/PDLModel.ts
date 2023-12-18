@@ -76,7 +76,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
 
-  public abstract presetLauncherProperty: TProperty<number>;
+  public abstract mysteryLauncherProperty: TProperty<number>;
 
   public readonly meanLaunchAngleProperty: DynamicProperty<number, number, T>;
 

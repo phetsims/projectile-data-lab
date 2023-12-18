@@ -8,15 +8,15 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 export default class LauncherRadioButtonGroupWrapper extends Node {
-  public constructor( presetLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
+  public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/7
-    const presetLauncherRadioButtonGroupItems = _.range( 1, 7 ).map( presetLauncher => {
+    const mysteryLauncherRadioButtonGroupItems = _.range( 1, 7 ).map( mysteryLauncher => {
       return {
-        value: presetLauncher,
-        tandemName: `presetLauncher${presetLauncher}RadioButton`,
+        value: mysteryLauncher,
+        tandemName: `mysteryLauncher${mysteryLauncher}RadioButton`,
 
         // The Panel provides larger bounds around the text, for making the button the size we want.
-        createNode: () => new Panel( new PDLText( presetLauncher.toString(), {
+        createNode: () => new Panel( new PDLText( mysteryLauncher.toString(), {
             fontSize: 14
           } ), {
             fill: null,
@@ -28,8 +28,8 @@ export default class LauncherRadioButtonGroupWrapper extends Node {
       };
     } );
 
-    const presetLauncherRadioButtonGroup = new RectangularRadioButtonGroup( presetLauncherProperty, presetLauncherRadioButtonGroupItems, {
-      tandem: providedOptions.tandem.createTandem( 'presetLauncherRadioButtonGroup' ),
+    const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( mysteryLauncherProperty, mysteryLauncherRadioButtonGroupItems, {
+      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroup' ),
       orientation: 'horizontal',
       preferredWidth: 130,
       lineSpacing: 3,
@@ -40,7 +40,7 @@ export default class LauncherRadioButtonGroupWrapper extends Node {
       }
     } );
     super( {
-      children: [ presetLauncherRadioButtonGroup ]
+      children: [ mysteryLauncherRadioButtonGroup ]
     } );
   }
 }

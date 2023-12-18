@@ -22,13 +22,13 @@ export default class MeasuresLaunchPanel extends VSMLaunchPanel {
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
                       projectileTypeProperty: PhetioProperty<ProjectileType>,
                       isLauncherCustomProperty: PhetioProperty<boolean>,
-                      presetLauncherProperty: PhetioProperty<number>,
+                      mysteryLauncherProperty: PhetioProperty<number>,
                       customLauncherTypeProperty: PhetioProperty<LauncherMechanism>,
                       angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: MeasuresLaunchPanelOptions ) {
 
 
-    const launcherSection = new SectionAnyLauncher( isLauncherCustomProperty, presetLauncherProperty,
+    const launcherSection = new SectionAnyLauncher( isLauncherCustomProperty, mysteryLauncherProperty,
       customLauncherTypeProperty, angleStabilizerProperty, {
         tandem: providedOptions.tandem.createTandem( 'launcherSection' )
       } );

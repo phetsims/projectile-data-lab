@@ -41,7 +41,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
   // Did we decide on this?
   // Number is lightweight in the code, but is it best for selecting a launcher via PhET-IO?
-  public readonly presetLauncherProperty: DynamicProperty<number, number, VSMField>;
+  public readonly mysteryLauncherProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, VSMField>;
 
@@ -66,9 +66,9 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       derive: t => t.latestLaunchSpeedProperty
     } );
 
-    this.presetLauncherProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+    this.mysteryLauncherProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,
-      derive: 'presetLauncherProperty'
+      derive: 'mysteryLauncherProperty'
     } );
 
     this.customLauncherTypeProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>( this.fieldProperty, {
