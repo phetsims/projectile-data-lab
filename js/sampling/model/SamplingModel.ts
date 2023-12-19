@@ -28,9 +28,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly sampleSizeProperty: Property<number>;
   public readonly mysteryLauncherProperty: NumberProperty;
 
-  public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly numberOfSamplesWithMeansShowingProperty: DynamicProperty<number, number, SamplingField>;
 
   // TODO: Use phase instead of sampleMean, see https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
@@ -71,8 +70,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       this.fieldProperty.value = field;
     } );
 
-    this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
-      derive: t => t.numberOfStartedSamplesProperty
+    this.numberOfSamplesWithMeansShowingProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+      derive: t => t.numberOfSamplesWithMeansShowingProperty
     } );
 
     this.selectedSampleProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
@@ -80,10 +79,6 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       // The up/down carousel card changes the selected sample, so this is bidirectional
       bidirectional: true,
       derive: t => t.selectedSampleProperty
-    } );
-
-    this.numberOfCompletedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
-      derive: t => t.numberOfCompletedSamplesProperty
     } );
 
     this.sampleMeanProperty = new DynamicProperty<number | null, number | null, SamplingField>( this.fieldProperty, {
@@ -95,14 +90,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
     this.fieldProperty.value.startPhase( 'showingClearPresample' );
 
-    if ( this.launchModeProperty.value === 'single' ) {
-
-      // TODO: Document, and describe how the selectedSampleProperty is updated: see https://github.com/phetsims/projectile-data-lab/issues/17
-      this.fieldProperty.value.startNewSample();
-    }
-    else {
+    if ( this.launchModeProperty.value === 'continuous' ) {
       this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
     }
+
+    this.fieldProperty.value.startNewSample();
   }
 
   public step( dt: number ): void {

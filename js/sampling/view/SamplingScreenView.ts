@@ -15,7 +15,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
 import SampleCardsPanel from './SampleCardsPanel.js';
-import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
 import SamplingCanvasNode from './SamplingCanvasNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -81,8 +80,10 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 
-    const sampleCardsPanel = new SampleCardsPanel( model.fieldProperty, model.selectedSampleProperty, model.numberOfStartedSamplesProperty,
-      model.numberOfCompletedSamplesProperty, {
+    const sampleCardsPanel = new SampleCardsPanel(
+      model.fieldProperty,
+      model.selectedSampleProperty,
+      model.numberOfSamplesWithMeansShowingProperty, {
         tandem: options.tandem.createTandem( 'sampleCardsPanel' )
       } );
 
@@ -109,13 +110,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         tandem: options.tandem.createTandem( 'accordionBox' )
       } );
     this.addChild( this.accordionBox );
-
-    this.behindProjectilesLayer.addChild( new SamplingFieldSignNode(
-      model.fieldProperty,
-      this.modelViewTransform,
-      model.selectedSampleProperty,
-      model.numberOfStartedSamplesProperty
-    ) );
 
     // layout
     this.visibleBoundsProperty.link( visibleBounds => {

@@ -3,12 +3,12 @@
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Projectile from '../../common/model/Projectile.js';
 import HistogramData from '../../common/model/HistogramData.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -23,19 +23,19 @@ type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
-const SHOWING_CLEAR_PRESAMPLE_TIME = 0.2;
+const SHOWING_CLEAR_PRESAMPLE_TIME = 0.3;
 const SHOWING_SAMPLE_TIME = 0.3;
-const SHOWING_SAMPLE_AND_MEAN_TIME = 0.5;
+const SHOWING_SAMPLE_AND_MEAN_TIME = 0.3;
 
 // In single mode, we transition through these phases:
 // 1. idle (user has not yet pressed the launch button)
-// 2. showingClearPresample (don't do that on the 1st run because there is nothing to clear).
+// 2. showingClearPresample (on the first sample, this phase only lasts for a single frame).
 // 3. showingProjectiles (individual projectiles have highlighted paths)
 // 4. showingCompleteSampleWithMean - User can press the launch button, which goes back to 2
 
 // In continuous mode, we transition through these phases:
 // 1. idle (user has not yet pressed the launch button)
-// 2. showingClearPresample (don't do that on the 1st run because there is nothing to clear).
+// 2. showingClearPresample (on the first sample, this phase only lasts for a single frame).
 // 3. showingCompleteSampleWithoutMean (user has pressed the launch button, and we are creating a sample)
 // 4. showingCompleteSampleWithMean (user has pressed the launch button, and we are creating a sample)
 // GO TO 2
@@ -46,15 +46,7 @@ type SamplingPhase = 'idle' | 'showingClearPresample' | 'showingProjectiles' | '
 export default class SamplingField extends Field {
   public override identifier: string;
 
-  // The simulation begins with 0 samples, showing sample 0 of 0. When a sample begins, this number increases. This is
-  // a convenience Property to simplify the user interface -- it is fully computable from the Projectiles.
-  // TODO: Get rid of these now that we have phase? See https://github.com/phetsims/projectile-data-lab/issues/17
-  public readonly numberOfStartedSamplesProperty: NumberProperty;
-
-  // In order to show an accumulating sample, we must differentiate between the total samples and total completed samples.
-  // This is a convenience Property to simplify the user interface -- it is fully computable from the Projectiles.
-  // TODO: Get rid of these now that we have phase? See https://github.com/phetsims/projectile-data-lab/issues/17
-  public readonly numberOfCompletedSamplesProperty: NumberProperty;
+  public readonly numberOfSamplesWithMeansShowingProperty: NumberProperty;
 
   // This property is used to set the visibility and position of the mean indicator.
   // If it is null, the current sample is not yet complete and the mean indicator is not visible.
@@ -82,11 +74,8 @@ export default class SamplingField extends Field {
 
     this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );
 
-    // PhET-iO instrumentation not needed since this is computable from the Projectiles
-    this.numberOfStartedSamplesProperty = new NumberProperty( 0 );
-
-    // PhET-iO instrumentation not needed since this is computable from the Projectiles
-    this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
+    // PhET-iO instrumentation not needed since this is computable from the Projectiles and the phase
+    this.numberOfSamplesWithMeansShowingProperty = new NumberProperty( 0 );
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     this.totalSampleTime =
@@ -103,7 +92,6 @@ export default class SamplingField extends Field {
     } );
 
     this.mysteryLauncherProperty.value = launcher;
-    this.updateCounts();
 
     this.selectedSampleProperty.lazyLink( () => {
 
@@ -120,7 +108,13 @@ export default class SamplingField extends Field {
     } );
 
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
-      this.updateCounts();
+
+      // TODO: Would it be more reliable to just instrument this property? See https://github.com/phetsims/projectile-data-lab/issues/17
+      const totalProjectiles = this.getTotalProjectileCount();
+      const numCompletedSamples = Math.floor( totalProjectiles / this.sampleSize );
+      const numSamplesWithMeansShowing = Math.max( 0, this.phase === 'showingCompleteSampleWithMean' ? numCompletedSamples : numCompletedSamples - 1 );
+
+      this.numberOfSamplesWithMeansShowingProperty.value = numSamplesWithMeansShowing;
     } );
   }
 
@@ -129,12 +123,15 @@ export default class SamplingField extends Field {
   }
 
   /**
-   * Return an array of samples, where each sample is an object with a single property, x, which is the mean of the
-   * projectiles in that sample. This is used for the histogram.
+   * Return an array of samples which have their means currently showing. Each sample is an object with a single property, x,
+   * which is the mean distance of projectiles in that sample. This is used for the histogram.
    */
-  public getSamples(): HistogramData[] {
+  public getHistogramData(): HistogramData[] {
+
     const samples: HistogramData[] = [];
-    for ( let sampleNumber = 1; sampleNumber <= this.numberOfCompletedSamplesProperty.value; sampleNumber++ ) {
+
+    for ( let sampleIndex = 0; sampleIndex < this.numberOfSamplesWithMeansShowingProperty.value; sampleIndex++ ) {
+      const sampleNumber = sampleIndex + 1;
 
       const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === sampleNumber );
 
@@ -148,23 +145,12 @@ export default class SamplingField extends Field {
     return samples;
   }
 
-  // NOTE: you probably want to this.updateCounts(); after calling this.
   public createLandedProjectile(): void {
-    const projectile = this.createProjectile( this.numberOfCompletedSamplesProperty.value + 1 );
+    const projectile = this.createProjectile( this.selectedSampleProperty.value );
     projectile.setLanded();
 
     this.landedProjectiles.push( projectile );
     this.projectilesChangedEmitter.emit();
-  }
-
-  public override updateCounts(): void {
-    const totalProjectiles = this.getTotalProjectileCount();
-
-    const completed = Math.floor( totalProjectiles / this.sampleSize );
-    const hasStartedAnUnfinishedSample = totalProjectiles % this.sampleSize !== 0;
-
-    this.numberOfCompletedSamplesProperty.value = completed;
-    this.numberOfStartedSamplesProperty.value = completed + ( hasStartedAnUnfinishedSample ? 1 : 0 );
   }
 
   public startNewSample(): void {
@@ -175,26 +161,18 @@ export default class SamplingField extends Field {
     // Any time we start a new sample, if an old sample was in-progress, we must complete it immediately/synchronously
     // before starting the new one. Typically, this would only happen when the user clicks the launch button while
     // continuous launching is enabled.
-    let updated = false;
-    while ( this.getTotalProjectileCount() % this.sampleSize !== 0 ) {
-      this.createLandedProjectile();
-      updated = true;
-    }
 
-    // Make sure we are pointing at the right sample for the new Projectile
-    updated && this.updateCounts();
-
-    // Create the first projectile in the new sample if there is none, otherwise immediately clear and schedule one
-    // to appear when the timer expires.
-    if ( this.getTotalProjectileCount() === 0 ) {
-      this.createLandedProjectile();
-    }
+    // TODO: Update this to use the phase system - see https://github.com/phetsims/projectile-data-lab/issues/17
+    // let updated = false;
+    // while ( this.getTotalProjectileCount() % this.sampleSize !== 0 ) {
+    //   this.createLandedProjectile();
+    //   updated = true;
+    // }
 
     // Show the new sample in the selector panel. Note this means if sample 2/8 was selected, then we
     // create a new one, it will jump to 9/9. This is the desired behavior.
-    this.selectedSampleProperty.value = this.numberOfStartedSamplesProperty.value + 1;
 
-    this.updateCounts();
+    this.selectedSampleProperty.value++;
   }
 
   public step( dt: number, launchMode: 'continuous' | 'single', isContinuousLaunching: boolean ): void {
@@ -217,21 +195,20 @@ export default class SamplingField extends Field {
     }
     else if ( this.phase === 'showingClearPresample' ) {
 
-      if ( timeInMode >= SHOWING_CLEAR_PRESAMPLE_TIME ) {
+      // If this is the first sample on the current field, do not delay the start of the sample
+      // Otherwise, wait for SHOWING_CLEAR_PRESAMPLE_TIME while highlighting the first projectile
+      if ( this.landedProjectiles.length === 0 || timeInMode >= SHOWING_CLEAR_PRESAMPLE_TIME ) {
 
         if ( launchMode === 'continuous' ) {
 
           // Create all projectiles for this sample immediately and go into showingSamplePhase
-          this.startNewSample();
           while ( this.getProjectilesInSelectedSample().length < this.sampleSize ) {
             this.createLandedProjectile();
           }
-          this.updateCounts();
           this.startPhase( 'showingCompleteSampleWithoutMean' );
         }
         else {
           this.startPhase( 'showingProjectiles' );
-          this.startNewSample();
         }
       }
     }
@@ -246,26 +223,27 @@ export default class SamplingField extends Field {
       while ( this.getProjectilesInSelectedSample().length < numberProjectilesToShow ) {
         this.createLandedProjectile();
       }
-      this.updateCounts();
 
       // Allow extra time to show focus on the final projectile before showing the sample mean
       if ( timeInMode > this.totalSampleTime ) {
-        updateMean();
         this.startPhase( 'showingCompleteSampleWithMean' );
+        updateMean();
+        this.numberOfSamplesWithMeansShowingProperty.value++;
       }
     }
     else if ( this.phase === 'showingCompleteSampleWithoutMean' ) { // Only in continuous mode
 
       if ( timeInMode > SHOWING_SAMPLE_TIME ) {
-        updateMean();
+
         this.startPhase( 'showingCompleteSampleWithMean' );
+        updateMean();
+        this.numberOfSamplesWithMeansShowingProperty.value++;
       }
     }
     else if ( this.phase === 'showingCompleteSampleWithMean' ) {
       if ( launchMode === 'continuous' && isContinuousLaunching && timeInMode >= SHOWING_SAMPLE_AND_MEAN_TIME ) {
         this.startPhase( 'showingClearPresample' );
-        this.selectedSampleProperty.value++;
-        this.updateCounts();
+        this.startNewSample();
       }
     }
   }
@@ -284,11 +262,9 @@ export default class SamplingField extends Field {
   public override clearProjectiles(): void {
     super.clearProjectiles();
 
-    this.numberOfStartedSamplesProperty.reset();
-    this.numberOfCompletedSamplesProperty.reset();
+    this.startPhase( 'idle' );
 
-    this.updateCounts();
-
+    this.numberOfSamplesWithMeansShowingProperty.reset();
     this.sampleMeanProperty.reset();
   }
 }

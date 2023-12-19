@@ -32,8 +32,7 @@ export default class SampleCardsPanel extends PDLPanel {
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
     selectedSampleProperty: TProperty<number>,
-    sampleCountProperty: TReadOnlyProperty<number>,
-    numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
+    numberOfSampleCardsProperty: TReadOnlyProperty<number>,
     options: SampleCardsPanelOptions ) {
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
@@ -41,23 +40,22 @@ export default class SampleCardsPanel extends PDLPanel {
       // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
       // TODO: How to show the finished sample number or selected sample number (but not an in progress sample), see https://github.com/phetsims/projectile-data-lab/issues/7
       number: selectedSampleProperty,
-      count: sampleCountProperty
+      count: numberOfSampleCardsProperty
     } );
 
     const node = new Node();
 
-    Multilink.multilink( [
-      samplingFieldProperty, selectedSampleProperty, sampleCountProperty,
-      numberOfCompletedSamplesProperty ], () => {
+    Multilink.multilink( [ samplingFieldProperty, numberOfSampleCardsProperty ],
+      ( samplingField, numberOfSampleCards ) => {
 
-      const field = samplingFieldProperty.value;
-      const projectiles = field.getProjectilesInSelectedSample();
-      const values = projectiles.map( projectile => projectile.x );
+        const field = samplingFieldProperty.value;
+        const projectiles = field.getProjectilesInSelectedSample();
+        const values = projectiles.map( projectile => projectile.x );
 
-      // Only show the value for a full sample
-      const isFullSample = projectiles.length === field.sampleSize;
+        // Only show the value for a full sample
+        const isFullSample = true;// projectiles.length === field.sampleSize;
 
-      if ( isFullSample ) {
+        // if ( selectedSample <= numberOfSampleCards ) {
         const meanString = isFullSample ? Utils.toFixedNumber( _.mean( values ), 1 ) : '?';
 
         const page = new VBox( {
@@ -70,8 +68,8 @@ export default class SampleCardsPanel extends PDLPanel {
         } );
 
         node.children = [ page ];
-      }
-    } );
+        // } // TODO: See https://github.com/phetsims/projectile-data-lab/issues/17
+      } );
 
     const carousel = new Panel( node );
 
@@ -85,14 +83,14 @@ export default class SampleCardsPanel extends PDLPanel {
         },
         listener: () => {
           const proposedValue = selectedSampleProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
-          if ( proposedValue >= 1 && proposedValue <= sampleCountProperty.value ) {
+          if ( proposedValue >= 1 && proposedValue <= numberOfSampleCardsProperty.value ) {
             selectedSampleProperty.value = proposedValue;
           }
         },
         fireOnHold: true,
         fireOnHoldInterval: 50,
-        enabledProperty: new DerivedProperty( [ selectedSampleProperty, sampleCountProperty ], ( selectedSample, sampleCount ) => {
-          return ( type === 'increment' ) ? selectedSample < sampleCount : selectedSample > 1;
+        enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfSampleCardsProperty ], ( selectedSample, numberOfSampleCards ) => {
+          return ( type === 'increment' ) ? selectedSample < numberOfSampleCards : selectedSample > 1;
         } )
       } );
     };

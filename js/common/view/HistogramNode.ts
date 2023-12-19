@@ -206,7 +206,7 @@ export default class HistogramNode extends Node {
           histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
         }
         else if ( field instanceof SamplingField ) {
-          const samples = field.getSamples();
+          const samples = field.getHistogramData();
           const selectedOne = field.selectedSampleProperty.value;
           histogramPainter.setHistogramData( samples, samples[ selectedOne - 1 ] );
         }
@@ -217,22 +217,27 @@ export default class HistogramNode extends Node {
       }
     };
 
+    // Incorrect sample is depicted with a dot, see https://github.com/phetsims/projectile-data-lab/issues/17
+
     isSettingPhetioStateProperty.addListener( updateHistogram );
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
     fields.forEach( field => {
 
-      // When one projectile lands or is cleared, update the histogram
-      field.projectileLandedEmitter.addListener( () => updateHistogram() );
       field.projectilesClearedEmitter.addListener( () => updateHistogram() );
 
       // For VSM, redraw when the selected projectile changes
       if ( field instanceof VSMField ) {
         field.selectedProjectileProperty.link( () => updateHistogram() );
+        field.projectileLandedEmitter.addListener( () => updateHistogram() );
       }
       else if ( field instanceof SamplingField ) {
+
+        // Show a different selected brick
         field.selectedSampleProperty.link( () => updateHistogram() );
-        field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
+
+        // When we get a new mean, redraw the histogram
+        field.numberOfSamplesWithMeansShowingProperty.link( () => updateHistogram() );
       }
     } );
 

@@ -127,7 +127,7 @@ export default class SampleThumbnailNode extends Node {
         fields.forEach( field => {
           if ( field instanceof SamplingField ) {
             if ( field.sampleSize === thumbnailSampleSize && field.launcher === ( fieldProperty.value as SamplingField ).launcher ) {
-              histogramPainter.setHistogramData( field.getSamples(), null );
+              histogramPainter.setHistogramData( field.getHistogramData(), null );
             }
           }
           else {
@@ -144,17 +144,16 @@ export default class SampleThumbnailNode extends Node {
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
     fields.forEach( field => {
 
-      // When one projectile lands or is cleared, update the histogram
-      field.projectileLandedEmitter.addListener( () => updateHistogram() );
       field.projectilesClearedEmitter.addListener( () => updateHistogram() );
 
       // For VSM, redraw when the selected projectile changes
       if ( field instanceof VSMField ) {
         field.selectedProjectileProperty.link( () => updateHistogram() );
+        field.projectileLandedEmitter.addListener( () => updateHistogram() );
       }
       else if ( field instanceof SamplingField ) {
         field.selectedSampleProperty.link( () => updateHistogram() );
-        field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
+        field.numberOfSamplesWithMeansShowingProperty.link( () => updateHistogram() );
       }
     } );
 
