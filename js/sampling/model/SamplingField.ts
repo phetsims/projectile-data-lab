@@ -43,6 +43,7 @@ const SHOWING_SAMPLE_AND_MEAN_TIME = 0.3;
 type SamplingPhase = 'idle' | 'showingClearPresample' | 'showingProjectiles' | 'showingCompleteSampleWithoutMean' | 'showingCompleteSampleWithMean';
 
 // TODO: Gracefully handle changes of mode while a sample is in progress, see https://github.com/phetsims/projectile-data-lab/issues/17
+// TODO: Gracefully handle starting a new sample when selectedSample < max, see https://github.com/phetsims/projectile-data-lab/issues/17
 export default class SamplingField extends Field {
   public override identifier: string;
 
