@@ -46,7 +46,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     // When the sample mean takes a value, repaint the canvas to show the paths as all white
     model.sampleMeanProperty.link( () => samplingCanvasNode.invalidatePaint() );
     model.fields.forEach( field => {
-      field.phaseChangedEmitter.addListener( () => samplingCanvasNode.invalidatePaint() );
+      field.numberOfSamplesWithMeansShowingProperty.link( () => samplingCanvasNode.invalidatePaint() );
     } );
 
     this.projectileCanvasLayer.addChild( samplingCanvasNode );

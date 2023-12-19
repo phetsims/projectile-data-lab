@@ -6,7 +6,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
 import HistogramData from '../../common/model/HistogramData.js';
 import Property from '../../../../axon/js/Property.js';
-import Emitter from '../../../../axon/js/Emitter.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
@@ -66,7 +65,6 @@ export default class SamplingField extends Field {
 
   // Current phase, see documentation above
   private phase: SamplingPhase = 'idle';
-  public readonly phaseChangedEmitter = new Emitter();
 
   public constructor( public readonly launcher: number,
                       public readonly sampleSize: number,
@@ -252,7 +250,6 @@ export default class SamplingField extends Field {
   public startPhase( phase: SamplingPhase ): void {
     this.phase = phase;
     this.phaseStartTime = this.time;
-    this.phaseChangedEmitter.emit();
   }
 
   public getPhase(): SamplingPhase {
