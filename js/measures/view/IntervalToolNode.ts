@@ -18,15 +18,13 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 export type IntervalToolNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 const TEXT_PANEL_BOUNDS_DILATION = 5;
 
-// TODO: Studio autoselect text: https://github.com/phetsims/projectile-data-lab/issues/7
-// TODO: i18n, maxWidth: https://github.com/phetsims/projectile-data-lab/issues/7
-// TODO: Put it behind the data measures display. https://github.com/phetsims/projectile-data-lab/issues/7
 export default class IntervalToolNode extends Node {
   private readonly arrowNode: ArrowNode;
 
@@ -72,8 +70,19 @@ export default class IntervalToolNode extends Node {
 
     this.addChild( this.arrowNode );
 
-    const intervalText = new PDLText( '', {
-      font: PDLConstants.INTERVAL_TOOL_FONT
+    const intervalProperty = new Property( Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 ) );
+    intervalTool.changedEmitter.addListener( () => {
+      intervalProperty.value = Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 );
+    } );
+
+    // Pattern for the interval readout, not instrumented and hence does not support studio autoselect.
+    const intervalReadoutStringProperty = new PatternStringProperty( ProjectileDataLabStrings.intervalMetersPatternStringProperty, {
+      interval: intervalProperty
+    } );
+
+    const intervalText = new PDLText( intervalReadoutStringProperty, {
+      font: PDLConstants.INTERVAL_TOOL_FONT,
+      maxWidth: 100
     } );
     const intervalReadout = new Panel( intervalText );
 
@@ -86,17 +95,14 @@ export default class IntervalToolNode extends Node {
       }
     } );
 
+    // Pattern for the percent readout, not instrumented and hence does not support studio autoselect.
     const percentPatternProperty = new PatternStringProperty( ProjectileDataLabStrings.intervalToolPercentStringProperty, {
       percent: nonNullProperty
     } );
 
-    // TODO: Studio text autoselect, see https://github.com/phetsims/projectile-data-lab/issues/7
-    // const displayValueProperty = new DerivedProperty( [ intervalTool.dataFractionProperty, percentPatternProperty ], ( fraction, format ) => {
-    //   return fraction === null ? 'longdash' : format;
-    // } );
-
     const percentReadout = new Panel( new PDLText( percentPatternProperty, {
-      font: PDLConstants.INTERVAL_TOOL_FONT
+      font: PDLConstants.INTERVAL_TOOL_FONT,
+      maxWidth: 100
     } ) );
     percentPatternProperty.link( () => {
       percentReadout.mouseArea = percentReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
@@ -155,8 +161,6 @@ export default class IntervalToolNode extends Node {
       // Note if the edge1 and edge2 are the same, the arrow will have the empty bounds
       this.arrowNode.setTailAndTip( viewEdge1X, ARROW_Y, viewEdge2X, ARROW_Y );
 
-      intervalText.string = Utils.toFixed( ( Math.abs( intervalTool.edge2 - intervalTool.edge1 ) ), 1 ) + ' m';
-
       intervalReadout.mouseArea = intervalReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
       intervalReadout.touchArea = intervalReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
 
@@ -167,6 +171,9 @@ export default class IntervalToolNode extends Node {
     intervalTool.dataFractionProperty.link( fraction => update() );
     intervalTool.changedEmitter.addListener( update );
     update();
+    percentPatternProperty.link( update );
+    intervalReadoutStringProperty.link( update );
+
 
     readoutVBox.addInputListener( new DragListener( {
       applyOffset: true,

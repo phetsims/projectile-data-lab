@@ -55,6 +55,7 @@ type StringsType = {
   'sampleNumberOfCountPatternStringProperty': LocalizedStringProperty;
   'numberOfCountPatternStringProperty': LocalizedStringProperty;
   'binWidthMPatternStringProperty': LocalizedStringProperty;
+  'intervalMetersPatternStringProperty': LocalizedStringProperty;
   'distanceStringProperty': LocalizedStringProperty;
   'meanDistanceStringProperty': LocalizedStringProperty;
   'countStringProperty': LocalizedStringProperty;
