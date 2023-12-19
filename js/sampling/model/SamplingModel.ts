@@ -31,6 +31,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
+
+  // TODO: Use phase instead of sampleMean, see https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
 
   public constructor( providedOptions: SamplingModelOptions ) {
@@ -87,27 +89,24 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     this.sampleMeanProperty = new DynamicProperty<number | null, number | null, SamplingField>( this.fieldProperty, {
       derive: t => t.sampleMeanProperty
     } );
-
-    // When the launch mode changes, update the timing between projectiles within a sample.
-    this.launchModeProperty.link( launchMode => {
-      this.fields.forEach( field => field.setLaunchMode( launchMode ) );
-    } );
   }
 
   public override launchButtonPressed(): void {
+
+    this.fieldProperty.value.startPhase( 'showingClearPresample' );
+
     if ( this.launchModeProperty.value === 'single' ) {
+
+      // TODO: Document, and describe how the selectedSampleProperty is updated: see https://github.com/phetsims/projectile-data-lab/issues/17
       this.fieldProperty.value.startNewSample();
     }
     else {
-      if ( !this.isContinuousLaunchingProperty.value ) {
-        this.fieldProperty.value.startNewSample();
-      }
       this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
     }
   }
 
   public step( dt: number ): void {
-    this.fieldProperty.value.step( dt, this.isContinuousLaunchingProperty.value );
+    this.fieldProperty.value.step( dt, this.launchModeProperty.value, this.isContinuousLaunchingProperty.value );
   }
 
   public override clearCurrentField(): void {

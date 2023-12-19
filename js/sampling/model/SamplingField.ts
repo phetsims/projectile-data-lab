@@ -5,10 +5,10 @@ import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Projectile from '../../common/model/Projectile.js';
-import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 import HistogramData from '../../common/model/HistogramData.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Property from '../../../../axon/js/Property.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -22,39 +22,58 @@ import Property from '../../../../axon/js/Property.js';
 type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
-// When running in continuous mode, show all projectiles appearing at once. This allows us to compute the mean
-// immediately, and it looks better in the histogram, showing the selected part. There is no flickering. The user
-// can still see data sweep in when in single mode.
-const WITHIN_SAMPLE_TIME_CONTINUOUS = 0;
-
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
-const MEAN_SYMBOL_DELAY_TIME = 0.3;
-const NEXT_SAMPLE_DELAY_TIME = 0.5;
+const SHOWING_CLEAR_PRESAMPLE_TIME = 0.2;
+const SHOWING_SAMPLE_TIME = 0.3;
+const SHOWING_SAMPLE_AND_MEAN_TIME = 0.5;
 
+// In single mode, we transition through these phases:
+// 1. idle (user has not yet pressed the launch button)
+// 2. showingClearPresample (don't do that on the 1st run because there is nothing to clear).
+// 3. showingProjectiles (individual projectiles have highlighted paths)
+// 4. showingCompleteSampleWithMean - User can press the launch button, which goes back to 2
+
+// In continuous mode, we transition through these phases:
+// 1. idle (user has not yet pressed the launch button)
+// 2. showingClearPresample (don't do that on the 1st run because there is nothing to clear).
+// 3. showingCompleteSampleWithoutMean (user has pressed the launch button, and we are creating a sample)
+// 4. showingCompleteSampleWithMean (user has pressed the launch button, and we are creating a sample)
+// GO TO 2
+
+type SamplingPhase = 'idle' | 'showingClearPresample' | 'showingProjectiles' | 'showingCompleteSampleWithoutMean' | 'showingCompleteSampleWithMean';
+
+// TODO: Gracefully handle changes of mode while a sample is in progress, see https://github.com/phetsims/projectile-data-lab/issues/17
 export default class SamplingField extends Field {
   public override identifier: string;
 
-  private readonly withinSampleTimer: PDLEventTimer;
-  private readonly betweenSamplesTimer = new PDLEventTimer( MEAN_SYMBOL_DELAY_TIME + NEXT_SAMPLE_DELAY_TIME );
-
-  // After a sample completes, this timer counts down until we show the mean indicator.
-  private meanIndicatorDelayTimer: PDLEventTimer | null = null;
-
   // The simulation begins with 0 samples, showing sample 0 of 0. When a sample begins, this number increases. This is
   // a convenience Property to simplify the user interface -- it is fully computable from the Projectiles.
+  // TODO: Get rid of these now that we have phase? See https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly numberOfStartedSamplesProperty: NumberProperty;
 
   // In order to show an accumulating sample, we must differentiate between the total samples and total completed samples.
   // This is a convenience Property to simplify the user interface -- it is fully computable from the Projectiles.
+  // TODO: Get rid of these now that we have phase? See https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
   // This property is used to set the visibility and position of the mean indicator.
   // If it is null, the current sample is not yet complete and the mean indicator is not visible.
   // Note: In 'Single sample' mode, there is a delay between the last projectile in a sample and the mean indicator appearing.
+  // TODO: Get rid of these now that we have phase? See https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly sampleMeanProperty: Property<number | null>;
 
-  // private currentLandedCount = 0;
-  private readonly singleModeWithinSamplePeriod: number;
+  // Total elapsed time of running the model, so we can update the current phase and/or move to the next phase.
+  private time = 0;
+
+  // Mark the time when a phase began, so we can track how long we have been in the phase.
+  private phaseStartTime = 0;
+
+  // Total time to launch all projectiles in single mode.
+  private readonly totalSampleTime: number;
+
+  // Current phase, see documentation above
+  private phase: SamplingPhase = 'idle';
+  public readonly phaseChangedEmitter = new Emitter();
 
   public constructor( public readonly launcher: number,
                       public readonly sampleSize: number,
@@ -70,22 +89,18 @@ export default class SamplingField extends Field {
     this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
-    const totalSampleTime =
+    this.totalSampleTime =
       this.sampleSize === 2 ? 0.5 :
       this.sampleSize === 5 ? 1 :
       this.sampleSize === 15 ? 1.5 :
       this.sampleSize === 40 ? 2 :
       0;
 
-    assert && assert( totalSampleTime > 0, 'totalSampleTime should be greater than 0' );
+    assert && assert( this.totalSampleTime > 0, 'this.totalSampleTime should be greater than 0' );
 
     this.sampleMeanProperty = new Property<number | null>( null, {
       reentrant: true
     } );
-
-    this.singleModeWithinSamplePeriod = totalSampleTime / this.sampleSize;
-
-    this.withinSampleTimer = new PDLEventTimer( this.singleModeWithinSamplePeriod );
 
     this.mysteryLauncherProperty.value = launcher;
     this.updateCounts();
@@ -179,50 +194,90 @@ export default class SamplingField extends Field {
     // create a new one, it will jump to 9/9. This is the desired behavior.
     this.selectedSampleProperty.value = this.numberOfStartedSamplesProperty.value + 1;
 
-    this.betweenSamplesTimer.stop();
-    this.withinSampleTimer.restart();
-
     this.updateCounts();
   }
 
-  public step( dt: number, isContinuousLaunching: boolean ): void {
-    if ( this.meanIndicatorDelayTimer !== null ) {
-      this.meanIndicatorDelayTimer.step( dt, () => {
-        const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
-        if ( projectilesInSelectedSample.length > 0 ) {
-          this.sampleMeanProperty.value = _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) );
+  public step( dt: number, launchMode: 'continuous' | 'single', isContinuousLaunching: boolean ): void {
+    this.time += dt;
+    const timeInMode = this.time - this.phaseStartTime;
+
+    const updateMean = () => {
+      const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
+      if ( projectilesInSelectedSample.length > 0 ) {
+        this.sampleMeanProperty.value = _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) );
+      }
+      else {
+        this.sampleMeanProperty.value = null;
+      }
+    };
+
+    if ( this.phase === 'idle' ) {
+
+      // Nothing to do, waiting for user to press the launch button
+    }
+    else if ( this.phase === 'showingClearPresample' ) {
+
+      if ( timeInMode >= SHOWING_CLEAR_PRESAMPLE_TIME ) {
+
+        if ( launchMode === 'continuous' ) {
+
+          // Create all projectiles for this sample immediately and go into showingSamplePhase
+          this.startNewSample();
+          while ( this.getProjectilesInSelectedSample().length < this.sampleSize ) {
+            this.createLandedProjectile();
+          }
+          this.updateCounts();
+          this.startPhase( 'showingCompleteSampleWithoutMean' );
         }
         else {
-          this.sampleMeanProperty.value = null;
+          this.startPhase( 'showingProjectiles' );
+          this.startNewSample();
         }
-        this.meanIndicatorDelayTimer = null;
-      } );
+      }
     }
+    else if ( this.phase === 'showingProjectiles' ) { // Only for single mode
 
-    if ( isContinuousLaunching ) {
+      // The continuous amount we have progressed through the current sample
+      const portionOfSample = Math.min( timeInMode / this.totalSampleTime, 1 );
 
-      // TODO: For https://github.com/phetsims/projectile-data-lab/issues/17, show a "blank" phase as part of the rhythm
-      this.betweenSamplesTimer.step( dt, () => {
-        this.startNewSample();
-      } );
-    }
+      // Compute the number of projectile that should be showing at this time
+      const numberProjectilesToShow = Math.ceil( portionOfSample * this.sampleSize );
 
-    this.withinSampleTimer.step( dt, () => {
-
-      this.createLandedProjectile();
+      while ( this.getProjectilesInSelectedSample().length < numberProjectilesToShow ) {
+        this.createLandedProjectile();
+      }
       this.updateCounts();
 
-      if ( this.getTotalProjectileCount() % this.sampleSize === 0 ) {
-
-        // When a sample is completed, timeSinceSampleFinished will be set from null to 0
-        this.meanIndicatorDelayTimer = new PDLEventTimer( MEAN_SYMBOL_DELAY_TIME );
-        this.meanIndicatorDelayTimer.restart();
-
-        // Finished a sample, schedule the next one to begin soon
-        this.withinSampleTimer.stop();
-        this.betweenSamplesTimer.restart();
+      // Allow extra time to show focus on the final projectile before showing the sample mean
+      if ( timeInMode > this.totalSampleTime ) {
+        updateMean();
+        this.startPhase( 'showingCompleteSampleWithMean' );
       }
-    } );
+    }
+    else if ( this.phase === 'showingCompleteSampleWithoutMean' ) { // Only in continuous mode
+
+      if ( timeInMode > SHOWING_SAMPLE_TIME ) {
+        updateMean();
+        this.startPhase( 'showingCompleteSampleWithMean' );
+      }
+    }
+    else if ( this.phase === 'showingCompleteSampleWithMean' ) {
+      if ( launchMode === 'continuous' && isContinuousLaunching && timeInMode >= SHOWING_SAMPLE_AND_MEAN_TIME ) {
+        this.startPhase( 'showingClearPresample' );
+        this.selectedSampleProperty.value++;
+        this.updateCounts();
+      }
+    }
+  }
+
+  public startPhase( phase: SamplingPhase ): void {
+    this.phase = phase;
+    this.phaseStartTime = this.time;
+    this.phaseChangedEmitter.emit();
+  }
+
+  public getPhase(): SamplingPhase {
+    return this.phase;
   }
 
   // When the eraser button is pressed, clear the selected Field's projectiles.
@@ -232,17 +287,9 @@ export default class SamplingField extends Field {
     this.numberOfStartedSamplesProperty.reset();
     this.numberOfCompletedSamplesProperty.reset();
 
-    this.withinSampleTimer.stop();
-    this.betweenSamplesTimer.stop();
-
     this.updateCounts();
 
     this.sampleMeanProperty.reset();
-    this.meanIndicatorDelayTimer = null;
-  }
-
-  public setLaunchMode( launchMode: 'single' | 'continuous' ): void {
-    this.withinSampleTimer.setPeriod( launchMode === 'single' ? this.singleModeWithinSamplePeriod : WITHIN_SAMPLE_TIME_CONTINUOUS / this.sampleSize );
   }
 }
 

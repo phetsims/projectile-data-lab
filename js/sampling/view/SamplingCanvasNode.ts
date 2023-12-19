@@ -22,7 +22,6 @@ type SamplingCanvasNodeOptions = SelfOptions & PDLCanvasNodeOptions;
 export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
   public constructor( fieldProperty: Property<SamplingField>,
                       isPathsVisibleProperty: Property<boolean>,
-                      private readonly isContinuousLaunchingProperty: TReadOnlyProperty<boolean>,
                       modelViewTransform: ModelViewTransform2,
                       selectedSampleProperty: TReadOnlyProperty<number>,
                       providedOptions: SamplingCanvasNodeOptions ) {
@@ -49,7 +48,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     const isShowingSampleMean = this.fieldProperty.value.sampleMeanProperty.value !== null;
 
     for ( let i = 0; i < projectiles.length; i++ ) {
-      const showHighlightedPath = !this.isContinuousLaunchingProperty.value && i === projectiles.length - 1;
+      const showHighlightedPath = this.fieldProperty.value.getPhase() === 'showingProjectiles' && i === projectiles.length - 1;
 
       const pathStrokeColorProperty = ( showHighlightedPath && !isShowingSampleMean ) ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
       context.strokeStyle = pathStrokeColorProperty.value.toCSS();
