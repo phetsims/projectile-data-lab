@@ -1,23 +1,21 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLPanelSection from '../../common/view/PDLPanelSection.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import angleUpSolidShape from '../../../../sherpa/js/fontawesome-5/angleUpSolidShape.js';
-import angleDownSolidShape from '../../../../sherpa/js/fontawesome-5/angleDownSolidShape.js';
+import { HBox, Line, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
 import Panel from '../../../../sun/js/Panel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import SamplingField from '../model/SamplingField.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import Utils from '../../../../dot/js/Utils.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
+import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
+import SamplingField from '../model/SamplingField.js';
+import Utils from '../../../../dot/js/Utils.js';
+import PDLText from '../../common/view/PDLText.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -33,81 +31,130 @@ export default class SampleSelectorPanel extends PDLPanel {
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
     selectedSampleProperty: TProperty<number>,
     numberOfSampleCardsProperty: TReadOnlyProperty<number>,
-    options: SampleSelectorPanelOptions ) {
+    providedOptions: SampleSelectorPanelOptions ) {
 
-    const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
+    const options = optionize<SampleSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
 
-      // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
-      // TODO: How to show the finished sample number or selected sample number (but not an in progress sample), see https://github.com/phetsims/projectile-data-lab/issues/7
-      number: selectedSampleProperty,
-      count: numberOfSampleCardsProperty
-    } );
+    // const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfCountPatternStringProperty, {
+    //
+    //   // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
+    //   number: selectedSampleProperty,
+    //   count: numberOfSampleCardsProperty
+    // } );
 
-    const node = new Node();
+    // const titleStringProperty = new DerivedProperty( [ numberOfSampleCardsProperty, patternStringProperty ], ( landedProjectileCount, patternString ) => {
+    //   return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : patternString;
+    // } );
 
+    const dataContainer = new Node();
     Multilink.multilink( [ samplingFieldProperty, numberOfSampleCardsProperty ],
       field => {
 
-        const projectiles = field.getProjectilesInSelectedSample();
-        const values = projectiles.map( projectile => projectile.x );
-
-        // Only show the value for a full sample
-        const isFullSample = true;// projectiles.length === field.sampleSize;
-
-        // if ( selectedSample <= numberOfSampleCards ) {
-        const meanString = isFullSample ? Utils.toFixedNumber( _.mean( values ), 1 ) : '?';
-
-        const page = new VBox( {
-          align: 'left',
-          children: [
-            new Text( 'Launcher: ' + field.launcher ),
-            new Text( 'Sample Size: ' + field.sampleSize ),
-            new Text( `Mean: ${meanString} m` )
-          ]
-        } );
-
-        node.children = [ page ];
-        // } // TODO: See https://github.com/phetsims/projectile-data-lab/issues/17
+        if ( numberOfSampleCardsProperty.value === 0 ) {
+          dataContainer.children = [ new PDLText( 'No data' ) ];
+        }
+        else {
+          const projectiles = field.getProjectilesInSelectedSample();
+          const values = projectiles.map( projectile => projectile.x );
+          dataContainer.children = [ new VBox( {
+            align: 'left',
+            children: [
+              new Text( 'Launcher: ' + field.launcher ),
+              new Text( 'Sample Size: ' + field.sampleSize ),
+              new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m` )
+            ]
+          } ) ];
+        }
       } );
 
-    const carousel = new Panel( node );
-
-    const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
-      return new RectangularPushButton( {
-        tandem: options.tandem.createTandem( type + 'Button' ),
-        content: new Path( type === 'increment' ? angleUpSolidShape : angleDownSolidShape, { fill: 'white', scale: 0.05 } ),
-        buttonAppearanceStrategy: FlatAppearanceStrategy,
-        buttonAppearanceStrategyOptions: {
-          lineWidth: 0
-        },
-        listener: () => {
-          const proposedValue = selectedSampleProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
-          if ( proposedValue >= 1 && proposedValue <= numberOfSampleCardsProperty.value ) {
-            selectedSampleProperty.value = proposedValue;
-          }
-        },
-        fireOnHold: true,
-        fireOnHoldInterval: 50,
-        enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfSampleCardsProperty ], ( selectedSample, numberOfSampleCards ) => {
-          return ( type === 'increment' ) ? selectedSample < numberOfSampleCards : selectedSample > 1;
-        } )
-      } );
+    const navigationButtonOptions: RectangularPushButtonOptions = {
+      buttonAppearanceStrategy: FlatAppearanceStrategy,
+      buttonAppearanceStrategyOptions: {
+        lineWidth: 0
+      },
+      xMargin: 5,
+      yMargin: 10,
+      layoutOptions: {
+        stretch: true,
+        grow: 0
+      }
     };
 
-    const upDownButtons = new VBox( {
-      spacing: 3,
-      children: [
-        createIncrementDecrementButton( 'increment' ),
-        createIncrementDecrementButton( 'decrement' )
-      ]
-    } );
+    // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/7
+    const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
+      return new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
+        {},
+        navigationButtonOptions,
+        {
+          tandem: options.tandem.createTandem( type + 'Button' ),
+          content: new Path( type === 'increment' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.04 } ),
+          listener: () => {
+            const proposedValue = selectedSampleProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
+            if ( proposedValue >= 1 && proposedValue <= numberOfSampleCardsProperty.value ) {
+              selectedSampleProperty.value = proposedValue;
+            }
+          },
+          fireOnHold: true,
+          fireOnHoldInterval: 50,
+          enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfSampleCardsProperty ], ( selectedSample, sampleCount ) => {
+            return ( type === 'increment' ) ? selectedSample < sampleCount : selectedSample > 1;
+          } )
+        }
+      ) );
+    };
 
-    super( new PDLPanelSection( patternStringProperty, new HBox( {
-      spacing: 5,
-      children: [ carousel, upDownButtons ]
+    const createFirstLastButton = ( type: 'first' | 'last' ) => {
+      const path = new Path( type === 'last' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.04 } );
+      const line = type === 'first' ?
+                   new Line( 0, 0, 0, path.height, { stroke: 'white', lineWidth: 2, right: path.left - 0.5, centerY: path.centerY } ) :
+                   new Line( 0, 0, 0, path.height, { stroke: 'white', lineWidth: 2, left: path.right + 0.5, centerY: path.centerY } );
+      return new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
+        {},
+        navigationButtonOptions,
+        {
+          tandem: options.tandem.createTandem( `${type}ProjectileButton` ),
+          content: new Node( {
+            children: [
+              line,
+              path
+            ]
+          } ),
+          listener: () => {
+            selectedSampleProperty.value = type === 'last' ? numberOfSampleCardsProperty.value : 1;
+          },
+          enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfSampleCardsProperty ], ( selectedProjectileNumber, landedProjectileCount ) => {
+            return type === 'last' ? selectedProjectileNumber < landedProjectileCount : selectedProjectileNumber >= 2;
+          } )
+        }
+      ) );
+    };
+
+    const sampleCardContainer = new Panel( dataContainer, { maxHeight: 20, align: 'center' } );
+
+    super( new HBox( {
+      spacing: 2,
+      children: [
+        new HBox( {
+          spacing: 2,
+          children: [
+            createFirstLastButton( 'first' ),
+            createIncrementDecrementButton( 'decrement' )
+          ]
+        } ),
+        sampleCardContainer,
+        new HBox( {
+          spacing: 2,
+          children: [
+            createIncrementDecrementButton( 'increment' ),
+            createFirstLastButton( 'last' )
+          ]
+        } )
+      ],
+      tandem: options.tandem.createTandem( 'sampleNumberOfCountPatternSection' )
     } ), {
-      tandem: options.tandem.createTandem( 'sampleSelectorPanelSection' )
-    } ) );
+      minHeight: 50,
+      tandem: options.tandem
+    } );
   }
 }
 
