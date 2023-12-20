@@ -51,6 +51,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, VSMField>;
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;
   public readonly landedProjectileCountProperty: DynamicProperty<number, number, VSMField>;
+  public readonly isStopwatchRunningProperty: DynamicProperty<boolean, boolean, VSMField>;
+  public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, VSMField>;
 
   public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
 
@@ -92,6 +94,15 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.landedProjectileCountProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       derive: t => t.landedProjectileCountProperty
+    } );
+
+    this.isStopwatchRunningProperty = new DynamicProperty<boolean, boolean, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.isStopwatchRunningProperty
+    } );
+
+    this.stopwatchElapsedTimeProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+      derive: t => t.stopwatchElapsedTimeProperty
     } );
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );

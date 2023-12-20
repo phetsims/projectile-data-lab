@@ -11,7 +11,6 @@ import AngleToolNode from './AngleToolNode.js';
 import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VSMField from '../model/VSMField.js';
@@ -27,6 +26,7 @@ import FieldSelectorPanel from './FieldSelectorPanel.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import TimeDisplayNode from './TimeDisplayNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -147,17 +147,15 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       measuringTapeNode.setDragBounds( new Bounds2( 0, 0, viewBounds.maxX, viewBounds.maxY ) );
     } );
 
-    const stopwatchNode = new StopwatchNode( model.stopwatch, {
+    const timeDisplayNode = new TimeDisplayNode( model.stopwatchElapsedTimeProperty, {
       visibleProperty: model.isStopwatchVisibleProperty,
-      dragBoundsProperty: this.visibleBoundsProperty,
-      tandem: options.tandem.createTandem( 'stopwatchNode' )
+      tandem: options.tandem.createTandem( 'timeDisplayNode' )
     } );
+    timeDisplayNode.leftCenter = this.launchButton.rightCenter.plusXY( 10, 0 );
 
-    const stopwatchStartingPosition = new Vector2(
-      this.layoutBounds.centerX - 0.5 * stopwatchNode.bounds.width,
-      this.layoutBounds.centerY - 0.5 * stopwatchNode.bounds.height );
-    model.stopwatch.positionProperty.setInitialValue( stopwatchStartingPosition );
-    model.stopwatch.positionProperty.reset();
+    model.isStopwatchVisibleProperty.link( isStopwatchVisible => {
+      this.launchControlRadioButtonGroup.visible = !isStopwatchVisible;
+    } );
 
     const isLauncherRaisedProperty = new DerivedProperty( [ model.launcherHeightProperty ], height => height > 0 );
 
@@ -242,7 +240,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       children: [ this.fieldSelectorPanel ]
     } );
 
-    this.toolsLayer.addChild( stopwatchNode );
+    this.toolsLayer.addChild( timeDisplayNode );
     this.toolsLayer.addChild( angleToolNode );
     this.toolsLayer.addChild( speedToolNode );
     this.toolsLayer.addChild( measuringTapeNode );

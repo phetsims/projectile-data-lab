@@ -130,6 +130,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     fieldOverlayBack.y = fieldY;
     fieldOverlayFront.x = fieldX;
     fieldOverlayFront.y = fieldY;
+
     // Create the launch button
     const launchIconToggleNode = new ToggleNode<'single' | 'continuous', Image>( model.launchModeProperty, [ {
       value: 'single',
