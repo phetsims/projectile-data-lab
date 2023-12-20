@@ -23,12 +23,13 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { LaunchMode } from './LaunchMode.js';
+import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PDLConstants from '../PDLConstants.js';
 import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -70,7 +71,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly fieldProperty: Property<T>;
 
   // single launch vs continuous launch (rapid fire) mode.
-  public readonly launchModeProperty: DynamicProperty<LaunchMode, LaunchMode, T>;
+  public readonly launchModeProperty: Property<LaunchMode>;
 
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
 
@@ -147,9 +148,11 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioValueType: ReferenceIO( Field.FieldIO )
     } );
 
-    this.launchModeProperty = new DynamicProperty<LaunchMode, LaunchMode, T>( this.fieldProperty, {
-      bidirectional: true,
-      derive: t => t.launchModeProperty
+    this.launchModeProperty = new Property<LaunchMode>( 'single', {
+      validValues: LaunchModeValues,
+      tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
+      phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
+      phetioValueType: StringUnionIO( LaunchModeValues )
     } );
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {

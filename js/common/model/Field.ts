@@ -18,7 +18,6 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
-import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
 import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -34,8 +33,6 @@ export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 export default abstract class Field extends PhetioObject {
-
-  public readonly launchModeProperty: Property<LaunchMode>;
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
@@ -167,13 +164,6 @@ export default abstract class Field extends PhetioObject {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
       phetioDocumentation: 'This property configures the active launcher by number.',
       phetioValueType: NumberIO
-    } );
-
-    this.launchModeProperty = new Property<LaunchMode>( 'single', {
-      validValues: LaunchModeValues,
-      tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
-      phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
-      phetioValueType: StringUnionIO( LaunchModeValues )
     } );
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {
