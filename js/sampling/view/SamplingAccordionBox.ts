@@ -52,6 +52,8 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
       maxWidth: 500
     }, providedOptions );
 
+    const zoomLevelProperty = histogramNode.zoomLevelProperty;
+
     super( comboBoxParent, new HBox( {
       spacing: 4,
       children: [ histogramNode,
@@ -59,13 +61,13 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
           spacing: 4,
           children: [
             new SampleThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
             new SampleThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
             new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
             new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty )
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty )
           ]
         } )
       ]

@@ -44,6 +44,7 @@ export default class HistogramNode extends Node {
   protected readonly chartNode: Node;
   protected readonly chartTransform: ChartTransform;
   protected readonly chartClipLayer: Node;
+  public readonly zoomLevelProperty: NumberProperty;
 
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
@@ -60,7 +61,7 @@ export default class HistogramNode extends Node {
     const maxZoomLevel = maxCounts.length - 1;
     const tickSpacings = [ 50, 20, 10, 10, 5 ];
 
-    const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
+    this.zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
 
     this.chartTransform = new ChartTransform( {
       viewWidth: 620,
@@ -154,7 +155,7 @@ export default class HistogramNode extends Node {
       chartCanvasNode.update();
     } );
 
-    const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomLevelProperty, {
+    const zoomButtonGroup = new PlusMinusZoomButtonGroup( this.zoomLevelProperty, {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',
       bottom: this.chartTransform.viewHeight,
@@ -250,13 +251,13 @@ export default class HistogramNode extends Node {
     // When the field or bin width changes, redraw the histogram
     fieldProperty.link( () => updateHistogram() );
     binWidthProperty.link( () => updateHistogram() );
-    zoomLevelProperty.link( () => {
+    this.zoomLevelProperty.link( () => {
 
-      const maxCount = maxCounts[ zoomLevelProperty.value ];
+      const maxCount = maxCounts[ this.zoomLevelProperty.value ];
 
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
-      const tickSpacing = tickSpacings[ zoomLevelProperty.value ];
+      const tickSpacing = tickSpacings[ this.zoomLevelProperty.value ];
       verticalTickMarkSet.setSpacing( tickSpacing );
       verticalTickLabelSet.setSpacing( tickSpacing );
       // horizontalGridLines.setSpacing( tickSpacing );

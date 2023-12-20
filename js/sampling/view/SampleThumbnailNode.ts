@@ -32,14 +32,12 @@ export default class SampleThumbnailNode extends Node {
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
                       blockFillProperty: TReadOnlyProperty<Color>,
-                      blockStrokeProperty: TReadOnlyProperty<Color> ) {
+                      blockStrokeProperty: TReadOnlyProperty<Color>,
+                      zoomLevelProperty: NumberProperty ) {
     super();
 
     // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
     const maxCounts = [ 500, 200, 100, 50, 20 ];
-    const maxZoomLevel = maxCounts.length - 1;
-
-    const zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
 
     this.chartTransform = new ChartTransform( {
       viewWidth: 140,
