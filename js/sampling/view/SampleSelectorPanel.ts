@@ -129,7 +129,7 @@ export default class SampleSelectorPanel extends PDLPanel {
       ) );
     };
 
-    const sampleCardContainer = new Panel( dataContainer, { maxHeight: 20, align: 'center' } );
+    const sampleCardContainer = new Panel( dataContainer, { align: 'center' } );
 
     super( new HBox( {
       spacing: 2,
