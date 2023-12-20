@@ -14,7 +14,7 @@ import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
-import SampleCardsPanel from './SampleCardsPanel.js';
+import SampleSelectorPanel from './SampleSelectorPanel.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
 import SamplingCanvasNode from './SamplingCanvasNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -80,18 +80,18 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 
-    const sampleCardsPanel = new SampleCardsPanel(
+    const sampleSelectorPanel = new SampleSelectorPanel(
       model.fieldProperty,
       model.selectedSampleProperty,
       model.numberOfSamplesWithMeansShowingProperty, {
-        tandem: options.tandem.createTandem( 'sampleCardsPanel' )
+        tandem: options.tandem.createTandem( 'sampleSelectorPanel' )
       } );
 
     const launcherSampleSizePanel = new VBox( {
       stretch: true,
       spacing: PDLConstants.INTER_PANEL_SPACING,
       left: PDLConstants.SCREEN_VIEW_X_MARGIN,
-      children: [ this.launchPanel, sampleCardsPanel ]
+      children: [ this.launchPanel, sampleSelectorPanel ]
     } );
 
     this.addChild( launcherSampleSizePanel );

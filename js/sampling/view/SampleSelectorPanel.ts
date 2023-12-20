@@ -25,15 +25,15 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SampleCardsPanelOptions = SelfOptions & PDLPanelOptions;
+type SampleSelectorPanelOptions = SelfOptions & PDLPanelOptions;
 
-export default class SampleCardsPanel extends PDLPanel {
+export default class SampleSelectorPanel extends PDLPanel {
 
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
     selectedSampleProperty: TProperty<number>,
     numberOfSampleCardsProperty: TReadOnlyProperty<number>,
-    options: SampleCardsPanelOptions ) {
+    options: SampleSelectorPanelOptions ) {
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
 
@@ -107,9 +107,9 @@ export default class SampleCardsPanel extends PDLPanel {
       spacing: 5,
       children: [ carousel, upDownButtons ]
     } ), {
-      tandem: options.tandem.createTandem( 'sampleCardsPanelSection' )
+      tandem: options.tandem.createTandem( 'sampleSelectorPanelSection' )
     } ) );
   }
 }
 
-projectileDataLab.register( 'SampleCardsPanel', SampleCardsPanel );
+projectileDataLab.register( 'SampleSelectorPanel', SampleSelectorPanel );
