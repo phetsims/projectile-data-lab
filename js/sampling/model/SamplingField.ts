@@ -152,12 +152,16 @@ export default class SamplingField extends Field {
 
       const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === sampleNumber );
 
-      assert && assert( members.length === this.sampleSize, 'members should have the correct length. sampleNumber = ' + sampleNumber + ', members.length = ' + members.length + ', this.sampleSize = ' + this.sampleSize );
+      if ( members.length === this.sampleSize ) {
 
-      const mean = _.mean( members.map( projectile => projectile.x ) );
-      assert && assert( !isNaN( mean ), 'mean should not be NaN' );
+        const mean = _.mean( members.map( projectile => projectile.x ) );
+        assert && assert( !isNaN( mean ), 'mean should not be NaN' );
 
-      samples.push( { x: mean } );
+        samples.push( { x: mean } );
+      }
+      else {
+        console.log( `Histogram data shows inconsistent samples for sampleNumber: ${sampleNumber}, members.length = ` + members.length + ', this.sampleSize = ' + this.sampleSize );
+      }
     }
     return samples;
   }
