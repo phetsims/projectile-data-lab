@@ -5,7 +5,7 @@ import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-co
 import PDLPanelSection from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, Image, Node, Path } from '../../../../scenery/js/imports.js';
+import { HBox, Image, Line, Node, Path } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
@@ -24,7 +24,6 @@ import pumpkin3Highlighted_png from '../../../images/pumpkin3Highlighted_png.js'
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
 import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
-import angleDoubleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleDoubleRightSolidShape.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
@@ -85,13 +84,16 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       }
     };
 
-    const navigationButtonOptions = {
+    const navigationButtonOptions: RectangularPushButtonOptions = {
       buttonAppearanceStrategy: FlatAppearanceStrategy,
       buttonAppearanceStrategyOptions: {
         lineWidth: 0
       },
+      xMargin: 5,
+      yMargin: 10,
       layoutOptions: {
-        stretch: true
+        stretch: true,
+        grow: 0
       }
     };
 
@@ -102,7 +104,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
         navigationButtonOptions,
         {
           tandem: options.tandem.createTandem( type + 'Button' ),
-          content: new Path( type === 'increment' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.05 } ),
+          content: new Path( type === 'increment' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.04 } ),
           listener: () => {
             const proposedValue = selectedProjectileNumberProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
             if ( proposedValue >= 1 && proposedValue <= landedProjectileCountProperty.value ) {
@@ -118,32 +120,54 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       ) );
     };
 
-    const latestProjectileButton = new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
-      {},
-      navigationButtonOptions,
-      {
-        tandem: options.tandem.createTandem( 'latestProjectileButton' ),
-        content: new Path( angleDoubleRightSolidShape, { fill: 'white', scale: 0.05 } ),
-        listener: () => {
-          selectedProjectileNumberProperty.value = landedProjectileCountProperty.value;
-        },
-        enabledProperty: new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty ], ( selectedProjectileNumber, landedProjectileCount ) => {
-          return selectedProjectileNumber !== landedProjectileCount;
-        } )
-      }
-    ) );
+    const createFirstLastButton = ( type: 'first' | 'last' ) => {
+      const path = new Path( type === 'last' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.04 } );
+      const line = type === 'first' ?
+                   new Line( 0, 0, 0, path.height, { stroke: 'white', lineWidth: 2, right: path.left - 0.5, centerY: path.centerY } ) :
+                   new Line( 0, 0, 0, path.height, { stroke: 'white', lineWidth: 2, left: path.right + 0.5, centerY: path.centerY } );
+      return new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
+        {},
+        navigationButtonOptions,
+        {
+          tandem: options.tandem.createTandem( `${type}ProjectileButton` ),
+          content: new Node( {
+            children: [
+              line,
+              path
+            ]
+          } ),
+          listener: () => {
+            selectedProjectileNumberProperty.value = type === 'last' ? landedProjectileCountProperty.value : 1;
+          },
+          enabledProperty: new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty ], ( selectedProjectileNumber, landedProjectileCount ) => {
+            return type === 'last' ? selectedProjectileNumber !== landedProjectileCount : selectedProjectileNumber >= 2;
+          } )
+        }
+      ) );
+    };
 
     const projectileImageContainer = new Node();
     const projectileCardContainer = new Panel( projectileImageContainer, { maxHeight: 20, align: 'center' } );
-    const projectileData = new PDLPanelSection( titleStringProperty, projectileCardContainer, { align: 'center' } );
+    const projectileData = new PDLPanelSection( titleStringProperty, projectileCardContainer, { align: 'center', grow: 10 } );
 
     super( new HBox( {
       spacing: 5,
       children: [
-        createIncrementDecrementButton( 'decrement' ),
+        new HBox( {
+          spacing: 4,
+          children: [
+            createFirstLastButton( 'first' ),
+            createIncrementDecrementButton( 'decrement' )
+          ]
+        } ),
         projectileData,
-        createIncrementDecrementButton( 'increment' ),
-        latestProjectileButton
+        new HBox( {
+          spacing: 4,
+          children: [
+            createIncrementDecrementButton( 'increment' ),
+            createFirstLastButton( 'last' )
+          ]
+        } )
       ],
       tandem: options.tandem.createTandem( 'sampleNumberOfCountPatternSection' )
     } ), {
