@@ -275,8 +275,7 @@ export default class SamplingField extends Field {
   public override clearProjectiles(): void {
     super.clearProjectiles();
 
-    this.phaseProperty.value = 'idle';
-
+    this.phaseProperty.reset();
     this.numberOfSamplesWithMeansShowingProperty.reset();
     this.sampleMeanProperty.reset();
   }
