@@ -46,6 +46,19 @@ export default class SampleThumbnailNode extends Node {
       modelYRange: new Range( 0, 10 )
     } );
 
+    // Horizontally zoom in on the thumbnails, centering on the average output for the mystery launcher
+    fieldProperty.link( field => {
+      const center = field.mysteryLauncherProperty.value === 1 ? 63.5 :
+                     field.mysteryLauncherProperty.value === 2 ? 61 :
+                     field.mysteryLauncherProperty.value === 3 ? 64 :
+                     field.mysteryLauncherProperty.value === 4 ? 63.5 :
+                     field.mysteryLauncherProperty.value === 5 ? 63 :
+                     field.mysteryLauncherProperty.value === 6 ? 62 :
+                     62;
+
+      this.chartTransform.setModelXRange( new Range( center - 10, center + 10 ) );
+    } );
+
     const chartBackground = new ChartRectangle( this.chartTransform, {
       fill: 'white',
       stroke: 'black'
