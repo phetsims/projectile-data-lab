@@ -9,6 +9,7 @@ import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -292,7 +293,11 @@ export default class SamplingField extends Field {
       }
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
-      if ( launchMode === 'continuous' && isContinuousLaunching && timeInMode >= SHOWING_SAMPLE_AND_MEAN_TIME ) {
+      if (
+        launchMode === 'continuous' &&
+        isContinuousLaunching && timeInMode >= SHOWING_SAMPLE_AND_MEAN_TIME &&
+        this.numberOfSamplesWithMeansShowingProperty.value < PDLConstants.MAX_SAMPLES_PER_FIELD
+      ) {
         this.phaseProperty.value = 'showingClearPresample';
         this.startNewSample();
       }

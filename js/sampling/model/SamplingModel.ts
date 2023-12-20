@@ -16,6 +16,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import SamplingField from './SamplingField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -88,24 +89,33 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public override launchButtonPressed(): void {
 
-    const phaseProperty = this.fieldProperty.value.phaseProperty;
+    const field = this.fieldProperty.value;
+    const phaseProperty = field.phaseProperty;
 
     if ( this.launchModeProperty.value === 'single' ) {
       if ( phaseProperty.value !== 'idle' &&
            phaseProperty.value !== 'showingCompleteSampleWithMean' ) {
-        this.fieldProperty.value.finishCurrentSample();
+        field.finishCurrentSample();
+      }
+
+      if ( field.numberOfSamplesWithMeansShowingProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+        return;
       }
 
       phaseProperty.value = 'showingClearPresample';
-      this.fieldProperty.value.startNewSample();
+      field.startNewSample();
     }
 
     else if ( this.launchModeProperty.value === 'continuous' ) {
-      this.fieldProperty.value.isContinuousLaunchingProperty.toggle();
+      field.isContinuousLaunchingProperty.toggle();
+
+      if ( field.numberOfSamplesWithMeansShowingProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+        return;
+      }
 
       if ( phaseProperty.value === 'idle' ) {
         phaseProperty.value = 'showingClearPresample';
-        this.fieldProperty.value.startNewSample();
+        field.startNewSample();
       }
     }
   }

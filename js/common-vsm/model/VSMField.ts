@@ -131,7 +131,7 @@ export default class VSMField extends Field {
   }
 
   public launchProjectile(): void {
-    if ( this.getTotalProjectileCount() >= PDLConstants.MAX_PROJECTILES_PER_FIELD ) {
+    if ( this.getTotalProjectileCount() >= PDLConstants.MAX_PROJECTILES_PER_VSM_FIELD ) {
       return;
     }
 
