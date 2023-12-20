@@ -46,9 +46,8 @@ export default class SampleSelectorPanel extends PDLPanel {
     const node = new Node();
 
     Multilink.multilink( [ samplingFieldProperty, numberOfSampleCardsProperty ],
-      ( samplingField, numberOfSampleCards ) => {
+      field => {
 
-        const field = samplingFieldProperty.value;
         const projectiles = field.getProjectilesInSelectedSample();
         const values = projectiles.map( projectile => projectile.x );
 
@@ -61,8 +60,8 @@ export default class SampleSelectorPanel extends PDLPanel {
         const page = new VBox( {
           align: 'left',
           children: [
-            new Text( 'Launcher: ' + samplingFieldProperty.value.launcher ),
-            new Text( 'Sample Size: ' + samplingFieldProperty.value.sampleSize ),
+            new Text( 'Launcher: ' + field.launcher ),
+            new Text( 'Sample Size: ' + field.sampleSize ),
             new Text( `Mean: ${meanString} m` )
           ]
         } );
