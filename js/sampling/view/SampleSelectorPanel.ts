@@ -65,10 +65,11 @@ export default class SampleSelectorPanel extends PDLPanel {
             align: 'left',
             spacing: 2,
             children: [
+              // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
               new Text( 'Sample: ' + selectedSampleProperty.value + ' of ' + numberOfSampleCardsProperty.value ),
               new HSeparator( { stroke: 'black' } ),
               new Text( 'Launcher: ' + field.launcher ),
-              new Text( 'Sample Size: ' + field.sampleSize ),
+              new Text( 'Sample size: ' + field.sampleSize ),
               new HBox( {
                 children: [ new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m` ), new MeanIndicatorNode( 10, { maxWidth: 10 } ) ]
               } )

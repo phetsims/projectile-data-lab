@@ -173,7 +173,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       }
     } );
 
-    const radioButtonLabelMaxWidth = 120;
+    const radioButtonLabelMaxWidth = 140;
     this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchModeProperty, [ {
       value: 'single' as const,
       createNode: () => new Text( singleStringProperty, {
