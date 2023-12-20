@@ -65,7 +65,8 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
       children: [
         new PDLText( ProjectileDataLabStrings.fieldStringProperty, {
           fill: 'black',
-          fontSize: 16
+          fontSize: 16,
+          maxWidth: 100
         } ),
         fieldRadioButtonGroup
       ]

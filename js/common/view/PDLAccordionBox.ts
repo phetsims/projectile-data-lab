@@ -83,10 +83,14 @@ export default class PDLAccordionBox extends AccordionBox {
         // strategies
         new ToggleNode( BIN_STRATEGY_PROPERTY, [ {
           value: 'binWidth',
-          createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty )
+          createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, {
+            maxWidth: 120
+          } )
         }, {
           value: 'totalBins',
-          createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty )
+          createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, {
+            maxWidth: 120
+          } )
         } ], {
           alignChildren: ToggleNode.RIGHT,
           layoutOptions: {

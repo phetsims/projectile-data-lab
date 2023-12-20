@@ -172,10 +172,12 @@ export default class HistogramNode extends Node {
 
     const verticalAxisLabel = new PDLText( ProjectileDataLabStrings.countStringProperty, {
       rotation: -Math.PI / 2,
-      fontSize: 16
+      fontSize: 16,
+      maxWidth: 86
     } );
     const horizontalAxisLabel = new PDLText( horizontalAxisLabelText, {
-      fontSize: 16
+      fontSize: 16,
+      maxWidth: 100
     } );
 
     this.children = [

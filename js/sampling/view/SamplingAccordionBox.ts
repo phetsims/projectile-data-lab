@@ -47,7 +47,8 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
 
     const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
       titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
-        font: PDLConstants.LAUNCH_CONTROL_FONT
+        font: PDLConstants.LAUNCH_CONTROL_FONT,
+        maxWidth: 600
       } ),
       maxWidth: 500
     }, providedOptions );
