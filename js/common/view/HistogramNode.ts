@@ -179,7 +179,9 @@ export default class HistogramNode extends Node {
 
     this.children = [
       zoomButtonGroup,
-      this.chartNode.mutate( { left: zoomButtonGroup.right + 2 } ),
+
+      // Translate the chart node to the right far enough that it won't overlap with the zoom buttons even at the furthest zoomed out level
+      this.chartNode.mutate( { left: zoomButtonGroup.right + 14 } ),
       verticalAxisLabel,
       horizontalAxisLabel
     ];
