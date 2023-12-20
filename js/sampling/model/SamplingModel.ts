@@ -63,7 +63,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioValueType: NumberIO
     } );
 
-    this.mysteryLauncherProperty = new NumberProperty( 1 );
+    this.mysteryLauncherProperty = new NumberProperty( 1, {
+      validValues: _.range( 1, 7 ),
+      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
+      phetioDocumentation: 'This property configures the active launcher by number.'
+    } );
 
     // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
     Multilink.multilink( [ this.sampleSizeProperty, this.mysteryLauncherProperty ], ( sampleSize, mysteryLauncher ) => {
