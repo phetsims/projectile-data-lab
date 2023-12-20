@@ -58,12 +58,10 @@ export default class SamplingField extends Field {
   public readonly sampleMeanProperty: Property<number | null>;
 
   // Total elapsed time of running the model, so we can update the current phase and/or move to the next phase.
-  // TODO: This probably needs to be instrumented for phet-io as a Property, see https://github.com/phetsims/projectile-data-lab/issues/17
-  private time = 0;
+  private readonly timeProperty: NumberProperty;
 
   // Mark the time when a phase began, so we can track how long we have been in the phase.
-  // TODO: This probably needs to be instrumented for phet-io as a Property, see https://github.com/phetsims/projectile-data-lab/issues/17
-  private phaseStartTime = 0;
+  private readonly phaseStartTimeProperty: NumberProperty;
 
   // Total time to launch all projectiles in single mode.
   private readonly totalSampleTime: number;
@@ -117,22 +115,39 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'The sampling screen is managed by a finite state machine. The possible states are called phases. For internal phet-io use only, for managing state save and load.'
     } );
 
+    this.timeProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'timeProperty' ),
+      phetioDocumentation: 'The total elapsed time of running the model, so we can update the current phase and/or move to the next phase. For PhET-iO internal use only for managing state save and load.'
+    } );
+
+    this.phaseStartTimeProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'phaseStartTimeProperty' ),
+      phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
+    } );
+
     const phaseChanged = () => {
-      this.phaseStartTime = this.time;
-
-      const totalProjectiles = this.getTotalProjectileCount();
-      const numCompletedSamples = Math.floor( totalProjectiles / this.sampleSize );
-      const numSamplesWithMeansShowing = Math.max( 0, this.phaseProperty.value !== 'showingCompleteSampleWithMean' ? numCompletedSamples - 1 : numCompletedSamples );
-
-      if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
-        this.numberOfSamplesWithMeansShowingProperty.value = numSamplesWithMeansShowing;
-      }
+      this.phaseStartTimeProperty.value = this.timeProperty.value;
+      this.updateNumberOfSamplesWithMeansShowing();
     };
     this.phaseProperty.link( phaseChanged );
 
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
-      phaseChanged();
+      this.updateNumberOfSamplesWithMeansShowing();
     } );
+  }
+
+  private updateNumberOfSamplesWithMeansShowing(): void {
+
+    const totalProjectiles = this.getTotalProjectileCount();
+    const numCompletedSamples = Math.floor( totalProjectiles / this.sampleSize );
+    const numSamplesWithMeansShowing = Math.max( 0, this.phaseProperty.value !== 'showingCompleteSampleWithMean' ? numCompletedSamples - 1 : numCompletedSamples );
+
+    if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
+      this.numberOfSamplesWithMeansShowingProperty.value = numSamplesWithMeansShowing;
+      if ( this.landedProjectiles.length === 0 ) {
+        assert && assert( this.numberOfSamplesWithMeansShowingProperty.value === 0, 'numberOfSamplesWithMeansShowingProperty should be 0 when there are no projectiles' );
+      }
+    }
   }
 
   public getProjectilesInSelectedSample(): Projectile[] {
@@ -199,14 +214,23 @@ export default class SamplingField extends Field {
   // If the user fires a new sample while a prior sample was in progress, finish up the prior sample.
   // Only relevant for 'single' mode.
   public finishCurrentSample(): void {
+    let addedProjectiles = false;
     while ( this.getProjectilesInSelectedSample().length < this.sampleSize ) {
       this.createLandedProjectile();
+      addedProjectiles = true;
+    }
+
+    if ( addedProjectiles ) {
+
+      // The number of mean counts only updates when in this phase, so we need to adopt this phase temporarily to get
+      // that to update
+      this.phaseProperty.value = 'showingCompleteSampleWithMean';
     }
   }
 
   public step( dt: number, launchMode: 'continuous' | 'single', isContinuousLaunching: boolean ): void {
-    this.time += dt;
-    const timeInMode = this.time - this.phaseStartTime;
+    this.timeProperty.value += dt;
+    const timeInMode = this.timeProperty.value - this.phaseStartTimeProperty.value;
 
     const updateMean = () => {
       const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
