@@ -58,9 +58,11 @@ export default class SamplingField extends Field {
   public readonly sampleMeanProperty: Property<number | null>;
 
   // Total elapsed time of running the model, so we can update the current phase and/or move to the next phase.
+  // TODO: This probably needs to be instrumented for phet-io as a Property, see https://github.com/phetsims/projectile-data-lab/issues/17
   private time = 0;
 
   // Mark the time when a phase began, so we can track how long we have been in the phase.
+  // TODO: This probably needs to be instrumented for phet-io as a Property, see https://github.com/phetsims/projectile-data-lab/issues/17
   private phaseStartTime = 0;
 
   // Total time to launch all projectiles in single mode.
