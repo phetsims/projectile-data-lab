@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
 import TProperty from '../../../../axon/js/TProperty.js';
@@ -22,7 +22,9 @@ import Easing from '../../../../twixt/js/Easing.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  isIcon?: boolean;
+};
 type LauncherNodeOptions = SelfOptions & NodeOptions;
 
 export const BARREL_LENGTH_BEFORE_ORIGIN = 90;
@@ -68,7 +70,7 @@ export default class LauncherNode extends Node {
     const launcherX = modelViewTransform.modelToViewX( 0 );
     const launcherY = modelViewTransform.modelToViewY( 0 );
 
-    const defaultOptions = { x: launcherX, y: launcherY };
+    const defaultOptions = { x: launcherX, y: launcherY, isIcon: false };
     const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
@@ -93,7 +95,7 @@ export default class LauncherNode extends Node {
     } );
 
     mysteryLauncherProperty.link( mysteryLauncher => {
-      this.updateMysteryLauncher( mysteryLauncher );
+      this.updateMysteryLauncher( mysteryLauncher, options.isIcon );
     } );
   }
 
@@ -159,9 +161,9 @@ export default class LauncherNode extends Node {
     launcherFlashAnimation.start();
   }
 
-  protected updateMysteryLauncher( type: number ): void {
+  protected updateMysteryLauncher( type: number, isIcon: boolean ): void {
     this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( type );
-    this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( type );
+    this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( type, isIcon );
     this.launcherFrameFront.children = this.launcherFrameFrontGraphicsForType( type );
   }
 
@@ -218,7 +220,7 @@ export default class LauncherNode extends Node {
     return [ barrel, launcherEndRect ];
   }
 
-  private launcherFrameBackGraphicsForType( mysteryLauncher: number ): Node[] {
+  private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
     const frameBackground = new Path( this.guideRailInnerShape(), {
       fill: PDLColors.launcherFrameBackgroundColorProperty
     } );
@@ -246,25 +248,32 @@ export default class LauncherNode extends Node {
     frameBarTop.rotateAround( Vector2.ZERO, GUIDE_RAIL_MAX_ANGLE );
     frameBarBottom.rotateAround( Vector2.ZERO, GUIDE_RAIL_MIN_ANGLE );
 
-    const supportBarFillGradient = new LinearGradient( -0.5 * SUPPORT_BAR_WIDTH, 0, 0.5 * SUPPORT_BAR_WIDTH, 0 );
-    supportBarFillGradient.addColorStop( 0, frameFillDarkerColorProperty );
-    supportBarFillGradient.addColorStop( 0.4, frameFillDarkColorProperty );
-    supportBarFillGradient.addColorStop( 0.6, frameFillDarkColorProperty );
-    supportBarFillGradient.addColorStop( 1, frameFillDarkerColorProperty );
+    const content = [];
 
-    const supportBarRect = new Shape().rect(
-      SUPPORT_BAR_CENTER_X - 0.5 * SUPPORT_BAR_WIDTH,
-      0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
-      SUPPORT_BAR_WIDTH,
-      SUPPORT_BAR_HEIGHT );
-    const supportBarShape = supportBarRect.shapeDifference( this.guideRailOuterShape() );
+    // If the launcher is an icon, do not render the support bar
+    if ( !isIcon ) {
+      const supportBarFillGradient = new LinearGradient( -0.5 * SUPPORT_BAR_WIDTH, 0, 0.5 * SUPPORT_BAR_WIDTH, 0 );
+      supportBarFillGradient.addColorStop( 0, frameFillDarkerColorProperty );
+      supportBarFillGradient.addColorStop( 0.4, frameFillDarkColorProperty );
+      supportBarFillGradient.addColorStop( 0.6, frameFillDarkColorProperty );
+      supportBarFillGradient.addColorStop( 1, frameFillDarkerColorProperty );
 
-    const supportBar = new Path( supportBarShape, {
-      fill: supportBarFillGradient,
-      stroke: PDLColors.launcherStrokeColorProperty
-    } );
+      const supportBarRect = new Shape().rect(
+        SUPPORT_BAR_CENTER_X - 0.5 * SUPPORT_BAR_WIDTH,
+        0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
+        SUPPORT_BAR_WIDTH,
+        SUPPORT_BAR_HEIGHT );
+      const supportBarShape = supportBarRect.shapeDifference( this.guideRailOuterShape() );
 
-    return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
+      const supportBar = new Path( supportBarShape, {
+        fill: supportBarFillGradient,
+        stroke: PDLColors.launcherStrokeColorProperty
+      } );
+
+      content.push( supportBar );
+    }
+
+    return [ ...content, frameBackground, frameBarTop, frameBarBottom ];
   }
 
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {

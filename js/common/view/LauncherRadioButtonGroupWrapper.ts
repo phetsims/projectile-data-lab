@@ -1,11 +1,34 @@
 // Copyright 2023, University of Colorado Boulder
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import Panel from '../../../../sun/js/Panel.js';
-import PDLText from './PDLText.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import Property from '../../../../axon/js/Property.js';
+import LauncherNode from './LauncherNode.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import PDLText from './PDLText.js';
+import { Shape } from '../../../../kite/js/imports.js';
+
+const LAUNCHER_ICON_WIDTH = 35;
+const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
+
+class MysteryLauncherIcon extends Node {
+  public constructor( mysteryLauncherNumber: number ) {
+
+    const mysteryLauncherIcon = new LauncherNode( ModelViewTransform2.createIdentity(), new Property( 45 ), new Property( 0 ),
+      new Property( mysteryLauncherNumber ), { isIcon: true } ).rasterized( {
+      resolution: 1.25
+    } );
+    super( {
+      children: [ mysteryLauncherIcon ],
+      pickable: false,
+      maxWidth: LAUNCHER_ICON_WIDTH,
+      top: 0,
+      left: 0
+    } );
+  }
+}
 
 export default class LauncherRadioButtonGroupWrapper extends Node {
   public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
@@ -16,31 +39,73 @@ export default class LauncherRadioButtonGroupWrapper extends Node {
         tandemName: `mysteryLauncher${mysteryLauncher}RadioButton`,
 
         // The Panel provides larger bounds around the text, for making the button the size we want.
-        createNode: () => new Panel( new PDLText( mysteryLauncher.toString(), {
-            fontSize: 14
-          } ), {
-            fill: null,
-            stroke: null,
-            xMargin: 10,
-            yMargin: 2
-          }
-        )
+        createNode: () => {
+          const launcherIcon = new MysteryLauncherIcon( mysteryLauncher );
+          const launcherIconPaddingX = 7;
+          const launcherIconPaddingY = 5;
+
+          const launcherIconBoundsWithPadding = launcherIcon.bounds.dilatedX( launcherIconPaddingX ).dilatedY( launcherIconPaddingY );
+
+          const numberLabel = new PDLText( mysteryLauncher.toString(), { fontSize: 14 } );
+
+          const numberLabelBounds = numberLabel.bounds;
+
+          const numberLabelBackgroundShape = Shape.roundedRectangleWithRadii(
+            numberLabelBounds.x,
+            numberLabelBounds.y,
+            numberLabelBounds.width + 8,
+            numberLabelBounds.height + 2,
+            {
+              topLeft: LAUNCHER_BUTTON_CORNER_RADIUS,
+              topRight: 0,
+              bottomRight: LAUNCHER_BUTTON_CORNER_RADIUS,
+              bottomLeft: 0
+            } );
+
+          const numberLabelBackground = new Path( numberLabelBackgroundShape, {
+            top: 0,
+            left: 0,
+            fill: '#FCFCFC',
+            stroke: 'black',
+            lineWidth: 0.5
+          } );
+
+          numberLabel.center = numberLabelBackground.center;
+
+          const numberLabelContainer = new Node( { children: [ numberLabelBackground, numberLabel ], pickable: false } );
+
+          const launcherIconContainer = new Rectangle( launcherIconBoundsWithPadding, {
+            children: [ launcherIcon, numberLabelContainer ]
+          } );
+
+          numberLabelContainer.top = launcherIconContainer.top;
+          numberLabelContainer.left = launcherIconContainer.left;
+          launcherIcon.centerX = launcherIconContainer.centerX;
+
+          return launcherIconContainer;
+        }
       };
     } );
 
     const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( mysteryLauncherProperty, mysteryLauncherRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroup' ),
       orientation: 'horizontal',
-      preferredWidth: 130,
+      preferredWidth: 160,
       lineSpacing: 3,
-      spacing: 3,
+      spacing: 4,
       wrap: true,
       radioButtonOptions: {
-        baseColor: 'white'
+        baseColor: 'white',
+        xMargin: 0,
+        yMargin: 0,
+        cornerRadius: LAUNCHER_BUTTON_CORNER_RADIUS
       }
     } );
     super( {
-      children: [ mysteryLauncherRadioButtonGroup ]
+      children: [ mysteryLauncherRadioButtonGroup ],
+      layoutOptions: {
+        align: 'center'
+      }
     } );
   }
 }
