@@ -161,7 +161,7 @@ export default class LauncherNode extends Node {
     launcherFlashAnimation.start();
   }
 
-  protected updateMysteryLauncher( type: number, isIcon: boolean ): void {
+  protected updateMysteryLauncher( type: number, isIcon = false ): void {
     this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( type );
     this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( type, isIcon );
     this.launcherFrameFront.children = this.launcherFrameFrontGraphicsForType( type );
