@@ -88,13 +88,26 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public override launchButtonPressed(): void {
 
-    this.fieldProperty.value.startPhase( 'showingClearPresample' );
+    const phaseProperty = this.fieldProperty.value.phaseProperty;
 
-    if ( this.launchModeProperty.value === 'continuous' ) {
-      this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
+    if ( this.launchModeProperty.value === 'single' ) {
+      if ( phaseProperty.value !== 'idle' &&
+           phaseProperty.value !== 'showingCompleteSampleWithMean' ) {
+        this.fieldProperty.value.finishCurrentSample();
+      }
+
+      phaseProperty.value = 'showingClearPresample';
+      this.fieldProperty.value.startNewSample();
     }
 
-    this.fieldProperty.value.startNewSample();
+    else if ( this.launchModeProperty.value === 'continuous' ) {
+      this.fieldProperty.value.isContinuousLaunchingProperty.toggle();
+
+      if ( phaseProperty.value === 'idle' ) {
+        phaseProperty.value = 'showingClearPresample';
+        this.fieldProperty.value.startNewSample();
+      }
+    }
   }
 
   public step( dt: number ): void {
