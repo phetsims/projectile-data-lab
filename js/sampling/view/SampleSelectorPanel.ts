@@ -16,6 +16,7 @@ import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRight
 import SamplingField from '../model/SamplingField.js';
 import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
+import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -68,7 +69,9 @@ export default class SampleSelectorPanel extends PDLPanel {
               new HSeparator( { stroke: 'black' } ),
               new Text( 'Launcher: ' + field.launcher ),
               new Text( 'Sample Size: ' + field.sampleSize ),
-              new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m` )
+              new HBox( {
+                children: [ new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m` ), new MeanIndicatorNode( 10, { maxWidth: 10 } ) ]
+              } )
             ]
           } ) ];
         }
