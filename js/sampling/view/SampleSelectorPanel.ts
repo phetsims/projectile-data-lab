@@ -3,7 +3,7 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, Line, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, HSeparator, Line, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -46,19 +46,26 @@ export default class SampleSelectorPanel extends PDLPanel {
     //   return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : patternString;
     // } );
 
+    // const titleStringProperty = new DerivedProperty( [ ProjectileDataLabStrings.noDataStringProperty, numberOfSampleCardsProperty ], ( x, landedProjectileCount ) => {
+    //   return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : ProjectileDataLabStrings.numberOfCountPatternStringProperty.value;
+    // } );
+
     const dataContainer = new Node();
-    Multilink.multilink( [ samplingFieldProperty, numberOfSampleCardsProperty ],
+    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, numberOfSampleCardsProperty ],
       field => {
 
         if ( numberOfSampleCardsProperty.value === 0 ) {
           dataContainer.children = [ new PDLText( 'No data' ) ];
         }
-        else {
+        else if ( selectedSampleProperty.value <= numberOfSampleCardsProperty.value ) {
           const projectiles = field.getProjectilesInSelectedSample();
           const values = projectiles.map( projectile => projectile.x );
           dataContainer.children = [ new VBox( {
             align: 'left',
+            spacing: 2,
             children: [
+              new Text( 'Sample: ' + selectedSampleProperty.value + ' of ' + numberOfSampleCardsProperty.value ),
+              new HSeparator( { stroke: 'black' } ),
               new Text( 'Launcher: ' + field.launcher ),
               new Text( 'Sample Size: ' + field.sampleSize ),
               new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m` )
