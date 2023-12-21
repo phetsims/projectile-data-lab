@@ -10,6 +10,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import Emitter from '../../../../axon/js/Emitter.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -57,6 +58,13 @@ export default class SamplingField extends Field {
   // Note: In 'Single sample' mode, there is a delay between the last projectile in a sample and the mean indicator appearing.
   // TODO: Get rid of these now that we have phase? See https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly sampleMeanProperty: Property<number | null>;
+
+  public readonly projectileCreatedEmitter = new Emitter<[ Projectile ]>( {
+    parameters: [ {
+      name: 'projectile',
+      valueType: Projectile
+    } ]
+  } );
 
   // Total elapsed time of running the model, so we can update the current phase and/or move to the next phase.
   private readonly timeProperty: NumberProperty;
@@ -188,6 +196,7 @@ export default class SamplingField extends Field {
 
     this.landedProjectiles.push( projectile );
     this.projectilesChangedEmitter.emit();
+    this.projectileCreatedEmitter.emit( projectile );
   }
 
   public startNewSample(): void {

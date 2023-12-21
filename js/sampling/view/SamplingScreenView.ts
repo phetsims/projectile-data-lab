@@ -111,6 +111,15 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
     this.addChild( this.accordionBox );
 
+    // When a projectile is created in 'single' mode, play the launch animation
+    model.fields.forEach( field => {
+      field.projectileCreatedEmitter.addListener( projectile => {
+        if ( model.fieldProperty.value === field && model.launchModeProperty.value === 'single' ) {
+          this.launcherNode.playLaunchAnimation( projectile.launchAngle );
+        }
+      } );
+    } );
+
     // layout
     this.visibleBoundsProperty.link( visibleBounds => {
       this.accordionBox.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
