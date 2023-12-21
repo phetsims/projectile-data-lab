@@ -32,11 +32,11 @@ export default class SectionProjectileType extends PDLPanelSection {
     }, {
       value: 'pumpkin' as const,
       tandemName: 'pumpkinRadioButton',
-      createNode: () => new Image( pumpkin_png, { scale: 0.2 } )
+      createNode: () => new Image( pumpkin_png, { scale: 0.23 } )
     }, {
       value: 'piano' as const,
       tandemName: 'pianoRadioButton',
-      createNode: () => new Image( piano_png, { scale: 0.15 } )
+      createNode: () => new Image( piano_png, { scale: 0.18 } )
     } ], {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
       orientation: 'horizontal',

@@ -25,13 +25,22 @@ export default class SectionSampleSize extends PDLPanelSection {
       return {
         value: sampleSize,
         tandemName: `sampleSize${sampleSize}RadioButton`,
-        createNode: () => new PDLText( sampleSize.toString() )
+        createNode: () => new PDLText( sampleSize.toString(), { fontSize: 16 } )
       };
     } );
 
     const sampleSizeRadioButtonGroup = new RectangularRadioButtonGroup( sampleSizeProperty, sampleSizeRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'sampleSizeRadioButtonGroup' ),
-      orientation: 'horizontal'
+      orientation: 'horizontal',
+      spacing: 6,
+      radioButtonOptions: {
+        baseColor: 'white',
+        xMargin: 7,
+        yMargin: 7
+      },
+      layoutOptions: {
+        align: 'center'
+      }
     } );
     super( ProjectileDataLabStrings.sampleSizeStringProperty, sampleSizeRadioButtonGroup, providedOptions );
   }
