@@ -142,12 +142,11 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     } );
 
     // When the stopwatch is hidden, clear it.
-    Multilink.multilink( [ this.isStopwatchVisibleProperty, this.stopwatchPhaseProperty ],
-      ( isStopwatchVisible, stopwatchPhase ) => {
-        if ( !isStopwatchVisible && stopwatchPhase === 'running' ) {
-          this.stopwatchPhaseProperty.value = 'clear';
-        }
-      } );
+    this.isStopwatchVisibleProperty.link( isStopwatchVisible => {
+      if ( !isStopwatchVisible ) {
+        this.stopwatchPhaseProperty.value = 'clear';
+      }
+    } );
 
     // When displaying the stopwatch or switching field with the stopwatch displayed, stop continuous launching
     Multilink.multilink( [ this.isStopwatchVisibleProperty, this.fieldProperty ],
