@@ -149,7 +149,15 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
         }
       } );
 
-    // When the stopwatch is displayed, stop continuous launching
+    // When displaying the stopwatch or switching field with the stopwatch displayed, stop continuous launching
+    Multilink.multilink( [ this.isStopwatchVisibleProperty, this.fieldProperty ],
+      ( isStopwatchVisible, field ) => {
+        if ( isStopwatchVisible ) {
+          field.isContinuousLaunchingProperty.value = false;
+        }
+      } );
+
+
     this.isStopwatchVisibleProperty.lazyLink( isStopwatchVisible => {
       if ( isStopwatchVisible ) {
         this.fieldProperty.value.isContinuousLaunchingProperty.value = false;
