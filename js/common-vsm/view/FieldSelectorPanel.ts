@@ -35,13 +35,13 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         tandemName: 'field' + i + 'RadioButton',
         createNode: () => new Panel( new PDLText( i.toString(), {
           fill: PDLColors.fieldBorderStrokeColorProperty,
-          fontSize: 18,
+          fontSize: 22,
           fontWeight: 'bold'
         } ), {
           fill: null,
           stroke: null,
-          xMargin: 12,
-          yMargin: 2
+          xMargin: 10,
+          yMargin: 0
         } )
       };
     } ), {
@@ -53,7 +53,9 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         baseColor: PDLColors.fieldFillColorProperty,
         buttonAppearanceStrategyOptions: {
           selectedStroke: 'black',
-          deselectedStroke: null
+          selectedLineWidth: 2,
+          deselectedStroke: null,
+          deselectedButtonOpacity: 0.8
         }
       }
     } );

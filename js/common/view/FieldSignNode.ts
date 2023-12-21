@@ -30,18 +30,20 @@ export default class FieldSignNode extends Node {
     } );
   }
 
-  private drawSign( ): void {
+  private drawSign(): void {
     const signMarginX = 10;
     const signMarginY = 4;
     const signOffsetY = 40;
-    const signPostTopExtension = 5;
     const signPostWidth = 7;
 
     const signRect = this.textNode.bounds.dilatedXY( signMarginX, signMarginY );
-    const sign = new Rectangle( signRect, { fill: PDLColors.fieldSignColorProperty, cornerRadius: 1 } );
-    const signPost = new Rectangle( -0.5 * signPostWidth, -0.5 * signRect.height - signPostTopExtension,
-      signPostWidth, signOffsetY + 0.5 * signRect.height + signPostTopExtension, {
-        fill: PDLColors.fieldSignColorProperty.value.darkerColor( 0.9 )
+    const sign = new Rectangle( signRect, {
+      fill: PDLColors.fieldSignFillColorProperty,
+      cornerRadius: 1
+    } );
+    const signPost = new Rectangle( -0.5 * signPostWidth, -0.5 * signRect.height,
+      signPostWidth, signOffsetY + 0.5 * signRect.height, {
+        fill: PDLColors.fieldSignFillColorProperty.value.darkerColor( 0.75 )
       } );
 
     this.addChild( signPost );

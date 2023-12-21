@@ -12,6 +12,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PDLColors from '../../common/PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
@@ -40,8 +41,14 @@ export default class VSMFieldSignNode extends FieldSignNode {
       projectileCount: landedProjectileCountProperty
     } );
 
-    const fieldNumberText = new Text( fieldSignStringProperty, { font: PDLConstants.PRIMARY_FONT } );
-    const projectileCountText = new Text( patternStringProperty, { font: PDLConstants.PRIMARY_FONT } );
+    const fieldNumberText = new Text( fieldSignStringProperty, {
+      fill: PDLColors.fieldSignTextColorProperty,
+      font: PDLConstants.FIELD_SIGN_FONT
+    } );
+    const projectileCountText = new Text( patternStringProperty, {
+      fill: PDLColors.fieldSignTextColorProperty,
+      font: PDLConstants.FIELD_SIGN_FONT
+    } );
 
     const fieldSignTextNodes = [ fieldNumberText, projectileCountText ];
 
