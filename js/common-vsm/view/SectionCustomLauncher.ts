@@ -2,7 +2,7 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import { VBox } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
@@ -23,6 +23,11 @@ export default class SectionCustomLauncher extends PDLPanelSection {
 
   public constructor( customLauncherTypeProperty: PhetioProperty<LauncherMechanism>,
                       angleStabilizerProperty: PhetioProperty<number>, providedOptions: SectionCustomLauncherOptions ) {
+
+    const options = optionize<SectionCustomLauncherOptions, SelfOptions, PDLPanelSectionOptions>()( {
+      stretch: true
+    }, providedOptions );
+
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' )
     } );
@@ -31,9 +36,14 @@ export default class SectionCustomLauncher extends PDLPanelSection {
       tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' )
     } );
 
-    const contentContainer = new VBox( { children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ], spacing: 5, stretch: true } );
+    const contentContainer = new VBox( {
+      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ],
+      spacing: 5,
+      stretch: true,
+      xMargin: 10
+    } );
 
-    super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, providedOptions );
+    super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, options );
   }
 }
 

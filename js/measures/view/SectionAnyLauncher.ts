@@ -70,7 +70,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
 
     const customLauncherControls = new VBox( {
       children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ],
-      spacing: 3, stretch: true, topMargin: 3
+      spacing: 4, stretch: true, topMargin: 3
     } );
 
     const launcherControlsToggleNode = new ToggleNode<boolean, Node>( isLauncherCustomProperty, [ {
