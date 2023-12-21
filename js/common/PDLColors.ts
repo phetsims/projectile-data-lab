@@ -36,6 +36,10 @@ const PDLColors = {
     default: '#ea2621'
   } ),
 
+  timerDisplayColorProperty: new ProfileColorProperty( projectileDataLab, 'timerDisplayFill', {
+    default: '#5082e6'
+  } ),
+
   fieldFillColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill', {
     default: '#1A974E'
   } ),

@@ -152,9 +152,10 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     const timedLaunchButton = new RectangularPushButton( {
       visibleProperty: model.isStopwatchVisibleProperty,
       content: timedLaunchIconToggleNode,
+      fireOnDown: true,
       left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      baseColor: PDLColors.launchButtonColorProperty,
+      baseColor: PDLColors.timerDisplayColorProperty,
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
       tandem: options.tandem.createTandem( 'timedLaunchButton' ),
@@ -162,8 +163,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         model.launchButtonPressed();
       }
     } );
-
-    this.addChild( timedLaunchButton );
 
     // tools
 
@@ -201,7 +200,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       visibleProperty: model.isStopwatchVisibleProperty,
       tandem: options.tandem.createTandem( 'timeDisplayNode' )
     } );
-    timeDisplayNode.leftCenter = this.launchButton.rightCenter.plusXY( 10, 0 );
+    timeDisplayNode.leftCenter = this.launchButton.rightCenter;
 
     model.isStopwatchVisibleProperty.link( isStopwatchVisible => {
       this.launchButton.visible = !isStopwatchVisible;
@@ -297,6 +296,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.toolsLayer.addChild( measuringTapeNode );
 
     this.addChild( bottomUIContainer );
+    this.addChild( timedLaunchButton );
     this.addChild( this.accordionBox );
     this.addChild( this.launchPanel );
     this.addChild( this.topRightUIContainer );

@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { LinearGradient, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import NumberDisplay from '../../../../scenery-phet/js/NumberDisplay.js';
 import ShadedRectangle from '../../../../scenery-phet/js/ShadedRectangle.js';
@@ -9,6 +9,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
+import PDLColors from '../../common/PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 export type TimeDisplayNodeOptions = SelfOptions & NodeOptions;
@@ -31,18 +32,53 @@ export default class TimeDisplayNode extends Node {
       pickable: false // allow dragging by the number display
     } );
 
-    const xMargin = 5;
-    const yMargin = 5;
-    const backgroundNode = new ShadedRectangle( new Bounds2( 0, 0,
-      contents.width + 2 * xMargin, contents.height + 2 * yMargin ), {
-      baseColor: 'rgb( 80, 130, 230 )',
+    const xMargin = 8.5;
+    const yMargin = 8.5;
+    const bgWidth = contents.width + 2 * xMargin;
+    const bgHeight = contents.height + 2 * yMargin;
+    const backgroundNode = new ShadedRectangle( new Bounds2( 0, 0, bgWidth, bgHeight ), {
+      baseColor: PDLColors.timerDisplayColorProperty,
       tagName: 'div',
       focusable: true
     } );
     contents.center = backgroundNode.center;
 
+    // Create the graphics for the wire connecting to the launch button
+    const WIRE_LENGTH = 30;
+    const WIRE_WIDTH = 5;
+    const WIRE_CAP_LENGTH = 3;
+    const WIRE_CAP_WIDTH = 8;
+
+    const wireTopY = 0.5 * bgHeight - 0.5 * WIRE_WIDTH;
+    const wireCapTopY = 0.5 * bgHeight - 0.5 * WIRE_CAP_WIDTH;
+
+    const wireFillGradient = new LinearGradient( 0, wireTopY, 0, wireTopY + WIRE_WIDTH );
+    wireFillGradient.addColorStop( 0, PDLColors.launchButtonColorProperty );
+    wireFillGradient.addColorStop( 1, PDLColors.launchButtonColorProperty.value.darkerColor( 0.8 ) );
+
+    const wireCapFillGradient = new LinearGradient( 0, wireCapTopY, 0, wireCapTopY + WIRE_CAP_WIDTH );
+    wireCapFillGradient.addColorStop( 0, PDLColors.timerDisplayColorProperty.value.darkerColor( 0.8 ) );
+    wireCapFillGradient.addColorStop( 1, PDLColors.timerDisplayColorProperty.value.darkerColor( 0.6 ) );
+
+    const wire = new Rectangle( -WIRE_LENGTH, wireTopY, WIRE_LENGTH, WIRE_WIDTH, {
+      fill: wireFillGradient,
+      pickable: false
+    } );
+
+    const wireCapLeft = new Rectangle( -WIRE_LENGTH - WIRE_CAP_LENGTH, wireCapTopY, WIRE_CAP_LENGTH, WIRE_CAP_WIDTH, {
+      fill: wireCapFillGradient,
+      cornerRadius: 1,
+      pickable: false
+    } );
+
+    const wireCapRight = new Rectangle( -WIRE_CAP_LENGTH, wireCapTopY, WIRE_CAP_LENGTH, WIRE_CAP_WIDTH, {
+      fill: wireCapFillGradient,
+      cornerRadius: 1,
+      pickable: false
+    } );
+
     const options = optionize<TimeDisplayNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [ backgroundNode, contents ]
+      children: [ backgroundNode, contents, wire, wireCapLeft, wireCapRight ]
     }, providedOptions );
 
     super( options );
