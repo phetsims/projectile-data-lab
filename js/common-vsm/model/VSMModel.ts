@@ -230,6 +230,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.isMeasuringTapeVisibleProperty.reset();
     this.isStopwatchVisibleProperty.reset();
+    this.stopwatchPhaseProperty.reset();
 
     this.measuringTapeBasePositionProperty.reset();
     this.measuringTapeTipPositionProperty.reset();

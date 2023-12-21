@@ -186,6 +186,8 @@ export default class VSMField extends Field {
     this.customLauncherTypeProperty.reset();
     this.angleStabilizerProperty.reset();
     this.continuousLaunchTimer.reset();
+    this.stopwatchPhaseProperty.reset();
+    this.stopwatchElapsedTimeProperty.reset();
   }
 
   public override clearProjectiles(): void {
