@@ -25,9 +25,7 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
   public constructor( fieldProperty: Property<T>, providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      fill: null,
-      stroke: null
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
     }, providedOptions );
 
     // Show radio buttons for the fields
@@ -54,7 +52,7 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         preferredWidth: 40,
         baseColor: PDLColors.fieldFillColorProperty,
         buttonAppearanceStrategyOptions: {
-          selectedStroke: PDLColors.fieldBorderStrokeColorProperty,
+          selectedStroke: 'black',
           deselectedStroke: null
         }
       }
@@ -62,6 +60,7 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
 
     super( new HBox( {
       spacing: 10,
+      leftMargin: 5,
       children: [
         new PDLText( ProjectileDataLabStrings.fieldStringProperty, {
           fill: 'black',

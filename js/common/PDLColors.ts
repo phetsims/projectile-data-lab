@@ -32,6 +32,10 @@ const PDLColors = {
     default: 'rgb(243,243,243)'
   } ),
 
+  panelStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'panelStroke', {
+    default: 'rgb(131,131,131)'
+  } ),
+
   launchButtonColorProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonFill', {
     default: '#ea2621'
   } ),

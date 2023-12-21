@@ -123,6 +123,7 @@ export default class PDLAccordionBox extends AccordionBox {
 
     const options = optionize<PDLAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       fill: PDLColors.panelColorProperty,
+      stroke: PDLColors.panelStrokeColorProperty,
       titleAlignX: 'left',
       titleXSpacing: margin,
       buttonXMargin: margin,

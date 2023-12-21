@@ -8,10 +8,11 @@
  */
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Color, HSeparator, Node, VBox } from '../../../../scenery/js/imports.js';
+import { HSeparator, Node, VBox } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
 import PDLConstants from '../PDLConstants.js';
+import PDLColors from '../PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
@@ -29,7 +30,7 @@ export class PDLLaunchPanel extends PDLPanel {
     children.forEach( ( child, index ) => {
       childrenWithSeparators.push( child );
       if ( index < children.length - 1 ) {
-        childrenWithSeparators.push( new HSeparator( { stroke: Color.BLACK } ) );
+        childrenWithSeparators.push( new HSeparator( { stroke: PDLColors.panelStrokeColorProperty } ) );
       }
     } );
 
