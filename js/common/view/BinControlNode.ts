@@ -31,12 +31,14 @@ export default class BinControlNode extends HBox {
       public constructor() {
         const validBinWidths = selectedBinWidthProperty.validValues ?? [];
         const comboBoxItems = validBinWidths.map( binWidth => {
+
+          const binWidthName = binWidth === 0.5 ? 'half' : binWidth;
           return {
             value: binWidth,
             createNode: () => new PDLText( new PatternStringProperty( ProjectileDataLabStrings.binWidthMPatternStringProperty, {
               binWidth: binWidth
             } ) ),
-            tandemName: `binWidth${binWidth}Item`
+            tandemName: `binWidth${binWidthName}Item`
           };
         } );
         super( selectedBinWidthProperty, comboBoxItems, comboBoxParent, {

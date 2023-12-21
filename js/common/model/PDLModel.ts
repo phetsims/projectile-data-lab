@@ -102,14 +102,14 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     const histogramTandem = providedOptions.tandem.createTandem( 'histogram' );
 
     this.selectedBinWidthProperty = new Property<number>( 1, {
-      validValues: [ 1, 2, 5, 10 ],
+      validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: histogramTandem.createTandem( 'selectedBinWidthProperty' ),
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',
       phetioValueType: NumberIO
     } );
 
     this.selectedTotalBinsProperty = new Property<number>( 10, {
-      validValues: [ 10, 20, 50, 100 ],
+      validValues: [ 10, 20, 50, 100, 200 ],
       tandem: histogramTandem.createTandem( 'selectedTotalBinsProperty' ),
       phetioDocumentation: 'This property configures the total number of bins in the histogram.',
       phetioValueType: NumberIO
