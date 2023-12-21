@@ -157,12 +157,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
         }
       } );
 
-    this.isStopwatchVisibleProperty.lazyLink( isStopwatchVisible => {
-      if ( isStopwatchVisible ) {
-        this.fieldProperty.value.isContinuousLaunchingProperty.value = false;
-      }
-    } );
-
     this.stopwatchPhaseProperty.lazyLink( stopwatchPhase => {
       if ( stopwatchPhase === 'clear' ) {
         this.stopwatch.reset();
