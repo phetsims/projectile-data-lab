@@ -11,6 +11,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import SourcesModel from './model/SourcesModel.js';
 import SourcesScreenView from './view/SourcesScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
+import SourcesKeyboardHelpNode from './view/SourcesKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -21,7 +22,8 @@ export default class SourcesScreen extends Screen<SourcesModel, SourcesScreenVie
   public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: ProjectileDataLabStrings.screen.sourcesStringProperty
+      name: ProjectileDataLabStrings.screen.sourcesStringProperty,
+      createKeyboardHelpNode: () => new SourcesKeyboardHelpNode()
     }, providedOptions );
 
     super(

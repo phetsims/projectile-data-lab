@@ -11,6 +11,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import SamplingModel from './model/SamplingModel.js';
 import SamplingScreenView from './view/SamplingScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
+import SamplingKeyboardHelpNode from './view/SamplingKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -21,7 +22,8 @@ export default class SamplingScreen extends Screen<SamplingModel, SamplingScreen
   public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: ProjectileDataLabStrings.screen.samplingStringProperty
+      name: ProjectileDataLabStrings.screen.samplingStringProperty,
+      createKeyboardHelpNode: () => new SamplingKeyboardHelpNode()
     }, providedOptions );
 
     super(

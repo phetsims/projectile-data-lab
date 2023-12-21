@@ -11,6 +11,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import VariabilityModel from './model/VariabilityModel.js';
 import VariabilityScreenView from './view/VariabilityScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
+import VariabilityKeyboardHelpNode from './view/VariabilityKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -21,7 +22,8 @@ export default class VariabilityScreen extends Screen<VariabilityModel, Variabil
   public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: ProjectileDataLabStrings.screen.variabilityStringProperty
+      name: ProjectileDataLabStrings.screen.variabilityStringProperty,
+      createKeyboardHelpNode: () => new VariabilityKeyboardHelpNode()
     }, providedOptions );
 
     super(

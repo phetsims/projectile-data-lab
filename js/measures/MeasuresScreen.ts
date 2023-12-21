@@ -11,6 +11,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import MeasuresModel from './model/MeasuresModel.js';
 import MeasuresScreenView from './view/MeasuresScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
+import MeasuresKeyboardHelpNode from './view/MeasuresKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -21,7 +22,8 @@ export default class MeasuresScreen extends Screen<MeasuresModel, MeasuresScreen
   public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
-      name: ProjectileDataLabStrings.screen.measuresStringProperty
+      name: ProjectileDataLabStrings.screen.measuresStringProperty,
+      createKeyboardHelpNode: () => new MeasuresKeyboardHelpNode()
     }, providedOptions );
 
     super(
