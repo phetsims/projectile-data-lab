@@ -42,9 +42,9 @@ export default class LauncherRadioButtonGroupWrapper extends Node {
         createNode: () => {
           const launcherIcon = new MysteryLauncherIcon( mysteryLauncher );
           const launcherIconPaddingX = 7;
-          const launcherIconPaddingY = 5;
+          const launcherIconPaddingTopY = 1;
 
-          const launcherIconBoundsWithPadding = launcherIcon.bounds.dilatedX( launcherIconPaddingX ).dilatedY( launcherIconPaddingY );
+          const launcherIconBoundsWithPadding = launcherIcon.bounds.dilatedX( launcherIconPaddingX ).dilatedY( launcherIconPaddingTopY ).shiftY( -launcherIconPaddingTopY );
 
           const numberLabel = new PDLText( mysteryLauncher.toString(), { fontSize: 14 } );
 

@@ -248,10 +248,9 @@ export default class LauncherNode extends Node {
     frameBarTop.rotateAround( Vector2.ZERO, GUIDE_RAIL_MAX_ANGLE );
     frameBarBottom.rotateAround( Vector2.ZERO, GUIDE_RAIL_MIN_ANGLE );
 
-    const content = [];
+    const supportBarHeight = isIcon ? 20 : SUPPORT_BAR_HEIGHT;
 
     // If the launcher is an icon, do not render the support bar
-    if ( !isIcon ) {
       const supportBarFillGradient = new LinearGradient( -0.5 * SUPPORT_BAR_WIDTH, 0, 0.5 * SUPPORT_BAR_WIDTH, 0 );
       supportBarFillGradient.addColorStop( 0, frameFillDarkerColorProperty );
       supportBarFillGradient.addColorStop( 0.4, frameFillDarkColorProperty );
@@ -262,7 +261,7 @@ export default class LauncherNode extends Node {
         SUPPORT_BAR_CENTER_X - 0.5 * SUPPORT_BAR_WIDTH,
         0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
         SUPPORT_BAR_WIDTH,
-        SUPPORT_BAR_HEIGHT );
+        supportBarHeight );
       const supportBarShape = supportBarRect.shapeDifference( this.guideRailOuterShape() );
 
       const supportBar = new Path( supportBarShape, {
@@ -270,10 +269,7 @@ export default class LauncherNode extends Node {
         stroke: PDLColors.launcherStrokeColorProperty
       } );
 
-      content.push( supportBar );
-    }
-
-    return [ ...content, frameBackground, frameBarTop, frameBarBottom ];
+    return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
   }
 
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
