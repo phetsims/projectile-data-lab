@@ -182,7 +182,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
 
     this.isContinuousLaunchingProperty = new DynamicProperty<boolean, boolean, T>( this.fieldProperty, {
-      bidirectional: true,
       derive: t => t.isContinuousLaunchingProperty
     } );
 

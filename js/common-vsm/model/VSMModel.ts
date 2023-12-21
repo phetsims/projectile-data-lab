@@ -207,8 +207,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 6 : 1 );
 
-    if ( this.launchModeProperty.value === 'continuous' &&
-         this.isContinuousLaunchingProperty.value ) {
+    if ( this.launchModeProperty.value === 'continuous' && this.isContinuousLaunchingProperty.value ) {
 
       this.fieldProperty.value.continuousLaunchTimer.step( dt, () => {
         this.fieldProperty.value.launchProjectile();
