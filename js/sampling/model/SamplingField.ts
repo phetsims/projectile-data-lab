@@ -25,8 +25,8 @@ type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
-const SHOWING_CLEAR_PRESAMPLE_TIME = 0.3;
-const SHOWING_SAMPLE_TIME = 0.3;
+const SHOWING_CLEAR_PRESAMPLE_TIME = 0.25;
+const SHOWING_SAMPLE_TIME = 0.25;
 const SHOWING_SAMPLE_AND_MEAN_TIME = 0.3;
 
 // In single mode, we transition through these phases:
