@@ -19,6 +19,8 @@ import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { LauncherMechanism } from './LauncherMechanism.js';
 import Projectile from '../../common/model/Projectile.js';
+import { StopwatchPhase } from './StopwatchPhase.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -51,7 +53,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, VSMField>;
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;
   public readonly landedProjectileCountProperty: DynamicProperty<number, number, VSMField>;
-  public readonly isStopwatchRunningProperty: DynamicProperty<boolean, boolean, VSMField>;
+  public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>;
   public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, VSMField>;
 
   public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
@@ -96,9 +98,9 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       derive: t => t.landedProjectileCountProperty
     } );
 
-    this.isStopwatchRunningProperty = new DynamicProperty<boolean, boolean, VSMField>( this.fieldProperty, {
+    this.stopwatchPhaseProperty = new DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.isStopwatchRunningProperty
+      derive: t => t.stopwatchPhaseProperty
     } );
 
     this.stopwatchElapsedTimeProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
@@ -139,16 +141,43 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       tandem: providedOptions.tandem.createTandem( 'stopwatch' )
     } );
 
-    // When the stopwatch is hidden, pause it.
-    this.isStopwatchVisibleProperty.lazyLink( isStopwatchVisible => {
-      if ( !isStopwatchVisible ) {
+    // When the stopwatch is hidden, clear it.
+    Multilink.multilink( [ this.isStopwatchVisibleProperty, this.stopwatchPhaseProperty ],
+      ( isStopwatchVisible, stopwatchPhase ) => {
+        if ( !isStopwatchVisible && stopwatchPhase === 'running' ) {
+          this.stopwatchPhaseProperty.value = 'clear';
+        }
+      } );
+
+    this.stopwatchPhaseProperty.lazyLink( stopwatchPhase => {
+      if ( stopwatchPhase === 'clear' ) {
+        this.stopwatch.reset();
+        this.fieldProperty.value.stopwatchElapsedTimeProperty.reset();
+      }
+      else if ( stopwatchPhase === 'running' ) {
+        this.stopwatch.isRunningProperty.value = true;
+      }
+      else {
         this.stopwatch.isRunningProperty.value = false;
       }
     } );
   }
 
   public override launchButtonPressed(): void {
-    if ( this.launchModeProperty.value === 'single' ) {
+    if ( this.isStopwatchVisibleProperty.value ) {
+
+      if ( this.stopwatchPhaseProperty.value === 'clear' ) {
+        this.stopwatchPhaseProperty.value = 'running';
+        this.fieldProperty.value.launchProjectile();
+      }
+      else if ( this.stopwatchPhaseProperty.value === 'running' ) {
+        this.stopwatchPhaseProperty.value = 'stopped';
+      }
+      else {
+        this.stopwatchPhaseProperty.value = 'clear';
+      }
+    }
+    else if ( this.launchModeProperty.value === 'single' ) {
       this.fieldProperty.value.launchProjectile();
     }
     else {
@@ -171,7 +200,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 6 : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' &&
-         this.isContinuousLaunchingProperty.value ) {
+         this.isContinuousLaunchingProperty.value && !this.isStopwatchVisibleProperty.value ) {
 
       this.fieldProperty.value.continuousLaunchTimer.step( dt, () => {
         this.fieldProperty.value.launchProjectile();

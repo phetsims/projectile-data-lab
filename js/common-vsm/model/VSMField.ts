@@ -16,7 +16,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import { StopwatchPhase, StopwatchPhaseValues } from './StopwatchPhase.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -44,7 +44,7 @@ export default class VSMField extends Field {
   public readonly selectedProjectileNumberProperty: NumberProperty;
   public readonly selectedProjectileProperty: TReadOnlyProperty<Projectile | null>;
 
-  public readonly isStopwatchRunningProperty: BooleanProperty;
+  public readonly stopwatchPhaseProperty: Property<StopwatchPhase>;
   public readonly stopwatchElapsedTimeProperty: NumberProperty;
 
   public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
@@ -94,9 +94,11 @@ export default class VSMField extends Field {
       phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
     } );
 
-    this.isStopwatchRunningProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isStopwatchRunningProperty' ),
-      phetioDocumentation: 'This property is true when the stopwatch is running.'
+    this.stopwatchPhaseProperty = new Property<StopwatchPhase>( 'clear', {
+      validValues: StopwatchPhaseValues,
+      tandem: providedOptions.tandem.createTandem( 'stopwatchPhaseProperty' ),
+      phetioDocumentation: 'This property represents the phase of the stopwatch used to time projectile flight.',
+      phetioValueType: StringUnionIO( StopwatchPhaseValues )
     } );
 
     this.stopwatchElapsedTimeProperty = new NumberProperty( 0, {
@@ -149,9 +151,6 @@ export default class VSMField extends Field {
       return;
     }
 
-    this.stopwatchElapsedTimeProperty.value = 0;
-    this.isStopwatchRunningProperty.value = true;
-
     const projectile = this.createProjectile( 0 );
     this.airborneProjectiles.push( projectile );
 
@@ -163,7 +162,7 @@ export default class VSMField extends Field {
 
   public step( dt: number ): void {
 
-    if ( this.isStopwatchRunningProperty.value ) {
+    if ( this.stopwatchPhaseProperty.value === 'running' ) {
       this.stopwatchElapsedTimeProperty.value += dt;
     }
 
