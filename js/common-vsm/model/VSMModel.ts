@@ -149,6 +149,13 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
         }
       } );
 
+    // When the stopwatch is displayed, stop continuous launching
+    this.isStopwatchVisibleProperty.lazyLink( isStopwatchVisible => {
+      if ( isStopwatchVisible ) {
+        this.fieldProperty.value.isContinuousLaunchingProperty.value = false;
+      }
+    } );
+
     this.stopwatchPhaseProperty.lazyLink( stopwatchPhase => {
       if ( stopwatchPhase === 'clear' ) {
         this.stopwatch.reset();
@@ -200,7 +207,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 6 : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' &&
-         this.isContinuousLaunchingProperty.value && !this.isStopwatchVisibleProperty.value ) {
+         this.isContinuousLaunchingProperty.value ) {
 
       this.fieldProperty.value.continuousLaunchTimer.step( dt, () => {
         this.fieldProperty.value.launchProjectile();

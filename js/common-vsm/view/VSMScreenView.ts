@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, HBox, Node, VBox } from '../../../../scenery/js/imports.js';
+import { Color, HBox, Image, Node, Path, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import VSMAccordionBox from './VSMAccordionBox.js';
@@ -27,6 +27,13 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import TimeDisplayNode from './TimeDisplayNode.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
+import { StopwatchPhase } from '../model/StopwatchPhase.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import PDLColors from '../../common/PDLColors.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
+import UTurnArrowShape from '../../../../scenery-phet/js/UTurnArrowShape.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -115,6 +122,49 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
     this.topRightUIContainer.addChild( this.timeControlNode );
 
+    // Create the timed launch button
+
+    const timedLaunchIconToggleNode = new ToggleNode<StopwatchPhase, Node>( model.stopwatchPhaseProperty, [
+      {
+        value: 'clear',
+        createNode: () => new Image( launchButtonSingle_png )
+      }, {
+        value: 'running',
+        createNode: () => new Rectangle( 0, 0, 50, 50, {
+          fill: 'black',
+          stroke: 'white',
+          lineWidth: 2,
+          cornerRadius: 5,
+          opacity: 0.75 // Adjusts the color of the icon to look more like part of the button
+        } )
+      },
+      {
+        value: 'stopped',
+        createNode: () => new Path( new UTurnArrowShape( 40 ), {
+          fill: 'black',
+          stroke: 'white',
+          lineWidth: 2,
+          opacity: 0.75 // Adjusts the color of the icon to look more like part of the button
+        } )
+      }
+    ], {} );
+
+    const timedLaunchButton = new RectangularPushButton( {
+      visibleProperty: model.isStopwatchVisibleProperty,
+      content: timedLaunchIconToggleNode,
+      left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
+      bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      baseColor: PDLColors.launchButtonColorProperty,
+      size: new Dimension2( 85, 45 ),
+      yMargin: 5,
+      tandem: options.tandem.createTandem( 'timedLaunchButton' ),
+      listener: () => {
+        model.launchButtonPressed();
+      }
+    } );
+
+    this.addChild( timedLaunchButton );
+
     // tools
 
     const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
@@ -154,6 +204,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     timeDisplayNode.leftCenter = this.launchButton.rightCenter.plusXY( 10, 0 );
 
     model.isStopwatchVisibleProperty.link( isStopwatchVisible => {
+      this.launchButton.visible = !isStopwatchVisible;
       this.launchControlRadioButtonGroup.visible = !isStopwatchVisible;
     } );
 
