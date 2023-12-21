@@ -7,11 +7,13 @@ import NumberDisplay from '../../../../scenery-phet/js/NumberDisplay.js';
 import ShadedRectangle from '../../../../scenery-phet/js/ShadedRectangle.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLColors from '../../common/PDLColors.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  isIcon?: boolean;
+};
 export type TimeDisplayNodeOptions = SelfOptions & NodeOptions;
 
 export default class TimeDisplayNode extends Node {
@@ -77,8 +79,17 @@ export default class TimeDisplayNode extends Node {
       pickable: false
     } );
 
+    const children: Node[] = [ backgroundNode, contents ];
+
+    if ( !providedOptions.isIcon ) {
+      children.push( wire );
+      children.push( wireCapLeft );
+      children.push( wireCapRight );
+    }
+
     const options = optionize<TimeDisplayNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [ backgroundNode, contents, wire, wireCapLeft, wireCapRight ]
+      isIcon: false,
+      children: children
     }, providedOptions );
 
     super( options );
