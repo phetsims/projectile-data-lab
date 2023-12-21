@@ -313,16 +313,23 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     // Keyboard order
     this.pdomControlAreaNode.pdomOrder = [
+
       this.launchPanel,
+
       this.launchButton,
       this.launchControlRadioButtonGroup,
+
       this.fieldSelectorPanel,
+
+      this.accordionBox,
+
+      staticToolPanel,
+      interactiveToolPanel,
+
       this.projectileSelectorPanel,
       this.timeControlNode,
-      this.resetAllButton,
       this.eraserButton,
-      staticToolPanel,
-      interactiveToolPanel
+      this.resetAllButton
     ];
   }
 }
