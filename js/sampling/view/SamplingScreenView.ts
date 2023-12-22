@@ -111,12 +111,18 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
     this.addChild( this.accordionBox );
 
-    // When a projectile is created in 'single' mode, play the launch animation
     model.fields.forEach( field => {
+
+      // When a projectile is created in 'single' mode, play the launch animation
       field.projectileCreatedEmitter.addListener( projectile => {
         if ( model.fieldProperty.value === field && model.launchModeProperty.value === 'single' ) {
           this.launcherNode.playLaunchAnimation( projectile.launchAngle );
         }
+      } );
+
+      // When showing the mean indicator, fade out the projectile canvas to de-emphasize the individual data
+      field.phaseProperty.lazyLink( phase => {
+        samplingCanvasNode.opacity = phase === 'showingCompleteSampleWithMean' ? 0.6 : 1;
       } );
     } );
 
