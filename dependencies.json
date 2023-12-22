@@ -1,15 +1,15 @@
 {
-  "comment": "# projectile-data-lab 1.0.0-dev.10 Fri Dec 15 2023 17:33:32 GMT-0500 (Eastern Standard Time)",
+  "comment": "# projectile-data-lab 1.0.0-dev.11 Fri Dec 22 2023 15:57:48 GMT-0500 (Eastern Standard Time)",
   "assert": {
     "sha": "47dac8ba80fe19cc82ef8453fb68ddf7c05b363f",
     "branch": "main"
   },
   "axon": {
-    "sha": "15c7181b222ae6c85b13abfde7775364c010e1e4",
+    "sha": "4b7ee00fc3f4f4607cfec1aa1664a73e5db5f344",
     "branch": "main"
   },
   "bamboo": {
-    "sha": "67cb361decc934a1cd71be42d6982f39dad28db3",
+    "sha": "938e3cd288115c6efa50cd5c8e52efc38945655a",
     "branch": "main"
   },
   "brand": {
@@ -17,63 +17,63 @@
     "branch": "main"
   },
   "chipper": {
-    "sha": "22ca86b06b366d3077a85480498922e2bbb32d3b",
+    "sha": "a8a22adb4844f89ba377d56a9e9263cc1a6ad837",
     "branch": "main"
   },
   "dot": {
-    "sha": "3d5f43c8fbf1159dbe412618f2e9c70442aecc8d",
+    "sha": "abd2237dce6f0fd1f8ed56fa1858b3542a89c406",
     "branch": "main"
   },
   "joist": {
-    "sha": "e3b10a5a3509be35dc3d9b00850129a89d68136d",
+    "sha": "b964b518f2932d0a312aed483a1ebdea59059803",
     "branch": "main"
   },
   "kite": {
-    "sha": "1980d4c60a8d0c0ee9f7e133d0082bfbb9ffb24f",
+    "sha": "2bab7c8eae05bdd62667de80e8ed1fda6fd62996",
     "branch": "main"
   },
   "perennial-alias": {
-    "sha": "0b349b5d04bc42ee71e6fa0280233477d937464a",
+    "sha": "d6df68696e5954c6163a5899e721c3780c49b9a5",
     "branch": "main"
   },
   "phet-core": {
-    "sha": "988d742379f61e45eb978daa20f7ca3046a3ef7b",
+    "sha": "ee658ad1a66c25e42d8b1262a8e71fa35eed9f8a",
     "branch": "main"
   },
   "phet-io": {
-    "sha": "9f35db410edf88792d8e0f47c89a8c6ed2bf589d",
+    "sha": "c913d1a9776c3dae175ba47f94e96273657f4f50",
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "8273e041637418bc2af8c7970d54ea3befe8a87c",
+    "sha": "093afb2cb1151061b162115c7053babc1fc2cef9",
     "branch": "main"
   },
   "phet-io-wrappers": {
-    "sha": "5e40763d3cde205797f8d6a5f21f6d157d77b8d2",
+    "sha": "14523f0044e2c118fef3e3a960f581831da834ba",
     "branch": "main"
   },
   "phetcommon": {
-    "sha": "5a48c7a7f00fe2db85470248c43aa6d4a7597180",
+    "sha": "744d20304e2c36f6e472de55546f71981e59090a",
     "branch": "main"
   },
   "phetmarks": {
-    "sha": "3350295d37c8b1b51223e60a5c08bef9fe040b1e",
+    "sha": "68465de8a7b78caed783b790cd48b6d78930d2a1",
     "branch": "main"
   },
   "projectile-data-lab": {
-    "sha": "56c7ab10ad5239cd49d182d975451b4db7205b76",
+    "sha": "69115db2ddde7c61a500a2c79b9a9f0ee7dc5ce8",
     "branch": "main"
   },
   "query-string-machine": {
-    "sha": "ceb14b1e370b7c28eb1d1c867e4dae28dcea1610",
+    "sha": "4254a5693b59ac2c98def90def1e9bbcc320cf8c",
     "branch": "main"
   },
   "scenery": {
-    "sha": "5c1961eedfd419982e48df804a6c1f869a1ba067",
+    "sha": "3bbb4c99f064178f806f4995a4b7ffa2b93442ff",
     "branch": "main"
   },
   "scenery-phet": {
-    "sha": "35496b8931d21444e70d99d53f007237ddef33f9",
+    "sha": "5e1d80b6ba37253bf92cdbed143430d11db5ff5c",
     "branch": "main"
   },
   "sherpa": {
@@ -81,27 +81,27 @@
     "branch": "main"
   },
   "studio": {
-    "sha": "b8207082b682fa6fddb6fb48b5bd9e72f288620f",
+    "sha": "1847cb4fd5ed414d834494619c9e0e63e95978b2",
     "branch": "main"
   },
   "sun": {
-    "sha": "11c1c103788fdefeed8f8e0b13218980c1ef826f",
+    "sha": "f26d1565a6ac82febe1720e2b0b9c7a4b7ad1b5a",
     "branch": "main"
   },
   "tambo": {
-    "sha": "56e3cbf818ad3e923fd3e14b459d7209ae33bf7e",
+    "sha": "d63d9973104eaf2306022f7a5b1dbc37b631b658",
     "branch": "main"
   },
   "tandem": {
-    "sha": "0817e44be43cb83ded42cb725f21ac12c94f2973",
+    "sha": "004681831446caf5746e9b33442cf965cde8f2d7",
     "branch": "main"
   },
   "twixt": {
-    "sha": "db87a714041ea03515fb3fb81889eba34a1711a0",
+    "sha": "8c411048f43c5bad30a3f9a3516da40b21471403",
     "branch": "main"
   },
   "utterance-queue": {
-    "sha": "fb67b3880c0d29447d575ef97ab4f14e08b2cb34",
+    "sha": "559b856d9e578e8c266c16c5e967fe8a9f07e0eb",
     "branch": "main"
   }
 }
