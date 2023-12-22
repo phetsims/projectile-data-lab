@@ -53,6 +53,8 @@ export default class VSMFieldSignNode extends FieldSignNode {
     } );
 
     const projectileCount = new Panel( projectileCountText, {
+      minWidth: 65,
+      align: 'center',
       xMargin: 4,
       yMargin: 2,
       fill: PDLColors.fieldSignStrokeColorProperty,
@@ -65,8 +67,8 @@ export default class VSMFieldSignNode extends FieldSignNode {
     const fieldSignTextContainer = new VBox( {
       children: [ ...fieldSignTextNodes ],
       align: 'center',
-      spacing: 4
-      // maxWidth: modelVie4Transform.modelToViewDeltaX( 6 )
+      spacing: 4,
+      maxWidth: 80
     } );
 
     super( fieldSignTextContainer, options );

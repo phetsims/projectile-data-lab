@@ -33,7 +33,7 @@ export default class FieldSignNode extends Node {
   }
 
   private drawSign(): void {
-    const signMarginX = 14;
+    const signMarginX = 10;
     const signMarginY = 6;
     const signOffsetY = 44;
     const signPostOffsetX = 28;
