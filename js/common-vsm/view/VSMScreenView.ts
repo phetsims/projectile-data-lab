@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, HBox, Image, Node, Path, Rectangle, VBox } from '../../../../scenery/js/imports.js';
+import { Color, Image, Node, Path, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import VSMAccordionBox from './VSMAccordionBox.js';
@@ -276,31 +276,43 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
     } );
 
-    this.behindProjectilesLayer.addChild( new VSMFieldSignNode(
+    const fieldSign = new VSMFieldSignNode(
       model.fieldProperty,
       model.landedProjectileCountProperty,
       model.fields,
       this.modelViewTransform
-    ) );
+    );
 
-    // TODO: We don't need a container with only one child, see https://github.com/phetsims/projectile-data-lab/issues/7
-    const bottomUIContainer = new HBox( {
-      bottom: this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      left: this.layoutBounds.centerX - 60,
-      children: [ this.fieldSelectorPanel ]
-    } );
+    this.behindProjectilesLayer.addChild( fieldSign );
 
     this.toolsLayer.addChild( timeDisplayNode );
     this.toolsLayer.addChild( angleToolNode );
     this.toolsLayer.addChild( speedToolNode );
     this.toolsLayer.addChild( measuringTapeNode );
 
-    this.addChild( bottomUIContainer );
+    this.addChild( this.fieldSelectorPanel );
     this.addChild( timedLaunchButton );
     this.addChild( this.accordionBox );
     this.addChild( this.launchPanel );
     this.addChild( this.topRightUIContainer );
     this.addChild( this.toolsLayer );
+
+    // Position the field selector panel
+    this.fieldSelectorPanel.bottom = this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    this.fieldSelectorPanel.left = this.layoutBounds.centerX - 60;
+
+    // Positioning field sign and eraser button
+    const fieldSignEraserButtonSpacing = 20;
+    this.eraserButton.left = fieldSign.right + fieldSignEraserButtonSpacing;
+
+    const totalFieldSignEraserButtonWidth = fieldSign.width + this.eraserButton.width + fieldSignEraserButtonSpacing;
+
+    // Position the 'No air resistance' text
+    this.noAirResistanceText.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION;
+
+    ProjectileDataLabStrings.noAirResistanceStringProperty.link( () => {
+      this.noAirResistanceText.centerX = fieldSign.left + 0.5 * totalFieldSignEraserButtonWidth;
+    } );
 
     // Allow the top content to go above the dev bounds, but not too far
     this.visibleBoundsProperty.link( visibleBounds => {

@@ -13,6 +13,7 @@ import Field from '../../common/model/Field.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
+import Panel from '../../../../sun/js/Panel.js';
 
 type SelfOptions = EmptySelfOptions;
 type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
@@ -25,7 +26,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
                       providedOptions?: VSMFieldSignNodeOptions ) {
 
     // Create the field sign
-    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( 94, 0 ) );
+    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( PDLConstants.FIELD_SIGN_X, 0 ) );
 
     const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
       x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y
@@ -45,17 +46,27 @@ export default class VSMFieldSignNode extends FieldSignNode {
       fill: PDLColors.fieldSignTextColorProperty,
       font: PDLConstants.FIELD_SIGN_FONT
     } );
+
     const projectileCountText = new Text( patternStringProperty, {
       fill: PDLColors.fieldSignTextColorProperty,
-      font: PDLConstants.FIELD_SIGN_FONT
+      font: PDLConstants.FIELD_SIGN_COUNT_FONT
     } );
 
-    const fieldSignTextNodes = [ fieldNumberText, projectileCountText ];
+    const projectileCount = new Panel( projectileCountText, {
+      xMargin: 4,
+      yMargin: 2,
+      fill: PDLColors.fieldSignStrokeColorProperty,
+      stroke: null,
+      cornerRadius: 3
+    } );
+
+    const fieldSignTextNodes = [ fieldNumberText, projectileCount ];
 
     const fieldSignTextContainer = new VBox( {
       children: [ ...fieldSignTextNodes ],
       align: 'center',
-      maxWidth: modelViewTransform.modelToViewDeltaX( 6 )
+      spacing: 4
+      // maxWidth: modelVie4Transform.modelToViewDeltaX( 6 )
     } );
 
     super( fieldSignTextContainer, options );

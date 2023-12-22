@@ -1,9 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { ManualConstraint, Node, NodeOptions, Rectangle } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 
 /**
  * The FieldSignNode contains the field sign, which displays text about the field number and landed projectiles.
@@ -31,22 +33,41 @@ export default class FieldSignNode extends Node {
   }
 
   private drawSign(): void {
-    const signMarginX = 10;
-    const signMarginY = 4;
-    const signOffsetY = 40;
+    const signMarginX = 14;
+    const signMarginY = 6;
+    const signOffsetY = 44;
+    const signPostOffsetX = 28;
     const signPostWidth = 7;
+    const signPostBaseRadiusY = 1;
 
     const signRect = this.textNode.bounds.dilatedXY( signMarginX, signMarginY );
     const sign = new Rectangle( signRect, {
       fill: PDLColors.fieldSignFillColorProperty,
-      cornerRadius: 1
+      stroke: PDLColors.fieldSignStrokeColorProperty,
+      lineWidth: 1.5,
+      cornerRadius: 4
     } );
-    const signPost = new Rectangle( -0.5 * signPostWidth, -0.5 * signRect.height,
-      signPostWidth, signOffsetY + 0.5 * signRect.height, {
-        fill: PDLColors.fieldSignFillColorProperty.value.darkerColor( 0.75 )
+
+    const signPostRect = ( x: number ) => new Rectangle(
+      x, -0.5 * signRect.height, signPostWidth, signOffsetY + 0.5 * signRect.height, {
+        fill: PDLColors.fieldSignStrokeColorProperty
       } );
 
-    this.addChild( signPost );
+    const signPostRectLeft = signPostRect( -signPostOffsetX - 0.5 * signPostWidth );
+    const signPostRectRight = signPostRect( signPostOffsetX - 0.5 * signPostWidth );
+
+    const signPostBase = ( x: number ) => new Path( new Shape().ellipse( new Vector2( x, signOffsetY ),
+      0.5 * signPostWidth, signPostBaseRadiusY, 0 ), {
+      fill: PDLColors.fieldSignStrokeColorProperty
+    } );
+
+    const signPostBaseLeft = signPostBase( -signPostOffsetX );
+    const signPostBaseRight = signPostBase( signPostOffsetX );
+
+    this.addChild( signPostRectLeft );
+    this.addChild( signPostRectRight );
+    this.addChild( signPostBaseLeft );
+    this.addChild( signPostBaseRight );
     this.addChild( sign );
     this.addChild( this.textNode );
   }

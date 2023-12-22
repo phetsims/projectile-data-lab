@@ -50,7 +50,8 @@ const PDLConstants = {
   FIELD_LINE_WIDTH: 2,
   FIELD_LINE_NUMBERED_WIDTH: 2.5,
   FIELD_LABEL_TOP_MARGIN: 1,
-  FIELD_SIGN_CENTER_Y: 447,
+  FIELD_SIGN_X: 84.1,
+  FIELD_SIGN_CENTER_Y: 442,
   FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION: 48,
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
@@ -90,7 +91,8 @@ const PDLConstants = {
   HEATMAP_TOOL_LABEL_FONT: new PhetFont( 11 ),
   PRIMARY_FONT: new PhetFont( 13 ),
   FIELD_LABEL_FONT: new PhetFont( 15 ),
-  FIELD_SIGN_FONT: new PhetFont( { size: 15, weight: 'bold' } ),
+  FIELD_SIGN_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
+  FIELD_SIGN_COUNT_FONT: new PhetFont( { size: 15, weight: 'bold' } ),
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
