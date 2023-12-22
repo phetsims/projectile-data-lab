@@ -128,11 +128,6 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     this.fieldProperty.value.step( dt, this.launchModeProperty.value, this.isContinuousLaunchingProperty.value );
   }
 
-  public override clearCurrentField(): void {
-    super.clearCurrentField();
-    this.isContinuousLaunchingProperty.reset();
-  }
-
   /**
    * Resets the model.
    */
