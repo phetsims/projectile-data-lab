@@ -57,7 +57,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
       align: 'center',
       xMargin: 4,
       yMargin: 2,
-      fill: PDLColors.fieldSignStrokeColorProperty,
+      fill: PDLColors.fieldSignStrokeColorProperty.value.darkerColor( 0.8 ),
       stroke: null,
       cornerRadius: 3
     } );
