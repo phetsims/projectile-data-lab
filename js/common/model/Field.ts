@@ -75,6 +75,10 @@ export default abstract class Field extends PhetioObject {
 
   public readonly selectedSampleProperty: NumberProperty;
 
+  // TODO: Incorporate into PhET-iO so that field selector is stateful - see https://github.com/phetsims/projectile-data-lab/issues/7
+  // Are there any landed projectiles in the field? This is used for the data indicator on the field selector panel.
+  public readonly isContainingDataProperty: BooleanProperty = new BooleanProperty( false );
+
   public readonly abstract identifier: string;
 
   protected constructor( providedOptions: FieldOptions ) {
@@ -105,9 +109,14 @@ export default abstract class Field extends PhetioObject {
       arrayRemove( this.airborneProjectiles, projectile );
       this.landedProjectiles.push( projectile );
 
+      this.isContainingDataProperty.value = true;
     } );
 
     this.projectilesClearedEmitter = new Emitter();
+
+    this.projectilesClearedEmitter.addListener( () => {
+      this.isContainingDataProperty.value = false;
+    } );
 
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', {
 

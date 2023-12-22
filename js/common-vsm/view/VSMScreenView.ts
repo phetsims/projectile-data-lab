@@ -272,7 +272,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 
-    this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, {
+    this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, model.fields, {
       tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
     } );
 

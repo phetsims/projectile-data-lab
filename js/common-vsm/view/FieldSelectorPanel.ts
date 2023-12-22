@@ -11,7 +11,8 @@ import PDLConstants from '../../common/PDLConstants.js';
 import VSMField from '../model/VSMField.js';
 import Panel from '../../../../sun/js/Panel.js';
 import PDLColors from '../../common/PDLColors.js';
-import { HBox } from '../../../../scenery/js/imports.js';
+import { Circle, HBox, Rectangle } from '../../../../scenery/js/imports.js';
+import Field from '../../common/model/Field.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -22,43 +23,64 @@ type SelfOptions = EmptySelfOptions;
 type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
-  public constructor( fieldProperty: Property<T>, providedOptions: FieldPanelOptions ) {
+  public constructor( fieldProperty: Property<T>, fields: Field[], providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN
     }, providedOptions );
 
     // Show radio buttons for the fields
-    const fieldRadioButtonGroup = new RectangularRadioButtonGroup( fieldProperty, _.range( 1, 9 ).map( i => {
-      return {
-        value: fieldProperty.validValues![ i - 1 ],
-        tandemName: 'field' + i + 'RadioButton',
-        createNode: () => new Panel( new PDLText( i.toString(), {
+    const fieldRadioButtonGroup = new RectangularRadioButtonGroup( fieldProperty,
+      fields.map( field => {
+
+        const fieldNumber = fields.indexOf( field ) + 1;
+
+        const dataIndicator = new Circle( 3, {
+          visibleProperty: field.isContainingDataProperty,
           fill: PDLColors.fieldSignTextColorProperty,
-          fontSize: 24,
-          fontWeight: 'bold'
-        } ), {
-          fill: null,
-          stroke: null,
-          xMargin: 10,
-          yMargin: 0
-        } )
-      };
-    } ), {
-      tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),
-      orientation: 'horizontal',
-      spacing: 5,
-      radioButtonOptions: {
-        preferredWidth: 40,
-        baseColor: PDLColors.fieldSignFillColorProperty,
-        buttonAppearanceStrategyOptions: {
-          selectedStroke: PDLColors.fieldSignStrokeColorProperty,
-          selectedLineWidth: 2,
-          deselectedStroke: null,
-          deselectedButtonOpacity: 0.8
+          pickable: false
+        } );
+
+        const buttonText = new PDLText( fieldNumber.toString(), {
+          fill: PDLColors.fieldSignTextColorProperty,
+          fontSize: 20,
+            fontWeight: 'bold'
+      } );
+
+        const buttonContents = new Rectangle( buttonText.bounds.dilatedX( 10 ).dilatedY( 1 ), {
+          children: [ buttonText, dataIndicator ]
+        } );
+
+        dataIndicator.top = buttonContents.top;
+        dataIndicator.left = buttonContents.left;
+
+        buttonText.centerX = buttonContents.centerX;
+
+        return {
+          value: fieldProperty.validValues![ fieldNumber - 1 ],
+          tandemName: 'field' + fieldNumber + 'RadioButton',
+          createNode: () => new Panel( buttonContents, {
+            fill: null,
+            stroke: null,
+            xMargin: 0,
+            yMargin: 0
+          } )
+        };
+      } ), {
+        tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),
+        orientation: 'horizontal',
+        spacing: 5,
+        radioButtonOptions: {
+          preferredWidth: 40,
+          baseColor: PDLColors.fieldSignFillColorProperty,
+          buttonAppearanceStrategyOptions: {
+            selectedStroke: PDLColors.fieldSignStrokeColorProperty,
+            selectedLineWidth: 2,
+            deselectedStroke: null,
+            deselectedButtonOpacity: 0.8
+          }
         }
-      }
-    } );
+      } );
 
     super( new HBox( {
       spacing: 10,
