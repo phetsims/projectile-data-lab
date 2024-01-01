@@ -134,8 +134,8 @@ export default class HeatMapToolNode extends Node {
       value: this.mostRecentValueStringProperty
     } );
 
-    const readoutStringProperty = new DerivedProperty( [ this.mostRecentValueStringProperty, valueUnitsPatternStringProperty ], ( value, patternString ) => {
-      return value === null ? ProjectileDataLabStrings.longDashStringProperty.value : patternString;
+    const readoutStringProperty = new DerivedProperty( [ this.mostRecentValueStringProperty, valueUnitsPatternStringProperty, ProjectileDataLabStrings.longDashStringProperty ], ( value, patternString, longDashString ) => {
+      return value === null ? longDashString : patternString;
     } );
 
     this.valueReadoutNode = new Node( { x: 0, y: options.valueReadoutY } );

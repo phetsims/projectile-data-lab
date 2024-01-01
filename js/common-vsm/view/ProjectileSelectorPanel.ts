@@ -52,8 +52,8 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       count: landedProjectileCountProperty
     } );
 
-    const titleStringProperty = new DerivedProperty( [ landedProjectileCountProperty, patternStringProperty ], ( landedProjectileCount, patternString ) => {
-      return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : patternString;
+    const titleStringProperty = new DerivedProperty( [ landedProjectileCountProperty, patternStringProperty, ProjectileDataLabStrings.noDataStringProperty ], ( landedProjectileCount, patternString, noDataString ) => {
+      return landedProjectileCount === 0 ? noDataString : patternString;
     } );
 
     const createPage = () => {
