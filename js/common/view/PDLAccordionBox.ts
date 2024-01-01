@@ -15,7 +15,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Property from '../../../../axon/js/Property.js';
 import PDLColors from '../PDLColors.js';
-import BinControlNode from './BinControlNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -42,13 +41,9 @@ export default class PDLAccordionBox extends AccordionBox {
       contentYMargin: margin,
       contentYSpacing: 0
     }, providedOptions );
-    const binControlNode = new BinControlNode( comboBoxParent, selectedBinWidthProperty, selectedTotalBinsProperty, {
-      tandem: options.tandem.createTandem( 'binControlNode' ),
-      leftBottom: content.leftBottom.plusXY( 0, 2 )
-    } );
     const contentContainer = new Node( {
       children: [
-        binControlNode,
+        // binControlNode,
         content
       ]
     } );

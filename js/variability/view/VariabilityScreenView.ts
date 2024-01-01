@@ -18,6 +18,7 @@ import VSMField from '../../common-vsm/model/VSMField.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import PDLColors from '../../common/PDLColors.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -43,12 +44,15 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    const histogramNode = new HistogramNode( model.fieldProperty, model.fields, model.binWidthProperty,
-      model.histogramRepresentationProperty, ProjectileDataLabStrings.distanceStringProperty, PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty, {
+    const createHistogramNode = ( node: Node ) => new HistogramNode( model.fieldProperty, model.fields, model.binWidthProperty,
+      model.histogramRepresentationProperty, ProjectileDataLabStrings.distanceStringProperty, PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty,
+      model.selectedBinWidthProperty,
+      model.selectedTotalBinsProperty,
+      node, {
         tandem: options.tandem.createTandem( 'histogramNode' )
       } );
 
-    super( model, launchPanel, staticToolPanel, interactiveToolPanel, histogramNode, options );
+    super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
 
     this.launcherNode = new LauncherNode(
       this.modelViewTransform,
@@ -59,7 +63,6 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
     );
 
     this.launcherLayer.addChild( this.launcherNode );
-
   }
 }
 projectileDataLab.register( 'VariabilityScreenView', VariabilityScreenView );

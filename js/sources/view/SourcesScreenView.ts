@@ -19,6 +19,7 @@ import VSMField from '../../common-vsm/model/VSMField.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../../common/PDLColors.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -28,7 +29,8 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
 
   protected readonly launcherNode: CustomLauncherNode;
 
-  public constructor( model: SourcesModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
+  public constructor( model: SourcesModel,
+                      providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
     const launchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
@@ -43,14 +45,16 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    const histogramNode = new HistogramNode( model.fieldProperty, model.fields, model.binWidthProperty,
+    const createHistogramNode = ( node: Node ) => new HistogramNode( model.fieldProperty, model.fields, model.binWidthProperty,
       model.histogramRepresentationProperty, ProjectileDataLabStrings.distanceStringProperty,
       PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty,
-      {
+      model.selectedBinWidthProperty,
+      model.selectedTotalBinsProperty,
+      node, {
         tandem: options.tandem.createTandem( 'histogramNode' )
       } );
 
-    super( model, launchPanel, staticToolPanel, interactiveToolPanel, histogramNode, options );
+    super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
 
     this.launcherNode = new CustomLauncherNode(
       this.modelViewTransform,

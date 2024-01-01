@@ -10,7 +10,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { Rectangle } from '../../../../scenery/js/imports.js';
+import { Node, Rectangle } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import PDLColors from '../../common/PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
@@ -37,10 +37,12 @@ export default class MeasuresHistogramNode extends HistogramNode {
                       standardDeviationProperty: PhetioProperty<number | null>,
                       intervalTool: IntervalTool,
                       intervalToolVisibleProperty: TReadOnlyProperty<boolean>,
+                      selectedBinWidthProperty: Property<number>,
+                      selectedTotalBinsProperty: Property<number>,
+                      comboBoxParent: Node,
                       options: MeasuresHistogramNodeOptions ) {
     super( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, horizontalAxisLabelText,
-
-      PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty,
+      PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty, selectedBinWidthProperty, selectedTotalBinsProperty, comboBoxParent,
       options );
 
     const dataMeasuresChartOverlay = new DataMeasuresOverlay( this.chartTransform, meanProperty, standardDeviationProperty,

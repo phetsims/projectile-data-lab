@@ -29,6 +29,7 @@ import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioS
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import HistogramIconNode from './HistogramIconNode.js';
 import Property from '../../../../axon/js/Property.js';
+import BinControlNode from './BinControlNode.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -53,6 +54,11 @@ export default class HistogramNode extends Node {
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       blockFillProperty: ColorProperty,
                       blockStrokeProperty: ColorProperty,
+
+                      selectedBinWidthProperty: Property<number>,
+                      selectedTotalBinsProperty: Property<number>,
+                      comboBoxParent: Node,
+
                       options: HistogramNodeOptions ) {
     super();
 
@@ -266,6 +272,12 @@ export default class HistogramNode extends Node {
       updateHistogram();
     } );
 
+    const binControlNode = new BinControlNode( comboBoxParent, selectedBinWidthProperty, selectedTotalBinsProperty, {
+      tandem: options.tandem.createTandem( 'binControlNode' ),
+      leftTop: this.chartNode.leftBottom.plusXY( 8, 10 )
+    } );
+    this.addChild( binControlNode );
+
     const barBlockSwitch = new ABSwitch(
       histogramRepresentationProperty,
       'blocks', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
@@ -274,9 +286,9 @@ export default class HistogramNode extends Node {
         spacing: 8,
         toggleSwitchOptions: {
           maxWidth: 32
-        }
+        },
+        rightTop: this.chartNode.rightBottom.plusXY( -8, 10 )
       } );
-    barBlockSwitch.rightTop = this.chartNode.rightBottom.plusXY( -8, 10 );
     this.addChild( barBlockSwitch );
   }
 }

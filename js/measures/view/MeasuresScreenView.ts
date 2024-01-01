@@ -18,6 +18,7 @@ import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import MeasuresHistogramNode from './MeasuresHistogramNode.js';
 import IntervalToolNode from './IntervalToolNode.js';
+import { Node } from '../../../../scenery/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -47,7 +48,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    const histogramNode = new MeasuresHistogramNode(
+    const createHistogramNode = ( comboBoxParent: Node ) => new MeasuresHistogramNode(
       model.fieldProperty,
       model.fields,
       model.binWidthProperty,
@@ -57,11 +58,14 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.landedDistanceAverageProperty,
       model.landedDistanceStandardDeviationProperty,
       model.intervalTool,
-      model.isIntervalToolVisibleProperty, {
+      model.isIntervalToolVisibleProperty,
+      model.selectedBinWidthProperty,
+      model.selectedTotalBinsProperty,
+      comboBoxParent, {
         tandem: options.tandem.createTandem( 'histogramNode' )
       } );
 
-    super( model, launchPanel, staticToolPanel, interactiveToolPanel, histogramNode, options );
+    super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
 
     this.launcherNode = new CustomLauncherNode(
       this.modelViewTransform,

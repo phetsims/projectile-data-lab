@@ -41,7 +41,10 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
     providedOptions: VSMAccordionBoxOptions ) {
 
     const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, ProjectileDataLabStrings.meanDistanceStringProperty,
-      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, {
+      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty,
+      selectedBinWidthProperty,
+      selectedTotalBinsProperty,
+      comboBoxParent, {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 

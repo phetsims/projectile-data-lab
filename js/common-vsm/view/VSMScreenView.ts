@@ -58,7 +58,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
                          launchPanel: VSMLaunchPanel,
                          staticToolPanel: StaticToolPanel,
                          interactiveToolPanel: InteractiveToolPanel,
-                         histogramNode: HistogramNode,
+                         // Closure that creates the HistogramNode. We need to access 'this' to be the combo box parent
+                         // hence must create it lazily.
+                         createHistogramNode: ( node: Node ) => HistogramNode,
                          options: VSMScreenViewOptions ) {
     super(
       model,
@@ -98,7 +100,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.accordionBox = new VSMAccordionBox(
       model.selectedBinWidthProperty,
       model.selectedTotalBinsProperty,
-      histogramNode,
+      createHistogramNode( this ),
       this, {
         expandedProperty: model.isHistogramVisibleProperty,
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
