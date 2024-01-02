@@ -11,8 +11,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import VSMField from '../model/VSMField.js';
 import Panel from '../../../../sun/js/Panel.js';
 import PDLColors from '../../common/PDLColors.js';
-import { Circle, HBox, Rectangle } from '../../../../scenery/js/imports.js';
-import Field from '../../common/model/Field.js';
+import { Circle, HBox, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -23,7 +22,7 @@ type SelfOptions = EmptySelfOptions;
 type FieldPanelOptions = SelfOptions & PDLPanelOptions;
 
 export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
-  public constructor( fieldProperty: Property<T>, fields: Field[], providedOptions: FieldPanelOptions ) {
+  public constructor( fieldProperty: Property<T>, fields: T[], providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
       top: PDLConstants.SCREEN_VIEW_Y_MARGIN
@@ -44,8 +43,8 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         const buttonText = new PDLText( fieldNumber.toString(), {
           fill: PDLColors.fieldSignTextColorProperty,
           fontSize: 20,
-            fontWeight: 'bold'
-      } );
+          fontWeight: 'bold'
+        } );
 
         const buttonContents = new Rectangle( buttonText.bounds.dilatedX( 10 ).dilatedY( 1 ), {
           children: [ buttonText, dataIndicator ]
@@ -94,6 +93,16 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         fieldRadioButtonGroup
       ]
     } ), options );
+
+    // a listener that selects a field based on the keystroke, regardless of where focus is in the document
+    this.addInputListener( new KeyboardListener( {
+      keys: [ '1', '2', '3', '4', '5', '6', '7', '8' ] as const,
+      global: true,
+      callback: ( event, keysPressed ) => {
+        const key = parseInt( keysPressed[ 0 ], 10 );
+        fieldProperty.value = fields[ key - 1 ];
+      }
+    } ) );
   }
 }
 
