@@ -12,7 +12,8 @@ import PDLText from '../../common/view/PDLText.js';
 import SamplingField from '../model/SamplingField.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { MysteryLauncherIcon } from '../../common/view/LauncherRadioButtonGroupWrapper.js';
+
+import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
 
 export default class SamplingHistogramNode extends HistogramNode {
   public constructor( launcherProperty: TReadOnlyProperty<number>,

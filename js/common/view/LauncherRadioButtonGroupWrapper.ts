@@ -4,32 +4,11 @@ import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import Property from '../../../../axon/js/Property.js';
-import LauncherNode from './LauncherNode.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PDLText from './PDLText.js';
 import { Shape } from '../../../../kite/js/imports.js';
+import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
 
-const LAUNCHER_ICON_WIDTH = 35;
 const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
-
-// TODO: Move to a new file: https://github.com/phetsims/projectile-data-lab/issues/7
-export class MysteryLauncherIcon extends Node {
-  public constructor( mysteryLauncherNumber: number ) {
-
-    const mysteryLauncherIcon = new LauncherNode( ModelViewTransform2.createIdentity(), new Property( 45 ), new Property( 0 ),
-      new Property( mysteryLauncherNumber ), { isIcon: true } ).rasterized( {
-      resolution: 1.25
-    } );
-    super( {
-      children: [ mysteryLauncherIcon ],
-      pickable: false,
-      maxWidth: LAUNCHER_ICON_WIDTH,
-      top: 0,
-      left: 0
-    } );
-  }
-}
 
 export default class LauncherRadioButtonGroupWrapper extends Node {
   public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
