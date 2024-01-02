@@ -9,6 +9,7 @@ import SectionSampleSize from './SectionSampleSize.js';
 import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -16,7 +17,7 @@ import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js'
  */
 
 type SelfOptions = EmptySelfOptions;
-type SamplingLaunchPanelOptions = SelfOptions & PDLPanelOptions;
+type SamplingLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
 export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
