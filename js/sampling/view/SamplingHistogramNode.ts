@@ -6,12 +6,13 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
-import { ColorProperty, Node, VBox } from '../../../../scenery/js/imports.js';
+import { ColorProperty, HBox, Node, VBox } from '../../../../scenery/js/imports.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 import PDLText from '../../common/view/PDLText.js';
 import SamplingField from '../model/SamplingField.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import { MysteryLauncherIcon } from '../../common/view/LauncherRadioButtonGroupWrapper.js';
 
 export default class SamplingHistogramNode extends HistogramNode {
   public constructor( launcherProperty: TReadOnlyProperty<number>,
@@ -44,13 +45,22 @@ export default class SamplingHistogramNode extends HistogramNode {
       options
     );
 
-    const label = new PDLPanel( new VBox( {
+    const iconNode = new Node();
+    launcherProperty.link( launcher => {
+      iconNode.children = [ new MysteryLauncherIcon( launcher ) ];
+    } );
+    const textVBox = new VBox( {
       align: 'left',
       children: [
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty, { launcher: launcherProperty } ), { fontSize: 11 } ),
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty, { sampleSize: sampleSizeProperty } ), { fontSize: 11 } ),
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty, { numberOfSamples: numberOfSamplesProperty } ), { fontSize: 11 } )
       ]
+    } );
+    iconNode.maxHeight = textVBox.height;
+    const label = new PDLPanel( new HBox( {
+      spacing: 5,
+      children: [ iconNode, textVBox ]
     } ), {
       fill: 'white',
       cornerRadius: 3

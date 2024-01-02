@@ -13,7 +13,8 @@ import { Shape } from '../../../../kite/js/imports.js';
 const LAUNCHER_ICON_WIDTH = 35;
 const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
 
-class MysteryLauncherIcon extends Node {
+// TODO: Move to a new file: https://github.com/phetsims/projectile-data-lab/issues/7
+export class MysteryLauncherIcon extends Node {
   public constructor( mysteryLauncherNumber: number ) {
 
     const mysteryLauncherIcon = new LauncherNode( ModelViewTransform2.createIdentity(), new Property( 45 ), new Property( 0 ),
