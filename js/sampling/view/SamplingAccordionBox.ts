@@ -10,10 +10,10 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
-import HistogramNode from '../../common/view/HistogramNode.js';
 import SamplingField from '../model/SamplingField.js';
 import PDLColors from '../../common/PDLColors.js';
 import SampleThumbnailNode from './SampleThumbnailNode.js';
+import SamplingHistogramNode from './SamplingHistogramNode.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -31,6 +31,9 @@ export type VSMAccordionBoxOptions =
 export default class SamplingAccordionBox extends PDLAccordionBox {
 
   public constructor(
+    launcherProperty: TReadOnlyProperty<number>,
+    sampleSizeProperty: TReadOnlyProperty<number>,
+    numberOfSamplesProperty: TReadOnlyProperty<number>,
     fieldProperty: TReadOnlyProperty<SamplingField>,
     fields: SamplingField[],
     selectedBinWidthProperty: Property<number>,
@@ -40,7 +43,12 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
     histogramRepresentationProperty: Property<HistogramRepresentation>,
     providedOptions: VSMAccordionBoxOptions ) {
 
-    const histogramNode = new HistogramNode( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, ProjectileDataLabStrings.meanDistanceStringProperty,
+    const histogramNode = new SamplingHistogramNode(
+      launcherProperty,
+      sampleSizeProperty,
+      numberOfSamplesProperty,
+
+      fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, ProjectileDataLabStrings.meanDistanceStringProperty,
       PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty,
       selectedBinWidthProperty,
       selectedTotalBinsProperty,
@@ -60,7 +68,8 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
 
     super( comboBoxParent, new HBox( {
       spacing: 4,
-      children: [ histogramNode,
+      children: [
+        histogramNode,
         new VBox( {
           spacing: 4,
           children: [

@@ -54,11 +54,9 @@ export default class HistogramNode extends Node {
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       blockFillProperty: ColorProperty,
                       blockStrokeProperty: ColorProperty,
-
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
                       comboBoxParent: Node,
-
                       options: HistogramNodeOptions ) {
     super();
 
@@ -78,13 +76,15 @@ export default class HistogramNode extends Node {
 
     const chartBackground = new ChartRectangle( this.chartTransform, {
       fill: 'white',
-      stroke: 'black'
+      stroke: 'black',
+      cornerRadius: 5
     } );
 
     // Show the frame in front, so it overlaps the bottom of the bars
     const chartFrame = new ChartRectangle( this.chartTransform, {
       fill: null,
-      stroke: 'black'
+      stroke: 'black',
+      cornerRadius: 5
     } );
 
     const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty,
@@ -130,6 +130,12 @@ export default class HistogramNode extends Node {
         // Background
         chartBackground,
 
+        // Background
+        chartFrame,
+
+        // Clipped contents
+        chartClip,
+
         // Major ticks on the y-axis
         verticalTickMarkSet,
         verticalTickLabelSet,
@@ -138,13 +144,7 @@ export default class HistogramNode extends Node {
         new TickLabelSet( this.chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, {
           edge: 'min',
           createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
-        } ),
-
-        // Background
-        chartFrame,
-
-        // Clipped contents
-        chartClip
+        } )
       ]
     } );
 

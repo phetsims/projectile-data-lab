@@ -10,11 +10,10 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import projectileDataLab from '../../projectileDataLab.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLColors from '../PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
-export type PDLPanelOptions = SelfOptions & WithRequired<PanelOptions, 'tandem'>;
+export type PDLPanelOptions = SelfOptions & PanelOptions;
 
 export class PDLPanel extends Panel {
   public constructor( content: Node, providedOptions?: PDLPanelOptions ) {

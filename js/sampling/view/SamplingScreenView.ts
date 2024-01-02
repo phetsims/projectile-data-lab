@@ -97,6 +97,10 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.addChild( launcherSampleSizePanel );
 
     this.accordionBox = new SamplingAccordionBox(
+      model.mysteryLauncherProperty,
+      model.sampleSizeProperty,
+      model.numberOfSamplesWithMeansShowingProperty,
+
       model.fieldProperty,
       model.fields,
       model.selectedBinWidthProperty,
