@@ -7,7 +7,6 @@ import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
 import Utils from '../../../../dot/js/Utils.js';
 import GridLineSet from '../../../../bamboo/js/GridLineSet.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
-import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -93,13 +92,22 @@ export default class HistogramNode extends Node {
     // Changes based on the zoom level
     const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {
       stroke: 'lightGray',
-      lineWidth: 0.8
+      lineWidth: 0.5
+    } );
+
+    const majorHorizontalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 10, {
+      stroke: 'lightGray',
+      lineWidth: 1.0
     } );
 
     // Changes based on the bin width
     const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: 'lightGray',
-      lineWidth: 0.8
+      lineWidth: 0.5
+    } );
+    const majorVerticalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 5, {
+      stroke: 'lightGray',
+      lineWidth: 1.0
     } );
 
     this.chartClipLayer = new Node();
@@ -112,6 +120,10 @@ export default class HistogramNode extends Node {
         horizontalGridLines,
         verticalGridLines,
 
+        // Major grid lines
+        majorHorizontalGridLines,
+        majorVerticalGridLines,
+
         this.chartClipLayer,
 
         // Some data
@@ -119,7 +131,6 @@ export default class HistogramNode extends Node {
       ]
     } );
 
-    const verticalTickMarkSet = new TickMarkSet( this.chartTransform, Orientation.VERTICAL, 5, { edge: 'min', extent: 8 } );
     const verticalTickLabelSet = new TickLabelSet( this.chartTransform, Orientation.VERTICAL, 5, {
       edge: 'min',
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
@@ -137,10 +148,8 @@ export default class HistogramNode extends Node {
         chartClip,
 
         // Major ticks on the y-axis
-        verticalTickMarkSet,
         verticalTickLabelSet,
 
-        new TickMarkSet( this.chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, { edge: 'min', extent: 8 } ),
         new TickLabelSet( this.chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, {
           edge: 'min',
           createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
@@ -266,9 +275,7 @@ export default class HistogramNode extends Node {
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
       const tickSpacing = tickSpacings[ this.zoomLevelProperty.value ];
-      verticalTickMarkSet.setSpacing( tickSpacing );
       verticalTickLabelSet.setSpacing( tickSpacing );
-      // horizontalGridLines.setSpacing( tickSpacing );
       updateHistogram();
     } );
 
