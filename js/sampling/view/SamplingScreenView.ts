@@ -144,6 +144,13 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
+    // Position the 'No air resistance' text
+    this.noAirResistanceText.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION;
+
+    ProjectileDataLabStrings.noAirResistanceStringProperty.link( () => {
+      this.noAirResistanceText.right = this.eraserButton.right;
+    } );
+
     ManualConstraint.create(
       this,
       [ this.accordionBox, this.launchPanel ],
