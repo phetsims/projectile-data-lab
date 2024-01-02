@@ -75,15 +75,13 @@ export default class HistogramNode extends Node {
 
     const chartBackground = new ChartRectangle( this.chartTransform, {
       fill: 'white',
-      stroke: 'black',
-      cornerRadius: 5
+      stroke: 'black'
     } );
 
     // Show the frame in front, so it overlaps the bottom of the bars
     const chartFrame = new ChartRectangle( this.chartTransform, {
       fill: null,
-      stroke: 'black',
-      cornerRadius: 5
+      stroke: 'black'
     } );
 
     const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty,

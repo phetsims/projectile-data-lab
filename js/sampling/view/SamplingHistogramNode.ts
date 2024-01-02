@@ -64,7 +64,7 @@ export default class SamplingHistogramNode extends HistogramNode {
       children: [ iconNode, textVBox ]
     } ), {
       fill: 'white',
-      cornerRadius: 3
+      cornerRadius: 0
     } );
     this.chartNode.addChild( label );
   }
