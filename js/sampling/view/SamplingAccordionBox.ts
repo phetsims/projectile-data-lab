@@ -41,6 +41,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
     binWidthProperty: TReadOnlyProperty<number>,
     comboBoxParent: Node,
     histogramRepresentationProperty: Property<HistogramRepresentation>,
+    clearCurrentField: () => void,
     providedOptions: VSMAccordionBoxOptions ) {
 
     const histogramNode = new SamplingHistogramNode(
@@ -52,7 +53,8 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
       PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty,
       selectedBinWidthProperty,
       selectedTotalBinsProperty,
-      comboBoxParent, {
+      comboBoxParent,
+      clearCurrentField, {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 

@@ -6,7 +6,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
-import { ColorProperty, HBox, Node, VBox } from '../../../../scenery/js/imports.js';
+import { ColorProperty, HBox, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 import PDLText from '../../common/view/PDLText.js';
 import SamplingField from '../model/SamplingField.js';
@@ -14,6 +14,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
+import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 
 export default class SamplingHistogramNode extends HistogramNode {
   public constructor( launcherProperty: TReadOnlyProperty<number>,
@@ -29,6 +30,7 @@ export default class SamplingHistogramNode extends HistogramNode {
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
                       comboBoxParent: Node,
+                      clearCurrentField: () => void,
                       options: HistogramNodeOptions ) {
     super(
       fieldProperty,
@@ -67,6 +69,20 @@ export default class SamplingHistogramNode extends HistogramNode {
       cornerRadius: 0
     } );
     this.chartNode.addChild( label );
+
+    // Create the eraser button
+    const eraserButton = new EraserButton( {
+      iconWidth: 27,
+      listener: clearCurrentField,
+      tandem: options.tandem.createTandem( 'eraserButton' )
+    } );
+
+    this.chartNode.addChild( eraserButton );
+
+    ManualConstraint.create( this, [ eraserButton, this.chartBackground ], ( eraserButton, chartBackground ) => {
+      eraserButton.right = chartBackground.right - 3;
+      eraserButton.top = chartBackground.top + 3;
+    } );
   }
 }
 

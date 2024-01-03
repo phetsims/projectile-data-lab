@@ -63,6 +63,7 @@ export default class HistogramNode extends Node {
   protected readonly chartTransform: ChartTransform;
   protected readonly chartClipLayer: Node;
   public readonly zoomLevelProperty: NumberProperty;
+  protected readonly chartBackground: ChartRectangle;
 
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
@@ -89,7 +90,7 @@ export default class HistogramNode extends Node {
       modelYRange: new Range( 0, 25 )
     } );
 
-    const chartBackground = new ChartRectangle( this.chartTransform, {
+    this.chartBackground = new ChartRectangle( this.chartTransform, {
       fill: 'white',
       stroke: 'black'
     } );
@@ -127,7 +128,7 @@ export default class HistogramNode extends Node {
     this.chartClipLayer = new Node();
     const chartCanvasNode = new ChartCanvasNode( this.chartTransform, [ histogramPainter ] );
     const chartClip = new Node( {
-      clipArea: chartBackground.getShape(),
+      clipArea: this.chartBackground.getShape(),
       children: [
 
         // grid lines
@@ -153,7 +154,7 @@ export default class HistogramNode extends Node {
       children: [
 
         // Background
-        chartBackground,
+        this.chartBackground,
 
         // Clipped contents
         chartClip,

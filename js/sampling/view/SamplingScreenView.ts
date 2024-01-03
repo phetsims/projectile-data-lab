@@ -120,7 +120,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       model.selectedTotalBinsProperty,
       model.binWidthProperty,
       this,
-      model.histogramRepresentationProperty, {
+      model.histogramRepresentationProperty,
+      () => model.clearCurrentField(), {
         expandedProperty: model.isHistogramVisibleProperty,
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         centerX: this.layoutBounds.centerX,
@@ -157,7 +158,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.noAirResistanceText.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION;
 
     ProjectileDataLabStrings.noAirResistanceStringProperty.link( () => {
-      this.noAirResistanceText.right = this.eraserButton.right;
+      this.noAirResistanceText.right = this.layoutBounds.right;
     } );
 
     ManualConstraint.create(

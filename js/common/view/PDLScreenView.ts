@@ -23,7 +23,6 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import PDLText from './PDLText.js';
-import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Field from '../model/Field.js';
@@ -58,7 +57,6 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
   protected readonly launchButton;
   protected readonly launchControlRadioButtonGroup;
-  protected readonly eraserButton: EraserButton;
   protected readonly resetAllButton;
   protected readonly noAirResistanceText: PDLText;
 
@@ -189,20 +187,6 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       spacing: 10,
       tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' )
     } );
-
-    // Create the eraser button
-    this.eraserButton = new EraserButton( {
-      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
-      centerY: PDLConstants.FIELD_SIGN_CENTER_Y,
-      iconWidth: 27,
-      listener: () => {
-        model.clearCurrentField();
-      },
-      tandem: options.tandem.createTandem( 'eraserButton' )
-    } );
-
-    // Create the effect that the eraser button is next to the field sign
-    this.behindProjectilesLayer.addChild( this.eraserButton );
 
     this.addChild( background );
     this.addChild( fieldBack );

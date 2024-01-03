@@ -34,6 +34,7 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 import PDLColors from '../../common/PDLColors.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import UTurnArrowShape from '../../../../scenery-phet/js/UTurnArrowShape.js';
+import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -46,16 +47,16 @@ type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
-  protected readonly launchPanel: VSMLaunchPanel;
   protected readonly fieldSelectorPanel: FieldSelectorPanel<VSMField>;
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorPanel: ProjectileSelectorPanel;
   protected readonly topRightUIContainer: VBox;
+  protected readonly eraserButton: EraserButton;
 
   protected constructor( model: VSMModel<T>,
-                         launchPanel: VSMLaunchPanel,
+                         public readonly launchPanel: VSMLaunchPanel,
                          staticToolPanel: StaticToolPanel,
                          interactiveToolPanel: InteractiveToolPanel,
                          // Closure that creates the HistogramNode. We need to access 'this' to be the combo box parent
@@ -69,7 +70,19 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       options
     );
 
-    this.launchPanel = launchPanel;
+    // Create the eraser button
+    this.eraserButton = new EraserButton( {
+      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
+      centerY: PDLConstants.FIELD_SIGN_CENTER_Y,
+      iconWidth: 27,
+      listener: () => {
+        model.clearCurrentField();
+      },
+      tandem: options.tandem.createTandem( 'eraserButton' )
+    } );
+
+    // Create the effect that the eraser button is next to the field sign
+    this.behindProjectilesLayer.addChild( this.eraserButton );
 
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
