@@ -8,6 +8,9 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../../common/PDLColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import SamplingField from '../model/SamplingField.js';
+import cannonball_png from '../../../images/cannonball_png.js';
+import cannonballGray_png from '../../../images/cannonballGray_png.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * Render the paths and projectiles for the Variability, Sources and Measures screens of Projectile Data Lab.
@@ -57,13 +60,20 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
     // 3. Projectiles
     for ( let i = 0; i < projectiles.length; i++ ) {
+      const projectile = projectiles[ i ];
 
-      const showHighlighted = this.fieldProperty.value.phaseProperty.value === 'showingProjectiles' && i === projectiles.length - 1;
+      const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
+      const image = this.fieldProperty.value.phaseProperty.value === 'showingCompleteSampleWithMean' ? cannonballGray_png : cannonball_png;
 
-      // All projectiles are darkened in the Sampling screen, so they match the look of the majority of the data on the other screens
-      // REVIEW: There is a design request to show flying cannonballs in "single" mode. If we decide to do that, we may
-      // wish to show the undarkened ones while flying through the air, or otherwise try to match the design from screens 1-3
-      this.drawProjectile( context, projectiles[ i ], true, !showHighlighted );
+      context.save();
+
+      // Move to the center of where we want to draw our image, similar to code in PDLCanvasNode
+      context.translate( viewPoint.x, viewPoint.y );
+      context.scale( PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR, PDLConstants.PROJECTILE_IMAGE_SCALE_FACTOR );
+      context.drawImage( image, -image.width / 2, -image.height / 2 );
+
+      context.restore();
+
     }
   }
 }
