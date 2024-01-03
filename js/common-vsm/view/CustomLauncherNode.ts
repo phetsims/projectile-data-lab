@@ -139,6 +139,9 @@ export default class CustomLauncherNode extends LauncherNode {
         this.updateMysteryLauncher( mysteryLauncherProperty.value );
         this.launcherFrameFront.opacity = 1;
       }
+
+      // Only show the label node for non-custom launchers
+      this.labelNode.visible = !isCustom;
     } );
 
     customLauncherTypeProperty.link( launcherType => {

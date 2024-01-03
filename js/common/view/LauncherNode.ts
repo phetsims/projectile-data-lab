@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
@@ -14,6 +14,7 @@ import Animation from '../../../../twixt/js/Animation.js';
 import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Easing from '../../../../twixt/js/Easing.js';
+import PDLText from './PDLText.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -60,6 +61,7 @@ export default class LauncherNode extends Node {
   private readonly launcherFrameBack: Node;
 
   private barrelRotationAnimation?: Animation;
+  protected readonly labelNode: Node;
 
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
                       private readonly meanLaunchAngleProperty: TProperty<number>,
@@ -73,6 +75,21 @@ export default class LauncherNode extends Node {
     const defaultOptions = { x: launcherX, y: launcherY, isIcon: false };
     const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
+
+    const labelText = new PDLText( new DerivedProperty( [ mysteryLauncherProperty ], mysteryLauncher => Utils.toFixed( mysteryLauncher, 0 ) ), {
+      fontSize: 16
+    } );
+    const labelBackground = new Circle( Math.max( labelText.width, labelText.height ) * 0.75, {
+      fill: 'white',
+      stroke: 'black',
+      lineWidth: 1
+    } );
+    labelText.center = labelBackground.center;
+
+    this.labelNode = new Node( {
+      children: [ labelBackground, labelText ],
+      x: -70
+    } );
 
     this.launcherBarrel = new Node();
     this.launcherBarrelGraphics = new Node();
@@ -162,7 +179,7 @@ export default class LauncherNode extends Node {
   }
 
   protected updateMysteryLauncher( type: number, isIcon = false ): void {
-    this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( type );
+    this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( type, isIcon );
     this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( type, isIcon );
     this.launcherFrameFront.children = this.launcherFrameFrontGraphicsForType( type );
   }
@@ -171,7 +188,7 @@ export default class LauncherNode extends Node {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
-  private launcherBarrelGraphicsForType( mysteryLauncher: number ): Node[] {
+  private launcherBarrelGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
     const barrelPrimaryColorProperty = PDLColors.launcherFillColorProperties[ mysteryLauncher - 1 ].primary;
     const barrelPrimaryDarkColorProperty = new DerivedProperty( [ barrelPrimaryColorProperty ],
       color => color.darkerColor( 0.8 ) );
@@ -217,7 +234,7 @@ export default class LauncherNode extends Node {
       }
     );
 
-    return [ barrel, launcherEndRect ];
+    return [ barrel, launcherEndRect, ...( isIcon ? [] : [ this.labelNode ] ) ];
   }
 
   private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
@@ -251,23 +268,23 @@ export default class LauncherNode extends Node {
     const supportBarHeight = isIcon ? 20 : SUPPORT_BAR_HEIGHT;
 
     // If the launcher is an icon, do not render the support bar
-      const supportBarFillGradient = new LinearGradient( -0.5 * SUPPORT_BAR_WIDTH, 0, 0.5 * SUPPORT_BAR_WIDTH, 0 );
-      supportBarFillGradient.addColorStop( 0, frameFillDarkerColorProperty );
-      supportBarFillGradient.addColorStop( 0.4, frameFillDarkColorProperty );
-      supportBarFillGradient.addColorStop( 0.6, frameFillDarkColorProperty );
-      supportBarFillGradient.addColorStop( 1, frameFillDarkerColorProperty );
+    const supportBarFillGradient = new LinearGradient( -0.5 * SUPPORT_BAR_WIDTH, 0, 0.5 * SUPPORT_BAR_WIDTH, 0 );
+    supportBarFillGradient.addColorStop( 0, frameFillDarkerColorProperty );
+    supportBarFillGradient.addColorStop( 0.4, frameFillDarkColorProperty );
+    supportBarFillGradient.addColorStop( 0.6, frameFillDarkColorProperty );
+    supportBarFillGradient.addColorStop( 1, frameFillDarkerColorProperty );
 
-      const supportBarRect = new Shape().rect(
-        SUPPORT_BAR_CENTER_X - 0.5 * SUPPORT_BAR_WIDTH,
-        0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
-        SUPPORT_BAR_WIDTH,
-        supportBarHeight );
-      const supportBarShape = supportBarRect.shapeDifference( this.guideRailOuterShape() );
+    const supportBarRect = new Shape().rect(
+      SUPPORT_BAR_CENTER_X - 0.5 * SUPPORT_BAR_WIDTH,
+      0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
+      SUPPORT_BAR_WIDTH,
+      supportBarHeight );
+    const supportBarShape = supportBarRect.shapeDifference( this.guideRailOuterShape() );
 
-      const supportBar = new Path( supportBarShape, {
-        fill: supportBarFillGradient,
-        stroke: PDLColors.launcherStrokeColorProperty
-      } );
+    const supportBar = new Path( supportBarShape, {
+      fill: supportBarFillGradient,
+      stroke: PDLColors.launcherStrokeColorProperty
+    } );
 
     return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
   }
