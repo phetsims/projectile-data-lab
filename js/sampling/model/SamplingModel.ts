@@ -31,8 +31,6 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfSamplesWithMeansShowingProperty: DynamicProperty<number, number, SamplingField>;
-
-  // TODO: Use phase instead of sampleMean, see https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
 
   public constructor( providedOptions: SamplingModelOptions ) {
@@ -107,7 +105,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       }
 
       phaseProperty.value = 'showingClearPresample';
-      field.startNewSample();
+      this.selectedSampleProperty.value++;
     }
 
     else if ( this.launchModeProperty.value === 'continuous' ) {
@@ -118,8 +116,10 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       }
 
       if ( phaseProperty.value === 'idle' ) {
+
+        // TODO: Do we need this phase? https://github.com/phetsims/projectile-data-lab/issues/7
         phaseProperty.value = 'showingClearPresample';
-        field.startNewSample();
+        this.selectedSampleProperty.value++;
       }
     }
   }

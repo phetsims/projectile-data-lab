@@ -11,6 +11,7 @@ import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Emitter from '../../../../axon/js/Emitter.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -27,6 +28,7 @@ export type SamplingFieldOptions = SelfOptions & FieldOptions;
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
 const SHOWING_CLEAR_PRESAMPLE_TIME = 0.25;
 const SHOWING_SAMPLE_TIME = 0.25;
+const SHOWING_SINGLE_SAMPLE_TIME = 0.5;
 const SHOWING_SAMPLE_AND_MEAN_TIME = 0.3;
 
 // In single mode, we transition through these phases:
@@ -43,7 +45,7 @@ const SHOWING_SAMPLE_AND_MEAN_TIME = 0.3;
 // GO TO 2
 
 // TODO: Move to a different file, see https://github.com/phetsims/projectile-data-lab/issues/17
-const SamplingPhaseValues = [ 'idle', 'showingClearPresample', 'showingProjectiles', 'showingCompleteSampleWithoutMean', 'showingCompleteSampleWithMean' ] as const;
+const SamplingPhaseValues = [ 'idle', 'showingClearPresample', 'showingProjectiles', 'showingCompleteSampleWithoutMean', 'showingCompleteSampleWithMean', 'showingCompleteSampleWithoutMeanSingleSample' ] as const;
 type SamplingPhase = typeof SamplingPhaseValues[ number ];
 
 // TODO: Gracefully handle changes of mode while a sample is in progress, see https://github.com/phetsims/projectile-data-lab/issues/17
@@ -56,7 +58,6 @@ export default class SamplingField extends Field {
   // This property is used to set the visibility and position of the mean indicator.
   // If it is null, the current sample is not yet complete and the mean indicator is not visible.
   // Note: In 'Single sample' mode, there is a delay between the last projectile in a sample and the mean indicator appearing.
-  // TODO: Get rid of these now that we have phase? See https://github.com/phetsims/projectile-data-lab/issues/17
   public readonly sampleMeanProperty: Property<number | null>;
 
   public readonly projectileCreatedEmitter = new Emitter<[ Projectile ]>( {
@@ -90,10 +91,10 @@ export default class SamplingField extends Field {
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     this.totalSampleTime =
-      this.sampleSize === 2 ? 1 :
+      this.sampleSize === 2 ? 0.75 :
       this.sampleSize === 5 ? 2 :
       this.sampleSize === 15 ? 5 :
-      this.sampleSize === 40 ? 10 :
+      this.sampleSize === 40 ? 9 :
       0;
 
     assert && assert( this.totalSampleTime > 0, 'this.totalSampleTime should be greater than 0' );
@@ -104,24 +105,23 @@ export default class SamplingField extends Field {
 
     this.mysteryLauncherProperty.value = launcher;
 
-    this.selectedSampleProperty.lazyLink( () => {
-
-      // TODO: Factor out: https://github.com/phetsims/projectile-data-lab/issues/17
-      const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
-
-      // TODO: This wouldn't work if we ever have sample size = 1, see https://github.com/phetsims/projectile-data-lab/issues/17
-      if ( projectilesInSelectedSample.length > 1 ) {
-        this.sampleMeanProperty.value = _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) );
-      }
-      else {
-        this.sampleMeanProperty.value = null;
-      }
-    } );
-
     this.phaseProperty = new StringUnionProperty<SamplingPhase>( 'idle', {
       validValues: SamplingPhaseValues,
       tandem: options.tandem.createTandem( 'phaseProperty' ),
       phetioDocumentation: 'The sampling screen is managed by a finite state machine. The possible states are called phases. For internal phet-io use only, for managing state save and load.'
+    } );
+
+    Multilink.multilink( [ this.selectedSampleProperty, this.phaseProperty ], ( selectedSample, phase ) => {
+
+      const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
+
+      if ( assert && phase === 'showingCompleteSampleWithMean' ) {
+        assert && assert( projectilesInSelectedSample.length === this.sampleSize, 'we should have all the projectiles if we moved into the phase: showingCompleteSampleWithMean' );
+      }
+
+      this.sampleMeanProperty.value =
+        phase === 'showingCompleteSampleWithMean' ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) :
+        null;
     } );
 
     this.timeProperty = new NumberProperty( 0, {
@@ -163,6 +163,10 @@ export default class SamplingField extends Field {
     return this.getAllProjectiles().filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
   }
 
+  public getLandedProjectilesInSelectedSample(): Projectile[] {
+    return this.landedProjectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
+  }
+
   /**
    * Return an array of samples which have their means currently showing. Each sample is an object with a single property, x,
    * which is the mean distance of projectiles in that sample. This is used for the histogram.
@@ -199,28 +203,6 @@ export default class SamplingField extends Field {
     this.projectileCreatedEmitter.emit( projectile );
   }
 
-  public startNewSample(): void {
-
-    // When starting a new sample, the mean indicator should be hidden.
-    this.sampleMeanProperty.value = null;
-
-    // Any time we start a new sample, if an old sample was in-progress, we must complete it immediately/synchronously
-    // before starting the new one. Typically, this would only happen when the user clicks the launch button while
-    // continuous launching is enabled.
-
-    // TODO: Update this to use the phase system - see https://github.com/phetsims/projectile-data-lab/issues/17
-    // let updated = false;
-    // while ( this.getTotalProjectileCount() % this.sampleSize !== 0 ) {
-    //   this.createLandedProjectile();
-    //   updated = true;
-    // }
-
-    // Show the new sample in the selector panel. Note this means if sample 2/8 was selected, then we
-    // create a new one, it will jump to 9/9. This is the desired behavior.
-
-    this.selectedSampleProperty.value++;
-  }
-
   // If the user fires a new sample while a prior sample was in progress, finish up the prior sample.
   // Only relevant for 'single' mode.
   public finishCurrentSample(): void {
@@ -244,16 +226,6 @@ export default class SamplingField extends Field {
 
     this.timeProperty.value += dt;
     const timeInMode = this.timeProperty.value - this.phaseStartTimeProperty.value;
-
-    const updateMean = () => {
-      const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
-      if ( projectilesInSelectedSample.length > 0 ) {
-        this.sampleMeanProperty.value = _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) );
-      }
-      else {
-        this.sampleMeanProperty.value = null;
-      }
-    };
 
     if ( this.phaseProperty.value === 'idle' ) {
 
@@ -295,18 +267,21 @@ export default class SamplingField extends Field {
       }
 
       // Allow extra time to show focus on the final projectile before showing the sample mean
-      if ( this.landedProjectiles.length === this.sampleSize ) {
+      if ( this.getLandedProjectilesInSelectedSample().length === this.sampleSize ) {
 
-        this.phaseProperty.value = 'showingCompleteSampleWithMean';
-        updateMean();
+        this.phaseProperty.value = 'showingCompleteSampleWithoutMeanSingleSample';
       }
     }
-    else if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) { // Only in continuous mode
+    else if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMeanSingleSample' ) {
+
+      if ( timeInMode > SHOWING_SINGLE_SAMPLE_TIME ) {
+        this.phaseProperty.value = 'showingCompleteSampleWithMean';
+      }
+    }
+    else if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) { // Only for continuous mode
 
       if ( timeInMode > SHOWING_SAMPLE_TIME ) {
-
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
-        updateMean();
       }
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
@@ -316,7 +291,7 @@ export default class SamplingField extends Field {
         this.numberOfSamplesWithMeansShowingProperty.value < PDLConstants.MAX_SAMPLES_PER_FIELD
       ) {
         this.phaseProperty.value = 'showingClearPresample';
-        this.startNewSample();
+        this.selectedSampleProperty.value++;
       }
     }
   }
