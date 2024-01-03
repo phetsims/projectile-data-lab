@@ -31,7 +31,8 @@ export default class SampleSelectorPanel extends PDLPanel {
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
     selectedSampleProperty: TProperty<number>,
-    numberOfSampleCardsProperty: TReadOnlyProperty<number>,
+    numberOfStartedSamplesProperty: TReadOnlyProperty<number>,
+    numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
     providedOptions: SampleSelectorPanelOptions ) {
 
     const options = optionize<SampleSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
@@ -40,36 +41,51 @@ export default class SampleSelectorPanel extends PDLPanel {
     //
     //   // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
     //   number: selectedSampleProperty,
-    //   count: numberOfSampleCardsProperty
+    //   count: numberOfCompletedSamplesProperty
     // } );
 
-    // const titleStringProperty = new DerivedProperty( [ numberOfSampleCardsProperty, patternStringProperty ], ( landedProjectileCount, patternString ) => {
+    // const titleStringProperty = new DerivedProperty( [ numberOfCompletedSamplesProperty, patternStringProperty ], ( landedProjectileCount, patternString ) => {
     //   return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : patternString;
     // } );
 
-    // const titleStringProperty = new DerivedProperty( [ ProjectileDataLabStrings.noDataStringProperty, numberOfSampleCardsProperty ], ( x, landedProjectileCount ) => {
+    // const titleStringProperty = new DerivedProperty( [ ProjectileDataLabStrings.noDataStringProperty, numberOfCompletedSamplesProperty ], ( x, landedProjectileCount ) => {
     //   return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : ProjectileDataLabStrings.numberOfCountPatternStringProperty.value;
     // } );
 
     const dataContainer = new Node();
-    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, numberOfSampleCardsProperty ],
-      field => {
+    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
+      ( samplingField, selectedSample, numberOfStartedSamples, numberOfCompletedSamples ) => {
 
-        if ( numberOfSampleCardsProperty.value === 0 ) {
+        if ( numberOfStartedSamples === 0 ) {
           dataContainer.children = [ new PDLText( 'No data' ) ];
         }
-        else if ( selectedSampleProperty.value <= numberOfSampleCardsProperty.value ) {
-          const projectiles = field.getProjectilesInSelectedSample();
+
+        // REVIEW: See how this logic can be simplified / documented
+        else if ( ( selectedSample === numberOfStartedSamples && numberOfStartedSamples > numberOfCompletedSamples ) ||
+                  ( selectedSample > numberOfStartedSamples ) ) {
+
+          dataContainer.children = [ new VBox( {
+            align: 'left',
+            spacing: 2,
+            children: [
+              // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
+              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples ),
+              new HSeparator( { stroke: 'black' } ),
+              new PDLText( 'Creating...' )
+            ]
+          } ) ];
+        }
+
+        else {
+          const projectiles = samplingField.getProjectilesInSelectedSample();
           const values = projectiles.map( projectile => projectile.x );
           dataContainer.children = [ new VBox( {
             align: 'left',
             spacing: 2,
             children: [
               // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
-              new Text( 'Sample: ' + selectedSampleProperty.value + ' of ' + numberOfSampleCardsProperty.value ),
+              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples ),
               new HSeparator( { stroke: 'black' } ),
-              new Text( 'Launcher: ' + field.launcher ),
-              new Text( 'Sample size: ' + field.sampleSize ),
               new HBox( {
                 children: [ new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m` ), new MeanIndicatorNode( 10, { maxWidth: 10 } ) ]
               } )
@@ -101,14 +117,17 @@ export default class SampleSelectorPanel extends PDLPanel {
           content: new Path( type === 'increment' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.04 } ),
           listener: () => {
             const proposedValue = selectedSampleProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
-            if ( proposedValue >= 1 && proposedValue <= numberOfSampleCardsProperty.value ) {
+            if ( proposedValue >= 1 && proposedValue <= numberOfCompletedSamplesProperty.value ) {
+              samplingFieldProperty.value.finishCurrentSample();
               selectedSampleProperty.value = proposedValue;
+
+              samplingFieldProperty.value.phaseProperty.value = 'showingCompleteSampleWithMean';
             }
           },
           fireOnHold: true,
           fireOnHoldInterval: 50,
-          enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfSampleCardsProperty ], ( selectedSample, sampleCount ) => {
-            return ( type === 'increment' ) ? selectedSample < sampleCount : selectedSample > 1;
+          enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfCompletedSamplesProperty ], ( selectedSample, numberOfSampleCards ) => {
+            return ( type === 'increment' ) ? selectedSample < numberOfSampleCards : selectedSample > 1;
           } )
         }
       ) );
@@ -131,9 +150,9 @@ export default class SampleSelectorPanel extends PDLPanel {
             ]
           } ),
           listener: () => {
-            selectedSampleProperty.value = type === 'last' ? numberOfSampleCardsProperty.value : 1;
+            selectedSampleProperty.value = type === 'last' ? numberOfCompletedSamplesProperty.value : 1;
           },
-          enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfSampleCardsProperty ], ( selectedProjectileNumber, landedProjectileCount ) => {
+          enabledProperty: new DerivedProperty( [ selectedSampleProperty, numberOfCompletedSamplesProperty ], ( selectedProjectileNumber, landedProjectileCount ) => {
             return type === 'last' ? selectedProjectileNumber < landedProjectileCount : selectedProjectileNumber >= 2;
           } )
         }

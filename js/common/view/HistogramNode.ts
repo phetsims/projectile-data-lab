@@ -274,7 +274,7 @@ export default class HistogramNode extends Node {
         field.selectedSampleProperty.link( () => updateHistogram() );
 
         // When we get a new mean, redraw the histogram
-        field.numberOfSamplesWithMeansShowingProperty.link( () => updateHistogram() );
+        field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
       }
     } );
 

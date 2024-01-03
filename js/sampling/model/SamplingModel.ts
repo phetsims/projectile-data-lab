@@ -30,7 +30,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly mysteryLauncherProperty: NumberProperty;
 
   public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly numberOfSamplesWithMeansShowingProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
 
   public constructor( providedOptions: SamplingModelOptions ) {
@@ -73,8 +74,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       this.fieldProperty.value = field;
     } );
 
-    this.numberOfSamplesWithMeansShowingProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
-      derive: t => t.numberOfSamplesWithMeansShowingProperty
+    this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+      derive: t => t.numberOfStartedSamplesProperty
+    } );
+
+    this.numberOfCompletedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+      derive: t => t.numberOfCompletedSamplesProperty
     } );
 
     this.selectedSampleProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
@@ -95,12 +100,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const phaseProperty = field.phaseProperty;
 
     if ( this.launchModeProperty.value === 'single' ) {
-      if ( phaseProperty.value !== 'idle' &&
-           phaseProperty.value !== 'showingCompleteSampleWithMean' ) {
+      if ( phaseProperty.value !== 'idle' && phaseProperty.value !== 'showingCompleteSampleWithMean' ) {
         field.finishCurrentSample();
       }
 
-      if ( field.numberOfSamplesWithMeansShowingProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+      if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
         return;
       }
 
@@ -111,7 +115,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     else if ( this.launchModeProperty.value === 'continuous' ) {
       field.isContinuousLaunchingProperty.toggle();
 
-      if ( field.numberOfSamplesWithMeansShowingProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+      if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
         return;
       }
 

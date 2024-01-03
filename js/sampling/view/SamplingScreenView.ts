@@ -46,7 +46,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     // When the sample mean takes a value, repaint the canvas to show the paths as all white
     model.sampleMeanProperty.link( () => samplingCanvasNode.invalidatePaint() );
     model.fields.forEach( field => {
-      field.numberOfSamplesWithMeansShowingProperty.link( () => samplingCanvasNode.invalidatePaint() );
+      field.numberOfCompletedSamplesProperty.link( () => samplingCanvasNode.invalidatePaint() );
     } );
 
     this.projectileCanvasLayer.addChild( samplingCanvasNode );
@@ -83,7 +83,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     const sampleSelectorPanel = new SampleSelectorPanel(
       model.fieldProperty,
       model.selectedSampleProperty,
-      model.numberOfSamplesWithMeansShowingProperty, {
+      model.numberOfStartedSamplesProperty,
+      model.numberOfCompletedSamplesProperty, {
         tandem: options.tandem.createTandem( 'sampleSelectorPanel' )
       } );
 
@@ -99,7 +100,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.accordionBox = new SamplingAccordionBox(
       model.mysteryLauncherProperty,
       model.sampleSizeProperty,
-      model.numberOfSamplesWithMeansShowingProperty,
+      model.numberOfCompletedSamplesProperty,
 
       model.fieldProperty,
       model.fields,
@@ -117,16 +118,12 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     model.fields.forEach( field => {
 
+      // TODO: Do not playLaunchAnimation when a projectile is created as part of autocomleting the current sample - see https://github.com/phetsims/projectile-data-lab/issues/7
       // When a projectile is created in 'single' mode, play the launch animation
       field.projectileCreatedEmitter.addListener( projectile => {
         if ( model.fieldProperty.value === field && model.launchModeProperty.value === 'single' ) {
           this.launcherNode.playLaunchAnimation( projectile.launchAngle );
         }
-      } );
-
-      // When showing the mean indicator, fade out the projectile canvas to de-emphasize the individual data
-      field.phaseProperty.lazyLink( phase => {
-        samplingCanvasNode.opacity = phase === 'showingCompleteSampleWithMean' ? 0.6 : 1;
       } );
     } );
 

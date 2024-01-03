@@ -151,7 +151,7 @@ export default class SampleThumbnailNode extends Node {
       }
       else if ( field instanceof SamplingField ) {
         field.selectedSampleProperty.link( () => updateHistogram() );
-        field.numberOfSamplesWithMeansShowingProperty.link( () => updateHistogram() );
+        field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
       }
     } );
 

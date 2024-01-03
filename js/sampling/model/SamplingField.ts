@@ -53,7 +53,11 @@ type SamplingPhase = typeof SamplingPhaseValues[ number ];
 export default class SamplingField extends Field {
   public override identifier: string;
 
-  public readonly numberOfSamplesWithMeansShowingProperty: NumberProperty;
+  // A sample is "started" when the first projectile is launched for that sample.
+  public readonly numberOfStartedSamplesProperty: NumberProperty;
+
+  // A sample is "completed" when the mean indicator is shown after a delay following the last projectile landing.
+  public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
   // This property is used to set the visibility and position of the mean indicator.
   // If it is null, the current sample is not yet complete and the mean indicator is not visible.
@@ -86,8 +90,9 @@ export default class SamplingField extends Field {
 
     this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );
 
-    // PhET-iO instrumentation not needed since this is computable from the Projectiles and the phase
-    this.numberOfSamplesWithMeansShowingProperty = new NumberProperty( 0 );
+    // PhET-iO instrumentation not needed since these are computable from the Projectiles and the phase
+    this.numberOfStartedSamplesProperty = new NumberProperty( 0 );
+    this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     this.totalSampleTime =
@@ -134,27 +139,35 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
+    this.selectedSampleProperty.link( () => {
+      this.updateSampleCountProperties();
+    } );
+
     const phaseChanged = () => {
       this.phaseStartTimeProperty.value = this.timeProperty.value;
-      this.updateNumberOfSamplesWithMeansShowing();
+      this.updateSampleCountProperties();
     };
     this.phaseProperty.link( phaseChanged );
 
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
-      this.updateNumberOfSamplesWithMeansShowing();
+      this.updateSampleCountProperties();
     } );
   }
 
-  private updateNumberOfSamplesWithMeansShowing(): void {
-
+  private updateSampleCountProperties(): void {
     const totalProjectiles = this.getTotalProjectileCount();
+
+    // If the selected sample is greater than the number of started samples, then we are about to start creating projectiles for a new sample
+    const numStartedSamples = Math.max( Math.ceil( totalProjectiles / this.sampleSize ), this.selectedSampleProperty.value );
+    this.numberOfStartedSamplesProperty.value = numStartedSamples;
+
     const numCompletedSamples = Math.floor( totalProjectiles / this.sampleSize );
     const numSamplesWithMeansShowing = Math.max( 0, this.phaseProperty.value !== 'showingCompleteSampleWithMean' ? numCompletedSamples - 1 : numCompletedSamples );
 
     if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
-      this.numberOfSamplesWithMeansShowingProperty.value = numSamplesWithMeansShowing;
+      this.numberOfCompletedSamplesProperty.value = numSamplesWithMeansShowing;
       if ( this.landedProjectiles.length === 0 ) {
-        assert && assert( this.numberOfSamplesWithMeansShowingProperty.value === 0, 'numberOfSamplesWithMeansShowingProperty should be 0 when there are no projectiles' );
+        assert && assert( this.numberOfCompletedSamplesProperty.value === 0, 'numberOfCompletedSamplesProperty should be 0 when there are no projectiles' );
       }
     }
   }
@@ -175,7 +188,7 @@ export default class SamplingField extends Field {
 
     const samples: HistogramData[] = [];
 
-    for ( let sampleIndex = 0; sampleIndex < this.numberOfSamplesWithMeansShowingProperty.value; sampleIndex++ ) {
+    for ( let sampleIndex = 0; sampleIndex < this.numberOfCompletedSamplesProperty.value; sampleIndex++ ) {
       const sampleNumber = sampleIndex + 1;
 
       const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === sampleNumber );
@@ -264,6 +277,8 @@ export default class SamplingField extends Field {
         this.airborneProjectiles.push( projectile );
         this.projectilesChangedEmitter.emit();
         this.projectileCreatedEmitter.emit( projectile );
+
+        this.updateSampleCountProperties();
       }
 
       // Allow extra time to show focus on the final projectile before showing the sample mean
@@ -288,7 +303,7 @@ export default class SamplingField extends Field {
       if (
         launchMode === 'continuous' &&
         isContinuousLaunching && timeInMode >= SHOWING_SAMPLE_AND_MEAN_TIME &&
-        this.numberOfSamplesWithMeansShowingProperty.value < PDLConstants.MAX_SAMPLES_PER_FIELD
+        this.numberOfCompletedSamplesProperty.value < PDLConstants.MAX_SAMPLES_PER_FIELD
       ) {
         this.phaseProperty.value = 'showingClearPresample';
         this.selectedSampleProperty.value++;
@@ -301,7 +316,8 @@ export default class SamplingField extends Field {
     super.clearProjectiles();
 
     this.phaseProperty.reset();
-    this.numberOfSamplesWithMeansShowingProperty.reset();
+    this.numberOfStartedSamplesProperty.reset();
+    this.numberOfCompletedSamplesProperty.reset();
     this.sampleMeanProperty.reset();
   }
 }
