@@ -166,17 +166,7 @@ export default class VSMField extends Field {
       this.stopwatchElapsedTimeProperty.value += dt;
     }
 
-    // If any projectiles were airborne at the beginning of the step, repaint the canvas at the end
-    const numInitialAirborneProjectiles = this.airborneProjectiles.length;
-
-    this.airborneProjectiles.forEach( projectile => {
-      projectile.step( this, dt );
-    } );
-
-    // Repaint if any projectiles were airborne at the beginning of the step
-    if ( numInitialAirborneProjectiles ) {
-      this.projectilesChangedEmitter.emit();
-    }
+    this.stepAirborneParticles( dt );
   }
 
   public override reset(): void {

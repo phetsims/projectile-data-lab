@@ -90,10 +90,10 @@ export default class SamplingField extends Field {
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     this.totalSampleTime =
-      this.sampleSize === 2 ? 0.5 :
-      this.sampleSize === 5 ? 1 :
-      this.sampleSize === 15 ? 1.5 :
-      this.sampleSize === 40 ? 2 :
+      this.sampleSize === 2 ? 1 :
+      this.sampleSize === 5 ? 2 :
+      this.sampleSize === 15 ? 5 :
+      this.sampleSize === 40 ? 10 :
       0;
 
     assert && assert( this.totalSampleTime > 0, 'this.totalSampleTime should be greater than 0' );
@@ -239,6 +239,9 @@ export default class SamplingField extends Field {
   }
 
   public step( dt: number, launchMode: 'continuous' | 'single', isContinuousLaunching: boolean ): void {
+
+    this.stepAirborneParticles( dt );
+
     this.timeProperty.value += dt;
     const timeInMode = this.timeProperty.value - this.phaseStartTimeProperty.value;
 
@@ -284,11 +287,16 @@ export default class SamplingField extends Field {
       const numberProjectilesToShow = Math.ceil( portionOfSample * this.sampleSize );
 
       while ( this.getProjectilesInSelectedSample().length < numberProjectilesToShow ) {
-        this.createLandedProjectile();
+        const projectile = this.createProjectile( this.selectedSampleProperty.value );
+
+        this.airborneProjectiles.push( projectile );
+        this.projectilesChangedEmitter.emit();
+        this.projectileCreatedEmitter.emit( projectile );
       }
 
       // Allow extra time to show focus on the final projectile before showing the sample mean
-      if ( timeInMode > this.totalSampleTime ) {
+      if ( this.landedProjectiles.length === this.sampleSize ) {
+
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
         updateMean();
       }
