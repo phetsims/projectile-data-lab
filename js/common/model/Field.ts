@@ -62,8 +62,6 @@ export default abstract class Field extends PhetioObject {
   public readonly isContinuousLaunchingProperty: BooleanProperty;
 
   // NOTE: Make sure no Projectile appears in both arrays at the same time
-
-  // TODO: Move airborneParticles to VSM????????? - see https://github.com/phetsims/projectile-data-lab/issues/7. But designers recently asked for airborne animation in the sampling screen. It is up for discussion.
   public readonly airborneProjectiles: Projectile[] = [];
   public readonly landedProjectiles: Projectile[] = [];
 
