@@ -1,7 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * PDLKeyboardHelpNode offers the specific keyboard guidance for a Center and Variability simulation screen.
+ * PDLKeyboardHelpNode offers the specific keyboard guidance for a Projectile Data Lab simulation screen.
  * It is a structured layout presenting basic actions and other keyboard interactions.
  *
  * @author Sam Reid (PhET Interactive Simulations)
