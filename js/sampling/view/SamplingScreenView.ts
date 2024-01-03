@@ -20,6 +20,8 @@ import SamplingCanvasNode from './SamplingCanvasNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
+import PDLText from '../../common/view/PDLText.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -60,9 +62,19 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     } );
     this.projectileCanvasLayer.addChild( meanIndicatorNode );
 
+    const meanReadoutNode = new PDLText( '', {
+      visibleProperty: meanIndicatorVisibleProperty,
+      fontSize: 12
+    } );
+    this.projectileCanvasLayer.addChild( meanReadoutNode );
+
     model.sampleMeanProperty.link( mean => {
       if ( mean !== null ) {
         meanIndicatorNode.centerX = this.modelViewTransform.modelToViewX( mean );
+
+        // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
+        meanReadoutNode.string = `${Utils.toFixed( mean, 1 )} m`;
+        meanReadoutNode.centerBottom = meanIndicatorNode.centerTop.plusXY( 0, -2 );
       }
     } );
 
@@ -118,7 +130,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     model.fields.forEach( field => {
 
-      // TODO: Do not playLaunchAnimation when a projectile is created as part of autocomleting the current sample - see https://github.com/phetsims/projectile-data-lab/issues/7
+      // TODO: Do not playLaunchAnimation when a projectile is created as part of autocompleting the current sample - see https://github.com/phetsims/projectile-data-lab/issues/7
       // When a projectile is created in 'single' mode, play the launch animation
       field.projectileCreatedEmitter.addListener( projectile => {
         if ( model.fieldProperty.value === field && model.launchModeProperty.value === 'single' ) {
