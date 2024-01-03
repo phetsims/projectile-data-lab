@@ -29,6 +29,7 @@ import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import HistogramIconNode from './HistogramIconNode.js';
 import Property from '../../../../axon/js/Property.js';
 import BinControlNode from './BinControlNode.js';
+import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -143,6 +144,7 @@ export default class HistogramNode extends Node {
       ]
     } );
 
+    const verticalTickMarkSet = new TickMarkSet( this.chartTransform, Orientation.VERTICAL, 5, { edge: 'min', extent: 8 } );
     const verticalTickLabelSet = new TickLabelSet( this.chartTransform, Orientation.VERTICAL, 5, {
       edge: 'min',
       createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
@@ -162,6 +164,9 @@ export default class HistogramNode extends Node {
         // Major ticks on the y-axis
         verticalTickLabelSet,
 
+        verticalTickMarkSet,
+
+        new TickMarkSet( this.chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, { edge: 'min', extent: 8 } ),
         new TickLabelSet( this.chartTransform, Orientation.HORIZONTAL, PDLConstants.FIELD_LABEL_INCREMENT, {
           edge: 'min',
           createLabel: ( value: number ) => new Text( Utils.toFixed( value, 0 ), { fontSize: 12 } )
@@ -289,6 +294,7 @@ export default class HistogramNode extends Node {
       const tickSpacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].tickSpacing;
 
       verticalTickLabelSet.setSpacing( tickSpacing );
+      verticalTickMarkSet.setSpacing( tickSpacing );
       majorVerticalGridLines.setSpacing( tickSpacing );
       verticalGridLines.setSpacing( ZOOM_LEVELS[ this.zoomLevelProperty.value ].tickSpacing / 5 );
       updateHistogram();
