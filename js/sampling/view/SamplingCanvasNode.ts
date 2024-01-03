@@ -41,6 +41,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     // 3: Projectiles
 
     const projectiles = this.fieldProperty.value.getProjectilesInSelectedSample();
+    const landedProjectiles = this.fieldProperty.value.getLandedProjectilesInSelectedSample();
 
     // 1. Force field graphics for landed outliers are drawn in PDLCanvasNode
     super.drawOutlierGraphicsForLandedProjectiles( projectiles, context );
@@ -48,12 +49,11 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     // 2. Trajectories
     context.lineWidth = 1;
 
-    const isShowingSampleMean = this.fieldProperty.value.sampleMeanProperty.value !== null;
-
     for ( let i = 0; i < projectiles.length; i++ ) {
-      const showHighlightedPath = this.fieldProperty.value.phaseProperty.value === 'showingProjectiles' && i === projectiles.length - 1;
+      const isAirborne = !landedProjectiles.includes( projectiles[ i ] );
+      const showHighlightedPath = this.fieldProperty.value.phaseProperty.value === 'showingProjectiles' && isAirborne;
 
-      const pathStrokeColorProperty = ( showHighlightedPath && !isShowingSampleMean ) ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
+      const pathStrokeColorProperty = showHighlightedPath ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
       context.strokeStyle = pathStrokeColorProperty.value.toCSS();
       this.drawPathForProjectile( context, projectiles[ i ] );
     }
