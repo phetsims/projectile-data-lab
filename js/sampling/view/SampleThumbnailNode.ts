@@ -18,6 +18,7 @@ import VSMField from '../../common-vsm/model/VSMField.js';
 import SamplingField from '../model/SamplingField.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLText from '../../common/view/PDLText.js';
+import { ZOOM_LEVELS } from '../../common/view/HistogramNode.js';
 
 // TODO: Duplicated with the top of HistogramNode, see https://github.com/phetsims/projectile-data-lab/issues/7
 export default class SampleThumbnailNode extends Node {
@@ -35,9 +36,6 @@ export default class SampleThumbnailNode extends Node {
                       blockStrokeProperty: TReadOnlyProperty<Color>,
                       zoomLevelProperty: NumberProperty ) {
     super();
-
-    // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const maxCounts = [ 500, 200, 100, 50, 20 ];
 
     this.chartTransform = new ChartTransform( {
       viewWidth: 140,
@@ -63,13 +61,13 @@ export default class SampleThumbnailNode extends Node {
       blockFillProperty, blockStrokeProperty );
 
     // Changes based on the zoom level
-    const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {
+    const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 10, {
       stroke: 'lightGray',
       lineWidth: 0.8
     } );
 
     // Changes based on the bin width
-    const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
+    const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: 'lightGray',
       lineWidth: 0.8
     } );
@@ -81,8 +79,8 @@ export default class SampleThumbnailNode extends Node {
       children: [
 
         // Minor grid lines
-        horizontalGridLines,
         verticalGridLines,
+        horizontalGridLines,
 
         this.chartClipLayer,
 
@@ -106,7 +104,7 @@ export default class SampleThumbnailNode extends Node {
     } );
 
     binWidthProperty.link( binWidth => {
-      verticalGridLines.setSpacing( binWidth );
+      horizontalGridLines.setSpacing( binWidth );
       chartCanvasNode.update();
     } );
 
@@ -165,8 +163,10 @@ export default class SampleThumbnailNode extends Node {
     fieldProperty.link( () => updateHistogram() );
     binWidthProperty.link( () => updateHistogram() );
     zoomLevelProperty.link( () => {
-      const maxCount = maxCounts[ zoomLevelProperty.value ];
+      const maxCount = ZOOM_LEVELS[ zoomLevelProperty.value ].maxCount;
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
+      const tickSpacing = ZOOM_LEVELS[ zoomLevelProperty.value ].tickSpacing;
+      verticalGridLines.setSpacing( tickSpacing );
       updateHistogram();
     } );
   }

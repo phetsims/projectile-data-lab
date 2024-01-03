@@ -39,6 +39,23 @@ import BinControlNode from './BinControlNode.js';
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
+export const ZOOM_LEVELS = [ {
+  maxCount: 500,
+  tickSpacing: 50
+}, {
+  maxCount: 200,
+  tickSpacing: 20
+}, {
+  maxCount: 100,
+  tickSpacing: 10
+}, {
+  maxCount: 50,
+  tickSpacing: 10
+}, {
+  maxCount: 25,
+  tickSpacing: 5
+} ];
+
 export default class HistogramNode extends Node {
 
   protected readonly chartNode: Node;
@@ -59,10 +76,8 @@ export default class HistogramNode extends Node {
                       options: HistogramNodeOptions ) {
     super();
 
-    // TODO: Improve this pattern - see https://github.com/phetsims/projectile-data-lab/issues/7
-    const maxCounts = [ 500, 200, 100, 50, 25 ];
-    const maxZoomLevel = maxCounts.length - 1;
-    const tickSpacings = [ 50, 20, 10, 10, 5 ];
+
+    const maxZoomLevel = ZOOM_LEVELS.length - 1;
 
     this.zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
 
@@ -88,22 +103,22 @@ export default class HistogramNode extends Node {
       blockFillProperty, blockStrokeProperty );
 
     // Changes based on the zoom level
-    const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {
+    const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {
       stroke: 'lightGray',
       lineWidth: 0.5
     } );
 
-    const majorHorizontalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 10, {
+    const majorVerticalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 10, {
       stroke: 'lightGray',
       lineWidth: 1.0
     } );
 
     // Changes based on the bin width
-    const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
+    const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: 'lightGray',
       lineWidth: 0.5
     } );
-    const majorVerticalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 5, {
+    const majorHorizontalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 5, {
       stroke: 'lightGray',
       lineWidth: 1.0
     } );
@@ -114,13 +129,12 @@ export default class HistogramNode extends Node {
       clipArea: chartBackground.getShape(),
       children: [
 
-        // Minor grid lines
-        horizontalGridLines,
+        // grid lines
         verticalGridLines,
+        horizontalGridLines,
 
-        // Major grid lines
-        majorHorizontalGridLines,
         majorVerticalGridLines,
+        majorHorizontalGridLines,
 
         this.chartClipLayer,
 
@@ -156,7 +170,7 @@ export default class HistogramNode extends Node {
     } );
 
     binWidthProperty.link( binWidth => {
-      verticalGridLines.setSpacing( binWidth );
+      horizontalGridLines.setSpacing( binWidth );
       chartCanvasNode.update();
     } );
 
@@ -268,12 +282,15 @@ export default class HistogramNode extends Node {
     binWidthProperty.link( () => updateHistogram() );
     this.zoomLevelProperty.link( () => {
 
-      const maxCount = maxCounts[ this.zoomLevelProperty.value ];
+      const maxCount = ZOOM_LEVELS[ this.zoomLevelProperty.value ].maxCount;
 
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
-      const tickSpacing = tickSpacings[ this.zoomLevelProperty.value ];
+      const tickSpacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].tickSpacing;
+
       verticalTickLabelSet.setSpacing( tickSpacing );
+      majorVerticalGridLines.setSpacing( tickSpacing );
+      verticalGridLines.setSpacing( ZOOM_LEVELS[ this.zoomLevelProperty.value ].tickSpacing / 5 );
       updateHistogram();
     } );
 
