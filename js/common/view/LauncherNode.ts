@@ -77,18 +77,19 @@ export default class LauncherNode extends Node {
     super( options );
 
     const labelText = new PDLText( new DerivedProperty( [ mysteryLauncherProperty ], mysteryLauncher => Utils.toFixed( mysteryLauncher, 0 ) ), {
-      fontSize: 16
+      fontSize: 18
     } );
-    const labelBackground = new Circle( Math.max( labelText.width, labelText.height ) * 0.75, {
+    const labelBackground = new Circle( Math.max( labelText.width, labelText.height ) * 0.65, {
       fill: 'white',
       stroke: 'black',
+      opacity: 0.6,
       lineWidth: 1
     } );
     labelText.center = labelBackground.center;
 
     this.labelNode = new Node( {
       children: [ labelBackground, labelText ],
-      x: -70
+      x: -68
     } );
 
     this.launcherBarrel = new Node();
