@@ -313,9 +313,12 @@ export default class SamplingField extends Field {
 
   // When the eraser button is pressed, clear the selected Field's projectiles.
   public override clearProjectiles(): void {
+
+    // Clear the phase before clearing projectiles, so it will know we are in an acceptable state
+    this.phaseProperty.reset();
+
     super.clearProjectiles();
 
-    this.phaseProperty.reset();
     this.numberOfStartedSamplesProperty.reset();
     this.numberOfCompletedSamplesProperty.reset();
     this.sampleMeanProperty.reset();
