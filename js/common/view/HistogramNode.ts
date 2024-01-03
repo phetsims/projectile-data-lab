@@ -155,11 +155,11 @@ export default class HistogramNode extends Node {
         // Background
         chartBackground,
 
-        // Background
-        chartFrame,
-
         // Clipped contents
         chartClip,
+
+        // Draw the chart frame in front, so it occludes edge grid lines
+        chartFrame,
 
         // Major ticks on the y-axis
         verticalTickLabelSet,
