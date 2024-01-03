@@ -40,9 +40,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly measuringTapeBasePositionProperty;
   public readonly measuringTapeTipPositionProperty;
 
-  // TODO: Don't use number, see https://github.com/phetsims/projectile-data-lab/issues/7
-  // Did we decide on this?
-  // Number is lightweight in the code, but is it best for selecting a launcher via PhET-IO?
   public readonly mysteryLauncherProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, VSMField>;
