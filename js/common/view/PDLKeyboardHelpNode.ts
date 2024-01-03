@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * PDLKeyboardHelpNode offers the specific keyboard guidance for a Projectile Data Lab simulation screen.
