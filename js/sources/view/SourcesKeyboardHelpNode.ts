@@ -6,11 +6,12 @@
 
 import PDLKeyboardHelpNode from '../../common/view/PDLKeyboardHelpNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import KeyboardShortcutsHelpSection from '../../common-vsm/view/KeyboardShortcutsHelpSection.js';
 
 export default class SourcesKeyboardHelpNode extends PDLKeyboardHelpNode {
 
   public constructor() {
-    super();
+    super( new KeyboardShortcutsHelpSection() );
   }
 }
 

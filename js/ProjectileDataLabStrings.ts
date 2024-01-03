@@ -67,6 +67,8 @@ type StringsType = {
   'launcherPatternStringProperty': LocalizedStringProperty;
   'sampleSizePatternStringProperty': LocalizedStringProperty;
   'numberOfSamplesPatternStringProperty': LocalizedStringProperty;
+  'keyboardShortcutsStringProperty': LocalizedStringProperty;
+  'selectAFieldStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;
