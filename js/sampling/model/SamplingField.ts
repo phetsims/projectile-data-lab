@@ -204,15 +204,21 @@ export default class SamplingField extends Field {
 
 
   // If the user fires a new sample while a prior sample was in progress, finish up the prior sample.
-  // Only relevant for 'single' mode.
+  // Most important for 'Single' mode
   public finishCurrentSample(): void {
-    let addedProjectiles = false;
+    let changed = false;
     while ( this.getProjectilesInSelectedSample().length < this.sampleSize ) {
-      addedProjectiles = true;
+      changed = true;
       this.createLandedProjectile();
     }
 
-    if ( addedProjectiles ) {
+    // Anything in the air should end up on the ground.
+    this.getProjectilesInSelectedSample().forEach( projectile => {
+      projectile.setLanded();
+      changed = true;
+    } );
+
+    if ( changed ) {
       this.updateComputedProperties();
       this.projectilesChangedEmitter.emit();
     }

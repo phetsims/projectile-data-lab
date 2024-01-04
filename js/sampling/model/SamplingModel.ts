@@ -16,7 +16,6 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import SamplingField from './SamplingField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
 import { SamplingPhase } from './SamplingPhase.js';
 
@@ -121,12 +120,16 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       if ( phaseProperty.value !== 'idle' ) {
 
         // TODO: When autocompleting a sample, start the next one - see https://github.com/phetsims/projectile-data-lab/issues/22
+
+        // Fire any remaining to be fired.
         field.finishCurrentSample();
+        phaseProperty.value = 'showingCompleteSampleWithMean';
       }
 
-      if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
-        return;
-      }
+      // TODO: Disable the button when the max number of samples is reached - see https://github.com/phetsims/projectile-data-lab/issues/23
+      // if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+      //   return;
+      // }
 
       this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
 
@@ -153,6 +156,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         }
 
         field.finishCurrentSample();
+        phaseProperty.value = 'showingCompleteSampleWithMean';
       }
     }
   }
