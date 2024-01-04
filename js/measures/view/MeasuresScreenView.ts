@@ -100,13 +100,14 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       this.launchButton,
       this.launchControlRadioButtonGroup,
       this.fieldSelectorPanel,
+      this.accordionBox,
+      staticToolPanel,
+      interactiveToolPanel,
       this.projectileSelectorPanel,
       intervalToolNode, // this one is added
       this.timeControlNode,
-      this.resetAllButton,
       this.eraserButton,
-      staticToolPanel,
-      interactiveToolPanel
+      this.resetAllButton
     ];
   }
 }
