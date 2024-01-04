@@ -36,7 +36,7 @@
     "value": "Projectile (100 kg)"
   },
   "launcherNumberPattern": {
-    "value": "Launcher: {{number}}"
+    "value": "Launcher {{number}}"
   },
   "angleStabilizer": {
     "value": "Angle stabilizer"
@@ -153,7 +153,7 @@
     "value": "{{percent}}%"
   },
   "launcherPattern": {
-    "value": "Launcher: {{launcher}}"
+    "value": "Launcher {{launcher}}"
   },
   "sampleSizePattern": {
     "value": "Sample size (n): {{sampleSize}}"

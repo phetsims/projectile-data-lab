@@ -91,12 +91,13 @@ const PDLConstants = {
   HEATMAP_TOOL_LABEL_FONT: new PhetFont( 11 ),
   PRIMARY_FONT: new PhetFont( 13 ),
   FIELD_LABEL_FONT: new PhetFont( 15 ),
-  FIELD_SIGN_FONT: new PhetFont( { size: 18, weight: 'bold' } ),
+  FIELD_SIGN_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
   FIELD_SIGN_COUNT_FONT: new PhetFont( { size: 15, weight: 'bold' } ),
   LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
   INTERVAL_TOOL_FONT: new PhetFont( 15 ),
+  SAMPLE_SELECTOR_FONT: new PhetFont( 13 ),
 
   ANGLE_STABILIZER_RANGE: new Range( 0, MAX_ANGLE_STANDARD_DEVIATION ),
 

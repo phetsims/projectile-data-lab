@@ -4,53 +4,58 @@ import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSign
 import projectileDataLab from '../../projectileDataLab.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import SamplingField from '../model/SamplingField.js';
+import PDLColors from '../../common/PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
-type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
+type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
 export default class SamplingFieldSignNode extends FieldSignNode {
-  public constructor( fieldProperty: TReadOnlyProperty<SamplingField>,
+  public constructor( launcherNumberProperty: TReadOnlyProperty<number>,
+                      sampleSizeProperty: TReadOnlyProperty<number>,
                       modelViewTransform: ModelViewTransform2,
-                      selectedSampleProperty: TReadOnlyProperty<number>,
-                      sampleCountProperty: TReadOnlyProperty<number>,
-                      providedOptions?: VSMFieldSignNodeOptions ) {
+                      providedOptions?: SamplingFieldSignNodeOptions ) {
 
-    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( 92, 0 ) );
+    // Create the field sign
+    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( PDLConstants.FIELD_SIGN_X, 0 ) );
 
-    const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
+    const options = optionize<SamplingFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
       x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y
     }, providedOptions );
 
-    const fieldSignStringProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty, {
-      number: new DerivedProperty( [ fieldProperty ], field => field.launcher )
+    const launcherNumberStringProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty,
+      {
+        number: launcherNumberProperty
+      } );
+
+    const sampleSizeStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
+      {
+        sampleSize: sampleSizeProperty
+      } );
+
+    const launcherNumberText = new Text( launcherNumberStringProperty, {
+      fill: PDLColors.fieldSignTextColorProperty,
+      font: PDLConstants.FIELD_SIGN_FONT
     } );
 
-    const sampleSizeStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizeValuePatternStringProperty, {
-      value: new DerivedProperty( [ fieldProperty ], field => field.sampleSize )
+    const sampleSizeText = new Text( sampleSizeStringProperty, {
+      fill: PDLColors.fieldSignTextColorProperty,
+      font: PDLConstants.FIELD_SIGN_FONT
     } );
 
-    const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
-      number: selectedSampleProperty,
-      count: sampleCountProperty
-    } );
+    const fieldSignTextNodes = [ launcherNumberText, sampleSizeText ];
 
     const fieldSignTextContainer = new VBox( {
+      children: [ ...fieldSignTextNodes ],
       align: 'center',
-      spacing: 2,
-      children: [
-        new Text( fieldSignStringProperty, { font: PDLConstants.PRIMARY_FONT } ),
-        new Text( sampleSizeStringProperty, { font: PDLConstants.PRIMARY_FONT } ),
-        new Text( patternStringProperty, { font: PDLConstants.PRIMARY_FONT } )
-      ],
-      maxWidth: modelViewTransform.modelToViewDeltaX( 11 )
+      spacing: 4,
+      maxWidth: 200,
+      yMargin: 3
     } );
 
     super( fieldSignTextContainer, options );

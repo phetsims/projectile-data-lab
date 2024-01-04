@@ -17,6 +17,7 @@ import SamplingField from '../model/SamplingField.js';
 import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -57,7 +58,7 @@ export default class SampleSelectorPanel extends PDLPanel {
       ( samplingField, selectedSample, numberOfStartedSamples, numberOfCompletedSamples ) => {
 
         if ( numberOfStartedSamples === 0 ) {
-          dataContainer.children = [ new PDLText( 'No data' ) ];
+          dataContainer.children = [ new PDLText( 'No data', { font: PDLConstants.SAMPLE_SELECTOR_FONT } ) ];
         }
 
         // REVIEW: See how this logic can be simplified / documented
@@ -69,9 +70,9 @@ export default class SampleSelectorPanel extends PDLPanel {
             spacing: 2,
             children: [
               // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
-              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples ),
+              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
               new HSeparator( { stroke: 'black' } ),
-              new PDLText( 'Creating...' )
+              new PDLText( 'Creating...', { font: PDLConstants.SAMPLE_SELECTOR_FONT } )
             ]
           } ) ];
         }
@@ -84,10 +85,13 @@ export default class SampleSelectorPanel extends PDLPanel {
             spacing: 2,
             children: [
               // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
-              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples ),
+              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
               new HSeparator( { stroke: 'black' } ),
               new HBox( {
-                children: [ new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m` ), new MeanIndicatorNode( 10, { maxWidth: 10 } ) ]
+                children: [
+                  new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m `, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
+                  new MeanIndicatorNode( 10, { maxWidth: 10 } )
+                ]
               } )
             ]
           } ) ];
@@ -159,7 +163,7 @@ export default class SampleSelectorPanel extends PDLPanel {
       ) );
     };
 
-    const sampleCardContainer = new Panel( dataContainer, { align: 'center', maxWidth: 70 } );
+    const sampleCardContainer = new Panel( dataContainer, { align: 'center', maxWidth: 200 } );
 
     super( new HBox( {
       spacing: 2,

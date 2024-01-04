@@ -10,7 +10,7 @@ import SamplingModel from '../model/SamplingModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLScreenView from '../../common/view/PDLScreenView.js';
 import SamplingLaunchPanel from './SamplingLaunchPanel.js';
-import { ManualConstraint, VBox } from '../../../../scenery/js/imports.js';
+import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
@@ -22,6 +22,7 @@ import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
+import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -92,6 +93,12 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 
+    const fieldSign = new SamplingFieldSignNode(
+      model.mysteryLauncherProperty,
+      model.sampleSizeProperty,
+      this.modelViewTransform
+    );
+
     const sampleSelectorPanel = new SampleSelectorPanel(
       model.fieldProperty,
       model.selectedSampleProperty,
@@ -100,14 +107,12 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         tandem: options.tandem.createTandem( 'sampleSelectorPanel' )
       } );
 
-    const launcherSampleSizePanel = new VBox( {
-      stretch: true,
-      spacing: PDLConstants.INTER_PANEL_SPACING,
-      left: PDLConstants.SCREEN_VIEW_X_MARGIN,
-      children: [ this.launchPanel, sampleSelectorPanel ]
-    } );
+    this.addChild( this.launchPanel );
+    this.addChild( fieldSign );
+    this.addChild( sampleSelectorPanel );
 
-    this.addChild( launcherSampleSizePanel );
+    sampleSelectorPanel.centerX = fieldSign.centerX;
+    sampleSelectorPanel.bottom = fieldSign.top - PDLConstants.INTER_PANEL_SPACING;
 
     this.accordionBox = new SamplingAccordionBox(
       model.mysteryLauncherProperty,
@@ -143,23 +148,20 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     // layout
     this.visibleBoundsProperty.link( visibleBounds => {
       this.accordionBox.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
-      launcherSampleSizePanel.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      this.launchPanel.top = visibleBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
     // Allow the top content to go above the dev bounds, but not too far
     this.visibleBoundsProperty.link( visibleBounds => {
       const minY = PDLConstants.ABOVE_DEV_BOUNDS_TOP;
       const topY = Math.max( visibleBounds.top, minY );
-      launcherSampleSizePanel.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
+      this.launchPanel.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
       this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
     // Position the 'No air resistance' text
-    this.noAirResistanceText.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION;
-
-    ProjectileDataLabStrings.noAirResistanceStringProperty.link( () => {
-      this.noAirResistanceText.right = this.layoutBounds.right;
-    } );
+    this.noAirResistanceText.centerX = this.launchPanel.centerX;
+    this.noAirResistanceText.top = this.launchPanel.bottom;
 
     ManualConstraint.create(
       this,
@@ -182,6 +184,14 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
           accordionBoxProxy.maxWidth = accordionBoxWidth;
           accordionBoxProxy.preferredWidth = accordionBoxWidth;
         }
+      } );
+
+    ManualConstraint.create(
+      this,
+      [ sampleSelectorPanel, fieldSign ],
+      ( sampleSelectorPanelProxy, fieldSignProxy ) => {
+        sampleSelectorPanelProxy.centerX = fieldSignProxy.centerX;
+        sampleSelectorPanelProxy.bottom = fieldSignProxy.top - 20;
       } );
 
     this.pdomControlAreaNode.pdomOrder = [ this.launchPanel, sampleSelectorPanel, this.launchButton, this.launchControlRadioButtonGroup, this.accordionBox, this.resetAllButton ];
