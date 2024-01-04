@@ -3,7 +3,7 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, HSeparator, Line, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Line, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -50,12 +50,10 @@ export default class SampleSelectorPanel extends PDLPanel {
         else {
 
           const children: Node[] = [
-
             new Text( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
               number: selectedSample,
               count: numberOfStartedSamples
-            } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
-            new HSeparator( { stroke: 'black' } )
+            } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } )
           ];
 
           // REVIEW: See how this logic can be simplified / documented
