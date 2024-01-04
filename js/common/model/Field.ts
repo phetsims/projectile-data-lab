@@ -21,6 +21,7 @@ import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -73,9 +74,8 @@ export default abstract class Field extends PhetioObject {
 
   public readonly selectedSampleProperty: NumberProperty;
 
-  // TODO: Incorporate into PhET-iO so that field selector is stateful - see https://github.com/phetsims/projectile-data-lab/issues/7
   // Are there any landed projectiles in the field? This is used for the data indicator on the field selector panel.
-  public readonly isContainingDataProperty: BooleanProperty = new BooleanProperty( false );
+  public readonly isContainingDataProperty = new BooleanProperty( false );
 
   public readonly abstract identifier: string;
 
@@ -99,6 +99,10 @@ export default abstract class Field extends PhetioObject {
       hasListenerOrderDependencies: true
     } );
 
+    const updateIsContainingDataProperty = () => {
+      this.isContainingDataProperty.value = this.landedProjectiles.length > 0;
+    };
+
     this.projectileLandedEmitter.addListener( projectile => {
 
       assert && assert( this.airborneProjectiles.includes( projectile ), 'projectile should be in airborneProjectiles' );
@@ -107,14 +111,15 @@ export default abstract class Field extends PhetioObject {
       arrayRemove( this.airborneProjectiles, projectile );
       this.landedProjectiles.push( projectile );
 
-      this.isContainingDataProperty.value = true;
+      updateIsContainingDataProperty();
     } );
+
+    // Update after phet-io state set
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( updateIsContainingDataProperty );
 
     this.projectilesClearedEmitter = new Emitter();
 
-    this.projectilesClearedEmitter.addListener( () => {
-      this.isContainingDataProperty.value = false;
-    } );
+    this.projectilesClearedEmitter.addListener( updateIsContainingDataProperty );
 
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', {
 
