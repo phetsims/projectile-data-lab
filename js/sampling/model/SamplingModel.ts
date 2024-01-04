@@ -119,9 +119,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     if ( this.launchModeProperty.value === 'single' ) {
       if ( phaseProperty.value !== 'idle' ) {
 
-        // TODO: When autocompleting a sample, start the next one - see https://github.com/phetsims/projectile-data-lab/issues/22
-
-        // Fire any remaining to be fired.
+        // When firing a sample while another was in progress, finish out the prior one first
         field.finishCurrentSample();
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
