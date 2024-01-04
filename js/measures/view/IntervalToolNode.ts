@@ -230,6 +230,12 @@ export default class IntervalToolNode extends Node {
       tandem: providedOptions.tandem.createTandem( 'edge2KeyboardDragListener' ),
       drag: moveToFront( edge2Sphere )
     } ) );
+
+    this.pdomOrder = [
+      edge1Sphere,
+      readoutVBox,
+      edge2Sphere
+    ];
   }
 }
 
