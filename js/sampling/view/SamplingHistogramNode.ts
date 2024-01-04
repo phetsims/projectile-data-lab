@@ -53,6 +53,10 @@ export default class SamplingHistogramNode extends HistogramNode {
       iconNode.children = [ new MysteryLauncherIcon( launcher ) ];
     } );
     const textVBox = new VBox( {
+
+      // Prevent from overlapping with the majority of the data in ?stringTest=long
+      maxWidth: 250,
+
       align: 'left',
       children: [
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty, { launcher: launcherProperty } ), { fontSize: 11 } ),

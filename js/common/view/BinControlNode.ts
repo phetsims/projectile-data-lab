@@ -37,7 +37,9 @@ export default class BinControlNode extends HBox {
             value: binWidth,
             createNode: () => new PDLText( new PatternStringProperty( ProjectileDataLabStrings.binWidthMPatternStringProperty, {
               binWidth: binWidth
-            } ) ),
+            } ), {
+              maxWidth: 120
+            } ),
             tandemName: `binWidth${binWidthName}Item`
           };
         } );
@@ -53,7 +55,9 @@ export default class BinControlNode extends HBox {
         const comboBoxItems = ( selectedTotalBinsProperty.validValues ?? [] ).map( totalBins => {
           return {
             value: totalBins,
-            createNode: () => new PDLText( Utils.toFixed( totalBins, 0 ) ),
+            createNode: () => new PDLText( Utils.toFixed( totalBins, 0 ), {
+              maxWidth: 120
+            } ),
             tandemName: `totalBins${totalBins}Item`
           };
         } );

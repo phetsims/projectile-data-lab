@@ -19,6 +19,8 @@ import SamplingField from '../model/SamplingField.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLText from '../../common/view/PDLText.js';
 import { ZOOM_LEVELS } from '../../common/view/HistogramNode.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 // TODO: Duplicated with the top of HistogramNode, see https://github.com/phetsims/projectile-data-lab/issues/7
 export default class SampleThumbnailNode extends Node {
@@ -111,7 +113,11 @@ export default class SampleThumbnailNode extends Node {
     this.chartTransform.changedEmitter.addListener( () => chartCanvasNode.update() );
     histogramRepresentationProperty.link( () => chartCanvasNode.update() );
 
-    const labelText = new PDLText( 'n=' + thumbnailSampleSize );
+    const labelText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.nEqualsSampleSizePatternStringProperty, {
+      sampleSize: thumbnailSampleSize
+    } ), {
+      maxWidth: 80
+    } );
     this.children = [ this.chartNode, labelText ];
     labelText.leftTop = this.chartNode.leftTop.plusXY( 4, 1 );
 
