@@ -109,7 +109,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       }
 
       phaseProperty.value = 'showingClearPresample';
-      this.selectedSampleProperty.value++;
+      this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
     }
 
     else if ( this.launchModeProperty.value === 'continuous' ) {
@@ -122,8 +122,17 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       if ( phaseProperty.value === 'idle' ) {
 
         // TODO: Do we need this phase? https://github.com/phetsims/projectile-data-lab/issues/7
-        phaseProperty.value = 'showingClearPresample';
-        this.selectedSampleProperty.value++;
+        phaseProperty.value = 'showingCompleteSampleWithMean';
+      }
+      else {
+        field.finishCurrentSample();
+      }
+
+      if ( field.isContinuousLaunchingProperty.value ) {
+        this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value;
+        if ( this.selectedSampleProperty.value === 0 ) {
+          this.selectedSampleProperty.value = 1;
+        }
       }
     }
   }
