@@ -198,7 +198,14 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         this.noAirResistanceText.top = launchPanelProxy.bottom + 20;
       } );
 
-    this.pdomControlAreaNode.pdomOrder = [ this.launchPanel, sampleSelectorPanel, this.launchButton, this.launchControlRadioButtonGroup, this.accordionBox, this.resetAllButton ];
+    this.pdomControlAreaNode.pdomOrder = [
+      this.launchPanel,
+      this.launchButton,
+      this.launchControlRadioButtonGroup,
+      this.accordionBox,
+      sampleSelectorPanel,
+      this.resetAllButton
+    ];
   }
 }
 
