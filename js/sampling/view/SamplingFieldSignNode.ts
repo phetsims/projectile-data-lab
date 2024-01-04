@@ -4,13 +4,14 @@ import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSign
 import projectileDataLab from '../../projectileDataLab.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
+import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
 
 type SelfOptions = EmptySelfOptions;
 type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
@@ -58,7 +59,20 @@ export default class SamplingFieldSignNode extends FieldSignNode {
       yMargin: 2
     } );
 
-    super( fieldSignTextContainer, options );
+    const launcherIconNode = new Node();
+    launcherNumberProperty.link( launcherNumber => {
+      launcherIconNode.children = [ new MysteryLauncherIcon( launcherNumber ) ];
+    } );
+
+    const fieldSignContents = new HBox( {
+      spacing: 7,
+      children: [
+        launcherIconNode,
+        fieldSignTextContainer
+      ]
+    } );
+
+    super( fieldSignContents, options );
   }
 }
 
