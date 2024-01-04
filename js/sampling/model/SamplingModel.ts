@@ -39,6 +39,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
+    // This is an adapter Property that converts between the SamplingModel's launchModeProperty which is available
+    // after the super() call
     const samplingLaunchModeProperty = new Property<LaunchMode>( 'single', {
       validValues: LaunchModeValues
     } );

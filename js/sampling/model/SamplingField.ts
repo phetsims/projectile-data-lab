@@ -32,20 +32,6 @@ const SHOWING_SINGLE_SAMPLE_TIME = 0.3;
 // This is the duration of the sample and mean symbol being visible, in 'Continuous' mode.
 const CONTINUOUS_MODE_PERIOD = 0.15;
 
-// TODO: Clean up after we find out if we are keeping https://github.com/phetsims/projectile-data-lab/commit/548b36f3b75921d7c50105a7d49daab8c56b39a0, see https://github.com/phetsims/projectile-data-lab/issues/17
-// In single mode, we transition through these phases:
-// 1. idle (user has not yet pressed the launch button)
-// 2. showingClearPresample (on the first sample, this phase only lasts for a single frame).
-// 3. showingProjectiles (individual projectiles have highlighted paths)
-// 4. showingCompleteSampleWithMean - User can press the launch button, which goes back to 2
-
-// In continuous mode, we transition through these phases:
-// 1. idle (user has not yet pressed the launch button)
-// 2. showingClearPresample (on the first sample, this phase only lasts for a single frame).
-// 3. showingCompleteSampleWithoutMean (user has pressed the launch button, and we are creating a sample)
-// 4. showingCompleteSampleWithMean
-// GO TO 2
-
 // TODO: Gracefully handle changes of mode while a sample is in progress, see https://github.com/phetsims/projectile-data-lab/issues/17
 // TODO: Gracefully handle starting a new sample when selectedSample < max, see https://github.com/phetsims/projectile-data-lab/issues/17
 export default class SamplingField extends Field {
@@ -126,26 +112,29 @@ export default class SamplingField extends Field {
     } );
 
     this.selectedSampleProperty.link( () => {
-      this.updateSampleCountProperties();
+      this.updateComputedProperties();
     } );
 
     const phaseChanged = () => {
       this.phaseStartTimeProperty.value = this.timeProperty.value;
-      this.updateSampleCountProperties();
+      this.updateComputedProperties();
     };
     this.phaseProperty.link( phaseChanged );
 
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
-      this.updateSampleCountProperties();
+      this.updateComputedProperties();
     } );
   }
 
-  private updateSampleCountProperties(): void {
+  /**
+   * In this simulation, some of the properties are computed from the state of the projectiles+phase, so we need to update
+   * them accordingly.
+   */
+  private updateComputedProperties(): void {
     const totalProjectiles = this.getTotalProjectileCount();
 
     // If the selected sample is greater than the number of started samples, then we are about to start creating projectiles for a new sample
-    const numStartedSamples = Math.max( Math.ceil( totalProjectiles / this.sampleSize ), this.selectedSampleProperty.value );
-    this.numberOfStartedSamplesProperty.value = numStartedSamples;
+    this.numberOfStartedSamplesProperty.value = Math.max( Math.ceil( totalProjectiles / this.sampleSize ), this.selectedSampleProperty.value );
 
     let numberOfCompletedSamples = Math.floor( totalProjectiles / this.sampleSize );
 
@@ -154,9 +143,7 @@ export default class SamplingField extends Field {
       numberOfCompletedSamples--;
     }
 
-    numberOfCompletedSamples = Math.max( 0, numberOfCompletedSamples );
-
-    this.numberOfCompletedSamplesProperty.value = numberOfCompletedSamples;
+    this.numberOfCompletedSamplesProperty.value = Math.max( 0, numberOfCompletedSamples );
 
     // Update the sample mean
     const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
@@ -226,7 +213,7 @@ export default class SamplingField extends Field {
     }
 
     if ( addedProjectiles ) {
-      this.updateSampleCountProperties();
+      this.updateComputedProperties();
       this.projectilesChangedEmitter.emit();
     }
   }
@@ -257,7 +244,7 @@ export default class SamplingField extends Field {
         this.projectilesChangedEmitter.emit();
         this.projectileCreatedEmitter.emit( projectile );
 
-        this.updateSampleCountProperties();
+        this.updateComputedProperties();
       }
 
       // Allow extra time to show focus on the final projectile before showing the sample mean
@@ -294,7 +281,7 @@ export default class SamplingField extends Field {
   public override clearProjectiles(): void {
 
     super.clearProjectiles();
-    this.updateSampleCountProperties();
+    this.updateComputedProperties();
 
     if ( this.phaseProperty.value !== 'showingCompleteSampleWithMean' ) {
       this.phaseProperty.reset();
