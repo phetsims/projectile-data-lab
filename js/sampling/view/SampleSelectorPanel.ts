@@ -68,10 +68,11 @@ export default class SampleSelectorPanel extends PDLPanel {
           else {
             const values = samplingField.getProjectilesInSelectedSample().map( projectile => projectile.x );
 
-            const meanText = new Text( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
-              mean: Utils.toFixed( _.mean( values ), 1 )
+            const meanText = new Text( new PatternStringProperty( ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty, {
+              value: Utils.toFixed( _.mean( values ), 1 )
             } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
             children.push( new HBox( {
+                spacing: 3,
                 children: [ meanText, new MeanIndicatorNode( 10, { maxWidth: 10 } ) ]
               } )
             );
