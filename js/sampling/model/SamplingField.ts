@@ -26,10 +26,10 @@ type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & FieldOptions;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
-const SHOWING_CLEAR_PRESAMPLE_TIME = 0.25;
-const SHOWING_SAMPLE_TIME = 0.25;
+const SHOWING_CLEAR_PRESAMPLE_TIME = 0;
+const SHOWING_SAMPLE_TIME = 0;
 const SHOWING_SINGLE_SAMPLE_TIME = 0.5;
-const SHOWING_SAMPLE_AND_MEAN_TIME = 0.3;
+const SHOWING_SAMPLE_AND_MEAN_TIME = 0.2;
 
 // In single mode, we transition through these phases:
 // 1. idle (user has not yet pressed the launch button)
@@ -305,8 +305,16 @@ export default class SamplingField extends Field {
         isContinuousLaunching && timeInMode >= SHOWING_SAMPLE_AND_MEAN_TIME &&
         this.numberOfCompletedSamplesProperty.value < PDLConstants.MAX_SAMPLES_PER_FIELD
       ) {
+
+        // Create all projectiles for this sample immediately and go to next one
+        // TODO: Eliminate unused modes and streamline this approach if we stick with it, see https://github.com/phetsims/projectile-data-lab/issues/7
         this.phaseProperty.value = 'showingClearPresample';
         this.selectedSampleProperty.value++;
+        this.phaseProperty.value = 'showingProjectiles';
+        while ( this.getProjectilesInSelectedSample().length < this.sampleSize ) {
+          this.createLandedProjectile();
+        }
+        this.phaseProperty.value = 'showingCompleteSampleWithMean';
       }
     }
   }
