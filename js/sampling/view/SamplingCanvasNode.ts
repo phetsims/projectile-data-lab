@@ -51,7 +51,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
     for ( let i = 0; i < projectiles.length; i++ ) {
       const isAirborne = !landedProjectiles.includes( projectiles[ i ] );
-      const showHighlightedPath = this.fieldProperty.value.phaseProperty.value === 'showingProjectiles' && isAirborne;
+      const showHighlightedPath = this.fieldProperty.value.phaseProperty.value === 'showingAirborneProjectiles' && isAirborne;
 
       const pathStrokeColorProperty = showHighlightedPath ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
       context.strokeStyle = pathStrokeColorProperty.value.toCSS();

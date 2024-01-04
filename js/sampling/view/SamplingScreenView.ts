@@ -54,8 +54,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     this.projectileCanvasLayer.addChild( samplingCanvasNode );
 
-    const meanIndicatorVisibleProperty = new DerivedProperty( [ model.sampleMeanProperty ],
-      sampleMean => sampleMean !== null );
+    const meanIndicatorVisibleProperty = new DerivedProperty( [ model.phaseProperty ],
+      phase => phase === 'showingCompleteSampleWithMean' );
 
     const meanIndicatorNode = new MeanIndicatorNode( 14, {
       visibleProperty: meanIndicatorVisibleProperty,
