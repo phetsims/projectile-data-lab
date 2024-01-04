@@ -53,9 +53,9 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     const fieldSignTextContainer = new VBox( {
       children: [ ...fieldSignTextNodes ],
       align: 'center',
-      spacing: 4,
+      spacing: 3,
       maxWidth: 200,
-      yMargin: 3
+      yMargin: 2
     } );
 
     super( fieldSignTextContainer, options );
