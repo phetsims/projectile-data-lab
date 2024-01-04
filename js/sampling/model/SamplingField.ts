@@ -116,16 +116,15 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'The sampling screen is managed by a finite state machine. The possible states are called phases. For internal phet-io use only, for managing state save and load.'
     } );
 
-    Multilink.multilink( [ this.selectedSampleProperty, this.phaseProperty ], ( selectedSample, phase ) => {
+    Multilink.multilink( [ this.phaseProperty, this.selectedSampleProperty ], phase => {
 
       const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
 
-      if ( assert && phase === 'showingCompleteSampleWithMean' ) {
-        assert && assert( projectilesInSelectedSample.length === this.sampleSize, 'we should have all the projectiles if we moved into the phase: showingCompleteSampleWithMean' );
-      }
+      // This multilink is called during transient intermediate phases, so we must guard and make sure we truly have a complete sample
+      const isComplete = phase === 'showingCompleteSampleWithMean' && projectilesInSelectedSample.length === this.sampleSize;
 
       this.sampleMeanProperty.value =
-        phase === 'showingCompleteSampleWithMean' ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) :
+        isComplete ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) :
         null;
     } );
 
@@ -322,14 +321,12 @@ export default class SamplingField extends Field {
   // When the eraser button is pressed, clear the selected Field's projectiles.
   public override clearProjectiles(): void {
 
-    // Clear the phase before clearing projectiles, so it will know we are in an acceptable state
-    this.phaseProperty.reset();
-
     super.clearProjectiles();
+    this.updateSampleCountProperties();
 
-    this.numberOfStartedSamplesProperty.reset();
-    this.numberOfCompletedSamplesProperty.reset();
-    this.sampleMeanProperty.reset();
+    if ( this.phaseProperty.value !== 'showingCompleteSampleWithMean' ) {
+      this.phaseProperty.reset();
+    }
   }
 }
 
