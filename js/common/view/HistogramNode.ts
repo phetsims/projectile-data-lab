@@ -50,6 +50,9 @@ export const ZOOM_LEVELS = [ {
   maxCount: 100,
   tickSpacing: 10
 }, {
+  maxCount: 75,
+  tickSpacing: 15
+}, {
   maxCount: 50,
   tickSpacing: 10
 }, {
