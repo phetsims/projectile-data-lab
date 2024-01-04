@@ -166,7 +166,7 @@ export default class SampleSelectorPanel extends PDLPanel {
     const sampleCardContainer = new Panel( dataContainer, { align: 'center', maxWidth: 200 } );
 
     super( new HBox( {
-      spacing: 2,
+      spacing: 3,
       children: [
         new HBox( {
           spacing: 2,

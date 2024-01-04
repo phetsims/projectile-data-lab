@@ -159,10 +159,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
-    // Position the 'No air resistance' text
-    this.noAirResistanceText.centerX = this.launchPanel.centerX;
-    this.noAirResistanceText.top = this.launchPanel.bottom;
-
     ManualConstraint.create(
       this,
       [ this.accordionBox, this.launchPanel ],
@@ -192,6 +188,14 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       ( sampleSelectorPanelProxy, fieldSignProxy ) => {
         sampleSelectorPanelProxy.centerX = fieldSignProxy.centerX;
         sampleSelectorPanelProxy.bottom = fieldSignProxy.top - 20;
+      } );
+
+    // Position the 'No air resistance' text
+    ManualConstraint.create(
+      this,
+      [ this.launchPanel ], launchPanelProxy => {
+        this.noAirResistanceText.centerX = launchPanelProxy.centerX;
+        this.noAirResistanceText.top = launchPanelProxy.bottom + 20;
       } );
 
     this.pdomControlAreaNode.pdomOrder = [ this.launchPanel, sampleSelectorPanel, this.launchButton, this.launchControlRadioButtonGroup, this.accordionBox, this.resetAllButton ];

@@ -2,7 +2,7 @@
 
 import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import SectionSampleSize from './SectionSampleSize.js';
@@ -32,7 +32,11 @@ export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
     const content: Node[] = [ launcherSection, sampleSizeSection ];
 
-    super( content, providedOptions );
+    const options = optionize<SamplingLaunchPanelOptions, SelfOptions, PDLPanelOptions>()( {
+      yMargin: 8
+    }, providedOptions );
+
+    super( content, options );
   }
 }
 projectileDataLab.register( 'SamplingLaunchPanel', SamplingLaunchPanel );
