@@ -18,6 +18,8 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 /**
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -38,63 +40,44 @@ export default class SampleSelectorPanel extends PDLPanel {
 
     const options = optionize<SampleSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
 
-    // const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfCountPatternStringProperty, {
-    //
-    //   // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/7
-    //   number: selectedSampleProperty,
-    //   count: numberOfCompletedSamplesProperty
-    // } );
-
-    // const titleStringProperty = new DerivedProperty( [ numberOfCompletedSamplesProperty, patternStringProperty ], ( landedProjectileCount, patternString ) => {
-    //   return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : patternString;
-    // } );
-
-    // const titleStringProperty = new DerivedProperty( [ ProjectileDataLabStrings.noDataStringProperty, numberOfCompletedSamplesProperty ], ( x, landedProjectileCount ) => {
-    //   return landedProjectileCount === 0 ? ProjectileDataLabStrings.noDataStringProperty.value : ProjectileDataLabStrings.numberOfCountPatternStringProperty.value;
-    // } );
-
     const dataContainer = new Node();
     Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
       ( samplingField, selectedSample, numberOfStartedSamples, numberOfCompletedSamples ) => {
 
         if ( numberOfStartedSamples === 0 ) {
-          dataContainer.children = [ new PDLText( 'No data', { font: PDLConstants.SAMPLE_SELECTOR_FONT } ) ];
+          dataContainer.children = [ new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ) ];
         }
-
-        // REVIEW: See how this logic can be simplified / documented
-        else if ( ( selectedSample === numberOfStartedSamples && numberOfStartedSamples > numberOfCompletedSamples ) ||
-                  ( selectedSample > numberOfStartedSamples ) ) {
-
-          dataContainer.children = [ new VBox( {
-            align: 'left',
-            spacing: 2,
-            children: [
-              // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
-              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
-              new HSeparator( { stroke: 'black' } ),
-              new PDLText( 'Creating...', { font: PDLConstants.SAMPLE_SELECTOR_FONT } )
-            ]
-          } ) ];
-        }
-
         else {
-          const projectiles = samplingField.getProjectilesInSelectedSample();
-          const values = projectiles.map( projectile => projectile.x );
-          dataContainer.children = [ new VBox( {
-            align: 'left',
-            spacing: 2,
-            children: [
-              // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
-              new Text( 'Sample ' + selectedSample + ' of ' + numberOfStartedSamples, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
-              new HSeparator( { stroke: 'black' } ),
-              new HBox( {
-                children: [
-                  new Text( `Mean: ${Utils.toFixedNumber( _.mean( values ), 1 )} m `, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
-                  new MeanIndicatorNode( 10, { maxWidth: 10 } )
-                ]
+
+          const children: Node[] = [
+
+            new Text( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
+              number: selectedSample,
+              count: numberOfStartedSamples
+            } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } ),
+            new HSeparator( { stroke: 'black' } )
+          ];
+
+          // REVIEW: See how this logic can be simplified / documented
+          const isUnfinishedSampleSelected = selectedSample === numberOfStartedSamples && numberOfStartedSamples > numberOfCompletedSamples;
+          const isUnstartedSampleSelected = selectedSample > numberOfStartedSamples;
+          if ( isUnfinishedSampleSelected || isUnstartedSampleSelected ) {
+            children.push( new PDLText( ProjectileDataLabStrings.creatingStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ) );
+          }
+
+          else {
+            const values = samplingField.getProjectilesInSelectedSample().map( projectile => projectile.x );
+
+            const meanText = new Text( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
+              mean: Utils.toFixed( _.mean( values ), 1 )
+            } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+            children.push( new HBox( {
+                children: [ meanText, new MeanIndicatorNode( 10, { maxWidth: 10 } ) ]
               } )
-            ]
-          } ) ];
+            );
+          }
+
+          dataContainer.children = [ new VBox( { align: 'left', spacing: 2, children: children } ) ];
         }
       } );
 
@@ -163,7 +146,12 @@ export default class SampleSelectorPanel extends PDLPanel {
       ) );
     };
 
-    const sampleCardContainer = new Panel( dataContainer, { align: 'center', maxWidth: 200 } );
+    const sampleCardContainer = new Panel( dataContainer, {
+      align: 'center',
+
+      // Keep the right edge on-screen for stringTest=long
+      maxWidth: 175
+    } );
 
     super( new HBox( {
       spacing: 3,
