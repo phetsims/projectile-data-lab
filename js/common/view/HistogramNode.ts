@@ -255,8 +255,6 @@ export default class HistogramNode extends Node {
       }
     };
 
-    // Incorrect sample is depicted with a dot, see https://github.com/phetsims/projectile-data-lab/issues/17
-
     isSettingPhetioStateProperty.addListener( updateHistogram );
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.

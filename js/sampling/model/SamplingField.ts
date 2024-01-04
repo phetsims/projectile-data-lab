@@ -31,6 +31,7 @@ const SHOWING_SAMPLE_TIME = 0;
 const SHOWING_SINGLE_SAMPLE_TIME = 0.5;
 const SHOWING_SAMPLE_AND_MEAN_TIME = 0.2;
 
+// TODO: Clean up after we find out if we are keeping https://github.com/phetsims/projectile-data-lab/commit/548b36f3b75921d7c50105a7d49daab8c56b39a0, see https://github.com/phetsims/projectile-data-lab/issues/17
 // In single mode, we transition through these phases:
 // 1. idle (user has not yet pressed the launch button)
 // 2. showingClearPresample (on the first sample, this phase only lasts for a single frame).
