@@ -19,6 +19,11 @@ import projectileDataLab from '../projectileDataLab.js';
 
 const PDLColors = {
 
+  // Background color for screen icons in this sim
+  screenIconBackgroundColorProperty: new ProfileColorProperty( projectileDataLab, 'iconBackground', {
+    default: '#f7f7f7'
+  } ),
+
   // Background color for screens in this sim
   screenBackgroundTopColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundTop', {
     default: '#29b5ff'

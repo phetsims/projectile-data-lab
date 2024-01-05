@@ -12,6 +12,7 @@ import SourcesModel from './model/SourcesModel.js';
 import SourcesScreenView from './view/SourcesScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import SourcesKeyboardHelpNode from './view/SourcesKeyboardHelpNode.js';
+import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -23,6 +24,7 @@ export default class SourcesScreen extends Screen<SourcesModel, SourcesScreenVie
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.sourcesStringProperty,
+      homeScreenIcon: PDLScreenIconFactory.createSourcesScreenIcon(),
       createKeyboardHelpNode: () => new SourcesKeyboardHelpNode()
     }, providedOptions );
 
