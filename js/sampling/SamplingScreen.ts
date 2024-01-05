@@ -12,6 +12,7 @@ import SamplingModel from './model/SamplingModel.js';
 import SamplingScreenView from './view/SamplingScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import SamplingKeyboardHelpNode from './view/SamplingKeyboardHelpNode.js';
+import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -23,6 +24,7 @@ export default class SamplingScreen extends Screen<SamplingModel, SamplingScreen
 
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.samplingStringProperty,
+      homeScreenIcon: PDLScreenIconFactory.createSamplingScreenIcon(),
       createKeyboardHelpNode: () => new SamplingKeyboardHelpNode()
     }, providedOptions );
 
