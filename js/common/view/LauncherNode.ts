@@ -28,7 +28,7 @@ type SelfOptions = {
 };
 type LauncherNodeOptions = SelfOptions & NodeOptions;
 
-export const BARREL_LENGTH_BEFORE_ORIGIN = 90;
+export const BARREL_LENGTH_BEFORE_ORIGIN = 85;
 const BARREL_LENGTH_AFTER_ORIGIN = 15;
 
 const BARREL_BASE_WIDTH = 45;
@@ -89,7 +89,7 @@ export default class LauncherNode extends Node {
 
     this.labelNode = new Node( {
       children: [ labelBackground, labelText ],
-      x: -68
+      x: -63
     } );
 
     this.launcherBarrel = new Node();

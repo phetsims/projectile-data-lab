@@ -28,15 +28,15 @@ export default class SectionProjectileType extends PDLPanelSection {
     const projectileTypeRadioButtonGroup = new RectangularRadioButtonGroup( projectileTypeProperty, [ {
       value: 'cannonball' as const,
       tandemName: 'cannonballRadioButton',
-      createNode: () => new Image( cannonball_png, { scale: 0.25 } )
+      createNode: () => new Image( cannonball_png, { scale: 0.22 } )
     }, {
       value: 'pumpkin' as const,
       tandemName: 'pumpkinRadioButton',
-      createNode: () => new Image( pumpkin_png, { scale: 0.23 } )
+      createNode: () => new Image( pumpkin_png, { scale: 0.20 } )
     }, {
       value: 'piano' as const,
       tandemName: 'pianoRadioButton',
-      createNode: () => new Image( piano_png, { scale: 0.18 } )
+      createNode: () => new Image( piano_png, { scale: 0.15 } )
     } ], {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
       orientation: 'horizontal',

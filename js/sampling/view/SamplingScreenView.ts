@@ -112,8 +112,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
 
     this.addChild( this.launchPanel );
-    this.addChild( fieldSign );
-    this.addChild( sampleSelectorPanel );
+    this.behindProjectilesLayer.addChild( fieldSign );
+    this.behindProjectilesLayer.addChild( sampleSelectorPanel );
 
     sampleSelectorPanel.centerX = fieldSign.centerX;
     sampleSelectorPanel.bottom = fieldSign.top - PDLConstants.INTER_PANEL_SPACING;
@@ -199,7 +199,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this,
       [ this.launchPanel ], launchPanelProxy => {
         this.noAirResistanceText.centerX = launchPanelProxy.centerX;
-        this.noAirResistanceText.top = launchPanelProxy.bottom + 20;
+        this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
       } );
 
     model.numberOfStartedSamplesProperty.link( startedSamples => {

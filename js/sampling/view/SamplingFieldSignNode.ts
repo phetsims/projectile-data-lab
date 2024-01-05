@@ -23,10 +23,10 @@ export default class SamplingFieldSignNode extends FieldSignNode {
                       providedOptions?: SamplingFieldSignNodeOptions ) {
 
     // Create the field sign
-    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( PDLConstants.FIELD_SIGN_X, 0 ) );
+    const fieldSignPosition = modelViewTransform.modelToViewPosition( new Vector2( PDLConstants.SAMPLING_FIELD_SIGN_X, 0 ) );
 
     const options = optionize<SamplingFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
-      x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y
+      x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y, signPostOffsetX: 75
     }, providedOptions );
 
     const launcherNumberStringProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty,

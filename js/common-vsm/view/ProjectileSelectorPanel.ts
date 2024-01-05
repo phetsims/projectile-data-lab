@@ -52,9 +52,11 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       count: landedProjectileCountProperty
     } );
 
-    const titleStringProperty = new DerivedProperty( [ landedProjectileCountProperty, patternStringProperty, ProjectileDataLabStrings.noDataStringProperty ], ( landedProjectileCount, patternString, noDataString ) => {
-      return landedProjectileCount === 0 ? noDataString : patternString;
-    } );
+    const titleStringProperty = new DerivedProperty(
+      [ landedProjectileCountProperty, patternStringProperty, ProjectileDataLabStrings.noDataStringProperty ],
+      ( landedProjectileCount, patternString, noDataString ) => {
+        return landedProjectileCount === 0 ? noDataString : patternString;
+      } );
 
     const createPage = () => {
       const projectile = selectedProjectileProperty.value;
@@ -142,7 +144,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
     };
 
     const projectileImageContainer = new Node();
-    const projectileCardContainer = new Panel( projectileImageContainer, { maxHeight: 20, align: 'center' } );
+    const projectileCardContainer = new Panel( projectileImageContainer, { maxHeight: 25, align: 'center' } );
     const projectileData = new PDLPanelSection( titleStringProperty, projectileCardContainer, {
       align: 'center', grow: 10,
       maxWidth: 60

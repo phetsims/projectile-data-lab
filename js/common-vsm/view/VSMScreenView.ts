@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, Image, Node, Path, Rectangle, VBox } from '../../../../scenery/js/imports.js';
+import { Color, Image, ManualConstraint, Node, Path, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import VSMAccordionBox from './VSMAccordionBox.js';
@@ -95,20 +95,28 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
 
-    this.projectileSelectorPanel = new ProjectileSelectorPanel(
-      model.selectedProjectileNumberProperty,
-      model.landedProjectileCountProperty,
-      model.selectedProjectileProperty, {
-        tandem: options.tandem.createTandem( 'projectileSelectorPanel' )
+    this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
+      tandem: options.tandem.createTandem( 'timeControlNode' ),
+      playPauseStepButtonOptions: {
+        includeStepForwardButton: false
+      },
+      timeSpeedProperty: model.timeSpeedProperty,
+      timeSpeeds: model.timeSpeedValues,
+      buttonGroupXSpacing: 18,
+      layoutOptions: {
+        topMargin: 10
+      },
+      speedRadioButtonGroupOptions: {
+        maxWidth: 80
       }
-    );
+    } );
 
     this.topRightUIContainer = new VBox( {
       stretch: true,
       right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
       top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
       spacing: PDLConstants.INTER_PANEL_SPACING,
-      children: [ staticToolPanel, interactiveToolPanel, this.projectileSelectorPanel ]
+      children: [ staticToolPanel, interactiveToolPanel, this.timeControlNode ]
     } );
 
     const accordionBoxWidth = this.topRightUIContainer.left - launchPanel.right - 2 * PDLConstants.INTER_PANEL_SPACING;
@@ -126,22 +134,13 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         tandem: options.tandem.createTandem( 'accordionBox' )
       } );
 
-    this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
-      tandem: options.tandem.createTandem( 'timeControlNode' ),
-      playPauseStepButtonOptions: {
-        includeStepForwardButton: false
-      },
-      timeSpeedProperty: model.timeSpeedProperty,
-      timeSpeeds: model.timeSpeedValues,
-      buttonGroupXSpacing: 18,
-      layoutOptions: {
-        topMargin: 10
-      },
-      speedRadioButtonGroupOptions: {
-        maxWidth: 80
+    this.projectileSelectorPanel = new ProjectileSelectorPanel(
+      model.selectedProjectileNumberProperty,
+      model.landedProjectileCountProperty,
+      model.selectedProjectileProperty, {
+        tandem: options.tandem.createTandem( 'projectileSelectorPanel' )
       }
-    } );
-    this.topRightUIContainer.addChild( this.timeControlNode );
+    );
 
     // Create the timed launch button
 
@@ -311,6 +310,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.toolsLayer.addChild( speedToolNode );
     this.toolsLayer.addChild( measuringTapeNode );
 
+    this.addChild( this.projectileSelectorPanel );
     this.addChild( this.fieldSelectorPanel );
     this.addChild( timedLaunchButton );
     this.addChild( this.accordionBox );
@@ -326,15 +326,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     const fieldSignEraserButtonSpacing = 20;
     this.eraserButton.left = fieldSign.right + fieldSignEraserButtonSpacing;
 
-    const totalFieldSignEraserButtonWidth = fieldSign.width + this.eraserButton.width + fieldSignEraserButtonSpacing;
-
-    // Position the 'No air resistance' text
-    this.noAirResistanceText.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION;
-
-    ProjectileDataLabStrings.noAirResistanceStringProperty.link( () => {
-      this.noAirResistanceText.centerX = fieldSign.left + 0.5 * totalFieldSignEraserButtonWidth;
-    } );
-
     model.totalProjectileCountProperty.link( totalProjectileCount => {
       this.launchButton.enabled = totalProjectileCount < PDLConstants.MAX_PROJECTILES_PER_VSM_FIELD;
     } );
@@ -347,6 +338,23 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
       this.topRightUIContainer.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
+
+    // Position the projectile selector panel
+    ManualConstraint.create(
+      this,
+      [ this.launchPanel, this.projectileSelectorPanel ], ( launchPanelProxy, projectileSelectorPanelProxy ) => {
+        const totalFieldSignEraserButtonWidth = fieldSign.width + this.eraserButton.width + fieldSignEraserButtonSpacing;
+        projectileSelectorPanelProxy.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION;
+        projectileSelectorPanelProxy.centerX = fieldSign.left + 0.5 * totalFieldSignEraserButtonWidth;
+      } );
+
+    // Position the 'No air resistance' text
+    ManualConstraint.create(
+      this,
+      [ this.launchPanel ], launchPanelProxy => {
+        this.noAirResistanceText.centerX = launchPanelProxy.centerX;
+        this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
+      } );
 
     // Keyboard order
     this.pdomControlAreaNode.pdomOrder = [

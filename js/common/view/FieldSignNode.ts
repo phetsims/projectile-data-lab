@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import { ManualConstraint, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
@@ -14,17 +14,23 @@ import Vector2 from '../../../../dot/js/Vector2.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  signPostOffsetX?: number;
+};
 export type FieldSignNodeOptions = SelfOptions & NodeOptions;
 
 export default class FieldSignNode extends Node {
   public constructor( private readonly textNode: Node, providedOptions: FieldSignNodeOptions ) {
-    super( providedOptions );
+    const options = optionize<FieldSignNodeOptions, SelfOptions, NodeOptions>()( {
+      signPostOffsetX: 28
+    }, providedOptions );
+
+    super( options );
 
     textNode.centerX = 0;
     textNode.centerY = 0;
 
-    this.drawSign();
+    this.drawSign( options.signPostOffsetX );
 
     ManualConstraint.create( this, [ textNode ], textNodeProxy => {
       textNodeProxy.centerX = 0;
@@ -32,11 +38,10 @@ export default class FieldSignNode extends Node {
     } );
   }
 
-  private drawSign(): void {
+  private drawSign( signPostOffsetX: number ): void {
     const signMarginX = 10;
     const signMarginY = 6;
     const signOffsetY = 44;
-    const signPostOffsetX = 28;
     const signPostWidth = 7;
     const signPostBaseRadiusY = 1;
 

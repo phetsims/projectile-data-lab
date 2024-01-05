@@ -36,13 +36,13 @@ const PDLConstants = {
 
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,
-  RAISED_LAUNCHER_HEIGHT: 15,
+  RAISED_LAUNCHER_HEIGHT: 12,
   FREEFALL_ACCELERATION: 9.81,
   FIELD_LABEL_INCREMENT: 10,
 
   // In view units
   FIELD_CENTER_OFFSET_X: 44,
-  FIELD_CENTER_Y: 500,
+  FIELD_CENTER_Y: 510,
   FIELD_HEIGHT: 40,
   FIELD_WIDTH: fieldWidth,
   FIELD_BORDER_LINE_WIDTH: 2,
@@ -50,8 +50,9 @@ const PDLConstants = {
   FIELD_LINE_WIDTH: 1.5,
   FIELD_LINE_NUMBERED_WIDTH: 2,
   FIELD_LABEL_TOP_MARGIN: 1,
-  FIELD_SIGN_X: 89,
-  FIELD_SIGN_CENTER_Y: 442,
+  FIELD_SIGN_X: 86,
+  SAMPLING_FIELD_SIGN_X: 88,
+  FIELD_SIGN_CENTER_Y: 452,
   FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION: 48,
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
