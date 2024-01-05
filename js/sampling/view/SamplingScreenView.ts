@@ -56,7 +56,9 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.projectileCanvasLayer.addChild( samplingCanvasNode );
 
     const meanIndicatorVisibleProperty = new DerivedProperty( [ model.phaseProperty ],
-      phase => phase === 'showingCompleteSampleWithMean' );
+      phase => phase === 'showingCompleteSampleWithMean' ||
+               phase === 'maxSamplesReached'
+    );
 
     const meanIndicatorNode = new MeanIndicatorNode( 14, {
       visibleProperty: meanIndicatorVisibleProperty,
@@ -200,6 +202,11 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         this.noAirResistanceText.centerX = launchPanelProxy.centerX;
         this.noAirResistanceText.top = launchPanelProxy.bottom + 20;
       } );
+
+    // this.launchButton.setEnabledProperty( new DerivedProperty( [ model.phaseProperty ], phase => phase !== 'maxSamplesReached' ) );
+    model.phaseProperty.link( phase => {
+      this.launchButton.enabled = phase !== 'maxSamplesReached';
+    } );
 
     this.pdomControlAreaNode.pdomOrder = [
       this.launchPanel,

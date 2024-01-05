@@ -49,9 +49,10 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     // 2. Trajectories
     context.lineWidth = 1;
 
+    const phase = this.fieldProperty.value.phaseProperty.value;
     for ( let i = 0; i < projectiles.length; i++ ) {
       const isAirborne = !landedProjectiles.includes( projectiles[ i ] );
-      const showHighlightedPath = this.fieldProperty.value.phaseProperty.value === 'showingAirborneProjectiles' && isAirborne;
+      const showHighlightedPath = phase === 'showingAirborneProjectiles' && isAirborne;
 
       const pathStrokeColorProperty = showHighlightedPath ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
       context.strokeStyle = pathStrokeColorProperty.value.toCSS();
@@ -63,7 +64,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
       const projectile = projectiles[ i ];
 
       const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
-      const image = this.fieldProperty.value.phaseProperty.value === 'showingCompleteSampleWithMean' ? cannonballGray_png : cannonball_png;
+      const image = ( phase === 'showingCompleteSampleWithMean' || phase === 'maxSamplesReached' ) ? cannonballGray_png : cannonball_png;
 
       context.save();
 

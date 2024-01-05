@@ -18,6 +18,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
 import { SamplingPhase } from './SamplingPhase.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -124,23 +125,17 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
 
-      // TODO: Disable the button when the max number of samples is reached - see https://github.com/phetsims/projectile-data-lab/issues/23
-      // if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
-      //   return;
-      // }
-
-      this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
-
-      phaseProperty.value = 'showingAirborneProjectiles';
+      if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+        phaseProperty.value = 'maxSamplesReached';
+      }
+      else {
+        this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
+        phaseProperty.value = 'showingAirborneProjectiles';
+      }
     }
 
     else if ( this.launchModeProperty.value === 'continuous' ) {
       field.isContinuousLaunchingProperty.toggle();
-
-      // TODO: Disable the button when the max number of samples is reached - see https://github.com/phetsims/projectile-data-lab/issues/23
-      // if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
-      //   return;
-      // }
 
       if ( phaseProperty.value === 'idle' ) {
         this.selectedSampleProperty.value = 1;

@@ -149,7 +149,7 @@ export default class SamplingField extends Field {
     const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
 
     // This multilink is called during transient intermediate phases, so we must guard and make sure we truly have a complete sample
-    const isComplete = this.phaseProperty.value === 'showingCompleteSampleWithMean' && projectilesInSelectedSample.length === this.sampleSize;
+    const isComplete = ( this.phaseProperty.value === 'showingCompleteSampleWithMean' || this.phaseProperty.value === 'maxSamplesReached' ) && projectilesInSelectedSample.length === this.sampleSize;
 
     this.sampleMeanProperty.value = isComplete ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) : null;
 
@@ -275,11 +275,15 @@ export default class SamplingField extends Field {
 
         // Manually restart the phase timer, since the phase will not change when showing sequential continuous samples
         this.phaseStartTimeProperty.value = this.timeProperty.value;
-
-        if ( this.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
-          this.phaseProperty.value = 'maxSamplesReached';
-        }
       }
+
+      if ( this.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+        this.phaseProperty.value = 'maxSamplesReached';
+      }
+    }
+    else if ( this.phaseProperty.value === 'maxSamplesReached' ) {
+
+      // Nothing to do
     }
   }
 

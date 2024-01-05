@@ -35,6 +35,7 @@ import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 import PDLAccordionBox from './PDLAccordionBox.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { LaunchMode } from '../model/LaunchMode.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
@@ -55,9 +56,9 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
   protected readonly bottomUIContainer: HBox;
 
-  protected readonly launchButton;
-  protected readonly launchControlRadioButtonGroup;
-  protected readonly resetAllButton;
+  protected readonly launchButton: RectangularPushButton;
+  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<LaunchMode>;
+  protected readonly resetAllButton: ResetAllButton;
   protected readonly noAirResistanceText: PDLText;
 
   protected constructor( model: PDLModel<T>,
