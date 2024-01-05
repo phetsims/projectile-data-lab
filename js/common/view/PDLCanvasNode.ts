@@ -18,7 +18,7 @@ import Projectile from '../model/Projectile.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import cannonballHighlighted_png from '../../../images/cannonballHighlighted_png.js';
-import cannonballDark_png from '../../../images/cannonballDark_png.js';
+import cannonballGray_png from '../../../images/cannonballGray_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
 import pumpkin1Highlighted_png from '../../../images/pumpkin1Highlighted_png.js';
 import pumpkin2Highlighted_png from '../../../images/pumpkin2Highlighted_png.js';
@@ -134,7 +134,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
         image = isLanded ? ( isDarkened ? pianoDark_png : pianoHighlighted_png ) : piano_png;
         break;
       default:
-        image = isLanded ? ( isDarkened ? cannonballDark_png : cannonballHighlighted_png ) : cannonball_png;
+        image = isLanded ? ( isDarkened ? cannonballGray_png : cannonballHighlighted_png ) : cannonball_png;
         break;
     }
 
