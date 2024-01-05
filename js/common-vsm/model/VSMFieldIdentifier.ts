@@ -1,7 +1,10 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * Also used as tandems
+ * Uniquely identify each field, note these are also used in the tandems.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 export const VSMFieldIdentifierValues = [
   'field1', 'field2', 'field3',

@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * Enumeration that describes the mechanism used to launch the projectile.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import PDLConstants from '../../common/PDLConstants.js';
 
 export const LauncherMechanismValues = [ 'spring', 'pressure', 'explosion' ] as const;

@@ -16,6 +16,12 @@ type SelfOptions = {
 };
 export type TimeDisplayNodeOptions = SelfOptions & NodeOptions;
 
+/**
+ * TimeDisplayNode is a Node that displays the elapsed time of the stopwatch.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 export default class TimeDisplayNode extends Node {
   public constructor( stopwatchElapsedTimeProperty: TReadOnlyProperty<number>, providedOptions: TimeDisplayNodeOptions ) {
 

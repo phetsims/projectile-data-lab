@@ -10,6 +10,8 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 /**
  * Hotkeys related to the sim. We discovered that it John Travoltage, they are referred to as "keyboard shortcuts"
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class KeyboardShortcutsHelpSection extends KeyboardHelpSection {
 
