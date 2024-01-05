@@ -16,6 +16,12 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 
+/**
+ * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
+ * Sampling-screen-specific elements.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 export default class SamplingHistogramNode extends HistogramNode {
   public constructor( launcherProperty: TReadOnlyProperty<number>,
                       sampleSizeProperty: TReadOnlyProperty<number>,

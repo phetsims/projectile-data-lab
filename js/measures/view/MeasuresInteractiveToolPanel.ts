@@ -16,6 +16,12 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 type SelfOptions = EmptySelfOptions;
 type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOptions;
 
+/**
+ * The MeasuresInteractiveToolPanel extends the InteractiveToolPanel and provides a specialized user interface for
+ * interacting with additional tools on the Measures screen.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
 export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
   public constructor(
     isMeasuringTapeVisibleProperty: BooleanProperty,

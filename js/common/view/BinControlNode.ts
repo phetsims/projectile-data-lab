@@ -1,5 +1,11 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * BinControlNode toggles between showing the bin width combo box and the total bins combo boxes, based on the user's
+ * preference.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 import projectileDataLab from '../../projectileDataLab.js';
 import { HBox, HBoxOptions, Node } from '../../../../scenery/js/imports.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';

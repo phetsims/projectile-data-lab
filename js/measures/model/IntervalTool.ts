@@ -20,6 +20,11 @@ type IntervalToolOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
 const DEFAULT_EDGE_1 = 40;
 const DEFAULT_EDGE_2 = 60;
 
+/**
+ * IntervalTool is a tool that allows the user to select an interval in the data set.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
 export default class IntervalTool extends PhetioObject {
 
   private _edge1: number;

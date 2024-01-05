@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * The VSMFieldSignNode shows the field number and the number of projectiles that have landed in that field.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSignNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';

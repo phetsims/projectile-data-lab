@@ -1,5 +1,11 @@
 // Copyright 2023, University of Colorado Boulder
 
+/**
+ * HistogramRepresentationIconNode draws the icons to choose between 'blocks' or 'bars'.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -10,7 +16,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import Property from '../../../../axon/js/Property.js';
 
-export default class HistogramIconNode extends Node {
+export default class HistogramRepresentationIconNode extends Node {
   public constructor( blockFillProperty: ColorProperty, blockStrokeProperty: ColorProperty, histogramRepresentation: HistogramRepresentation ) {
     super( {
       pickable: true
@@ -40,4 +46,4 @@ export default class HistogramIconNode extends Node {
   }
 }
 
-projectileDataLab.register( 'HistogramIconNode', HistogramIconNode );
+projectileDataLab.register( 'HistogramRepresentationIconNode', HistogramRepresentationIconNode );

@@ -14,6 +14,11 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 type SelfOptions = EmptySelfOptions;
 type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
 
+/**
+ * The MeasuresStaticToolPanel shows checkboxes to select the static (non-interactive) tools.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
 export default class MeasuresStaticToolPanel extends StaticToolPanel {
   public constructor( arePathsVisibleProperty: Property<boolean>, isLaunchAngleVisibleProperty: Property<boolean>,
                       isLaunchSpeedVisibleProperty: Property<boolean>,

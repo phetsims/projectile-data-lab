@@ -10,6 +10,12 @@ import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
 
 const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
 
+/**
+ * LauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
+ * mystery launchers.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
 export default class LauncherRadioButtonGroupWrapper extends Node {
   public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/7

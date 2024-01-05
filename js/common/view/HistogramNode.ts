@@ -26,7 +26,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
-import HistogramIconNode from './HistogramIconNode.js';
+import HistogramRepresentationIconNode from './HistogramRepresentationIconNode.js';
 import Property from '../../../../axon/js/Property.js';
 import BinControlNode from './BinControlNode.js';
 import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
@@ -310,8 +310,8 @@ export default class HistogramNode extends Node {
 
     const barBlockSwitch = new ABSwitch(
       histogramRepresentationProperty,
-      'blocks', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
-      'bars', new HistogramIconNode( blockFillProperty, blockStrokeProperty, 'bars' ), {
+      'blocks', new HistogramRepresentationIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
+      'bars', new HistogramRepresentationIconNode( blockFillProperty, blockStrokeProperty, 'bars' ), {
         tandem: options.tandem.createTandem( 'barBlockSwitch' ),
         spacing: 8,
         toggleSwitchOptions: {

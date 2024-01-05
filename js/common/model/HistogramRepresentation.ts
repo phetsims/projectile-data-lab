@@ -1,6 +1,6 @@
 // Copyright 2023, University of Colorado Boulder
 
-// TODO: Some files are missing author and header doc, see https://github.com/phetsims/projectile-data-lab/issues/7
+// TODO: Some files are missing header doc, see https://github.com/phetsims/projectile-data-lab/issues/7
 
 /**
  * Enumeration that describes whether the histogram is showing bars (one per bin) or blocks (one per projectile).

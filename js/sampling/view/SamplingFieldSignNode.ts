@@ -16,6 +16,11 @@ import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
 type SelfOptions = EmptySelfOptions;
 type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
+/**
+ * The SamplingFieldSignNode shows the launcher number and the number of projectiles that have landed in that field.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
 export default class SamplingFieldSignNode extends FieldSignNode {
   public constructor( launcherNumberProperty: TReadOnlyProperty<number>,
                       sampleSizeProperty: TReadOnlyProperty<number>,

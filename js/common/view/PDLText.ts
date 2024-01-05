@@ -11,6 +11,8 @@ type PDLTextOptions = SelfOptions & TextOptions;
 
 /**
  * PDLText is a Text with the default font for the Projectile Data Lab.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class PDLText extends Text {
   public constructor( text: TReadOnlyProperty<string> | string, providedOptions?: PDLTextOptions ) {

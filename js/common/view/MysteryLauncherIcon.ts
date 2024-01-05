@@ -7,6 +7,11 @@ import Property from '../../../../axon/js/Property.js';
 
 const LAUNCHER_ICON_WIDTH = 35;
 
+/**
+ * MysteryLauncherIcon shows the icon for a mystery launcher.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
 export class MysteryLauncherIcon extends Node {
   public constructor( mysteryLauncherNumber: number ) {
 
