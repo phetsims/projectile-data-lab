@@ -82,7 +82,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioDocumentation: 'This property configures the active launcher by number.'
     } );
 
-    // TODO: The field is a derived property based on the selected launcher and sample size. https://github.com/phetsims/projectile-data-lab/issues/7
+    // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
     Multilink.multilink( [ this.sampleSizeProperty, this.mysteryLauncherProperty ], ( sampleSize, mysteryLauncher ) => {
       const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcher === mysteryLauncher )!;
       this.fieldProperty.value = field;

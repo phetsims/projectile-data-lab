@@ -2,8 +2,6 @@
 
 /**
  * SimulationPreferencesContentNode displays general controls that globally affect the presentation or behavior of the simulation.
- * TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
- * TODO: finalize wording, see https://github.com/phetsims/projectile-data-lab/issues/7
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

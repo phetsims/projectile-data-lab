@@ -9,7 +9,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
@@ -70,8 +70,7 @@ export default class DataMeasuresOverlay extends Node {
     const meanLineLength = totalHeight - meanIndicatorHeight;
     const arrowY = origin.y - totalHeight + meanLineLength / 2; // Put the arrow in the middle of the mean line
 
-    // TODO: ArrowNode options documentation could be improved, see https://github.com/phetsims/projectile-data-lab/issues/7
-    const arrowOptions = {
+    const arrowOptions: ArrowNodeOptions = {
       visibleProperty: isArrowsVisibleProperty,
       doubleHead: true,
       headWidth: 5,
