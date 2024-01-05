@@ -19,11 +19,20 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Property from '../../../../axon/js/Property.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import grab_mp3 from '../../../../tambo/sounds/grab_mp3.js';
+import release_mp3 from '../../../../tambo/sounds/release_mp3.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
 
 type SelfOptions = EmptySelfOptions;
 export type IntervalToolNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 const TEXT_PANEL_BOUNDS_DILATION = 5;
+
+const grabClip = new SoundClip( grab_mp3, { initialOutputLevel: 0.4 } );
+const releaseClip = new SoundClip( release_mp3, { initialOutputLevel: 0.4 } );
+soundManager.addSoundGenerator( grabClip );
+soundManager.addSoundGenerator( releaseClip );
 
 export default class IntervalToolNode extends Node {
   private readonly arrowNode: ArrowNode;
@@ -174,8 +183,9 @@ export default class IntervalToolNode extends Node {
     percentPatternProperty.link( update );
     intervalReadoutStringProperty.link( update );
 
-
     readoutVBox.addInputListener( new DragListener( {
+      start: () => grabClip.play(),
+      end: () => releaseClip.play(),
       applyOffset: true,
       useParentOffset: true,
 
@@ -186,6 +196,8 @@ export default class IntervalToolNode extends Node {
     } ) );
 
     readoutVBox.addInputListener( new KeyboardDragListener( {
+      start: () => grabClip.play(),
+      end: () => releaseClip.play(),
       dragVelocity: 300, // velocity of the Node being dragged, in view coordinates per second
       shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
       positionProperty: centerProperty,
@@ -198,6 +210,8 @@ export default class IntervalToolNode extends Node {
     };
 
     edge1Sphere.addInputListener( new DragListener( {
+      start: () => grabClip.play(),
+      end: () => releaseClip.play(),
       useInputListenerCursor: true,
       positionProperty: edge1Property,
       transform: modelViewTransform,
@@ -206,6 +220,8 @@ export default class IntervalToolNode extends Node {
     } ) );
 
     edge2Sphere.addInputListener( new DragListener( {
+      start: () => grabClip.play(),
+      end: () => releaseClip.play(),
       useInputListenerCursor: true,
       positionProperty: edge2Property,
       transform: modelViewTransform,
@@ -214,6 +230,8 @@ export default class IntervalToolNode extends Node {
     } ) );
 
     edge1Sphere.addInputListener( new KeyboardDragListener( {
+      start: () => grabClip.play(),
+      end: () => releaseClip.play(),
       dragVelocity: 300, // velocity of the Node being dragged, in view coordinates per second
       shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
       positionProperty: edge1Property,
@@ -223,6 +241,8 @@ export default class IntervalToolNode extends Node {
     } ) );
 
     edge2Sphere.addInputListener( new KeyboardDragListener( {
+      start: () => grabClip.play(),
+      end: () => releaseClip.play(),
       dragVelocity: 300, // velocity of the Node being dragged, in view coordinates per second
       shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
       positionProperty: edge2Property,
