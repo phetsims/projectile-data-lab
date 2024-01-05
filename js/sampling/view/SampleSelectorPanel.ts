@@ -44,17 +44,17 @@ export default class SampleSelectorPanel extends PDLPanel {
     const dataContainer = new Node();
 
     // Reuse text labels to avoid memory leaks
-    const noDataText = new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+    const noDataText = new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SELECTOR_FONT } );
     const titleText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
       number: selectedSampleProperty,
       count: numberOfStartedSamplesProperty
-    } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
-    const creatingText = new PDLText( ProjectileDataLabStrings.creatingStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+    } ), { font: PDLConstants.SELECTOR_FONT } );
+    const creatingText = new PDLText( ProjectileDataLabStrings.creatingStringProperty, { font: PDLConstants.SELECTOR_FONT } );
     const meanText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty, {
       value: new DerivedProperty( [ sampleMeanProperty ], ( mean: number | null ) => {
         return mean === null ? 'null' : Utils.toFixed( mean, 1 );
       } )
-    } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+    } ), { font: PDLConstants.SELECTOR_FONT } );
     const meanIndicatorNode = new MeanIndicatorNode( 10, { maxWidth: 10 } );
 
     Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],

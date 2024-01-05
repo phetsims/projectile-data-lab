@@ -15,7 +15,7 @@ const maxFieldDistance = 100;
 const fieldWidth = 850;
 const pixelsToDistance = fieldWidth / maxFieldDistance;
 
-const MAX_ANGLE_STANDARD_DEVIATION = 8; // degrees
+const maxAngleStandardDeviation = 8; // degrees
 
 const PDLConstants = {
 
@@ -29,7 +29,7 @@ const PDLConstants = {
   MAX_SAMPLES_PER_FIELD: 200,
 
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.7, // seconds
-  MAX_ANGLE_STANDARD_DEVIATION: MAX_ANGLE_STANDARD_DEVIATION, // degrees
+  MAX_ANGLE_STANDARD_DEVIATION: maxAngleStandardDeviation, // degrees
 
   // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
   ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS: 3,
@@ -79,11 +79,11 @@ const PDLConstants = {
 
   LAUNCHER_CONFIGS: [
     new MysteryLauncherProfile( 'spring', 1 ),
-    new MysteryLauncherProfile( 'spring', MAX_ANGLE_STANDARD_DEVIATION ),
+    new MysteryLauncherProfile( 'spring', maxAngleStandardDeviation ),
     new MysteryLauncherProfile( 'explosion', 0 ),
     new MysteryLauncherProfile( 'pressure', 2 ),
     new MysteryLauncherProfile( 'pressure', 4 ),
-    new MysteryLauncherProfile( 'explosion', MAX_ANGLE_STANDARD_DEVIATION )
+    new MysteryLauncherProfile( 'explosion', maxAngleStandardDeviation )
   ],
 
   // The projectile source images are scaled by this factor when drawing them on the canvas
@@ -98,9 +98,9 @@ const PDLConstants = {
   NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
   INTERVAL_TOOL_FONT: new PhetFont( 15 ),
-  SAMPLE_SELECTOR_FONT: new PhetFont( 13 ),
+  SELECTOR_FONT: new PhetFont( 13 ),
 
-  ANGLE_STABILIZER_RANGE: new Range( 0, MAX_ANGLE_STANDARD_DEVIATION ),
+  ANGLE_STABILIZER_RANGE: new Range( 0, maxAngleStandardDeviation ),
 
   // Allow the top content to go above the dev bounds, but not too far
   ABOVE_DEV_BOUNDS_TOP: -200

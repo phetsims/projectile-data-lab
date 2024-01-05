@@ -24,6 +24,7 @@ import pumpkin3Highlighted_png from '../../../images/pumpkin3Highlighted_png.js'
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
 import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
@@ -143,12 +144,13 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       ) );
     };
 
-    const projectileImageContainer = new Node();
-    const projectileCardContainer = new Panel( projectileImageContainer, { maxHeight: 25, align: 'center' } );
-    const projectileData = new PDLPanelSection( titleStringProperty, projectileCardContainer, {
-      align: 'center', grow: 10,
-      maxWidth: 60
+    const projectileInfoContainer = new Node( { maxHeight: 15 } );
+    const projectileData = new PDLPanelSection( titleStringProperty, projectileInfoContainer, {
+      titleFont: PDLConstants.SELECTOR_FONT,
+      align: 'center'
     } );
+
+    const projectileCard = new Panel( projectileData, { xMargin: 6, yMargin: 5 } );
 
     super( new HBox( {
       spacing: 5,
@@ -160,7 +162,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
             createIncrementDecrementButton( 'decrement' )
           ]
         } ),
-        projectileData,
+        projectileCard,
         new HBox( {
           spacing: 4,
           children: [
@@ -176,7 +178,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
     } );
 
     Multilink.multilink( [ selectedProjectileNumberProperty, landedProjectileCountProperty, selectedProjectileProperty ], () => {
-      projectileImageContainer.children = [ createPage() ];
+      projectileInfoContainer.children = [ createPage() ];
     } );
   }
 }
