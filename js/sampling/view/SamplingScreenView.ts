@@ -108,7 +108,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       model.fieldProperty,
       model.selectedSampleProperty,
       model.numberOfStartedSamplesProperty,
-      model.numberOfCompletedSamplesProperty, {
+      model.numberOfCompletedSamplesProperty,
+      model.sampleMeanProperty, {
         tandem: options.tandem.createTandem( 'sampleSelectorPanel' )
       } );
 

@@ -3,7 +3,7 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import { HBox, Line, Node, Path, Text, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Line, Node, Path, VBox } from '../../../../scenery/js/imports.js';
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
 import Panel from '../../../../sun/js/Panel.js';
@@ -36,42 +36,56 @@ export default class SampleSelectorPanel extends PDLPanel {
     selectedSampleProperty: TProperty<number>,
     numberOfStartedSamplesProperty: TReadOnlyProperty<number>,
     numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
+    sampleMeanProperty: TReadOnlyProperty<number | null>,
     providedOptions: SampleSelectorPanelOptions ) {
 
     const options = optionize<SampleSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
 
     const dataContainer = new Node();
+
+    // Reuse text labels to avoid memory leaks
+    const noDataText = new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+    const titleText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
+      number: selectedSampleProperty,
+      count: numberOfStartedSamplesProperty
+    } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+    const creatingText = new PDLText( ProjectileDataLabStrings.creatingStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+    const meanText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty, {
+      value: new DerivedProperty( [ sampleMeanProperty ], ( mean: number | null ) => {
+        return mean === null ? 'null' : Utils.toFixed( mean, 1 );
+      } )
+    } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+    const meanIndicatorNode = new MeanIndicatorNode( 10, { maxWidth: 10 } );
+
     Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
       ( samplingField, selectedSample, numberOfStartedSamples, numberOfCompletedSamples ) => {
 
         if ( numberOfStartedSamples === 0 ) {
-          dataContainer.children = [ new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ) ];
+          noDataText.detach();
+          dataContainer.children = [ noDataText ];
         }
         else {
 
+          titleText.detach();
           const children: Node[] = [
-            new Text( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
-              number: selectedSample,
-              count: numberOfStartedSamples
-            } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } )
+            titleText
           ];
 
           // REVIEW: See how this logic can be simplified / documented
           const isUnfinishedSampleSelected = selectedSample === numberOfStartedSamples && numberOfStartedSamples > numberOfCompletedSamples;
           const isUnstartedSampleSelected = selectedSample > numberOfStartedSamples;
           if ( isUnfinishedSampleSelected || isUnstartedSampleSelected ) {
-            children.push( new PDLText( ProjectileDataLabStrings.creatingStringProperty, { font: PDLConstants.SAMPLE_SELECTOR_FONT } ) );
+            creatingText.detach();
+            children.push( creatingText );
           }
 
           else {
-            const values = samplingField.getProjectilesInSelectedSample().map( projectile => projectile.x );
 
-            const meanText = new Text( new PatternStringProperty( ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty, {
-              value: Utils.toFixed( _.mean( values ), 1 )
-            } ), { font: PDLConstants.SAMPLE_SELECTOR_FONT } );
+            meanText.detach();
+            meanIndicatorNode.detach();
             children.push( new HBox( {
                 spacing: 3,
-                children: [ meanText, new MeanIndicatorNode( 10, { maxWidth: 10 } ) ]
+                children: [ meanText, meanIndicatorNode ]
               } )
             );
           }
