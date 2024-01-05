@@ -23,6 +23,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
 import SamplingFieldSignNode from './SamplingFieldSignNode.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -63,7 +64,12 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     } );
     this.projectileCanvasLayer.addChild( meanIndicatorNode );
 
-    const meanReadoutNode = new PDLText( '', {
+    const meanReadoutStringProperty = new PatternStringProperty( ProjectileDataLabStrings.meanMetersPatternStringProperty, {
+      mean: new DerivedProperty( [ model.sampleMeanProperty ],
+        mean => mean === null ? '' : Utils.toFixed( mean, 1 )
+      )
+    } );
+    const meanReadoutNode = new PDLText( meanReadoutStringProperty, {
       visibleProperty: meanIndicatorVisibleProperty,
       fontSize: 12
     } );
@@ -72,9 +78,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     model.sampleMeanProperty.link( mean => {
       if ( mean !== null ) {
         meanIndicatorNode.centerX = this.modelViewTransform.modelToViewX( mean );
-
-        // TODO: i18n, see https://github.com/phetsims/projectile-data-lab/issues/7
-        meanReadoutNode.string = `${Utils.toFixed( mean, 1 )} m`;
         meanReadoutNode.centerBottom = meanIndicatorNode.centerTop.plusXY( 0, -2 );
       }
     } );
