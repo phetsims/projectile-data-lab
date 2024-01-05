@@ -50,6 +50,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, VSMField>;
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;
   public readonly landedProjectileCountProperty: DynamicProperty<number, number, VSMField>;
+  public readonly totalProjectileCountProperty: DynamicProperty<number, number, VSMField>;
   public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>;
   public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, VSMField>;
 
@@ -89,6 +90,10 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.selectedProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, VSMField>( this.fieldProperty, {
       derive: t => t.selectedProjectileProperty
+    } );
+
+    this.totalProjectileCountProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+      derive: t => t.totalProjectileCountProperty
     } );
 
     this.landedProjectileCountProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {

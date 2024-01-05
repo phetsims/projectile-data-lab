@@ -17,6 +17,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import { StopwatchPhase, StopwatchPhaseValues } from './StopwatchPhase.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -54,6 +55,7 @@ export default class VSMField extends Field {
     } ]
   } );
   public readonly landedProjectileCountProperty: NumberProperty;
+  public readonly totalProjectileCountProperty: NumberProperty;
 
   public constructor( public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
     super( providedOptions );
@@ -108,9 +110,8 @@ export default class VSMField extends Field {
 
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
     this.landedProjectileCountProperty = new NumberProperty( 0 );
+    this.totalProjectileCountProperty = new NumberProperty( 0 );
 
-    // TODO: When phetio-state is set, does it trigger "landed" on things? Probably not. And it probably shouldn't. https://github.com/phetsims/projectile-data-lab/issues/7
-    // But in that case we will need to track this data another way.
     this.projectileLandedEmitter.addListener( projectile => {
 
       // After a projectile lands, update the selected projectile number and the number of landed projectiles
@@ -125,6 +126,14 @@ export default class VSMField extends Field {
       }
 
       this.landedProjectileCountProperty.value = this.landedProjectiles.length;
+    } );
+
+    this.projectileLaunchedEmitter.addListener( projectile => {
+      this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
+    } );
+
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+      this.updateProjectileCounts();
     } );
 
     // If the selected projectile is changed, repaint the canvas even if time is paused
@@ -144,6 +153,11 @@ export default class VSMField extends Field {
         this.latestLaunchAngleProperty.value = this.meanLaunchAngleProperty.value;
       }
     } );
+  }
+
+  public updateProjectileCounts(): void {
+    this.landedProjectileCountProperty.value = this.landedProjectiles.length;
+    this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
   }
 
   public launchProjectile(): void {
@@ -187,7 +201,9 @@ export default class VSMField extends Field {
     this.continuousLaunchTimer.setZeroTimeRemaining();
 
     this.selectedProjectileNumberProperty.reset();
+
     this.landedProjectileCountProperty.reset();
+    this.totalProjectileCountProperty.reset();
   }
 }
 

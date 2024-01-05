@@ -67,7 +67,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       model,
       ProjectileDataLabStrings.singleLaunchStringProperty,
       ProjectileDataLabStrings.continuousLaunchStringProperty,
-      true,
+
+      // TODO: Putting true here is buggy. When you launch out the max manually, the press clear, the button automatically is in auto-fire mode. See https://github.com/phetsims/projectile-data-lab/issues/7
+      false,
       options
     );
 
@@ -328,6 +330,10 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     ProjectileDataLabStrings.noAirResistanceStringProperty.link( () => {
       this.noAirResistanceText.centerX = fieldSign.left + 0.5 * totalFieldSignEraserButtonWidth;
+    } );
+
+    model.totalProjectileCountProperty.link( totalProjectileCount => {
+      this.launchButton.enabled = totalProjectileCount < PDLConstants.MAX_PROJECTILES_PER_VSM_FIELD;
     } );
 
     // Allow the top content to go above the dev bounds, but not too far
