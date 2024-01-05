@@ -65,12 +65,17 @@ export default class SamplingHistogramNode extends HistogramNode {
       ]
     } );
     iconNode.maxHeight = textVBox.height;
+
+    const MARGIN = 3;
+
     const label = new PDLPanel( new HBox( {
       spacing: 5,
       children: [ iconNode, textVBox ]
     } ), {
       fill: 'white',
-      cornerRadius: 0
+      cornerRadius: 0,
+      top: MARGIN,
+      left: MARGIN
     } );
     this.chartNode.addChild( label );
 
@@ -84,8 +89,8 @@ export default class SamplingHistogramNode extends HistogramNode {
     this.chartNode.addChild( eraserButton );
 
     ManualConstraint.create( this, [ eraserButton, this.chartBackground ], ( eraserButton, chartBackground ) => {
-      eraserButton.right = chartBackground.right - 3;
-      eraserButton.top = chartBackground.top + 3;
+      eraserButton.right = chartBackground.right - MARGIN;
+      eraserButton.top = chartBackground.top + MARGIN;
     } );
   }
 }
