@@ -64,7 +64,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
       const projectile = projectiles[ i ];
 
       const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
-      const image = ( phase === 'showingCompleteSampleWithMean' || phase === 'maxSamplesReached' ) ? cannonballGray_png : cannonball_png;
+      const image = phase === 'showingCompleteSampleWithMean' ? cannonballGray_png : cannonball_png;
 
       context.save();
 
@@ -74,7 +74,6 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
       context.drawImage( image, -image.width / 2, -image.height / 2 );
 
       context.restore();
-
     }
   }
 }

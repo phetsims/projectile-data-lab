@@ -67,6 +67,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       model,
       ProjectileDataLabStrings.singleLaunchStringProperty,
       ProjectileDataLabStrings.continuousLaunchStringProperty,
+      true,
       options
     );
 

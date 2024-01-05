@@ -114,6 +114,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public override launchButtonPressed(): void {
 
+    if ( this.numberOfStartedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+      return;
+    }
+
+    console.log( 'launchButtonPressed' );
+
     const field = this.fieldProperty.value;
     const phaseProperty = field.phaseProperty;
 
@@ -125,13 +131,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
 
-      if ( field.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
-        phaseProperty.value = 'maxSamplesReached';
-      }
-      else {
-        this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
-        phaseProperty.value = 'showingAirborneProjectiles';
-      }
+      this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
+      phaseProperty.value = 'showingAirborneProjectiles';
     }
 
     else if ( this.launchModeProperty.value === 'continuous' ) {

@@ -122,6 +122,12 @@ export default class SamplingField extends Field {
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
       this.updateComputedProperties();
     } );
+
+    this.numberOfStartedSamplesProperty.link( numberOfStartedSamples => {
+      if ( numberOfStartedSamples >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+        this.isContinuousLaunchingProperty.value = false;
+      }
+    } );
   }
 
   /**
@@ -147,7 +153,7 @@ export default class SamplingField extends Field {
     const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
 
     // This multilink is called during transient intermediate phases, so we must guard and make sure we truly have a complete sample
-    const isComplete = ( this.phaseProperty.value === 'showingCompleteSampleWithMean' || this.phaseProperty.value === 'maxSamplesReached' ) && projectilesInSelectedSample.length === this.sampleSize;
+    const isComplete = this.phaseProperty.value === 'showingCompleteSampleWithMean' && projectilesInSelectedSample.length === this.sampleSize;
 
     this.sampleMeanProperty.value = isComplete ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) : null;
 
@@ -184,9 +190,6 @@ export default class SamplingField extends Field {
 
         samples.push( { x: mean } );
       }
-      else {
-        console.log( `Histogram data shows inconsistent samples for sampleNumber: ${sampleNumber}, members.length = ` + members.length + ', this.sampleSize = ' + this.sampleSize );
-      }
     }
     return samples;
   }
@@ -199,7 +202,6 @@ export default class SamplingField extends Field {
     this.projectilesChangedEmitter.emit();
     this.projectileCreatedEmitter.emit( projectile );
   }
-
 
   // If the user fires a new sample while a prior sample was in progress, finish up the prior sample.
   // Most important for 'Single' mode
@@ -241,13 +243,16 @@ export default class SamplingField extends Field {
       // Compute the number of projectile that should be showing at this time
       const numberProjectilesToShow = Math.ceil( portionOfSample * this.sampleSize );
 
+      let changed = false;
       while ( this.getProjectilesInSelectedSample().length < numberProjectilesToShow ) {
         const projectile = this.createProjectile( this.selectedSampleProperty.value );
-
         this.airborneProjectiles.push( projectile );
-        this.projectilesChangedEmitter.emit();
         this.projectileCreatedEmitter.emit( projectile );
+        changed = true;
+      }
 
+      if ( changed ) {
+        this.projectilesChangedEmitter.emit();
         this.updateComputedProperties();
       }
 
@@ -264,7 +269,11 @@ export default class SamplingField extends Field {
       }
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
-      if ( this.launchModeProperty.value === 'continuous' && this.isContinuousLaunchingProperty.value && timeInMode >= CONTINUOUS_MODE_PERIOD ) {
+      if (
+        this.launchModeProperty.value === 'continuous' &&
+        this.isContinuousLaunchingProperty.value &&
+        timeInMode >= CONTINUOUS_MODE_PERIOD &&
+        this.numberOfCompletedSamplesProperty.value < PDLConstants.MAX_SAMPLES_PER_FIELD ) {
 
         // Create all projectiles for this sample immediately and go to next one
         this.selectedSampleProperty.value++;
@@ -274,14 +283,6 @@ export default class SamplingField extends Field {
         // Manually restart the phase timer, since the phase will not change when showing sequential continuous samples
         this.phaseStartTimeProperty.value = this.timeProperty.value;
       }
-
-      if ( this.numberOfCompletedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
-        this.phaseProperty.value = 'maxSamplesReached';
-      }
-    }
-    else if ( this.phaseProperty.value === 'maxSamplesReached' ) {
-
-      // Nothing to do
     }
   }
 
@@ -290,10 +291,7 @@ export default class SamplingField extends Field {
 
     super.clearProjectiles();
     this.updateComputedProperties();
-
-    if ( this.phaseProperty.value !== 'showingCompleteSampleWithMean' ) {
-      this.phaseProperty.reset();
-    }
+    this.phaseProperty.reset();
   }
 }
 

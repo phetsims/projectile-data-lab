@@ -10,8 +10,7 @@ export const SamplingPhaseValues = [
   'idle', // User has not yet pressed the launch button
   'showingAirborneProjectiles', // Single mode only, show projectiles being launched through the air
   'showingCompleteSampleWithoutMean', // Single mode only, show all the landed projectiles without the mean
-  'showingCompleteSampleWithMean', // Single + Continuous, but this is the primary mode for Continuous
-  'maxSamplesReached' // Self-explanatory
+  'showingCompleteSampleWithMean' // Single + Continuous, but this is the primary mode for Continuous
 ] as const;
 
 export type SamplingPhase = typeof SamplingPhaseValues[number];
