@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2024, University of Colorado Boulder
 
 /**
  * The phases that a SamplingField can be in. Note some phases overlap between both single/continuous modes.

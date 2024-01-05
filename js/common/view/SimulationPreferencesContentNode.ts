@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * SimulationPreferencesContentNode displays general controls that globally affect the presentation or behavior of the simulation.
