@@ -80,7 +80,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
             field.launchAngleStandardDeviationProperty.value = angleStabilizer;
           }
           else {
-            // TODO: Does measures model need to know about the mystery launcher? - see https://github.com/phetsims/projectile-data-lab/issues/7
+            // TODO: Does measures model need to know about the mystery launcher? - see https://github.com/phetsims/projectile-data-lab/issues/25
             // Set the launch angle standard deviation to the value for the mystery launcher.
             const launcherConfig = PDLConstants.LAUNCHER_CONFIGS[ this.mysteryLauncherProperty.value - 1 ];
             field.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( launcherConfig.launcherMechanism );

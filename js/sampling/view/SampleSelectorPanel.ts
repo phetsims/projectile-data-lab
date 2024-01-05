@@ -107,7 +107,7 @@ export default class SampleSelectorPanel extends PDLPanel {
       }
     };
 
-    // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/25
     const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
       return new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
         {},

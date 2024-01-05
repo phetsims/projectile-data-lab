@@ -55,7 +55,7 @@ export default abstract class Field extends PhetioObject {
 
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
-  // TODO: Does every field need a launcher type property, or just the VSM fields? - see https://github.com/phetsims/projectile-data-lab/issues/7
+  // TODO: Does every field need a launcher type property, or just the VSM fields? - see https://github.com/phetsims/projectile-data-lab/issues/25
   // (Because the sampling field has a single launcher type per field)
   // Launcher type is the number of the active launcher, from 1-6
   public readonly mysteryLauncherProperty: Property<number>;
@@ -123,11 +123,11 @@ export default abstract class Field extends PhetioObject {
 
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', {
 
-      // TODO: On the sampling screen, only allow valid value of 30.  So make the LauncherConfigurationValues an option passed in, see https://github.com/phetsims/projectile-data-lab/issues/7
+      // TODO: On the sampling screen, only allow valid value of 30.  So make the LauncherConfigurationValues an option passed in, see https://github.com/phetsims/projectile-data-lab/issues/25
       // Does this go for the initial value as well? Where is that being changed?
       validValues: LauncherConfigurationValues,
 
-      // TODO: Do not instrument on the sampling screen, see https://github.com/phetsims/projectile-data-lab/issues/7
+      // TODO: Do not instrument on the sampling screen, see https://github.com/phetsims/projectile-data-lab/issues/25
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
       phetioDocumentation: 'This property configures the height and mean launch angle of the launcher. When set to ANGLE_0_RAISED, the launcher is raised.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
@@ -169,8 +169,8 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: StringUnionIO( ProjectileTypeValues )
     } );
 
-    // TODO: Keep in mind that in screens 2-3 it will have more sub-data structure, see https://github.com/phetsims/projectile-data-lab/issues/7
-    // TODO: That may be done in another Property in Screen 2 + 3, see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: Keep in mind that in screens 2-3 it will have more sub-data structure, see https://github.com/phetsims/projectile-data-lab/issues/25
+    // TODO: That may be done in another Property in Screen 2 + 3, see https://github.com/phetsims/projectile-data-lab/issues/25
     this.mysteryLauncherProperty = new Property<number>( 1, {
       validValues: _.range( 1, 7 ),
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
@@ -182,7 +182,7 @@ export default abstract class Field extends PhetioObject {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' )
     } );
 
-    // TODO: These should be based on whether the launcher is custom or not, see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: These should be based on whether the launcher is custom or not, see https://github.com/phetsims/projectile-data-lab/issues/25
     const initialMeanLaunchSpeed = MeanLaunchSpeedForMechanism( 'spring' );
     const initialSDLaunchSpeed = SDLaunchSpeedForMechanism( 'spring' );
 
@@ -282,7 +282,7 @@ export default abstract class Field extends PhetioObject {
 
   public static FieldIO = new IOType( 'FieldIO', {
     valueType: Field,
-    documentation: 'A field in the Projectile Data Lab', // TODO: https://github.com/phetsims/projectile-data-lab/issues/7 document fully
+    documentation: 'A field in the Projectile Data Lab', // TODO: https://github.com/phetsims/projectile-data-lab/issues/25 document fully
     defaultDeserializationMethod: 'applyState',
     stateSchema: {
       airborneProjectiles: ArrayIO( Projectile.ProjectileIO ),

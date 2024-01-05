@@ -107,7 +107,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     }
 
     // draw a white dot in the middle of the highlighted block, on top of the all the data blocks
-    // TODO: Clean up now that we know we don't want to show the highlight in the bars mode, see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: Clean up now that we know we don't want to show the highlight in the bars mode, see https://github.com/phetsims/projectile-data-lab/issues/25
     if ( histogramRepresentation === 'blocks' ) {
       if ( highlightDotX !== null && highlightDotY !== null ) {
         context.beginPath();

@@ -127,7 +127,7 @@ export default class CustomLauncherNode extends LauncherNode {
       this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
     } );
 
-    // TODO: Confirm that this is the right way to handle this - see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: Confirm that this is the right way to handle this - see https://github.com/phetsims/projectile-data-lab/issues/25
     isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {
       // If setting to custom, set the graphics for mystery launcher 1
       // If the second

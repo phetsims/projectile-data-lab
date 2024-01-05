@@ -18,7 +18,7 @@ const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
  */
 export default class LauncherRadioButtonGroupWrapper extends Node {
   public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
-    // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/7
+    // TODO: be explicit in passing the validValues through as a separate option, see https://github.com/phetsims/projectile-data-lab/issues/25
     const mysteryLauncherRadioButtonGroupItems = _.range( 1, 7 ).map( mysteryLauncher => {
       return {
         value: mysteryLauncher,
