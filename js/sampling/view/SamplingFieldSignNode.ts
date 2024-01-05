@@ -55,7 +55,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
       children: [ ...fieldSignTextNodes ],
       align: 'center',
       spacing: 3,
-      maxWidth: 200,
+      maxWidth: 140,
       yMargin: 2
     } );
 

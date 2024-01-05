@@ -136,6 +136,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       buttonGroupXSpacing: 18,
       layoutOptions: {
         topMargin: 10
+      },
+      speedRadioButtonGroupOptions: {
+        maxWidth: 80
       }
     } );
     this.topRightUIContainer.addChild( this.timeControlNode );

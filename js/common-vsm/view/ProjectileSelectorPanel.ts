@@ -57,11 +57,6 @@ export default class ProjectileSelectorPanel extends PDLPanel {
     } );
 
     const createPage = () => {
-      // const field = samplingFieldProperty.value;
-      // const projectiles = field.getProjectilesInCurrentSample();
-      // const values = projectiles.map( projectile => projectile.x );
-      //
-      // const meanString = values.length === 0 ? '?' : Utils.toFixedNumber( _.mean( values ), 1 );
       const projectile = selectedProjectileProperty.value;
 
       if ( projectile ) {
@@ -148,7 +143,10 @@ export default class ProjectileSelectorPanel extends PDLPanel {
 
     const projectileImageContainer = new Node();
     const projectileCardContainer = new Panel( projectileImageContainer, { maxHeight: 20, align: 'center' } );
-    const projectileData = new PDLPanelSection( titleStringProperty, projectileCardContainer, { align: 'center', grow: 10 } );
+    const projectileData = new PDLPanelSection( titleStringProperty, projectileCardContainer, {
+      align: 'center', grow: 10,
+      maxWidth: 60
+    } );
 
     super( new HBox( {
       spacing: 5,
