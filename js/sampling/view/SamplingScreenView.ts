@@ -71,7 +71,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     } );
     const meanReadoutNode = new PDLText( meanReadoutStringProperty, {
       visibleProperty: meanIndicatorVisibleProperty,
-      fontSize: 12
+      fontSize: 13
     } );
     this.projectileCanvasLayer.addChild( meanReadoutNode );
 
