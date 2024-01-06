@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * LaunchMode is a string literal union enumeration that describes whether the launch mode is single or continuous.
