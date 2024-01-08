@@ -43,4 +43,5 @@ files, and to have a usage site like `new MeasuringTapeIconNode()`.
 ### PhET-iO
 
 For this simulation, individual projectiles are not PhET-iO instrumented. Instead, the parent Field is instrumented.
-Please see FieldIO which describes how the serialization is implemented.
+Please see FieldIO which describes how the serialization is implemented. Note however that ProjectileIO defines how
+a Projectile is serialized as part of the Field serialization.
