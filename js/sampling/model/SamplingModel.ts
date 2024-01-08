@@ -52,7 +52,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       for ( let j = 0; j < SAMPLE_SIZES.length; j++ ) {
         fields.push( new SamplingField(
           i + 1, SAMPLE_SIZES[ j ], samplingLaunchModeProperty, {
-            tandem: fieldsTandem.createTandem( 'launcher' + ( i + 1 ) + 'sampleSize' + SAMPLE_SIZES[ j ] )
+            tandem: fieldsTandem.createTandem( `launcher${i + 1}sampleSize${SAMPLE_SIZES[ j ]}Field` )
           } ) );
       }
     }
