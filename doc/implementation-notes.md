@@ -29,6 +29,6 @@ Note that if the English strings are changed after 1.0, the keys will not be upd
 
 ### Inner classes
 
-For this simulation, for trivial classes that are only used by one class, we use inner classes. For example, search for
+For this simulation, for trivial classes that are only used by one class, we sometimes use inner classes. For example, search for
 `class MeasuringTapeIconNode`.  This allows us to keep code co-located with where it is used, without proliferating
 files, and to have a usage site like `new MeasuringTapeIconNode()`.
