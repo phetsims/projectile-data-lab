@@ -22,7 +22,6 @@ import { ZOOM_LEVELS } from '../../common/view/HistogramNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
-// TODO: Duplicated with the top of HistogramNode, see https://github.com/phetsims/projectile-data-lab/issues/25
 /**
  * SampleThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large
  * histogram, and are designed to make it easy to compare the widths of sample means for different n=? sample sizes.
