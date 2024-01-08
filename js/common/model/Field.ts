@@ -280,7 +280,7 @@ export default abstract class Field extends PhetioObject {
 
   public static FieldIO = new IOType( 'FieldIO', {
     valueType: Field,
-    documentation: 'A field in the Projectile Data Lab', // TODO: https://github.com/phetsims/projectile-data-lab/issues/25 document fully
+    documentation: 'A field in the Projectile Data Lab. This contains the state for the projectiles, separated into airborne and landed projectiles.',
     defaultDeserializationMethod: 'applyState',
     stateSchema: {
       airborneProjectiles: ArrayIO( Projectile.ProjectileIO ),

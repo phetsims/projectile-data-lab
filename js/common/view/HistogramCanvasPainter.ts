@@ -105,19 +105,16 @@ export default class HistogramCanvasPainter extends CanvasPainter {
         context.strokeRect( x * scaleFactor, y * scaleFactor - h, blockWidth * scaleFactor, h );
       }
     }
+    else if ( highlightDotX !== null && highlightDotY !== null ) {
 
-    // draw a white dot in the middle of the highlighted block, on top of the all the data blocks
-    // TODO: Clean up now that we know we don't want to show the highlight in the bars mode, see https://github.com/phetsims/projectile-data-lab/issues/25
-    if ( histogramRepresentation === 'blocks' ) {
-      if ( highlightDotX !== null && highlightDotY !== null ) {
-        context.beginPath();
-        context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, DOT_RADIUS * scaleFactor, 0, 2 * Math.PI );
-        context.fillStyle = 'white';
-        context.strokeStyle = this.blockFillProperty.value.toCSS();
-        context.lineWidth = scaleFactor;
-        context.fill();
-        context.stroke();
-      }
+      // draw a white dot in the middle of the highlighted block, in front of the all the data blocks
+      context.beginPath();
+      context.arc( highlightDotX * scaleFactor + blockWidth * scaleFactor / 2, highlightDotY * scaleFactor + blockHeight * scaleFactor / 2, DOT_RADIUS * scaleFactor, 0, 2 * Math.PI );
+      context.fillStyle = 'white';
+      context.strokeStyle = this.blockFillProperty.value.toCSS();
+      context.lineWidth = scaleFactor;
+      context.fill();
+      context.stroke();
     }
 
     context.restore();
