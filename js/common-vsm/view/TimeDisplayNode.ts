@@ -10,6 +10,7 @@ import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLColors from '../../common/PDLColors.js';
+import SceneryPhetStrings from '../../../../scenery-phet/js/SceneryPhetStrings.js';
 
 type SelfOptions = {
   isIcon?: boolean;
@@ -37,7 +38,14 @@ export default class TimeDisplayNode extends Node {
       cornerRadius: 4,
       xMargin: 4,
       yMargin: 2,
-      pickable: false // allow dragging by the number display
+      pickable: false, // allow dragging by the number display
+
+      numberFormatterDependencies: [
+
+        // Not really necessary since the units get filled in as '' so there really aren't units anyway. But to be
+        // careful and strict we observe this Property anyway.
+        SceneryPhetStrings.stopwatchValueUnitsPatternStringProperty
+      ]
     } );
 
     const xMargin = 8.5;
