@@ -35,28 +35,34 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
   }
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
+
     // Order of drawing:
     // 1. Force field graphics for outliers
-    // 2: Trajectories
+    // 2: Paths
     // 3: Projectiles
 
-    const projectiles = this.fieldProperty.value.getProjectilesInSelectedSample();
-    const landedProjectiles = this.fieldProperty.value.getLandedProjectilesInSelectedSample();
+    const field = this.fieldProperty.value;
+    const phase = field.phaseProperty.value;
+    const isShowingLatestSample = field.selectedSampleProperty.value === field.numberOfStartedSamplesProperty.value;
+
+    const projectiles = field.getProjectilesInSelectedSample();
+    const landedProjectiles = field.getLandedProjectilesInSelectedSample();
 
     // 1. Force field graphics for landed outliers are drawn in PDLCanvasNode
     super.drawOutlierGraphicsForLandedProjectiles( projectiles, context );
 
-    // 2. Trajectories
-    context.lineWidth = 1;
+    // 2. Paths
+    if ( isShowingLatestSample ) {
+      context.lineWidth = 1;
 
-    const phase = this.fieldProperty.value.phaseProperty.value;
-    for ( let i = 0; i < projectiles.length; i++ ) {
-      const isAirborne = !landedProjectiles.includes( projectiles[ i ] );
-      const showHighlightedPath = phase === 'showingAirborneProjectiles' && isAirborne;
+      for ( let i = 0; i < projectiles.length; i++ ) {
+        const isAirborne = !landedProjectiles.includes( projectiles[ i ] );
+        const showHighlightedPath = phase === 'showingAirborneProjectiles' && isAirborne;
 
-      const pathStrokeColorProperty = showHighlightedPath ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
-      context.strokeStyle = pathStrokeColorProperty.value.toCSS();
-      this.drawPathForProjectile( context, projectiles[ i ] );
+        const pathStrokeColorProperty = showHighlightedPath ? PDLColors.pathStrokeAirborneColorProperty : PDLColors.pathStrokeSamplingColorProperty;
+        context.strokeStyle = pathStrokeColorProperty.value.toCSS();
+        this.drawPathForProjectile( context, projectiles[ i ] );
+      }
     }
 
     // 3. Projectiles

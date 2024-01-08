@@ -34,10 +34,10 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
 
     // Order of drawing:
     // 1. Force field graphics for landed outliers
-    // 2: Trajectories for landed projectile that are not the most recent (if paths are visible)
+    // 2: Paths for landed projectile that are not the most recent (if paths are visible)
     // 3: Landed projectiles that are not the most recent
-    // 4: Trajectory for most recent landed projectile (if paths are visible)
-    // 5: Trajectories for flying projectiles (if paths are visible)
+    // 4: Path for most recent landed projectile (if paths are visible)
+    // 5: Paths for flying projectiles (if paths are visible)
     // 6: Flying projectiles
     // 7: Most recent landed projectile
 
@@ -48,7 +48,7 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
     // 1. Force field graphics for landed outliers are drawn in PDLCanvasNode
     super.drawOutlierGraphicsForLandedProjectiles( landedProjectiles, context );
 
-    // 2: Trajectories for landed projectile that are not the most recent (if paths are visible)
+    // 2: Paths for landed projectile that are not the most recent (if paths are visible)
     if ( this.isPathsVisibleProperty.value ) {
       context.lineWidth = 1;
 
@@ -77,13 +77,13 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
       }
     } );
 
-    // 4: Trajectory for most recent landed projectile (if paths are visible)
+    // 4: Path for most recent landed projectile (if paths are visible)
     if ( this.isPathsVisibleProperty.value && highlightedProjectile ) {
       context.strokeStyle = PDLColors.pathStrokeHighlightedColorProperty.value.toCSS();
       this.drawPathForProjectile( context, highlightedProjectile );
     }
 
-    // 5: Trajectories for flying projectiles (if paths are visible)
+    // 5: Paths for flying projectiles (if paths are visible)
     if ( this.isPathsVisibleProperty.value ) {
       context.strokeStyle = PDLColors.pathStrokeAirborneColorProperty.value.toCSS();
       airborneProjectiles.forEach( projectile => {

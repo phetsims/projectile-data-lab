@@ -53,6 +53,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     model.sampleMeanProperty.link( () => samplingCanvasNode.invalidatePaint() );
     model.fields.forEach( field => {
       field.numberOfCompletedSamplesProperty.link( () => samplingCanvasNode.invalidatePaint() );
+      field.numberOfStartedSamplesProperty.link( () => samplingCanvasNode.invalidatePaint() );
+      field.selectedSampleProperty.link( () => samplingCanvasNode.invalidatePaint() );
     } );
 
     this.projectileCanvasLayer.addChild( samplingCanvasNode );
