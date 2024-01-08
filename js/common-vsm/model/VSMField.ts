@@ -18,6 +18,7 @@ import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import { StopwatchPhase, StopwatchPhaseValues } from './StopwatchPhase.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -161,7 +162,7 @@ export default class VSMField extends Field {
   }
 
   public launchProjectile(): void {
-    if ( this.getTotalProjectileCount() >= PDLConstants.MAX_PROJECTILES_PER_VSM_FIELD ) {
+    if ( this.getTotalProjectileCount() >= PDLQueryParameters.maxProjectiles ) {
       return;
     }
 

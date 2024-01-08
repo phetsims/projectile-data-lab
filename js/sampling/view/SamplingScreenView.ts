@@ -24,6 +24,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
 import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -203,7 +204,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
 
     model.numberOfStartedSamplesProperty.link( startedSamples => {
-      this.launchButton.enabled = startedSamples < PDLConstants.MAX_SAMPLES_PER_FIELD;
+      this.launchButton.enabled = startedSamples < PDLQueryParameters.maxSamples;
     } );
 
     this.pdomControlAreaNode.pdomOrder = [

@@ -19,6 +19,20 @@ const SCHEMA_MAP = {
     validValues: BinStrategyValues,
     defaultValue: 'binWidth',
     public: true
+  },
+
+  // Per field for VSM, for testing.
+  maxProjectiles: {
+    type: 'number' as const,
+    defaultValue: 500,
+    public: false
+  },
+
+  // Max per field for Sampling, for testing.
+  maxSamples: {
+    type: 'number' as const,
+    defaultValue: 200,
+    public: false
   }
 };
 

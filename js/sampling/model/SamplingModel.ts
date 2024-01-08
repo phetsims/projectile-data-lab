@@ -18,7 +18,7 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
 import { SamplingPhase } from './SamplingPhase.js';
-import PDLConstants from '../../common/PDLConstants.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -114,7 +114,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public override launchButtonPressed(): void {
 
-    if ( this.numberOfStartedSamplesProperty.value >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+    if ( this.numberOfStartedSamplesProperty.value >= PDLQueryParameters.maxSamples ) {
       return;
     }
 

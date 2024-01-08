@@ -9,10 +9,10 @@ import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { LaunchMode } from '../../common/model/LaunchMode.js';
 import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -124,7 +124,7 @@ export default class SamplingField extends Field {
     } );
 
     this.numberOfStartedSamplesProperty.link( numberOfStartedSamples => {
-      if ( numberOfStartedSamples >= PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+      if ( numberOfStartedSamples >= PDLQueryParameters.maxSamples ) {
         this.isContinuousLaunchingProperty.value = false;
       }
     } );
@@ -273,7 +273,7 @@ export default class SamplingField extends Field {
         this.launchModeProperty.value === 'continuous' &&
         this.isContinuousLaunchingProperty.value &&
         timeInMode >= CONTINUOUS_MODE_PERIOD &&
-        this.numberOfCompletedSamplesProperty.value < PDLConstants.MAX_SAMPLES_PER_FIELD ) {
+        this.numberOfCompletedSamplesProperty.value < PDLQueryParameters.maxSamples ) {
 
         // Create all projectiles for this sample immediately and go to next one
         this.selectedSampleProperty.value++;
