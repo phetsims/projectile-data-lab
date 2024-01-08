@@ -14,6 +14,8 @@ import PDLColors from '../../common/PDLColors.js';
 import { Circle, HBox, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 
 /**
+ * Panel that allows the user to select a field. This appears beneath the fields for the VSM screens.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

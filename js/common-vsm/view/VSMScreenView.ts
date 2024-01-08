@@ -69,7 +69,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       ProjectileDataLabStrings.singleLaunchStringProperty,
       ProjectileDataLabStrings.continuousLaunchStringProperty,
 
-      // TODO: Putting true here is buggy. When you launch out the max manually, the press clear, the button automatically is in auto-fire mode. See https://github.com/phetsims/projectile-data-lab/issues/25
+      // TODO: Putting true here is buggy. When you launch out the max manually, the press clear, the button automatically is in auto-fire mode. See https://github.com/phetsims/projectile-data-lab/issues/23
       false,
       options
     );

@@ -47,8 +47,6 @@ export default class ProjectileSelectorPanel extends PDLPanel {
     const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfCountPatternStringProperty, {
-
-      // TODO: unify naming for these across strings/variables, see https://github.com/phetsims/projectile-data-lab/issues/25
       number: selectedProjectileNumberProperty,
       count: landedProjectileCountProperty
     } );
@@ -95,7 +93,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       }
     };
 
-    // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/25
+    // TODO: Duplicated with sampling screen card panel, see https://github.com/phetsims/projectile-data-lab/issues/25 Design team is still deciding if we want the first/last buttons.
     const createIncrementDecrementButton = ( type: 'increment' | 'decrement' ) => {
       return new RectangularPushButton( combineOptions<RectangularPushButtonOptions>(
         {},

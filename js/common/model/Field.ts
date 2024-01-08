@@ -55,9 +55,7 @@ export default abstract class Field extends PhetioObject {
 
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
-  // TODO: Does every field need a launcher type property, or just the VSM fields? - see https://github.com/phetsims/projectile-data-lab/issues/25
-  // (Because the sampling field has a single launcher type per field)
-  // Launcher type is the number of the active launcher, from 1-6
+  // Numerical index (1-based) for the type of the mystery launcher, from 1-6
   public readonly mysteryLauncherProperty: Property<number>;
 
   public readonly isContinuousLaunchingProperty: BooleanProperty;
