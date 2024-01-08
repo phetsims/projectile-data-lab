@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -23,7 +23,11 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+
+  // Only instrument the launcher configuration property in VSM screens.
+  isLauncherConfigurationPhetioInstrumented: boolean;
+};
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
 /**
@@ -119,17 +123,13 @@ export default abstract class Field extends PhetioObject {
 
     this.projectilesClearedEmitter.addListener( updateIsContainingDataProperty );
 
-    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', {
-
-      // TODO: On the sampling screen, only allow valid value of 30.  So make the LauncherConfigurationValues an option passed in, see https://github.com/phetsims/projectile-data-lab/issues/25
-      // Does this go for the initial value as well? Where is that being changed?
+    const launcherConfigurationOptions = options.isLauncherConfigurationPhetioInstrumented ? {
       validValues: LauncherConfigurationValues,
-
-      // TODO: Do not instrument on the sampling screen, see https://github.com/phetsims/projectile-data-lab/issues/25
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
       phetioDocumentation: 'This property configures the height and mean launch angle of the launcher. When set to ANGLE_0_RAISED, the launcher is raised.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
-    } );
+    } : { validValues: [ 'angle45' ] } as const;
+    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', launcherConfigurationOptions );
 
     this.meanLaunchAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
       configuration => {

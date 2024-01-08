@@ -12,7 +12,7 @@ export const LauncherConfigurationValues = [ 'angle30', 'angle45', 'angle60', 'a
 
 const meanLaunchAngles = [ 30, 45, 60, 0 ];
 
-// Export a mapping that returns the numrical value of the launcher configuration.
+// Export a mapping that returns the numerical value of the launcher configuration.
 export const AngleForConfiguration = ( configuration: LauncherConfiguration ): number => {
   return meanLaunchAngles[ LauncherConfigurationValues.indexOf( configuration ) ];
 };

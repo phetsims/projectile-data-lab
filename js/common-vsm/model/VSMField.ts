@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
@@ -19,6 +19,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import { StopwatchPhase, StopwatchPhaseValues } from './StopwatchPhase.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -28,7 +29,7 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-export type VSMFieldOptions = SelfOptions & FieldOptions;
+export type VSMFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented'>;
 
 export default class VSMField extends Field {
 
@@ -59,7 +60,12 @@ export default class VSMField extends Field {
   public readonly totalProjectileCountProperty: NumberProperty;
 
   public constructor( public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
-    super( providedOptions );
+
+    const options = optionize<VSMFieldOptions, SelfOptions, FieldOptions>()( {
+      isLauncherConfigurationPhetioInstrumented: true
+    }, providedOptions );
+
+    super( options );
 
     this.latestLaunchSpeedProperty = new Property<number>( this.meanLaunchSpeedProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),

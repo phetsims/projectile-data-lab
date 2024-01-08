@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
@@ -13,6 +13,7 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import { LaunchMode } from '../../common/model/LaunchMode.js';
 import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -24,7 +25,7 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-export type SamplingFieldOptions = SelfOptions & FieldOptions;
+export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented'>;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
 const SHOWING_SINGLE_SAMPLE_TIME = 0.3;
@@ -68,7 +69,10 @@ export default class SamplingField extends Field {
   public constructor( public readonly launcher: number,
                       public readonly sampleSize: number,
                       private readonly launchModeProperty: Property<LaunchMode>,
-                      options: SamplingFieldOptions ) {
+                      providedOptions: SamplingFieldOptions ) {
+    const options = optionize<SamplingFieldOptions, SelfOptions, FieldOptions>()( {
+      isLauncherConfigurationPhetioInstrumented: false
+    }, providedOptions );
     super( options );
 
     this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );

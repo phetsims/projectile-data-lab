@@ -1,10 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
-import VSMField from '../../common-vsm/model/VSMField.js';
+import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -18,7 +17,7 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-export type MeasuresFieldOptions = SelfOptions & FieldOptions;
+export type MeasuresFieldOptions = SelfOptions & VSMFieldOptions;
 
 export default class MeasuresField extends VSMField {
 
