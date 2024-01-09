@@ -344,10 +344,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // Position the projectile selector panel
     ManualConstraint.create(
       this,
-      [ this.launchPanel, this.projectileSelectorPanel ], ( launchPanelProxy, projectileSelectorPanelProxy ) => {
-        const totalFieldSignEraserButtonWidth = fieldSign.width + this.eraserButton.width + fieldSignEraserButtonSpacing;
-        projectileSelectorPanelProxy.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_AIR_RESISTANCE_TEXT_SEPARATION;
-        projectileSelectorPanelProxy.centerX = fieldSign.left + 0.5 * totalFieldSignEraserButtonWidth;
+      [ this.projectileSelectorPanel, fieldSign ], ( projectileSelectorPanelProxy, fieldSignProxy ) => {
+        projectileSelectorPanelProxy.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
+        projectileSelectorPanelProxy.centerX = fieldSignProxy.centerX;
       } );
 
     // Position the 'No air resistance' text
