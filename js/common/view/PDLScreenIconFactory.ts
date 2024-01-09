@@ -11,7 +11,7 @@
 
 import PDLColors from '../PDLColors.js';
 import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
-import { Circle, Image, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, HBox, Image, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import spring_png from '../../../images/spring_png.js';
@@ -41,9 +41,9 @@ const PDLScreenIconFactory = {
           new Path(
             new Shape().moveTo( info.x, info.y ).quadraticCurveToPointRelative( new Vector2( info.bezierX, info.bezierY ), new Vector2( info.lineDx, info.lineDy ) ),
             {
-            stroke: PDLColors.pathStrokeAirborneColorProperty,
-            lineWidth: 6
-          } ),
+              stroke: PDLColors.pathStrokeAirborneColorProperty,
+              lineWidth: 6
+            } ),
           new Image( cannonball_png, { centerX: info.x, centerY: info.y } )
         ]
       } );
@@ -66,7 +66,7 @@ const PDLScreenIconFactory = {
 
     const springNode = new Image( spring_png );
 
-    return new ScreenIcon( springNode, {
+    return new ScreenIcon( new HBox( { children: [ springNode ], yMargin: 20 } ), {
       fill: PDLColors.screenIconBackgroundColorProperty
     } );
   },
@@ -77,10 +77,10 @@ const PDLScreenIconFactory = {
   createMeasuresScreenIcon(): ScreenIcon {
 
     // The heights of the columns of data blocks in the histogram.
-    const columnHeights = [ 2, 1, 1, 4, 2, 6, 4, 8, 7, 1, 4, 2, 0, 1 ];
+    const columnHeights = [ 2, 3, 1 ];
 
     // The index of the column whose top data block should be highlighted.
-    const highlightTopBlockOfColumnIndex = 8;
+    const highlightTopBlockOfColumnIndex = 0;
 
     // The size of each data block in the histogram.
     const dataBlockSize = 10;
@@ -102,7 +102,7 @@ const PDLScreenIconFactory = {
           centerY: -j * dataBlockSize,
           fill: PDLColors.histogramDataFillColorProperty,
           stroke: PDLColors.histogramDataStrokeColorProperty,
-          lineWidth: 1.5
+          lineWidth: 1
         } );
 
         columnNode.addChild( dataBlockNode );
@@ -123,9 +123,11 @@ const PDLScreenIconFactory = {
       dataBlockNodes.push( columnNode );
     }
 
-    const iconNode = new Node( { children: dataBlockNodes } );
+    const iconNode = new Node( {
+      children: dataBlockNodes
+    } );
 
-    return new ScreenIcon( iconNode, {
+    return new ScreenIcon( new HBox( { children: [ iconNode ], yMargin: 5 } ), {
       fill: PDLColors.screenIconBackgroundColorProperty
     } );
   },
@@ -136,7 +138,7 @@ const PDLScreenIconFactory = {
   createSamplingScreenIcon(): ScreenIcon {
 
     // The x values of the projectiles in the icon, with the leftmost projectile at x = 0.
-    const projectileXValues = [ 0, 140, 280, 420 ];
+    const projectileXValues = [ 0, 90, 130, 250, 420 ];
 
     const projectileImages: Image[] = [];
 
