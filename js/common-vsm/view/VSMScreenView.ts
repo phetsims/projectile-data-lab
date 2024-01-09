@@ -368,9 +368,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
       this.launchButton,
       this.launchControlRadioButtonGroup,
-
       this.fieldSelectorPanel,
-
       this.accordionBox,
 
       staticToolPanel,
@@ -378,6 +376,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
       this.projectileSelectorPanel,
       this.timeControlNode,
+      // The interval tool node will appear here in the Measures screen.
       this.eraserButton,
       this.resetAllButton
     ];
