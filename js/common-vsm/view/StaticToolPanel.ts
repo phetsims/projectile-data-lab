@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * The StaticToolPanel shows checkboxes for non-interactive (static) tools. This file defines checkboxes for the

@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * Defines the configuration for the launch height and mean launch angle of the launcher. The launcher can either
