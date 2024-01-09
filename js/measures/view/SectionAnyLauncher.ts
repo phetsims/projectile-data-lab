@@ -51,19 +51,23 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       radioButtonOptions: { radius: 8 },
       touchAreaYDilation: 15,
       spacing: 4,
-      tandem: providedOptions.tandem.createTandem( 'isLauncherCustomRadioButtonGroup' )
+      tandem: providedOptions.tandem.createTandem( 'isLauncherCustomRadioButtonGroup' ),
+      phetioFeatured: true
     } );
 
     const mysteryLauncherRadioButtonGroupWrapper = new LauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
-      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroupWrapper' )
+      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroupWrapper' ),
+      phetioFeatured: true
     } );
 
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
-      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' )
+      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' ),
+      phetioFeatured: true
     } );
 
     const angleStabilizerNumberControl = new AngleStabilizerNumberControl( angleStabilizerProperty, {
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' )
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' ),
+      phetioFeatured: true
     } );
 
     const customLauncherControls = new VBox( {

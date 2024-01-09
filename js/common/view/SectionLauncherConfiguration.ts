@@ -55,6 +55,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
       } )
     } ], {
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' ),
+      phetioFeatured: true,
       orientation: 'horizontal',
       spacing: 5,
       radioButtonOptions: {

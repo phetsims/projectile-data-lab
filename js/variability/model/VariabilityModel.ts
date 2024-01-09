@@ -25,7 +25,8 @@ export default class VariabilityModel extends VSMModel<VSMField> {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( identifier => {
       return new VSMField( identifier, {
-        tandem: fieldsTandem.createTandem( identifier )
+        tandem: fieldsTandem.createTandem( identifier ),
+        phetioFeatured: true
       } );
     } );
 

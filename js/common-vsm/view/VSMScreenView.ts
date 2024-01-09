@@ -82,7 +82,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       listener: () => {
         model.clearCurrentField();
       },
-      tandem: options.tandem.createTandem( 'eraserButton' )
+      tandem: options.tandem.createTandem( 'eraserButton' ),
+      phetioFeatured: true,
     } );
 
     // Create the effect that the eraser button is next to the field sign
@@ -98,6 +99,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
       tandem: options.tandem.createTandem( 'timeControlNode' ),
+      phetioFeatured: true,
       playPauseStepButtonOptions: {
         includeStepForwardButton: false
       },
@@ -180,6 +182,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
       tandem: options.tandem.createTandem( 'timedLaunchButton' ),
+      phetioFeatured: true,
       listener: () => {
         model.launchButtonPressed();
       }
@@ -294,7 +297,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, model.fields, {
-      tandem: options.tandem.createTandem( 'fieldSelectorPanel' )
+      tandem: options.tandem.createTandem( 'fieldSelectorPanel' ),
+      phetioFeatured: true
     } );
 
     const fieldSign = new VSMFieldSignNode(

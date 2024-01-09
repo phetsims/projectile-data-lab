@@ -75,6 +75,7 @@ export default class VSMField extends Field {
     } );
 
     this.selectedProjectileNumberProperty = new NumberProperty( 0, {
+      phetioFeatured: true,
       tandem: providedOptions.tandem.createTandem( 'selectedProjectileNumberProperty' ),
       phetioDocumentation: 'This property is the number of the selected projectile, in order of landing. This number is 1-indexed, and 0 means no projectile is selected.'
     } );

@@ -95,6 +95,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.isHistogramVisibleProperty = new Property<boolean>( isHistogramInitiallyVisible, {
       tandem: visiblePropertiesTandem.createTandem( 'isHistogramVisibleProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the histogram is showing.',
       phetioValueType: BooleanIO
     } );
@@ -104,6 +105,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.selectedBinWidthProperty = new Property<number>( 1, {
       validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: histogramTandem.createTandem( 'selectedBinWidthProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property configures the bin width of the field and histogram.',
       phetioValueType: NumberIO
     } );
@@ -111,6 +113,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.selectedTotalBinsProperty = new Property<number>( 10, {
       validValues: [ 10, 20, 50, 100, 200 ],
       tandem: histogramTandem.createTandem( 'selectedTotalBinsProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property configures the total number of bins in the histogram.',
       phetioValueType: NumberIO
     } );
@@ -123,17 +126,20 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.histogramRepresentationProperty = new StringUnionProperty<HistogramRepresentation>( 'blocks', {
       validValues: HistogramRepresentationValues,
       tandem: histogramTandem.createTandem( 'representationProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
     } );
 
     this.isPlayingProperty = new BooleanProperty( true, {
       tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the simulation is playing. When false, the simulation is paused.'
     } );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       validValues: providedOptions.timeSpeedValues,
       tandem: providedOptions.tandem.createTandem( 'timeSpeedProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property indicates the rate of animation when the simulation is playing.'
     } );
 
@@ -144,6 +150,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.fieldProperty = new Property( this.fields[ 0 ], {
       validValues: this.fields,
       tandem: providedOptions.tandem.createTandem( 'fieldProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property indicates the active field.',
       phetioValueType: ReferenceIO( Field.FieldIO )
     } );
@@ -151,6 +158,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.launchModeProperty = new Property<LaunchMode>( 'single', {
       validValues: LaunchModeValues,
       tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
       phetioValueType: StringUnionIO( LaunchModeValues )
     } );
@@ -186,7 +194,8 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {
-      tandem: visiblePropertiesTandem.createTandem( 'isPathsVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isPathsVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.launchModeProperty.link( launchMode => {

@@ -69,6 +69,7 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         };
       } ), {
         tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),
+        phetioFeatured: true,
         orientation: 'horizontal',
         spacing: 5,
         radioButtonOptions: {

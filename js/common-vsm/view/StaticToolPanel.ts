@@ -126,7 +126,8 @@ export default class StaticToolPanel extends PDLPanel {
     },
       ...options.additionalVerticalCheckboxGroupItems
     ], {
-      tandem: options.tandem.createTandem( 'checkboxGroup' )
+      tandem: options.tandem.createTandem( 'checkboxGroup' ),
+      phetioFeatured: true
     } );
     super( checkboxGroup, options );
   }

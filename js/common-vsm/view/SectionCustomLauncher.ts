@@ -29,11 +29,13 @@ export default class SectionCustomLauncher extends PDLPanelSection {
     }, providedOptions );
 
     const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
-      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' )
+      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' ),
+      phetioFeatured: true
     } );
 
     const angleStabilizerNumberControl = new AngleStabilizerNumberControl( angleStabilizerProperty, {
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' )
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' ),
+      phetioFeatured: true
     } );
 
     const contentContainer = new VBox( {

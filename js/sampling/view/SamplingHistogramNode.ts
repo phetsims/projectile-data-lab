@@ -89,7 +89,8 @@ export default class SamplingHistogramNode extends HistogramNode {
     const eraserButton = new EraserButton( {
       iconWidth: 27,
       listener: clearCurrentField,
-      tandem: options.tandem.createTandem( 'eraserButton' )
+      tandem: options.tandem.createTandem( 'eraserButton' ),
+      phetioFeatured: true
     } );
 
     this.chartNode.addChild( eraserButton );

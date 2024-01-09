@@ -39,6 +39,7 @@ export default class SectionProjectileType extends PDLPanelSection {
       createNode: () => new Image( piano_png, { scale: 0.15 } )
     } ], {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
+      phetioFeatured: true,
       orientation: 'horizontal',
       radioButtonOptions: {
         baseColor: 'white'

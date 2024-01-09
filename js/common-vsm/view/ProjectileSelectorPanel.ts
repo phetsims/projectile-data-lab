@@ -100,6 +100,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
         navigationButtonOptions,
         {
           tandem: options.tandem.createTandem( type + 'Button' ),
+          phetioFeatured: true,
           content: new Path( type === 'increment' ? angleRightSolidShape : angleLeftSolidShape, { fill: 'white', scale: 0.04 } ),
           listener: () => {
             const proposedValue = selectedProjectileNumberProperty.value + ( ( type === 'increment' ) ? 1 : -1 );
@@ -126,6 +127,7 @@ export default class ProjectileSelectorPanel extends PDLPanel {
         navigationButtonOptions,
         {
           tandem: options.tandem.createTandem( `${type}ProjectileButton` ),
+          phetioFeatured: true,
           content: new Node( {
             children: [
               line,

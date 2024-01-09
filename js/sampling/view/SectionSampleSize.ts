@@ -31,6 +31,7 @@ export default class SectionSampleSize extends PDLPanelSection {
 
     const sampleSizeRadioButtonGroup = new RectangularRadioButtonGroup( sampleSizeProperty, sampleSizeRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'sampleSizeRadioButtonGroup' ),
+      phetioFeatured: true,
       orientation: 'horizontal',
       spacing: 6,
       radioButtonOptions: {

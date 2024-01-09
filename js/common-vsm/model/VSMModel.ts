@@ -112,15 +112,18 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
 
     this.isLaunchAngleVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isLaunchAngleVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isLaunchAngleVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.isLaunchSpeedVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isLaunchSpeedVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isLaunchSpeedVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.isMeasuringTapeVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isMeasuringTapeVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isMeasuringTapeVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     const measuringTapeTandem = providedOptions.tandem.createTandem( 'measuringTape' );
@@ -136,7 +139,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     } );
 
     this.isStopwatchVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isStopwatchVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isStopwatchVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.stopwatch = new Stopwatch( {

@@ -42,7 +42,8 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( identifier => {
       return new MeasuresField( identifier, {
-        tandem: fieldsTandem.createTandem( identifier )
+        tandem: fieldsTandem.createTandem( identifier ),
+        phetioFeatured: true
       } );
     } );
 
@@ -64,11 +65,13 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
 
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isIntervalToolVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isIntervalToolVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     this.isDataMeasuresVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isDataMeasuresVisibleProperty' )
+      tandem: visiblePropertiesTandem.createTandem( 'isDataMeasuresVisibleProperty' ),
+      phetioFeatured: true
     } );
 
     fields.forEach( field => {

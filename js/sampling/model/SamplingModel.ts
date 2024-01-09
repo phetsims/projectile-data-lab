@@ -52,7 +52,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       for ( let j = 0; j < SAMPLE_SIZES.length; j++ ) {
         fields.push( new SamplingField(
           i + 1, SAMPLE_SIZES[ j ], samplingLaunchModeProperty, {
-            tandem: fieldsTandem.createTandem( `launcher${i + 1}sampleSize${SAMPLE_SIZES[ j ]}Field` )
+            tandem: fieldsTandem.createTandem( `launcher${i + 1}sampleSize${SAMPLE_SIZES[ j ]}Field` ),
+            phetioFeatured: true
           } ) );
       }
     }
@@ -72,6 +73,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     this.sampleSizeProperty = new Property<number>( 2, {
       validValues: SAMPLE_SIZES,
       tandem: options.tandem.createTandem( 'sampleSizeProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property configures the number of projectiles in a sample',
       phetioValueType: NumberIO
     } );
@@ -79,6 +81,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     this.mysteryLauncherProperty = new NumberProperty( 1, {
       validValues: _.range( 1, 7 ),
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property configures the active launcher by number.'
     } );
 

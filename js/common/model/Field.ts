@@ -96,6 +96,7 @@ export default abstract class Field extends PhetioObject {
         phetioType: Projectile.ProjectileIO
       } ],
       tandem: options.tandem.createTandem( 'projectileLandedEmitter' ),
+      phetioFeatured: true,
 
       // We must update the arrays before anything else, see below.
       hasListenerOrderDependencies: true
@@ -126,6 +127,7 @@ export default abstract class Field extends PhetioObject {
     const launcherConfigurationOptions = options.isLauncherConfigurationPhetioInstrumented ? {
       validValues: LauncherConfigurationValues,
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property configures the height and mean launch angle of the launcher. When set to ANGLE_0_RAISED, the launcher is raised.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
     } : { validValues: [ 'angle45' ] } as const;
@@ -172,12 +174,14 @@ export default abstract class Field extends PhetioObject {
     this.mysteryLauncherProperty = new Property<number>( 1, {
       validValues: _.range( 1, 7 ),
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'This property configures the active launcher by number.',
       phetioValueType: NumberIO
     } );
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {
-      tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' )
+      tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' ),
+      phetioFeatured: true
     } );
 
     // TODO: These should be based on whether the launcher is custom or not, see https://github.com/phetsims/projectile-data-lab/issues/25
@@ -200,6 +204,7 @@ export default abstract class Field extends PhetioObject {
 
     this.selectedSampleProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'selectedSampleProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'The selected sample being shown on the field.'
     } );
 

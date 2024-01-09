@@ -34,7 +34,9 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
     const launchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
-      model.customLauncherTypeProperty, model.angleStabilizerProperty, { tandem: options.tandem.createTandem( 'launchPanel' ) } );
+      model.customLauncherTypeProperty, model.angleStabilizerProperty, {
+        tandem: options.tandem.createTandem( 'launchPanel' )
+      } );
 
     const staticToolPanel = new StaticToolPanel( model.isPathsVisibleProperty, model.isLaunchAngleVisibleProperty, model.isLaunchSpeedVisibleProperty, {
       tandem: options.tandem.createTandem( 'staticToolPanel' )

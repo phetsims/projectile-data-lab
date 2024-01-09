@@ -75,6 +75,7 @@ export default class LauncherRadioButtonGroupWrapper extends Node {
 
     const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( mysteryLauncherProperty, mysteryLauncherRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroup' ),
+      phetioFeatured: true,
       orientation: 'horizontal',
       preferredWidth: 160,
       lineSpacing: 3,

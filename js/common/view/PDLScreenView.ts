@@ -114,7 +114,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       },
       right: this.layoutBounds.maxX - PDLConstants.SCREEN_VIEW_X_MARGIN,
       bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      tandem: options.tandem.createTandem( 'resetAllButton' )
+      tandem: options.tandem.createTandem( 'resetAllButton' ),
+      phetioFeatured: true
     } );
 
     const fieldBack = new FieldNode( model.binWidthProperty, { x: fieldX, y: fieldY } );
@@ -165,6 +166,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
       tandem: options.tandem.createTandem( 'launchButton' ),
+      phetioFeatured: true,
       listener: () => {
         model.launchButtonPressed();
       }
@@ -189,7 +191,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       left: this.launchButton.right + 15,
       centerY: this.launchButton.centerY,
       spacing: 10,
-      tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' )
+      tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' ),
+      phetioFeatured: true
     } );
 
     this.addChild( background );
