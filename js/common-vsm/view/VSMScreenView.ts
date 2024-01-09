@@ -83,7 +83,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         model.clearCurrentField();
       },
       tandem: options.tandem.createTandem( 'eraserButton' ),
-      phetioFeatured: true,
+      phetioFeatured: true
     } );
 
     // Create the effect that the eraser button is next to the field sign
