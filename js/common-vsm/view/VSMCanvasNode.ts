@@ -30,7 +30,6 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
   }
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
-    // REVIEW: If performance is a problem, use a persistent canvas and just add on to it (for the paths layer)
 
     // Order of drawing:
     // 1. Force field graphics for landed outliers

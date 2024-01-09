@@ -71,7 +71,6 @@ export default class SampleSelectorPanel extends PDLPanel {
             titleText
           ];
 
-          // REVIEW: See how this logic can be simplified / documented
           const isUnfinishedSampleSelected = selectedSample === numberOfStartedSamples && numberOfStartedSamples > numberOfCompletedSamples;
           const isUnstartedSampleSelected = selectedSample > numberOfStartedSamples;
           if ( isUnfinishedSampleSelected || isUnstartedSampleSelected ) {
