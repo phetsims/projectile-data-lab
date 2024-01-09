@@ -12,7 +12,6 @@ import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import PDLText from './PDLText.js';
 
@@ -60,7 +59,7 @@ export default class LauncherNode extends Node {
   private readonly launcherBarrelGraphics: Node;
   private readonly launcherFrameBack: Node;
 
-  private barrelRotationAnimation?: Animation;
+  private barrelRotationAnimation: Animation | null = null;
   protected readonly labelNode: Node;
 
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
@@ -124,18 +123,14 @@ export default class LauncherNode extends Node {
 
     if ( this.barrelRotationAnimation ) {
       this.barrelRotationAnimation.stop();
-      this.barrelRotationAnimation = undefined;
+      this.barrelRotationAnimation = null;
     }
-
-    const rotationProperty = new NumberProperty( this.launcherBarrel.rotation );
-    rotationProperty.lazyLink( rotation => {
-      this.launcherBarrel.setRotation( rotation );
-    } );
 
     this.barrelRotationAnimation = new Animation( {
       duration: 0.5,
       targets: [ {
-        property: rotationProperty,
+        getValue: () => this.launcherBarrel.rotation,
+        setValue: ( rotation: number ) => { this.launcherBarrel.rotation = rotation;},
         from: this.launcherBarrel.rotation,
         to: Utils.toRadians( -this.meanLaunchAngleProperty.value ),
         easing: Easing.polynomialEaseOut( 1.5 )
@@ -152,15 +147,11 @@ export default class LauncherNode extends Node {
     this.launcherBarrel.addChild( launcherFlashNode );
     launcherFlashNode.moveToBack();
 
-    const scaleProperty = new NumberProperty( 1 );
-    scaleProperty.lazyLink( scale => {
-      launcherFlashNode.setScaleMagnitude( scale );
-    } );
-
     const launcherFlashAnimation = new Animation( {
       duration: 0.4,
       targets: [ {
-        property: scaleProperty,
+        getValue: () => launcherFlashNode.getScaleVector().getMagnitude(),
+        setValue: ( scale: number ) => { launcherFlashNode.setScaleMagnitude( scale ); },
         from: 1.2,
         to: 10,
         easing: Easing.QUADRATIC_OUT
