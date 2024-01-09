@@ -41,8 +41,6 @@ type ProjectileSelectorPanelOptions = SelfOptions & WithRequired<PDLPanelOptions
 
 export default class ProjectileSelectorPanel extends PDLPanel {
 
-  public readonly projectileCardPanel: Panel;
-
   public constructor(
     selectedProjectileNumberProperty: TProperty<number>,
     landedProjectileCountProperty: TReadOnlyProperty<number>,
@@ -154,15 +152,9 @@ export default class ProjectileSelectorPanel extends PDLPanel {
       tandem: options.tandem
     } );
 
-    this.projectileCardPanel = projectileCardPanel;
-
     Multilink.multilink( [ selectedProjectileNumberProperty, landedProjectileCountProperty, selectedProjectileProperty ], () => {
       projectileInfoContainer.children = [ createPage() ];
     } );
-  }
-
-  public getProjectileCardCenterX(): number {
-    return this.projectileCardPanel.globalBounds.centerX;
   }
 }
 
