@@ -17,6 +17,8 @@ import configurationButton3_png from '../../../images/configurationButton3_png.j
 import configurationButton4_png from '../../../images/configurationButton4_png.js';
 
 /**
+ * The SectionLauncherConfiguration shows the launcher configuration radio buttons.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

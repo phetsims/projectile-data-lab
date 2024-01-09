@@ -13,6 +13,8 @@ import { Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
+ * The VSMLaunchPanel presents a UI so the user can choose the launcher configuration and projectile type.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

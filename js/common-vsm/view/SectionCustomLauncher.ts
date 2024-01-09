@@ -12,6 +12,8 @@ import CustomLauncherTypeRadioButtonGroup from './CustomLauncherTypeRadioButtonG
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
+ * This SectionCustomLauncher is a panel section allows the user to customize a launcher.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

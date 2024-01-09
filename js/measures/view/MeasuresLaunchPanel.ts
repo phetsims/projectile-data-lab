@@ -10,6 +10,9 @@ import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import SectionAnyLauncher from './SectionAnyLauncher.js';
 
 /**
+ * The MeasuresLaunchPanel extends VSMLaunchPanel and adds the SectionAnyLauncher which allows the user to select
+ * between the custom and mystery launchers.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

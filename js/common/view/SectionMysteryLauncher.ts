@@ -9,6 +9,8 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import LauncherRadioButtonGroupWrapper from './LauncherRadioButtonGroupWrapper.js';
 
 /**
+ * The SectionMysteryLauncher shows the mystery launcher radio buttons.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

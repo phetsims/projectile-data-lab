@@ -1,8 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
+ * The SamplingModel is the model for the Projectile Data Lab's Sampling screen. All projectiles are tracked the
+ * same as in the parent, to simplify phet-io statefulness, and it adds phases and utilities to launch multiple
+ * projectiles to be part of a sample.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import projectileDataLab from '../../projectileDataLab.js';

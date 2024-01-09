@@ -14,6 +14,8 @@ import pumpkin_png from '../../../images/pumpkin_png.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
+ * The SectionProjectileType shows the projectile type radio buttons.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

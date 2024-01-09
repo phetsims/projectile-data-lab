@@ -12,7 +12,7 @@ const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
 
 /**
  * LauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
- * mystery launchers.
+ * mystery launchers. A wrapper is needed to help the layout wrap.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */

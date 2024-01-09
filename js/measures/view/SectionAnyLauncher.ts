@@ -17,6 +17,8 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import LauncherRadioButtonGroupWrapper from '../../common/view/LauncherRadioButtonGroupWrapper.js';
 
 /**
+ * The SectionAnyLauncher allows the user to select between the custom and mystery launchers.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

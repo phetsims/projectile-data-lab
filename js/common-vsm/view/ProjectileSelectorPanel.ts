@@ -29,10 +29,13 @@ import PDLConstants from '../../common/PDLConstants.js';
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
 /**
+ * Panel that allows the user to select a projectile. This appears in all VSM screens. The selected projectile is displayed
+ * in the panel  and highlighted in the play area. The ProjectileSelectorPanel is analogous to the
+ * SampleSelectorPanel that appears on the Sampling screen.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
-
 type SelfOptions = EmptySelfOptions;
 type ProjectileSelectorPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
