@@ -39,8 +39,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
     const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
     super( model,
-      ProjectileDataLabStrings.singleSampleStringProperty,
-      ProjectileDataLabStrings.continuousSamplingStringProperty,
+      ProjectileDataLabStrings.singleLaunchStringProperty,
+      ProjectileDataLabStrings.continuousLaunchStringProperty,
       false,
       options );
 
