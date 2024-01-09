@@ -68,7 +68,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
 
     const zoomLevelProperty = histogramNode.zoomLevelProperty;
 
-    super( comboBoxParent, new HBox( {
+    super( new HBox( {
       spacing: 4,
       children: [
         histogramNode,
@@ -86,7 +86,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
           ]
         } )
       ]
-    } ), selectedBinWidthProperty, selectedTotalBinsProperty, options );
+    } ), options );
   }
 }
 

@@ -26,10 +26,7 @@ export type VSMAccordionBoxOptions =
 export default class VSMAccordionBox extends PDLAccordionBox {
 
   public constructor(
-    selectedBinWidthProperty: Property<number>,
-    selectedTotalBinsProperty: Property<number>,
     histogramNode: HistogramNode,
-    comboBoxParent: Node,
     providedOptions: VSMAccordionBoxOptions ) {
 
     const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
@@ -39,7 +36,7 @@ export default class VSMAccordionBox extends PDLAccordionBox {
       } )
     }, providedOptions );
 
-    super( comboBoxParent, histogramNode, selectedBinWidthProperty, selectedTotalBinsProperty, options );
+    super( histogramNode, options );
   }
 }
 

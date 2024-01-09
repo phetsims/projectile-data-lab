@@ -13,7 +13,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import { Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import Property from '../../../../axon/js/Property.js';
 import PDLColors from '../PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -23,10 +22,7 @@ export type PDLAccordionBoxOptions =
   & WithRequired<AccordionBoxOptions, 'tandem'>;
 
 export default class PDLAccordionBox extends AccordionBox {
-  public constructor( comboBoxParent: Node,
-                      content: Node,
-                      selectedBinWidthProperty: Property<number>,
-                      selectedTotalBinsProperty: Property<number>,
+  public constructor( content: Node,
                       providedOptions: PDLAccordionBoxOptions ) {
 
     const margin = 8;
@@ -41,14 +37,8 @@ export default class PDLAccordionBox extends AccordionBox {
       contentYMargin: margin,
       contentYSpacing: 0
     }, providedOptions );
-    const contentContainer = new Node( {
-      children: [
-        // binControlNode,
-        content
-      ]
-    } );
 
-    super( contentContainer, options );
+    super( content, options );
   }
 }
 
