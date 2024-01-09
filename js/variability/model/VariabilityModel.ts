@@ -31,7 +31,7 @@ export default class VariabilityModel extends VSMModel<VSMField> {
       } );
     } );
 
-    super( fields, providedOptions );
+    super( fields, false, providedOptions );
   }
 }
 

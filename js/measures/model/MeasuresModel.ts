@@ -49,7 +49,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       } );
     } );
 
-    super( fields, providedOptions );
+    super( fields, true, providedOptions );
 
     this.landedDistanceAverageProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.landedDistanceAverageProperty

@@ -54,14 +54,14 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>;
   public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, VSMField>;
 
-  public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
+  public constructor( fields: T[], isHistogramInitiallyVisible: boolean, providedOptions: VSMModelOptions<T> ) {
 
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
       fields: fields,
       isPathsVisible: false
     }, providedOptions );
-    super( false, options );
+    super( isHistogramInitiallyVisible, options );
 
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,

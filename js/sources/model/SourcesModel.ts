@@ -32,7 +32,7 @@ export default class SourcesModel extends VSMModel<VSMField> {
       } );
     } );
 
-    super( fields, providedOptions );
+    super( fields, false, providedOptions );
 
     fields.forEach( field => {
       field.angleStabilizerProperty.link( angleStabilizer => {
