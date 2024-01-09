@@ -1,6 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
+ * The Sampling Screen View shows the view for the Sampling screen in the Projectile Data Lab.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 

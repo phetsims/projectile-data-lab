@@ -40,6 +40,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
   public readonly intervalTool: IntervalTool;
 
   public constructor( providedOptions: PDLModelOptions ) {
+
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( identifier => {
       return new MeasuresField( identifier, {

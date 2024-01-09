@@ -12,6 +12,8 @@ import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js'
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
+ * The SamplingLaunchPanel allows the user to select the launcher and sample size.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

@@ -1,6 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
+ * The SourcesKeyboardHelpNode shows the keyboard shortcuts and keyboard help items for the Sources screen.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 

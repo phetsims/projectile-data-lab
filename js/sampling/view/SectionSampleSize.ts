@@ -10,6 +10,8 @@ import PDLText from '../../common/view/PDLText.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
+ * The SectionSampleSize shows the sample size radio buttons.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

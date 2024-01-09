@@ -1,6 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
+ * The VariabilityModel for Projectile Data Lab.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

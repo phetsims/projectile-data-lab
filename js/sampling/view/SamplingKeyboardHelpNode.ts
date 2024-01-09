@@ -1,6 +1,8 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
+ * The SamplingKeyboardHelpNode shows the keyboard shortcuts and other keyboard help items for the Sampling screen.
+ *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
@@ -10,7 +12,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 export default class SamplingKeyboardHelpNode extends PDLKeyboardHelpNode {
 
   public constructor() {
-    super( );
+    super();
   }
 }
 

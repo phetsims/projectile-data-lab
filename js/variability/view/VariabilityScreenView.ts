@@ -1,6 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
+ * The VariabilityScreenView represents the view for the Variability Screen.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

@@ -1,6 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
+ * The SourcesScreenView for Projectile Data Lab.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

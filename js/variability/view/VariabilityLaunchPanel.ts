@@ -9,6 +9,9 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js';
 
 /**
+ * The VariabilityLaunchPanel extends VSMLaunchPanel and adds the SectionMysteryLauncher which allows the user to select
+ * between the mystery launchers.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

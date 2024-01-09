@@ -22,6 +22,8 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 /**
+ * The SampleSelectorPanel allows the user to select from the various started samples.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */

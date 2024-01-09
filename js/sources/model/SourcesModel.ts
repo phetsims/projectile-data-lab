@@ -1,6 +1,7 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
+ * The SourcesModel contains the model for the Sources screen.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

@@ -10,6 +10,9 @@ import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import SectionCustomLauncher from '../../common-vsm/view/SectionCustomLauncher.js';
 
 /**
+ * The SourcesLaunchPanel extends VSMLaunchPanel and adds the SectionCustomLauncher which allows the user to select
+ * between the custom and mystery launchers.
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
