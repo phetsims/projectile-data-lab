@@ -44,6 +44,11 @@ export default class SourcesModel extends VSMModel<VSMField> {
       } );
     } );
   }
+
+  public override launchProjectile(): void {
+    const field = this.fieldProperty.value;
+    field.launchProjectile( 'custom', field.customLauncherTypeProperty.value, field.angleStabilizerProperty.value );
+  }
 }
 
 projectileDataLab.register( 'SourcesModel', SourcesModel );

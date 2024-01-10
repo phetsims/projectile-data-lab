@@ -168,12 +168,13 @@ export default class VSMField extends Field {
     this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
   }
 
-  public launchProjectile(): void {
+  public launchProjectile( launcherType: 'mystery' | 'custom', customLauncherMechanism: LauncherMechanism | null,
+                           customLauncherAngleStabilizer: number | null ): void {
     if ( this.getTotalProjectileCount() >= PDLQueryParameters.maxProjectiles ) {
       return;
     }
 
-    const projectile = this.createProjectile( 0 );
+    const projectile = this.createProjectile( 0, launcherType, customLauncherMechanism, customLauncherAngleStabilizer );
     this.airborneProjectiles.push( projectile );
 
     this.latestLaunchAngleProperty.value = projectile.launchAngle;

@@ -18,7 +18,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
-import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
+import { LauncherMechanism, MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -245,7 +245,9 @@ export default abstract class Field extends PhetioObject {
     this.selectedSampleProperty.reset();
   }
 
-  protected createProjectile( sampleNumber: number ): Projectile {
+  protected createProjectile( sampleNumber: number,
+                              // Elsewhere there is a boolean, which should we prefer? See https://github.com/phetsims/projectile-data-lab/issues/67
+                              launcherType: 'mystery' | 'custom', customLauncherMechanism: LauncherMechanism | null, customLauncherAngleStabilizer: number | null ): Projectile {
     const launchAngle = this.meanLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
     const launchSpeed = this.meanLaunchSpeedProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
@@ -256,8 +258,25 @@ export default abstract class Field extends PhetioObject {
     const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
 
-    return new Projectile( screenTandemName, this.identifier, sampleNumber, 0, 0, this.projectileTypeProperty.value,
-      isFlippedHorizontally, landedImageIndex, 0, launchAngle, launchSpeed,
+    return new Projectile(
+      screenTandemName,
+      this.identifier,
+      sampleNumber,
+      this.launcherConfigurationProperty.value,
+      launcherType,
+      this.mysteryLauncherProperty.value,
+      customLauncherMechanism,
+      customLauncherAngleStabilizer,
+      0,
+
+      // TODO: Should be launchHeight, right? See https://github.com/phetsims/projectile-data-lab/issues/67
+      0,
+      this.projectileTypeProperty.value,
+      isFlippedHorizontally,
+      landedImageIndex,
+      0,
+      launchAngle,
+      launchSpeed,
       this.launchHeightProperty.value );
   }
 

@@ -181,7 +181,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
       if ( this.stopwatchPhaseProperty.value === 'clear' ) {
         this.stopwatchPhaseProperty.value = 'running';
-        this.fieldProperty.value.launchProjectile();
+        this.launchProjectile();
       }
       else if ( this.stopwatchPhaseProperty.value === 'running' ) {
         this.stopwatchPhaseProperty.value = 'stopped';
@@ -191,17 +191,23 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       }
     }
     else if ( this.launchModeProperty.value === 'single' ) {
-      this.fieldProperty.value.launchProjectile();
+      this.launchProjectile();
     }
     else {
 
       this.fieldProperty.value.isContinuousLaunchingProperty.value = !this.fieldProperty.value.isContinuousLaunchingProperty.value;
 
       if ( this.isContinuousLaunchingProperty.value ) {
-        this.fieldProperty.value.launchProjectile();
+        this.launchProjectile();
         this.fieldProperty.value.continuousLaunchTimer.restart();
       }
     }
+  }
+
+  // Overridden in subclasses to potentially create from a custom launcher
+  public launchProjectile(): void {
+    const field = this.fieldProperty.value;
+    field.launchProjectile( 'mystery', null, null );
   }
 
   public step( dt: number ): void {
@@ -215,7 +221,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     if ( this.launchModeProperty.value === 'continuous' && this.isContinuousLaunchingProperty.value ) {
 
       this.fieldProperty.value.continuousLaunchTimer.step( dt, () => {
-        this.fieldProperty.value.launchProjectile();
+        this.launchProjectile();
       } );
     }
 

@@ -120,6 +120,12 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     this.intervalTool.changedEmitter.addListener( updateIntervalToolDataPercentage );
   }
 
+  public override launchProjectile(): void {
+    const field = this.fieldProperty.value;
+    const isCustom = this.isLauncherCustomProperty.value;
+    field.launchProjectile( isCustom ? 'custom' : 'mystery', isCustom ? field.customLauncherTypeProperty.value : null, isCustom ? field.angleStabilizerProperty.value : null );
+  }
+
   public override reset(): void {
     super.reset();
 
