@@ -16,15 +16,15 @@ import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSo
 import TProperty from '../../../../axon/js/TProperty.js';
 
 /**
- * Selector node for choosing between a projectile (VSM Screens) or sample (Sampling Screen). Adapter from NumberSpinner
- * in order to maintain a similar look and feel, but also to show an icon in the display area.
+ * Selector node for choosing between a projectile (VSM Screens) or sample (Sampling Screen). Adapted from NumberSpinner
+ * in order to maintain a similar look and feel, but also to show arbitrary contents in the display area.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 type SelfOptions = EmptySelfOptions;
 type ParentOptions = AccessibleNumberSpinnerOptions & NodeOptions;
-export type SelectorNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'children' | 'valueProperty' | 'enabledRangeProperty'>;
+export type SelectorNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'children' | 'valueProperty' | 'enabledRangeProperty' | 'keyboardStep' | 'shiftKeyboardStep' | 'pageKeyboardStep'>;
 
 export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
@@ -70,7 +70,10 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     // increment button
     const incrementButton = new RectangularPushButton( combineOptions<RectangularPushButtonOptions>( {
         tandem: options.tandem.createTandem( 'incrementButton' ),
-        listener: () => numberProperty.set( numberProperty.value + 1 ),
+        listener: () => {
+          numberProperty.set( numberProperty.value + 1 );
+          this.focus();
+        },
         content: new Path( angleRightSolidShape, { fill: 'white', scale: 0.05 } )
       }, arrowButtonOptions )
     );
@@ -78,7 +81,10 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     // decrement button
     const decrementButton = new RectangularPushButton( combineOptions<RectangularPushButtonOptions>( {
         tandem: options.tandem.createTandem( 'decrementButton' ),
-        listener: () => numberProperty.set( numberProperty.value - 1 ),
+        listener: () => {
+          numberProperty.set( numberProperty.value - 1 );
+          this.focus();
+        },
         content: new Path( angleLeftSolidShape, { fill: 'white', scale: 0.05 } )
       }, arrowButtonOptions )
     );
@@ -104,16 +110,11 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     // should look depressed when interacting with those keys. To accomplish this we actually press the ArrowButtons
     // in response to input with those keys. keyboardStep and shiftKeyboardStep are set to zero so the value isn't
     // modified again by AccessibleValueHandler.
-    assert && assert( options.keyboardStep === undefined, 'SelectorNode sets keyboardStep, it will be the same as deltaValue' );
-    assert && assert( options.shiftKeyboardStep === undefined, 'SelectorNode sets shiftKeyboardStep, it will be the same as deltaValue' );
-    assert && assert( options.pageKeyboardStep === undefined, 'SelectorNode sets pageKeyboardStep, it should not be used with SelectorNode' );
     options.keyboardStep = 0;
     options.shiftKeyboardStep = 0;
     options.pageKeyboardStep = 0;
 
-    // Call super without the options that require valid bounds. Call mutate later with those options.
-    const boundsRequiredOptionKeys = _.pick( options, Node.REQUIRES_BOUNDS_OPTION_KEYS );
-    super( _.omit( options, Node.REQUIRES_BOUNDS_OPTION_KEYS ) );
+    super( options );
 
     // enable/disable arrow buttons
     const updateEnabled = () => {
@@ -141,8 +142,6 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     const decreasedListener = ( isDown: boolean ) => isDown && decrementButton.pdomClick();
     this.incrementDownEmitter.addListener( increasedListener );
     this.decrementDownEmitter.addListener( decreasedListener );
-
-    this.mutate( boundsRequiredOptionKeys );
 
     // support for binder documentation, stripped out in builds and only runs when ?binder is specified
     assert && phet.chipper.queryParameters.binder && InstanceRegistry.registerDataURL( 'sun', 'SelectorNode', this );
