@@ -107,7 +107,6 @@ export default class SampleSelectorNode extends SelectorNode {
     } );
 
     super( sampleCardContainer, selectedSampleProperty, rangeProperty, {
-      minHeight: 50,
       tandem: options.tandem
     } );
   }
