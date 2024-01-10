@@ -22,7 +22,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 
 /**
- * The SampleSelectorPanel allows the user to select from the various started samples.
+ * The SampleSelectorNode allows the user to select from the various started samples.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -31,7 +31,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 type SelfOptions = EmptySelfOptions;
 type SampleSelectorPanelOptions = SelfOptions & PDLPanelOptions;
 
-export default class SampleSelectorPanel extends PDLPanel {
+export default class SampleSelectorNode extends PDLPanel {
 
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
@@ -194,4 +194,4 @@ export default class SampleSelectorPanel extends PDLPanel {
   }
 }
 
-projectileDataLab.register( 'SampleSelectorPanel', SampleSelectorPanel );
+projectileDataLab.register( 'SampleSelectorNode', SampleSelectorNode );

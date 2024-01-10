@@ -16,7 +16,7 @@ import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
-import SampleSelectorPanel from './SampleSelectorPanel.js';
+import SampleSelectorNode from './SampleSelectorNode.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
 import SamplingCanvasNode from './SamplingCanvasNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -107,7 +107,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.modelViewTransform
     );
 
-    const sampleSelectorPanel = new SampleSelectorPanel(
+    const sampleSelectorPanel = new SampleSelectorNode(
       model.fieldProperty,
       model.selectedSampleProperty,
       model.numberOfStartedSamplesProperty,
