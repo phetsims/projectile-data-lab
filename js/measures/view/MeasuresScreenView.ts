@@ -98,9 +98,12 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
     // Keyboard order. TODO: How to eliminate duplication with the parent class? See https://github.com/phetsims/projectile-data-lab/issues/60
     this.pdomControlAreaNode.pdomOrder = [
-      this.launchPanel,
+
       this.launchButton,
       this.launchControlRadioButtonGroup,
+
+      this.launchPanel,
+
       this.fieldSelectorPanel,
       this.accordionBox,
       staticToolPanel,
