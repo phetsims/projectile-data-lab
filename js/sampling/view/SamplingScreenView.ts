@@ -107,21 +107,21 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.modelViewTransform
     );
 
-    const sampleSelectorPanel = new SampleSelectorNode(
+    const sampleSelectorNode = new SampleSelectorNode(
       model.fieldProperty,
       model.selectedSampleProperty,
       model.numberOfStartedSamplesProperty,
       model.numberOfCompletedSamplesProperty,
       model.sampleMeanProperty, {
-        tandem: options.tandem.createTandem( 'sampleSelectorPanel' )
+        tandem: options.tandem.createTandem( 'sampleSelectorNode' )
       } );
 
     this.addChild( this.launchPanel );
     this.behindProjectilesLayer.addChild( fieldSign );
-    this.behindProjectilesLayer.addChild( sampleSelectorPanel );
+    this.behindProjectilesLayer.addChild( sampleSelectorNode );
 
-    sampleSelectorPanel.centerX = fieldSign.centerX;
-    sampleSelectorPanel.bottom = fieldSign.top - PDLConstants.INTER_PANEL_SPACING;
+    sampleSelectorNode.centerX = fieldSign.centerX;
+    sampleSelectorNode.bottom = fieldSign.top - PDLConstants.INTER_PANEL_SPACING;
 
     this.accordionBox = new SamplingAccordionBox(
       model.mysteryLauncherProperty,
@@ -193,7 +193,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     ManualConstraint.create(
       this,
-      [ sampleSelectorPanel, fieldSign ],
+      [ sampleSelectorNode, fieldSign ],
       ( sampleSelectorPanelProxy, fieldSignProxy ) => {
         sampleSelectorPanelProxy.centerX = fieldSignProxy.centerX;
         sampleSelectorPanelProxy.bottom = fieldSignProxy.top - 20;
@@ -216,7 +216,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.launchButton,
       this.launchControlRadioButtonGroup,
       this.accordionBox,
-      sampleSelectorPanel,
+      sampleSelectorNode,
       this.resetAllButton
     ];
   }
