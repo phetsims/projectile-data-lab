@@ -46,6 +46,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
 
   public constructor(
     selectedProjectileNumberProperty: TProperty<number>,
+    totalProjectileCountProperty: TReadOnlyProperty<number>,
     landedProjectileCountProperty: TReadOnlyProperty<number>,
     selectedProjectileProperty: TReadOnlyProperty<Projectile | null>,
     providedOptions: ProjectileSelectorPanelOptions ) {
@@ -64,9 +65,24 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const angleStabilizerProperty = new Property( 0 );
     const latestLaunchSpeedProperty = new Property( 0 );
 
-    const rangeProperty = new DerivedProperty( [ landedProjectileCountProperty ], landedProjectileCount => {
-      return landedProjectileCount === 0 ? new Range( 0, 0 ) : new Range( 1, landedProjectileCount );
-    } );
+    const rangeProperty = new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty, totalProjectileCountProperty, selectedProjectileProperty ],
+      ( ( selectedProjectileNumber, landedProjectileCount, totalProjectileCount ) => {
+
+        // Projectiles are added to the data set when they land
+        if ( landedProjectileCount === 0 ) {
+          return new Range( 0, 0 );
+        }
+        else if ( totalProjectileCount > landedProjectileCount ) {
+
+          // If some are airborne, then disable the buttons, freezing at the currently selected value
+          return new Range( selectedProjectileNumber, selectedProjectileNumber );
+        }
+        else {
+
+          // Everything is landed, everything can be selected
+          return new Range( 1, landedProjectileCount );
+        }
+      } ) );
 
     const customLauncherNode = new CustomLauncherNode(
       ModelViewTransform2.createIdentity(),

@@ -124,17 +124,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
     // synchronize with number value
     numberProperty.link( updateEnabled );
-
-    // Dynamic range changes, see https://github.com/phetsims/scenery-phet/issues/305
-    const rangeObserver = ( range: Range ) => {
-
-      // If our value is outside our new range, adjust it to be within the range.
-      numberProperty.value = range.constrainValue( numberProperty.value );
-
-      // Range changes may change whether the buttons are enabled
-      updateEnabled();
-    };
-    rangeProperty.link( rangeObserver );
+    rangeProperty.link( updateEnabled );
 
     // pdom - click arrow buttons on press of arrow keys so that the Property value changes by deltaValue
     // and the buttons look depressed
