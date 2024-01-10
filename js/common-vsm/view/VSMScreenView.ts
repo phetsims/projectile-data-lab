@@ -18,7 +18,7 @@ import VSMFieldSignNode from './VSMFieldSignNode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
 import VSMCanvasNode from './VSMCanvasNode.js';
-import ProjectileSelectorPanel from './ProjectileSelectorPanel.js';
+import ProjectileSelectorNode from './ProjectileSelectorNode.js';
 import StaticToolPanel from './StaticToolPanel.js';
 import InteractiveToolPanel from './InteractiveToolPanel.js';
 import VSMLaunchPanel from './VSMLaunchPanel.js';
@@ -52,7 +52,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
   protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
-  protected readonly projectileSelectorPanel: ProjectileSelectorPanel;
+  protected readonly projectileSelectorNode: ProjectileSelectorNode;
   protected readonly topRightUIContainer: VBox;
   protected readonly eraserButton: EraserButton;
 
@@ -134,11 +134,11 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         tandem: options.tandem.createTandem( 'accordionBox' )
       } );
 
-    this.projectileSelectorPanel = new ProjectileSelectorPanel(
+    this.projectileSelectorNode = new ProjectileSelectorNode(
       model.selectedProjectileNumberProperty,
       model.landedProjectileCountProperty,
       model.selectedProjectileProperty, {
-        tandem: options.tandem.createTandem( 'projectileSelectorPanel' )
+        tandem: options.tandem.createTandem( 'projectileSelectorNode' )
       }
     );
 
@@ -312,7 +312,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.toolsLayer.addChild( speedToolNode );
     this.toolsLayer.addChild( measuringTapeNode );
 
-    this.addChild( this.projectileSelectorPanel );
+    this.addChild( this.projectileSelectorNode );
     this.addChild( this.fieldSelectorPanel );
     this.addChild( timedLaunchButton );
     this.addChild( this.accordionBox );
@@ -344,7 +344,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // Position the projectile selector panel
     ManualConstraint.create(
       this,
-      [ this.projectileSelectorPanel, fieldSign ], ( projectileSelectorPanelProxy, fieldSignProxy ) => {
+      [ this.projectileSelectorNode, fieldSign ], ( projectileSelectorPanelProxy, fieldSignProxy ) => {
         projectileSelectorPanelProxy.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
         projectileSelectorPanelProxy.centerX = fieldSignProxy.centerX;
       } );
@@ -370,7 +370,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       staticToolPanel,
       interactiveToolPanel,
 
-      this.projectileSelectorPanel,
+      this.projectileSelectorNode,
       this.timeControlNode,
       // The interval tool node will appear here in the Measures screen.
       this.eraserButton,
