@@ -123,15 +123,7 @@ export default class VSMField extends Field {
     this.projectileLandedEmitter.addListener( projectile => {
 
       // After a projectile lands, update the selected projectile number and the number of landed projectiles
-      const indexOfNewProjectile = this.landedProjectiles.indexOf( projectile );
-
-      const indexOfPreviouslyLandedProjectile = indexOfNewProjectile - 1;
-      const indexOfSelectedProjectile = this.selectedProjectileNumberProperty.value - 1;
-
-      // However, if the user is not selecting the latest projectile, then don't change the selected projectile
-      if ( indexOfSelectedProjectile === indexOfPreviouslyLandedProjectile ) {
-        this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
-      }
+      this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
 
       this.landedProjectileCountProperty.value = this.landedProjectiles.length;
     } );
