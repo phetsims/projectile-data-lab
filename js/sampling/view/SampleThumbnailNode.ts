@@ -123,7 +123,9 @@ export default class SampleThumbnailNode extends Node {
     } );
 
     binWidthProperty.link( binWidth => {
-      horizontalGridLines.setSpacing( binWidth );
+
+      // In the thumbnail, show Half as many grid lines as in the main histogram, so multiply the bin width by 2
+      horizontalGridLines.setSpacing( binWidth * 2 );
       chartCanvasNode.update();
     } );
 
