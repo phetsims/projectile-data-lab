@@ -14,6 +14,7 @@ import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
 import { LauncherMechanism, LauncherMechanismValues } from '../../common-vsm/model/LauncherMechanism.js';
+import { MysteryOrCustom, MysteryOrCustomValues } from './MysteryOrCustom.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -30,7 +31,7 @@ export default class Projectile {
   public fieldIdentifier: string;
 
   public launcherConfiguration: LauncherConfiguration;
-  public launcherType: 'mystery' | 'custom';
+  public launcherType: MysteryOrCustom;
 
   // The following are mutually exclusive depending on whether the launcherType is mystery or custom.
   public mysteryLauncherNumber: number | null;
@@ -70,7 +71,7 @@ export default class Projectile {
     fieldIdentifier: string,
     sampleNumber: number,
     launcherConfiguration: LauncherConfiguration,
-    launcherType: 'mystery' | 'custom',
+    launcherType: MysteryOrCustom,
     mysteryLauncherNumber: number | null,
     customLauncherMechanism: LauncherMechanism | null,
     customLauncherAngleStabilizer: number | null,
@@ -128,7 +129,7 @@ export default class Projectile {
       fieldIdentifier: StringIO,
       sampleNumber: NumberIO,
       launcherConfiguration: StringUnionIO( LauncherConfigurationValues ),
-      launcherType: StringUnionIO( [ 'mystery', 'custom' ] ),
+      launcherType: StringUnionIO( MysteryOrCustomValues ),
       mysteryLauncherNumber: NullableIO( NumberIO ),
       customLauncherMechanism: NullableIO( StringUnionIO( LauncherMechanismValues ) ),
       customLauncherAngleStabilizer: NullableIO( NumberIO ),
@@ -232,7 +233,7 @@ export type ProjectileStateObject = {
   fieldIdentifier: string;
   sampleNumber: number;
   launcherConfiguration: LauncherConfiguration;
-  launcherType: 'mystery' | 'custom';
+  launcherType: MysteryOrCustom;
   mysteryLauncherNumber: number | null;
   customLauncherMechanism: LauncherMechanism | null;
   customLauncherAngleStabilizer: number | null;

@@ -20,6 +20,7 @@ import { StopwatchPhase, StopwatchPhaseValues } from './StopwatchPhase.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -160,7 +161,7 @@ export default class VSMField extends Field {
     this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
   }
 
-  public launchProjectile( launcherType: 'mystery' | 'custom', customLauncherMechanism: LauncherMechanism | null,
+  public launchProjectile( launcherType: MysteryOrCustom, customLauncherMechanism: LauncherMechanism | null,
                            customLauncherAngleStabilizer: number | null ): void {
     if ( this.getTotalProjectileCount() >= PDLQueryParameters.maxProjectiles ) {
       return;

@@ -22,6 +22,7 @@ import { LauncherMechanism, MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechani
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import { MysteryOrCustom } from './MysteryOrCustom.js';
 
 type SelfOptions = {
 
@@ -247,7 +248,7 @@ export default abstract class Field extends PhetioObject {
 
   protected createProjectile( sampleNumber: number,
                               // Elsewhere there is a boolean, which should we prefer? See https://github.com/phetsims/projectile-data-lab/issues/67
-                              launcherType: 'mystery' | 'custom', customLauncherMechanism: LauncherMechanism | null, customLauncherAngleStabilizer: number | null ): Projectile {
+                              launcherType: MysteryOrCustom, customLauncherMechanism: LauncherMechanism | null, customLauncherAngleStabilizer: number | null ): Projectile {
     const launchAngle = this.meanLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
     const launchSpeed = this.meanLaunchSpeedProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
