@@ -42,22 +42,34 @@ export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tand
 
 export const ZOOM_LEVELS = [ {
   maxCount: 500,
-  tickSpacing: 50
+  minorSpacing: 10,
+
+  numberOfThumbnailGridLines: 15
 }, {
   maxCount: 200,
-  tickSpacing: 20
+  minorSpacing: 8,
+
+  numberOfThumbnailGridLines: 13
 }, {
   maxCount: 100,
-  tickSpacing: 10
+  minorSpacing: 5,
+
+  numberOfThumbnailGridLines: 11
 }, {
   maxCount: 75,
-  tickSpacing: 15
+  minorSpacing: 5,
+
+  numberOfThumbnailGridLines: 9
 }, {
   maxCount: 50,
-  tickSpacing: 10
+  minorSpacing: 5,
+
+  numberOfThumbnailGridLines: 7
 }, {
   maxCount: 25,
-  tickSpacing: 5
+  minorSpacing: null,
+
+  numberOfThumbnailGridLines: 5
 } ];
 
 export default class HistogramNode extends Node {
@@ -293,12 +305,17 @@ export default class HistogramNode extends Node {
 
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
-      const tickSpacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].tickSpacing;
+      const tickSpacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].maxCount / 5;
 
       verticalTickLabelSet.setSpacing( tickSpacing );
       verticalTickMarkSet.setSpacing( tickSpacing );
       majorVerticalGridLines.setSpacing( tickSpacing );
-      verticalGridLines.setSpacing( ZOOM_LEVELS[ this.zoomLevelProperty.value ].tickSpacing / 5 );
+      const spacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].minorSpacing;
+      if ( spacing !== null ) {
+        verticalGridLines.setSpacing( spacing );
+      }
+      verticalGridLines.visible = spacing !== null;
+
       updateHistogram();
     } );
 

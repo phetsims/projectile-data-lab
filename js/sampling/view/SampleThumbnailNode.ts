@@ -190,10 +190,15 @@ export default class SampleThumbnailNode extends Node {
     zoomLevelProperty.link( () => {
       const maxCount = ZOOM_LEVELS[ zoomLevelProperty.value ].maxCount;
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
-      const tickSpacing = ZOOM_LEVELS[ zoomLevelProperty.value ].tickSpacing;
+      const thumbnailSpacing = ZOOM_LEVELS[ zoomLevelProperty.value ].maxCount / ZOOM_LEVELS[ zoomLevelProperty.value ].numberOfThumbnailGridLines;
 
-      // In the thumbnail, show Half as many grid lines as in the main histogram, so multiply the tick spacing by 2
-      verticalGridLines.setSpacing( tickSpacing * 2 );
+      if ( thumbnailSpacing !== null ) {
+
+        // In the thumbnail, show Half as many grid lines as in the main histogram, so multiply the tick spacing by 2
+        verticalGridLines.setSpacing( thumbnailSpacing );
+      }
+      verticalGridLines.visible = thumbnailSpacing !== null;
+
       updateHistogram();
     } );
   }
