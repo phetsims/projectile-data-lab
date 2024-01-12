@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2024, University of Colorado Boulder
 
 /**
  * MysteryOrCustom is a string literal union enumeration that describes whether the cannon is mystery or custom.
