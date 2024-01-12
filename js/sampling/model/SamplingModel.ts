@@ -125,8 +125,6 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       return;
     }
 
-    console.log( 'launchButtonPressed' );
-
     const field = this.fieldProperty.value;
     const phaseProperty = field.phaseProperty;
 

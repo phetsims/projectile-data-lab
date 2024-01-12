@@ -113,7 +113,10 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
-    this.selectedSampleProperty.link( () => {
+    this.selectedSampleProperty.link( ( newSampleIndex, oldSampleIndex ) => {
+      if ( typeof oldSampleIndex === 'number' && newSampleIndex < oldSampleIndex ) {
+        this.finishSample( oldSampleIndex );
+      }
       this.updateComputedProperties();
     } );
 
@@ -167,7 +170,11 @@ export default class SamplingField extends Field {
   }
 
   public getProjectilesInSelectedSample(): Projectile[] {
-    return this.getAllProjectiles().filter( projectile => projectile.sampleNumber === this.selectedSampleProperty.value );
+    return this.getProjectilesInSample( this.selectedSampleProperty.value );
+  }
+
+  public getProjectilesInSample( sampleNumber: number ): Projectile[] {
+    return this.getAllProjectiles().filter( projectile => projectile.sampleNumber === sampleNumber );
   }
 
   public getLandedProjectilesInSelectedSample(): Projectile[] {
@@ -198,8 +205,8 @@ export default class SamplingField extends Field {
     return samples;
   }
 
-  public createLandedProjectile(): void {
-    const projectile = this.createProjectile( this.selectedSampleProperty.value, 'mystery', null, null );
+  public createLandedProjectile( sampleNumber: number ): void {
+    const projectile = this.createProjectile( sampleNumber, 'mystery', null, null );
     projectile.setLanded();
 
     this.landedProjectiles.push( projectile );
@@ -210,14 +217,18 @@ export default class SamplingField extends Field {
   // If the user fires a new sample while a prior sample was in progress, finish up the prior sample.
   // Most important for 'Single' mode
   public finishCurrentSample(): void {
+    this.finishSample( this.selectedSampleProperty.value );
+  }
+
+  private finishSample( sampleNumber: number ): void {
     let changed = false;
-    while ( this.getProjectilesInSelectedSample().length < this.sampleSize ) {
+    while ( this.getProjectilesInSample( sampleNumber ).length < this.sampleSize ) {
       changed = true;
-      this.createLandedProjectile();
+      this.createLandedProjectile( sampleNumber );
     }
 
     // Anything in the air should end up on the ground.
-    this.getProjectilesInSelectedSample().forEach( projectile => {
+    this.getProjectilesInSample( sampleNumber ).forEach( projectile => {
       projectile.setLanded();
       changed = true;
     } );
