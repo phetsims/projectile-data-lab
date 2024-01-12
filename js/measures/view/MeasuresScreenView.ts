@@ -96,24 +96,8 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     this.toolsLayer.addChild( intervalToolNode );
     this.toolsLayer.addChild( dataMeasuresFieldOverlay );
 
-    // Keyboard order. TODO: How to eliminate duplication with the parent class? See https://github.com/phetsims/projectile-data-lab/issues/60
-    this.pdomControlAreaNode.pdomOrder = [
-
-      this.launchButton,
-      this.launchControlRadioButtonGroup,
-
-      this.launchPanel,
-
-      this.fieldSelectorPanel,
-      this.accordionBox,
-      staticToolPanel,
-      interactiveToolPanel,
-      this.projectileSelectorNode,
-      this.timeControlNode,
-      intervalToolNode, // this one is added
-      this.eraserButton,
-      this.resetAllButton
-    ];
+    // Keyboard order.
+    this.setVSMPDOMOrder( staticToolPanel, interactiveToolPanel, intervalToolNode );
   }
 }
 

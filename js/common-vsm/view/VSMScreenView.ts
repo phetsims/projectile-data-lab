@@ -359,6 +359,16 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
 
     // Keyboard order
+    this.setVSMPDOMOrder( staticToolPanel, interactiveToolPanel );
+  }
+
+  /**
+   * Set the keyboard order for the VSM screen.
+   */
+  protected setVSMPDOMOrder(
+    staticToolPanel: StaticToolPanel,
+    interactiveToolPanel: InteractiveToolPanel,
+    intervalToolNode?: Node ): void {
     this.pdomControlAreaNode.pdomOrder = [
 
       this.launchButton,
@@ -368,13 +378,11 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
       this.fieldSelectorPanel,
       this.accordionBox,
-
       staticToolPanel,
       interactiveToolPanel,
-
       this.projectileSelectorNode,
       this.timeControlNode,
-      // The interval tool node will appear here in the Measures screen.
+      ...( intervalToolNode ? [ intervalToolNode ] : [] ),
       this.eraserButton,
       this.resetAllButton
     ];
