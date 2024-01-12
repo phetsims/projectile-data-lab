@@ -64,7 +64,10 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
       },
       fireOnHold: true,
       fireOnHoldInterval: 50,
-      scale: 0.8
+      scale: 0.8,
+
+      phetioVisiblePropertyInstrumented: false,
+      phetioEnabledPropertyInstrumented: false
     };
 
     // increment button
