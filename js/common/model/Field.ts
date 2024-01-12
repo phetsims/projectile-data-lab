@@ -75,7 +75,7 @@ export default abstract class Field extends PhetioObject {
 
   public readonly projectilesClearedEmitter: Emitter;
 
-  public readonly selectedSampleProperty: NumberProperty;
+  public readonly selectedSampleIndexProperty: NumberProperty;
 
   // Are there any landed projectiles in the field? This is used for the data indicator on the field selector panel.
   public readonly isContainingDataProperty = new BooleanProperty( false );
@@ -203,8 +203,8 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: NumberIO
     } );
 
-    this.selectedSampleProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'selectedSampleProperty' ),
+    this.selectedSampleIndexProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'The selected sample being shown on the field.'
     } );
@@ -243,7 +243,7 @@ export default abstract class Field extends PhetioObject {
     this.projectilesChangedEmitter.emit();
     this.projectilesClearedEmitter.emit();
 
-    this.selectedSampleProperty.reset();
+    this.selectedSampleIndexProperty.reset();
   }
 
   protected createProjectile( sampleNumber: number,

@@ -175,7 +175,7 @@ export default class SampleThumbnailNode extends Node {
         field.projectileLandedEmitter.addListener( () => updateHistogram() );
       }
       else if ( field instanceof SamplingField ) {
-        field.selectedSampleProperty.link( () => updateHistogram() );
+        field.selectedSampleIndexProperty.link( () => updateHistogram() );
         field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
       }
     } );

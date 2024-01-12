@@ -47,7 +47,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       options );
 
     const samplingCanvasNode = new SamplingCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,
-      this.modelViewTransform, model.selectedSampleProperty, {
+      this.modelViewTransform, model.selectedSampleIndexProperty, {
         canvasBounds: this.canvasBounds
       } );
 
@@ -56,7 +56,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     model.fields.forEach( field => {
       field.numberOfCompletedSamplesProperty.link( () => samplingCanvasNode.invalidatePaint() );
       field.numberOfStartedSamplesProperty.link( () => samplingCanvasNode.invalidatePaint() );
-      field.selectedSampleProperty.link( () => samplingCanvasNode.invalidatePaint() );
+      field.selectedSampleIndexProperty.link( () => samplingCanvasNode.invalidatePaint() );
     } );
 
     this.projectileCanvasLayer.addChild( samplingCanvasNode );
@@ -109,7 +109,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     const sampleSelectorNode = new SampleSelectorNode(
       model.fieldProperty,
-      model.selectedSampleProperty,
+      model.selectedSampleIndexProperty,
       model.numberOfStartedSamplesProperty,
       model.numberOfCompletedSamplesProperty,
       model.sampleMeanProperty, {

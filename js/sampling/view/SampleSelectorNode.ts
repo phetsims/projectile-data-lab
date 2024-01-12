@@ -33,7 +33,7 @@ export default class SampleSelectorNode extends SelectorNode {
 
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
-    selectedSampleProperty: TProperty<number>,
+    selectedSampleIndexProperty: TProperty<number>,
     numberOfStartedSamplesProperty: TReadOnlyProperty<number>,
     numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
     sampleMeanProperty: TReadOnlyProperty<number | null>,
@@ -46,7 +46,7 @@ export default class SampleSelectorNode extends SelectorNode {
     // Reuse text labels to avoid memory leaks
     const noDataText = new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SELECTOR_FONT } );
     const titleText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
-      number: selectedSampleProperty,
+      number: selectedSampleIndexProperty,
       count: numberOfStartedSamplesProperty
     } ), { font: PDLConstants.SELECTOR_FONT } );
     const creatingText = new PDLText( ProjectileDataLabStrings.creatingStringProperty, { font: PDLConstants.SELECTOR_FONT } );
@@ -61,7 +61,7 @@ export default class SampleSelectorNode extends SelectorNode {
       return startedSampleCount === 0 ? new Range( 0, 0 ) : new Range( 1, startedSampleCount );
     } );
 
-    Multilink.multilink( [ samplingFieldProperty, selectedSampleProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
+    Multilink.multilink( [ samplingFieldProperty, selectedSampleIndexProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
       ( samplingField, selectedSample, numberOfStartedSamples, numberOfCompletedSamples ) => {
 
         if ( numberOfStartedSamples === 0 ) {
@@ -106,7 +106,7 @@ export default class SampleSelectorNode extends SelectorNode {
       minHeight: 40
     } );
 
-    super( sampleCardContainer, selectedSampleProperty, rangeProperty, {
+    super( sampleCardContainer, selectedSampleIndexProperty, rangeProperty, {
       tandem: options.tandem
     } );
   }

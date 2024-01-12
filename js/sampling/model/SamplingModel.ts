@@ -36,7 +36,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly mysteryLauncherProperty: NumberProperty;
 
   public readonly phaseProperty: DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>;
-  public readonly selectedSampleProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly selectedSampleIndexProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
@@ -107,11 +107,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       derive: t => t.phaseProperty
     } );
 
-    this.selectedSampleProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+    this.selectedSampleIndexProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
 
       // The up/down carousel card changes the selected sample, so this is bidirectional
       bidirectional: true,
-      derive: t => t.selectedSampleProperty
+      derive: t => t.selectedSampleIndexProperty
     } );
 
     this.sampleMeanProperty = new DynamicProperty<number | null, number | null, SamplingField>( this.fieldProperty, {
@@ -136,7 +136,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
 
-      this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
+      this.selectedSampleIndexProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
       phaseProperty.value = 'showingAirborneProjectiles';
     }
 
@@ -144,14 +144,14 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       field.isContinuousLaunchingProperty.toggle();
 
       if ( phaseProperty.value === 'idle' ) {
-        this.selectedSampleProperty.value = 1;
+        this.selectedSampleIndexProperty.value = 1;
         field.finishCurrentSample();
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
       else {
 
         if ( field.isContinuousLaunchingProperty.value ) {
-          this.selectedSampleProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
+          this.selectedSampleIndexProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
         }
 
         field.finishCurrentSample();
