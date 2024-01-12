@@ -21,6 +21,7 @@ import { LauncherMechanism } from './LauncherMechanism.js';
 import Projectile from '../../common/model/Projectile.js';
 import { StopwatchPhase } from './StopwatchPhase.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -85,7 +86,11 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.selectedProjectileNumberProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.selectedProjectileNumberProperty
+      derive: t => t.selectedProjectileNumberProperty,
+      phetioFeatured: true,
+      phetioDocumentation: 'This Property represents the selected projectile by number (1-indexed)',
+      tandem: options.tandem.createTandem( 'selectedProjectileNumberProperty' ),
+      phetioValueType: NumberIO
     } );
 
     this.selectedProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, VSMField>( this.fieldProperty, {

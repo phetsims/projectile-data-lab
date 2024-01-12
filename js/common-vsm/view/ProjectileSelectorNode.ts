@@ -28,6 +28,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import CustomLauncherNode from './CustomLauncherNode.js';
 import { AngleForConfiguration, LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import { LauncherMechanism } from '../model/LauncherMechanism.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
@@ -45,7 +46,7 @@ type ProjectileSelectorPanelOptions = SelfOptions & SelectorNodeOptions;
 export default class ProjectileSelectorNode extends SelectorNode {
 
   public constructor(
-    selectedProjectileNumberProperty: TProperty<number>,
+    selectedProjectileNumberProperty: TProperty<number> & PhetioObject,
     totalProjectileCountProperty: TReadOnlyProperty<number>,
     landedProjectileCountProperty: TReadOnlyProperty<number>,
     selectedProjectileProperty: TReadOnlyProperty<Projectile | null>,

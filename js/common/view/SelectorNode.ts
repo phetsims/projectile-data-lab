@@ -14,6 +14,7 @@ import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js
 import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
 import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
 import TProperty from '../../../../axon/js/TProperty.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
 /**
  * Selector node for choosing between a projectile (VSM Screens) or sample (Sampling Screen). Adapted from NumberSpinner
@@ -28,7 +29,7 @@ export type SelectorNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'child
 
 export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
-  public constructor( contents: Node, numberProperty: TProperty<number>, rangeProperty: TReadOnlyProperty<Range>, providedOptions?: SelectorNodeOptions ) {
+  public constructor( contents: Node, numberProperty: TProperty<number> & PhetioObject, rangeProperty: TReadOnlyProperty<Range>, providedOptions?: SelectorNodeOptions ) {
 
     const options = optionize<SelectorNodeOptions, SelfOptions, ParentOptions>()( {
 
@@ -135,6 +136,8 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     const decreasedListener = ( isDown: boolean ) => isDown && decrementButton.pdomClick();
     this.incrementDownEmitter.addListener( increasedListener );
     this.decrementDownEmitter.addListener( decreasedListener );
+
+    this.addLinkedElement( numberProperty );
 
     // support for binder documentation, stripped out in builds and only runs when ?binder is specified
     assert && phet.chipper.queryParameters.binder && InstanceRegistry.registerDataURL( 'sun', 'SelectorNode', this );

@@ -18,6 +18,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import SelectorNode from '../../common/view/SelectorNode.js';
 import Range from '../../../../dot/js/Range.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
 /**
  * The SampleSelectorNode allows the user to select from the various started samples.
@@ -33,7 +34,7 @@ export default class SampleSelectorNode extends SelectorNode {
 
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
-    selectedSampleIndexProperty: TProperty<number>,
+    selectedSampleIndexProperty: TProperty<number> & PhetioObject,
     numberOfStartedSamplesProperty: TReadOnlyProperty<number>,
     numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
     sampleMeanProperty: TReadOnlyProperty<number | null>,
