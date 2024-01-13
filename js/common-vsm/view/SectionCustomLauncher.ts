@@ -23,14 +23,14 @@ type SectionCustomLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOp
 
 export default class SectionCustomLauncher extends PDLPanelSection {
 
-  public constructor( customLauncherTypeProperty: PhetioProperty<LauncherMechanism>,
+  public constructor( customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>,
                       angleStabilizerProperty: PhetioProperty<number>, providedOptions: SectionCustomLauncherOptions ) {
 
     const options = optionize<SectionCustomLauncherOptions, SelfOptions, PDLPanelSectionOptions>()( {
       stretch: true
     }, providedOptions );
 
-    const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherTypeProperty, {
+    const customLauncherTypeRadioButtonGroup = new CustomLauncherTypeRadioButtonGroup( customLauncherMechanismProperty, {
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' ),
       phetioFeatured: true
     } );

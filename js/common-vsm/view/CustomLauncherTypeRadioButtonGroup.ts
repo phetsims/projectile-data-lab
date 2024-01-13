@@ -22,7 +22,7 @@ type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
 
 export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadioButtonGroup<LauncherMechanism> {
-  public constructor( customLauncherTypeProperty: PhetioProperty<LauncherMechanism>, providedOptions: CustomLauncherTypeRadioButtonGroupOptions ) {
+  public constructor( customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, providedOptions: CustomLauncherTypeRadioButtonGroupOptions ) {
 
     const items: RectangularRadioButtonGroupItem<LauncherMechanism>[] = [
       {
@@ -39,7 +39,7 @@ export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadio
         createNode: () => new Image( explosion_png, { scale: -0.18 } )
       } ];
 
-    super( customLauncherTypeProperty, items, {
+    super( customLauncherMechanismProperty, items, {
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' ),
       orientation: 'horizontal',
       align: 'center',

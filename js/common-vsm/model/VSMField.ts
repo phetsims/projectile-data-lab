@@ -39,7 +39,7 @@ export default class VSMField extends Field {
 
   public readonly isLauncherCustomProperty: Property<boolean>;
 
-  public readonly customLauncherTypeProperty: Property<LauncherMechanism>;
+  public readonly customLauncherMechanismProperty: Property<LauncherMechanism>;
 
   public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
 
@@ -90,9 +90,9 @@ export default class VSMField extends Field {
       phetioValueType: BooleanIO
     } );
 
-    this.customLauncherTypeProperty = new Property<LauncherMechanism>( 'spring', {
+    this.customLauncherMechanismProperty = new Property<LauncherMechanism>( 'spring', {
       validValues: LauncherMechanismValues,
-      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'customLauncherMechanismProperty' ),
       phetioDocumentation: 'This property configures the mechanism of the custom launcher.',
       phetioValueType: StringUnionIO( LauncherMechanismValues )
     } );
@@ -180,7 +180,7 @@ export default class VSMField extends Field {
     super.reset();
 
     this.isLauncherCustomProperty.reset();
-    this.customLauncherTypeProperty.reset();
+    this.customLauncherMechanismProperty.reset();
     this.angleStabilizerProperty.reset();
     this.continuousLaunchTimer.reset();
     this.stopwatchPhaseProperty.reset();
