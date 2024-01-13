@@ -85,7 +85,6 @@ export default class ProjectileSelectorNode extends SelectorNode {
         }
       } ) );
 
-    // TODO: Custom launcher icons are not correct in the projectile selector panel, see https://github.com/phetsims/projectile-data-lab/issues/77
     const customLauncherNode = new CustomLauncherNode(
       ModelViewTransform2.createIdentity(),
       launcherConfigurationProperty,
