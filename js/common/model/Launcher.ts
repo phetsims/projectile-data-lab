@@ -93,7 +93,7 @@ export const MYSTERY_LAUNCHERS = [
   new Launcher( 'mystery', 'pressure', 4 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 5, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher5' )
   } ),
-  new Launcher( 'mystery', 'explosion', maxAngleStandardDeviation, 6 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, {
+  new Launcher( 'mystery', 'explosion', 6 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 6, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher6' )
   } )
 ];
