@@ -14,7 +14,7 @@ import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import LauncherRadioButtonGroupWrapper from '../../common/view/LauncherRadioButtonGroupWrapper.js';
+import MysteryLauncherRadioButtonGroupWrapper from '../../common/view/MysteryLauncherRadioButtonGroupWrapper.js';
 
 /**
  * The SectionAnyLauncher allows the user to select between the custom and mystery launchers.
@@ -57,7 +57,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       phetioFeatured: true
     } );
 
-    const mysteryLauncherRadioButtonGroupWrapper = new LauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
+    const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroupWrapper' ),
       phetioFeatured: true
     } );

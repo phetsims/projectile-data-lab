@@ -11,12 +11,12 @@ import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
 const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
 
 /**
- * LauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
+ * MysteryLauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
  * mystery launchers. A wrapper is needed to help the layout wrap.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
-export default class LauncherRadioButtonGroupWrapper extends Node {
+export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
   public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
 
     const mysteryLauncherRadioButtonGroupItems = _.range( 1, 7 ).map( mysteryLauncher => {
@@ -97,4 +97,4 @@ export default class LauncherRadioButtonGroupWrapper extends Node {
   }
 }
 
-projectileDataLab.register( 'LauncherRadioButtonGroupWrapper', LauncherRadioButtonGroupWrapper );
+projectileDataLab.register( 'MysteryLauncherRadioButtonGroupWrapper', MysteryLauncherRadioButtonGroupWrapper );

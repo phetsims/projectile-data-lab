@@ -117,7 +117,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         launchAngleProperty.value = AngleForConfiguration( selectedProjectile.launcherConfiguration );
         launchHeightProperty.value = selectedProjectile.launchHeight;
         launcherConfigurationProperty.value = selectedProjectile.launcherConfiguration;
-        isLauncherCustomProperty.value = selectedProjectile.launcherType === 'custom';
+        isLauncherCustomProperty.value = selectedProjectile.mysteryOrCustom === 'custom';
         angleStabilizerProperty.value = selectedProjectile.launcherAngleStabilizer;
         launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
         // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
