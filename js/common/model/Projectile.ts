@@ -31,7 +31,7 @@ export default class Projectile {
 
   public launcherConfiguration: LauncherConfiguration;
 
-  public launcherType: MysteryOrCustom;
+  public mysteryOrCustom: MysteryOrCustom;
   public launcherAngleStabilizer: number;
   public launcherMechanism: LauncherMechanism;
   public launcherNumber: number;
@@ -69,7 +69,7 @@ export default class Projectile {
     fieldIdentifier: string,
     sampleNumber: number,
     launcherConfiguration: LauncherConfiguration,
-    launcherType: MysteryOrCustom,
+    mysteryOrCustom: MysteryOrCustom,
     launcherMechanism: LauncherMechanism,
     launcherAngleStabilizer: number,
     launcherNumber: number,
@@ -87,7 +87,7 @@ export default class Projectile {
     this.fieldIdentifier = fieldIdentifier;
     this.sampleNumber = sampleNumber;
     this.launcherConfiguration = launcherConfiguration;
-    this.launcherType = launcherType;
+    this.mysteryOrCustom = mysteryOrCustom;
     this.launcherAngleStabilizer = launcherAngleStabilizer;
     this.launcherMechanism = launcherMechanism;
     this.launcherNumber = launcherNumber;
@@ -127,7 +127,7 @@ export default class Projectile {
       fieldIdentifier: StringIO,
       sampleNumber: NumberIO,
       launcherConfiguration: StringUnionIO( LauncherConfigurationValues ),
-      launcherType: StringUnionIO( MysteryOrCustomValues ),
+      mysteryOrCustom: StringUnionIO( MysteryOrCustomValues ),
       launcherMechanism: StringUnionIO( LauncherMechanismValues ),
       launcherAngleStabilizer: NumberIO,
       launcherNumber: NumberIO,
@@ -147,7 +147,7 @@ export default class Projectile {
         fieldIdentifier: projectile.fieldIdentifier,
         sampleNumber: projectile.sampleNumber,
         launcherConfiguration: projectile.launcherConfiguration,
-        launcherType: projectile.launcherType,
+        mysteryOrCustom: projectile.mysteryOrCustom,
         launcherMechanism: projectile.launcherMechanism,
         launcherAngleStabilizer: projectile.launcherAngleStabilizer,
         launcherNumber: projectile.launcherNumber,
@@ -168,7 +168,7 @@ export default class Projectile {
         stateObject.fieldIdentifier,
         stateObject.sampleNumber,
         stateObject.launcherConfiguration,
-        stateObject.launcherType,
+        stateObject.mysteryOrCustom,
         stateObject.launcherMechanism,
         stateObject.launcherAngleStabilizer,
         stateObject.launcherNumber,
@@ -219,7 +219,7 @@ export type ProjectileStateObject = {
   fieldIdentifier: string;
   sampleNumber: number;
   launcherConfiguration: LauncherConfiguration;
-  launcherType: MysteryOrCustom;
+  mysteryOrCustom: MysteryOrCustom;
   launcherMechanism: LauncherMechanism;
   launcherAngleStabilizer: number;
   launcherNumber: number;
