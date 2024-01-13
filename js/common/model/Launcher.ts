@@ -36,7 +36,6 @@ const speedStandardDeviations = {
 type SelfOptions = EmptySelfOptions;
 type LauncherOptions = SelfOptions & PhetioObjectOptions;
 
-// TODO: https://github.com/phetsims/projectile-data-lab/issues/77 Let's try having MysteryLauncher have constants. Or will PhET-iO need to be able to change them?
 export default class Launcher extends PhetioObject {
   public readonly launcherMechanismProperty: Property<LauncherMechanism>;
   public readonly angleStabilizerProperty: Property<number>;
@@ -58,6 +57,7 @@ export default class Launcher extends PhetioObject {
 
     super( options );
 
+    // TODO: https://github.com/phetsims/projectile-data-lab/issues/80 These and more should be mutable for PhET-iO, right?
     this.launcherMechanismProperty = new Property( launcherMechanism );
     this.angleStabilizerProperty = new Property( angleStabilizer );
 
