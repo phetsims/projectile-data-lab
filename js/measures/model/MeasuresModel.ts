@@ -15,12 +15,10 @@ import VSMModel from '../../common-vsm/model/VSMModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import MeasuresField from './MeasuresField.js';
 import IntervalTool from './IntervalTool.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -43,7 +41,14 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( identifier => {
-      return new MeasuresField( identifier, {
+      const fieldTandem = fieldsTandem.createTandem( identifier );
+      return new MeasuresField( [ ...MYSTERY_LAUNCHERS, new Launcher( 'custom', 'spring',
+
+        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 what is the default angle stabilizer supposed to be?
+        2,
+        0, {
+          tandem: fieldTandem.createTandem( 'customLauncher' )
+        } ) ], identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
         phetioFeatured: true
       } );
@@ -76,25 +81,6 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       phetioFeatured: true
     } );
 
-    fields.forEach( field => {
-      Multilink.multilink( [ this.isLauncherCustomProperty, this.customLauncherTypeProperty, this.angleStabilizerProperty ],
-        ( isLauncherCustom, customLauncherType, angleStabilizer ) => {
-          if ( isLauncherCustom ) {
-            field.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( customLauncherType );
-            field.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( customLauncherType );
-            field.launchAngleStandardDeviationProperty.value = angleStabilizer;
-          }
-          else {
-            // TODO: Does measures model need to know about the mystery launcher? - see https://github.com/phetsims/projectile-data-lab/issues/25
-            // Set the launch angle standard deviation to the value for the mystery launcher.
-            const launcherConfig = PDLConstants.LAUNCHER_CONFIGS[ this.mysteryLauncherProperty.value - 1 ];
-            field.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
-            field.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
-            field.launchAngleStandardDeviationProperty.value = launcherConfig.angleStandardDeviation;
-          }
-        } );
-    } );
-
     this.intervalTool = new IntervalTool( {
       tandem: providedOptions.tandem.createTandem( 'intervalTool' )
     } );
@@ -118,12 +104,6 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     } );
     this.fieldProperty.link( field => updateIntervalToolDataPercentage() );
     this.intervalTool.changedEmitter.addListener( updateIntervalToolDataPercentage );
-  }
-
-  public override launchProjectile(): void {
-    const field = this.fieldProperty.value;
-    const isCustom = this.isLauncherCustomProperty.value;
-    field.launchProjectile( isCustom ? 'custom' : 'mystery', isCustom ? field.customLauncherTypeProperty.value : null, isCustom ? field.angleStabilizerProperty.value : null );
   }
 
   public override reset(): void {

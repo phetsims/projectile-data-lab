@@ -47,14 +47,14 @@ export default class CustomLauncherNode extends LauncherNode {
                       launcherHeightProperty: TProperty<number>,
                       isLauncherCustomProperty: TProperty<boolean>,
                       mysteryLauncherProperty: TProperty<number>,
-                      customLauncherTypeProperty: TProperty<LauncherMechanism>,
+                      launcherMechanismProperty: TProperty<LauncherMechanism>,
                       angleStabilizerProperty: TProperty<number>,
                       latestLaunchSpeedProperty: TProperty<number>,
                       providedOptions: CustomLauncherNodeOptions ) {
 
     super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherProperty, providedOptions );
 
-    const launcherTypeIcon = new Image( this.getImageKeyForCustomLauncherType( customLauncherTypeProperty.value ), {
+    const launcherTypeIcon = new Image( this.getImageKeyForCustomLauncherMechanism( launcherMechanismProperty.value ), {
       centerX: 0,
       centerY: 0
     } );
@@ -127,25 +127,18 @@ export default class CustomLauncherNode extends LauncherNode {
       this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
     } );
 
-    // TODO: Confirm that this is the right way to handle this - see https://github.com/phetsims/projectile-data-lab/issues/25
-    isLauncherCustomProperty.link( ( isCustom, prevIsCustom ) => {
-      // If setting to custom, set the graphics for mystery launcher 1
-      // If the second
-      if ( isCustom ) { // && ( !prevIsCustom || prevIsCustom === null ) ) {
-        this.updateMysteryLauncher( 1 );
-        this.launcherFrameFront.opacity = 0.2; // Do not set invisible because of 60 degree launch.
-      }
-      else { //if ( !isCustom && prevIsCustom ) {
-        this.updateMysteryLauncher( mysteryLauncherProperty.value );
-        this.launcherFrameFront.opacity = 1;
-      }
+    Multilink.multilink( [ isLauncherCustomProperty, mysteryLauncherProperty ], ( isCustom, mysteryLauncher ) => {
+
+      // The custom launcher is based on the graphics from mystery launcher 1
+      this.updateMysteryLauncher( isCustom ? 1 : mysteryLauncher );
+      this.launcherFrameFront.opacity = isCustom ? 0.2 : 1; // Do not set invisible because of 60 degree launch.
 
       // Only show the label node for non-custom launchers
       this.labelNode.visible = !isCustom;
     } );
 
-    customLauncherTypeProperty.link( launcherType => {
-      launcherTypeIcon.image = this.getImageKeyForCustomLauncherType( launcherType );
+    launcherMechanismProperty.link( launcherType => {
+      launcherTypeIcon.image = this.getImageKeyForCustomLauncherMechanism( launcherType );
       launcherTypeIcon.rotation = launcherType === 'pressure' ? -Math.PI / 2 : launcherType === 'explosion' ? Math.PI / 2 : 0;
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
@@ -155,7 +148,7 @@ export default class CustomLauncherNode extends LauncherNode {
 
     latestLaunchSpeedProperty.link( launchSpeed => {
       const maxAngle = 80;
-      const meanSpeed = MeanLaunchSpeedForMechanism( customLauncherTypeProperty.value );
+      const meanSpeed = MeanLaunchSpeedForMechanism( launcherMechanismProperty.value );
       const maxSpeed = 30;
       const needleDeltaRotation = maxAngle * ( launchSpeed - meanSpeed ) / ( maxSpeed - meanSpeed );
       pressureNeedleNode.rotation = Utils.toRadians( needleDeltaRotation ) - Math.PI / 2;
@@ -190,7 +183,7 @@ export default class CustomLauncherNode extends LauncherNode {
     return new Node( { children: [ angleStabilizerTop, angleStabilizerBottom ] } );
   }
 
-  private getImageKeyForCustomLauncherType( customLauncherType: LauncherMechanism ): HTMLImageElement {
+  private getImageKeyForCustomLauncherMechanism( customLauncherType: LauncherMechanism ): HTMLImageElement {
     switch( customLauncherType ) {
       case 'spring':
         return spring_png;

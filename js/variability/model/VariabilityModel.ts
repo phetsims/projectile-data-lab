@@ -14,6 +14,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common-vsm/model/VSMModel.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -24,8 +25,9 @@ export default class VariabilityModel extends VSMModel<VSMField> {
   public constructor( providedOptions: PDLModelOptions ) {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
+
     const fields = VSMFieldIdentifierValues.map( identifier => {
-      return new VSMField( identifier, {
+      return new VSMField( MYSTERY_LAUNCHERS, identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
         phetioFeatured: true
       } );

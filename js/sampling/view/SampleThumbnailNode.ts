@@ -54,12 +54,15 @@ export default class SampleThumbnailNode extends Node {
     // Horizontally zoom in on the thumbnails, centering on the average output for the mystery launcher
     // Each launcher has a different average output, so we need to adjust the range for the thumbnail histogram based on the mystery launcher
     fieldProperty.link( field => {
-      const range = field.mysteryLauncherProperty.value === 1 ? new Range( 55, 70 ) :
-                    field.mysteryLauncherProperty.value === 2 ? new Range( 45, 70 ) :
-                    field.mysteryLauncherProperty.value === 3 ? new Range( 50, 80 ) :
-                    field.mysteryLauncherProperty.value === 4 ? new Range( 55, 75 ) :
-                    field.mysteryLauncherProperty.value === 5 ? new Range( 55, 75 ) :
-                    field.mysteryLauncherProperty.value === 6 ? new Range( 45, 80 ) :
+
+      const index = field.launcherProperty.value.launcherNumber;
+
+      const range = index === 1 ? new Range( 55, 70 ) :
+                    index === 2 ? new Range( 45, 70 ) :
+                    index === 3 ? new Range( 50, 80 ) :
+                    index === 4 ? new Range( 55, 75 ) :
+                    index === 5 ? new Range( 55, 75 ) :
+                    index === 6 ? new Range( 45, 80 ) :
                     Range.EVERYTHING;
 
       this.chartTransform.setModelXRange( range );
@@ -149,7 +152,7 @@ export default class SampleThumbnailNode extends Node {
         // field may have changed. Let's update everything.
         fields.forEach( field => {
           if ( field instanceof SamplingField ) {
-            if ( field.sampleSize === thumbnailSampleSize && field.launcher === ( fieldProperty.value as SamplingField ).launcher ) {
+            if ( field.sampleSize === thumbnailSampleSize && field === fieldProperty.value ) {
               histogramPainter.setHistogramData( field.getHistogramData(), null );
             }
           }

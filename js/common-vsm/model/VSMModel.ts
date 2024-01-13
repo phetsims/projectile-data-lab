@@ -41,8 +41,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly measuringTapeBasePositionProperty;
   public readonly measuringTapeTipPositionProperty;
 
-  public readonly mysteryLauncherProperty: DynamicProperty<number, number, VSMField>;
-
   public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly customLauncherTypeProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>;
@@ -67,11 +65,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.latestLaunchSpeedProperty
-    } );
-
-    this.mysteryLauncherProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
-      bidirectional: true,
-      derive: 'mysteryLauncherProperty'
     } );
 
     this.customLauncherTypeProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>( this.fieldProperty, {
@@ -209,10 +202,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     }
   }
 
-  // Overridden in subclasses to potentially create from a custom launcher
   public launchProjectile(): void {
-    const field = this.fieldProperty.value;
-    field.launchProjectile( 'mystery', null, null );
+    this.fieldProperty.value.launchProjectile();
   }
 
   public step( dt: number ): void {

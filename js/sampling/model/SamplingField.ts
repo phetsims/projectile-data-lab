@@ -14,6 +14,7 @@ import { LaunchMode } from '../../common/model/LaunchMode.js';
 import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -66,14 +67,14 @@ export default class SamplingField extends Field {
   // Current phase, see documentation above
   public readonly phaseProperty: StringUnionProperty<SamplingPhase>;
 
-  public constructor( public readonly launcher: number,
+  public constructor( launcher: Launcher,
                       public readonly sampleSize: number,
                       private readonly launchModeProperty: Property<LaunchMode>,
                       providedOptions: SamplingFieldOptions ) {
     const options = optionize<SamplingFieldOptions, SelfOptions, FieldOptions>()( {
       isLauncherConfigurationPhetioInstrumented: false
     }, providedOptions );
-    super( options );
+    super( [ launcher ], options );
 
     this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );
 
@@ -94,8 +95,6 @@ export default class SamplingField extends Field {
     this.sampleMeanProperty = new Property<number | null>( null, {
       reentrant: true
     } );
-
-    this.mysteryLauncherProperty.value = launcher;
 
     this.phaseProperty = new StringUnionProperty<SamplingPhase>( 'idle', {
       validValues: SamplingPhaseValues,
@@ -206,7 +205,7 @@ export default class SamplingField extends Field {
   }
 
   public createLandedProjectile( sampleNumber: number ): void {
-    const projectile = this.createProjectile( sampleNumber, 'mystery', null, null );
+    const projectile = this.createProjectile( sampleNumber );
     projectile.setLanded();
 
     this.landedProjectiles.push( projectile );
@@ -260,7 +259,7 @@ export default class SamplingField extends Field {
 
       let changed = false;
       while ( this.getProjectilesInSelectedSample().length < numberProjectilesToShow ) {
-        const projectile = this.createProjectile( this.selectedSampleIndexProperty.value, 'mystery', null, null );
+        const projectile = this.createProjectile( this.selectedSampleIndexProperty.value );
         this.airborneProjectiles.push( projectile );
         this.projectileCreatedEmitter.emit( projectile );
         changed = true;

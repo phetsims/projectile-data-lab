@@ -8,7 +8,6 @@
 
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import MysteryLauncherProfile from './MysteryLauncherProfile.js';
 import Range from '../../../dot/js/Range.js';
 
 const maxFieldDistance = 100;
@@ -73,15 +72,6 @@ const PDLConstants = {
   PRESSURE_SPEED_SD: 0.6,
   EXPLOSION_SPEED_MEAN: 25,
   EXPLOSION_SPEED_SD: 1.2,
-
-  LAUNCHER_CONFIGS: [
-    new MysteryLauncherProfile( 'spring', 1 ),
-    new MysteryLauncherProfile( 'spring', maxAngleStandardDeviation ),
-    new MysteryLauncherProfile( 'explosion', 0 ),
-    new MysteryLauncherProfile( 'pressure', 2 ),
-    new MysteryLauncherProfile( 'pressure', 4 ),
-    new MysteryLauncherProfile( 'explosion', maxAngleStandardDeviation )
-  ],
 
   // The projectile source images are scaled by this factor when drawing them on the canvas
   PROJECTILE_IMAGE_SCALE_FACTOR: 0.15,

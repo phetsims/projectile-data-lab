@@ -20,7 +20,7 @@ import { StopwatchPhase, StopwatchPhaseValues } from './StopwatchPhase.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -41,8 +41,6 @@ export default class VSMField extends Field {
 
   public readonly customLauncherTypeProperty: Property<LauncherMechanism>;
 
-  public readonly angleStabilizerProperty: NumberProperty;
-
   public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
 
   public readonly selectedProjectileNumberProperty: NumberProperty;
@@ -60,13 +58,13 @@ export default class VSMField extends Field {
   public readonly landedProjectileCountProperty: NumberProperty;
   public readonly totalProjectileCountProperty: NumberProperty;
 
-  public constructor( public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
+  public constructor( launchers: readonly Launcher[], public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
 
     const options = optionize<VSMFieldOptions, SelfOptions, FieldOptions>()( {
       isLauncherConfigurationPhetioInstrumented: true
     }, providedOptions );
 
-    super( options );
+    super( launchers, options );
 
     this.latestLaunchSpeedProperty = new Property<number>( this.meanLaunchSpeedProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
@@ -97,12 +95,6 @@ export default class VSMField extends Field {
       tandem: providedOptions.tandem.createTandem( 'customLauncherTypeProperty' ),
       phetioDocumentation: 'This property configures the mechanism of the custom launcher.',
       phetioValueType: StringUnionIO( LauncherMechanismValues )
-    } );
-
-    this.angleStabilizerProperty = new NumberProperty( PDLConstants.LAUNCHER_CONFIGS[ 0 ].angleStandardDeviation, {
-      range: PDLConstants.ANGLE_STABILIZER_RANGE,
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerProperty' ),
-      phetioDocumentation: 'This property configures the width of the angle stabilizer for the custom launcher.'
     } );
 
     this.stopwatchPhaseProperty = new Property<StopwatchPhase>( 'clear', {
@@ -161,13 +153,12 @@ export default class VSMField extends Field {
     this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
   }
 
-  public launchProjectile( launcherType: MysteryOrCustom, customLauncherMechanism: LauncherMechanism | null,
-                           customLauncherAngleStabilizer: number | null ): void {
+  public launchProjectile(): void {
     if ( this.getTotalProjectileCount() >= PDLQueryParameters.maxProjectiles ) {
       return;
     }
 
-    const projectile = this.createProjectile( 0, launcherType, customLauncherMechanism, customLauncherAngleStabilizer );
+    const projectile = this.createProjectile( 0 );
     this.airborneProjectiles.push( projectile );
 
     this.latestLaunchAngleProperty.value = projectile.launchAngle;

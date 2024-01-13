@@ -21,7 +21,6 @@ import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -30,6 +29,8 @@ import PDLConstants from '../PDLConstants.js';
 import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import Launcher from './Launcher.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -77,7 +78,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
 
-  public abstract mysteryLauncherProperty: TProperty<number>;
+  public readonly mysteryLauncherProperty: PhetioProperty<number>;
 
   public readonly meanLaunchAngleProperty: DynamicProperty<number, number, T>;
 
@@ -88,6 +89,8 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly isContinuousLaunchingProperty: DynamicProperty<boolean, boolean, T>;
 
   public readonly isPathsVisibleProperty: BooleanProperty;
+
+  public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
 
   protected constructor( isHistogramInitiallyVisible: boolean, providedOptions: PDLModelOptions<T> ) {
 
@@ -191,6 +194,16 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.isContinuousLaunchingProperty = new DynamicProperty<boolean, boolean, T>( this.fieldProperty, {
       derive: t => t.isContinuousLaunchingProperty
+    } );
+
+    // TODO: Eliminate this? see https://github.com/phetsims/projectile-data-lab/issues/77
+    this.mysteryLauncherProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.mysteryLauncherProperty
+    } );
+
+    this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {
+      derive: t => t.launcherProperty
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {

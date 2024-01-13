@@ -18,11 +18,12 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
-import { LauncherMechanism, MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import { MysteryOrCustom } from './MysteryOrCustom.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import Launcher from './Launcher.js';
 
 type SelfOptions = {
 
@@ -42,21 +43,22 @@ export default abstract class Field extends PhetioObject {
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
+  public readonly launcherProperty: Property<Launcher>;
+
+  public readonly meanLaunchSpeedProperty: DynamicProperty<number, number, Launcher>;
+
+  public readonly standardDeviationLaunchSpeedProperty: DynamicProperty<number, number, Launcher>;
+
+  public readonly angleStabilizerProperty: DynamicProperty<number, number, Launcher>;
+
   // The most recent launch angle on this field, in degrees
   public readonly latestLaunchAngleProperty: Property<number>;
 
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
   public readonly meanLaunchAngleProperty: TReadOnlyProperty<number>;
 
-  public readonly launchAngleStandardDeviationProperty: Property<number>;
-
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launchHeightProperty: TReadOnlyProperty<number>;
-
-  // The mean speed of a projectile launched by the launcher, in meters per second
-  public readonly meanLaunchSpeedProperty: Property<number>;
-
-  public readonly launchSpeedStandardDeviationProperty: Property<number>;
 
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
@@ -82,7 +84,7 @@ export default abstract class Field extends PhetioObject {
 
   public readonly abstract identifier: string;
 
-  protected constructor( providedOptions: FieldOptions ) {
+  protected constructor( public readonly launchers: readonly Launcher[], providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,
       phetioState: true
@@ -147,11 +149,27 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: NumberIO
     } );
 
-    this.launchAngleStandardDeviationProperty = new Property<number>( 0, {
-      tandem: providedOptions.tandem.createTandem( 'launchAngleStandardDeviationProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'This property is the standard deviation of the launch angle in degrees.',
-      phetioValueType: NumberIO
+    this.launcherProperty = new Property<Launcher>( launchers[ 0 ], {
+      validValues: launchers,
+      tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'This property configures the active launcher on this field.',
+      phetioValueType: ReferenceIO( IOType.ObjectIO )
+    } );
+
+    this.meanLaunchSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+      bidirectional: true,
+      derive: t => t.meanLaunchSpeedProperty
+    } );
+
+    this.standardDeviationLaunchSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+      bidirectional: true,
+      derive: t => t.standardDeviationLaunchSpeedProperty
+    } );
+
+    this.angleStabilizerProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+      bidirectional: true,
+      derive: t => t.angleStabilizerProperty
     } );
 
     this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
@@ -170,14 +188,14 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: StringUnionIO( ProjectileTypeValues )
     } );
 
-    // TODO: Keep in mind that in screens 2-3 it will have more sub-data structure, see https://github.com/phetsims/projectile-data-lab/issues/25
-    // TODO: That may be done in another Property in Screen 2 + 3, see https://github.com/phetsims/projectile-data-lab/issues/25
-    this.mysteryLauncherProperty = new Property<number>( 1, {
-      validValues: _.range( 1, 7 ),
-      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
-      phetioFeatured: true,
-      phetioDocumentation: 'This property configures the active launcher by number.',
-      phetioValueType: NumberIO
+    this.mysteryLauncherProperty = new Property( this.launcherProperty.value.launcherNumber );
+    this.launcherProperty.link( launcher => {
+      this.mysteryLauncherProperty.value = launcher.launcherNumber;
+    } );
+    this.mysteryLauncherProperty.link( mysteryLauncher => {
+
+      // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
+      this.launcherProperty.value = this.launchers.find( launcher => launcher.launcherNumber === mysteryLauncher )!;
     } );
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {
@@ -185,36 +203,10 @@ export default abstract class Field extends PhetioObject {
       phetioFeatured: true
     } );
 
-    // TODO: These should be based on whether the launcher is custom or not, see https://github.com/phetsims/projectile-data-lab/issues/25
-    const initialMeanLaunchSpeed = MeanLaunchSpeedForMechanism( 'spring' );
-    const initialSDLaunchSpeed = SDLaunchSpeedForMechanism( 'spring' );
-
-    this.meanLaunchSpeedProperty = new Property<number>( initialMeanLaunchSpeed, {
-      tandem: providedOptions.tandem.createTandem( 'meanLaunchSpeedProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'This property configures the mean launch speed of the launcher.',
-      phetioValueType: NumberIO
-    } );
-
-    this.launchSpeedStandardDeviationProperty = new Property<number>( initialSDLaunchSpeed, {
-      tandem: providedOptions.tandem.createTandem( 'launchSpeedStandardDeviationProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'This property is the standard deviation of the launch speed, in meters per second.',
-      phetioValueType: NumberIO
-    } );
-
     this.selectedSampleIndexProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'The selected sample being shown on the field.'
-    } );
-
-    // Note: This is incorrect for the custom launcher ('Sources' and 'Measures' screens)
-    this.mysteryLauncherProperty.link( mysteryLauncher => {
-      const launcherConfig = PDLConstants.LAUNCHER_CONFIGS[ mysteryLauncher - 1 ];
-      this.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
-      this.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( launcherConfig.launcherMechanism );
-      this.launchAngleStandardDeviationProperty.value = launcherConfig.angleStandardDeviation;
     } );
   }
 
@@ -231,7 +223,8 @@ export default abstract class Field extends PhetioObject {
 
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
-    this.mysteryLauncherProperty.reset();
+
+    this.launcherProperty.reset();
 
     this.clearProjectiles();
   }
@@ -246,11 +239,9 @@ export default abstract class Field extends PhetioObject {
     this.selectedSampleIndexProperty.reset();
   }
 
-  protected createProjectile( sampleNumber: number,
-                              // Elsewhere there is a boolean, which should we prefer? See https://github.com/phetsims/projectile-data-lab/issues/67
-                              launcherType: MysteryOrCustom, customLauncherMechanism: LauncherMechanism | null, customLauncherAngleStabilizer: number | null ): Projectile {
-    const launchAngle = this.meanLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launchAngleStandardDeviationProperty.value; // in degrees
-    const launchSpeed = this.meanLaunchSpeedProperty.value + dotRandom.nextGaussian() * this.launchSpeedStandardDeviationProperty.value;
+  protected createProjectile( sampleNumber: number ): Projectile {
+    const launchAngle = this.meanLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launcherProperty.value.standardDeviationLaunchAngleProperty.value; // in degrees
+    const launchSpeed = this.meanLaunchSpeedProperty.value + dotRandom.nextGaussian() * this.launcherProperty.value.standardDeviationLaunchSpeedProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
@@ -259,19 +250,19 @@ export default abstract class Field extends PhetioObject {
     const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
 
+    const launcher = this.launcherProperty.value;
+
     return new Projectile(
       screenTandemName,
       this.identifier,
       sampleNumber,
       this.launcherConfigurationProperty.value,
-      launcherType,
-      this.mysteryLauncherProperty.value,
-      customLauncherMechanism,
-      customLauncherAngleStabilizer,
+      launcher.mysteryOrCustom,
+      launcher.launcherMechanismProperty.value,
+      launcher.angleStabilizerProperty.value,
+      launcher.launcherNumber,
       0,
-
-      // TODO: Should be launchHeight, right? See https://github.com/phetsims/projectile-data-lab/issues/67
-      0,
+      this.launchHeightProperty.value,
       this.projectileTypeProperty.value,
       isFlippedHorizontally,
       landedImageIndex,

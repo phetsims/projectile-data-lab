@@ -12,9 +12,9 @@ import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common-vsm/model/VSMModel.js';
-import { MeanLaunchSpeedForMechanism, SDLaunchSpeedForMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
+import Launcher from '../../common/model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -25,29 +25,18 @@ export default class SourcesModel extends VSMModel<VSMField> {
   public constructor( providedOptions: PDLModelOptions ) {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
-    const fields = VSMFieldIdentifierValues.map( identifier => {
-      return new VSMField( identifier, {
+    const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
+
+      // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 what is the default angle stabilizer supposed to be?
+      return new VSMField( [ new Launcher( 'custom', 'spring', 2, 0, {
+        tandem: fieldsTandem.createTandem( 'customLauncher' + index )
+      } ) ], identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
         phetioFeatured: true
       } );
     } );
 
     super( fields, false, providedOptions );
-
-    fields.forEach( field => {
-      field.angleStabilizerProperty.link( angleStabilizer => {
-        field.launchAngleStandardDeviationProperty.value = angleStabilizer;
-      } );
-      field.customLauncherTypeProperty.link( customLauncherType => {
-        field.meanLaunchSpeedProperty.value = MeanLaunchSpeedForMechanism( customLauncherType );
-        field.launchSpeedStandardDeviationProperty.value = SDLaunchSpeedForMechanism( customLauncherType );
-      } );
-    } );
-  }
-
-  public override launchProjectile(): void {
-    const field = this.fieldProperty.value;
-    field.launchProjectile( 'custom', field.customLauncherTypeProperty.value, field.angleStabilizerProperty.value );
   }
 }
 

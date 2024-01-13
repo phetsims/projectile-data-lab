@@ -19,10 +19,10 @@ import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import SamplingField from './SamplingField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
 import { SamplingPhase } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -33,7 +33,6 @@ const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
 export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly sampleSizeProperty: Property<number>;
-  public readonly mysteryLauncherProperty: NumberProperty;
 
   public readonly phaseProperty: DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>;
   public readonly selectedSampleIndexProperty: DynamicProperty<number, number, SamplingField>;
@@ -54,11 +53,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
       for ( let j = 0; j < SAMPLE_SIZES.length; j++ ) {
-        fields.push( new SamplingField(
-          i + 1, SAMPLE_SIZES[ j ], samplingLaunchModeProperty, {
-            tandem: fieldsTandem.createTandem( `launcher${i + 1}sampleSize${SAMPLE_SIZES[ j ]}Field` ),
-            phetioFeatured: true
-          } ) );
+
+        // TODO: Also, the SelectionField has only 1 launcher per field, but that fails out the mystery launcher radio buttons. See https://github.com/phetsims/projectile-data-lab/issues/77
+        fields.push( new SamplingField( MYSTERY_LAUNCHERS[ i ], SAMPLE_SIZES[ j ], samplingLaunchModeProperty, {
+          tandem: fieldsTandem.createTandem( `launcher${i + 1}sampleSize${SAMPLE_SIZES[ j ]}Field` ),
+          phetioFeatured: true
+        } ) );
       }
     }
 
@@ -82,16 +82,9 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioValueType: NumberIO
     } );
 
-    this.mysteryLauncherProperty = new NumberProperty( 1, {
-      validValues: _.range( 1, 7 ),
-      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
-      phetioFeatured: true,
-      phetioDocumentation: 'This property configures the active launcher by number.'
-    } );
-
     // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
-    Multilink.multilink( [ this.sampleSizeProperty, this.mysteryLauncherProperty ], ( sampleSize, mysteryLauncher ) => {
-      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcher === mysteryLauncher )!;
+    Multilink.multilink( [ this.sampleSizeProperty, this.launcherProperty ], ( sampleSize, launcher ) => {
+      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value === launcher )!;
       this.fieldProperty.value = field;
     } );
 
@@ -170,7 +163,6 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public override reset(): void {
     super.reset();
     this.sampleSizeProperty.reset();
-    this.mysteryLauncherProperty.reset();
   }
 }
 

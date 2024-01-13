@@ -7,6 +7,7 @@ import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The MeasuresField is an extension of the Field class that adds fields for the Measures model.
@@ -27,8 +28,8 @@ export default class MeasuresField extends VSMField {
   // This property represents the standard deviation of the distance (horizontal displacement) of landed projectiles.
   public readonly landedDistanceStandardDeviationProperty: Property<number | null>;
 
-  public constructor( identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
-    super( identifier, providedOptions );
+  public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
+    super( launchers, identifier, providedOptions );
 
     this.landedDistanceAverageProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'landedDistanceAverageProperty' ),

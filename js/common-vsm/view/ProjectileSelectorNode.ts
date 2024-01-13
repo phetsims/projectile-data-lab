@@ -62,7 +62,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
     const isLauncherCustomProperty = new Property( true );
     const mysteryLauncherProperty = new Property( 1 );
-    const customLauncherTypeProperty = new Property<LauncherMechanism>( 'spring' );
+    const launcherMechanismProperty = new Property<LauncherMechanism>( 'spring' );
     const angleStabilizerProperty = new Property( 0 );
     const latestLaunchSpeedProperty = new Property( 0 );
 
@@ -85,6 +85,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         }
       } ) );
 
+    // TODO: Custom launcher icons are not correct in the projectile selector panel, see https://github.com/phetsims/projectile-data-lab/issues/77
     const customLauncherNode = new CustomLauncherNode(
       ModelViewTransform2.createIdentity(),
       launcherConfigurationProperty,
@@ -92,7 +93,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       launchHeightProperty,
       isLauncherCustomProperty,
       mysteryLauncherProperty,
-      customLauncherTypeProperty,
+      launcherMechanismProperty,
       angleStabilizerProperty,
       latestLaunchSpeedProperty, {
         scale: 0.2,
@@ -113,18 +114,18 @@ export default class ProjectileSelectorNode extends SelectorNode {
           maxHeight: 15
         } ) ];
 
-        // Update the adapters for the selected projectile that will show up on the launcher icon.
+        // Update the adapters for the selected projectile that will determine how to show the launcher icon.
         launchAngleProperty.value = AngleForConfiguration( selectedProjectile.launcherConfiguration );
         launchHeightProperty.value = selectedProjectile.launchHeight;
         launcherConfigurationProperty.value = selectedProjectile.launcherConfiguration;
         isLauncherCustomProperty.value = selectedProjectile.launcherType === 'custom';
-        mysteryLauncherProperty.value = selectedProjectile.mysteryLauncherNumber!;
-        customLauncherTypeProperty.value = selectedProjectile.customLauncherMechanism!;
-        angleStabilizerProperty.value = selectedProjectile.customLauncherAngleStabilizer!;
+        angleStabilizerProperty.value = selectedProjectile.launcherAngleStabilizer;
+        launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
+        // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
 
-        // Adding this line causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
-        // TODO: Check in about this, see https://github.com/phetsims/projectile-data-lab/issues/67
-        // latestLaunchSpeedProperty.value = selectedProjectile.launchSpeed;
+        if ( selectedProjectile.launcherNumber > 0 ) {
+          mysteryLauncherProperty.value = selectedProjectile.launcherNumber;
+        }
 
         // Clear the clip area, so we can get an unclipped measurement of the localBounds.height
         customLauncherNode.clipArea = null;

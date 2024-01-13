@@ -11,7 +11,6 @@ import Field from './Field.js';
 import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
 import { LauncherMechanism, LauncherMechanismValues } from '../../common-vsm/model/LauncherMechanism.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from './MysteryOrCustom.js';
@@ -31,12 +30,11 @@ export default class Projectile {
   public fieldIdentifier: string;
 
   public launcherConfiguration: LauncherConfiguration;
-  public launcherType: MysteryOrCustom;
 
-  // The following are mutually exclusive depending on whether the launcherType is mystery or custom.
-  public mysteryLauncherNumber: number | null;
-  public customLauncherMechanism: LauncherMechanism | null;
-  public customLauncherAngleStabilizer: number | null;
+  public launcherType: MysteryOrCustom;
+  public launcherAngleStabilizer: number;
+  public launcherMechanism: LauncherMechanism;
+  public launcherNumber: number;
 
   // The x and y coordinates of the projectile relative to the launch position, in meters
   public x: number;
@@ -72,9 +70,9 @@ export default class Projectile {
     sampleNumber: number,
     launcherConfiguration: LauncherConfiguration,
     launcherType: MysteryOrCustom,
-    mysteryLauncherNumber: number | null,
-    customLauncherMechanism: LauncherMechanism | null,
-    customLauncherAngleStabilizer: number | null,
+    launcherMechanism: LauncherMechanism,
+    launcherAngleStabilizer: number,
+    launcherNumber: number,
     x: number,
     y: number,
     type: ProjectileType,
@@ -90,9 +88,9 @@ export default class Projectile {
     this.sampleNumber = sampleNumber;
     this.launcherConfiguration = launcherConfiguration;
     this.launcherType = launcherType;
-    this.mysteryLauncherNumber = mysteryLauncherNumber;
-    this.customLauncherMechanism = customLauncherMechanism;
-    this.customLauncherAngleStabilizer = customLauncherAngleStabilizer;
+    this.launcherAngleStabilizer = launcherAngleStabilizer;
+    this.launcherMechanism = launcherMechanism;
+    this.launcherNumber = launcherNumber;
     this.x = x;
     this.y = y;
     this.type = type;
@@ -130,9 +128,9 @@ export default class Projectile {
       sampleNumber: NumberIO,
       launcherConfiguration: StringUnionIO( LauncherConfigurationValues ),
       launcherType: StringUnionIO( MysteryOrCustomValues ),
-      mysteryLauncherNumber: NullableIO( NumberIO ),
-      customLauncherMechanism: NullableIO( StringUnionIO( LauncherMechanismValues ) ),
-      customLauncherAngleStabilizer: NullableIO( NumberIO ),
+      launcherMechanism: StringUnionIO( LauncherMechanismValues ),
+      launcherAngleStabilizer: NumberIO,
+      launcherNumber: NumberIO,
       x: NumberIO,
       y: NumberIO,
       type: StringUnionIO( ProjectileTypeValues ),
@@ -150,9 +148,9 @@ export default class Projectile {
         sampleNumber: projectile.sampleNumber,
         launcherConfiguration: projectile.launcherConfiguration,
         launcherType: projectile.launcherType,
-        mysteryLauncherNumber: projectile.mysteryLauncherNumber,
-        customLauncherMechanism: projectile.customLauncherMechanism,
-        customLauncherAngleStabilizer: projectile.customLauncherAngleStabilizer,
+        launcherMechanism: projectile.launcherMechanism,
+        launcherAngleStabilizer: projectile.launcherAngleStabilizer,
+        launcherNumber: projectile.launcherNumber,
         x: projectile.x,
         y: projectile.y,
         type: projectile.type,
@@ -171,9 +169,9 @@ export default class Projectile {
         stateObject.sampleNumber,
         stateObject.launcherConfiguration,
         stateObject.launcherType,
-        stateObject.mysteryLauncherNumber,
-        stateObject.customLauncherMechanism,
-        stateObject.customLauncherAngleStabilizer,
+        stateObject.launcherMechanism,
+        stateObject.launcherAngleStabilizer,
+        stateObject.launcherNumber,
         stateObject.x,
         stateObject.y,
         stateObject.type,
@@ -208,18 +206,6 @@ export default class Projectile {
     return ( v0 * cosTheta / g ) * ( v0 * sinTheta + Math.sqrt( v0 * v0 * sinTheta * sinTheta + 2 * g * launchHeight ) );
   }
 
-  public static getMaximumHeight( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
-    if ( launchAngle <= 0 ) {
-      return launchHeight;
-    }
-    else {
-      const g = PDLConstants.FREEFALL_ACCELERATION;
-      const v0 = launchSpeed;
-      const sinTheta = Math.sin( Utils.toRadians( launchAngle ) );
-      return launchHeight + v0 * v0 * sinTheta * sinTheta / ( 2 * g );
-    }
-  }
-
   public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
@@ -234,9 +220,9 @@ export type ProjectileStateObject = {
   sampleNumber: number;
   launcherConfiguration: LauncherConfiguration;
   launcherType: MysteryOrCustom;
-  mysteryLauncherNumber: number | null;
-  customLauncherMechanism: LauncherMechanism | null;
-  customLauncherAngleStabilizer: number | null;
+  launcherMechanism: LauncherMechanism;
+  launcherAngleStabilizer: number;
+  launcherNumber: number;
   x: number;
   y: number;
   type: ProjectileType;
