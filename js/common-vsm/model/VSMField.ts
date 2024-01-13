@@ -6,7 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import { LauncherMechanism, LauncherMechanismValues } from './LauncherMechanism.js';
+import { LauncherMechanism } from './LauncherMechanism.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
@@ -21,6 +21,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -39,7 +40,7 @@ export default class VSMField extends Field {
 
   public readonly isLauncherCustomProperty: Property<boolean>;
 
-  public readonly customLauncherMechanismProperty: Property<LauncherMechanism>;
+  public readonly customLauncherMechanismProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>;
 
   public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
 
@@ -90,12 +91,11 @@ export default class VSMField extends Field {
       phetioValueType: BooleanIO
     } );
 
-    this.customLauncherMechanismProperty = new Property<LauncherMechanism>( 'spring', {
-      validValues: LauncherMechanismValues,
-      tandem: providedOptions.tandem.createTandem( 'customLauncherMechanismProperty' ),
-      phetioDocumentation: 'This property configures the mechanism of the custom launcher.',
-      phetioValueType: StringUnionIO( LauncherMechanismValues )
+    this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>( this.launcherProperty, {
+      bidirectional: true,
+      derive: t => t.launcherMechanismProperty
     } );
+    this.customLauncherMechanismProperty.debug( 'clmp' );
 
     this.stopwatchPhaseProperty = new Property<StopwatchPhase>( 'clear', {
       validValues: StopwatchPhaseValues,
