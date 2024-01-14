@@ -61,7 +61,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const launchHeightProperty = new NumberProperty( 0 );
     const launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
     const isLauncherCustomProperty = new Property( true );
-    const mysteryLauncherProperty = new Property( 1 );
+    const mysteryLauncherNumberProperty = new Property( 1 );
     const launcherMechanismProperty = new Property<LauncherMechanism>( 'spring' );
     const angleStabilizerProperty = new Property( 0 );
     const latestLaunchSpeedProperty = new Property( 0 );
@@ -91,7 +91,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       launchAngleProperty,
       launchHeightProperty,
       isLauncherCustomProperty,
-      mysteryLauncherProperty,
+      mysteryLauncherNumberProperty,
       launcherMechanismProperty,
       angleStabilizerProperty,
       latestLaunchSpeedProperty, {
@@ -123,7 +123,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
 
         if ( selectedProjectile.launcherNumber > 0 ) {
-          mysteryLauncherProperty.value = selectedProjectile.launcherNumber;
+          mysteryLauncherNumberProperty.value = selectedProjectile.launcherNumber;
         }
 
         // Clear the clip area, so we can get an unclipped measurement of the localBounds.height

@@ -65,7 +65,7 @@ export default class LauncherNode extends Node {
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
                       private readonly meanLaunchAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
-                      mysteryLauncherProperty: TProperty<number>,
+                      mysteryLauncherNumberProperty: TProperty<number>,
                       providedOptions: LauncherNodeOptions ) {
 
     const launcherX = modelViewTransform.modelToViewX( 0 );
@@ -75,7 +75,7 @@ export default class LauncherNode extends Node {
     const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
-    const labelText = new PDLText( new DerivedProperty( [ mysteryLauncherProperty ], mysteryLauncher => Utils.toFixed( mysteryLauncher, 0 ) ), {
+    const labelText = new PDLText( new DerivedProperty( [ mysteryLauncherNumberProperty ], mysteryLauncher => Utils.toFixed( mysteryLauncher, 0 ) ), {
       fontSize: 18
     } );
     const labelBackground = new Circle( Math.max( labelText.width, labelText.height ) * 0.65, {
@@ -111,7 +111,7 @@ export default class LauncherNode extends Node {
       this.updateLauncherHeight( launcherHeight );
     } );
 
-    mysteryLauncherProperty.link( mysteryLauncher => {
+    mysteryLauncherNumberProperty.link( mysteryLauncher => {
       this.updateMysteryLauncher( mysteryLauncher, options.isIcon );
     } );
   }

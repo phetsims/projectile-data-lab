@@ -33,7 +33,7 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
   public constructor( model: VariabilityModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
-    const launchPanel = new VariabilityLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, model.mysteryLauncherProperty, {
+    const launchPanel = new VariabilityLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, model.mysteryLauncherNumberProperty, {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 
@@ -60,7 +60,7 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
       this.modelViewTransform,
       model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
-      model.mysteryLauncherProperty,
+      model.mysteryLauncherNumberProperty,
       {}
     );
 

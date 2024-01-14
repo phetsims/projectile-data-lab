@@ -20,8 +20,8 @@ type SectionMysteryLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionO
 
 export default class SectionMysteryLauncher extends PDLPanelSection {
 
-  public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: SectionMysteryLauncherOptions ) {
-    super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, providedOptions ), providedOptions );
+  public constructor( mysteryLauncherNumberProperty: PhetioProperty<number>, providedOptions: SectionMysteryLauncherOptions ) {
+    super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherNumberProperty, providedOptions ), providedOptions );
   }
 }
 

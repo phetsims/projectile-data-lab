@@ -17,7 +17,7 @@ const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
-  public constructor( mysteryLauncherProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
+  public constructor( mysteryLauncherNumberProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
 
     const mysteryLauncherRadioButtonGroupItems = _.range( 1, 7 ).map( mysteryLauncher => {
       return {
@@ -73,7 +73,7 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
       };
     } );
 
-    const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( mysteryLauncherProperty, mysteryLauncherRadioButtonGroupItems, {
+    const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( mysteryLauncherNumberProperty, mysteryLauncherRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroup' ),
       phetioFeatured: true,
       orientation: 'horizontal',

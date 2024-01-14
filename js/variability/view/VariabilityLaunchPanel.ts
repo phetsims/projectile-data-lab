@@ -21,9 +21,9 @@ type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class VariabilityLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, projectileTypeProperty: PhetioProperty<ProjectileType>, mysteryLauncherProperty: PhetioProperty<number>, providedOptions: VariabilityLaunchPanelOptions ) {
+  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, projectileTypeProperty: PhetioProperty<ProjectileType>, mysteryLauncherNumberProperty: PhetioProperty<number>, providedOptions: VariabilityLaunchPanelOptions ) {
 
-    const mysteryLauncherSection = new SectionMysteryLauncher( mysteryLauncherProperty, {
+    const mysteryLauncherSection = new SectionMysteryLauncher( mysteryLauncherNumberProperty, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherSection' )
     } );
 

@@ -78,7 +78,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
 
-  public readonly mysteryLauncherProperty: PhetioProperty<number>;
+  public readonly mysteryLauncherNumberProperty: PhetioProperty<number>;
 
   public readonly meanLaunchAngleProperty: DynamicProperty<number, number, T>;
 
@@ -155,7 +155,9 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       tandem: providedOptions.tandem.createTandem( 'fieldProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates the active field.',
-      phetioValueType: ReferenceIO( Field.FieldIO )
+      phetioValueType: ReferenceIO( Field.FieldIO ),
+      reentrant: true,
+      valueComparisonStrategy: 'reference'
     } );
 
     this.launchModeProperty = new Property<LaunchMode>( 'single', {
@@ -196,10 +198,10 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       derive: t => t.isContinuousLaunchingProperty
     } );
 
-    // TODO: Eliminate this? see https://github.com/phetsims/projectile-data-lab/issues/77
-    this.mysteryLauncherProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+    this.mysteryLauncherNumberProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.mysteryLauncherProperty
+      derive: t => t.mysteryLauncherNumberProperty,
+      reentrant: true
     } );
 
     this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {

@@ -46,13 +46,13 @@ export default class CustomLauncherNode extends LauncherNode {
                       launcherAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
                       isLauncherCustomProperty: TProperty<boolean>,
-                      mysteryLauncherProperty: TProperty<number>,
+                      mysteryLauncherNumberProperty: TProperty<number>,
                       launcherMechanismProperty: TProperty<LauncherMechanism>,
                       angleStabilizerProperty: TProperty<number>,
                       latestLaunchSpeedProperty: TProperty<number>,
                       providedOptions: CustomLauncherNodeOptions ) {
 
-    super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherProperty, providedOptions );
+    super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherNumberProperty, providedOptions );
 
     const launcherTypeIcon = new Image( this.getImageKeyForCustomLauncherMechanism( launcherMechanismProperty.value ), {
       centerX: 0,
@@ -127,7 +127,7 @@ export default class CustomLauncherNode extends LauncherNode {
       this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
     } );
 
-    Multilink.multilink( [ isLauncherCustomProperty, mysteryLauncherProperty ], ( isCustom, mysteryLauncher ) => {
+    Multilink.multilink( [ isLauncherCustomProperty, mysteryLauncherNumberProperty ], ( isCustom, mysteryLauncher ) => {
 
       // The custom launcher is based on the graphics from mystery launcher 1
       this.updateMysteryLauncher( isCustom ? 1 : mysteryLauncher );

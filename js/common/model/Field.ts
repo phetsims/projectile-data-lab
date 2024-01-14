@@ -63,7 +63,7 @@ export default abstract class Field extends PhetioObject {
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
   // Numerical index (1-based) for the type of the mystery launcher, from 1-6
-  public readonly mysteryLauncherProperty: Property<number>;
+  public readonly mysteryLauncherNumberProperty: Property<number>;
 
   public readonly isContinuousLaunchingProperty: BooleanProperty;
 
@@ -188,15 +188,21 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: StringUnionIO( ProjectileTypeValues )
     } );
 
-    this.mysteryLauncherProperty = new Property( this.launcherProperty.value.launcherNumber );
-    this.launcherProperty.link( launcher => {
-      this.mysteryLauncherProperty.value = launcher.launcherNumber;
-    } );
-    this.mysteryLauncherProperty.link( mysteryLauncher => {
+    this.mysteryLauncherNumberProperty = new Property( this.launcherProperty.value.launcherNumber );
 
-      // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
-      this.launcherProperty.value = this.launchers.find( launcher => launcher.launcherNumber === mysteryLauncher )!;
-    } );
+    // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
+    // do not do this on the sampling screen, which has only one launcher per field, and changing the mystery
+    // launcher actually changes which field you are on.
+    if ( this.launchers.length > 1 ) {
+
+      this.launcherProperty.link( launcher => {
+        this.mysteryLauncherNumberProperty.value = launcher.launcherNumber;
+      } );
+
+      this.mysteryLauncherNumberProperty.link( mysteryLauncher => {
+        this.launcherProperty.value = this.launchers.find( launcher => launcher.launcherNumber === mysteryLauncher )!;
+      } );
+    }
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' ),

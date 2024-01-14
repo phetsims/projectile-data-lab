@@ -82,10 +82,21 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioValueType: NumberIO
     } );
 
+    // TODO: This is a workaround for a re-entrant problem discovered in https://github.com/phetsims/projectile-data-lab/issues/77
+    // and would be good to understand/solve.
+    let isSettingField = false;
+
     // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
-    Multilink.multilink( [ this.sampleSizeProperty, this.launcherProperty ], ( sampleSize, launcher ) => {
-      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value === launcher )!;
-      this.fieldProperty.value = field;
+    Multilink.multilink( [ this.sampleSizeProperty, this.mysteryLauncherNumberProperty ], ( sampleSize, mysteryLauncherNumber ) => {
+
+      if ( !isSettingField ) {
+        isSettingField = true;
+        const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value.launcherNumber === mysteryLauncherNumber )!;
+        // console.log( 'found field: ' + this.fields.indexOf( field ) );
+        this.fieldProperty.value = field;
+
+        isSettingField = false;
+      }
     } );
 
     this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {

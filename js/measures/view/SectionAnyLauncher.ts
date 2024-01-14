@@ -28,7 +28,7 @@ type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptio
 
 export default class SectionAnyLauncher extends PDLPanelSection {
 
-  public constructor( isLauncherCustomProperty: PhetioProperty<boolean>, mysteryLauncherProperty: PhetioProperty<number>,
+  public constructor( isLauncherCustomProperty: PhetioProperty<boolean>, mysteryLauncherNumberProperty: PhetioProperty<number>,
                       customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
@@ -57,7 +57,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       phetioFeatured: true
     } );
 
-    const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
+    const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherNumberProperty, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroupWrapper' ),
       phetioFeatured: true
     } );
