@@ -23,6 +23,7 @@ import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
 import { SamplingPhase } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -39,6 +40,9 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
+  private fieldToSet: SamplingField | null = null;
+
+  public readonly mysteryLauncherNumberProperty: PhetioProperty<number>;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
@@ -84,19 +88,16 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
     // TODO: This is a workaround for a re-entrant problem discovered in https://github.com/phetsims/projectile-data-lab/issues/77
     // and would be good to understand/solve.
-    let isSettingField = false;
+    this.mysteryLauncherNumberProperty = new Property( 1 );
 
     // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
     Multilink.multilink( [ this.sampleSizeProperty, this.mysteryLauncherNumberProperty ], ( sampleSize, mysteryLauncherNumber ) => {
 
-      if ( !isSettingField ) {
-        isSettingField = true;
-        const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value.launcherNumber === mysteryLauncherNumber )!;
-        // console.log( 'found field: ' + this.fields.indexOf( field ) );
-        this.fieldProperty.value = field;
+      console.log( 'sampleSize: ' + sampleSize + ' mysteryLauncherNumber: ' + mysteryLauncherNumber );
+      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value.launcherNumber === mysteryLauncherNumber )!;
+      console.log( 'found field: ' + this.fields.indexOf( field ) );
 
-        isSettingField = false;
-      }
+      this.fieldProperty.value = field;
     } );
 
     this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {

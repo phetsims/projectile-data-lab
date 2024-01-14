@@ -50,6 +50,9 @@ export default class VSMField extends Field {
   public readonly stopwatchPhaseProperty: Property<StopwatchPhase>;
   public readonly stopwatchElapsedTimeProperty: NumberProperty;
 
+  // Numerical index (1-based) for the type of the mystery launcher, from 1-6
+  public readonly mysteryLauncherNumberProperty: Property<number>;
+
   public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
     parameters: [ {
       name: 'projectile',
@@ -66,6 +69,13 @@ export default class VSMField extends Field {
     }, providedOptions );
 
     super( launchers, options );
+
+    this.mysteryLauncherNumberProperty = new Property( this.launcherProperty.value.launcherNumber );
+
+    // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
+    this.mysteryLauncherNumberProperty.link( mysteryLauncher => {
+      this.launcherProperty.value = this.launchers.find( launcher => launcher.launcherNumber === mysteryLauncher )!;
+    } );
 
     this.latestLaunchSpeedProperty = new Property<number>( this.meanLaunchSpeedProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),

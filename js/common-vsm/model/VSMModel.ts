@@ -22,6 +22,7 @@ import Projectile from '../../common/model/Projectile.js';
 import { StopwatchPhase } from './StopwatchPhase.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -53,6 +54,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>;
   public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, VSMField>;
 
+  public readonly mysteryLauncherNumberProperty: PhetioProperty<number>;
+
   public constructor( fields: T[], isHistogramInitiallyVisible: boolean, providedOptions: VSMModelOptions<T> ) {
 
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
@@ -61,6 +64,11 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       isPathsVisible: false
     }, providedOptions );
     super( isHistogramInitiallyVisible, options );
+
+    this.mysteryLauncherNumberProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.mysteryLauncherNumberProperty
+    } );
 
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,
