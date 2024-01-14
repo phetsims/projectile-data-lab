@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * CustomLauncherTypeRadioButtonGroup is a group of radio buttons for selecting between mystery and custom launchers
