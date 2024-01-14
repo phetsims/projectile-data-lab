@@ -105,7 +105,6 @@ export default class VSMField extends Field {
       bidirectional: true,
       derive: t => t.launcherMechanismProperty
     } );
-    this.customLauncherMechanismProperty.debug( 'clmp' );
 
     this.stopwatchPhaseProperty = new Property<StopwatchPhase>( 'clear', {
       validValues: StopwatchPhaseValues,

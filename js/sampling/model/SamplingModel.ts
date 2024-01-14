@@ -92,11 +92,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
     // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
     Multilink.multilink( [ this.sampleSizeProperty, this.mysteryLauncherNumberProperty ], ( sampleSize, mysteryLauncherNumber ) => {
-
-      console.log( 'sampleSize: ' + sampleSize + ' mysteryLauncherNumber: ' + mysteryLauncherNumber );
       const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value.launcherNumber === mysteryLauncherNumber )!;
-      console.log( 'found field: ' + this.fields.indexOf( field ) );
-
       this.fieldProperty.value = field;
     } );
 
