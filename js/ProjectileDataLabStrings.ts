@@ -48,6 +48,8 @@ type StringsType = {
   'longDashStringProperty': LocalizedStringProperty;
   'meanEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'standardDeviationMPatternStringProperty': LocalizedStringProperty;
+  'standardDeviationEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'standardErrorEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'metersPerSecondPatternStringProperty': LocalizedStringProperty;
   'degreesPatternStringProperty': LocalizedStringProperty;
   'nEqualsProjectileCountPatternStringProperty': LocalizedStringProperty;

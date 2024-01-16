@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
+import { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import Field from '../../common/model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
@@ -10,10 +10,19 @@ import projectileDataLab from '../../projectileDataLab.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { Node, Rectangle } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import PDLColors from '../../common/PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
+import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import MeasuresField from '../model/MeasuresField.js';
+import PDLText from '../../common/view/PDLText.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import { PDLPanel } from '../../common/view/PDLPanel.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * The measures histogram node is a histogram node that also shows the mean and standard deviation of the data.
@@ -25,9 +34,9 @@ import Property from '../../../../axon/js/Property.js';
 type SelfOptions = EmptySelfOptions;
 type MeasuresHistogramNodeOptions = SelfOptions & WithRequired<HistogramNodeOptions, 'tandem'>;
 
-export default class MeasuresHistogramNode extends HistogramNode {
+export default class MeasuresHistogramNode extends VSMHistogramNode {
 
-  public constructor( fieldProperty: TReadOnlyProperty<Field>,
+  public constructor( fieldProperty: TReadOnlyProperty<MeasuresField>,
                       fields: Field[],
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
@@ -35,15 +44,62 @@ export default class MeasuresHistogramNode extends HistogramNode {
                       isDataMeasuresVisibleProperty: BooleanProperty,
                       meanProperty: PhetioProperty<number | null>,
                       standardDeviationProperty: PhetioProperty<number | null>,
+                      standardErrorProperty: PhetioProperty<number | null>,
                       intervalTool: IntervalTool,
                       intervalToolVisibleProperty: TReadOnlyProperty<boolean>,
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
                       comboBoxParent: Node,
                       options: MeasuresHistogramNodeOptions ) {
-    super( fieldProperty, fields, binWidthProperty, histogramRepresentationProperty, horizontalAxisLabelText,
-      PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty, selectedBinWidthProperty, selectedTotalBinsProperty, comboBoxParent,
+    super(
+      fieldProperty,
+      fields,
+      binWidthProperty,
+      histogramRepresentationProperty,
+      horizontalAxisLabelText,
+      selectedBinWidthProperty,
+      selectedTotalBinsProperty,
+      comboBoxParent,
       options );
+
+    const noDataLabel = new PDLText( ProjectileDataLabStrings.noDataStringProperty, {} );
+
+    const roundedStringProperty = ( nullableNumberProperty: PhetioProperty<number | null> ) =>
+      new DerivedProperty( [ nullableNumberProperty ], nullableNumber => {
+        return nullableNumber === null ? '' : Utils.toFixed( nullableNumber, 2 );
+      } );
+
+    const dataLabels = [
+      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty,
+        { value: roundedStringProperty( meanProperty ) } ), {
+        font: PDLConstants.HISTOGRAM_PANEL_FONT
+      } ),
+      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardDeviationEqualsValueMPatternStringProperty,
+        { value: roundedStringProperty( standardDeviationProperty ) } ), {
+        font: PDLConstants.HISTOGRAM_PANEL_FONT
+      } ),
+      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardErrorEqualsValueMPatternStringProperty,
+        { value: roundedStringProperty( standardErrorProperty ) } ), {
+        font: PDLConstants.HISTOGRAM_PANEL_FONT
+      } )
+    ];
+
+    const textVBox = new VBox( {
+
+      // Prevent from overlapping with the majority of the data in ?stringTest=long
+      maxWidth: 250,
+      align: 'left',
+      children: []
+    } );
+
+    const textPanel = new PDLPanel( new HBox( {
+      spacing: 5,
+      children: [ textVBox ]
+    } ), {
+      fill: 'white',
+      cornerRadius: 0
+    } );
+    this.chartNode.addChild( textPanel );
 
     const dataMeasuresChartOverlay = new DataMeasuresOverlay( this.chartTransform, meanProperty, standardDeviationProperty,
       this.chartTransform.viewHeight, isDataMeasuresVisibleProperty, {
@@ -67,6 +123,15 @@ export default class MeasuresHistogramNode extends HistogramNode {
     };
     updateIntervalToolHighlight();
     intervalTool.changedEmitter.addListener( updateIntervalToolHighlight );
+
+    meanProperty.link( mean => {
+      textVBox.setChildren( mean === null ? [ noDataLabel ] : dataLabels );
+    } );
+
+    ManualConstraint.create( this, [ textPanel, this.chartBackground ], ( textPanelProxy, chartBackgroundProxy ) => {
+      textPanelProxy.left = chartBackgroundProxy.left + PDLConstants.HISTOGRAM_PANEL_MARGIN;
+      textPanelProxy.top = chartBackgroundProxy.top + PDLConstants.HISTOGRAM_PANEL_MARGIN;
+    } );
   }
 }
 

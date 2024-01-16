@@ -28,6 +28,9 @@ export default class MeasuresField extends VSMField {
   // This property represents the standard deviation of the distance (horizontal displacement) of landed projectiles.
   public readonly landedDistanceStandardDeviationProperty: Property<number | null>;
 
+  // This property represents the standard error of the mean distance (horizontal displacement) of landed projectiles.
+  public readonly landedDistanceStandardErrorProperty: Property<number | null>;
+
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
     super( launchers, identifier, providedOptions );
 
@@ -41,9 +44,15 @@ export default class MeasuresField extends VSMField {
       phetioValueType: NullableIO( NumberIO )
     } );
 
+    this.landedDistanceStandardErrorProperty = new Property<number | null>( null, {
+      tandem: providedOptions.tandem.createTandem( 'landedDistanceStandardErrorProperty' ),
+      phetioValueType: NullableIO( NumberIO )
+    } );
+
     this.projectileLandedEmitter.addListener( () => {
       this.landedDistanceAverageProperty.value = _.mean( this.landedProjectiles.map( landedProjectile => landedProjectile.x ) );
       this.landedDistanceStandardDeviationProperty.value = this.getLandedDistanceStandardDeviation();
+      this.landedDistanceStandardErrorProperty.value = this.getLandedDistanceStandardDeviation() / Math.sqrt( this.landedProjectiles.length );
     } );
   }
 
@@ -63,6 +72,7 @@ export default class MeasuresField extends VSMField {
     super.clearProjectiles();
     this.landedDistanceAverageProperty.value = null;
     this.landedDistanceStandardDeviationProperty.value = null;
+    this.landedDistanceStandardErrorProperty.value = null;
   }
 }
 

@@ -57,8 +57,9 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.histogramRepresentationProperty,
       ProjectileDataLabStrings.distanceStringProperty,
       model.isDataMeasuresVisibleProperty,
-      model.landedDistanceAverageProperty,
+      model.landedDistanceMeanProperty,
       model.landedDistanceStandardDeviationProperty,
+      model.landedDistanceStandardErrorProperty,
       model.intervalTool,
       model.isIntervalToolVisibleProperty,
       model.selectedBinWidthProperty,
@@ -89,7 +90,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     } );
 
     const dataMeasuresFieldOverlay = new DataMeasuresOverlay( this.modelViewTransform,
-      model.landedDistanceAverageProperty, model.landedDistanceStandardDeviationProperty, 50, model.isDataMeasuresVisibleProperty, {
+      model.landedDistanceMeanProperty, model.landedDistanceStandardDeviationProperty, 50, model.isDataMeasuresVisibleProperty, {
         tandem: options.tandem.createTandem( 'dataMeasuresFieldOverlay' )
       } );
 

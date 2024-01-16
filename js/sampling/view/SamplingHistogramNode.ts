@@ -6,7 +6,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
-import { ColorProperty, HBox, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 import PDLText from '../../common/view/PDLText.js';
 import SamplingField from '../model/SamplingField.js';
@@ -15,6 +15,8 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 /**
  * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
@@ -31,8 +33,6 @@ export default class SamplingHistogramNode extends HistogramNode {
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      blockFillProperty: ColorProperty,
-                      blockStrokeProperty: ColorProperty,
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
                       comboBoxParent: Node,
@@ -44,13 +44,11 @@ export default class SamplingHistogramNode extends HistogramNode {
       binWidthProperty,
       histogramRepresentationProperty,
       horizontalAxisLabelText,
-      blockFillProperty,
-      blockStrokeProperty,
-
       selectedBinWidthProperty,
       selectedTotalBinsProperty,
       comboBoxParent,
-
+      PDLColors.meanMarkerFillProperty,
+      PDLColors.meanMarkerStrokeProperty,
       options
     );
 
@@ -61,29 +59,28 @@ export default class SamplingHistogramNode extends HistogramNode {
     const textVBox = new VBox( {
 
       // Prevent from overlapping with the majority of the data in ?stringTest=long
-      maxWidth: 250,
+      maxWidth: 240,
 
       align: 'left',
       children: [
-        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty, { launcher: launcherProperty } ), { fontSize: 11 } ),
-        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty, { sampleSize: sampleSizeProperty } ), { fontSize: 11 } ),
-        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty, { numberOfSamples: numberOfSamplesProperty } ), { fontSize: 11 } )
+        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty,
+          { value: launcherProperty } ), { font: PDLConstants.SELECTOR_FONT } ),
+        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
+          { value: sampleSizeProperty } ), { font: PDLConstants.SELECTOR_FONT } ),
+        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
+          { value: numberOfSamplesProperty } ), { font: PDLConstants.SELECTOR_FONT } )
       ]
     } );
     iconNode.maxHeight = textVBox.height;
 
-    const MARGIN = 3;
-
-    const label = new PDLPanel( new HBox( {
+    const textPanel = new PDLPanel( new HBox( {
       spacing: 5,
       children: [ iconNode, textVBox ]
     } ), {
       fill: 'white',
-      cornerRadius: 0,
-      top: MARGIN,
-      left: MARGIN
+      cornerRadius: 0
     } );
-    this.chartNode.addChild( label );
+    this.chartNode.addChild( textPanel );
 
     // Create the eraser button
     const eraserButton = new EraserButton( {
@@ -95,9 +92,14 @@ export default class SamplingHistogramNode extends HistogramNode {
 
     this.chartNode.addChild( eraserButton );
 
-    ManualConstraint.create( this, [ eraserButton, this.chartBackground ], ( eraserButton, chartBackground ) => {
-      eraserButton.right = chartBackground.right - MARGIN;
-      eraserButton.top = chartBackground.top + MARGIN;
+    ManualConstraint.create( this, [ textPanel, this.chartBackground ], ( textPanelProxy, chartBackgroundProxy ) => {
+      textPanelProxy.left = chartBackgroundProxy.left + PDLConstants.HISTOGRAM_PANEL_MARGIN;
+      textPanelProxy.top = chartBackgroundProxy.top + PDLConstants.HISTOGRAM_PANEL_MARGIN;
+    } );
+
+    ManualConstraint.create( this, [ eraserButton, this.chartBackground ], ( eraserButtonProxy, chartBackgroundProxy ) => {
+      eraserButtonProxy.right = chartBackgroundProxy.right - PDLConstants.HISTOGRAM_PANEL_MARGIN;
+      eraserButtonProxy.top = chartBackgroundProxy.top + PDLConstants.HISTOGRAM_PANEL_MARGIN;
     } );
   }
 }

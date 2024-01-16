@@ -85,11 +85,11 @@ export default class HistogramNode extends Node {
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      blockFillProperty: ColorProperty,
-                      blockStrokeProperty: ColorProperty,
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
                       comboBoxParent: Node,
+                      blockFillProperty: ColorProperty,
+                      blockStrokeProperty: ColorProperty,
                       options: HistogramNodeOptions ) {
     super();
 

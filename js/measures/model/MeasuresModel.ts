@@ -26,9 +26,11 @@ type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>
 
 export default class MeasuresModel extends VSMModel<MeasuresField> {
 
-  public readonly landedDistanceAverageProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly landedDistanceMeanProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   public readonly landedDistanceStandardDeviationProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+
+  public readonly landedDistanceStandardErrorProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   public readonly isLauncherCustomProperty: DynamicProperty<boolean, boolean, VSMField>;
 
@@ -56,12 +58,16 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     super( fields, true, providedOptions );
 
-    this.landedDistanceAverageProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
+    this.landedDistanceMeanProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.landedDistanceAverageProperty
     } );
 
     this.landedDistanceStandardDeviationProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.landedDistanceStandardDeviationProperty
+    } );
+
+    this.landedDistanceStandardErrorProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
+      derive: t => t.landedDistanceStandardErrorProperty
     } );
 
     this.isLauncherCustomProperty = new DynamicProperty<boolean, boolean, VSMField>( this.fieldProperty, {

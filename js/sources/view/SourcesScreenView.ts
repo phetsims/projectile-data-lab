@@ -18,10 +18,9 @@ import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js'
 import Property from '../../../../axon/js/Property.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
-import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLColors from '../../common/PDLColors.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -49,9 +48,12 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    const createHistogramNode = ( node: Node ) => new HistogramNode( model.fieldProperty, model.fields, model.binWidthProperty,
-      model.histogramRepresentationProperty, ProjectileDataLabStrings.distanceStringProperty,
-      PDLColors.histogramDataFillColorProperty, PDLColors.histogramDataStrokeColorProperty,
+    const createHistogramNode = ( node: Node ) => new VSMHistogramNode(
+      model.fieldProperty,
+      model.fields,
+      model.binWidthProperty,
+      model.histogramRepresentationProperty,
+      ProjectileDataLabStrings.distanceStringProperty,
       model.selectedBinWidthProperty,
       model.selectedTotalBinsProperty,
       node, {

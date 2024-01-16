@@ -50,6 +50,7 @@ const PDLConstants = {
   SAMPLING_FIELD_SIGN_X: 88,
   FIELD_SIGN_CENTER_Y: 452,
   FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION: 48,
+  HISTOGRAM_PANEL_MARGIN: 5,
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.
   // FIELD_SCALING_FACTOR_HORIZONTAL can be any value between 0-Number.POSITIVE_INFINITY.
@@ -76,16 +77,17 @@ const PDLConstants = {
   // The projectile source images are scaled by this factor when drawing them on the canvas
   PROJECTILE_IMAGE_SCALE_FACTOR: 0.15,
 
-  HEATMAP_TOOL_LABEL_FONT: new PhetFont( 11 ),
-  PRIMARY_FONT: new PhetFont( 13 ),
-  FIELD_LABEL_FONT: new PhetFont( 15 ),
+  HEATMAP_TOOL_LABEL_FONT: new PhetFont( { size: 11 } ),
+  PRIMARY_FONT: new PhetFont( { size: 13 } ),
+  FIELD_LABEL_FONT: new PhetFont( { size: 15 } ),
   FIELD_SIGN_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
   FIELD_SIGN_COUNT_FONT: new PhetFont( { size: 15, weight: 'bold' } ),
-  LAUNCH_CONTROL_FONT: new PhetFont( 15 ),
-  NO_AIR_RESISTANCE_FONT: new PhetFont( 15 ),
+  LAUNCH_CONTROL_FONT: new PhetFont( { size: 15 } ),
+  NO_AIR_RESISTANCE_FONT: new PhetFont( { size: 15 } ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
-  INTERVAL_TOOL_FONT: new PhetFont( 15 ),
-  SELECTOR_FONT: new PhetFont( 14 ),
+  INTERVAL_TOOL_FONT: new PhetFont( { size: 15 } ),
+  SELECTOR_FONT: new PhetFont( { size: 14 } ),
+  HISTOGRAM_PANEL_FONT: new PhetFont( { size: 12 } ),
 
   ANGLE_STABILIZER_RANGE: new Range( 0, maxAngleStandardDeviation ),
 
