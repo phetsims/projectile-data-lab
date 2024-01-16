@@ -183,6 +183,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   }
 
   public override launchButtonPressed(): void {
+
     if ( this.isStopwatchVisibleProperty.value ) {
 
       if ( this.stopwatchPhaseProperty.value === 'clear' ) {
@@ -211,6 +212,10 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   }
 
   public launchProjectile(): void {
+
+    // If the simulation is paused, unpause it.
+    this.isPlayingProperty.value = true;
+
     this.fieldProperty.value.launchProjectile();
   }
 
