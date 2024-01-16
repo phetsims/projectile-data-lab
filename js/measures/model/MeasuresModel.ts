@@ -26,17 +26,31 @@ type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>
 
 export default class MeasuresModel extends VSMModel<MeasuresField> {
 
+  // The average distance of the landed projectiles
   public readonly landedDistanceMeanProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
+  // The standard deviation of the distance of the landed projectiles
   public readonly landedDistanceStandardDeviationProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
+  // The standard error of the mean distance of landed projectiles
   public readonly landedDistanceStandardErrorProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
+  // Whether the launcher is custom or mystery
   public readonly isLauncherCustomProperty: DynamicProperty<boolean, boolean, VSMField>;
 
-  // Static tool visibility
-  public readonly isDataMeasuresVisibleProperty: BooleanProperty;
+  // Whether the mean is visible on the field and histogram
+  public readonly isMeanVisibleProperty: BooleanProperty;
+
+  // Whether the standard deviation is visible on the field and histogram
+  public readonly isStandardDeviationVisibleProperty: BooleanProperty;
+
+  // Whether the values are visible on the field and histogram
+  public readonly isValuesVisibleProperty: BooleanProperty;
+
+  // Whether the interval tool is visible on the field and histogram
   public readonly isIntervalToolVisibleProperty: BooleanProperty;
+
+  // The interval tool
   public readonly intervalTool: IntervalTool;
 
   public constructor( providedOptions: PDLModelOptions ) {
@@ -82,8 +96,18 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       phetioFeatured: true
     } );
 
-    this.isDataMeasuresVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isDataMeasuresVisibleProperty' ),
+    this.isMeanVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'isMeanVisibleProperty' ),
+      phetioFeatured: true
+    } );
+
+    this.isStandardDeviationVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'isStandardDeviationVisibleProperty' ),
+      phetioFeatured: true
+    } );
+
+    this.isValuesVisibleProperty = new BooleanProperty( false, {
+      tandem: visiblePropertiesTandem.createTandem( 'isValuesVisibleProperty' ),
       phetioFeatured: true
     } );
 
@@ -115,7 +139,9 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
   public override reset(): void {
     super.reset();
 
-    this.isDataMeasuresVisibleProperty.reset();
+    this.isMeanVisibleProperty.reset();
+    this.isStandardDeviationVisibleProperty.reset();
+    this.isValuesVisibleProperty.reset();
     this.isIntervalToolVisibleProperty.reset();
 
     this.intervalTool.reset();

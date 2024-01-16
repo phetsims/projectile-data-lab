@@ -36,42 +36,56 @@ export default class DataMeasuresOverlay extends Node {
   public constructor( modelViewTransform: ModelViewTransform2 | ChartTransform,
                       landedDistanceAverageProperty: PhetioProperty<number | null>,
                       landedDistanceStandardDeviationProperty: PhetioProperty<number | null>,
+                      isMeanDisplayedProperty: BooleanProperty,
+                      isStandardDeviationDisplayedProperty: BooleanProperty,
+                      isValuesDisplayedProperty: BooleanProperty,
                       totalHeight: number,
-                      isVisibleProperty: BooleanProperty,
                       providedOptions: DataMeasuresFieldOverlayOptions ) {
 
     const origin = modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const isStandardDeviationVisibleProperty = new DerivedProperty( [ landedDistanceStandardDeviationProperty ], standardDeviation => {
-      return standardDeviation !== null && standardDeviation > MIN_SD_FOR_SHOW_SD;
-    } );
+    const isMeanVisibleProperty = new DerivedProperty(
+      [ isMeanDisplayedProperty, landedDistanceAverageProperty ],
+      ( isMeanDisplayed, landedDistanceAverage ) => {
+        return isMeanDisplayed && landedDistanceAverage !== null;
+      } );
 
-    const isArrowsVisibleProperty = new DerivedProperty( [ landedDistanceStandardDeviationProperty ], standardDeviation => {
-      return standardDeviation !== null && standardDeviation > MIN_SD_FOR_SHOW_ARROWS;
-    } );
+    const isSDLinesVisibleProperty = new DerivedProperty(
+      [ isStandardDeviationDisplayedProperty, landedDistanceStandardDeviationProperty ],
+      ( isStandardDeviationDisplayed, landedDistanceStandardDeviation ) => {
+        return isStandardDeviationDisplayed && landedDistanceStandardDeviation !== null && landedDistanceStandardDeviation > MIN_SD_FOR_SHOW_SD;
+      } );
+
+    const isSDArrowsVisibleProperty = new DerivedProperty(
+      [ isStandardDeviationDisplayedProperty, landedDistanceStandardDeviationProperty ],
+      ( isStandardDeviationDisplayed, landedDistanceStandardDeviation ) => {
+        return isStandardDeviationDisplayed && landedDistanceStandardDeviation !== null && landedDistanceStandardDeviation > MIN_SD_FOR_SHOW_ARROWS;
+      } );
 
     const meanIndicatorRadius = providedOptions.isIcon ? 8 : 10;
 
-    const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius );
+    const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius, {
+      visibleProperty: isMeanVisibleProperty
+    } );
     meanIndicator.bottom = origin.y;
 
     const meanIndicatorHeight = meanIndicator.bounds.height;
 
     const lineOptions = {
-      visibleProperty: isStandardDeviationVisibleProperty,
+      visibleProperty: isSDLinesVisibleProperty,
       stroke: 'black',
       lineWidth: LINE_WIDTH
     };
 
     const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
     const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
-    const meanLine = new Path( new Shape().moveTo( 0, origin.y - meanIndicatorHeight ).lineTo( 0, origin.y - totalHeight ), lineOptions );
+    const meanLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
 
     const meanLineLength = totalHeight - meanIndicatorHeight;
     const arrowY = origin.y - totalHeight + meanLineLength / 2; // Put the arrow in the middle of the mean line
 
     const arrowOptions: ArrowNodeOptions = {
-      visibleProperty: isArrowsVisibleProperty,
+      visibleProperty: isSDArrowsVisibleProperty,
       doubleHead: true,
       headWidth: 5,
       headHeight: 5,
@@ -103,15 +117,8 @@ export default class DataMeasuresOverlay extends Node {
         }
       } );
 
-    const isSelfVisibleProperty = new DerivedProperty(
-      [ isVisibleProperty, landedDistanceAverageProperty ],
-      ( isVisible, landedDistanceAverage ) => {
-        return isVisible && landedDistanceAverage !== null;
-      } );
-
 
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
-      visibleProperty: isSelfVisibleProperty,
       children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, meanIndicator ],
       isIcon: false
     }, providedOptions );

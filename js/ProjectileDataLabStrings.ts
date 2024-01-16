@@ -35,12 +35,14 @@ type StringsType = {
   'fieldStringProperty': LocalizedStringProperty;
   'fieldValuePatternStringProperty': LocalizedStringProperty;
   'noDataStringProperty': LocalizedStringProperty;
+  'meanStringProperty': LocalizedStringProperty;
+  'standardDeviationStringProperty': LocalizedStringProperty;
+  'valuesStringProperty': LocalizedStringProperty;
   'sampleSizeStringProperty': LocalizedStringProperty;
   'sampleSizeValuePatternStringProperty': LocalizedStringProperty;
   'pathsStringProperty': LocalizedStringProperty;
   'launchSpeedStringProperty': LocalizedStringProperty;
   'launchAngleStringProperty': LocalizedStringProperty;
-  'dataMeasuresStringProperty': LocalizedStringProperty;
   'measuringTapeStringProperty': LocalizedStringProperty;
   'stopwatchStringProperty': LocalizedStringProperty;
   'intervalToolStringProperty': LocalizedStringProperty;

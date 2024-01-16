@@ -38,9 +38,13 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
         tandem: options.tandem.createTandem( 'launchPanel' )
       } );
 
-    const staticToolPanel = new MeasuresStaticToolPanel( model.isPathsVisibleProperty, model.isLaunchAngleVisibleProperty,
+    const staticToolPanel = new MeasuresStaticToolPanel(
+      model.isPathsVisibleProperty,
+      model.isLaunchAngleVisibleProperty,
       model.isLaunchSpeedVisibleProperty,
-      model.isDataMeasuresVisibleProperty, {
+      model.isMeanVisibleProperty,
+      model.isStandardDeviationVisibleProperty,
+      model.isValuesVisibleProperty, {
         tandem: options.tandem.createTandem( 'staticToolPanel' )
       } );
     const interactiveToolPanel = new MeasuresInteractiveToolPanel(
@@ -56,7 +60,9 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.binWidthProperty,
       model.histogramRepresentationProperty,
       ProjectileDataLabStrings.distanceStringProperty,
-      model.isDataMeasuresVisibleProperty,
+      model.isMeanVisibleProperty,
+      model.isStandardDeviationVisibleProperty,
+      model.isValuesVisibleProperty,
       model.landedDistanceMeanProperty,
       model.landedDistanceStandardDeviationProperty,
       model.landedDistanceStandardErrorProperty,
@@ -89,8 +95,14 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       tandem: options.tandem.createTandem( 'intervalToolNode' )
     } );
 
-    const dataMeasuresFieldOverlay = new DataMeasuresOverlay( this.modelViewTransform,
-      model.landedDistanceMeanProperty, model.landedDistanceStandardDeviationProperty, 50, model.isDataMeasuresVisibleProperty, {
+    const dataMeasuresFieldOverlay = new DataMeasuresOverlay(
+      this.modelViewTransform,
+      model.landedDistanceMeanProperty,
+      model.landedDistanceStandardDeviationProperty,
+      model.isMeanVisibleProperty,
+      model.isStandardDeviationVisibleProperty,
+      model.isValuesVisibleProperty,
+      50, {
         tandem: options.tandem.createTandem( 'dataMeasuresFieldOverlay' )
       } );
 

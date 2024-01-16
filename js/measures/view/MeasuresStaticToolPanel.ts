@@ -22,14 +22,22 @@ type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
 export default class MeasuresStaticToolPanel extends StaticToolPanel {
   public constructor( arePathsVisibleProperty: Property<boolean>, isLaunchAngleVisibleProperty: Property<boolean>,
                       isLaunchSpeedVisibleProperty: Property<boolean>,
-                      isDataMeasuresVisibleProperty: Property<boolean>,
+                      isMeanVisibleProperty: Property<boolean>,
+                      isStandardDeviationVisibleProperty: Property<boolean>,
+                      isValuesVisibleProperty: Property<boolean>,
                       providedOptions: PDLPanelOptions ) {
 
     class DataMeasuresIconNode extends Node {
-      public constructor() {
+      public constructor( showMean: boolean, showStandardDeviation: boolean ) {
 
-        const dataMeasuresNode = new DataMeasuresOverlay( new ModelViewTransform2(),
-          new Property( 0 ), new Property( 20 ), ICON_WIDTH, new BooleanProperty( true ), {
+        const dataMeasuresNode = new DataMeasuresOverlay(
+          new ModelViewTransform2(),
+          new Property( 0 ),
+          new Property( 20 ),
+          new BooleanProperty( showMean ),
+          new BooleanProperty( showStandardDeviation ),
+          new BooleanProperty( false ),
+          ICON_WIDTH, {
             isIcon: true
           } )
           .rasterized( {
@@ -46,9 +54,17 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
     const options = optionize<PDLPanelOptions, SelfOptions, MeasuresStaticToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
         {
-          property: isDataMeasuresVisibleProperty,
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.dataMeasuresStringProperty, new DataMeasuresIconNode() ),
-          tandemName: 'dataMeasuresCheckbox'
+          property: isMeanVisibleProperty,
+          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.meanStringProperty, new DataMeasuresIconNode( true, false ) ),
+          tandemName: 'meanCheckbox'
+        }, {
+          property: isStandardDeviationVisibleProperty,
+          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.standardDeviationStringProperty, new DataMeasuresIconNode( false, true ) ),
+          tandemName: 'standardDeviationCheckbox'
+        }, {
+          property: isValuesVisibleProperty,
+          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.valuesStringProperty, new Node() ),
+          tandemName: 'valuesCheckbox'
         }
       ]
     }, providedOptions );

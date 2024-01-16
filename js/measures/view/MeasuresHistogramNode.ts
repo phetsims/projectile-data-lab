@@ -41,7 +41,9 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      isDataMeasuresVisibleProperty: BooleanProperty,
+                      isMeanVisibleProperty: BooleanProperty,
+                      isStandardDeviationVisibleProperty: BooleanProperty,
+                      isValuesVisibleProperty: BooleanProperty,
                       meanProperty: PhetioProperty<number | null>,
                       standardDeviationProperty: PhetioProperty<number | null>,
                       standardErrorProperty: PhetioProperty<number | null>,
@@ -96,13 +98,20 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       spacing: 5,
       children: [ textVBox ]
     } ), {
+      visibleProperty: isValuesVisibleProperty,
       fill: 'white',
       cornerRadius: 0
     } );
     this.chartNode.addChild( textPanel );
 
-    const dataMeasuresChartOverlay = new DataMeasuresOverlay( this.chartTransform, meanProperty, standardDeviationProperty,
-      this.chartTransform.viewHeight, isDataMeasuresVisibleProperty, {
+    const dataMeasuresChartOverlay = new DataMeasuresOverlay(
+      this.chartTransform,
+      meanProperty,
+      standardDeviationProperty,
+      isMeanVisibleProperty,
+      isStandardDeviationVisibleProperty,
+      isValuesVisibleProperty,
+      this.chartTransform.viewHeight, {
         tandem: options.tandem.createTandem( 'dataMeasuresChartOverlay' )
       } );
 
