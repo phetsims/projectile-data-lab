@@ -91,6 +91,8 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       // Prevent from overlapping with the majority of the data in ?stringTest=long
       maxWidth: 250,
       align: 'left',
+
+      // Children are specified in a link() below
       children: []
     } );
 

@@ -38,7 +38,7 @@ export default class DataMeasuresOverlay extends Node {
                       landedDistanceStandardDeviationProperty: PhetioProperty<number | null>,
                       isMeanDisplayedProperty: BooleanProperty,
                       isStandardDeviationDisplayedProperty: BooleanProperty,
-                      isValuesDisplayedProperty: BooleanProperty,
+                      isValuesDisplayedProperty: BooleanProperty, // TODO: Wire this up, see https://github.com/phetsims/projectile-data-lab/issues/49
                       totalHeight: number,
                       providedOptions: DataMeasuresFieldOverlayOptions ) {
 
@@ -50,12 +50,14 @@ export default class DataMeasuresOverlay extends Node {
         return isMeanDisplayed && landedDistanceAverage !== null;
       } );
 
+    // Show the standard deviation lines if they are far enough apart to distinguish visually.
     const isSDLinesVisibleProperty = new DerivedProperty(
       [ isStandardDeviationDisplayedProperty, landedDistanceStandardDeviationProperty ],
       ( isStandardDeviationDisplayed, landedDistanceStandardDeviation ) => {
         return isStandardDeviationDisplayed && landedDistanceStandardDeviation !== null && landedDistanceStandardDeviation > MIN_SD_FOR_SHOW_SD;
       } );
 
+    // Show the standard deviation arrows if they are far enough apart to distinguish visually.
     const isSDArrowsVisibleProperty = new DerivedProperty(
       [ isStandardDeviationDisplayedProperty, landedDistanceStandardDeviationProperty ],
       ( isStandardDeviationDisplayed, landedDistanceStandardDeviation ) => {

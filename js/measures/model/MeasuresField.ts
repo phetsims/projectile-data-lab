@@ -34,6 +34,7 @@ export default class MeasuresField extends VSMField {
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
     super( launchers, identifier, providedOptions );
 
+    // TODO: Remove 'landed' prefixes, see https://github.com/phetsims/projectile-data-lab/issues/86
     this.landedDistanceAverageProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'landedDistanceAverageProperty' ),
       phetioValueType: NullableIO( NumberIO )

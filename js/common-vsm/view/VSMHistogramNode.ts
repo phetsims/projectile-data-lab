@@ -14,6 +14,8 @@ import VSMField from '../model/VSMField.js';
  * The VSMHistogramNode shows the histogram for a VSM field, extending the standard HistogramNode and adding
  * VSM-screen-specific elements.
  *
+ * TODO: Eliminate this file and just use new HistogramNode() see https://github.com/phetsims/projectile-data-lab/issues/26
+ *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 export default class VSMHistogramNode extends HistogramNode {
