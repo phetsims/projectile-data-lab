@@ -49,7 +49,7 @@ const PDLConstants = {
   FIELD_SIGN_X: 86,
   SAMPLING_FIELD_SIGN_X: 88,
   FIELD_SIGN_CENTER_Y: 452,
-  FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION: 48,
+  FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION: 12,
   HISTOGRAM_PANEL_MARGIN: 5,
 
   // Horizontal scaling controls the amount of x-offset applied to each point for the perspective transformation.

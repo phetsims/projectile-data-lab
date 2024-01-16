@@ -346,7 +346,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     ManualConstraint.create(
       this,
       [ this.projectileSelectorNode, fieldSign ], ( projectileSelectorPanelProxy, fieldSignProxy ) => {
-        projectileSelectorPanelProxy.bottom = PDLConstants.FIELD_SIGN_CENTER_Y - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
+        projectileSelectorPanelProxy.bottom = fieldSignProxy.top - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
         projectileSelectorPanelProxy.centerX = fieldSignProxy.centerX;
       } );
 
