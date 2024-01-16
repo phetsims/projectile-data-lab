@@ -54,7 +54,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
       buttonAppearanceStrategyOptions: {
         lineWidth: 0
       },
-      baseColor: new Color( 255, 255, 255, 0.5 ),
+      baseColor: new Color( 255, 255, 255, 0.8 ),
       disabledColor: new Color( 255, 255, 255, 0.2 ),
       minWidth: 30,
       xMargin: 5,
@@ -78,7 +78,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
           numberProperty.set( numberProperty.value + 1 );
           this.focus();
         },
-        content: new Path( angleRightSolidShape, { fill: 'white', scale: 0.05 } )
+        content: new Path( angleRightSolidShape, { fill: 'gray', scale: 0.05 } )
       }, arrowButtonOptions )
     );
 
@@ -89,7 +89,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
           numberProperty.set( numberProperty.value - 1 );
           this.focus();
         },
-        content: new Path( angleLeftSolidShape, { fill: 'white', scale: 0.05 } )
+        content: new Path( angleLeftSolidShape, { fill: 'gray', scale: 0.05 } )
       }, arrowButtonOptions )
     );
 
