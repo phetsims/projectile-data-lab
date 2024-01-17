@@ -1,5 +1,5 @@
 // Copyright 2023-2024, University of Colorado Boulder
-import { Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
@@ -88,6 +88,20 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
         cornerRadius: LAUNCHER_BUTTON_CORNER_RADIUS
       }
     } );
+
+    // a listener that selects a field based on the keystroke, regardless of where focus is in the document
+    mysteryLauncherRadioButtonGroup.addInputListener( new KeyboardListener( {
+      keys: [ '1', '2', '3', '4', '5', '6', '7', '8' ] as const,
+      callback: ( event, keysPressed ) => {
+        const key = parseInt( keysPressed, 10 );
+        mysteryLauncherNumberProperty.value = key;
+
+        // Move focus to the radio button that was selected. Without this line, focus would incorrectly remain
+        // on the previous button.
+        mysteryLauncherRadioButtonGroup.getButtonForValue( key ).focus();
+      }
+    } ) );
+
     super( {
       children: [ mysteryLauncherRadioButtonGroup ],
       layoutOptions: {

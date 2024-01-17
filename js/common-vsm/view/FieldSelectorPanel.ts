@@ -99,12 +99,14 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     this.addInputListener( new KeyboardListener( {
-      keys: [ 'alt+1', 'alt+2', 'alt+3', 'alt+4', 'alt+5', 'alt+6', 'alt+7', 'alt+8' ] as const,
-      global: true,
+      keys: [ '1', '2', '3', '4', '5', '6', '7', '8' ] as const,
       callback: ( event, keysPressed ) => {
-        const numberKey = keysPressed.split( '+' )[ 1 ];
-        const key = parseInt( numberKey, 10 );
+        const key = parseInt( keysPressed, 10 );
         fieldProperty.value = fields[ key - 1 ];
+
+        // Move focus to the radio button that was selected. Without this line, focus would incorrectly remain
+        // on the previous button.
+        fieldRadioButtonGroup.getButtonForValue( fieldProperty.value ).focus();
       }
     } ) );
   }
