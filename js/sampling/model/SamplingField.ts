@@ -32,7 +32,7 @@ export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLau
 const SHOWING_SINGLE_SAMPLE_TIME = 0.3;
 
 // This is the duration of the sample and mean symbol being visible, in 'Continuous' mode.
-const CONTINUOUS_MODE_PERIOD = 0.15;
+const CONTINUOUS_MODE_PERIOD = 0.4;
 
 export default class SamplingField extends Field {
   public override identifier: string;
