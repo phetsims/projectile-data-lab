@@ -38,7 +38,7 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
           new BooleanProperty( showStandardDeviation ),
           new BooleanProperty( false ),
           ICON_WIDTH, {
-            isIcon: true
+            context: 'icon'
           } )
           .rasterized( {
             resolution: 4
