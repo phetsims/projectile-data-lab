@@ -20,7 +20,8 @@ import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import HistogramNode from '../../common/view/HistogramNode.js';
+import PDLColors from '../../common/PDLColors.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -48,7 +49,7 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    const createHistogramNode = ( node: Node ) => new VSMHistogramNode(
+    const createHistogramNode = ( node: Node ) => new HistogramNode(
       model.fieldProperty,
       model.fields,
       model.binWidthProperty,
@@ -56,7 +57,9 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
       ProjectileDataLabStrings.distanceStringProperty,
       model.selectedBinWidthProperty,
       model.selectedTotalBinsProperty,
-      node, {
+      node,
+      PDLColors.histogramDataFillColorProperty,
+      PDLColors.histogramDataStrokeColorProperty, {
         tandem: options.tandem.createTandem( 'histogramNode' )
       } );
 

@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
+import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import Field from '../../common/model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
@@ -14,7 +14,6 @@ import { HBox, ManualConstraint, Node, Rectangle, VBox } from '../../../../scene
 import IntervalTool from '../model/IntervalTool.js';
 import PDLColors from '../../common/PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
-import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 import MeasuresField from '../model/MeasuresField.js';
 import PDLText from '../../common/view/PDLText.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -34,7 +33,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 type SelfOptions = EmptySelfOptions;
 type MeasuresHistogramNodeOptions = SelfOptions & WithRequired<HistogramNodeOptions, 'tandem'>;
 
-export default class MeasuresHistogramNode extends VSMHistogramNode {
+export default class MeasuresHistogramNode extends HistogramNode {
 
   public constructor( fieldProperty: TReadOnlyProperty<MeasuresField>,
                       fields: Field[],
@@ -62,6 +61,10 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       selectedBinWidthProperty,
       selectedTotalBinsProperty,
       comboBoxParent,
+
+      PDLColors.histogramDataFillColorProperty,
+      PDLColors.histogramDataStrokeColorProperty,
+
       options );
 
     const noDataLabel = new PDLText( ProjectileDataLabStrings.noDataStringProperty, {} );
