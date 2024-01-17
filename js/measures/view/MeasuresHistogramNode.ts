@@ -112,9 +112,11 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       standardDeviationProperty,
       isMeanVisibleProperty,
       isStandardDeviationVisibleProperty,
+
+      // The numbers on the data measures overlay are not shown in the histogram
       new BooleanProperty( false ),
       this.chartTransform.viewHeight, {
-        isHistogram: true,
+        context: 'histogram',
         tandem: options.tandem.createTandem( 'dataMeasuresChartOverlay' )
       } );
 

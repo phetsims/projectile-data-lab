@@ -30,8 +30,7 @@ import { PDLPanel } from '../../common/view/PDLPanel.js';
  */
 
 type SelfOptions = {
-  isHistogram?: boolean;
-  isIcon?: boolean;
+  context: 'histogram' | 'field' | 'icon';
 };
 export type DataMeasuresFieldOverlayOptions = SelfOptions & NodeOptions;
 
@@ -48,6 +47,8 @@ const TEXT_OFFSET = 2;
 
 // The minimum distance between the edge of the SD label text and the mean line
 const MIN_SD_TEXT_MARGIN_X = 3;
+
+const TEXT_MAX_WIDTH = 80;
 
 export default class DataMeasuresOverlay extends Node {
   public constructor( modelViewTransform: ModelViewTransform2 | ChartTransform,
@@ -81,14 +82,14 @@ export default class DataMeasuresOverlay extends Node {
         return isStandardDeviationDisplayed && landedDistanceStandardDeviation !== null && landedDistanceStandardDeviation > MIN_SD_FOR_SHOW_ARROWS;
       } );
 
-    const meanIndicatorRadius = providedOptions.isIcon ? 8 : 10;
+    const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 10;
 
     const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius, {
       visibleProperty: isMeanVisibleProperty
     } );
 
     // On the field, the mean indicator is nudged down a bit so that it hides the bottom of the mean line
-    const meanIndicatorOffsetY = providedOptions.isHistogram || providedOptions.isIcon ? 0 : 2;
+    const meanIndicatorOffsetY = providedOptions.context === 'field' ? 2 : 0;
     meanIndicator.bottom = origin.y + meanIndicatorOffsetY;
 
     const meanIndicatorHeight = meanIndicator.bounds.height;
@@ -99,7 +100,7 @@ export default class DataMeasuresOverlay extends Node {
       lineWidth: LINE_WIDTH
     };
 
-    const arrowYFactor = providedOptions.isHistogram || providedOptions.isIcon ? 0.5 : ARROW_Y_POSITION_FACTOR;
+    const arrowYFactor = providedOptions.context === 'field' ? ARROW_Y_POSITION_FACTOR : 0.5;
 
     const arrowY = origin.y - arrowYFactor * totalHeight;
     const ARROW_HEAD_WIDTH = 3;
@@ -129,7 +130,8 @@ export default class DataMeasuresOverlay extends Node {
 
     const meanLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMetersPatternStringProperty,
       { mean: roundedStringProperty( meanDistanceProperty ) } ), {
-      font: PDLConstants.PRIMARY_FONT
+      font: PDLConstants.PRIMARY_FONT,
+      maxWidth: TEXT_MAX_WIDTH
     } );
 
     const meanLabelPanel = new PDLPanel( meanLabel, {
@@ -139,25 +141,27 @@ export default class DataMeasuresOverlay extends Node {
       lineWidth: 1,
       cornerRadius: 5,
       xMargin: 3,
-      yMargin: 2,
-      bottom: origin.y - meanIndicatorHeight - TEXT_OFFSET
+      yMargin: 2
     } );
 
-    const sdLeftLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardDeviationMPatternStringProperty,
-      { standardDeviation: roundedStringProperty( standardDeviationDistanceProperty ) } ), {
+    const sdPatternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.standardDeviationMPatternStringProperty,
+      { standardDeviation: roundedStringProperty( standardDeviationDistanceProperty ) } );
+
+    const sdLeftLabel = new PDLText( sdPatternStringProperty, {
       visibleProperty: DerivedProperty.and( [ isSDLinesVisibleProperty, isValuesDisplayedProperty ] ),
       font: PDLConstants.PRIMARY_FONT,
-      bottom: arrowY - ARROW_HEAD_WIDTH - TEXT_OFFSET
+      bottom: arrowY - ARROW_HEAD_WIDTH - TEXT_OFFSET,
+      maxWidth: TEXT_MAX_WIDTH
     } );
 
-    const sdRightLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardDeviationMPatternStringProperty,
-      { standardDeviation: roundedStringProperty( standardDeviationDistanceProperty ) } ), {
+    const sdRightLabel = new PDLText( sdPatternStringProperty, {
       visibleProperty: DerivedProperty.and( [ isSDLinesVisibleProperty, isValuesDisplayedProperty ] ),
       font: PDLConstants.PRIMARY_FONT,
-      bottom: arrowY - ARROW_HEAD_WIDTH - TEXT_OFFSET
+      bottom: arrowY - ARROW_HEAD_WIDTH - TEXT_OFFSET,
+      maxWidth: TEXT_MAX_WIDTH
     } );
 
-    Multilink.multilink( [ meanDistanceProperty, standardDeviationDistanceProperty ],
+    Multilink.multilink( [ meanDistanceProperty, standardDeviationDistanceProperty, sdPatternStringProperty, meanLabelPanel.boundsProperty ],
       ( average, standardDeviation ) => {
 
         if ( average !== null && standardDeviation !== null ) {
@@ -168,6 +172,7 @@ export default class DataMeasuresOverlay extends Node {
           meanIndicator.x = meanX;
           meanLine.x = meanX;
           meanLabelPanel.centerX = meanX;
+          meanLabelPanel.bottom = origin.y - meanIndicatorHeight - TEXT_OFFSET;
 
           leftLine.x = leftX;
           rightLine.x = rightX;
@@ -192,9 +197,7 @@ export default class DataMeasuresOverlay extends Node {
 
 
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
-      children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, sdLeftLabel, sdRightLabel, meanIndicator, meanLabelPanel ],
-      isHistogram: false,
-      isIcon: false
+      children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, sdLeftLabel, sdRightLabel, meanIndicator, meanLabelPanel ]
     }, providedOptions );
 
     super( options );
