@@ -30,6 +30,8 @@ import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 type SelfOptions = EmptySelfOptions;
 type SampleSelectorPanelOptions = SelfOptions & PDLPanelOptions;
 
+const MAX_TEXT_WIDTH = 120;
+
 export default class SampleSelectorNode extends SelectorNode {
 
   public constructor(
@@ -45,17 +47,26 @@ export default class SampleSelectorNode extends SelectorNode {
     const dataContainer = new Node();
 
     // Reuse text labels to avoid memory leaks
-    const noDataText = new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SELECTOR_FONT } );
+    const noDataText = new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SELECTOR_FONT, maxWidth: MAX_TEXT_WIDTH } );
     const titleText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
       number: selectedSampleIndexProperty,
       count: numberOfStartedSamplesProperty
-    } ), { font: PDLConstants.SELECTOR_FONT } );
-    const creatingText = new PDLText( ProjectileDataLabStrings.creatingStringProperty, { font: PDLConstants.SELECTOR_FONT } );
+    } ), {
+      font: PDLConstants.SELECTOR_FONT,
+      maxWidth: MAX_TEXT_WIDTH
+    } );
+    const creatingText = new PDLText( ProjectileDataLabStrings.creatingStringProperty, {
+      font: PDLConstants.SELECTOR_FONT,
+      maxWidth: MAX_TEXT_WIDTH
+    } );
     const meanText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty, {
       value: new DerivedProperty( [ sampleMeanProperty ], ( mean: number | null ) => {
         return mean === null ? 'null' : Utils.toFixed( mean, 1 );
       } )
-    } ), { font: PDLConstants.SELECTOR_FONT } );
+    } ), {
+      font: PDLConstants.SELECTOR_FONT,
+      maxWidth: MAX_TEXT_WIDTH
+    } );
     const meanIndicatorNode = new MeanIndicatorNode( 10, { maxWidth: 10 } );
 
     const rangeProperty = new DerivedProperty( [ numberOfStartedSamplesProperty ], startedSampleCount => {
@@ -103,8 +114,9 @@ export default class SampleSelectorNode extends SelectorNode {
 
       // Keep the right edge on-screen for stringTest=long
       maxWidth: 150,
-      minWidth: 120,
-      minHeight: 40
+      minWidth: 150,
+      minHeight: 60,
+      maxHeight: 60
     } );
 
     super( sampleCardContainer, selectedSampleIndexProperty, rangeProperty, {
