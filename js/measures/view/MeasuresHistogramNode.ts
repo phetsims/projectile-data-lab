@@ -112,8 +112,9 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       standardDeviationProperty,
       isMeanVisibleProperty,
       isStandardDeviationVisibleProperty,
-      isValuesVisibleProperty,
+      new BooleanProperty( false ),
       this.chartTransform.viewHeight, {
+        isHistogram: true,
         tandem: options.tandem.createTandem( 'dataMeasuresChartOverlay' )
       } );
 
