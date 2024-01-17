@@ -15,7 +15,6 @@ import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/Keybo
 
 export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
   public constructor( ...additionalSections: KeyboardHelpSection[] ) {
-    // KeyboardHelpSection.alignHelpSectionIcons( rightContent );
     super( [
       new MoveDraggableItemsKeyboardHelpSection(),
       ...additionalSections

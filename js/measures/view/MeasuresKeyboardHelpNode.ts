@@ -8,12 +8,12 @@
 
 import PDLKeyboardHelpNode from '../../common/view/PDLKeyboardHelpNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import KeyboardShortcutsHelpSection from '../../common-vsm/view/KeyboardShortcutsHelpSection.js';
+import VSMKeyboardShortcutsHelpSection from '../../common-vsm/view/VSMKeyboardShortcutsHelpSection.js';
 
 export default class MeasuresKeyboardHelpNode extends PDLKeyboardHelpNode {
 
   public constructor() {
-    super( new KeyboardShortcutsHelpSection() );
+    super( new VSMKeyboardShortcutsHelpSection() );
   }
 }
 

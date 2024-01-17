@@ -8,11 +8,12 @@
 
 import PDLKeyboardHelpNode from '../../common/view/PDLKeyboardHelpNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import SamplingKeyboardShortcutsHelpSection from './SamplingKeyboardShortcutsHelpSection.js';
 
 export default class SamplingKeyboardHelpNode extends PDLKeyboardHelpNode {
 
   public constructor() {
-    super();
+    super( new SamplingKeyboardShortcutsHelpSection() );
   }
 }
 

@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { HBox, Image, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { HBox, Image, KeyboardListener, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -155,6 +155,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       } )
     } ], {} );
 
+    // TODO: https://github.com/phetsims/projectile-data-lab/issues/61 move to a separate file
     this.launchButton = new RectangularPushButton( {
       content: launchButtonToggleNode,
 
@@ -173,6 +174,13 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
         model.launchButtonPressed();
       }
     } );
+
+    // a listener that presses the button based on the keystroke, regardless of where focus is in the document
+    this.addInputListener( new KeyboardListener( {
+      keys: [ 'alt+l' ] as const,
+      global: true,
+      callback: ( event, keysPressed ) => model.launchButtonPressed()
+    } ) );
 
     const radioButtonLabelMaxWidth = 120;
     this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchModeProperty, [ {

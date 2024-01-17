@@ -75,6 +75,7 @@ type StringsType = {
   'keyboardShortcutsStringProperty': LocalizedStringProperty;
   'selectAFieldStringProperty': LocalizedStringProperty;
   'creatingStringProperty': LocalizedStringProperty;
+  'pressTheLaunchButtonStringProperty': LocalizedStringProperty;
 };
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;
