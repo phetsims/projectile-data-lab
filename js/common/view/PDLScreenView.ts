@@ -11,7 +11,7 @@ import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.j
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { HBox, Image, KeyboardListener, Node, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -20,16 +20,11 @@ import FieldNode from './FieldNode.js';
 import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import Dimension2 from '../../../../dot/js/Dimension2.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import PDLText from './PDLText.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Field from '../model/Field.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
-import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
 import LauncherNode from './LauncherNode.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 import PDLAccordionBox from './PDLAccordionBox.js';
@@ -37,6 +32,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { LaunchMode } from '../model/LaunchMode.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
+import LaunchButton from './LaunchButton.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
@@ -130,57 +126,12 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     fieldOverlayFront.y = fieldY;
 
     // Create the launch button
-    const launchIconToggleNode = new ToggleNode<'single' | 'continuous', Image>( model.launchModeProperty, [ {
-      value: 'single',
-      createNode: () => new Image( launchButtonSingle_png )
-    }, {
-      value: 'continuous',
-      createNode: () => new Image( launchButtonContinuous_png )
-    } ], {} );
-
-    const launchButtonToggleNode = new ToggleNode<boolean, Node>( new DerivedProperty( [
-      model.isContinuousLaunchingProperty,
-      model.launchModeProperty
-    ], ( isContinuousLaunching, launchMode ) => isContinuousLaunching && launchMode === 'continuous' ), [ {
-      value: false,
-      createNode: () => launchIconToggleNode
-    }, {
-      value: true,
-      createNode: () => new Rectangle( 0, 0, 50, 50, {
-        fill: 'black',
-        stroke: 'white',
-        lineWidth: 2,
-        cornerRadius: 5,
-        opacity: 0.75 // Adjusts the color of the icon to look more like part of the button
-      } )
-    } ], {} );
-
-    // TODO: https://github.com/phetsims/projectile-data-lab/issues/61 move to a separate file
-    this.launchButton = new RectangularPushButton( {
-      content: launchButtonToggleNode,
-
-      // Autofire is not compatible with the model for the Sampling Screen, so only support it for the VSM screens.
-      fireOnDown: isLaunchButtonAutoFire,
-      fireOnHold: isLaunchButtonAutoFire,
-      fireOnHoldInterval: 200,
-      left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
-      bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      baseColor: PDLColors.launchButtonColorProperty,
-      size: new Dimension2( 85, 45 ),
-      yMargin: 5,
-      tandem: options.tandem.createTandem( 'launchButton' ),
-      phetioFeatured: true,
-      listener: () => {
-        model.launchButtonPressed();
-      }
-    } );
-
-    // a listener that presses the button based on the keystroke, regardless of where focus is in the document
-    this.addInputListener( new KeyboardListener( {
-      keys: [ 'alt+l' ] as const,
-      global: true,
-      callback: ( event, keysPressed ) => model.launchButtonPressed()
-    } ) );
+    this.launchButton = new LaunchButton( model.isContinuousLaunchingProperty,
+      model.launchModeProperty, isLaunchButtonAutoFire, () => model.launchButtonPressed(), {
+        left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
+        bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
+        tandem: options.tandem.createTandem( 'launchButton' )
+      } );
 
     const radioButtonLabelMaxWidth = 120;
     this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchModeProperty, [ {
