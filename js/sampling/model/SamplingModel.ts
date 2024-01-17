@@ -131,6 +131,10 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const phaseProperty = field.phaseProperty;
 
     if ( this.launchModeProperty.value === 'single' ) {
+
+      // If the simulation is paused, unpause it.
+      this.isPlayingProperty.value = true;
+
       if ( phaseProperty.value !== 'idle' ) {
 
         // When firing a sample while another was in progress, finish out the prior one first
@@ -146,13 +150,20 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       field.isContinuousLaunchingProperty.toggle();
 
       if ( phaseProperty.value === 'idle' ) {
+
+        // If the simulation is paused, unpause it.
+        this.isPlayingProperty.value = true;
+
         this.selectedSampleIndexProperty.value = 1;
         field.finishCurrentSample();
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
       else {
-
         if ( field.isContinuousLaunchingProperty.value ) {
+
+          // If the simulation is paused, unpause it.
+          this.isPlayingProperty.value = true;
+
           this.selectedSampleIndexProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
         }
 
