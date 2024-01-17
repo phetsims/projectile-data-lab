@@ -99,7 +99,7 @@ export default class DataMeasuresOverlay extends Node {
       lineWidth: LINE_WIDTH
     };
 
-    const arrowYFactor = providedOptions.isHistogram ? 0.5 : ARROW_Y_POSITION_FACTOR;
+    const arrowYFactor = providedOptions.isHistogram || providedOptions.isIcon ? 0.5 : ARROW_Y_POSITION_FACTOR;
 
     const arrowY = origin.y - arrowYFactor * totalHeight;
     const ARROW_HEAD_WIDTH = 3;
