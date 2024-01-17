@@ -24,6 +24,7 @@ import { SamplingPhase } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -162,6 +163,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   }
 
   public step( dt: number ): void {
+
+    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? PDLConstants.TIME_SPEED_FAST : 1 );
     this.fieldProperty.value.step( dt );
   }
 

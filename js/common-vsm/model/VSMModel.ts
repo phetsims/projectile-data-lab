@@ -23,6 +23,7 @@ import { StopwatchPhase } from './StopwatchPhase.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -225,7 +226,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       return;
     }
 
-    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? 6 : 1 );
+    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? PDLConstants.TIME_SPEED_FAST : 1 );
 
     if ( this.launchModeProperty.value === 'continuous' && this.isContinuousLaunchingProperty.value ) {
 

@@ -36,6 +36,7 @@ import PDLAccordionBox from './PDLAccordionBox.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { LaunchMode } from '../model/LaunchMode.js';
+import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
@@ -58,6 +59,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
   protected readonly launchButton: RectangularPushButton;
   protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<LaunchMode>;
+  protected readonly timeControlNode: TimeControlNode;
   protected readonly resetAllButton: ResetAllButton;
   protected readonly noAirResistanceText: PDLText;
 
@@ -193,6 +195,23 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       spacing: 10,
       tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' ),
       phetioFeatured: true
+    } );
+
+    this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
+      tandem: options.tandem.createTandem( 'timeControlNode' ),
+      phetioFeatured: true,
+      playPauseStepButtonOptions: {
+        includeStepForwardButton: false
+      },
+      timeSpeedProperty: model.timeSpeedProperty,
+      timeSpeeds: model.timeSpeedValues,
+      buttonGroupXSpacing: 18,
+      layoutOptions: {
+        topMargin: 10
+      },
+      speedRadioButtonGroupOptions: {
+        maxWidth: 80
+      }
     } );
 
     this.addChild( background );

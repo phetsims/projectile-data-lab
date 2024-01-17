@@ -67,6 +67,9 @@ const PDLConstants = {
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
+  // The factor multiple for time speed in 'Fast' mode
+  TIME_SPEED_FAST: 6,
+
   SPRING_SPEED_MEAN: 25,
   SPRING_SPEED_SD: 0.3,
   PRESSURE_SPEED_MEAN: 25,

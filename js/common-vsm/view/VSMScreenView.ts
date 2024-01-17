@@ -15,7 +15,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import VSMField from '../model/VSMField.js';
 import VSMFieldSignNode from './VSMFieldSignNode.js';
-import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
 import VSMCanvasNode from './VSMCanvasNode.js';
 import ProjectileSelectorNode from './ProjectileSelectorNode.js';
@@ -49,7 +48,6 @@ type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'ta
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldSelectorPanel: FieldSelectorPanel<VSMField>;
-  protected readonly timeControlNode;
   protected readonly accordionBox: VSMAccordionBox;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorNode: ProjectileSelectorNode;
@@ -96,23 +94,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         canvasBounds: this.canvasBounds
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
-
-    this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
-      tandem: options.tandem.createTandem( 'timeControlNode' ),
-      phetioFeatured: true,
-      playPauseStepButtonOptions: {
-        includeStepForwardButton: false
-      },
-      timeSpeedProperty: model.timeSpeedProperty,
-      timeSpeeds: model.timeSpeedValues,
-      buttonGroupXSpacing: 18,
-      layoutOptions: {
-        topMargin: 10
-      },
-      speedRadioButtonGroupOptions: {
-        maxWidth: 80
-      }
-    } );
 
     this.topRightUIContainer = new VBox( {
       stretch: true,

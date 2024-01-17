@@ -116,6 +116,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         tandem: options.tandem.createTandem( 'sampleSelectorNode' )
       } );
 
+    this.addChild( this.timeControlNode );
     this.addChild( this.launchPanel );
     this.behindProjectilesLayer.addChild( fieldSign );
     this.behindProjectilesLayer.addChild( sampleSelectorNode );
@@ -191,18 +192,22 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         }
       } );
 
-    ManualConstraint.create(
-      this,
-      [ sampleSelectorNode, fieldSign ],
+    // Position the field sign
+    ManualConstraint.create( this, [ sampleSelectorNode, fieldSign ],
       ( sampleSelectorPanelProxy, fieldSignProxy ) => {
         sampleSelectorPanelProxy.centerX = fieldSignProxy.centerX;
         sampleSelectorPanelProxy.bottom = fieldSignProxy.top - 20;
       } );
 
+    // Position the time control node so that the play/pause button is centered at the 50-meter mark
+    ManualConstraint.create( this, [ this.timeControlNode ], timeControlNodeProxy => {
+      const playPauseCenterOffsetX = 0.5 * this.timeControlNode.width - this.timeControlNode.getPlayPauseButtonCenter().x;
+      timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
+      timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
+
     // Position the 'No air resistance' text
-    ManualConstraint.create(
-      this,
-      [ this.launchPanel ], launchPanelProxy => {
+    ManualConstraint.create( this, [ this.launchPanel ], launchPanelProxy => {
         this.noAirResistanceText.centerX = launchPanelProxy.centerX;
         this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
       } );
