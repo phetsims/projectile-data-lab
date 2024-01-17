@@ -44,7 +44,7 @@ const ARROW_Y_POSITION_FACTOR = 0.7;
 const MIN_SD_FOR_SHOW_ARROWS = 0.8;
 
 // The vertical offset between the edge of the text label and the adjacent element
-const TEXT_OFFSET = 1;
+const TEXT_OFFSET = 2;
 
 // The minimum distance between the edge of the SD label text and the mean line
 const MIN_SD_TEXT_MARGIN_X = 3;
