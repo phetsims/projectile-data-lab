@@ -128,7 +128,7 @@ export default class IntervalToolNode extends Node {
       focusable: true,
       tagName: 'div',
       children: [ intervalReadout, percentReadout ],
-      spacing: 6
+      spacing: 4
     } );
     this.addChild( readoutVBox );
 
@@ -163,8 +163,8 @@ export default class IntervalToolNode extends Node {
       const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1 );
       const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2 );
 
-      const SPHERE_Y = modelViewTransform.modelToViewY( 16 );
-      const ARROW_Y = modelViewTransform.modelToViewY( 12.5 );
+      const SPHERE_Y = modelViewTransform.modelToViewY( 18 );
+      const ARROW_Y = modelViewTransform.modelToViewY( 14.5 );
       const y0 = modelViewTransform.modelToViewY( 0 );
 
       edge1Sphere.center = new Vector2( viewEdge1X, SPHERE_Y );

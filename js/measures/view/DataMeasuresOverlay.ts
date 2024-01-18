@@ -82,7 +82,7 @@ export default class DataMeasuresOverlay extends Node {
         return isStandardDeviationDisplayed && landedDistanceStandardDeviation !== null && landedDistanceStandardDeviation > MIN_SD_FOR_SHOW_ARROWS;
       } );
 
-    const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 10;
+    const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 14;
 
     const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius, {
       visibleProperty: isMeanVisibleProperty

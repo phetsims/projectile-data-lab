@@ -88,7 +88,7 @@ const PDLConstants = {
   LAUNCH_CONTROL_FONT: new PhetFont( { size: 15 } ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( { size: 15 } ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
-  INTERVAL_TOOL_FONT: new PhetFont( { size: 15 } ),
+  INTERVAL_TOOL_FONT: new PhetFont( { size: 13 } ),
   SELECTOR_FONT: new PhetFont( { size: 14 } ),
   HISTOGRAM_PANEL_FONT: new PhetFont( { size: 12 } ),
 
