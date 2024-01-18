@@ -66,13 +66,6 @@ const PDLConstants = {
   // The factor multiple for time speed in 'Fast' mode
   TIME_SPEED_FAST: 6,
 
-  SPRING_SPEED_MEAN: 25,
-  SPRING_SPEED_SD: 0.3,
-  PRESSURE_SPEED_MEAN: 25,
-  PRESSURE_SPEED_SD: 0.6,
-  EXPLOSION_SPEED_MEAN: 25,
-  EXPLOSION_SPEED_SD: 1.2,
-
   // The projectile source images are scaled by this factor when drawing them on the canvas
   PROJECTILE_IMAGE_SCALE_FACTOR: 0.15,
 

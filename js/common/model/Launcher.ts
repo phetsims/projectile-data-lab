@@ -1,9 +1,8 @@
 // Copyright 2024, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
+import { LauncherMechanism, speedMeans, speedStandardDeviations } from '../../common-vsm/model/LauncherMechanism.js';
 import Property from '../../../../axon/js/Property.js';
-import PDLConstants from '../PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { MysteryOrCustom } from './MysteryOrCustom.js';
@@ -21,18 +20,6 @@ import IOType from '../../../../tandem/js/types/IOType.js';
  */
 
 const MAX_STANDARD_DEVIATION_ANGLE = 8; // degrees
-
-// TODO: These will need to be instrumented for PhET-iO - see https://github.com/phetsims/projectile-data-lab/issues/80
-const speedAverages = {
-  spring: PDLConstants.SPRING_SPEED_MEAN,
-  pressure: PDLConstants.PRESSURE_SPEED_MEAN,
-  explosion: PDLConstants.EXPLOSION_SPEED_MEAN
-};
-const speedStandardDeviations = {
-  spring: PDLConstants.SPRING_SPEED_SD,
-  pressure: PDLConstants.PRESSURE_SPEED_SD,
-  explosion: PDLConstants.EXPLOSION_SPEED_SD
-};
 
 type SelfOptions = EmptySelfOptions;
 type LauncherOptions = SelfOptions & PhetioObjectOptions;
@@ -66,7 +53,7 @@ export default class Launcher extends PhetioObject {
     this.standardDeviationAngleProperty = new Property( standardDeviationAngle );
 
     this.meanLaunchSpeedProperty = new DerivedProperty( [ this.launcherMechanismProperty ], launcherMechanism => {
-      return speedAverages[ launcherMechanism ];
+      return speedMeans[ launcherMechanism ];
     } );
 
     this.standardDeviationSpeedProperty = new DerivedProperty( [ this.launcherMechanismProperty ], launcherMechanism => {

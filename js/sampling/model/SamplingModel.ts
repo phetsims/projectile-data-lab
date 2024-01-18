@@ -58,8 +58,6 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
       for ( let j = 0; j < SAMPLE_SIZES.length; j++ ) {
-
-        // TODO: Also, the SelectionField has only 1 launcher per field, but that fails out the mystery launcher radio buttons. See https://github.com/phetsims/projectile-data-lab/issues/77
         fields.push( new SamplingField( MYSTERY_LAUNCHERS[ i ], SAMPLE_SIZES[ j ], samplingLaunchModeProperty, {
           tandem: fieldsTandem.createTandem( `launcher${i + 1}sampleSize${SAMPLE_SIZES[ j ]}Field` ),
           phetioFeatured: true
@@ -87,8 +85,6 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioValueType: NumberIO
     } );
 
-    // TODO: This is a workaround for a re-entrant problem discovered in https://github.com/phetsims/projectile-data-lab/issues/77
-    // and would be good to understand/solve.
     this.mysteryLauncherNumberProperty = new Property( 1 );
 
     // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size

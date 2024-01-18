@@ -6,7 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS } from '../../common/view/LauncherNode.js';
-import { LauncherMechanism, MeanLaunchSpeedForMechanism } from '../model/LauncherMechanism.js';
+import { LauncherMechanism, speedMeans } from '../model/LauncherMechanism.js';
 import spring_png from '../../../images/spring_png.js';
 import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
 import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
@@ -152,7 +152,7 @@ export default class CustomLauncherNode extends LauncherNode {
 
     latestLaunchSpeedProperty.link( launchSpeed => {
       const maxAngle = 80;
-      const meanSpeed = MeanLaunchSpeedForMechanism( launcherMechanismProperty.value );
+      const meanSpeed = speedMeans[ launcherMechanismProperty.value ];
       const maxSpeed = 30;
       const needleDeltaRotation = maxAngle * ( launchSpeed - meanSpeed ) / ( maxSpeed - meanSpeed );
       pressureNeedleNode.rotation = Utils.toRadians( needleDeltaRotation ) - Math.PI / 2;

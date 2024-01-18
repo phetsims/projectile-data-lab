@@ -1,7 +1,5 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import PDLConstants from '../../common/PDLConstants.js';
-
 /**
  * Enumeration that describes the mechanism used to launch the projectile.
  *
@@ -10,11 +8,17 @@ import PDLConstants from '../../common/PDLConstants.js';
 
 export const LauncherMechanismValues = [ 'spring', 'pressure', 'explosion' ] as const;
 
-// TODO: Duplicated, see https://github.com/phetsims/projectile-data-lab/issues/77
-const speedAverages = [ PDLConstants.SPRING_SPEED_MEAN, PDLConstants.PRESSURE_SPEED_MEAN, PDLConstants.EXPLOSION_SPEED_MEAN ];
+// TODO: These will need to be instrumented for PhET-iO - see https://github.com/phetsims/projectile-data-lab/issues/80
+export const speedMeans = {
+  spring: 25,
+  pressure: 25,
+  explosion: 25
+};
 
-export const MeanLaunchSpeedForMechanism = ( type: LauncherMechanism ): number => {
-  return speedAverages[ LauncherMechanismValues.indexOf( type ) ];
+export const speedStandardDeviations = {
+  spring: 0.3,
+  pressure: 0.6,
+  explosion: 1.2
 };
 
 export type LauncherMechanism = typeof LauncherMechanismValues[number];
