@@ -72,8 +72,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const projectile = this.data[ i ];
       const isHighlighted = this.selectedData === projectile;
 
-      // Calculate the bin for this value
-      // TODO: Is this how you want to calculate the bin? See https://github.com/phetsims/projectile-data-lab/issues/90
+      // Calculate the bin for this value by its lower bound
       const bin = Math.floor( projectile.x / binWidth ) * binWidth;
 
       // Update the count for this bin
