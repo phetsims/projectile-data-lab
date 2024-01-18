@@ -107,10 +107,11 @@ export default class ProjectileSelectorNode extends SelectorNode {
                          selectedProjectile.type === 'piano' ? pianoHighlighted_png :
                          cannonball_png;
 
+        const imageScale = selectedProjectile.type === 'pumpkin' ? 0.18 : selectedProjectile.type === 'piano' ? 0.14 : 0.2;
+
         projectileInfoContainer.children = [ new Node( {
-          children: [ new Image( imagePNG, { scale: 0.5 } ) ],
-          matrix: Matrix3.scale( selectedProjectile.isFlippedHorizontally ? -1 : 1, 1 ),
-          maxHeight: 15
+          children: [ new Image( imagePNG, { scale: imageScale } ) ],
+          matrix: Matrix3.scale( selectedProjectile.isFlippedHorizontally ? -1 : 1, 1 )
         } ) ];
 
         // Update the adapters for the selected projectile that will determine how to show the launcher icon.
