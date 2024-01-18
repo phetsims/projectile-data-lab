@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import { Color, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -136,8 +136,8 @@ export default class DataMeasuresOverlay extends Node {
 
     const meanLabelPanel = new PDLPanel( meanLabel, {
       visibleProperty: DerivedProperty.and( [ isMeanVisibleProperty, isValuesDisplayedProperty ] ),
-      fill: new Color( 255, 255, 255, 0.85 ),
-      stroke: null,
+      fill: 'white',
+      stroke: 'black',
       lineWidth: 1,
       cornerRadius: 5,
       xMargin: 3,
