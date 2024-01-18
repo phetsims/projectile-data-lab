@@ -26,7 +26,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import CustomLauncherNode from './CustomLauncherNode.js';
-import { AngleForConfiguration, LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
+import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
 import { LauncherMechanism } from '../model/LauncherMechanism.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 
@@ -115,7 +115,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         } ) ];
 
         // Update the adapters for the selected projectile that will determine how to show the launcher icon.
-        launchAngleProperty.value = AngleForConfiguration( selectedProjectile.launcherConfiguration );
+        launchAngleProperty.value = MEAN_LAUNCH_ANGLES[ selectedProjectile.launcherConfiguration ];
         launchHeightProperty.value = selectedProjectile.launchHeight;
         launcherConfigurationProperty.value = selectedProjectile.launcherConfiguration;
         isLauncherCustomProperty.value = selectedProjectile.mysteryOrCustom === 'custom';
@@ -123,7 +123,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
         // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
 
-        if ( selectedProjectile.launcherNumber > 0 ) {
+        if ( selectedProjectile.mysteryOrCustom === 'mystery' ) {
           mysteryLauncherNumberProperty.value = selectedProjectile.launcherNumber;
         }
 

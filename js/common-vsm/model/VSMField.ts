@@ -22,6 +22,7 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -72,11 +73,6 @@ export default class VSMField extends Field {
 
     this.mysteryLauncherNumberProperty = new Property( this.launcherProperty.value.launcherNumber );
 
-    // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
-    this.mysteryLauncherNumberProperty.link( mysteryLauncher => {
-      this.launcherProperty.value = this.launchers.find( launcher => launcher.launcherNumber === mysteryLauncher )!;
-    } );
-
     this.latestLaunchSpeedProperty = new Property<number>( this.meanSpeedProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
       phetioReadOnly: true,
@@ -121,6 +117,16 @@ export default class VSMField extends Field {
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
     this.landedProjectileCountProperty = new NumberProperty( 0 );
     this.totalProjectileCountProperty = new NumberProperty( 0 );
+
+    // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
+    Multilink.multilink( [ this.mysteryLauncherNumberProperty, this.isLauncherCustomProperty ], ( mysteryLauncherNumber, isLauncherCustom ) => {
+
+      this.launcherProperty.value = this.launchers.find( launcher => {
+
+        // There is only one custom launcher per field, so we can safely take the first match in that case
+        return isLauncherCustom ? launcher.mysteryOrCustom === 'custom' : launcher.launcherNumber === mysteryLauncherNumber;
+      } )!;
+    } );
 
     this.projectileLandedEmitter.addListener( projectile => {
 

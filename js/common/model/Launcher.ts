@@ -39,7 +39,10 @@ export default class Launcher extends PhetioObject {
                       // 1-6 for the mystery launchers.
                       // 0 for custom
                       public readonly launcherNumber: number, providedOptions: LauncherOptions ) {
-    assert && assert( mysteryOrCustom === 'custom' && launcherNumber === 0 || mysteryOrCustom !== 'custom' && launcherNumber >= 1 && launcherNumber <= 6, 'invalid launcher number' );
+
+    if ( assert && mysteryOrCustom === 'custom' ) {
+      assert( launcherNumber === 1 || launcherNumber === MYSTERY_LAUNCHERS[ MYSTERY_LAUNCHERS.length - 1 ].launcherNumber + 1, 'invalid launcher number' );
+    }
 
     const options = optionize<LauncherOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: IOType.ObjectIO,

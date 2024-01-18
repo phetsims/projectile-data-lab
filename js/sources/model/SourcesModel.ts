@@ -27,12 +27,14 @@ export default class SourcesModel extends VSMModel<VSMField> {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
-      return new VSMField( [ new Launcher( 'custom', 'spring', PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
-
-        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 should this be number 1? Or get rid of Launcher.launcherNumber altogether?
-        0, {
+      const customLauncher = new Launcher(
+        'custom',
+        'spring',
+        PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
+        1, {
           tandem: fieldsTandem.createTandem( 'customLauncher' + index )
-        } ) ], identifier, {
+        } );
+      return new VSMField( [ customLauncher ], identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
         phetioFeatured: true
       } );

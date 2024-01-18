@@ -170,21 +170,21 @@ export default class LauncherNode extends Node {
     launcherFlashAnimation.start();
   }
 
-  protected updateMysteryLauncher( type: number, isIcon = false ): void {
-    this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( type, isIcon );
-    this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( type, isIcon );
-    this.launcherFrameFront.children = this.launcherFrameFrontGraphicsForType( type );
+  protected updateMysteryLauncher( mysteryLauncherNumber: number, isIcon = false ): void {
+    this.launcherBarrelGraphics.children = this.launcherBarrelGraphicsForType( mysteryLauncherNumber, isIcon );
+    this.launcherFrameBack.children = this.launcherFrameBackGraphicsForType( mysteryLauncherNumber, isIcon );
+    this.launcherFrameFront.children = this.launcherFrameFrontGraphicsForType( mysteryLauncherNumber );
   }
 
   private updateLauncherHeight( height: number ): void {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
-  private launcherBarrelGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
-    const barrelPrimaryColorProperty = PDLColors.launcherFillColorProperties[ mysteryLauncher - 1 ].primary;
+  private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
+    const barrelPrimaryColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].primary;
     const barrelPrimaryDarkColorProperty = new DerivedProperty( [ barrelPrimaryColorProperty ],
       color => color.darkerColor( 0.8 ) );
-    const barrelSecondaryColorProperty = PDLColors.launcherFillColorProperties[ mysteryLauncher - 1 ].secondary;
+    const barrelSecondaryColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].secondary;
 
     const barrelBaseRadius = 0.5 * BARREL_BASE_WIDTH;
     const barrelBaseX = -BARREL_LENGTH_BEFORE_ORIGIN + barrelBaseRadius;
@@ -234,7 +234,7 @@ export default class LauncherNode extends Node {
       fill: PDLColors.launcherFrameBackgroundColorProperty
     } );
 
-    const fillColorProperty = PDLColors.launcherFillColorProperties[ mysteryLauncher - 1 ].secondary;
+    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].secondary;
     const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
       color => color.darkerColor( 0.8 ) );
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
@@ -283,7 +283,7 @@ export default class LauncherNode extends Node {
 
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
-    const fillColorProperty = PDLColors.launcherFillColorProperties[ mysteryLauncher - 1 ].secondary;
+    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].secondary;
     const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
       color => color.darkerColor( 0.8 ) );
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],

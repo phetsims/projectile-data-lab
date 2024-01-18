@@ -6,7 +6,7 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Property from '../../../../axon/js/Property.js';
-import { AngleForConfiguration, LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
+import { LauncherConfiguration, LauncherConfigurationValues, MEAN_LAUNCH_ANGLES } from './LauncherConfiguration.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -134,9 +134,7 @@ export default abstract class Field extends PhetioObject {
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', launcherConfigurationOptions );
 
     this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
-      configuration => {
-        return AngleForConfiguration( configuration );
-      } );
+      configuration => MEAN_LAUNCH_ANGLES[ configuration ] );
 
     this.latestAngleProperty = new Property<number>( this.meanAngleProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestAngleProperty' ),

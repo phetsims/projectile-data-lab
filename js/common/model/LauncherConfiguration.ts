@@ -10,11 +10,11 @@
 
 export const LauncherConfigurationValues = [ 'angle30', 'angle45', 'angle60', 'angle0Raised' ] as const;
 
-const meanLaunchAngles = [ 30, 45, 60, 0 ];
-
-// Export a mapping that returns the numerical value of the launcher configuration.
-export const AngleForConfiguration = ( configuration: LauncherConfiguration ): number => {
-  return meanLaunchAngles[ LauncherConfigurationValues.indexOf( configuration ) ];
+export const MEAN_LAUNCH_ANGLES = {
+  angle30: 30,
+  angle45: 45,
+  angle60: 60,
+  angle0Raised: 0
 };
 
 export type LauncherConfiguration = typeof LauncherConfigurationValues[number];

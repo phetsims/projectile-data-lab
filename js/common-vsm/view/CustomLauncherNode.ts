@@ -13,7 +13,7 @@ import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
 import explosion_png from '../../../images/explosion_png.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { AngleForConfiguration, LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
+import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import gear_png from '../../../images/gear_png.js';
@@ -78,7 +78,7 @@ export default class CustomLauncherNode extends LauncherNode {
     const launchAngleLimiter = new Rectangle( -BARREL_LENGTH_BEFORE_ORIGIN - LAUNCH_ANGLE_LIMITER_LENGTH, -0.5 * LAUNCH_ANGLE_LIMITER_WIDTH,
       LAUNCH_ANGLE_LIMITER_LENGTH, LAUNCH_ANGLE_LIMITER_WIDTH, {
         visibleProperty: isLauncherCustomProperty,
-        fill: PDLColors.launcherFillColorProperties[ 0 ].primary,
+        fill: PDLColors.mysteryLauncherFillColorProperties[ 0 ].primary,
         stroke: PDLColors.launcherStrokeColorProperty,
         cornerRadius: 2
       } );
@@ -123,7 +123,7 @@ export default class CustomLauncherNode extends LauncherNode {
 
     Multilink.multilink( [ launcherConfigurationProperty, standardDeviationAngleProperty ],
       ( launcherConfiguration, standardDeviationAngle ) => {
-        const launcherAngle = AngleForConfiguration( launcherConfiguration );
+        const launcherAngle = MEAN_LAUNCH_ANGLES[ launcherConfiguration ];
         const rotationFactor = 0.4;
         gearTopContainer.rotation = rotationFactor * ( launcherAngle + standardDeviationAngle );
         gearBottomContainer.rotation = rotationFactor * ( launcherAngle - standardDeviationAngle );
@@ -162,7 +162,7 @@ export default class CustomLauncherNode extends LauncherNode {
   private getAngleStabilizers( launcherConfiguration: LauncherConfiguration, separationWidth: number ): Node {
 
     // Subtract the angle of the launcher from 180 to get the central angle of the angle stabilizer.
-    const centralAngle = Utils.toRadians( 180 - AngleForConfiguration( launcherConfiguration ) );
+    const centralAngle = Utils.toRadians( 180 - MEAN_LAUNCH_ANGLES[ launcherConfiguration ] );
 
     // The minimum gap is angle of an arc length LAUNCH_ANGLE_LIMITER_WIDTH at radius GUIDE_RAIL_OUTER_RADIUS
     const minimumStabilizerGap = LAUNCH_ANGLE_LIMITER_WIDTH / GUIDE_RAIL_OUTER_RADIUS;

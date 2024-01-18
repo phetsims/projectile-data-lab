@@ -57,14 +57,20 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
   public constructor( providedOptions: PDLModelOptions ) {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
-    const fields = VSMFieldIdentifierValues.map( identifier => {
+    const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
       const fieldTandem = fieldsTandem.createTandem( identifier );
-      return new MeasuresField( [ ...MYSTERY_LAUNCHERS, new Launcher( 'custom', 'spring', PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
 
-        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 should this be listed first? Maybe search for launchers.indexOf() and avoid that pattern?
-        0, {
-        tandem: fieldTandem.createTandem( 'customLauncher' )
-      } ) ], identifier, {
+      const lastMysteryLauncherNumber = MYSTERY_LAUNCHERS[ MYSTERY_LAUNCHERS.length - 1 ].launcherNumber;
+
+      const customLauncher = new Launcher(
+        'custom',
+        'spring',
+        PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
+        lastMysteryLauncherNumber + 1, {
+          tandem: fieldTandem.createTandem( `customLauncher${index + 1}` )
+        } );
+
+      return new MeasuresField( [ ...MYSTERY_LAUNCHERS, customLauncher ], identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
         phetioFeatured: true
       } );

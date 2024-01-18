@@ -81,7 +81,7 @@ const PDLColors = {
     default: '#70D1A4'
   } ),
 
-  launcherFillColorProperties: [
+  mysteryLauncherFillColorProperties: [
     {
       primary: new ProfileColorProperty( projectileDataLab, 'launcher1Primary', { default: '#908C99' } ),
       secondary: new ProfileColorProperty( projectileDataLab, 'launcher1Secondary', { default: '#828089' } )
