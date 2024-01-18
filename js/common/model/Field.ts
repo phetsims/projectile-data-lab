@@ -45,17 +45,17 @@ export default abstract class Field extends PhetioObject {
 
   public readonly launcherProperty: Property<Launcher>;
 
-  public readonly meanLaunchSpeedProperty: DynamicProperty<number, number, Launcher>;
+  public readonly meanSpeedProperty: DynamicProperty<number, number, Launcher>;
 
-  public readonly standardDeviationLaunchSpeedProperty: DynamicProperty<number, number, Launcher>;
+  public readonly standardDeviationSpeedProperty: DynamicProperty<number, number, Launcher>;
 
-  public readonly angleStabilizerProperty: DynamicProperty<number, number, Launcher>;
+  public readonly standardDeviationAngleProperty: DynamicProperty<number, number, Launcher>;
 
   // The most recent launch angle on this field, in degrees
-  public readonly latestLaunchAngleProperty: Property<number>;
+  public readonly latestAngleProperty: Property<number>;
 
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
-  public readonly meanLaunchAngleProperty: TReadOnlyProperty<number>;
+  public readonly meanAngleProperty: TReadOnlyProperty<number>;
 
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launchHeightProperty: TReadOnlyProperty<number>;
@@ -133,13 +133,13 @@ export default abstract class Field extends PhetioObject {
     } : { validValues: [ 'angle45' ] } as const;
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', launcherConfigurationOptions );
 
-    this.meanLaunchAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
+    this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
       configuration => {
         return AngleForConfiguration( configuration );
       } );
 
-    this.latestLaunchAngleProperty = new Property<number>( this.meanLaunchAngleProperty.value, {
-      tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
+    this.latestAngleProperty = new Property<number>( this.meanAngleProperty.value, {
+      tandem: providedOptions.tandem.createTandem( 'latestAngleProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
                            + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.',
@@ -154,19 +154,19 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
 
-    this.meanLaunchSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+    this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
       derive: t => t.meanLaunchSpeedProperty
     } );
 
-    this.standardDeviationLaunchSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+    this.standardDeviationSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
-      derive: t => t.standardDeviationLaunchSpeedProperty
+      derive: t => t.standardDeviationSpeedProperty
     } );
 
-    this.angleStabilizerProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+    this.standardDeviationAngleProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
-      derive: t => t.angleStabilizerProperty
+      derive: t => t.standardDeviationAngleProperty
     } );
 
     this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
@@ -227,8 +227,8 @@ export default abstract class Field extends PhetioObject {
   }
 
   protected createProjectile( sampleNumber: number ): Projectile {
-    const launchAngle = this.meanLaunchAngleProperty.value + dotRandom.nextGaussian() * this.launcherProperty.value.standardDeviationLaunchAngleProperty.value; // in degrees
-    const launchSpeed = this.meanLaunchSpeedProperty.value + dotRandom.nextGaussian() * this.launcherProperty.value.standardDeviationLaunchSpeedProperty.value;
+    const launchAngle = this.meanAngleProperty.value + dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
+    const launchSpeed = this.meanSpeedProperty.value + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
@@ -246,7 +246,7 @@ export default abstract class Field extends PhetioObject {
       this.launcherConfigurationProperty.value,
       launcher.mysteryOrCustom,
       launcher.launcherMechanismProperty.value,
-      launcher.angleStabilizerProperty.value,
+      this.standardDeviationAngleProperty.value,
       launcher.launcherNumber,
       0,
       this.launchHeightProperty.value,

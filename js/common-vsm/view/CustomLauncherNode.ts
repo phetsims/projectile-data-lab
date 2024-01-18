@@ -48,7 +48,7 @@ export default class CustomLauncherNode extends LauncherNode {
                       isLauncherCustomProperty: TProperty<boolean>,
                       mysteryLauncherNumberProperty: TProperty<number>,
                       launcherMechanismProperty: TProperty<LauncherMechanism>,
-                      angleStabilizerProperty: TProperty<number>,
+                      standardDeviationAngleProperty: TProperty<number>,
                       latestLaunchSpeedProperty: TProperty<number>,
                       providedOptions: CustomLauncherNodeOptions ) {
 
@@ -92,7 +92,8 @@ export default class CustomLauncherNode extends LauncherNode {
 
     this.addChild( this.angleStabilizersContainer );
     this.angleStabilizersContainer.moveToBack();
-    this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizerProperty.value ) );
+    this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value,
+      PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngleProperty.value ) );
 
     const gearImageScale = 0.2;
     const gearAngleInset = Utils.toRadians( 6 );
@@ -119,13 +120,15 @@ export default class CustomLauncherNode extends LauncherNode {
     this.addChild( gearTopContainer );
     this.addChild( gearBottomContainer );
 
-    Multilink.multilink( [ launcherConfigurationProperty, angleStabilizerProperty ], ( launcherConfiguration, angleStabilizer ) => {
-      const launcherAngle = AngleForConfiguration( launcherConfiguration );
-      const rotationFactor = 0.4;
-      gearTopContainer.rotation = rotationFactor * ( launcherAngle + angleStabilizer );
-      gearBottomContainer.rotation = rotationFactor * ( launcherAngle - angleStabilizer );
-      this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration, PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer ) ];
-    } );
+    Multilink.multilink( [ launcherConfigurationProperty, standardDeviationAngleProperty ],
+      ( launcherConfiguration, standardDeviationAngle ) => {
+        const launcherAngle = AngleForConfiguration( launcherConfiguration );
+        const rotationFactor = 0.4;
+        gearTopContainer.rotation = rotationFactor * ( launcherAngle + standardDeviationAngle );
+        gearBottomContainer.rotation = rotationFactor * ( launcherAngle - standardDeviationAngle );
+        this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration,
+          PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngle ) ];
+      } );
 
     Multilink.multilink( [ isLauncherCustomProperty, mysteryLauncherNumberProperty ], ( isCustom, mysteryLauncher ) => {
 
@@ -156,8 +159,8 @@ export default class CustomLauncherNode extends LauncherNode {
   }
 
   private getAngleStabilizers( launcherConfiguration: LauncherConfiguration, separationWidth: number ): Node {
-    // positive x-direction is zero, clockwise is positive;
-    // Min angle is the bottom of the guide rail, max angle is the top of the guide rail
+
+    // Subtract the angle of the launcher from 180 to get the central angle of the angle stabilizer.
     const centralAngle = Utils.toRadians( 180 - AngleForConfiguration( launcherConfiguration ) );
 
     // The minimum gap is angle of an arc length LAUNCH_ANGLE_LIMITER_WIDTH at radius GUIDE_RAIL_OUTER_RADIUS

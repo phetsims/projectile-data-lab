@@ -63,7 +63,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const isLauncherCustomProperty = new Property( true );
     const mysteryLauncherNumberProperty = new Property( 1 );
     const launcherMechanismProperty = new Property<LauncherMechanism>( 'spring' );
-    const angleStabilizerProperty = new Property( 0 );
+    const standardDeviationAngleProperty = new Property( 0 );
     const latestLaunchSpeedProperty = new Property( 0 );
 
     const rangeProperty = new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty, totalProjectileCountProperty, selectedProjectileProperty ],
@@ -93,7 +93,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       isLauncherCustomProperty,
       mysteryLauncherNumberProperty,
       launcherMechanismProperty,
-      angleStabilizerProperty,
+      standardDeviationAngleProperty,
       latestLaunchSpeedProperty, {
         scale: 0.2,
         visibleProperty: new DerivedProperty( [ selectedProjectileProperty ], projectile => projectile !== null )
@@ -119,7 +119,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         launchHeightProperty.value = selectedProjectile.launchHeight;
         launcherConfigurationProperty.value = selectedProjectile.launcherConfiguration;
         isLauncherCustomProperty.value = selectedProjectile.mysteryOrCustom === 'custom';
-        angleStabilizerProperty.value = selectedProjectile.launcherAngleStabilizer;
+        standardDeviationAngleProperty.value = selectedProjectile.launcherStandardDeviationAngle;
         launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
         // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
 

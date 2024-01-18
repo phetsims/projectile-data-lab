@@ -20,8 +20,9 @@ import IOType from '../../../../tandem/js/types/IOType.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-const maxAngleStandardDeviation = 8; // degrees
+const MAX_STANDARD_DEVIATION_ANGLE = 8; // degrees
 
+// TODO: These will need to be instrumented for PhET-iO - see https://github.com/phetsims/projectile-data-lab/issues/80
 const speedAverages = {
   spring: PDLConstants.SPRING_SPEED_MEAN,
   pressure: PDLConstants.PRESSURE_SPEED_MEAN,
@@ -37,14 +38,17 @@ type SelfOptions = EmptySelfOptions;
 type LauncherOptions = SelfOptions & PhetioObjectOptions;
 
 export default class Launcher extends PhetioObject {
+
+  // The launcher mechanism (spring, pressure, explosion) determines the mean and standard deviation of the launch speed.
   public readonly launcherMechanismProperty: Property<LauncherMechanism>;
-  public readonly angleStabilizerProperty: Property<number>;
+
+  // The standard deviation of the launch angle.
+  public readonly standardDeviationAngleProperty: Property<number>;
 
   public readonly meanLaunchSpeedProperty: TReadOnlyProperty<number>;
-  public readonly standardDeviationLaunchSpeedProperty: TReadOnlyProperty<number>;
-  public readonly standardDeviationLaunchAngleProperty: TReadOnlyProperty<number>;
+  public readonly standardDeviationSpeedProperty: TReadOnlyProperty<number>;
 
-  public constructor( public readonly mysteryOrCustom: MysteryOrCustom, launcherMechanism: LauncherMechanism, angleStabilizer: number,
+  public constructor( public readonly mysteryOrCustom: MysteryOrCustom, launcherMechanism: LauncherMechanism, standardDeviationAngle: number,
                       // 1-6 for the mystery launchers.
                       // 0 for custom
                       public readonly launcherNumber: number, providedOptions: LauncherOptions ) {
@@ -59,18 +63,14 @@ export default class Launcher extends PhetioObject {
 
     // TODO: https://github.com/phetsims/projectile-data-lab/issues/80 These and more should be mutable for PhET-iO, right?
     this.launcherMechanismProperty = new Property( launcherMechanism );
-    this.angleStabilizerProperty = new Property( angleStabilizer );
+    this.standardDeviationAngleProperty = new Property( standardDeviationAngle );
 
     this.meanLaunchSpeedProperty = new DerivedProperty( [ this.launcherMechanismProperty ], launcherMechanism => {
       return speedAverages[ launcherMechanism ];
     } );
 
-    this.standardDeviationLaunchSpeedProperty = new DerivedProperty( [ this.launcherMechanismProperty ], launcherMechanism => {
+    this.standardDeviationSpeedProperty = new DerivedProperty( [ this.launcherMechanismProperty ], launcherMechanism => {
       return speedStandardDeviations[ launcherMechanism ];
-    } );
-
-    this.standardDeviationLaunchAngleProperty = new DerivedProperty( [ this.angleStabilizerProperty ], angleStabilizer => {
-      return PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * angleStabilizer;
     } );
   }
 }
@@ -78,22 +78,22 @@ export default class Launcher extends PhetioObject {
 export const MYSTERY_LAUNCHERS = [
 
   // TODO: Check these angleStabilizer values, see https://github.com/phetsims/projectile-data-lab/issues/77
-  new Launcher( 'mystery', 'spring', 1 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 1, {
+  new Launcher( 'mystery', 'spring', 1, 1, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher1' )
   } ),
-  new Launcher( 'mystery', 'spring', maxAngleStandardDeviation / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 2, {
+  new Launcher( 'mystery', 'spring', MAX_STANDARD_DEVIATION_ANGLE, 2, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher2' )
   } ),
-  new Launcher( 'mystery', 'explosion', 0 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 3, {
+  new Launcher( 'mystery', 'explosion', 0, 3, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher3' )
   } ),
-  new Launcher( 'mystery', 'pressure', 2 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 4, {
+  new Launcher( 'mystery', 'pressure', 2, 4, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher4' )
   } ),
-  new Launcher( 'mystery', 'pressure', 4 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 5, {
+  new Launcher( 'mystery', 'pressure', 4, 5, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher5' )
   } ),
-  new Launcher( 'mystery', 'explosion', 6 / PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS, 6, {
+  new Launcher( 'mystery', 'explosion', MAX_STANDARD_DEVIATION_ANGLE, 6, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher6' )
   } )
 ];

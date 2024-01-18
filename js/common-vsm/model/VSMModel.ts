@@ -46,7 +46,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly customLauncherMechanismProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>;
-  public readonly angleStabilizerProperty: DynamicProperty<number, number, VSMField>;
+  public readonly standardDeviationAngleProperty: DynamicProperty<number, number, VSMField>;
 
   public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, VSMField>;
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;
@@ -81,9 +81,9 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       derive: t => t.customLauncherMechanismProperty
     } );
 
-    this.angleStabilizerProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+    this.standardDeviationAngleProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.angleStabilizerProperty
+      derive: t => t.standardDeviationAngleProperty
     } );
 
     this.selectedProjectileNumberProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
