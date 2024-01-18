@@ -192,11 +192,12 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         }
       } );
 
-    // Position the field sign
-    ManualConstraint.create( this, [ sampleSelectorNode, fieldSign ],
-      ( sampleSelectorPanelProxy, fieldSignProxy ) => {
-        sampleSelectorPanelProxy.centerX = fieldSignProxy.centerX;
-        sampleSelectorPanelProxy.bottom = fieldSignProxy.top - 20;
+    // Position the sample selector panel
+    ManualConstraint.create(
+      this,
+      [ sampleSelectorNode, fieldSign ], ( sampleSelectorNodeProxy, fieldSignProxy ) => {
+        sampleSelectorNodeProxy.bottom = fieldSignProxy.top - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
+        sampleSelectorNodeProxy.centerX = fieldSignProxy.centerX;
       } );
 
     // Position the time control node so that the play/pause button is centered at the 50-meter mark
