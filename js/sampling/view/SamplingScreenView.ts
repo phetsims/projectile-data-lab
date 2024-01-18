@@ -146,7 +146,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     model.fields.forEach( field => {
 
-      // TODO: Do not playLaunchAnimation when a projectile is created as part of autocompleting the current sample - see https://github.com/phetsims/projectile-data-lab/issues/25
+      // TODO: Do not playLaunchAnimation when a projectile is created as part of autocompleting the current sample - see https://github.com/phetsims/projectile-data-lab/issues/21
       // When a projectile is created in 'single' mode, play the launch animation
       field.projectileCreatedEmitter.addListener( projectile => {
         if ( model.fieldProperty.value === field && model.launchModeProperty.value === 'single' ) {
