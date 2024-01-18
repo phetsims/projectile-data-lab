@@ -82,7 +82,9 @@ const PDLConstants = {
   HISTOGRAM_PANEL_FONT: new PhetFont( { size: 12 } ),
 
   // Allow the top content to go above the dev bounds, but not too far
-  ABOVE_DEV_BOUNDS_TOP: -200
+  ABOVE_DEV_BOUNDS_TOP: -200,
+
+  CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE: 2
 } as const;
 
 projectileDataLab.register( 'PDLConstants', PDLConstants );

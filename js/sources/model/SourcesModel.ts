@@ -15,6 +15,7 @@ import VSMModel from '../../common-vsm/model/VSMModel.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import Launcher from '../../common/model/Launcher.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,10 +27,7 @@ export default class SourcesModel extends VSMModel<VSMField> {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
-      return new VSMField( [ new Launcher( 'custom', 'spring',
-
-        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 this '2' should be a constant because it is duplicated in other custom launcher initializations.
-        2,
+      return new VSMField( [ new Launcher( 'custom', 'spring', PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
 
         // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 should this be number 1? Or get rid of Launcher.launcherNumber altogether?
         0, {

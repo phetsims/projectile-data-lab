@@ -19,6 +19,7 @@ import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentif
 import MeasuresField from './MeasuresField.js';
 import IntervalTool from './IntervalTool.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -58,7 +59,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( identifier => {
       const fieldTandem = fieldsTandem.createTandem( identifier );
-      return new MeasuresField( [ ...MYSTERY_LAUNCHERS, new Launcher( 'custom', 'spring', 2,
+      return new MeasuresField( [ ...MYSTERY_LAUNCHERS, new Launcher( 'custom', 'spring', PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
 
         // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 should this be listed first? Maybe search for launchers.indexOf() and avoid that pattern?
         0, {
