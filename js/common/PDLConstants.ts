@@ -8,7 +8,6 @@
 
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import Range from '../../../dot/js/Range.js';
 
 const maxFieldDistance = 100;
 const fieldWidth = 850;
@@ -26,9 +25,6 @@ const PDLConstants = {
 
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.7, // seconds
   MAX_ANGLE_STANDARD_DEVIATION: maxAngleStandardDeviation, // degrees
-
-  // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
-  ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS: 3,
 
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,
@@ -91,8 +87,6 @@ const PDLConstants = {
   INTERVAL_TOOL_FONT: new PhetFont( { size: 13 } ),
   SELECTOR_FONT: new PhetFont( { size: 14 } ),
   HISTOGRAM_PANEL_FONT: new PhetFont( { size: 12 } ),
-
-  ANGLE_STABILIZER_RANGE: new Range( 0, maxAngleStandardDeviation ),
 
   // Allow the top content to go above the dev bounds, but not too far
   ABOVE_DEV_BOUNDS_TOP: -200

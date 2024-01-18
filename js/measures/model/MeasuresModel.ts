@@ -58,13 +58,12 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( identifier => {
       const fieldTandem = fieldsTandem.createTandem( identifier );
-      return new MeasuresField( [ ...MYSTERY_LAUNCHERS, new Launcher( 'custom', 'spring',
+      return new MeasuresField( [ ...MYSTERY_LAUNCHERS, new Launcher( 'custom', 'spring', 2,
 
-        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 what is the default angle stabilizer supposed to be?
-        2,
+        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 should this be listed first? Maybe search for launchers.indexOf() and avoid that pattern?
         0, {
-          tandem: fieldTandem.createTandem( 'customLauncher' )
-        } ) ], identifier, {
+        tandem: fieldTandem.createTandem( 'customLauncher' )
+      } ) ], identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
         phetioFeatured: true
       } );

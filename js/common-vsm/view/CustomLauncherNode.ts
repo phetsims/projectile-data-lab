@@ -1,13 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { Image, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS } from '../../common/view/LauncherNode.js';
 import { LauncherMechanism, MeanLaunchSpeedForMechanism } from '../model/LauncherMechanism.js';
-import { Node, Image } from '../../../../scenery/js/imports.js';
 import spring_png from '../../../images/spring_png.js';
 import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
 import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
@@ -17,7 +16,6 @@ import { Shape } from '../../../../kite/js/imports.js';
 import { AngleForConfiguration, LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import gear_png from '../../../images/gear_png.js';
 
 /**
@@ -36,6 +34,9 @@ type CustomLauncherNodeOptions = SelfOptions & NodeOptions;
 const GUIDE_RAIL_OUTER_CUTOFF = 13;
 const LAUNCH_ANGLE_LIMITER_LENGTH = 17;
 const LAUNCH_ANGLE_LIMITER_WIDTH = 5;
+
+// This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
+const ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS = 3;
 
 export default class CustomLauncherNode extends LauncherNode {
 
@@ -93,7 +94,7 @@ export default class CustomLauncherNode extends LauncherNode {
     this.addChild( this.angleStabilizersContainer );
     this.angleStabilizersContainer.moveToBack();
     this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value,
-      PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngleProperty.value ) );
+      ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngleProperty.value ) );
 
     const gearImageScale = 0.2;
     const gearAngleInset = Utils.toRadians( 6 );
@@ -127,7 +128,7 @@ export default class CustomLauncherNode extends LauncherNode {
         gearTopContainer.rotation = rotationFactor * ( launcherAngle + standardDeviationAngle );
         gearBottomContainer.rotation = rotationFactor * ( launcherAngle - standardDeviationAngle );
         this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration,
-          PDLConstants.ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngle ) ];
+          ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngle ) ];
       } );
 
     Multilink.multilink( [ isLauncherCustomProperty, mysteryLauncherNumberProperty ], ( isCustom, mysteryLauncher ) => {

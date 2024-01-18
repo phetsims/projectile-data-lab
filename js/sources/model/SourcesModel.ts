@@ -26,11 +26,15 @@ export default class SourcesModel extends VSMModel<VSMField> {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
+      return new VSMField( [ new Launcher( 'custom', 'spring',
 
-      // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 what is the default angle stabilizer supposed to be?
-      return new VSMField( [ new Launcher( 'custom', 'spring', 2, 0, {
-        tandem: fieldsTandem.createTandem( 'customLauncher' + index )
-      } ) ], identifier, {
+        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 this '2' should be a constant because it is duplicated in other custom launcher initializations.
+        2,
+
+        // TODO: https://github.com/phetsims/projectile-data-lab/issues/77 should this be number 1? Or get rid of Launcher.launcherNumber altogether?
+        0, {
+          tandem: fieldsTandem.createTandem( 'customLauncher' + index )
+        } ) ], identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
         phetioFeatured: true
       } );

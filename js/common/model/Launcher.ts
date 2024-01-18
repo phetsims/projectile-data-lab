@@ -76,8 +76,6 @@ export default class Launcher extends PhetioObject {
 }
 
 export const MYSTERY_LAUNCHERS = [
-
-  // TODO: Check these angleStabilizer values, see https://github.com/phetsims/projectile-data-lab/issues/77
   new Launcher( 'mystery', 'spring', 1, 1, {
     tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher1' )
   } ),

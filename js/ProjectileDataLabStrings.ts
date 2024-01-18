@@ -27,8 +27,8 @@ type StringsType = {
   'projectile10kgStringProperty': LocalizedStringProperty;
   'launcherNumberPatternStringProperty': LocalizedStringProperty;
   'angleStabilizerStringProperty': LocalizedStringProperty;
-  'angleStabilizerNarrowStringProperty': LocalizedStringProperty;
-  'angleStabilizerWideStringProperty': LocalizedStringProperty;
+  'narrowStringProperty': LocalizedStringProperty;
+  'wideStringProperty': LocalizedStringProperty;
   'mysteryLauncherStringProperty': LocalizedStringProperty;
   'customLauncherStringProperty': LocalizedStringProperty;
   'histogramStringProperty': LocalizedStringProperty;

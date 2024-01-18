@@ -1,7 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 /**
- * A specific NumberControl for this sim that doesn't have tweaker buttons.
+ * A specific NumberControl for this sim that changes the angle standard deviation for the launcher. Note that in the UI
+ * it is named "Angle Stabilizer" to convey the mechanism, but throughout the code the actual value that is being set
+ * is the standard deviation.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -18,23 +20,24 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
 import HSlider from '../../../../sun/js/HSlider.js';
+import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = EmptySelfOptions;
-type AngleStabilizerNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
+type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
 
 export default class AngleStabilizerNumberControl extends VBox {
 
-  public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStabilizerNumberControlOptions ) {
+  public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
 
-    const range = PDLConstants.ANGLE_STABILIZER_RANGE;
+    const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, NumberControlOptions>()( {}, providedOptions );
 
-    const options = optionize<AngleStabilizerNumberControlOptions, SelfOptions, NumberControlOptions>()( {}, providedOptions );
+    const range = new Range( 0, PDLConstants.MAX_ANGLE_STANDARD_DEVIATION );
 
-    const angleStabilizerSlider = new HSlider( valueProperty, range, {
+    const slider = new HSlider( valueProperty, range, {
       layoutOptions: {
         stretch: true
       },
-      tandem: options.tandem.createTandem( 'angleStabilizerSlider' ),
+      tandem: options.tandem.createTandem( 'slider' ),
       majorTickLength: 12,
       minorTickLength: 5,
       tickLabelSpacing: 2,
@@ -43,23 +46,23 @@ export default class AngleStabilizerNumberControl extends VBox {
       thumbTouchAreaXDilation: 6,
       thumbTouchAreaYDilation: 4 // smaller to prevent overlap with above number spinner buttons
     } );
-    angleStabilizerSlider.addMajorTick( range.min, new PDLText( ProjectileDataLabStrings.angleStabilizerNarrowStringProperty, {
+    slider.addMajorTick( range.min, new PDLText( ProjectileDataLabStrings.narrowStringProperty, {
       fontSize: 10,
       maxWidth: 60
     } ) );
-    angleStabilizerSlider.addMajorTick( range.max, new PDLText( ProjectileDataLabStrings.angleStabilizerWideStringProperty, {
+    slider.addMajorTick( range.max, new PDLText( ProjectileDataLabStrings.wideStringProperty, {
       fontSize: 10,
       maxWidth: 60
     } ) );
     for ( let i = 1; i < range.max; i++ ) {
-      angleStabilizerSlider.addMinorTick( i );
+      slider.addMinorTick( i );
     }
     super( {
       children: [
         new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty, {
           maxWidth: 150
         } ),
-        angleStabilizerSlider
+        slider
       ]
     } );
   }

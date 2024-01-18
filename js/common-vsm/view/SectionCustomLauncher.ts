@@ -35,6 +35,7 @@ export default class SectionCustomLauncher extends PDLPanelSection {
       phetioFeatured: true
     } );
 
+    // Note that the Angle Stabilizer controls the standard deviation of the launch angle.
     const angleStabilizerNumberControl = new AngleStabilizerNumberControl( standardDeviationAngleProperty, {
       tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' ),
       phetioFeatured: true
