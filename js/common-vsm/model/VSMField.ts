@@ -9,7 +9,6 @@ import Property from '../../../../axon/js/Property.js';
 import { LauncherMechanism } from './LauncherMechanism.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -23,6 +22,8 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -39,7 +40,7 @@ export default class VSMField extends Field {
   // The most recent speed of a projectile launched by the launcher, in meters per second
   public readonly latestLaunchSpeedProperty: Property<number>;
 
-  public readonly isLauncherCustomProperty: Property<boolean>;
+  public readonly mysteryOrCustomProperty: Property<MysteryOrCustom>;
 
   public readonly customLauncherMechanismProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>;
 
@@ -91,10 +92,10 @@ export default class VSMField extends Field {
         return this.landedProjectiles[ highlightedProjectileNumber - 1 ] || null;
       } );
 
-    this.isLauncherCustomProperty = new Property<boolean>( false, {
-      tandem: providedOptions.tandem.createTandem( 'isLauncherCustomProperty' ),
+    this.mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
+      tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomProperty' ),
       phetioDocumentation: 'This property is true when the custom launcher is selected.',
-      phetioValueType: BooleanIO
+      validValues: MysteryOrCustomValues
     } );
 
     this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>( this.launcherProperty, {
@@ -119,12 +120,17 @@ export default class VSMField extends Field {
     this.totalProjectileCountProperty = new NumberProperty( 0 );
 
     // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
-    Multilink.multilink( [ this.mysteryLauncherNumberProperty, this.isLauncherCustomProperty ], ( mysteryLauncherNumber, isLauncherCustom ) => {
+    Multilink.multilink( [ this.mysteryLauncherNumberProperty, this.mysteryOrCustomProperty ], ( mysteryLauncherNumber, mysteryOrCustom ) => {
 
       this.launcherProperty.value = this.launchers.find( launcher => {
 
         // There is only one custom launcher per field, so we can safely take the first match in that case
-        return isLauncherCustom ? launcher.mysteryOrCustom === 'custom' : launcher.launcherNumber === mysteryLauncherNumber;
+        if ( mysteryOrCustom === 'custom' ) {
+          return launcher.mysteryOrCustom === 'custom';
+        }
+        else {
+          return launcher.launcherNumber === mysteryLauncherNumber;
+        }
       } )!;
     } );
 
@@ -195,7 +201,7 @@ export default class VSMField extends Field {
   public override reset(): void {
     super.reset();
 
-    this.isLauncherCustomProperty.reset();
+    this.mysteryOrCustomProperty.reset();
     this.customLauncherMechanismProperty.reset();
     this.standardDeviationAngleProperty.reset();
     this.continuousLaunchTimer.reset();

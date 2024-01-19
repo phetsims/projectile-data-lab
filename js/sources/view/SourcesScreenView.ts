@@ -70,7 +70,7 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
       model.launcherConfigurationProperty,
       model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
-      new Property( true ),
+      new Property( 'custom' ),
       new Property( 1 ),
       model.customLauncherMechanismProperty,
       model.standardDeviationAngleProperty,

@@ -15,6 +15,7 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import MysteryLauncherRadioButtonGroupWrapper from '../../common/view/MysteryLauncherRadioButtonGroupWrapper.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 
 /**
  * The SectionAnyLauncher allows the user to select between the custom and mystery launchers.
@@ -28,28 +29,28 @@ type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptio
 
 export default class SectionAnyLauncher extends PDLPanelSection {
 
-  public constructor( isLauncherCustomProperty: PhetioProperty<boolean>, mysteryLauncherNumberProperty: PhetioProperty<number>,
+  public constructor( mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>, mysteryLauncherNumberProperty: PhetioProperty<number>,
                       customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStandardDeviationProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
-    const radioButtonItems: AquaRadioButtonGroupItem<boolean>[] = [ {
+    const radioButtonItems: AquaRadioButtonGroupItem<MysteryOrCustom>[] = [ {
       createNode: () => new PDLText( ProjectileDataLabStrings.mysteryLauncherStringProperty, {
         fontSize: 12,
         maxWidth: 120
       } ),
-      value: false,
+      value: 'mystery',
       tandemName: 'standardLauncherRadioButton'
     }, {
       createNode: () => new PDLText( ProjectileDataLabStrings.customLauncherStringProperty, {
         fontSize: 12,
         maxWidth: 120
       } ),
-      value: true,
+      value: 'custom',
       tandemName: 'customLauncherRadioButton'
     } ];
 
     // radio button group, vertically layout so that i18n text has enough space to grow to the right.
-    const isLauncherCustomRadioButtonGroup = new VerticalAquaRadioButtonGroup( isLauncherCustomProperty, radioButtonItems, {
+    const isLauncherCustomRadioButtonGroup = new VerticalAquaRadioButtonGroup( mysteryOrCustomProperty, radioButtonItems, {
       radioButtonOptions: { radius: 8 },
       touchAreaYDilation: 15,
       spacing: 4,
@@ -77,11 +78,11 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       spacing: 4, stretch: true, topMargin: 3
     } );
 
-    const launcherControlsToggleNode = new ToggleNode<boolean, Node>( isLauncherCustomProperty, [ {
-      value: false,
+    const launcherControlsToggleNode = new ToggleNode<MysteryOrCustom, Node>( mysteryOrCustomProperty, [ {
+      value: 'mystery',
       createNode: () => mysteryLauncherRadioButtonGroupWrapper
     }, {
-      value: true,
+      value: 'custom',
       createNode: () => customLauncherControls
     } ], {} );
 

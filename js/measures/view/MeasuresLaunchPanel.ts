@@ -8,6 +8,7 @@ import { ProjectileType } from '../../common/model/ProjectileType.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
 import SectionAnyLauncher from './SectionAnyLauncher.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 
 /**
  * The MeasuresLaunchPanel extends VSMLaunchPanel and adds the SectionAnyLauncher which allows the user to select
@@ -24,14 +25,14 @@ export default class MeasuresLaunchPanel extends VSMLaunchPanel {
 
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
                       projectileTypeProperty: PhetioProperty<ProjectileType>,
-                      isLauncherCustomProperty: PhetioProperty<boolean>,
+                      mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>,
                       mysteryLauncherNumberProperty: PhetioProperty<number>,
                       customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>,
                       angleStandardDeviationProperty: PhetioProperty<number>,
                       providedOptions: MeasuresLaunchPanelOptions ) {
 
 
-    const launcherSection = new SectionAnyLauncher( isLauncherCustomProperty, mysteryLauncherNumberProperty,
+    const launcherSection = new SectionAnyLauncher( mysteryOrCustomProperty, mysteryLauncherNumberProperty,
       customLauncherMechanismProperty, angleStandardDeviationProperty, {
         tandem: providedOptions.tandem.createTandem( 'launcherSection' )
       } );

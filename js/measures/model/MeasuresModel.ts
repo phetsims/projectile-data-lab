@@ -20,6 +20,7 @@ import MeasuresField from './MeasuresField.js';
 import IntervalTool from './IntervalTool.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -37,7 +38,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
   public readonly landedDistanceStandardErrorProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   // Whether the launcher is custom or mystery
-  public readonly isLauncherCustomProperty: DynamicProperty<boolean, boolean, VSMField>;
+  public readonly mysteryOrCustomProperty: DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>;
 
   // Whether the mean is visible on the field and histogram
   public readonly isMeanVisibleProperty: BooleanProperty;
@@ -90,9 +91,9 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       derive: t => t.landedDistanceStandardErrorProperty
     } );
 
-    this.isLauncherCustomProperty = new DynamicProperty<boolean, boolean, VSMField>( this.fieldProperty, {
+    this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.isLauncherCustomProperty
+      derive: t => t.mysteryOrCustomProperty
     } );
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );

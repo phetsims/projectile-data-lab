@@ -31,6 +31,7 @@ import { LauncherMechanism } from '../model/LauncherMechanism.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
@@ -60,7 +61,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const launchAngleProperty = new NumberProperty( 30 );
     const launchHeightProperty = new NumberProperty( 0 );
     const launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
-    const isLauncherCustomProperty = new Property( true );
+    const mysteryOrCustomProperty = new Property<MysteryOrCustom>( 'mystery' );
     const mysteryLauncherNumberProperty = new Property( 1 );
     const launcherMechanismProperty = new Property<LauncherMechanism>( 'spring' );
     const standardDeviationAngleProperty = new Property( 0 );
@@ -90,7 +91,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       launcherConfigurationProperty,
       launchAngleProperty,
       launchHeightProperty,
-      isLauncherCustomProperty,
+      mysteryOrCustomProperty,
       mysteryLauncherNumberProperty,
       launcherMechanismProperty,
       standardDeviationAngleProperty,
@@ -163,7 +164,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
           launchAngleProperty.value = MEAN_LAUNCH_ANGLES[ selectedProjectile.launcherConfiguration ];
           launchHeightProperty.value = selectedProjectile.launchHeight;
           launcherConfigurationProperty.value = selectedProjectile.launcherConfiguration;
-          isLauncherCustomProperty.value = selectedProjectile.mysteryOrCustom === 'custom';
+          mysteryOrCustomProperty.value = selectedProjectile.mysteryOrCustom;
           standardDeviationAngleProperty.value = selectedProjectile.launcherStandardDeviationAngle;
           launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
           // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67

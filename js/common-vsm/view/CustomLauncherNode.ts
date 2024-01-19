@@ -17,6 +17,8 @@ import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/La
 import Utils from '../../../../dot/js/Utils.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import gear_png from '../../../images/gear_png.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 /**
  * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
@@ -46,7 +48,7 @@ export default class CustomLauncherNode extends LauncherNode {
                       launcherConfigurationProperty: TProperty<LauncherConfiguration>,
                       launcherAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
-                      isLauncherCustomProperty: TProperty<boolean>,
+                      mysteryOrCustomProperty: TProperty<MysteryOrCustom>,
                       mysteryLauncherNumberProperty: TProperty<number>,
                       launcherMechanismProperty: TProperty<LauncherMechanism>,
                       standardDeviationAngleProperty: TProperty<number>,
@@ -59,6 +61,8 @@ export default class CustomLauncherNode extends LauncherNode {
       centerX: 0,
       centerY: 0
     } );
+
+    const isLauncherCustomProperty = DerivedProperty.valueEqualsConstant( mysteryOrCustomProperty, 'custom' );
 
     const pressureNeedleIcon = new Image( pressureNeedle_png, { x: -13.5, y: -40 } );
     const pressureNeedleNode = new Node( { children: [ pressureNeedleIcon ] } );
@@ -131,14 +135,14 @@ export default class CustomLauncherNode extends LauncherNode {
           ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngle ) ];
       } );
 
-    Multilink.multilink( [ isLauncherCustomProperty, mysteryLauncherNumberProperty ], ( isCustom, mysteryLauncher ) => {
+    Multilink.multilink( [ mysteryOrCustomProperty, mysteryLauncherNumberProperty ], ( mysteryOrCustom, mysteryLauncher ) => {
 
       // The custom launcher is based on the graphics from mystery launcher 1
-      this.updateMysteryLauncher( isCustom ? 1 : mysteryLauncher );
-      this.launcherFrameFront.opacity = isCustom ? 0.2 : 1; // Do not set invisible because of 60 degree launch.
+      this.updateMysteryLauncher( mysteryOrCustom === 'custom' ? 1 : mysteryLauncher );
+      this.launcherFrameFront.opacity = mysteryOrCustom === 'custom' ? 0.2 : 1; // Do not set invisible because of 60 degree launch.
 
-      // Only show the label node for non-custom launchers
-      this.labelNode.visible = !isCustom;
+      // Only show the label node for mystery launchers
+      this.labelNode.visible = mysteryOrCustom === 'mystery';
     } );
 
     launcherMechanismProperty.link( launcherType => {
