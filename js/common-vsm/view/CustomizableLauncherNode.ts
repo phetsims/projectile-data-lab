@@ -21,7 +21,7 @@ import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 /**
- * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
+ * The CustomizableLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
  * It also contains a symbol that represents the type of launcher. The symbol is a spring for the spring launcher, a pressure
  * gauge for the pressure launcher, and an explosion for the explosion launcher.
  *
@@ -40,7 +40,7 @@ const LAUNCH_ANGLE_LIMITER_WIDTH = 5;
 // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
 const ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS = 3;
 
-export default class CustomLauncherNode extends LauncherNode {
+export default class CustomizableLauncherNode extends LauncherNode {
 
   private readonly angleStabilizersContainer = new Node();
 
@@ -203,4 +203,4 @@ export default class CustomLauncherNode extends LauncherNode {
   }
 }
 
-projectileDataLab.register( 'CustomLauncherNode', CustomLauncherNode );
+projectileDataLab.register( 'CustomizableLauncherNode', CustomizableLauncherNode );

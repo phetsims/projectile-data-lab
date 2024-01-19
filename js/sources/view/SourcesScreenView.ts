@@ -16,7 +16,7 @@ import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import Property from '../../../../axon/js/Property.js';
-import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
+import CustomizableLauncherNode from '../../common-vsm/view/CustomizableLauncherNode.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { Node } from '../../../../scenery/js/imports.js';
@@ -29,7 +29,7 @@ type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class SourcesScreenView extends VSMScreenView<VSMField> {
 
-  protected readonly launcherNode: CustomLauncherNode;
+  protected readonly launcherNode: CustomizableLauncherNode;
 
   public constructor( model: SourcesModel,
                       providedOptions: ProjectileDataLabScreenViewOptions ) {
@@ -65,7 +65,7 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
 
-    this.launcherNode = new CustomLauncherNode(
+    this.launcherNode = new CustomizableLauncherNode(
       this.modelViewTransform,
       model.launcherConfigurationProperty,
       model.meanLaunchAngleProperty,

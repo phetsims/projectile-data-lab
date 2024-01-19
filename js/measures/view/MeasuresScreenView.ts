@@ -14,7 +14,7 @@ import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
 import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
 import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
-import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
+import CustomizableLauncherNode from '../../common-vsm/view/CustomizableLauncherNode.js';
 import MeasuresField from '../model/MeasuresField.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -28,7 +28,7 @@ type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
 export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
-  protected readonly launcherNode: CustomLauncherNode;
+  protected readonly launcherNode: CustomizableLauncherNode;
 
   public constructor( model: MeasuresModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
@@ -76,7 +76,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
 
-    this.launcherNode = new CustomLauncherNode(
+    this.launcherNode = new CustomizableLauncherNode(
       this.modelViewTransform,
       model.launcherConfigurationProperty,
       model.meanLaunchAngleProperty,

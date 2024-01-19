@@ -25,7 +25,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import CustomLauncherNode from './CustomLauncherNode.js';
+import CustomizableLauncherNode from './CustomizableLauncherNode.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
 import { LauncherMechanism } from '../model/LauncherMechanism.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
@@ -86,7 +86,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         }
       } ) );
 
-    const customLauncherNode = new CustomLauncherNode(
+    const customLauncherNode = new CustomizableLauncherNode(
       ModelViewTransform2.createIdentity(),
       launcherConfigurationProperty,
       launchAngleProperty,
@@ -167,7 +167,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
           mysteryOrCustomProperty.value = selectedProjectile.mysteryOrCustom;
           standardDeviationAngleProperty.value = selectedProjectile.launcherStandardDeviationAngle;
           launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
-          // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
+          // Updating the latestLaunchSpeedProperty causes a failure in CustomizableLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
 
           if ( selectedProjectile.mysteryOrCustom === 'mystery' ) {
             mysteryLauncherNumberProperty.value = selectedProjectile.launcherNumber;
