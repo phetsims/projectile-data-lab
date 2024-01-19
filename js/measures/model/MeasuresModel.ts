@@ -28,14 +28,14 @@ type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>
 
 export default class MeasuresModel extends VSMModel<MeasuresField> {
 
-  // The average distance of the landed projectiles
-  public readonly landedDistanceMeanProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  // The mean distance of the landed projectiles
+  public readonly meanDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   // The standard deviation of the distance of the landed projectiles
-  public readonly landedDistanceStandardDeviationProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly standardDeviationDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   // The standard error of the mean distance of landed projectiles
-  public readonly landedDistanceStandardErrorProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly standardErrorDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   // Whether the launcher is custom or mystery
   public readonly mysteryOrCustomProperty: DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>;
@@ -79,16 +79,16 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     super( fields, true, providedOptions );
 
-    this.landedDistanceMeanProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.landedDistanceAverageProperty
+    this.meanDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
+      derive: t => t.meanDistanceProperty
     } );
 
-    this.landedDistanceStandardDeviationProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.landedDistanceStandardDeviationProperty
+    this.standardDeviationDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
+      derive: t => t.standardDeviationDistanceProperty
     } );
 
-    this.landedDistanceStandardErrorProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.landedDistanceStandardErrorProperty
+    this.standardErrorDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
+      derive: t => t.standardErrorDistanceProperty
     } );
 
     this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>( this.fieldProperty, {

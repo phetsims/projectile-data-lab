@@ -64,22 +64,22 @@ export default class DataMeasuresOverlay extends Node {
 
     const isMeanVisibleProperty = new DerivedProperty(
       [ isMeanDisplayedProperty, meanDistanceProperty ],
-      ( isMeanDisplayed, landedDistanceAverage ) => {
-        return isMeanDisplayed && landedDistanceAverage !== null;
+      ( isMeanDisplayed, meanDistance ) => {
+        return isMeanDisplayed && meanDistance !== null;
       } );
 
     // Show the standard deviation lines if they are far enough apart to distinguish visually.
     const isSDLinesVisibleProperty = new DerivedProperty(
       [ isStandardDeviationDisplayedProperty, standardDeviationDistanceProperty ],
-      ( isStandardDeviationDisplayed, landedDistanceStandardDeviation ) => {
-        return isStandardDeviationDisplayed && landedDistanceStandardDeviation !== null;
+      ( isStandardDeviationDisplayed, standardDeviationDistance ) => {
+        return isStandardDeviationDisplayed && standardDeviationDistance !== null;
       } );
 
     // Show the standard deviation arrows if they are far enough apart to distinguish visually.
     const isSDArrowsVisibleProperty = new DerivedProperty(
       [ isStandardDeviationDisplayedProperty, standardDeviationDistanceProperty ],
-      ( isStandardDeviationDisplayed, landedDistanceStandardDeviation ) => {
-        return isStandardDeviationDisplayed && landedDistanceStandardDeviation !== null && landedDistanceStandardDeviation > MIN_SD_FOR_SHOW_ARROWS;
+      ( isStandardDeviationDisplayed, standardDeviationDistance ) => {
+        return isStandardDeviationDisplayed && standardDeviationDistance !== null && standardDeviationDistance > MIN_SD_FOR_SHOW_ARROWS;
       } );
 
     const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 14;

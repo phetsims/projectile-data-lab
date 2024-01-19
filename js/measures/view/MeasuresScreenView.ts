@@ -63,9 +63,9 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.isMeanVisibleProperty,
       model.isStandardDeviationVisibleProperty,
       model.isValuesVisibleProperty,
-      model.landedDistanceMeanProperty,
-      model.landedDistanceStandardDeviationProperty,
-      model.landedDistanceStandardErrorProperty,
+      model.meanDistanceProperty,
+      model.standardDeviationDistanceProperty,
+      model.standardErrorDistanceProperty,
       model.intervalTool,
       model.isIntervalToolVisibleProperty,
       model.selectedBinWidthProperty,
@@ -97,8 +97,8 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
     const dataMeasuresFieldOverlay = new DataMeasuresOverlay(
       this.modelViewTransform,
-      model.landedDistanceMeanProperty,
-      model.landedDistanceStandardDeviationProperty,
+      model.meanDistanceProperty,
+      model.standardDeviationDistanceProperty,
       model.isMeanVisibleProperty,
       model.isStandardDeviationVisibleProperty,
       model.isValuesVisibleProperty,

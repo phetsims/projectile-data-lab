@@ -23,41 +23,40 @@ export type MeasuresFieldOptions = SelfOptions & VSMFieldOptions;
 export default class MeasuresField extends VSMField {
 
   // This property represents the average distance (horizontal displacement) of landed projectiles.
-  public readonly landedDistanceAverageProperty: Property<number | null>;
+  public readonly meanDistanceProperty: Property<number | null>;
 
   // This property represents the standard deviation of the distance (horizontal displacement) of landed projectiles.
-  public readonly landedDistanceStandardDeviationProperty: Property<number | null>;
+  public readonly standardDeviationDistanceProperty: Property<number | null>;
 
   // This property represents the standard error of the mean distance (horizontal displacement) of landed projectiles.
-  public readonly landedDistanceStandardErrorProperty: Property<number | null>;
+  public readonly standardErrorDistanceProperty: Property<number | null>;
 
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
     super( launchers, identifier, providedOptions );
 
-    // TODO: Remove 'landed' prefixes, see https://github.com/phetsims/projectile-data-lab/issues/86
-    this.landedDistanceAverageProperty = new Property<number | null>( null, {
-      tandem: providedOptions.tandem.createTandem( 'landedDistanceAverageProperty' ),
+    this.meanDistanceProperty = new Property<number | null>( null, {
+      tandem: providedOptions.tandem.createTandem( 'meanDistanceProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
 
-    this.landedDistanceStandardDeviationProperty = new Property<number | null>( null, {
-      tandem: providedOptions.tandem.createTandem( 'landedDistanceStandardDeviationProperty' ),
+    this.standardDeviationDistanceProperty = new Property<number | null>( null, {
+      tandem: providedOptions.tandem.createTandem( 'standardDeviationDistanceProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
 
-    this.landedDistanceStandardErrorProperty = new Property<number | null>( null, {
-      tandem: providedOptions.tandem.createTandem( 'landedDistanceStandardErrorProperty' ),
+    this.standardErrorDistanceProperty = new Property<number | null>( null, {
+      tandem: providedOptions.tandem.createTandem( 'standardErrorDistanceProperty' ),
       phetioValueType: NullableIO( NumberIO )
     } );
 
     this.projectileLandedEmitter.addListener( () => {
-      this.landedDistanceAverageProperty.value = _.mean( this.landedProjectiles.map( landedProjectile => landedProjectile.x ) );
-      this.landedDistanceStandardDeviationProperty.value = this.getLandedDistanceStandardDeviation();
-      this.landedDistanceStandardErrorProperty.value = this.getLandedDistanceStandardDeviation() / Math.sqrt( this.landedProjectiles.length );
+      this.meanDistanceProperty.value = _.mean( this.landedProjectiles.map( landedProjectile => landedProjectile.x ) );
+      this.standardDeviationDistanceProperty.value = this.getStandardDeviationDistance();
+      this.standardErrorDistanceProperty.value = this.getStandardDeviationDistance() / Math.sqrt( this.landedProjectiles.length );
     } );
   }
 
-  private getLandedDistanceStandardDeviation(): number {
+  private getStandardDeviationDistance(): number {
     let sum = 0;
     let count = 0;
     const average = _.mean( this.landedProjectiles.map( landedProjectile => landedProjectile.x ) );
@@ -71,9 +70,9 @@ export default class MeasuresField extends VSMField {
 
   public override clearProjectiles(): void {
     super.clearProjectiles();
-    this.landedDistanceAverageProperty.value = null;
-    this.landedDistanceStandardDeviationProperty.value = null;
-    this.landedDistanceStandardErrorProperty.value = null;
+    this.meanDistanceProperty.value = null;
+    this.standardDeviationDistanceProperty.value = null;
+    this.standardErrorDistanceProperty.value = null;
   }
 }
 
