@@ -95,7 +95,8 @@ export default class ProjectileSelectorNode extends SelectorNode {
       mysteryLauncherNumberProperty,
       launcherMechanismProperty,
       standardDeviationAngleProperty,
-      latestLaunchSpeedProperty, {
+      latestLaunchSpeedProperty,
+      null, {
         scale: 0.2,
         visibleProperty: new DerivedProperty( [ selectedProjectileProperty ], projectile => projectile !== null )
       } );

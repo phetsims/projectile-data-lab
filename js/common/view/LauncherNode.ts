@@ -14,6 +14,8 @@ import Animation from '../../../../twixt/js/Animation.js';
 import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import PDLText from './PDLText.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Field from '../model/Field.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -66,13 +68,13 @@ export default class LauncherNode extends Node {
                       private readonly meanLaunchAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
                       mysteryLauncherNumberProperty: TProperty<number>,
-                      providedOptions: LauncherNodeOptions ) {
+                      fieldProperty: TReadOnlyProperty<Field> | null,
+                      providedOptions?: LauncherNodeOptions ) {
 
     const launcherX = modelViewTransform.modelToViewX( 0 );
     const launcherY = modelViewTransform.modelToViewY( 0 );
 
-    const defaultOptions = { x: launcherX, y: launcherY, isIcon: false };
-    const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
+    const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( { x: launcherX, y: launcherY, isIcon: false }, providedOptions );
     super( options );
 
     const labelText = new PDLText( new DerivedProperty( [ mysteryLauncherNumberProperty ], mysteryLauncher => Utils.toFixed( mysteryLauncher, 0 ) ), {
@@ -114,6 +116,15 @@ export default class LauncherNode extends Node {
     mysteryLauncherNumberProperty.link( mysteryLauncher => {
       this.updateMysteryLauncher( mysteryLauncher, options.isIcon );
     } );
+
+    fieldProperty && fieldProperty.link( () => this.cancelBarrelRotationAnimation() );
+  }
+
+  private cancelBarrelRotationAnimation(): void {
+    if ( this.barrelRotationAnimation ) {
+      this.barrelRotationAnimation.stop();
+      this.barrelRotationAnimation = null;
+    }
   }
 
   // TODO: Check this for memory leaks - see https://github.com/phetsims/projectile-data-lab/issues/24
@@ -121,10 +132,7 @@ export default class LauncherNode extends Node {
 
     this.launcherBarrel.setRotation( Utils.toRadians( -angle ) );
 
-    if ( this.barrelRotationAnimation ) {
-      this.barrelRotationAnimation.stop();
-      this.barrelRotationAnimation = null;
-    }
+    this.cancelBarrelRotationAnimation();
 
     this.barrelRotationAnimation = new Animation( {
       duration: 0.5,

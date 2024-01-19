@@ -92,7 +92,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
       model.mysteryLauncherNumberProperty,
-      {}
+      model.fieldProperty
     );
 
     this.launcherLayer.addChild( this.launcherNode );

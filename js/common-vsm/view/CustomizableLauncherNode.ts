@@ -19,6 +19,8 @@ import gear_png from '../../../images/gear_png.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../model/LauncherMechanism.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Field from '../../common/model/Field.js';
 
 /**
  * The CustomizableLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
@@ -53,9 +55,10 @@ export default class CustomizableLauncherNode extends LauncherNode {
                       launcherMechanismProperty: TProperty<LauncherMechanism>,
                       standardDeviationAngleProperty: TProperty<number>,
                       latestLaunchSpeedProperty: TProperty<number>,
+                      fieldProperty: TReadOnlyProperty<Field> | null,
                       providedOptions: CustomLauncherNodeOptions ) {
 
-    super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherNumberProperty, providedOptions );
+    super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherNumberProperty, fieldProperty, providedOptions );
 
     const launcherTypeIcon = new Image( CustomizableLauncherNode.getImageKeyForCustomLauncherMechanism( launcherMechanismProperty.value ), {
       centerX: 0,
