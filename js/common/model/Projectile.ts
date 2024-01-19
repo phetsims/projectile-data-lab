@@ -43,7 +43,7 @@ export default class Projectile {
   // timeAirborne is the time the projectile has been airborne since launch, in seconds
   public timeAirborne: number;
 
-  // The type of the projectile - CANNONBALL, PUMPKIN or PIANO
+  // The type of the projectile - cannonball, pumpkin or piano
   public type: ProjectileType;
 
   // Initial angle of the projectile in degrees

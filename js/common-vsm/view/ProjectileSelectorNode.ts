@@ -29,6 +29,8 @@ import CustomLauncherNode from './CustomLauncherNode.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
 import { LauncherMechanism } from '../model/LauncherMechanism.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import { ProjectileType } from '../../common/model/ProjectileType.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
@@ -53,8 +55,6 @@ export default class ProjectileSelectorNode extends SelectorNode {
     providedOptions: ProjectileSelectorPanelOptions ) {
 
     const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
-
-    const projectileInfoContainer = new Node();
 
     // Create adapters for that will reflect the values for the selected projectile.
     const launchAngleProperty = new NumberProperty( 30 );
@@ -99,51 +99,99 @@ export default class ProjectileSelectorNode extends SelectorNode {
         visibleProperty: new DerivedProperty( [ selectedProjectileProperty ], projectile => projectile !== null )
       } );
 
+    type Depiction = {
+      type: ProjectileType;
+      isFlippedHorizontally: boolean;
+      landedImageIndex?: number;
+    };
+
+    const depictions: Depiction[] = [
+      { type: 'cannonball', isFlippedHorizontally: false },
+      { type: 'cannonball', isFlippedHorizontally: true },
+      { type: 'piano', isFlippedHorizontally: false },
+      { type: 'piano', isFlippedHorizontally: true },
+      { type: 'pumpkin', isFlippedHorizontally: false, landedImageIndex: 0 },
+      { type: 'pumpkin', isFlippedHorizontally: true, landedImageIndex: 0 },
+      { type: 'pumpkin', isFlippedHorizontally: false, landedImageIndex: 1 },
+      { type: 'pumpkin', isFlippedHorizontally: true, landedImageIndex: 1 },
+      { type: 'pumpkin', isFlippedHorizontally: false, landedImageIndex: 2 },
+      { type: 'pumpkin', isFlippedHorizontally: true, landedImageIndex: 2 }
+    ];
+
+    const depictionProperty = new Property<Depiction>( depictions[ 0 ] );
+
+    const createNode = ( depiction: Depiction ) => {
+      const imagePNG = depiction.type === 'pumpkin' ? PUMPKIN_LANDED_IMAGES[ depiction.landedImageIndex! ] :
+                       depiction.type === 'piano' ? pianoHighlighted_png :
+                       cannonball_png;
+
+      const imageScale = depiction.type === 'pumpkin' ? 0.18 : depiction.type === 'piano' ? 0.14 : 0.2;
+
+      return new Node( {
+        children: [ new Image( imagePNG, { scale: imageScale } ) ],
+        matrix: Matrix3.scale( depiction.isFlippedHorizontally ? -1 : 1, 1 )
+      } );
+    };
+
+    const projectileToggleNode = new ToggleNode( depictionProperty, depictions.map( depiction => ( {
+        createNode: tandem => createNode( depiction ),
+        value: depiction
+      } ) )
+    );
+
     Multilink.multilink( [ selectedProjectileNumberProperty, landedProjectileCountProperty, selectedProjectileProperty ], ( projectileNumber, landedProjectileCount, selectedProjectile ) => {
 
-      if ( selectedProjectile ) {
+        if ( selectedProjectile ) {
 
-        const imagePNG = selectedProjectile.type === 'pumpkin' ? PUMPKIN_LANDED_IMAGES[ selectedProjectile.landedImageIndex ] :
-                         selectedProjectile.type === 'piano' ? pianoHighlighted_png :
-                         cannonball_png;
+          // Use a reference lookup because it is what ToggleNode supports for equality checking
+          const lookup = depictions.find( depiction => {
 
-        const imageScale = selectedProjectile.type === 'pumpkin' ? 0.18 : selectedProjectile.type === 'piano' ? 0.14 : 0.2;
+            if ( depiction.type === 'cannonball' || depiction.type === 'piano' ) {
+              return depiction.type === selectedProjectile.type &&
+                     depiction.isFlippedHorizontally === selectedProjectile.isFlippedHorizontally;
+            }
+            else {
+              return depiction.type === selectedProjectile.type &&
+                     depiction.isFlippedHorizontally === selectedProjectile.isFlippedHorizontally &&
+                     depiction.landedImageIndex !== selectedProjectile.landedImageIndex;
+            }
+          } );
 
-        projectileInfoContainer.children = [ new Node( {
-          children: [ new Image( imagePNG, { scale: imageScale } ) ],
-          matrix: Matrix3.scale( selectedProjectile.isFlippedHorizontally ? -1 : 1, 1 )
-        } ) ];
+          depictionProperty.value = lookup!;
 
-        // Update the adapters for the selected projectile that will determine how to show the launcher icon.
-        launchAngleProperty.value = MEAN_LAUNCH_ANGLES[ selectedProjectile.launcherConfiguration ];
-        launchHeightProperty.value = selectedProjectile.launchHeight;
-        launcherConfigurationProperty.value = selectedProjectile.launcherConfiguration;
-        isLauncherCustomProperty.value = selectedProjectile.mysteryOrCustom === 'custom';
-        standardDeviationAngleProperty.value = selectedProjectile.launcherStandardDeviationAngle;
-        launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
-        // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
+          // Update the adapters for the selected projectile that will determine how to show the launcher icon.
+          launchAngleProperty.value = MEAN_LAUNCH_ANGLES[ selectedProjectile.launcherConfiguration ];
+          launchHeightProperty.value = selectedProjectile.launchHeight;
+          launcherConfigurationProperty.value = selectedProjectile.launcherConfiguration;
+          isLauncherCustomProperty.value = selectedProjectile.mysteryOrCustom === 'custom';
+          standardDeviationAngleProperty.value = selectedProjectile.launcherStandardDeviationAngle;
+          launcherMechanismProperty.value = selectedProjectile.launcherMechanism;
+          // Updating the latestLaunchSpeedProperty causes a failure in CustomLauncherNode, and is not needed, see https://github.com/phetsims/projectile-data-lab/issues/67
 
-        if ( selectedProjectile.mysteryOrCustom === 'mystery' ) {
-          mysteryLauncherNumberProperty.value = selectedProjectile.launcherNumber;
+          if ( selectedProjectile.mysteryOrCustom === 'mystery' ) {
+            mysteryLauncherNumberProperty.value = selectedProjectile.launcherNumber;
+          }
+
+          // Clear the clip area, so we can get an unclipped measurement of the localBounds.height
+          customLauncherNode.clipArea = null;
+
+          const height = customLauncherNode.localBounds.height * ( selectedProjectile.launcherConfiguration === 'angle0Raised' ? 0.6 : 0.5 );
+
+          // The launcher has a long pedestal that gets clipped off.
+          customLauncherNode.clipArea = Shape.rect(
+            customLauncherNode.localBounds.minX,
+            customLauncherNode.localBounds.minY,
+            customLauncherNode.localBounds.width,
+            height
+          );
+
+          projectileToggleNode.visible = true;
         }
-
-        // Clear the clip area, so we can get an unclipped measurement of the localBounds.height
-        customLauncherNode.clipArea = null;
-
-        const height = customLauncherNode.localBounds.height * ( selectedProjectile.launcherConfiguration === 'angle0Raised' ? 0.6 : 0.5 );
-
-        // The launcher has a long pedestal that gets clipped off.
-        customLauncherNode.clipArea = Shape.rect(
-          customLauncherNode.localBounds.minX,
-          customLauncherNode.localBounds.minY,
-          customLauncherNode.localBounds.width,
-          height
-        );
+        else {
+          projectileToggleNode.visible = false;
+        }
       }
-      else {
-        projectileInfoContainer.children = [];
-      }
-    } );
+    );
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfCountPatternStringProperty, {
       number: selectedProjectileNumberProperty,
@@ -161,7 +209,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
           maxWidth: 64,
           font: PDLConstants.SELECTOR_FONT
         } ),
-        projectileInfoContainer
+        projectileToggleNode
       ],
       spacing: 5,
       align: 'center',
