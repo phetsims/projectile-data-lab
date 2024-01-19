@@ -29,6 +29,7 @@ export type VSMAccordionBoxOptions =
   SelfOptions & WithRequired<PDLAccordionBoxOptions, 'tandem'>;
 
 export default class SamplingAccordionBox extends PDLAccordionBox {
+  public readonly bottomThumbnailNode: SampleThumbnailNode;
 
   public constructor(
     launcherProperty: TReadOnlyProperty<number>,
@@ -70,6 +71,8 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
 
     const zoomLevelProperty = histogramNode.zoomLevelProperty;
 
+    const bottomThumbnailNode = new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty );
     super( new HBox( {
       spacing: 4,
       children: [
@@ -83,12 +86,13 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
               PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
             new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
               PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
-            new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty )
+            bottomThumbnailNode
           ]
         } )
       ]
     } ), options );
+
+    this.bottomThumbnailNode = bottomThumbnailNode;
   }
 }
 
