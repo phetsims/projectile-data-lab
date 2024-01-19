@@ -28,7 +28,9 @@ export default class LauncherMechanism extends PhetioObject {
 
     this.speedMeanProperty = new NumberProperty( speedMean, {
       tandem: tandem.createTandem( 'speedMeanProperty' ),
-      range: new Range( 20, 30 ),
+
+      // The speed tool is designed to show values up to 30 m/s.
+      range: new Range( 15, 25 ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       }
