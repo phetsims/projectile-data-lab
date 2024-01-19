@@ -60,11 +60,6 @@ export default class InteractiveToolPanel extends PDLPanel {
           lineColor: new Color( 0, 0, 0 ),
           crosshairLineWidth: 1.8,
           tapeLineWidth: 1.8,
-
-          // MeasuringTapeNode does not support hiding the text. This is our "hack" to hide it.
-          // TODO: Do we want to change common code support for that? Or try a font of 0? See https://github.com/phetsims/projectile-data-lab/issues/89
-          textMaxWidth: 1E-6,
-
           tandem: Tandem.OPT_OUT
         } ).rasterized( {
           resolution: 1.25
