@@ -7,7 +7,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
-import { LauncherMechanism } from '../../common-vsm/model/LauncherMechanism.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 import AngleStabilizerNumberControl from '../../common-vsm/view/AngleStabilizerNumberControl.js';
 import PDLText from '../../common/view/PDLText.js';

@@ -27,7 +27,7 @@ import Property from '../../../../axon/js/Property.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import CustomizableLauncherNode from './CustomizableLauncherNode.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
-import { LauncherMechanism } from '../model/LauncherMechanism.js';
+import LauncherMechanism, { SPRING } from '../model/LauncherMechanism.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
@@ -63,7 +63,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
     const mysteryOrCustomProperty = new Property<MysteryOrCustom>( 'mystery' );
     const mysteryLauncherNumberProperty = new Property( 1 );
-    const launcherMechanismProperty = new Property<LauncherMechanism>( 'spring' );
+    const launcherMechanismProperty = new Property<LauncherMechanism>( SPRING );
     const standardDeviationAngleProperty = new Property( 0 );
     const latestLaunchSpeedProperty = new Property( 0 );
 

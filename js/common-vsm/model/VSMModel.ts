@@ -17,7 +17,7 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { LauncherMechanism } from './LauncherMechanism.js';
+import LauncherMechanism from './LauncherMechanism.js';
 import Projectile from '../../common/model/Projectile.js';
 import { StopwatchPhase } from './StopwatchPhase.js';
 import Multilink from '../../../../axon/js/Multilink.js';

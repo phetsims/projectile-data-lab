@@ -6,7 +6,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import { LauncherMechanism } from '../model/LauncherMechanism.js';
+import LauncherMechanism from '../model/LauncherMechanism.js';
 import AngleStabilizerNumberControl from './AngleStabilizerNumberControl.js';
 import CustomLauncherTypeRadioButtonGroup from './CustomLauncherTypeRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';

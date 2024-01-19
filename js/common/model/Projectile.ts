@@ -12,7 +12,7 @@ import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js'
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
-import { LauncherMechanism, LauncherMechanismValues } from '../../common-vsm/model/LauncherMechanism.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from './MysteryOrCustom.js';
 
 /**
@@ -128,7 +128,7 @@ export default class Projectile {
       sampleNumber: NumberIO,
       launcherConfiguration: StringUnionIO( LauncherConfigurationValues ),
       mysteryOrCustom: StringUnionIO( MysteryOrCustomValues ),
-      launcherMechanism: StringUnionIO( LauncherMechanismValues ),
+      launcherMechanism: LauncherMechanism.LauncherMechanismIO,
       launcherStandardDeviationAngle: NumberIO,
       launcherNumber: NumberIO,
       x: NumberIO,
@@ -141,27 +141,6 @@ export default class Projectile {
       launchSpeed: NumberIO,
       launchHeight: NumberIO
     },
-    toStateObject: ( projectile: Projectile ): ProjectileStateObject => {
-      return {
-        screenIdentifier: projectile.screenIdentifier,
-        fieldIdentifier: projectile.fieldIdentifier,
-        sampleNumber: projectile.sampleNumber,
-        launcherConfiguration: projectile.launcherConfiguration,
-        mysteryOrCustom: projectile.mysteryOrCustom,
-        launcherMechanism: projectile.launcherMechanism,
-        launcherStandardDeviationAngle: projectile.launcherStandardDeviationAngle,
-        launcherNumber: projectile.launcherNumber,
-        x: projectile.x,
-        y: projectile.y,
-        type: projectile.type,
-        isFlippedHorizontally: projectile.isFlippedHorizontally,
-        landedImageIndex: projectile.landedImageIndex,
-        timeAirborne: projectile.timeAirborne,
-        launchAngle: projectile.launchAngle,
-        launchSpeed: projectile.launchSpeed,
-        launchHeight: projectile.launchHeight
-      };
-    },
     fromStateObject: ( stateObject: ProjectileStateObject ) => {
       return new Projectile(
         stateObject.screenIdentifier,
@@ -169,7 +148,7 @@ export default class Projectile {
         stateObject.sampleNumber,
         stateObject.launcherConfiguration,
         stateObject.mysteryOrCustom,
-        stateObject.launcherMechanism,
+        LauncherMechanism.LauncherMechanismIO.fromStateObject( stateObject.launcherMechanism ),
         stateObject.launcherStandardDeviationAngle,
         stateObject.launcherNumber,
         stateObject.x,

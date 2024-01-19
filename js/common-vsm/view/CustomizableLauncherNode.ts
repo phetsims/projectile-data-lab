@@ -6,7 +6,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS } from '../../common/view/LauncherNode.js';
-import { LauncherMechanism, speedMeans } from '../model/LauncherMechanism.js';
 import spring_png from '../../../images/spring_png.js';
 import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
 import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
@@ -19,6 +18,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import gear_png from '../../../images/gear_png.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../model/LauncherMechanism.js';
 
 /**
  * The CustomizableLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
@@ -57,7 +57,7 @@ export default class CustomizableLauncherNode extends LauncherNode {
 
     super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherNumberProperty, providedOptions );
 
-    const launcherTypeIcon = new Image( this.getImageKeyForCustomLauncherMechanism( launcherMechanismProperty.value ), {
+    const launcherTypeIcon = new Image( CustomizableLauncherNode.getImageKeyForCustomLauncherMechanism( launcherMechanismProperty.value ), {
       centerX: 0,
       centerY: 0
     } );
@@ -146,17 +146,17 @@ export default class CustomizableLauncherNode extends LauncherNode {
     } );
 
     launcherMechanismProperty.link( launcherType => {
-      launcherTypeIcon.image = this.getImageKeyForCustomLauncherMechanism( launcherType );
-      launcherTypeIcon.rotation = launcherType === 'pressure' ? -Math.PI / 2 : launcherType === 'explosion' ? Math.PI / 2 : 0;
+      launcherTypeIcon.image = CustomizableLauncherNode.getImageKeyForCustomLauncherMechanism( launcherType );
+      launcherTypeIcon.rotation = launcherType === PRESSURE ? -Math.PI / 2 : launcherType === EXPLOSION ? Math.PI / 2 : 0;
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
 
-      pressureNeedleNode.visible = launcherType === 'pressure';
+      pressureNeedleNode.visible = launcherType === PRESSURE;
     } );
 
     latestLaunchSpeedProperty.link( launchSpeed => {
       const maxAngle = 80;
-      const meanSpeed = speedMeans[ launcherMechanismProperty.value ];
+      const meanSpeed = launcherMechanismProperty.value.speedMeanProperty.value;
       const maxSpeed = 30;
       const needleDeltaRotation = maxAngle * ( launchSpeed - meanSpeed ) / ( maxSpeed - meanSpeed );
       pressureNeedleNode.rotation = Utils.toRadians( needleDeltaRotation ) - Math.PI / 2;
@@ -191,15 +191,10 @@ export default class CustomizableLauncherNode extends LauncherNode {
     return new Node( { children: [ angleStabilizerTop, angleStabilizerBottom ] } );
   }
 
-  private getImageKeyForCustomLauncherMechanism( customLauncherType: LauncherMechanism ): HTMLImageElement {
-    switch( customLauncherType ) {
-      case 'spring':
-        return spring_png;
-      case 'pressure':
-        return pressureWithoutNeedle_png;
-      default: //case 'explosion':
-        return explosion_png;
-    }
+  private static getImageKeyForCustomLauncherMechanism( customLauncherType: LauncherMechanism ): HTMLImageElement {
+    return customLauncherType === SPRING ? spring_png :
+           customLauncherType === PRESSURE ? pressureWithoutNeedle_png :
+           explosion_png;
   }
 }
 

@@ -21,6 +21,7 @@ import IntervalTool from './IntervalTool.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
+import { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -65,7 +66,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
       const customLauncher = new Launcher(
         'custom',
-        'spring',
+        SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         lastMysteryLauncherNumber + 1, {
           tandem: fieldTandem.createTandem( `customLauncher${index + 1}` )

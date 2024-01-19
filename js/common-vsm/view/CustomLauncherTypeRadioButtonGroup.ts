@@ -10,7 +10,7 @@
 import { Image } from '../../../../scenery/js/imports.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import { LauncherMechanism } from '../model/LauncherMechanism.js';
+import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../model/LauncherMechanism.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -26,15 +26,17 @@ export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadio
 
     const items: RectangularRadioButtonGroupItem<LauncherMechanism>[] = [
       {
-        value: 'spring' as const,
+        value: SPRING,
         tandemName: 'springRadioButton',
+
+        // TODO: These images are duplicated in CustomizableLauncherNode.getImageKeyForCustomLauncherMechanism, see https://github.com/phetsims/projectile-data-lab/issues/80
         createNode: () => new Image( spring_png, { scale: 0.14 } )
       }, {
-        value: 'pressure' as const,
+        value: PRESSURE,
         tandemName: 'pressureRadioButton',
         createNode: () => new Image( pressureWithNeedle_png, { scale: 0.18 } )
       }, {
-        value: 'explosion' as const,
+        value: EXPLOSION,
         tandemName: 'explosionRadioButton',
         createNode: () => new Image( explosion_png, { scale: -0.18 } )
       } ];

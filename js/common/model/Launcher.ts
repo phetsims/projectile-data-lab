@@ -1,15 +1,16 @@
 // Copyright 2024, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { LauncherMechanism, speedMeans, speedStandardDeviations } from '../../common-vsm/model/LauncherMechanism.js';
+import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import Property from '../../../../axon/js/Property.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { MysteryOrCustom } from './MysteryOrCustom.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * Launcher is the model for a projectile launcher. It defines the mean launch speed, standard deviation of launch speed,
@@ -32,7 +33,7 @@ export default class Launcher extends PhetioObject {
   // The standard deviation of the launch angle.
   public readonly standardDeviationAngleProperty: Property<number>;
 
-  public readonly meanLaunchSpeedProperty: TReadOnlyProperty<number>;
+  public readonly meanLaunchSpeedProperty: DynamicProperty<number, number, LauncherMechanism>;
   public readonly standardDeviationSpeedProperty: TReadOnlyProperty<number>;
 
   public constructor( public readonly mysteryOrCustom: MysteryOrCustom, launcherMechanism: LauncherMechanism, standardDeviationAngle: number,
@@ -51,38 +52,43 @@ export default class Launcher extends PhetioObject {
 
     super( options );
 
-    // TODO: https://github.com/phetsims/projectile-data-lab/issues/80 These and more should be mutable for PhET-iO, right?
-    this.launcherMechanismProperty = new Property( launcherMechanism );
-    this.standardDeviationAngleProperty = new Property( standardDeviationAngle );
-
-    this.meanLaunchSpeedProperty = new DerivedProperty( [ this.launcherMechanismProperty ], launcherMechanism => {
-      return speedMeans[ launcherMechanism ];
+    this.launcherMechanismProperty = new Property( launcherMechanism, {
+      tandem: options.tandem.createTandem( 'launcherMechanismProperty' ),
+      phetioValueType: LauncherMechanism.LauncherMechanismIO
+    } );
+    this.standardDeviationAngleProperty = new NumberProperty( standardDeviationAngle, {
+      tandem: options.tandem.createTandem( 'standardDeviationAngleProperty' )
     } );
 
-    this.standardDeviationSpeedProperty = new DerivedProperty( [ this.launcherMechanismProperty ], launcherMechanism => {
-      return speedStandardDeviations[ launcherMechanism ];
+    this.meanLaunchSpeedProperty = new DynamicProperty<number, number, LauncherMechanism>( this.launcherMechanismProperty, {
+      derive: launcherMechanism => launcherMechanism.speedMeanProperty
+    } );
+
+    this.standardDeviationSpeedProperty = new DynamicProperty<number, number, LauncherMechanism>( this.launcherMechanismProperty, {
+      derive: launcherMechanism => launcherMechanism.speedStandardDeviationProperty
     } );
   }
 }
 
+const mysteryLaunchersTandem = Tandem.GLOBAL_MODEL.createTandem( 'mysteryLaunchers' );
 export const MYSTERY_LAUNCHERS = [
-  new Launcher( 'mystery', 'spring', 1, 1, {
-    tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher1' )
+  new Launcher( 'mystery', SPRING, 1, 1, {
+    tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher1' )
   } ),
-  new Launcher( 'mystery', 'spring', MAX_STANDARD_DEVIATION_ANGLE, 2, {
-    tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher2' )
+  new Launcher( 'mystery', SPRING, MAX_STANDARD_DEVIATION_ANGLE, 2, {
+    tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher2' )
   } ),
-  new Launcher( 'mystery', 'explosion', 0, 3, {
-    tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher3' )
+  new Launcher( 'mystery', EXPLOSION, 0, 3, {
+    tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher3' )
   } ),
-  new Launcher( 'mystery', 'pressure', 2, 4, {
-    tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher4' )
+  new Launcher( 'mystery', PRESSURE, 2, 4, {
+    tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher4' )
   } ),
-  new Launcher( 'mystery', 'pressure', 4, 5, {
-    tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher5' )
+  new Launcher( 'mystery', PRESSURE, 4, 5, {
+    tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher5' )
   } ),
-  new Launcher( 'mystery', 'explosion', MAX_STANDARD_DEVIATION_ANGLE, 6, {
-    tandem: Tandem.GLOBAL_MODEL.createTandem( 'mysteryLauncher6' )
+  new Launcher( 'mystery', EXPLOSION, MAX_STANDARD_DEVIATION_ANGLE, 6, {
+    tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher6' )
   } )
 ];
 

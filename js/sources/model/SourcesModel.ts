@@ -16,6 +16,7 @@ import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentif
 import VSMField from '../../common-vsm/model/VSMField.js';
 import Launcher from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -29,7 +30,7 @@ export default class SourcesModel extends VSMModel<VSMField> {
     const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
       const customLauncher = new Launcher(
         'custom',
-        'spring',
+        SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         1, {
           tandem: fieldsTandem.createTandem( 'customLauncher' + index )

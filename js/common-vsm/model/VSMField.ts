@@ -6,7 +6,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import { LauncherMechanism } from './LauncherMechanism.js';
+import LauncherMechanism from './LauncherMechanism.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
