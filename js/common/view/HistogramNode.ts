@@ -207,14 +207,9 @@ export default class HistogramNode extends Node {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',
       bottom: this.chartTransform.viewHeight,
-      spacing: 5,
+      spacing: 0,
       iconOptions: {
-        scale: 1.5
-      },
-      buttonOptions: {
-        stroke: 'black',
-        lineWidth: 1,
-        cornerRadius: 3
+        scale: 1.2
       }
     } );
 
