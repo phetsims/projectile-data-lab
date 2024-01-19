@@ -20,7 +20,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
 import HSlider from '../../../../sun/js/HSlider.js';
-import Range from '../../../../dot/js/Range.js';
 
 type SelfOptions = EmptySelfOptions;
 type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
@@ -31,7 +30,7 @@ export default class AngleStabilizerNumberControl extends VBox {
 
     const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, NumberControlOptions>()( {}, providedOptions );
 
-    const range = new Range( 0, PDLConstants.MAX_ANGLE_STANDARD_DEVIATION );
+    const range = PDLConstants.ANGLE_STABILIZER_RANGE;
 
     const slider = new HSlider( valueProperty, range, {
       layoutOptions: {

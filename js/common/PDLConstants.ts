@@ -6,6 +6,7 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
+import Range from '../../../dot/js/Range.js';
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 
@@ -24,7 +25,8 @@ const PDLConstants = {
   BOTTOM_UI_SPACING: 20,
 
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.7, // seconds
-  MAX_ANGLE_STANDARD_DEVIATION: maxAngleStandardDeviation, // degrees
+
+  ANGLE_STABILIZER_RANGE: new Range( 0, maxAngleStandardDeviation ),
 
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,

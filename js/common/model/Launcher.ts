@@ -11,6 +11,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import IOType from '../../../../tandem/js/types/IOType.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PDLConstants from '../PDLConstants.js';
 
 /**
  * Launcher is the model for a projectile launcher. It defines the mean launch speed, standard deviation of launch speed,
@@ -54,9 +55,14 @@ export default class Launcher extends PhetioObject {
 
     this.launcherMechanismProperty = new Property( launcherMechanism, {
       tandem: options.tandem.createTandem( 'launcherMechanismProperty' ),
-      phetioValueType: LauncherMechanism.LauncherMechanismIO
+      phetioValueType: LauncherMechanism.LauncherMechanismIO,
+      validValues: [ SPRING, PRESSURE, EXPLOSION ]
     } );
     this.standardDeviationAngleProperty = new NumberProperty( standardDeviationAngle, {
+      range: PDLConstants.ANGLE_STABILIZER_RANGE,
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      },
       tandem: options.tandem.createTandem( 'standardDeviationAngleProperty' )
     } );
 

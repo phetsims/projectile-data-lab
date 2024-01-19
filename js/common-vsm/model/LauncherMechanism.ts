@@ -28,12 +28,18 @@ export default class LauncherMechanism extends PhetioObject {
 
     this.speedMeanProperty = new NumberProperty( speedMean, {
       tandem: tandem.createTandem( 'speedMeanProperty' ),
-      range: new Range( 20, 30 )
+      range: new Range( 20, 30 ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      }
     } );
 
     this.speedStandardDeviationProperty = new NumberProperty( speedStandardDeviation, {
       tandem: tandem.createTandem( 'speedStandardDeviationProperty' ),
-      range: new Range( 0.2, 1.5 )
+      range: new Range( 0.2, 1.5 ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      }
     } );
   }
 
