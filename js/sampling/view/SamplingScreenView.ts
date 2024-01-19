@@ -200,18 +200,18 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         sampleSelectorNodeProxy.centerX = fieldSignProxy.centerX;
       } );
 
-    // Position the time control node so that the play/pause button is centered at the 50-meter mark
-    ManualConstraint.create( this, [ this.timeControlNode ], timeControlNodeProxy => {
-      const playPauseCenterOffsetX = 0.5 * this.timeControlNode.width - this.timeControlNode.getPlayPauseButtonCenter().x;
-      timeControlNodeProxy.centerX = this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X + playPauseCenterOffsetX;
-      timeControlNodeProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
-    } );
+    // Position the time control node so that it is right-aligned underneath the accordion box
+    ManualConstraint.create( this, [ this.timeControlNode, this.accordionBox ],
+      ( timeControlNodeProxy, accordionBoxProxy ) => {
+        timeControlNodeProxy.right = accordionBoxProxy.right - PDLConstants.INTER_PANEL_SPACING;
+        timeControlNodeProxy.top = accordionBoxProxy.bottom + PDLConstants.INTER_PANEL_SPACING;
+      } );
 
     // Position the 'No air resistance' text
     ManualConstraint.create( this, [ this.launchPanel ], launchPanelProxy => {
-        this.noAirResistanceText.centerX = launchPanelProxy.centerX;
-        this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
-      } );
+      this.noAirResistanceText.centerX = launchPanelProxy.centerX;
+      this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
+    } );
 
     model.numberOfStartedSamplesProperty.link( startedSamples => {
       this.launchButton.enabled = startedSamples < PDLQueryParameters.maxSamples;
