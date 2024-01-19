@@ -235,7 +235,7 @@ export default class HistogramNode extends Node {
 
     ManualConstraint.create( this, [ this.chartNode, verticalAxisLabel, zoomButtonGroup ], ( chartNodeProxy, verticalAxisLabel, zoomButtonGroup ) => {
       verticalAxisLabel.centerX = zoomButtonGroup.centerX;
-      verticalAxisLabel.centerY = ( zoomButtonGroup.top + chartNodeProxy.top ) / 2;
+      verticalAxisLabel.bottom = zoomButtonGroup.top - 17;
     } );
 
     ManualConstraint.create( this, [ this.chartNode, horizontalAxisLabel ], ( chartNodeProxy, horizontalAxisLabel ) => {
