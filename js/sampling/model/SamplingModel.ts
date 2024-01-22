@@ -22,8 +22,10 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
 import { SamplingPhase } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -41,7 +43,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
 
-  // public readonly mysteryLauncherProperty: PhetioProperty<Launcher>;
+  public readonly launcherProperty: Property<Launcher>;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
@@ -71,6 +73,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
     super( options );
 
+    // In the SamplingModel, the launcher is an independent variable that (with the sample size) determines the Field
+    this.launcherProperty = new Property<Launcher>( MYSTERY_LAUNCHERS[ 0 ], {
+      tandem: options.tandem.createTandem( 'launcherProperty' ),
+      phetioValueType: ReferenceIO( IOType.ObjectIO )
+    } );
+
     this.launchModeProperty.link( launchMode => {
       samplingLaunchModeProperty.value = launchMode;
     } );
@@ -88,6 +96,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     Multilink.multilink( [ this.sampleSizeProperty, this.launcherProperty ], ( sampleSize, launcher ) => {
       const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value === launcher )!;
       this.fieldProperty.value = field;
+
+      console.log( launcher.launcherNumber, sampleSize, field.identifier );
     } );
 
     this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {

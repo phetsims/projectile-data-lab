@@ -83,7 +83,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public readonly isPathsVisibleProperty: BooleanProperty;
 
-  public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
+  public readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
 
@@ -181,11 +181,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.isContinuousLaunchingProperty = new DynamicProperty<boolean, boolean, T>( this.fieldProperty, {
       derive: t => t.isContinuousLaunchingProperty
-    } );
-
-    this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {
-      bidirectional: true,
-      derive: t => t.launcherProperty
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {

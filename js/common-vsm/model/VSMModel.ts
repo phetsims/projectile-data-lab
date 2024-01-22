@@ -23,6 +23,7 @@ import { StopwatchPhase } from './StopwatchPhase.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import Launcher from '../../common/model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
@@ -54,6 +55,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>;
   public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, VSMField>;
 
+  public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
+
   public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
 
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
@@ -62,6 +65,12 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       isPathsVisible: false
     }, providedOptions );
     super( options );
+
+    // In the VSM screens, the launcher can be chosen independently in each Field
+    this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.launcherProperty
+    } );
 
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
       bidirectional: true,

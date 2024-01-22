@@ -81,7 +81,9 @@ export default class SamplingField extends Field {
 
       // The launcher never changes on this field, but we still need a Property<Launcher> in the parent type to power
       // the DynamicProperty instances.
-      new Property( launcher ), options );
+      new Property( launcher, {
+        validValues: [ launcher ]
+      } ), options );
 
     this.selectedSampleIndexProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),

@@ -145,15 +145,6 @@ export default abstract class Field extends PhetioObject {
       phetioFeatured: true
     } );
 
-    // TODO: https://github.com/phetsims/projectile-data-lab/issues/96 instrument the launcherProperties created in subclasses, then delete this code
-    // this.launcherProperty = new Property<Launcher>( launchers[ 0 ], {
-    //   validValues: launchers,
-    //   tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
-    //   phetioFeatured: true,
-    //   phetioDocumentation: 'This property configures the active launcher on this field.',
-    //   phetioValueType: ReferenceIO( IOType.ObjectIO )
-    // } );
-
     this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
       derive: t => t.meanLaunchSpeedProperty
