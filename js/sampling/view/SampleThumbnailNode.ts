@@ -3,7 +3,6 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import { Color, Node } from '../../../../scenery/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Field from '../../common/model/Field.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -14,7 +13,6 @@ import GridLineSet from '../../../../bamboo/js/GridLineSet.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import VSMField from '../../common-vsm/model/VSMField.js';
 import SamplingField from '../model/SamplingField.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLText from '../../common/view/PDLText.js';
@@ -35,8 +33,8 @@ export default class SampleThumbnailNode extends Node {
   protected readonly chartClipLayer: Node;
 
   public constructor( thumbnailSampleSize: number,
-                      fieldProperty: TReadOnlyProperty<Field>,
-                      fields: Field[],
+                      fieldProperty: TReadOnlyProperty<SamplingField>,
+                      fields: SamplingField[],
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
                       blockFillProperty: TReadOnlyProperty<Color>,
@@ -150,16 +148,11 @@ export default class SampleThumbnailNode extends Node {
       if ( !isSettingPhetioStateProperty.value ) {
 
         // field may have changed. Let's update everything.
-        fields.forEach( field => {
-          if ( field instanceof SamplingField ) {
-            if ( field.sampleSize === thumbnailSampleSize && field === fieldProperty.value ) {
-              histogramPainter.setHistogramData( field.getHistogramData(), null );
-            }
-          }
-          else {
-            assert && assert( false, 'unhandled field type' );
-          }
-        } );
+        const histogramData = fields.find( field =>
+          field.sampleSize === thumbnailSampleSize &&
+          field.launcherProperty.value === fieldProperty.value.launcherProperty.value
+        )!.getHistogramData();
+        histogramPainter.setHistogramData( histogramData, null );
 
         chartCanvasNode.update();
       }
@@ -171,16 +164,9 @@ export default class SampleThumbnailNode extends Node {
     fields.forEach( field => {
 
       field.projectilesClearedEmitter.addListener( () => updateHistogram() );
-
-      // For VSM, redraw when the selected projectile changes
-      if ( field instanceof VSMField ) {
-        field.selectedProjectileProperty.link( () => updateHistogram() );
-        field.projectileLandedEmitter.addListener( () => updateHistogram() );
-      }
-      else if ( field instanceof SamplingField ) {
-        field.selectedSampleIndexProperty.link( () => updateHistogram() );
-        field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
-      }
+      field.selectedSampleIndexProperty.link( () => updateHistogram() );
+      field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
+      field.phaseProperty.link( () => updateHistogram() );
     } );
 
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
