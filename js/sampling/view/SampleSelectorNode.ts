@@ -19,6 +19,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import SelectorNode from '../../common/view/SelectorNode.js';
 import Range from '../../../../dot/js/Range.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import { SamplingPhase } from '../model/SamplingPhase.js';
 
 /**
  * The SampleSelectorNode allows the user to select from the various started samples.
@@ -40,6 +41,7 @@ export default class SampleSelectorNode extends SelectorNode {
     numberOfStartedSamplesProperty: TReadOnlyProperty<number>,
     numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
     sampleMeanProperty: TReadOnlyProperty<number | null>,
+    phaseProperty: TReadOnlyProperty<SamplingPhase>,
     providedOptions: SampleSelectorPanelOptions ) {
 
     const options = optionize<SampleSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
@@ -69,9 +71,25 @@ export default class SampleSelectorNode extends SelectorNode {
     } );
     const meanIndicatorNode = new MeanIndicatorNode( 10, { maxWidth: 10 } );
 
-    const rangeProperty = new DerivedProperty( [ numberOfStartedSamplesProperty ], startedSampleCount => {
-      return startedSampleCount === 0 ? new Range( 0, 0 ) : new Range( 1, startedSampleCount );
-    } );
+    // Note the similarity between this implementation and the one in ProjectileSelectorNode
+    const rangeProperty = new DerivedProperty(
+      [ numberOfStartedSamplesProperty, selectedSampleIndexProperty, phaseProperty ],
+      ( startedSampleCount, selectedSampleIndex, phase ) => {
+        if ( startedSampleCount === 0 ) {
+          return new Range( 0, 0 );
+        }
+
+        else if ( phase !== 'showingCompleteSampleWithMean' ) {
+
+          // If some are airborne, then disable the buttons, freezing at the currently selected value
+          return new Range( selectedSampleIndex, selectedSampleIndex );
+        }
+        else {
+
+          // Everything is landed, everything can be selected
+          return new Range( 1, startedSampleCount );
+        }
+      } );
 
     Multilink.multilink( [ samplingFieldProperty, selectedSampleIndexProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
       ( samplingField, selectedSample, numberOfStartedSamples, numberOfCompletedSamples ) => {
