@@ -7,6 +7,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import MysteryLauncherRadioButtonGroupWrapper from './MysteryLauncherRadioButtonGroupWrapper.js';
+import Launcher from '../model/Launcher.js';
 
 /**
  * The SectionMysteryLauncher shows the mystery launcher radio buttons.
@@ -20,8 +21,8 @@ type SectionMysteryLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionO
 
 export default class SectionMysteryLauncher extends PDLPanelSection {
 
-  public constructor( mysteryLauncherNumberProperty: PhetioProperty<number>, providedOptions: SectionMysteryLauncherOptions ) {
-    super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherNumberProperty, providedOptions ), providedOptions );
+  public constructor( mysteryLauncherProperty: PhetioProperty<Launcher>, providedOptions: SectionMysteryLauncherOptions ) {
+    super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, providedOptions ), providedOptions );
   }
 }
 

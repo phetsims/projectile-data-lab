@@ -13,7 +13,8 @@ import StringIO from '../../../../tandem/js/types/StringIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import { MysteryOrCustom, MysteryOrCustomValues } from './MysteryOrCustom.js';
+import Launcher from './Launcher.js';
+import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -31,10 +32,10 @@ export default class Projectile {
 
   public launcherConfiguration: LauncherConfiguration;
 
-  public mysteryOrCustom: MysteryOrCustom;
   public launcherStandardDeviationAngle: number;
   public launcherMechanism: LauncherMechanism;
-  public launcherNumber: number;
+
+  public launcher: Launcher;
 
   // The x and y coordinates of the projectile relative to the launch position, in meters
   public x: number;
@@ -69,10 +70,9 @@ export default class Projectile {
     fieldIdentifier: string,
     sampleNumber: number,
     launcherConfiguration: LauncherConfiguration,
-    mysteryOrCustom: MysteryOrCustom,
+    launcher: Launcher,
     launcherMechanism: LauncherMechanism,
     launcherStandardDeviationAngle: number,
-    launcherNumber: number,
     x: number,
     y: number,
     type: ProjectileType,
@@ -87,10 +87,9 @@ export default class Projectile {
     this.fieldIdentifier = fieldIdentifier;
     this.sampleNumber = sampleNumber;
     this.launcherConfiguration = launcherConfiguration;
-    this.mysteryOrCustom = mysteryOrCustom;
+    this.launcher = launcher;
     this.launcherStandardDeviationAngle = launcherStandardDeviationAngle;
     this.launcherMechanism = launcherMechanism;
-    this.launcherNumber = launcherNumber;
     this.x = x;
     this.y = y;
     this.type = type;
@@ -127,10 +126,9 @@ export default class Projectile {
       fieldIdentifier: StringIO,
       sampleNumber: NumberIO,
       launcherConfiguration: StringUnionIO( LauncherConfigurationValues ),
-      mysteryOrCustom: StringUnionIO( MysteryOrCustomValues ),
+      launcher: ReferenceIO( IOType.ObjectIO ),
       launcherMechanism: LauncherMechanism.LauncherMechanismIO,
       launcherStandardDeviationAngle: NumberIO,
-      launcherNumber: NumberIO,
       x: NumberIO,
       y: NumberIO,
       type: StringUnionIO( ProjectileTypeValues ),
@@ -147,10 +145,9 @@ export default class Projectile {
         stateObject.fieldIdentifier,
         stateObject.sampleNumber,
         stateObject.launcherConfiguration,
-        stateObject.mysteryOrCustom,
+        ReferenceIO( IOType.ObjectIO ).fromStateObject( stateObject.launcher ) as Launcher,
         LauncherMechanism.LauncherMechanismIO.fromStateObject( stateObject.launcherMechanism ),
         stateObject.launcherStandardDeviationAngle,
-        stateObject.launcherNumber,
         stateObject.x,
         stateObject.y,
         stateObject.type,
@@ -198,10 +195,9 @@ export type ProjectileStateObject = {
   fieldIdentifier: string;
   sampleNumber: number;
   launcherConfiguration: LauncherConfiguration;
-  mysteryOrCustom: MysteryOrCustom;
+  launcher: ReferenceIOState;
   launcherMechanism: LauncherMechanism;
   launcherStandardDeviationAngle: number;
-  launcherNumber: number;
   x: number;
   y: number;
   type: ProjectileType;

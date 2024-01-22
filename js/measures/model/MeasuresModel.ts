@@ -56,6 +56,8 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
   // The interval tool
   public readonly intervalTool: IntervalTool;
 
+  public readonly mysteryLauncherProperty: DynamicProperty<Launcher, Launcher, MeasuresField>;
+
   public constructor( providedOptions: PDLModelOptions ) {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
@@ -80,6 +82,16 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     super( fields, providedOptions );
 
+    this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.mysteryOrCustomProperty
+    } );
+
+    this.mysteryLauncherProperty = new DynamicProperty<Launcher, Launcher, MeasuresField>( this.fieldProperty, {
+      bidirectional: true,
+      derive: field => field.mysteryLauncherProperty
+    } );
+
     this.meanDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.meanDistanceProperty
     } );
@@ -90,11 +102,6 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     this.standardErrorDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.standardErrorDistanceProperty
-    } );
-
-    this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>( this.fieldProperty, {
-      bidirectional: true,
-      derive: t => t.mysteryOrCustomProperty
     } );
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );

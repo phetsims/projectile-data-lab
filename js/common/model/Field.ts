@@ -22,7 +22,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import Launcher from './Launcher.js';
 
 type SelfOptions = {
@@ -42,8 +41,6 @@ export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
 export default abstract class Field extends PhetioObject {
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
-
-  public readonly launcherProperty: Property<Launcher>;
 
   public readonly meanSpeedProperty: DynamicProperty<number, number, Launcher>;
 
@@ -81,7 +78,10 @@ export default abstract class Field extends PhetioObject {
 
   public readonly abstract identifier: string;
 
-  protected constructor( public readonly launchers: readonly Launcher[], providedOptions: FieldOptions ) {
+  protected constructor(
+    public readonly launchers: readonly Launcher[],
+    public readonly launcherProperty: Property<Launcher>,
+    providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,
       phetioState: true
@@ -145,13 +145,14 @@ export default abstract class Field extends PhetioObject {
       phetioFeatured: true
     } );
 
-    this.launcherProperty = new Property<Launcher>( launchers[ 0 ], {
-      validValues: launchers,
-      tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
-      phetioFeatured: true,
-      phetioDocumentation: 'This property configures the active launcher on this field.',
-      phetioValueType: ReferenceIO( IOType.ObjectIO )
-    } );
+    // TODO: https://github.com/phetsims/projectile-data-lab/issues/96 instrument the launcherProperties created in subclasses, then delete this code
+    // this.launcherProperty = new Property<Launcher>( launchers[ 0 ], {
+    //   validValues: launchers,
+    //   tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
+    //   phetioFeatured: true,
+    //   phetioDocumentation: 'This property configures the active launcher on this field.',
+    //   phetioValueType: ReferenceIO( IOType.ObjectIO )
+    // } );
 
     this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
@@ -238,10 +239,9 @@ export default abstract class Field extends PhetioObject {
       this.identifier,
       sampleNumber,
       this.launcherConfigurationProperty.value,
-      launcher.mysteryOrCustom,
+      launcher,
       launcher.launcherMechanismProperty.value,
       this.standardDeviationAngleProperty.value,
-      launcher.launcherNumber,
       0,
       this.launchHeightProperty.value,
       this.projectileTypeProperty.value,

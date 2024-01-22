@@ -23,7 +23,6 @@ import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
 import { SamplingPhase } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -41,9 +40,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
-  private fieldToSet: SamplingField | null = null;
 
-  public readonly mysteryLauncherNumberProperty: PhetioProperty<number>;
+  // public readonly mysteryLauncherProperty: PhetioProperty<Launcher>;
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
@@ -85,11 +83,10 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioValueType: NumberIO
     } );
 
-    this.mysteryLauncherNumberProperty = new Property( 1 );
-
     // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
-    Multilink.multilink( [ this.sampleSizeProperty, this.mysteryLauncherNumberProperty ], ( sampleSize, mysteryLauncherNumber ) => {
-      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value.launcherNumber === mysteryLauncherNumber )!;
+    // TODO: This seems buggy after https://github.com/phetsims/projectile-data-lab/issues/96. Perhaps make launcherProperty or fieldProperty abstract in PDLModel?
+    Multilink.multilink( [ this.sampleSizeProperty, this.launcherProperty ], ( sampleSize, launcher ) => {
+      const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value === launcher )!;
       this.fieldProperty.value = field;
     } );
 

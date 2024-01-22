@@ -7,7 +7,10 @@ import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import Launcher from '../../common/model/Launcher.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 
 /**
  * The MeasuresField is an extension of the Field class that adds fields for the Measures model.
@@ -31,8 +34,15 @@ export default class MeasuresField extends VSMField {
   // This property represents the standard error of the mean distance (horizontal displacement) of landed projectiles.
   public readonly standardErrorDistanceProperty: Property<number | null>;
 
+  public readonly mysteryLauncherProperty: Property<Launcher>;
+
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
     super( launchers, identifier, providedOptions );
+
+    this.mysteryLauncherProperty = new Property( MYSTERY_LAUNCHERS[ 0 ], {
+      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
+      phetioValueType: ReferenceIO( IOType.ObjectIO )
+    } );
 
     this.meanDistanceProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'meanDistanceProperty' ),
@@ -53,6 +63,21 @@ export default class MeasuresField extends VSMField {
       this.meanDistanceProperty.value = _.mean( this.landedProjectiles.map( landedProjectile => landedProjectile.x ) );
       this.standardDeviationDistanceProperty.value = this.getStandardDeviationDistance();
       this.standardErrorDistanceProperty.value = this.getStandardDeviationDistance() / Math.sqrt( this.landedProjectiles.length );
+    } );
+
+    // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
+    Multilink.multilink( [ this.mysteryLauncherProperty, this.mysteryOrCustomProperty ], ( mysteryLauncher, mysteryOrCustom ) => {
+
+      this.launcherProperty.value = this.launchers.find( launcher => {
+
+        // There is only one custom launcher per field, so we can safely take the first match in that case
+        if ( mysteryOrCustom === 'custom' ) {
+          return launcher.mysteryOrCustom === 'custom';
+        }
+        else {
+          return launcher === mysteryLauncher;
+        }
+      } )!;
     } );
   }
 

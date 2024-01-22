@@ -14,6 +14,7 @@ import SamplingField from '../model/SamplingField.js';
 import PDLColors from '../../common/PDLColors.js';
 import SampleThumbnailNode from './SampleThumbnailNode.js';
 import SamplingHistogramNode from './SamplingHistogramNode.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -32,7 +33,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
   public readonly bottomThumbnailNode: SampleThumbnailNode;
 
   public constructor(
-    launcherProperty: TReadOnlyProperty<number>,
+    launcherProperty: TReadOnlyProperty<Launcher>,
     sampleSizeProperty: TReadOnlyProperty<number>,
     numberOfSamplesProperty: TReadOnlyProperty<number>,
     fieldProperty: TReadOnlyProperty<SamplingField>,

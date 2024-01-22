@@ -91,18 +91,18 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.modelViewTransform,
       model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
-      model.mysteryLauncherNumberProperty,
+      model.launcherProperty,
       model.fieldProperty
     );
 
     this.launcherLayer.addChild( this.launcherNode );
 
-    this.launchPanel = new SamplingLaunchPanel( model.mysteryLauncherNumberProperty, model.sampleSizeProperty, {
+    this.launchPanel = new SamplingLaunchPanel( model.launcherProperty, model.sampleSizeProperty, {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 
     const fieldSign = new SamplingFieldSignNode(
-      model.mysteryLauncherNumberProperty,
+      model.launcherProperty,
       model.sampleSizeProperty,
       this.modelViewTransform
     );
@@ -126,7 +126,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     sampleSelectorNode.bottom = fieldSign.top - PDLConstants.INTER_PANEL_SPACING;
 
     this.accordionBox = new SamplingAccordionBox(
-      model.mysteryLauncherNumberProperty,
+      model.launcherProperty,
       model.sampleSizeProperty,
       model.numberOfCompletedSamplesProperty,
 

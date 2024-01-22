@@ -4,6 +4,7 @@ import { Node } from '../../../../scenery/js/imports.js';
 import LauncherNode from './LauncherNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Property from '../../../../axon/js/Property.js';
+import Launcher from '../model/Launcher.js';
 
 const LAUNCHER_ICON_WIDTH = 35;
 
@@ -13,10 +14,10 @@ const LAUNCHER_ICON_WIDTH = 35;
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 export class MysteryLauncherIcon extends Node {
-  public constructor( mysteryLauncherNumber: number ) {
+  public constructor( mysteryLauncher: Launcher ) {
 
     const mysteryLauncherIcon = new LauncherNode( ModelViewTransform2.createIdentity(), new Property( 45 ), new Property( 0 ),
-      new Property( mysteryLauncherNumber ), null, { isIcon: true } ).rasterized( {
+      new Property( mysteryLauncher ), null, { isIcon: true } ).rasterized( {
       resolution: 1.25
     } );
     super( {

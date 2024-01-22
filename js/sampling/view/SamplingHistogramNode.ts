@@ -17,6 +17,7 @@ import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
@@ -25,7 +26,7 @@ import PDLConstants from '../../common/PDLConstants.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class SamplingHistogramNode extends HistogramNode {
-  public constructor( launcherProperty: TReadOnlyProperty<number>,
+  public constructor( launcherProperty: TReadOnlyProperty<Launcher>,
                       sampleSizeProperty: TReadOnlyProperty<number>,
                       numberOfSamplesProperty: TReadOnlyProperty<number>,
                       fieldProperty: TReadOnlyProperty<SamplingField>,

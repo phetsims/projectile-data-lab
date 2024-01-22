@@ -16,6 +16,7 @@ import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioBu
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import MysteryLauncherRadioButtonGroupWrapper from '../../common/view/MysteryLauncherRadioButtonGroupWrapper.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The SectionAnyLauncher allows the user to select between the custom and mystery launchers.
@@ -29,7 +30,7 @@ type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptio
 
 export default class SectionAnyLauncher extends PDLPanelSection {
 
-  public constructor( mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>, mysteryLauncherNumberProperty: PhetioProperty<number>,
+  public constructor( mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>, mysteryLauncherProperty: PhetioProperty<Launcher>,
                       customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStandardDeviationProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
@@ -58,7 +59,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       phetioFeatured: true
     } );
 
-    const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherNumberProperty, {
+    const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroupWrapper' ),
       phetioFeatured: true
     } );

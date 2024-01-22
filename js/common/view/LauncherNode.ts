@@ -16,6 +16,7 @@ import Easing from '../../../../twixt/js/Easing.js';
 import PDLText from './PDLText.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../model/Field.js';
+import Launcher from '../model/Launcher.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -67,7 +68,7 @@ export default class LauncherNode extends Node {
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
                       private readonly meanLaunchAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
-                      mysteryLauncherNumberProperty: TProperty<number>,
+                      mysteryLauncher: TProperty<Launcher>,
                       fieldProperty: TReadOnlyProperty<Field> | null,
                       providedOptions?: LauncherNodeOptions ) {
 
@@ -77,7 +78,7 @@ export default class LauncherNode extends Node {
     const options = optionize<LauncherNodeOptions, SelfOptions, NodeOptions>()( { x: launcherX, y: launcherY, isIcon: false }, providedOptions );
     super( options );
 
-    const labelText = new PDLText( new DerivedProperty( [ mysteryLauncherNumberProperty ], mysteryLauncher => Utils.toFixed( mysteryLauncher, 0 ) ), {
+    const labelText = new PDLText( new DerivedProperty( [ mysteryLauncher ], mysteryLauncher => Utils.toFixed( mysteryLauncher.launcherNumber, 0 ) ), {
       fontSize: 18
     } );
     const labelBackground = new Circle( Math.max( labelText.width, labelText.height ) * 0.65, {
@@ -113,8 +114,8 @@ export default class LauncherNode extends Node {
       this.updateLauncherHeight( launcherHeight );
     } );
 
-    mysteryLauncherNumberProperty.link( mysteryLauncher => {
-      this.updateMysteryLauncher( mysteryLauncher, options.isIcon );
+    mysteryLauncher.link( mysteryLauncher => {
+      this.updateMysteryLauncher( mysteryLauncher.launcherNumber, options.isIcon );
     } );
 
     fieldProperty && fieldProperty.link( () => this.cancelBarrelRotationAnimation() );

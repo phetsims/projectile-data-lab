@@ -12,6 +12,8 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
 import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
+import Launcher from '../../common/model/Launcher.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
@@ -22,7 +24,7 @@ type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 export default class SamplingFieldSignNode extends FieldSignNode {
-  public constructor( launcherNumberProperty: TReadOnlyProperty<number>,
+  public constructor( launcherProperty: TReadOnlyProperty<Launcher>,
                       sampleSizeProperty: TReadOnlyProperty<number>,
                       modelViewTransform: ModelViewTransform2,
                       providedOptions?: SamplingFieldSignNodeOptions ) {
@@ -34,15 +36,14 @@ export default class SamplingFieldSignNode extends FieldSignNode {
       x: fieldSignPosition.x, y: PDLConstants.FIELD_SIGN_CENTER_Y, signPostOffsetX: 75
     }, providedOptions );
 
-    const launcherNumberStringProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty,
-      {
-        number: launcherNumberProperty
-      } );
+    const launcherNumberProperty = new DerivedProperty( [ launcherProperty ], launcher => launcher.launcherNumber );
+    const launcherNumberStringProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty, {
+      number: launcherNumberProperty
+    } );
 
-    const sampleSizeStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
-      {
-        sampleSize: sampleSizeProperty
-      } );
+    const sampleSizeStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty, {
+      sampleSize: sampleSizeProperty
+    } );
 
     const launcherNumberText = new Text( launcherNumberStringProperty, {
       fill: PDLColors.fieldSignTextColorProperty,
@@ -65,7 +66,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     } );
 
     const launcherIconNode = new Node();
-    launcherNumberProperty.link( launcherNumber => {
+    launcherProperty.link( launcherNumber => {
       launcherIconNode.children = [ new MysteryLauncherIcon( launcherNumber ) ];
     } );
 

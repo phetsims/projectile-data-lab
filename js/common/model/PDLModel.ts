@@ -28,7 +28,6 @@ import PDLConstants from '../PDLConstants.js';
 import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import Launcher from './Launcher.js';
 
 type SelfOptions<T extends Field> = {
@@ -73,8 +72,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
 
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
-
-  public abstract mysteryLauncherNumberProperty: PhetioProperty<number>;
 
   public readonly meanLaunchAngleProperty: DynamicProperty<number, number, T>;
 
@@ -187,6 +184,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
 
     this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {
+      bidirectional: true,
       derive: t => t.launcherProperty
     } );
 

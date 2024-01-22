@@ -7,6 +7,7 @@ import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSM
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The VariabilityLaunchPanel extends VSMLaunchPanel and adds the SectionMysteryLauncher which allows the user to select
@@ -21,9 +22,13 @@ type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class VariabilityLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, projectileTypeProperty: PhetioProperty<ProjectileType>, mysteryLauncherNumberProperty: PhetioProperty<number>, providedOptions: VariabilityLaunchPanelOptions ) {
+  public constructor(
+    launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
+    projectileTypeProperty: PhetioProperty<ProjectileType>,
+    mysteryLauncherProperty: PhetioProperty<Launcher>,
+    providedOptions: VariabilityLaunchPanelOptions ) {
 
-    const mysteryLauncherSection = new SectionMysteryLauncher( mysteryLauncherNumberProperty, {
+    const mysteryLauncherSection = new SectionMysteryLauncher( mysteryLauncherProperty, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherSection' )
     } );
 

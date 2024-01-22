@@ -65,13 +65,16 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
 
+    const launcher = model.launcherProperty.value;
+    assert && assert( launcher.mysteryOrCustom === 'custom', 'The launcher should be custom' );
+
     this.launcherNode = new CustomizableLauncherNode(
       this.modelViewTransform,
       model.launcherConfigurationProperty,
       model.meanLaunchAngleProperty,
       model.launcherHeightProperty,
       new Property( 'custom' ),
-      new Property( 1 ),
+      new Property( launcher ),
       model.customLauncherMechanismProperty,
       model.standardDeviationAngleProperty,
       model.latestLaunchSpeedProperty,

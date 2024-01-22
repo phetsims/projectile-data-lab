@@ -21,9 +21,10 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -52,9 +53,6 @@ export default class VSMField extends Field {
   public readonly stopwatchPhaseProperty: Property<StopwatchPhase>;
   public readonly stopwatchElapsedTimeProperty: NumberProperty;
 
-  // Numerical index (1-based) for the type of the mystery launcher, from 1-6
-  public readonly mysteryLauncherNumberProperty: Property<number>;
-
   public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
     parameters: [ {
       name: 'projectile',
@@ -72,9 +70,10 @@ export default class VSMField extends Field {
       isLauncherConfigurationPhetioInstrumented: true
     }, providedOptions );
 
-    super( launchers, options );
-
-    this.mysteryLauncherNumberProperty = new Property( this.launcherProperty.value.launcherNumber );
+    super( launchers, new Property( launchers[ 0 ], {
+      tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
+      phetioValueType: ReferenceIO( IOType.ObjectIO )
+    } ), options );
 
     this.latestLaunchSpeedProperty = new Property<number>( this.meanSpeedProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
@@ -121,21 +120,6 @@ export default class VSMField extends Field {
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
     this.landedProjectileCountProperty = new NumberProperty( 0 );
     this.totalProjectileCountProperty = new NumberProperty( 0 );
-
-    // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
-    Multilink.multilink( [ this.mysteryLauncherNumberProperty, this.mysteryOrCustomProperty ], ( mysteryLauncherNumber, mysteryOrCustom ) => {
-
-      this.launcherProperty.value = this.launchers.find( launcher => {
-
-        // There is only one custom launcher per field, so we can safely take the first match in that case
-        if ( mysteryOrCustom === 'custom' ) {
-          return launcher.mysteryOrCustom === 'custom';
-        }
-        else {
-          return launcher.launcherNumber === mysteryLauncherNumber;
-        }
-      } )!;
-    } );
 
     this.projectileLandedEmitter.addListener( projectile => {
 

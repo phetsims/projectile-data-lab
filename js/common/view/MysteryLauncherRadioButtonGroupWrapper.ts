@@ -2,11 +2,12 @@
 import { KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLText from './PDLText.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
 
@@ -17,12 +18,12 @@ const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
-  public constructor( mysteryLauncherNumberProperty: PhetioProperty<number>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
+  public constructor( launcherProperty: PhetioProperty<Launcher>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
 
-    const mysteryLauncherRadioButtonGroupItems = _.range( 1, 7 ).map( mysteryLauncher => {
+    const mysteryLauncherRadioButtonGroupItems = MYSTERY_LAUNCHERS.map( mysteryLauncher => {
       return {
         value: mysteryLauncher,
-        tandemName: `mysteryLauncher${mysteryLauncher}RadioButton`,
+        tandemName: `mysteryLauncher${mysteryLauncher.launcherNumber}RadioButton`,
 
         // The Panel provides larger bounds around the text, for making the button the size we want.
         createNode: () => {
@@ -32,7 +33,7 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
 
           const launcherIconBoundsWithPadding = launcherIcon.bounds.dilatedX( launcherIconPaddingX ).dilatedY( launcherIconPaddingTopY ).shiftY( -launcherIconPaddingTopY );
 
-          const numberLabel = new PDLText( mysteryLauncher.toString(), { fontSize: 14 } );
+          const numberLabel = new PDLText( mysteryLauncher.launcherNumber.toString(), { fontSize: 14 } );
 
           const numberLabelBounds = numberLabel.bounds;
 
@@ -73,7 +74,7 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
       };
     } );
 
-    const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( mysteryLauncherNumberProperty, mysteryLauncherRadioButtonGroupItems, {
+    const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( launcherProperty, mysteryLauncherRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroup' ),
       phetioFeatured: true,
       orientation: 'horizontal',
@@ -91,14 +92,16 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     mysteryLauncherRadioButtonGroup.addInputListener( new KeyboardListener( {
-      keys: [ '1', '2', '3', '4', '5', '6', '7', '8' ] as const,
+      keys: [ '1', '2', '3', '4', '5', '6' ] as const,
       callback: ( event, keysPressed ) => {
         const key = parseInt( keysPressed, 10 );
-        mysteryLauncherNumberProperty.value = key;
+
+        const launcher = MYSTERY_LAUNCHERS.find( launcher => launcher.launcherNumber === key )!;
+        launcherProperty.value = launcher;
 
         // Move focus to the radio button that was selected. Without this line, focus would incorrectly remain
         // on the previous button.
-        mysteryLauncherRadioButtonGroup.getButtonForValue( key ).focus();
+        mysteryLauncherRadioButtonGroup.getButtonForValue( launcher ).focus();
       }
     } ) );
 

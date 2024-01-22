@@ -10,6 +10,7 @@ import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import Launcher from '../../common/model/Launcher.js';
 
 /**
  * The SamplingLaunchPanel allows the user to select the launcher and sample size.
@@ -23,7 +24,7 @@ type SamplingLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 't
 
 export default class SamplingLaunchPanel extends PDLLaunchPanel {
 
-  public constructor( launcherProperty: PhetioProperty<number>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
+  public constructor( launcherProperty: PhetioProperty<Launcher>, sampleSizeProperty: Property<number>, providedOptions: SamplingLaunchPanelOptions ) {
     const launcherSection = new SectionMysteryLauncher( launcherProperty, {
       tandem: providedOptions.tandem.createTandem( 'launcherSection' )
     } );

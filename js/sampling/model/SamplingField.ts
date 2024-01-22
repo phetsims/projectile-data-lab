@@ -76,7 +76,12 @@ export default class SamplingField extends Field {
     const options = optionize<SamplingFieldOptions, SelfOptions, FieldOptions>()( {
       isLauncherConfigurationPhetioInstrumented: false
     }, providedOptions );
-    super( [ launcher ], options );
+
+    super( [ launcher ],
+
+      // The launcher never changes on this field, but we still need a Property<Launcher> in the parent type to power
+      // the DynamicProperty instances.
+      new Property( launcher ), options );
 
     this.selectedSampleIndexProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
