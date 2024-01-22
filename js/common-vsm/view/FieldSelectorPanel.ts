@@ -1,7 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
@@ -27,7 +26,11 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
   public constructor( fieldProperty: Property<T>, fields: T[], providedOptions: FieldPanelOptions ) {
 
     const options = optionize<FieldPanelOptions, SelfOptions, PDLPanelOptions>()( {
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      fill: null,
+      stroke: null,
+      xMargin: 0,
+      yMargin: 0
     }, providedOptions );
 
     // Show radio buttons for the fields
@@ -71,14 +74,16 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
         tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' ),
         phetioFeatured: true,
         orientation: 'horizontal',
-        spacing: 5,
+        spacing: 3,
         radioButtonOptions: {
           preferredWidth: 40,
           baseColor: PDLColors.fieldSignFillColorProperty,
           buttonAppearanceStrategyOptions: {
-            selectedStroke: PDLColors.fieldSignStrokeColorProperty,
-            selectedLineWidth: 2,
-            deselectedStroke: null,
+            selectedStroke: PDLColors.fieldSignTextColorProperty,
+            selectedLineWidth: 3,
+            overStroke: PDLColors.fieldSignTextColorProperty,
+            deselectedStroke: PDLColors.fieldSignTextColorProperty,
+            deselectedLineWidth: 2,
             deselectedButtonOpacity: 0.8
           }
         }
@@ -88,11 +93,10 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
       spacing: 10,
       leftMargin: 5,
       children: [
-        new PDLText( ProjectileDataLabStrings.fieldStringProperty, {
-          fill: 'black',
-          fontSize: 16,
-          maxWidth: 100
-        } ),
+        // new PDLText( ProjectileDataLabStrings.fieldStringProperty, {
+        //   fontSize: 16,
+        //   maxWidth: 100
+        // } ),
         fieldRadioButtonGroup
       ]
     } ), options );

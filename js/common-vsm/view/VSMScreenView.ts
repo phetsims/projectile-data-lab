@@ -74,8 +74,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     // Create the eraser button
     this.eraserButton = new EraserButton( {
-      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
-      centerY: PDLConstants.FIELD_SIGN_CENTER_Y,
       iconWidth: 27,
       listener: () => {
         model.clearCurrentField();
@@ -302,7 +300,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.addChild( this.toolsLayer );
 
     // Position the field selector panel
-    this.fieldSelectorPanel.bottom = this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    this.fieldSelectorPanel.bottom = this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN - 5;
     this.fieldSelectorPanel.left = this.layoutBounds.centerX - 60;
 
     // Positioning field sign and eraser button
@@ -336,6 +334,14 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       [ this.launchPanel ], launchPanelProxy => {
         this.noAirResistanceText.centerX = launchPanelProxy.centerX;
         this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
+      } );
+
+    // Position the eraser button
+    ManualConstraint.create(
+      this,
+      [ this.eraserButton, this.fieldSelectorPanel ], ( eraserButtonProxy, fieldSelectorPanelProxy ) => {
+        eraserButtonProxy.left = fieldSelectorPanelProxy.right + 10;
+        eraserButtonProxy.centerY = fieldSelectorPanelProxy.centerY;
       } );
 
     // Keyboard order

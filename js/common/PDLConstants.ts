@@ -38,7 +38,7 @@ const PDLConstants = {
   // In view units
   FIELD_CENTER_OFFSET_X: 44,
   FIELD_CENTER_Y: 510,
-  FIELD_HEIGHT: 40,
+  FIELD_HEIGHT: 35,
   FIELD_WIDTH: fieldWidth,
   FIELD_BORDER_LINE_WIDTH: 2,
   FIELD_CENTER_LINE_WIDTH: 2,
@@ -62,7 +62,7 @@ const PDLConstants = {
   // FIELD_SCALING_FACTOR_VERTICAL must be between 0-1.
   // 0 means the top and bottom halves of the same field have the same height.
   // 1 means the entire field is shown below the center line.
-  FIELD_SCALING_FACTOR_VERTICAL: 0.25,
+  FIELD_SCALING_FACTOR_VERTICAL: 0.2,
 
   PIXELS_TO_DISTANCE: pixelsToDistance,
 
