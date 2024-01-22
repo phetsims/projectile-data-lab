@@ -69,11 +69,12 @@ export default class IntervalToolNode extends Node {
     const edge1Sphere = new ShadedSphereNode( 20, sphereOptions );
     const edge2Sphere = new ShadedSphereNode( 20, sphereOptions );
 
-    edge1Sphere.touchArea = edge1Sphere.localBounds.dilatedXY( 2, 4 );
-    edge2Sphere.touchArea = edge2Sphere.localBounds.dilatedXY( 2, 4 );
+    const height = 70;
+    edge1Sphere.touchArea = edge1Sphere.localBounds.dilatedXY( 2, height ).shiftY( height - 2 );
+    edge2Sphere.touchArea = edge2Sphere.localBounds.dilatedXY( 2, height ).shiftY( height - 2 );
 
-    edge1Sphere.mouseArea = edge1Sphere.localBounds.dilatedXY( 2, 4 );
-    edge2Sphere.mouseArea = edge2Sphere.localBounds.dilatedXY( 2, 4 );
+    edge1Sphere.mouseArea = edge1Sphere.localBounds.dilatedXY( 2, height ).shiftY( height - 2 );
+    edge2Sphere.mouseArea = edge2Sphere.localBounds.dilatedXY( 2, height ).shiftY( height - 2 );
 
     this.addChild( edge1Sphere );
     this.addChild( edge2Sphere );
