@@ -128,7 +128,7 @@ export default abstract class Field extends PhetioObject {
       validValues: LauncherConfigurationValues,
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the height and mean launch angle of the launcher. When set to ANGLE_0_RAISED, the launcher is raised.',
+      phetioDocumentation: 'This property configures the height and mean launch angle of the launcher.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
     } : { validValues: [ 'angle45' ] } as const;
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', launcherConfigurationOptions );
