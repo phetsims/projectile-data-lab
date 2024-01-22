@@ -41,7 +41,7 @@ export default class SourcesModel extends VSMModel<VSMField> {
       } );
     } );
 
-    super( fields, true, providedOptions );
+    super( fields, providedOptions );
   }
 }
 

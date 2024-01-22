@@ -200,7 +200,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
    * Resets the view.
    */
   public reset(): void {
-    // implement me
+    this.accordionBox.reset();
   }
 }
 

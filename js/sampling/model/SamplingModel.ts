@@ -71,7 +71,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       isPathsVisible: true
     }, providedOptions );
 
-    super( true, options );
+    super( options );
 
     this.launchModeProperty.link( launchMode => {
       samplingLaunchModeProperty.value = launchMode;

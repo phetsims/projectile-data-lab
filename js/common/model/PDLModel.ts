@@ -20,7 +20,6 @@ import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -40,9 +39,6 @@ type SelfOptions<T extends Field> = {
 export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem };
 
 export default abstract class PDLModel<T extends Field> implements TModel {
-
-  // isHistogramExpandedProperty is true when the accordion box containing the histogram is open.
-  public readonly isHistogramExpandedProperty: Property<boolean>;
 
   // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
   // The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
@@ -92,16 +88,9 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
 
-  protected constructor( isHistogramInitiallyVisible: boolean, providedOptions: PDLModelOptions<T> ) {
+  protected constructor( providedOptions: PDLModelOptions<T> ) {
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
-
-    this.isHistogramExpandedProperty = new Property<boolean>( isHistogramInitiallyVisible, {
-      tandem: visiblePropertiesTandem.createTandem( 'isHistogramExpandedProperty' ),
-      phetioFeatured: true,
-      phetioDocumentation: 'This property indicates whether the histogram is showing.',
-      phetioValueType: BooleanIO
-    } );
 
     const histogramTandem = providedOptions.tandem.createTandem( 'histogram' );
 
@@ -217,7 +206,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public reset(): void {
     this.launchModeProperty.reset();
-    this.isHistogramExpandedProperty.reset();
     this.selectedBinWidthProperty.reset();
     this.selectedTotalBinsProperty.reset();
     this.isPlayingProperty.reset();

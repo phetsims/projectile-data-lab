@@ -107,7 +107,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     this.accordionBox = new VSMAccordionBox(
       createHistogramNode( this ), {
-        expandedProperty: model.isHistogramExpandedProperty,
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
         minWidth: accordionBoxWidth,
@@ -341,6 +340,12 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     // Keyboard order
     this.setVSMPDOMOrder( staticToolPanel, interactiveToolPanel );
+  }
+
+  public override reset(): void {
+    super.reset();
+
+    this.accordionBox.reset();
   }
 
   /**

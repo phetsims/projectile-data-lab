@@ -137,7 +137,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this,
       model.histogramRepresentationProperty,
       () => model.clearCurrentField(), {
-        expandedProperty: model.isHistogramExpandedProperty,
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         centerX: this.layoutBounds.centerX,
         tandem: options.tandem.createTandem( 'accordionBox' )

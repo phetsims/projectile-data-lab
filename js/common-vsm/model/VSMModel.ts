@@ -57,14 +57,14 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
   public readonly mysteryLauncherNumberProperty: PhetioProperty<number>;
 
-  public constructor( fields: T[], isHistogramInitiallyVisible: boolean, providedOptions: VSMModelOptions<T> ) {
+  public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
 
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
       fields: fields,
       isPathsVisible: false
     }, providedOptions );
-    super( isHistogramInitiallyVisible, options );
+    super( options );
 
     this.mysteryLauncherNumberProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
