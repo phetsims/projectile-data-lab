@@ -28,8 +28,6 @@ export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadio
       {
         value: SPRING,
         tandemName: 'springRadioButton',
-
-        // TODO: These images are duplicated in CustomizableLauncherNode.getImageKeyForCustomLauncherMechanism, see https://github.com/phetsims/projectile-data-lab/issues/80
         createNode: () => new Image( spring_png, { scale: 0.14 } )
       }, {
         value: PRESSURE,
