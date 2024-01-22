@@ -92,12 +92,9 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     } );
 
     // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
-    // TODO: This seems buggy after https://github.com/phetsims/projectile-data-lab/issues/96. Perhaps make launcherProperty or fieldProperty abstract in PDLModel?
     Multilink.multilink( [ this.sampleSizeProperty, this.launcherProperty ], ( sampleSize, launcher ) => {
       const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value === launcher )!;
       this.fieldProperty.value = field;
-
-      console.log( launcher.launcherNumber, sampleSize, field.identifier );
     } );
 
     this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
