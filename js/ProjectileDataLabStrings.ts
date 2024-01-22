@@ -49,9 +49,10 @@ type StringsType = {
   'metersStringProperty': LocalizedStringProperty;
   'longDashStringProperty': LocalizedStringProperty;
   'meanEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'meanXBarEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'standardDeviationMPatternStringProperty': LocalizedStringProperty;
   'standardDeviationEqualsValueMPatternStringProperty': LocalizedStringProperty;
-  'standardErrorEqualsValueMPatternStringProperty': LocalizedStringProperty;
+  'standardErrorOfXBarEqualsValueMPatternStringProperty': LocalizedStringProperty;
   'metersPerSecondPatternStringProperty': LocalizedStringProperty;
   'degreesPatternStringProperty': LocalizedStringProperty;
   'nEqualsProjectileCountPatternStringProperty': LocalizedStringProperty;

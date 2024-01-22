@@ -10,7 +10,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { HBox, ManualConstraint, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
+import { ManualConstraint, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import PDLColors from '../../common/PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
@@ -75,7 +75,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
       } );
 
     const dataLabels = [
-      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty,
+      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanXBarEqualsValueMPatternStringProperty,
         { value: roundedStringProperty( meanProperty ) } ), {
         font: PDLConstants.HISTOGRAM_PANEL_FONT
       } ),
@@ -83,7 +83,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
         { value: roundedStringProperty( standardDeviationProperty ) } ), {
         font: PDLConstants.HISTOGRAM_PANEL_FONT
       } ),
-      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardErrorEqualsValueMPatternStringProperty,
+      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardErrorOfXBarEqualsValueMPatternStringProperty,
         { value: roundedStringProperty( standardErrorProperty ) } ), {
         font: PDLConstants.HISTOGRAM_PANEL_FONT
       } )
@@ -99,10 +99,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
       children: []
     } );
 
-    const textPanel = new PDLPanel( new HBox( {
-      spacing: 5,
-      children: [ textVBox ]
-    } ), {
+    const textPanel = new PDLPanel( textVBox, {
       visibleProperty: isValuesVisibleProperty,
       fill: 'white',
       cornerRadius: 0

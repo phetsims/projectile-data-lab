@@ -107,14 +107,17 @@
   "meanEqualsValueMPattern": {
     "value": "Mean = {{value}} m"
   },
+  "meanXBarEqualsValueMPattern": {
+    "value": "Mean (\u0078\u0305)= {{value}} m"
+  },
   "standardDeviationMPattern": {
     "value": "{{standardDeviation}} m"
   },
   "standardDeviationEqualsValueMPattern": {
     "value": "Standard deviation = {{value}} m"
   },
-  "standardErrorEqualsValueMPattern": {
-    "value": "Standard error = {{value}} m"
+  "standardErrorOfXBarEqualsValueMPattern": {
+    "value": "Standard error of \u0078\u0305 = {{value}} m"
   },
   "metersPerSecondPattern": {
     "value": "{{value}} m/s"
