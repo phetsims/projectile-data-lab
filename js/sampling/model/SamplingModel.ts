@@ -81,7 +81,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       validValues: SAMPLE_SIZES,
       tandem: options.tandem.createTandem( 'sampleSizeProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the number of projectiles in a sample',
+      phetioDocumentation: 'This property configures the number of projectiles in a sample.',
       phetioValueType: NumberIO
     } );
 

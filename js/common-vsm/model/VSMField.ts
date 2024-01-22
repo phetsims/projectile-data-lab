@@ -64,6 +64,8 @@ export default class VSMField extends Field {
   public readonly landedProjectileCountProperty: NumberProperty;
   public readonly totalProjectileCountProperty: NumberProperty;
 
+  public override selectedSampleIndexProperty = new NumberProperty( 0 );
+
   public constructor( launchers: readonly Launcher[], public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
 
     const options = optionize<VSMFieldOptions, SelfOptions, FieldOptions>()( {
@@ -78,7 +80,8 @@ export default class VSMField extends Field {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This property is the latest launch speed, in meters per second. When a projectile is launched, this is set to the launch speed.',
-      phetioValueType: NumberIO
+      phetioValueType: NumberIO,
+      phetioFeatured: true
     } );
 
     this.selectedProjectileNumberProperty = new NumberProperty( 0, {
@@ -157,7 +160,7 @@ export default class VSMField extends Field {
 
     // If the launch configuration is changed, re-center the launcher.
     this.meanAngleProperty.lazyLink( configuredLaunchAngle => {
-      this.latestAngleProperty.value = configuredLaunchAngle;
+      this.latestLaunchAngleProperty.value = configuredLaunchAngle;
     } );
 
     // TODO: Find a better way to do this - see https://github.com/phetsims/projectile-data-lab/issues/28
@@ -165,7 +168,7 @@ export default class VSMField extends Field {
     // Do not do this during a continuous launch, because it causes flicker.
     this.standardDeviationAngleProperty.lazyLink( () => {
       if ( !this.isContinuousLaunchingProperty.value ) {
-        this.latestAngleProperty.value = this.meanAngleProperty.value;
+        this.latestLaunchAngleProperty.value = this.meanAngleProperty.value;
       }
     } );
   }
@@ -183,7 +186,7 @@ export default class VSMField extends Field {
     const projectile = this.createProjectile( 0 );
     this.airborneProjectiles.push( projectile );
 
-    this.latestAngleProperty.value = projectile.launchAngle;
+    this.latestLaunchAngleProperty.value = projectile.launchAngle;
     this.latestLaunchSpeedProperty.value = projectile.launchSpeed;
 
     this.projectileLaunchedEmitter.emit( projectile );

@@ -67,6 +67,8 @@ export default class SamplingField extends Field {
   // Current phase, see documentation above
   public readonly phaseProperty: StringUnionProperty<SamplingPhase>;
 
+  public readonly selectedSampleIndexProperty: NumberProperty;
+
   public constructor( launcher: Launcher,
                       public readonly sampleSize: number,
                       private readonly launchModeProperty: Property<LaunchMode>,
@@ -75,6 +77,12 @@ export default class SamplingField extends Field {
       isLauncherConfigurationPhetioInstrumented: false
     }, providedOptions );
     super( [ launcher ], options );
+
+    this.selectedSampleIndexProperty = new NumberProperty( 0, {
+      tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'The selected sample being shown on the field.'
+    } );
 
     this.identifier = window.phetio.PhetioIDUtils.getComponentName( this.phetioID );
 

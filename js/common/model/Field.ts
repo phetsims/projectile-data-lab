@@ -52,7 +52,7 @@ export default abstract class Field extends PhetioObject {
   public readonly standardDeviationAngleProperty: DynamicProperty<number, number, Launcher>;
 
   // The most recent launch angle on this field, in degrees
-  public readonly latestAngleProperty: Property<number>;
+  public readonly latestLaunchAngleProperty: Property<number>;
 
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
   public readonly meanAngleProperty: TReadOnlyProperty<number>;
@@ -74,7 +74,7 @@ export default abstract class Field extends PhetioObject {
 
   public readonly projectilesClearedEmitter: Emitter;
 
-  public readonly selectedSampleIndexProperty: NumberProperty;
+  public readonly abstract selectedSampleIndexProperty: NumberProperty;
 
   // Are there any landed projectiles in the field? This is used for the data indicator on the field selector panel.
   public readonly isContainingDataProperty = new BooleanProperty( false );
@@ -136,12 +136,13 @@ export default abstract class Field extends PhetioObject {
     this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
       configuration => MEAN_LAUNCH_ANGLES[ configuration ] );
 
-    this.latestAngleProperty = new Property<number>( this.meanAngleProperty.value, {
-      tandem: providedOptions.tandem.createTandem( 'latestAngleProperty' ),
+    this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
+      tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
                            + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.',
-      phetioValueType: NumberIO
+      phetioValueType: NumberIO,
+      phetioFeatured: true
     } );
 
     this.launcherProperty = new Property<Launcher>( launchers[ 0 ], {
@@ -185,13 +186,8 @@ export default abstract class Field extends PhetioObject {
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' ),
-      phetioFeatured: true
-    } );
-
-    this.selectedSampleIndexProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'The selected sample being shown on the field.'
+      phetioReadOnly: true
     } );
   }
 

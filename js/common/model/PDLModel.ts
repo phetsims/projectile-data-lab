@@ -153,7 +153,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       validValues: LaunchModeValues,
       tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates whether the launcher is in continuous launch (rapid fire) mode.',
+      phetioDocumentation: 'This property indicates whether the launcher is in single or continuous launch mode.',
       phetioValueType: StringUnionIO( LaunchModeValues )
     } );
 
@@ -174,7 +174,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.latestLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.latestAngleProperty
+      derive: t => t.latestLaunchAngleProperty
     } );
 
     this.launcherHeightProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
