@@ -238,9 +238,9 @@ export default class HistogramNode extends Node {
       verticalAxisLabel.bottom = zoomButtonGroup.top - 17;
     } );
 
-    ManualConstraint.create( this, [ this.chartNode, horizontalAxisLabel ], ( chartNodeProxy, horizontalAxisLabel ) => {
-      horizontalAxisLabel.centerX = chartNodeProxy.centerX;
-      horizontalAxisLabel.top = chartNodeProxy.bottom;
+    ManualConstraint.create( this, [ this.chartNode, horizontalAxisLabel, this.chartBackground ], ( chartNodeProxy, horizontalAxisLabelProxy, chartBackgroundProxy ) => {
+      horizontalAxisLabelProxy.centerX = chartBackgroundProxy.centerX;
+      horizontalAxisLabelProxy.top = chartNodeProxy.bottom;
     } );
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
