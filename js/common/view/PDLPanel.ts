@@ -20,7 +20,8 @@ export class PDLPanel extends Panel {
 
     const options = optionize<PDLPanelOptions, SelfOptions, PanelOptions>()( {
       fill: PDLColors.panelColorProperty,
-      stroke: PDLColors.panelStrokeColorProperty
+      stroke: PDLColors.panelStrokeColorProperty,
+      cornerRadius: 5
     }, providedOptions );
 
     super( content, options );

@@ -137,7 +137,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this,
       model.histogramRepresentationProperty,
       () => model.clearCurrentField(), {
-        expandedProperty: model.isHistogramVisibleProperty,
+        expandedProperty: model.isHistogramExpandedProperty,
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         centerX: this.layoutBounds.centerX,
         tandem: options.tandem.createTandem( 'accordionBox' )
@@ -204,7 +204,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     ManualConstraint.create( this, [ this.timeControlNode, this.accordionBox.bottomThumbnailNode, this.accordionBox ],
       ( timeControlNodeProxy, bottomThumbnailNodeProxy, accordionBoxProxy ) => {
         timeControlNodeProxy.centerX = bottomThumbnailNodeProxy.centerX;
-        timeControlNodeProxy.top = accordionBoxProxy.bottom + PDLConstants.INTER_PANEL_SPACING;
+        timeControlNodeProxy.top = accordionBoxProxy.bottom + PDLConstants.INTER_PANEL_SPACING + PDLConstants.TIME_CONTROL_MARGIN_TOP;
       } );
 
     // Position the 'No air resistance' text

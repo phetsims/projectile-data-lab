@@ -167,6 +167,9 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       buttonGroupXSpacing: 18,
       speedRadioButtonGroupOptions: {
         maxWidth: 80
+      },
+      layoutOptions: {
+        topMargin: PDLConstants.TIME_CONTROL_MARGIN_TOP
       }
     } );
 

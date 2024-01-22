@@ -35,7 +35,8 @@ export default class PDLAccordionBox extends AccordionBox {
       buttonXMargin: margin,
       buttonYMargin: margin,
       contentYMargin: margin,
-      contentYSpacing: 0
+      contentYSpacing: 0,
+      cornerRadius: 5
     }, providedOptions );
 
     super( content, options );

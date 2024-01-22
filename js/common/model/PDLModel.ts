@@ -41,8 +41,8 @@ export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem
 
 export default abstract class PDLModel<T extends Field> implements TModel {
 
-  // isHistogramVisibleProperty is true when the accordion box containing the histogram is open.
-  public readonly isHistogramVisibleProperty: Property<boolean>;
+  // isHistogramExpandedProperty is true when the accordion box containing the histogram is open.
+  public readonly isHistogramExpandedProperty: Property<boolean>;
 
   // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
   // The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
@@ -96,8 +96,8 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
 
-    this.isHistogramVisibleProperty = new Property<boolean>( isHistogramInitiallyVisible, {
-      tandem: visiblePropertiesTandem.createTandem( 'isHistogramVisibleProperty' ),
+    this.isHistogramExpandedProperty = new Property<boolean>( isHistogramInitiallyVisible, {
+      tandem: visiblePropertiesTandem.createTandem( 'isHistogramExpandedProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the histogram is showing.',
       phetioValueType: BooleanIO
@@ -133,15 +133,17 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioDocumentation: 'This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
     } );
 
+    const timeControlTandem = providedOptions.tandem.createTandem( 'timeControl' );
+
     this.isPlayingProperty = new BooleanProperty( true, {
-      tandem: providedOptions.tandem.createTandem( 'isPlayingProperty' ),
+      tandem: timeControlTandem.createTandem( 'isPlayingProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the simulation is playing. When false, the simulation is paused.'
     } );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       validValues: providedOptions.timeSpeedValues,
-      tandem: providedOptions.tandem.createTandem( 'timeSpeedProperty' ),
+      tandem: timeControlTandem.createTandem( 'timeSpeedProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates the rate of animation when the simulation is playing.'
     } );
@@ -215,7 +217,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   public reset(): void {
     this.launchModeProperty.reset();
-    this.isHistogramVisibleProperty.reset();
+    this.isHistogramExpandedProperty.reset();
     this.selectedBinWidthProperty.reset();
     this.selectedTotalBinsProperty.reset();
     this.isPlayingProperty.reset();
