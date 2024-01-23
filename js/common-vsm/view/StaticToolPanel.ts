@@ -27,7 +27,7 @@ type SelfOptions = {
 };
 export type StaticToolPanelOptions = SelfOptions & PDLPanelOptions;
 
-export const ICON_WIDTH = 24;
+export const ICON_WIDTH = 19;
 
 export default class StaticToolPanel extends PDLPanel {
 
@@ -138,9 +138,9 @@ export default class StaticToolPanel extends PDLPanel {
 
   public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
     return new HBox( {
-      spacing: 10,
+      spacing: 5,
       stretch: true, children: [ new PDLText( label, {
-        maxWidth: 90
+        maxWidth: 110
       } ), icon ]
     } );
   }

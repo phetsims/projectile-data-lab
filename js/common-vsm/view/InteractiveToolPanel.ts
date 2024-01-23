@@ -14,7 +14,7 @@ import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../su
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import StaticToolPanel from './StaticToolPanel.js';
+import StaticToolPanel, { ICON_WIDTH } from './StaticToolPanel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLText from '../../common/view/PDLText.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -47,7 +47,7 @@ export default class InteractiveToolPanel extends PDLPanel {
         super( {
           children: [ stopwatchNode ],
           pickable: false,
-          maxWidth: 25
+          maxWidth: ICON_WIDTH
         } );
       }
     }
@@ -68,7 +68,7 @@ export default class InteractiveToolPanel extends PDLPanel {
         super( {
           children: [ measuringTapeNode ],
           pickable: false,
-          maxWidth: 25
+          maxWidth: ICON_WIDTH
         } );
       }
     }
