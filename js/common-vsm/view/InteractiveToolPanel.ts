@@ -87,7 +87,7 @@ export default class InteractiveToolPanel extends PDLPanel {
       tandem: options.tandem.createTandem( 'checkboxGroup' ),
       phetioFeatured: true,
       checkboxOptions: {
-        boxWidth: PDLConstants.VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH,
+        boxWidth: PDLConstants.VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH
       }
     } );
     super( checkboxGroup, options );
