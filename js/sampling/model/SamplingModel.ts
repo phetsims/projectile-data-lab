@@ -102,7 +102,13 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     } );
 
     this.numberOfCompletedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
-      derive: t => t.numberOfCompletedSamplesProperty
+      derive: t => t.numberOfCompletedSamplesProperty,
+      tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'The number of samples that have been completed.',
+      phetioValueType: NumberIO,
+      phetioReadOnly: true,
+      phetioState: false
     } );
 
     this.phaseProperty = new DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>( this.fieldProperty, {

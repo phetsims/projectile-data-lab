@@ -95,7 +95,15 @@ export default class SamplingField extends Field {
 
     // PhET-iO instrumentation not needed since these are computable from the Projectiles and the phase
     this.numberOfStartedSamplesProperty = new NumberProperty( 0 );
-    this.numberOfCompletedSamplesProperty = new NumberProperty( 0 );
+    this.numberOfCompletedSamplesProperty = new NumberProperty( 0, {
+      phetioDocumentation: 'The number of samples that have been completed.',
+      tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
+      phetioReadOnly: true,
+      phetioFeatured: true,
+
+      // State is managed by the projectiles and updated in the stateSetEmitter below
+      phetioState: false
+    } );
 
     // Increase the total time as the sample size increases, so that larger samples take longer but not too long.
     this.totalSampleTime =
