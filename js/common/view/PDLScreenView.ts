@@ -116,8 +116,9 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       phetioFeatured: true
     } );
 
-    const fieldBack = new FieldNode( model.binWidthProperty, { x: fieldX, y: fieldY } );
-    const fieldFront = new FieldNode( model.binWidthProperty, { isBottomHalf: true, x: fieldX, y: fieldY } );
+
+    const fieldBack = new FieldNode( model.fields, model.fieldProperty, model.binWidthProperty, { x: fieldX, y: fieldY } );
+    const fieldFront = new FieldNode( model.fields, model.fieldProperty, model.binWidthProperty, { isBottomHalf: true, x: fieldX, y: fieldY } );
     const fieldOverlayBack = new FieldOverlayNode( this.modelViewTransform, {} );
     const fieldOverlayFront = new FieldOverlayNode( this.modelViewTransform, { isLeftSide: true } );
     fieldOverlayBack.x = fieldX;

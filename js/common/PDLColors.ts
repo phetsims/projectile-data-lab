@@ -49,11 +49,19 @@ const PDLColors = {
     default: '#5082e6'
   } ),
 
-  fieldFillColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill', {
+  fieldFill1ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill1', {
     default: '#1A974E'
   } ),
 
-  fieldBorderStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldBorderStroke', {
+  fieldFill2ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill2', {
+    default: '#1A974E'
+  } ),
+
+  fieldLineColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLine', {
+    default: new Color( 0xFFFFFF, 0.5 )
+  } ),
+
+  fieldBorderColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldBorder', {
     default: '#FFFFFF'
   } ),
 
@@ -75,10 +83,6 @@ const PDLColors = {
 
   pathStrokeSamplingColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeSampling', {
     default: new Color( 0xFFFFFF, 0.2 )
-  } ),
-
-  fieldLineStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineStroke', {
-    default: '#70D1A4'
   } ),
 
   mysteryLauncherFillColorProperties: [

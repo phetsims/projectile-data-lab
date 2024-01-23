@@ -10,6 +10,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PDLUtils from '../PDLUtils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Field from '../model/Field.js';
 
 /**
  * The FieldNode is the floating horizontal surface on which projectiles land. Its elements are drawn using a nonlinear
@@ -34,7 +35,7 @@ export default class FieldNode extends Node {
   // The field
   private fieldBorder: Node;
 
-  public constructor( binWidthProperty: TReadOnlyProperty<number>, providedOptions: FieldNodeOptions ) {
+  public constructor( fields: Field[], fieldProperty: TReadOnlyProperty<Field>, binWidthProperty: TReadOnlyProperty<number>, providedOptions: FieldNodeOptions ) {
 
     const fieldBounds = new Bounds2(
       -0.5 * PDLConstants.FIELD_WIDTH,
@@ -47,11 +48,11 @@ export default class FieldNode extends Node {
       pointMap: PDLUtils.transformField
     } );
 
-    const field = new Path( transformedShape, {
-      fill: PDLColors.fieldFillColorProperty
+    const fieldBackground = new Path( transformedShape, {
+      fill: PDLColors.fieldFill1ColorProperty
     } );
 
-    const defaultOptions = { isBottomHalf: false, children: [ field ] };
+    const defaultOptions = { isBottomHalf: false, children: [ fieldBackground ] };
     const options = optionize<FieldNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
 
@@ -95,9 +96,18 @@ export default class FieldNode extends Node {
       pointMap: PDLUtils.transformField
     } );
     this.fieldBorder = new Path( transformedFieldBorderShape, {
-      fill: PDLColors.fieldBorderStrokeColorProperty
+      fill: PDLColors.fieldBorderColorProperty
     } );
     this.addChild( this.fieldBorder );
+
+    // If the field changes, update the color of the fieldBackground.
+    fieldProperty.link( field => {
+      const fieldIndex = fields.indexOf( field );
+
+      // Interpolate between fieldFillColorProperty and fieldStrokeColorProperty based on the field index.
+      const fieldColor = PDLColors.fieldFill1ColorProperty.value.blend( PDLColors.fieldFill2ColorProperty.value, fieldIndex / ( fields.length - 1 ) );
+      fieldBackground.fill = fieldColor;
+    } );
 
     // If the bin width changes, remove the old field lines and create new ones.
     binWidthProperty.link( binWidth => {
@@ -143,8 +153,8 @@ export default class FieldNode extends Node {
       const isNumberedLine = ( i + 1 ) * binWidth % PDLConstants.FIELD_LABEL_INCREMENT === 0;
       const strokeColorProperty =
         isNumberedLine ?
-        PDLColors.fieldBorderStrokeColorProperty :
-        PDLColors.fieldLineStrokeColorProperty;
+        PDLColors.fieldBorderColorProperty :
+        PDLColors.fieldLineColorProperty;
       const strokeWidth = isNumberedLine ? PDLConstants.FIELD_LINE_NUMBERED_WIDTH : PDLConstants.FIELD_LINE_WIDTH;
       const lineShape = new Shape().rect( x - 0.5 * strokeWidth, -0.5 * lineHeight, strokeWidth, lineHeight );
       const transformedLineShape = lineShape.nonlinearTransformed( {
