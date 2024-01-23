@@ -11,6 +11,8 @@ import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 /**
  * The MeasuresField is an extension of the Field class that adds fields for the Measures model.
@@ -34,10 +36,20 @@ export default class MeasuresField extends VSMField {
   // This property represents the standard error of the mean distance (horizontal displacement) of landed projectiles.
   public readonly standardErrorDistanceProperty: Property<number | null>;
 
+  // This property represents whether the launcher is custom or mystery.
+  public readonly mysteryOrCustomProperty: Property<MysteryOrCustom>;
+
+  // This property represents the mystery launcher.
   public readonly mysteryLauncherProperty: Property<Launcher>;
 
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
     super( launchers, identifier, providedOptions );
+
+    this.mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
+      tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomProperty' ),
+      phetioDocumentation: 'This property represents whether the launcher is a mystery or custom launcher.',
+      validValues: MysteryOrCustomValues
+    } );
 
     this.mysteryLauncherProperty = new Property( MYSTERY_LAUNCHERS[ 0 ], {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
@@ -98,6 +110,13 @@ export default class MeasuresField extends VSMField {
     this.meanDistanceProperty.value = null;
     this.standardDeviationDistanceProperty.value = null;
     this.standardErrorDistanceProperty.value = null;
+  }
+
+  public override reset(): void {
+    super.reset();
+
+    this.mysteryOrCustomProperty.reset();
+    this.mysteryLauncherProperty.reset();
   }
 }
 

@@ -21,8 +21,6 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
-import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 
@@ -40,8 +38,6 @@ export default class VSMField extends Field {
 
   // The most recent speed of a projectile launched by the launcher, in meters per second
   public readonly latestLaunchSpeedProperty: Property<number>;
-
-  public readonly mysteryOrCustomProperty: Property<MysteryOrCustom>;
 
   public readonly customLauncherMechanismProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>;
 
@@ -96,12 +92,6 @@ export default class VSMField extends Field {
       highlightedProjectileNumber => {
         return this.landedProjectiles[ highlightedProjectileNumber - 1 ] || null;
       } );
-
-    this.mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
-      tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomProperty' ),
-      phetioDocumentation: 'This property is true when the custom launcher is selected.',
-      validValues: MysteryOrCustomValues
-    } );
 
     this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>( this.launcherProperty, {
       bidirectional: true,
@@ -197,7 +187,6 @@ export default class VSMField extends Field {
   public override reset(): void {
     super.reset();
 
-    this.mysteryOrCustomProperty.reset();
     this.customLauncherMechanismProperty.reset();
     this.standardDeviationAngleProperty.reset();
     this.continuousLaunchTimer.reset();

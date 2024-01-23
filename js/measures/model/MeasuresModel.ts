@@ -14,7 +14,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VSMModel from '../../common-vsm/model/VSMModel.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import VSMField from '../../common-vsm/model/VSMField.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import MeasuresField from './MeasuresField.js';
 import IntervalTool from './IntervalTool.js';
@@ -41,7 +40,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
   public readonly standardErrorDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
 
   // Whether the launcher is custom or mystery
-  public readonly mysteryOrCustomProperty: DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>;
+  public readonly mysteryOrCustomProperty: DynamicProperty<MysteryOrCustom, MysteryOrCustom, MeasuresField>;
 
   // Whether the mean is visible on the field and histogram
   public readonly isMeanVisibleProperty: BooleanProperty;
@@ -84,7 +83,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
     super( fields, providedOptions );
 
-    this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, VSMField>( this.fieldProperty, {
+    this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, MeasuresField>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.mysteryOrCustomProperty
     } );
