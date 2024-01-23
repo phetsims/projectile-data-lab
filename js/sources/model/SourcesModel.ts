@@ -36,7 +36,7 @@ export default class SourcesModel extends VSMModel<VSMField> {
         SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         1, {
-          tandem: fieldTandem.createTandem( `customLauncher` )
+          tandem: fieldTandem.createTandem( 'customLauncher' )
         } );
 
       return new VSMField( [ customLauncher ], identifier, {
