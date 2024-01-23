@@ -41,7 +41,8 @@ export default class SourcesModel extends VSMModel<VSMField> {
 
       return new VSMField( [ customLauncher ], identifier, {
         tandem: fieldTandem,
-        phetioFeatured: true
+        phetioFeatured: true,
+        isLauncherPropertyPhetioReadOnly: false
       } );
     } );
 

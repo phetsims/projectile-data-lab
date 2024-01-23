@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
@@ -13,6 +13,7 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 /**
  * The MeasuresField is an extension of the Field class that adds fields for the Measures model.
@@ -23,7 +24,7 @@ import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-export type MeasuresFieldOptions = SelfOptions & VSMFieldOptions;
+export type MeasuresFieldOptions = SelfOptions & StrictOmit<VSMFieldOptions, 'isLauncherPropertyPhetioReadOnly'>;
 
 export default class MeasuresField extends VSMField {
 
@@ -43,7 +44,11 @@ export default class MeasuresField extends VSMField {
   public readonly mysteryLauncherProperty: Property<Launcher>;
 
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
-    super( launchers, identifier, providedOptions );
+    const options = optionize<MeasuresFieldOptions, SelfOptions, VSMFieldOptions>()( {
+      isLauncherPropertyPhetioReadOnly: true
+    }, providedOptions );
+
+    super( launchers, identifier, options );
 
     this.mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
       tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomProperty' ),
@@ -53,7 +58,8 @@ export default class MeasuresField extends VSMField {
 
     this.mysteryLauncherProperty = new Property( MYSTERY_LAUNCHERS[ 0 ], {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
-      phetioValueType: ReferenceIO( IOType.ObjectIO )
+      phetioValueType: ReferenceIO( IOType.ObjectIO ),
+      validValues: MYSTERY_LAUNCHERS
     } );
 
     this.meanDistanceProperty = new Property<number | null>( null, {

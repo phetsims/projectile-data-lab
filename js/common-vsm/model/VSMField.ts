@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
@@ -31,7 +31,12 @@ import IOType from '../../../../tandem/js/types/IOType.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+
+  // On the Measures screen, the launcher property is read-only, because the value is determined by the combination
+  // of the mysteryOrCustomProperty and mysteryLauncherProperty.
+  isLauncherPropertyPhetioReadOnly: boolean;
+};
 export type VSMFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented'>;
 
 export default class VSMField extends Field {
@@ -69,6 +74,7 @@ export default class VSMField extends Field {
     const launcherProperty = new Property( launchers[ 0 ], {
       validValues: launchers,
       tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
+      phetioReadOnly: options.isLauncherPropertyPhetioReadOnly,
       phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
 

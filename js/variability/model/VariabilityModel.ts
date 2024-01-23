@@ -29,7 +29,8 @@ export default class VariabilityModel extends VSMModel<VSMField> {
     const fields = VSMFieldIdentifierValues.map( identifier => {
       return new VSMField( MYSTERY_LAUNCHERS, identifier, {
         tandem: fieldsTandem.createTandem( identifier ),
-        phetioFeatured: true
+        phetioFeatured: true,
+        isLauncherPropertyPhetioReadOnly: false
       } );
     } );
 
