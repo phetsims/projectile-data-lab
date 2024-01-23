@@ -20,6 +20,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PDLColors from '../../common/PDLColors.js';
 import AngleToolNode from './AngleToolNode.js';
 import SpeedToolNode from './SpeedToolNode.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -127,7 +128,10 @@ export default class StaticToolPanel extends PDLPanel {
       ...options.additionalVerticalCheckboxGroupItems
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      checkboxOptions: {
+        boxWidth: PDLConstants.VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH
+      }
     } );
     super( checkboxGroup, options );
   }

@@ -22,6 +22,7 @@ import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js'
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import TimeDisplayNode from './TimeDisplayNode.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -84,7 +85,10 @@ export default class InteractiveToolPanel extends PDLPanel {
       ...options.additionalVerticalCheckboxGroupItems
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      checkboxOptions: {
+        boxWidth: PDLConstants.VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH,
+      }
     } );
     super( checkboxGroup, options );
   }
