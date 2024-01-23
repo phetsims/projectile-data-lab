@@ -147,7 +147,7 @@ export default class SampleThumbnailNode extends Node {
       // Avoid an inconsistent intermediate state while the phet-io state is being set
       if ( !isSettingPhetioStateProperty.value ) {
 
-        // field may have changed. Let's update everything.
+        // Find the field that matches the thumbnail sample size and the mystery launcher
         const histogramData = fields.find( field =>
           field.sampleSize === thumbnailSampleSize &&
           field.launcherProperty.value === fieldProperty.value.launcherProperty.value
