@@ -70,10 +70,13 @@ export default class VSMField extends Field {
       isLauncherConfigurationPhetioInstrumented: true
     }, providedOptions );
 
-    super( launchers, new Property( launchers[ 0 ], {
+    const launcherProperty = new Property( launchers[ 0 ], {
+      validValues: launchers,
       tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
       phetioValueType: ReferenceIO( IOType.ObjectIO )
-    } ), options );
+    } );
+
+    super( launchers, launcherProperty, options );
 
     this.latestLaunchSpeedProperty = new Property<number>( this.meanSpeedProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
