@@ -73,7 +73,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
         SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         lastMysteryLauncherNumber + 1, {
-          tandem: fieldTandem.createTandem( `customLauncher${index + 1}` )
+          tandem: fieldTandem.createTandem( 'customLauncher' )
         } );
 
       return new MeasuresField( [ ...MYSTERY_LAUNCHERS, customLauncher ], identifier, {

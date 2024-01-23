@@ -27,16 +27,20 @@ export default class SourcesModel extends VSMModel<VSMField> {
   public constructor( providedOptions: PDLModelOptions ) {
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
+
     const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
+      const fieldTandem = fieldsTandem.createTandem( identifier );
+
       const customLauncher = new Launcher(
         'custom',
         SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         1, {
-          tandem: fieldsTandem.createTandem( 'customLauncher' + index )
+          tandem: fieldTandem.createTandem( `customLauncher` )
         } );
+
       return new VSMField( [ customLauncher ], identifier, {
-        tandem: fieldsTandem.createTandem( identifier ),
+        tandem: fieldTandem,
         phetioFeatured: true
       } );
     } );
