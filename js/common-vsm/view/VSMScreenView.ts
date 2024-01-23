@@ -4,7 +4,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Color, Image, ManualConstraint, Node, Path, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import VSMAccordionBox from './VSMAccordionBox.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import SpeedToolNode from './SpeedToolNode.js';
 import AngleToolNode from './AngleToolNode.js';
@@ -35,6 +34,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import UTurnArrowShape from '../../../../scenery-phet/js/UTurnArrowShape.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import PDLAccordionBox from '../../common/view/PDLAccordionBox.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -48,7 +48,7 @@ type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'ta
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldSelectorPanel: FieldSelectorPanel<VSMField>;
-  protected readonly accordionBox: VSMAccordionBox;
+  protected readonly accordionBox: PDLAccordionBox;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorNode: ProjectileSelectorNode;
   protected readonly topRightUIContainer: VBox;
@@ -101,14 +101,10 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       children: [ staticToolPanel, interactiveToolPanel, this.timeControlNode ]
     } );
 
-    const accordionBoxWidth = this.topRightUIContainer.left - launchPanel.right - 2 * PDLConstants.INTER_PANEL_SPACING;
-
-    this.accordionBox = new VSMAccordionBox(
+    this.accordionBox = new PDLAccordionBox(
       createHistogramNode( this ), {
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
-        minWidth: accordionBoxWidth,
-        maxWidth: accordionBoxWidth,
         tandem: options.tandem.createTandem( 'accordionBox' )
       } );
 

@@ -93,13 +93,14 @@ export default class HistogramNode extends Node {
                       options: HistogramNodeOptions ) {
     super();
 
-
     const maxZoomLevel = ZOOM_LEVELS.length - 1;
 
     this.zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
 
     this.chartTransform = new ChartTransform( {
-      viewWidth: 620,
+
+      // Tuned to make the spacing between the right panel and the histogram match that of the left
+      viewWidth: 561,
       viewHeight: 165,
       modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )

@@ -45,7 +45,9 @@ export default class SectionCustomLauncher extends PDLPanelSection {
       children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ],
       spacing: 5,
       stretch: true,
-      xMargin: 10
+
+      // Tuned to make sure the panels have the same width on all screens
+      xMargin: 8.5
     } );
 
     super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, options );

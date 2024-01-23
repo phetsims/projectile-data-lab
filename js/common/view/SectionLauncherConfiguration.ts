@@ -26,7 +26,7 @@ import configurationButton4_png from '../../../images/configurationButton4_png.j
 type SelfOptions = EmptySelfOptions;
 type SectionLauncherConfigurationOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
-const IMAGE_MAX_WIDTH = 32;
+const IMAGE_MAX_WIDTH = 30;
 
 export default class SectionLauncherConfiguration extends PDLPanelSection {
 

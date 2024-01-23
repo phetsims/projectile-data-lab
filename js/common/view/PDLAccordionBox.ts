@@ -10,10 +10,12 @@
 
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Node, Text } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -36,7 +38,11 @@ export default class PDLAccordionBox extends AccordionBox {
       buttonYMargin: margin,
       contentYMargin: margin,
       contentYSpacing: 0,
-      cornerRadius: 5
+      cornerRadius: 5,
+      titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
+        font: PDLConstants.LAUNCH_CONTROL_FONT,
+        maxWidth: 600
+      } )
     }, providedOptions );
 
     super( content, options );

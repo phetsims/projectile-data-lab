@@ -43,8 +43,8 @@ export default class SampleThumbnailNode extends Node {
     super();
 
     this.chartTransform = new ChartTransform( {
-      viewWidth: 140,
-      viewHeight: 60,
+      viewWidth: 160,
+      viewHeight: 52,
       modelXRange: new Range( 0, 100 ),
       modelYRange: new Range( 0, 10 )
     } );

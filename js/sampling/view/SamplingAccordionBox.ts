@@ -1,11 +1,10 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HBox, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
 import PDLAccordionBox, { PDLAccordionBoxOptions } from '../../common/view/PDLAccordionBox.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
@@ -62,20 +61,14 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 
-    const options = optionize<VSMAccordionBoxOptions, SelfOptions, PDLAccordionBoxOptions>()( {
-      titleNode: new Text( ProjectileDataLabStrings.histogramStringProperty, {
-        font: PDLConstants.LAUNCH_CONTROL_FONT,
-        maxWidth: 600
-      } ),
-      maxWidth: 500
-    }, providedOptions );
-
     const zoomLevelProperty = histogramNode.zoomLevelProperty;
 
     const bottomThumbnailNode = new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
       PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty );
     super( new HBox( {
-      spacing: 4,
+
+      // TODO: https://github.com/phetsims/projectile-data-lab/issues/50 Would be nice to top align with the top border of the chart
+      spacing: 7,
       children: [
         histogramNode,
         new VBox( {
@@ -91,7 +84,7 @@ export default class SamplingAccordionBox extends PDLAccordionBox {
           ]
         } )
       ]
-    } ), options );
+    } ), providedOptions );
 
     this.bottomThumbnailNode = bottomThumbnailNode;
   }
