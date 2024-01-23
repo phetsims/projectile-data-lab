@@ -146,12 +146,14 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.measuringTapeBasePositionProperty = new Property<Vector2>( new Vector2( 0, 0 ), {
       tandem: measuringTapeTandem.createTandem( 'basePositionProperty' ),
-      phetioValueType: Vector2.Vector2IO
+      phetioValueType: Vector2.Vector2IO,
+      phetioReadOnly: true
     } );
 
     this.measuringTapeTipPositionProperty = new Property<Vector2>( new Vector2( 50, 0 ), {
       tandem: measuringTapeTandem.createTandem( 'tipPositionProperty' ),
-      phetioValueType: Vector2.Vector2IO
+      phetioValueType: Vector2.Vector2IO,
+      phetioReadOnly: true
     } );
 
     this.isStopwatchVisibleProperty = new BooleanProperty( false, {
@@ -207,7 +209,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
         this.stopwatchPhaseProperty.value = 'clear';
       }
     }
-    else if ( this.launchModeProperty.value === 'single' ) {
+    else if ( this.singleOrContinuousProperty.value === 'single' ) {
       this.launchProjectile();
     }
     else {
@@ -237,7 +239,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? PDLConstants.TIME_SPEED_FAST : 1 );
 
-    if ( this.launchModeProperty.value === 'continuous' && this.isContinuousLaunchingProperty.value ) {
+    if ( this.singleOrContinuousProperty.value === 'continuous' && this.isContinuousLaunchingProperty.value ) {
 
       this.fieldProperty.value.continuousLaunchTimer.step( dt, () => {
         this.launchProjectile();

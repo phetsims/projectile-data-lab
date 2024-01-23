@@ -21,7 +21,7 @@ import { LauncherConfiguration } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { LaunchMode, LaunchModeValues } from './LaunchMode.js';
+import { SingleOrContinuous, SingleOrContinuousValues } from './SingleOrContinuous.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PDLConstants from '../PDLConstants.js';
@@ -67,7 +67,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly fieldProperty: Property<T>;
 
   // single launch vs continuous launch (rapid fire) mode.
-  public readonly launchModeProperty: Property<LaunchMode>;
+  public readonly singleOrContinuousProperty: Property<SingleOrContinuous>;
 
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
 
@@ -146,12 +146,12 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioValueType: ReferenceIO( Field.FieldIO )
     } );
 
-    this.launchModeProperty = new Property<LaunchMode>( 'single', {
-      validValues: LaunchModeValues,
-      tandem: providedOptions.tandem.createTandem( 'launchModeProperty' ),
+    this.singleOrContinuousProperty = new Property<SingleOrContinuous>( 'single', {
+      validValues: SingleOrContinuousValues,
+      tandem: providedOptions.tandem.createTandem( 'singleOrContinuousProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the launcher is in single or continuous launch mode.',
-      phetioValueType: StringUnionIO( LaunchModeValues )
+      phetioValueType: StringUnionIO( SingleOrContinuousValues )
     } );
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
@@ -188,8 +188,8 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioFeatured: true
     } );
 
-    this.launchModeProperty.link( launchMode => {
-      if ( launchMode === 'single' ) {
+    this.singleOrContinuousProperty.link( singleOrContinuous => {
+      if ( singleOrContinuous === 'single' ) {
         this.fieldProperty.value.isContinuousLaunchingProperty.value = false;
       }
     } );
@@ -198,7 +198,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public abstract launchButtonPressed(): void;
 
   public reset(): void {
-    this.launchModeProperty.reset();
+    this.singleOrContinuousProperty.reset();
     this.selectedBinWidthProperty.reset();
     this.selectedTotalBinsProperty.reset();
     this.isPlayingProperty.reset();

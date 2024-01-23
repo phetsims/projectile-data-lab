@@ -10,7 +10,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
 import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { LaunchMode } from '../model/LaunchMode.js';
+import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 /**
@@ -25,7 +25,7 @@ type LaunchButtonOptions = SelfOptions & RectangularPushButtonOptions;
 export default class LaunchButton extends RectangularPushButton {
   public constructor(
     isContinuousLaunchingProperty: TReadOnlyProperty<boolean>,
-    launchModeProperty: TReadOnlyProperty<LaunchMode>,
+    launchModeProperty: TReadOnlyProperty<SingleOrContinuous>,
     isLaunchButtonAutoFire: boolean,
     launchButtonPressed: () => void,
     providedOptions: LaunchButtonOptions ) {

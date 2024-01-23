@@ -30,7 +30,7 @@ import { PDLLaunchPanel } from './PDLLaunchPanel.js';
 import PDLAccordionBox from './PDLAccordionBox.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { LaunchMode } from '../model/LaunchMode.js';
+import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import LaunchButton from './LaunchButton.js';
 
@@ -54,7 +54,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected readonly bottomUIContainer: HBox;
 
   protected readonly launchButton: RectangularPushButton;
-  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<LaunchMode>;
+  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<SingleOrContinuous>;
   protected readonly timeControlNode: TimeControlNode;
   protected readonly resetAllButton: ResetAllButton;
   protected readonly noAirResistanceText: PDLText;
@@ -128,14 +128,14 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     // Create the launch button
     this.launchButton = new LaunchButton( model.isContinuousLaunchingProperty,
-      model.launchModeProperty, isLaunchButtonAutoFire, () => model.launchButtonPressed(), {
+      model.singleOrContinuousProperty, isLaunchButtonAutoFire, () => model.launchButtonPressed(), {
         left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.45 * PDLConstants.FIELD_WIDTH,
         bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
         tandem: options.tandem.createTandem( 'launchButton' )
       } );
 
     const radioButtonLabelMaxWidth = 120;
-    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.launchModeProperty, [ {
+    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.singleOrContinuousProperty, [ {
       value: 'single' as const,
       createNode: () => new Text( singleStringProperty, {
         font: PDLConstants.LAUNCH_CONTROL_FONT,

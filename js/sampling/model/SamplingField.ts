@@ -10,7 +10,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import { LaunchMode } from '../../common/model/LaunchMode.js';
+import { SingleOrContinuous } from '../../common/model/SingleOrContinuous.js';
 import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -71,7 +71,7 @@ export default class SamplingField extends Field {
 
   public constructor( launcher: Launcher,
                       public readonly sampleSize: number,
-                      private readonly launchModeProperty: Property<LaunchMode>,
+                      private readonly launchModeProperty: Property<SingleOrContinuous>,
                       providedOptions: SamplingFieldOptions ) {
     const options = optionize<SamplingFieldOptions, SelfOptions, FieldOptions>()( {
       isLauncherConfigurationPhetioInstrumented: false

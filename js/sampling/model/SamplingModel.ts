@@ -19,7 +19,7 @@ import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import SamplingField from './SamplingField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { LaunchMode, LaunchModeValues } from '../../common/model/LaunchMode.js';
+import { SingleOrContinuous, SingleOrContinuousValues } from '../../common/model/SingleOrContinuous.js';
 import { SamplingPhase } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
@@ -47,10 +47,10 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public constructor( providedOptions: SamplingModelOptions ) {
 
-    // This is an adapter Property that converts between the SamplingModel's launchModeProperty which is available
+    // This is an adapter Property that converts between the SamplingModel's singleOrContinuousProperty which is available
     // after the super() call
-    const samplingLaunchModeProperty = new Property<LaunchMode>( 'single', {
-      validValues: LaunchModeValues
+    const samplingLaunchModeProperty = new Property<SingleOrContinuous>( 'single', {
+      validValues: SingleOrContinuousValues
     } );
 
     const fields: SamplingField[] = [];
@@ -79,7 +79,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
 
-    this.launchModeProperty.link( launchMode => {
+    this.singleOrContinuousProperty.link( launchMode => {
       samplingLaunchModeProperty.value = launchMode;
     } );
 
@@ -136,7 +136,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const field = this.fieldProperty.value;
     const phaseProperty = field.phaseProperty;
 
-    if ( this.launchModeProperty.value === 'single' ) {
+    if ( this.singleOrContinuousProperty.value === 'single' ) {
 
       // If the simulation is paused, unpause it.
       this.isPlayingProperty.value = true;
@@ -152,7 +152,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phaseProperty.value = 'showingAirborneProjectiles';
     }
 
-    else if ( this.launchModeProperty.value === 'continuous' ) {
+    else if ( this.singleOrContinuousProperty.value === 'continuous' ) {
       field.isContinuousLaunchingProperty.toggle();
 
       if ( phaseProperty.value === 'idle' ) {
