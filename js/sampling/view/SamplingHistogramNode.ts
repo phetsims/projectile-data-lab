@@ -18,6 +18,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 /**
  * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
@@ -57,6 +58,9 @@ export default class SamplingHistogramNode extends HistogramNode {
     launcherProperty.link( launcher => {
       iconNode.children = [ new MysteryLauncherIcon( launcher ) ];
     } );
+
+    const launcherNumberProperty = new DerivedProperty( [ launcherProperty ], launcher => launcher.launcherNumber );
+
     const textVBox = new VBox( {
 
       // Prevent from overlapping with the majority of the data in ?stringTest=long
@@ -65,7 +69,7 @@ export default class SamplingHistogramNode extends HistogramNode {
       align: 'left',
       children: [
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty,
-          { launcher: launcherProperty } ), { font: PDLConstants.SELECTOR_FONT } ),
+          { launcher: launcherNumberProperty } ), { font: PDLConstants.SELECTOR_FONT } ),
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
           { sampleSize: sampleSizeProperty } ), { font: PDLConstants.SELECTOR_FONT } ),
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
