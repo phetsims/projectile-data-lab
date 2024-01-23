@@ -36,12 +36,13 @@ Note that if the English strings are changed after 1.0, the keys will not be upd
 
 ### Inner classes
 
-For this simulation, for trivial classes that are only used by one class, we sometimes use inner classes. For example, search for
-`class MeasuringTapeIconNode`.  This allows us to keep code co-located with where it is used, without proliferating
+For this simulation, for trivial classes that are only used by one class, we sometimes use inner classes. For example,
+search for
+`class MeasuringTapeIconNode`. This allows us to keep code co-located with where it is used, without proliferating
 files, and to have a usage site like `new MeasuringTapeIconNode()`.
 
 ### PhET-iO
 
 For this simulation, individual projectiles are not PhET-iO instrumented. Instead, the parent Field is instrumented.
-Please see FieldIO which describes how the serialization is implemented. Note however that ProjectileIO defines how
-a Projectile is serialized as part of the Field serialization.
+Please see FieldIO which describes how the serialization is implemented. Note however that ProjectileIO defines how a
+Projectile is serialized as part of the Field serialization.
