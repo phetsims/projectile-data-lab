@@ -43,7 +43,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     super( model,
       ProjectileDataLabStrings.singleLaunchStringProperty,
       ProjectileDataLabStrings.continuousLaunchStringProperty,
-      false,
       options );
 
     const samplingCanvasNode = new SamplingCanvasNode( model.fieldProperty, model.isPathsVisibleProperty,

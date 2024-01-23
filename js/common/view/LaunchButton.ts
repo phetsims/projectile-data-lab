@@ -26,7 +26,6 @@ export default class LaunchButton extends RectangularPushButton {
   public constructor(
     isContinuousLaunchingProperty: TReadOnlyProperty<boolean>,
     launchModeProperty: TReadOnlyProperty<SingleOrContinuous>,
-    isLaunchButtonAutoFire: boolean,
     launchButtonPressed: () => void,
     providedOptions: LaunchButtonOptions ) {
 
@@ -57,11 +56,6 @@ export default class LaunchButton extends RectangularPushButton {
 
     const options = optionize<LaunchButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
       content: launchButtonToggleNode,
-
-      // Autofire is not compatible with the model for the Sampling Screen, so only support it for the VSM screens.
-      fireOnDown: isLaunchButtonAutoFire,
-      fireOnHold: isLaunchButtonAutoFire,
-      fireOnHoldInterval: 200,
       baseColor: PDLColors.launchButtonColorProperty,
       size: new Dimension2( 85, 45 ),
       yMargin: 5,

@@ -62,7 +62,6 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected constructor( model: PDLModel<T>,
                          singleStringProperty: TReadOnlyProperty<string>,
                          continuousStringProperty: TReadOnlyProperty<string>,
-                         isLaunchButtonAutoFire: boolean,
                          options: PDLScreenViewOptions ) {
     super( options );
 
@@ -128,7 +127,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     // Create the launch button
     this.launchButton = new LaunchButton( model.isContinuousLaunchingProperty,
-      model.singleOrContinuousProperty, isLaunchButtonAutoFire, () => model.launchButtonPressed(), {
+      model.singleOrContinuousProperty, () => model.launchButtonPressed(), {
         left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.45 * PDLConstants.FIELD_WIDTH,
         bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
         tandem: options.tandem.createTandem( 'launchButton' )
