@@ -118,7 +118,13 @@ export default class VSMField extends Field {
     } );
 
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
-    this.landedProjectileCountProperty = new NumberProperty( 0 );
+    this.landedProjectileCountProperty = new NumberProperty( 0, {
+      phetioFeatured: true,
+      phetioDocumentation: 'This Property represents the number of projectiles that have landed.',
+      tandem: options.tandem.createTandem( 'landedProjectileCountProperty' ),
+      phetioReadOnly: true,
+      phetioState: false
+    } );
     this.totalProjectileCountProperty = new NumberProperty( 0 );
 
     this.projectileLandedEmitter.addListener( projectile => {

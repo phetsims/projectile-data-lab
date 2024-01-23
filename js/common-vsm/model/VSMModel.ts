@@ -105,7 +105,13 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     } );
 
     this.landedProjectileCountProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
-      derive: t => t.landedProjectileCountProperty
+      derive: t => t.landedProjectileCountProperty,
+      phetioFeatured: true,
+      phetioDocumentation: 'This Property represents the number of projectiles that have landed.',
+      tandem: options.tandem.createTandem( 'landedProjectileCountProperty' ),
+      phetioReadOnly: true,
+      phetioState: false,
+      phetioValueType: NumberIO
     } );
 
     this.stopwatchPhaseProperty = new DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>( this.fieldProperty, {
