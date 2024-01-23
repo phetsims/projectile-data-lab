@@ -22,6 +22,8 @@ import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -93,15 +95,33 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     } );
 
     this.meanDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.meanDistanceProperty
+      derive: t => t.meanDistanceProperty,
+      phetioFeatured: true,
+      tandem: providedOptions.tandem.createTandem( 'meanDistanceProperty' ),
+      phetioDocumentation: 'The mean distance of the landed projectiles, or null if no projectiles have landed.',
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true,
+      phetioState: false
     } );
 
     this.standardDeviationDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.standardDeviationDistanceProperty
+      derive: t => t.standardDeviationDistanceProperty,
+      phetioFeatured: true,
+      tandem: providedOptions.tandem.createTandem( 'standardDeviationDistanceProperty' ),
+      phetioDocumentation: 'The standard deviation of the distance of the landed projectiles, or null if no projectiles have landed.',
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true,
+      phetioState: false
     } );
 
     this.standardErrorDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.standardErrorDistanceProperty
+      derive: t => t.standardErrorDistanceProperty,
+      phetioFeatured: true,
+      tandem: providedOptions.tandem.createTandem( 'standardErrorDistanceProperty' ),
+      phetioDocumentation: 'The standard error of the mean distance of landed projectiles, or null if no projectiles have landed.',
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true,
+      phetioState: false
     } );
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
