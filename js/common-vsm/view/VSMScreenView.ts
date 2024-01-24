@@ -20,7 +20,7 @@ import ProjectileSelectorNode from './ProjectileSelectorNode.js';
 import StaticToolPanel from './StaticToolPanel.js';
 import InteractiveToolPanel from './InteractiveToolPanel.js';
 import VSMLaunchPanel from './VSMLaunchPanel.js';
-import FieldSelectorPanel from './FieldSelectorPanel.js';
+import FieldRadioButtonGroup from './FieldRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -47,7 +47,7 @@ type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
-  protected readonly fieldSelectorPanel: FieldSelectorPanel<VSMField>;
+  protected readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;
   protected readonly accordionBox: HistogramAccordionBox;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorNode: ProjectileSelectorNode;
@@ -266,9 +266,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 
-    this.fieldSelectorPanel = new FieldSelectorPanel( model.fieldProperty, model.fields, {
-      tandem: options.tandem.createTandem( 'fieldSelectorPanel' ),
-      phetioFeatured: true
+    this.fieldRadioButtonGroup = new FieldRadioButtonGroup( model.fieldProperty, model.fields, {
+      tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' )
     } );
 
     const fieldSign = new VSMFieldSignNode(
@@ -286,16 +285,16 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.toolsLayer.addChild( measuringTapeNode );
 
     this.addChild( this.projectileSelectorNode );
-    this.addChild( this.fieldSelectorPanel );
+    this.addChild( this.fieldRadioButtonGroup );
     this.addChild( timedLaunchButton );
     this.addChild( this.accordionBox );
     this.addChild( this.launchPanel );
     this.addChild( this.topRightUIContainer );
     this.addChild( this.toolsLayer );
 
-    // Position the field selector panel
-    this.fieldSelectorPanel.bottom = this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN - 5;
-    this.fieldSelectorPanel.left = this.layoutBounds.centerX - 60;
+    // Position the field selector radio button group
+    this.fieldRadioButtonGroup.bottom = this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN - 5;
+    this.fieldRadioButtonGroup.left = this.layoutBounds.centerX - 60;
 
     // Positioning field sign and eraser button
     const fieldSignEraserButtonSpacing = 20;
@@ -329,18 +328,16 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
 
     // Position the 'No air resistance' text
-    ManualConstraint.create( this, [ this.launchPanel ], launchPanelProxy => {
-      this.noAirResistanceText.centerX = launchPanelProxy.centerX;
-      this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
+    ManualConstraint.create( this, [ this.noAirResistanceText, this.launchPanel ], ( noAirResistanceTextProxy, launchPanelProxy ) => {
+      noAirResistanceTextProxy.centerX = launchPanelProxy.centerX;
+      noAirResistanceTextProxy.top = launchPanelProxy.bottom + 15;
     } );
 
     // Position the eraser button
-    ManualConstraint.create( this, [ this.eraserButton, this.fieldSelectorPanel ],
+    ManualConstraint.create( this, [ this.eraserButton, this.fieldRadioButtonGroup ],
       ( eraserButtonProxy, fieldSelectorPanelProxy ) => {
-        if ( isFinite( fieldSelectorPanelProxy.right ) ) {
-          eraserButtonProxy.left = fieldSelectorPanelProxy.right + 10;
-          eraserButtonProxy.centerY = fieldSelectorPanelProxy.centerY;
-        }
+        eraserButtonProxy.left = fieldSelectorPanelProxy.right + 10;
+        eraserButtonProxy.centerY = fieldSelectorPanelProxy.centerY;
       } );
 
     // Keyboard order
@@ -367,7 +364,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
       this.launchPanel,
 
-      this.fieldSelectorPanel,
+      this.fieldRadioButtonGroup,
       this.accordionBox,
       staticToolPanel,
       interactiveToolPanel,
