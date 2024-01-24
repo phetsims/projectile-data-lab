@@ -329,19 +329,18 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
 
     // Position the 'No air resistance' text
-    ManualConstraint.create(
-      this,
-      [ this.launchPanel ], launchPanelProxy => {
-        this.noAirResistanceText.centerX = launchPanelProxy.centerX;
-        this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
-      } );
+    ManualConstraint.create( this, [ this.launchPanel ], launchPanelProxy => {
+      this.noAirResistanceText.centerX = launchPanelProxy.centerX;
+      this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
+    } );
 
     // Position the eraser button
-    ManualConstraint.create(
-      this,
-      [ this.eraserButton, this.fieldSelectorPanel ], ( eraserButtonProxy, fieldSelectorPanelProxy ) => {
-        eraserButtonProxy.left = fieldSelectorPanelProxy.right + 10;
-        eraserButtonProxy.centerY = fieldSelectorPanelProxy.centerY;
+    ManualConstraint.create( this, [ this.eraserButton, this.fieldSelectorPanel ],
+      ( eraserButtonProxy, fieldSelectorPanelProxy ) => {
+        if ( isFinite( fieldSelectorPanelProxy.right ) ) {
+          eraserButtonProxy.left = fieldSelectorPanelProxy.right + 10;
+          eraserButtonProxy.centerY = fieldSelectorPanelProxy.centerY;
+        }
       } );
 
     // Keyboard order
