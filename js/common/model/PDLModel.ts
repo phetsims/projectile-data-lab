@@ -180,6 +180,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
 
     this.isContinuousLaunchingProperty = new DynamicProperty<boolean, boolean, T>( this.fieldProperty, {
+      bidirectional: true, // So that launching the last projectile can automatically pause continuous mode in the selected field.
       derive: t => t.isContinuousLaunchingProperty
     } );
 

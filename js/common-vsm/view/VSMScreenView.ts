@@ -303,6 +303,13 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     model.totalProjectileCountProperty.link( totalProjectileCount => {
       this.launchButton.enabled = totalProjectileCount < PDLQueryParameters.maxProjectiles;
+
+      // If it is the last projectile, set isContinuousLaunching to false, so that:
+      // * pressing clear won't resume launching
+      // * the icon will show as a launch icon rather than a stop icon
+      if ( totalProjectileCount === PDLQueryParameters.maxProjectiles ) {
+        model.isContinuousLaunchingProperty.value = false;
+      }
     } );
 
     // Allow the top content to go above the dev bounds, but not too far
