@@ -27,7 +27,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Field from '../model/Field.js';
 import LauncherNode from './LauncherNode.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
-import PDLAccordionBox from './PDLAccordionBox.js';
+import HistogramAccordionBox from './HistogramAccordionBox.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
@@ -49,7 +49,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected abstract readonly launcherNode: LauncherNode;
 
   protected abstract readonly launchPanel: PDLLaunchPanel;
-  protected abstract readonly accordionBox: PDLAccordionBox;
+  protected abstract readonly accordionBox: HistogramAccordionBox;
 
   protected readonly bottomUIContainer: HBox;
 

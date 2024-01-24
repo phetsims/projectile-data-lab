@@ -2,7 +2,7 @@
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
-import PDLAccordionBox, { PDLAccordionBoxOptions } from '../../common/view/PDLAccordionBox.js';
+import HistogramAccordionBox, { HistogramAccordionBoxOptions } from '../../common/view/HistogramAccordionBox.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -26,9 +26,9 @@ import Launcher from '../../common/model/Launcher.js';
 type SelfOptions = EmptySelfOptions;
 
 export type VSMAccordionBoxOptions =
-  SelfOptions & WithRequired<PDLAccordionBoxOptions, 'tandem'>;
+  SelfOptions & WithRequired<HistogramAccordionBoxOptions, 'tandem'>;
 
-export default class SamplingAccordionBox extends PDLAccordionBox {
+export default class SamplingAccordionBox extends HistogramAccordionBox {
   public readonly bottomThumbnailNode: SampleThumbnailNode;
 
   public constructor(

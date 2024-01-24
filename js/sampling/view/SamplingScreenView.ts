@@ -27,7 +27,7 @@ import PDLText from '../../common/view/PDLText.js';
 import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import { accordionBoxTandemName } from '../../common/view/PDLAccordionBox.js';
+import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -140,7 +140,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       () => model.clearCurrentField(), {
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         centerX: this.layoutBounds.centerX,
-        tandem: options.tandem.createTandem( accordionBoxTandemName )
+        tandem: options.tandem.createTandem( histogramAccordionBoxTandemName )
       } );
     this.addChild( this.accordionBox );
 

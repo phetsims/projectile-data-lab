@@ -21,7 +21,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import MeasuresHistogramNode from './MeasuresHistogramNode.js';
 import IntervalToolNode from './IntervalToolNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import { accordionBoxTandemName } from '../../common/view/PDLAccordionBox.js';
+import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -72,7 +72,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.selectedBinWidthProperty,
       model.selectedTotalBinsProperty,
       comboBoxParent, {
-        tandem: options.tandem.createTandem( accordionBoxTandemName ).createTandem( 'histogramNode' )
+        tandem: options.tandem.createTandem( histogramAccordionBoxTandemName ).createTandem( 'histogramNode' )
       } );
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );

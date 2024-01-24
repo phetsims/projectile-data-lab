@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The PDLAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
+ * The HistogramAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
  * It contains the histogram component as well as associated controls.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -19,19 +19,19 @@ import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 
-export type PDLAccordionBoxOptions =
+export type HistogramAccordionBoxOptions =
   SelfOptions
   & WithRequired<AccordionBoxOptions, 'tandem'>;
 
-export const accordionBoxTandemName = 'accordionBox';
+export const histogramAccordionBoxTandemName = 'histogramAccordionBox';
 
-export default class PDLAccordionBox extends AccordionBox {
+export default class HistogramAccordionBox extends AccordionBox {
   public constructor( content: Node,
-                      providedOptions: PDLAccordionBoxOptions ) {
+                      providedOptions: HistogramAccordionBoxOptions ) {
 
     const margin = 8;
 
-    const options = optionize<PDLAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
+    const options = optionize<HistogramAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       fill: PDLColors.panelColorProperty,
       stroke: PDLColors.panelStrokeColorProperty,
       titleAlignX: 'left',
@@ -51,4 +51,4 @@ export default class PDLAccordionBox extends AccordionBox {
   }
 }
 
-projectileDataLab.register( 'PDLAccordionBox', PDLAccordionBox );
+projectileDataLab.register( 'HistogramAccordionBox', HistogramAccordionBox );

@@ -34,7 +34,7 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import UTurnArrowShape from '../../../../scenery-phet/js/UTurnArrowShape.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import PDLAccordionBox, { accordionBoxTandemName } from '../../common/view/PDLAccordionBox.js';
+import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -48,7 +48,7 @@ type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'ta
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldSelectorPanel: FieldSelectorPanel<VSMField>;
-  protected readonly accordionBox: PDLAccordionBox;
+  protected readonly accordionBox: HistogramAccordionBox;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorNode: ProjectileSelectorNode;
   protected readonly topRightUIContainer: VBox;
@@ -90,11 +90,11 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
 
-    this.accordionBox = new PDLAccordionBox(
+    this.accordionBox = new HistogramAccordionBox(
       createHistogramNode( this ), {
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
-        tandem: options.tandem.createTandem( accordionBoxTandemName )
+        tandem: options.tandem.createTandem( histogramAccordionBoxTandemName )
       } );
 
     this.topRightUIContainer = new VBox( {
