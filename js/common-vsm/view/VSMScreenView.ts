@@ -90,20 +90,21 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
     this.projectileCanvasLayer.addChild( projectileCanvas );
 
-    this.topRightUIContainer = new VBox( {
-      stretch: true,
-      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
-      top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      spacing: PDLConstants.INTER_PANEL_SPACING,
-      children: [ staticToolPanel, interactiveToolPanel, this.timeControlNode ]
-    } );
-
     this.accordionBox = new PDLAccordionBox(
       createHistogramNode( this ), {
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         left: launchPanel.right + PDLConstants.INTER_PANEL_SPACING,
         tandem: options.tandem.createTandem( 'accordionBox' )
       } );
+
+    this.topRightUIContainer = new VBox( {
+      stretch: true,
+      right: this.layoutBounds.right - PDLConstants.SCREEN_VIEW_X_MARGIN,
+      top: this.layoutBounds.top + PDLConstants.SCREEN_VIEW_Y_MARGIN,
+      spacing: PDLConstants.INTER_PANEL_SPACING,
+      children: [ staticToolPanel, interactiveToolPanel, this.timeControlNode ],
+      preferredWidth: this.layoutBounds.right - this.accordionBox.right - PDLConstants.INTER_PANEL_SPACING - PDLConstants.SCREEN_VIEW_X_MARGIN
+    } );
 
     this.projectileSelectorNode = new ProjectileSelectorNode(
       model.selectedProjectileNumberProperty,
@@ -314,9 +315,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     // Position the projectile selector panel
-    ManualConstraint.create(
-      this,
-      [ this.projectileSelectorNode, fieldSign ], ( projectileSelectorPanelProxy, fieldSignProxy ) => {
+    ManualConstraint.create( this, [ this.projectileSelectorNode, fieldSign ],
+      ( projectileSelectorPanelProxy, fieldSignProxy ) => {
         projectileSelectorPanelProxy.bottom = fieldSignProxy.top - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
         projectileSelectorPanelProxy.centerX = fieldSignProxy.centerX;
       } );
