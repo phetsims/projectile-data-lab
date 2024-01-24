@@ -60,7 +60,7 @@ export default class SourcesScreenView extends VSMScreenView<VSMField> {
       node,
       PDLColors.histogramDataFillColorProperty,
       PDLColors.histogramDataStrokeColorProperty, {
-        tandem: options.tandem.createTandem( 'histogramNode' )
+        tandem: options.tandem.createTandem( 'accordionBox' ).createTandem( 'histogramNode' )
       } );
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );

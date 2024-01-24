@@ -71,7 +71,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.selectedBinWidthProperty,
       model.selectedTotalBinsProperty,
       comboBoxParent, {
-        tandem: options.tandem.createTandem( 'histogramNode' )
+        tandem: options.tandem.createTandem( 'accordionBox' ).createTandem( 'histogramNode' )
       } );
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
