@@ -51,7 +51,8 @@ export default class BinControlNode extends HBox {
         } );
         super( selectedBinWidthProperty, comboBoxItems, comboBoxParent, {
           listPosition: 'below',
-          tandem: providedOptions.tandem.createTandem( 'binWidthComboBox' )
+          tandem: providedOptions.tandem.createTandem( 'binWidthComboBox' ),
+          phetioVisiblePropertyInstrumented: false
         } );
       }
     }
@@ -69,7 +70,8 @@ export default class BinControlNode extends HBox {
         } );
         super( selectedTotalBinsProperty, comboBoxItems, comboBoxParent, {
           listPosition: 'below',
-          tandem: providedOptions.tandem.createTandem( 'totalBinsComboBox' )
+          tandem: providedOptions.tandem.createTandem( 'totalBinsComboBox' ),
+          phetioVisiblePropertyInstrumented: false
         } );
       }
     }
