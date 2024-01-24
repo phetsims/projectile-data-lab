@@ -103,7 +103,7 @@ export default class FieldSelectorPanel<T extends VSMField> extends PDLPanel {
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     this.addInputListener( new KeyboardListener( {
-      keys: [ '1', '2', '3', '4', '5', '6', '7', '8' ] as const,
+      keys: [ '1', '2', '3', '4', '5', '6' ] as const,
       callback: ( event, keysPressed ) => {
         const key = parseInt( keysPressed, 10 );
         fieldProperty.value = fields[ key - 1 ];
