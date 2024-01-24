@@ -7,9 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export const VSMFieldIdentifierValues = [
-  'field1', 'field2', 'field3',
-  'field4', 'field5', 'field6',
-  'field7', 'field8'
+  'field1', 'field2', 'field3', 'field4', 'field5', 'field6'
 ] as const;
 
 export type VSMFieldIdentifier = typeof VSMFieldIdentifierValues[number];
