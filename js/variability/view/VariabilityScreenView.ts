@@ -21,6 +21,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import PDLColors from '../../common/PDLColors.js';
+import { accordionBoxTandemName } from '../../common/view/PDLAccordionBox.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -57,7 +58,7 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
       node,
       PDLColors.histogramDataFillColorProperty,
       PDLColors.histogramDataStrokeColorProperty, {
-        tandem: options.tandem.createTandem( 'accordionBox' ).createTandem( 'histogramNode' )
+        tandem: options.tandem.createTandem( accordionBoxTandemName ).createTandem( 'histogramNode' )
       } );
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );

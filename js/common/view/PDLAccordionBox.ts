@@ -23,6 +23,8 @@ export type PDLAccordionBoxOptions =
   SelfOptions
   & WithRequired<AccordionBoxOptions, 'tandem'>;
 
+export const accordionBoxTandemName = 'accordionBox';
+
 export default class PDLAccordionBox extends AccordionBox {
   public constructor( content: Node,
                       providedOptions: PDLAccordionBoxOptions ) {
