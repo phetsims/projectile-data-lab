@@ -328,6 +328,10 @@ export default class SamplingField extends Field {
 
     super.clearProjectiles();
     this.updateComputedProperties();
+  }
+
+  public override reset(): void {
+    super.reset();
     this.phaseProperty.reset();
   }
 }
