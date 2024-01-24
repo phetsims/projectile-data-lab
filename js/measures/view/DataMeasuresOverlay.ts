@@ -34,13 +34,13 @@ type SelfOptions = {
 };
 export type DataMeasuresFieldOverlayOptions = SelfOptions & NodeOptions;
 
-const LINE_WIDTH = 1.5;
+const LINE_WIDTH = 1;
 
 // The y position of the arrows is a factor of the total height of the overlay
 const ARROW_Y_POSITION_FACTOR = 0.7;
 
 // The minimum standard deviation for which to show span arrows
-const MIN_SD_FOR_SHOW_ARROWS = 0.8;
+const MIN_SD_FOR_SHOW_ARROWS = 0;
 
 // The vertical offset between the edge of the text label and the adjacent element
 const TEXT_OFFSET = 2;
@@ -100,14 +100,14 @@ export default class DataMeasuresOverlay extends Node {
       lineWidth: LINE_WIDTH
     };
 
-    const arrowYFactor = providedOptions.context === 'field' ? ARROW_Y_POSITION_FACTOR : 0.5;
+    const arrowYFactor = providedOptions.context === 'field' ? ARROW_Y_POSITION_FACTOR : 0.65;
 
     const arrowY = origin.y - arrowYFactor * totalHeight;
-    const ARROW_HEAD_WIDTH = 3;
+    const ARROW_HEAD_WIDTH = 2;
 
     const meanLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
 
-    const sideLineHeight = origin.y - arrowY + ARROW_HEAD_WIDTH;
+    const sideLineHeight = providedOptions.context === 'field' ? 0.78 * totalHeight : 0.7 * totalHeight;
     const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), lineOptions );
     const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), lineOptions );
 
@@ -115,7 +115,8 @@ export default class DataMeasuresOverlay extends Node {
       visibleProperty: isSDArrowsVisibleProperty,
       doubleHead: true,
       headWidth: ARROW_HEAD_WIDTH,
-      headHeight: 5,
+      headHeight: 6,
+      lineWidth: 0.5,
       tailWidth: 1,
       stroke: 'black'
     };
@@ -137,7 +138,6 @@ export default class DataMeasuresOverlay extends Node {
     const meanLabelPanel = new PDLPanel( meanLabel, {
       visibleProperty: DerivedProperty.and( [ isMeanVisibleProperty, isValuesDisplayedProperty ] ),
       fill: 'white',
-      stroke: 'black',
       lineWidth: 1,
       cornerRadius: 5,
       xMargin: 3,
@@ -150,14 +150,14 @@ export default class DataMeasuresOverlay extends Node {
     const sdLeftLabel = new PDLText( sdPatternStringProperty, {
       visibleProperty: DerivedProperty.and( [ isSDLinesVisibleProperty, isValuesDisplayedProperty ] ),
       font: PDLConstants.PRIMARY_FONT,
-      bottom: arrowY - ARROW_HEAD_WIDTH - TEXT_OFFSET,
+      bottom: origin.y - sideLineHeight - TEXT_OFFSET,
       maxWidth: TEXT_MAX_WIDTH
     } );
 
     const sdRightLabel = new PDLText( sdPatternStringProperty, {
       visibleProperty: DerivedProperty.and( [ isSDLinesVisibleProperty, isValuesDisplayedProperty ] ),
       font: PDLConstants.PRIMARY_FONT,
-      bottom: arrowY - ARROW_HEAD_WIDTH - TEXT_OFFSET,
+      bottom: origin.y - sideLineHeight - TEXT_OFFSET,
       maxWidth: TEXT_MAX_WIDTH
     } );
 
