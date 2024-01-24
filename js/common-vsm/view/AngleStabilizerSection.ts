@@ -24,7 +24,7 @@ import HSlider from '../../../../sun/js/HSlider.js';
 type SelfOptions = EmptySelfOptions;
 type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
 
-export default class AngleStabilizerNumberControl extends VBox {
+export default class AngleStabilizerSection extends VBox {
 
   public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
 
@@ -43,7 +43,9 @@ export default class AngleStabilizerNumberControl extends VBox {
       trackSize: new Dimension2( 50, 0.5 ),
       thumbSize: new Dimension2( 13, 22 ),
       thumbTouchAreaXDilation: 6,
-      thumbTouchAreaYDilation: 4 // smaller to prevent overlap with above number spinner buttons
+      thumbTouchAreaYDilation: 4, // smaller to prevent overlap with above number spinner buttons
+      phetioVisiblePropertyInstrumented: false,
+      phetioEnabledPropertyInstrumented: false
     } );
     slider.addMajorTick( range.min, new PDLText( ProjectileDataLabStrings.narrowStringProperty, {
       fontSize: 10,
@@ -57,6 +59,7 @@ export default class AngleStabilizerNumberControl extends VBox {
       slider.addMinorTick( i );
     }
     super( {
+      tandem: options.tandem,
       children: [
         new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty, {
           maxWidth: 150
@@ -67,4 +70,4 @@ export default class AngleStabilizerNumberControl extends VBox {
   }
 }
 
-projectileDataLab.register( 'AngleStabilizerNumberControl', AngleStabilizerNumberControl );
+projectileDataLab.register( 'AngleStabilizerSection', AngleStabilizerSection );

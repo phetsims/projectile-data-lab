@@ -40,7 +40,7 @@ export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadio
       } ];
 
     super( customLauncherMechanismProperty, items, {
-      tandem: providedOptions.tandem.createTandem( 'customLauncherTypeRadioButtonGroup' ),
+      tandem: providedOptions.tandem,
       orientation: 'horizontal',
       align: 'center',
       radioButtonOptions: {

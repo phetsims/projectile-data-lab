@@ -79,7 +79,13 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.customLauncherMechanismProperty
+      derive: t => t.customLauncherMechanismProperty,
+      tandem: options.tandem.createTandem( 'customLauncherMechanismProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'This Property represents the mechanism of the custom launcher.',
+      phetioReadOnly: true,
+      phetioState: false,
+      phetioValueType: LauncherMechanism.LauncherMechanismIO
     } );
 
     this.standardDeviationAngleProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {

@@ -219,7 +219,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     this.pdomControlAreaNode.pdomOrder = [
       this.launchButton,
-      this.launchControlRadioButtonGroup,
+      this.singleOrContinuousRadioButtonGroup,
 
       this.launchPanel,
 

@@ -7,7 +7,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import LauncherMechanism from '../model/LauncherMechanism.js';
-import AngleStabilizerNumberControl from './AngleStabilizerNumberControl.js';
+import AngleStabilizerSection from './AngleStabilizerSection.js';
 import CustomLauncherTypeRadioButtonGroup from './CustomLauncherTypeRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
@@ -36,13 +36,13 @@ export default class SectionCustomLauncher extends PDLPanelSection {
     } );
 
     // Note that the Angle Stabilizer controls the standard deviation of the launch angle.
-    const angleStabilizerNumberControl = new AngleStabilizerNumberControl( standardDeviationAngleProperty, {
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' ),
+    const angleStabilizerSection = new AngleStabilizerSection( standardDeviationAngleProperty, {
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' ),
       phetioFeatured: true
     } );
 
     const contentContainer = new VBox( {
-      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ],
+      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ],
       spacing: 5,
       stretch: true,
 

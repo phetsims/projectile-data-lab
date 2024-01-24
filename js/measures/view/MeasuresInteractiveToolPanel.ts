@@ -38,7 +38,8 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
         const intervalTool = new IntervalTool( {
           tandem: Tandem.OPT_OUT
         } );
-        const intervalToolNode = new IntervalToolNode( intervalTool, transform, new BooleanProperty( true ), {
+        const intervalToolNode = new IntervalToolNode( intervalTool, transform, {
+          visibleProperty: new BooleanProperty( true ),
           tandem: Tandem.OPT_OUT
         } ).rasterized( { resolution: 2 } );
         super( {

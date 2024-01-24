@@ -129,6 +129,7 @@ export default class StaticToolPanel extends PDLPanel {
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' ),
       phetioFeatured: true,
+      phetioVisiblePropertyInstrumented: false,
       checkboxOptions: {
         boxWidth: PDLConstants.VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH
       }

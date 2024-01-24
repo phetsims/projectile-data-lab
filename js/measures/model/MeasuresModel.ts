@@ -157,7 +157,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       const count = field.landedProjectiles.filter( projectile => {
         return projectile.x >= min && projectile.x <= max;
       } ).length;
-      this.intervalTool.dataFractionProperty.value = field.landedProjectiles.length === 0 ? null : count / field.landedProjectiles.length;
+      this.intervalTool.dataFractionProperty.value = field.landedProjectiles.length === 0 ? 0 : count / field.landedProjectiles.length;
     };
 
     updateIntervalToolDataPercentage();

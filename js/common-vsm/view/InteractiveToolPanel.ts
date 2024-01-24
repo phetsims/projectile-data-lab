@@ -61,7 +61,8 @@ export default class InteractiveToolPanel extends PDLPanel {
           lineColor: new Color( 0, 0, 0 ),
           crosshairLineWidth: 1.8,
           tapeLineWidth: 1.8,
-          tandem: Tandem.OPT_OUT
+          tandem: Tandem.OPT_OUT,
+          hasValue: false
         } ).rasterized( {
           resolution: 1.25
         } );
@@ -86,6 +87,7 @@ export default class InteractiveToolPanel extends PDLPanel {
     ], {
       tandem: options.tandem.createTandem( 'checkboxGroup' ),
       phetioFeatured: true,
+      phetioVisiblePropertyInstrumented: false,
       checkboxOptions: {
         boxWidth: PDLConstants.VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH
       }

@@ -9,7 +9,7 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
-import AngleStabilizerNumberControl from '../../common-vsm/view/AngleStabilizerNumberControl.js';
+import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
 import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
@@ -69,13 +69,13 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       phetioFeatured: true
     } );
 
-    const angleStabilizerNumberControl = new AngleStabilizerNumberControl( angleStandardDeviationProperty, {
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerNumberControl' ),
+    const angleStabilizerSection = new AngleStabilizerSection( angleStandardDeviationProperty, {
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' ),
       phetioFeatured: true
     } );
 
     const customLauncherControls = new VBox( {
-      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerNumberControl ],
+      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ],
       spacing: 4, stretch: true, topMargin: 3
     } );
 
@@ -85,7 +85,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     }, {
       value: 'custom',
       createNode: () => customLauncherControls
-    } ], {} );
+    } ] );
 
     const contentContainer = new VBox( { children: [ isLauncherCustomRadioButtonGroup, launcherControlsToggleNode ], spacing: 5, stretch: true } );
 

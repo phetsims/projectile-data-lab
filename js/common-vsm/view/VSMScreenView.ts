@@ -198,7 +198,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     model.isStopwatchVisibleProperty.link( isStopwatchVisible => {
       this.launchButton.visible = !isStopwatchVisible;
-      this.launchControlRadioButtonGroup.visible = !isStopwatchVisible;
+      this.singleOrContinuousRadioButtonGroup.visible = !isStopwatchVisible;
     } );
 
     const isLauncherRaisedProperty = new DerivedProperty( [ model.launcherHeightProperty ], height => height > 0 );
@@ -360,7 +360,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.pdomControlAreaNode.pdomOrder = [
 
       this.launchButton,
-      this.launchControlRadioButtonGroup,
+      this.singleOrContinuousRadioButtonGroup,
 
       this.launchPanel,
 

@@ -17,7 +17,7 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Field from './Field.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { LauncherConfiguration } from './LauncherConfiguration.js';
+import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
 import { ProjectileType } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -156,7 +156,12 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launcherConfigurationProperty
+      derive: t => t.launcherConfigurationProperty,
+      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'This property indicates the current launcher configuration.',
+      phetioValueType: StringUnionIO( LauncherConfigurationValues ),
+      phetioState: false
     } );
 
     this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, T>( this.fieldProperty, {

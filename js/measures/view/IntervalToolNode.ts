@@ -8,8 +8,7 @@ import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Panel from '../../../../sun/js/Panel.js';
 import PDLText from '../../common/view/PDLText.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -43,11 +42,10 @@ soundManager.addSoundGenerator( releaseClip );
 export default class IntervalToolNode extends Node {
   private readonly arrowNode: ArrowNode;
 
-  public constructor( intervalTool: IntervalTool, modelViewTransform: ModelViewTransform2, isIntervalToolVisible: TReadOnlyProperty<boolean>,
-                      providedOptions: IntervalToolNodeOptions ) {
-    super( {
-      visibleProperty: isIntervalToolVisible
-    } );
+  public constructor( intervalTool: IntervalTool, modelViewTransform: ModelViewTransform2, providedOptions: IntervalToolNodeOptions ) {
+
+    const options = optionize<IntervalToolNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
+    super( options );
 
     const lineOptions = {
       stroke: PDLColors.intervalToolLineColorProperty,
@@ -263,6 +261,8 @@ export default class IntervalToolNode extends Node {
       readoutVBox,
       edge2Sphere
     ];
+
+    this.addLinkedElement( intervalTool );
   }
 }
 

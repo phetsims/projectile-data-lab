@@ -54,7 +54,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected readonly bottomUIContainer: HBox;
 
   protected readonly launchButton: RectangularPushButton;
-  protected readonly launchControlRadioButtonGroup: VerticalAquaRadioButtonGroup<SingleOrContinuous>;
+  protected readonly singleOrContinuousRadioButtonGroup: VerticalAquaRadioButtonGroup<SingleOrContinuous>;
   protected readonly timeControlNode: TimeControlNode;
   protected readonly resetAllButton: ResetAllButton;
   protected readonly noAirResistanceText: PDLText;
@@ -130,11 +130,12 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       model.singleOrContinuousProperty, () => model.launchButtonPressed(), {
         left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.45 * PDLConstants.FIELD_WIDTH,
         bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-        tandem: options.tandem.createTandem( 'launchButton' )
+        tandem: options.tandem.createTandem( 'launchButton' ),
+        phetioEnabledPropertyInstrumented: false
       } );
 
     const radioButtonLabelMaxWidth = 120;
-    this.launchControlRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.singleOrContinuousProperty, [ {
+    this.singleOrContinuousRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.singleOrContinuousProperty, [ {
       value: 'single' as const,
       createNode: () => new Text( singleStringProperty, {
         font: PDLConstants.LAUNCH_CONTROL_FONT,
@@ -152,8 +153,12 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       left: this.launchButton.right + 15,
       centerY: this.launchButton.centerY,
       spacing: 10,
-      tandem: options.tandem.createTandem( 'launchControlRadioButtonGroup' ),
-      phetioFeatured: true
+      tandem: options.tandem.createTandem( 'singleOrContinuousRadioButtonGroup' ),
+      phetioFeatured: true,
+      radioButtonOptions: {
+        phetioVisiblePropertyInstrumented: false,
+        phetioEnabledPropertyInstrumented: false
+      }
     } );
 
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
@@ -182,7 +187,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( fieldFront );
     this.addChild( fieldOverlayFront );
     this.addChild( this.launchButton );
-    this.addChild( this.launchControlRadioButtonGroup );
+    this.addChild( this.singleOrContinuousRadioButtonGroup );
     this.addChild( this.noAirResistanceText );
     this.addChild( this.resetAllButton );
   }
