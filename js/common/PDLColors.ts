@@ -173,7 +173,7 @@ const PDLColors = {
   } ),
 
   meanMarkerFillProperty: new ProfileColorProperty( projectileDataLab, 'meanMarkerFill', {
-    default: '#E300AD'
+    default: '#8500bd'
   } ),
 
   meanMarkerStrokeProperty: new ProfileColorProperty( projectileDataLab, 'meanMarkerStroke', {
