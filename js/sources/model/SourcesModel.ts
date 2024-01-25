@@ -10,23 +10,27 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VSMModel from '../../common-vsm/model/VSMModel.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
-import VSMField from '../../common-vsm/model/VSMField.js';
 import Launcher from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
+import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
+import SMField from '../../common-sm/model/SMField.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+type SourcesModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
-export default class SourcesModel extends VSMModel<VSMField> {
+export default class SourcesModel extends SMModel<SMField> {
 
-  public constructor( providedOptions: PDLModelOptions ) {
+  public constructor( providedOptions: SourcesModelOptions ) {
 
-    const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
+    const options = optionize<SourcesModelOptions, SelfOptions, SMModelOptions>()( {
+      isStandardDeviationAnglePropertyPhetioInstrumented: true
+    }, providedOptions );
+
+    const fieldsTandem = options.tandem.createTandem( 'fields' );
 
     const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
       const fieldTandem = fieldsTandem.createTandem( identifier );
@@ -39,14 +43,14 @@ export default class SourcesModel extends VSMModel<VSMField> {
           tandem: fieldTandem.createTandem( 'customLauncher' )
         } );
 
-      return new VSMField( [ customLauncher ], identifier, {
+      return new SMField( [ customLauncher ], identifier, {
         tandem: fieldTandem,
         phetioFeatured: true,
         isLauncherPropertyPhetioReadOnly: false
       } );
     } );
 
-    super( fields, providedOptions );
+    super( fields, options );
   }
 }
 

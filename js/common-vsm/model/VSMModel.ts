@@ -8,7 +8,7 @@
  */
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -17,16 +17,20 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import LauncherMechanism from './LauncherMechanism.js';
 import Projectile from '../../common/model/Projectile.js';
 import { StopwatchPhase } from './StopwatchPhase.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
-type SelfOptions = EmptySelfOptions;
-export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'fieldPropertyPhetioDocumentation' >;
+type SelfOptions = {
+  isStandardDeviationAnglePropertyPhetioInstrumented: boolean;
+};
+export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'fieldPropertyPhetioDocumentation'>;
 
 export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
@@ -43,17 +47,16 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly measuringTapeBasePositionProperty;
   public readonly measuringTapeTipPositionProperty;
 
-  public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, VSMField>;
+  public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, T>;
 
-  public readonly customLauncherMechanismProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>;
-  public readonly standardDeviationAngleProperty: DynamicProperty<number, number, VSMField>;
+  public readonly standardDeviationAngleProperty: DynamicProperty<number, number, T>;
 
-  public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, VSMField>;
-  public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, VSMField>;
-  public readonly landedProjectileCountProperty: DynamicProperty<number, number, VSMField>;
-  public readonly totalProjectileCountProperty: DynamicProperty<number, number, VSMField>;
-  public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>;
-  public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, VSMField>;
+  public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, T>;
+  public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, T>;
+  public readonly landedProjectileCountProperty: DynamicProperty<number, number, T>;
+  public readonly totalProjectileCountProperty: DynamicProperty<number, number, T>;
+  public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, T>;
+  public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, T>;
 
   public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
 
@@ -70,31 +73,32 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     // In the VSM screens, the launcher can be chosen independently in each Field
     this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launcherProperty
+      derive: t => t.launcherProperty,
+      phetioFeatured: true,
+      phetioDocumentation: 'This Property represents the selected launcher within the selected field.',
+      tandem: this.fieldProperty.value.launcherProperty.isPhetioInstrumented() ? options.tandem.createTandem( 'launcherProperty' ) : Tandem.OPT_OUT,
+      phetioState: false,
+      phetioValueType: ReferenceIO( IOType.ObjectIO ),
+      validValues: this.fieldProperty.value.launcherProperty.validValues
     } );
 
-    this.latestLaunchSpeedProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+    this.latestLaunchSpeedProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.latestLaunchSpeedProperty
     } );
 
-    this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, VSMField>( this.fieldProperty, {
+    this.standardDeviationAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.customLauncherMechanismProperty,
-      tandem: options.tandem.createTandem( 'customLauncherMechanismProperty' ),
+      derive: t => t.standardDeviationAngleProperty,
+      tandem: options.isStandardDeviationAnglePropertyPhetioInstrumented ? options.tandem.createTandem( 'standardDeviationAngleProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
-      phetioDocumentation: 'This Property represents the mechanism of the custom launcher.',
+      phetioDocumentation: 'This Property represents the standard deviation of the angle of launch.',
+      phetioValueType: NumberIO,
       phetioReadOnly: true,
-      phetioState: false,
-      phetioValueType: LauncherMechanism.LauncherMechanismIO
+      phetioState: false
     } );
 
-    this.standardDeviationAngleProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
-      bidirectional: true,
-      derive: t => t.standardDeviationAngleProperty
-    } );
-
-    this.selectedProjectileNumberProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+    this.selectedProjectileNumberProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.selectedProjectileNumberProperty,
       phetioFeatured: true,
@@ -103,15 +107,15 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioValueType: NumberIO
     } );
 
-    this.selectedProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, VSMField>( this.fieldProperty, {
+    this.selectedProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, T>( this.fieldProperty, {
       derive: t => t.selectedProjectileProperty
     } );
 
-    this.totalProjectileCountProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+    this.totalProjectileCountProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       derive: t => t.totalProjectileCountProperty
     } );
 
-    this.landedProjectileCountProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+    this.landedProjectileCountProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       derive: t => t.landedProjectileCountProperty,
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the number of projectiles that have landed.',
@@ -121,12 +125,12 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioValueType: NumberIO
     } );
 
-    this.stopwatchPhaseProperty = new DynamicProperty<StopwatchPhase, StopwatchPhase, VSMField>( this.fieldProperty, {
+    this.stopwatchPhaseProperty = new DynamicProperty<StopwatchPhase, StopwatchPhase, T>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.stopwatchPhaseProperty
     } );
 
-    this.stopwatchElapsedTimeProperty = new DynamicProperty<number, number, VSMField>( this.fieldProperty, {
+    this.stopwatchElapsedTimeProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       derive: t => t.stopwatchElapsedTimeProperty
     } );
 

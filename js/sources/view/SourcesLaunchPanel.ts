@@ -7,7 +7,7 @@ import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSM
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import SectionCustomLauncher from '../../common-vsm/view/SectionCustomLauncher.js';
+import SectionCustomLauncher from '../../common-sm/view/SectionCustomLauncher.js';
 
 /**
  * The SourcesLaunchPanel extends VSMLaunchPanel and adds the SectionCustomLauncher which allows the user to select

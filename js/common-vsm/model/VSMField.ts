@@ -6,7 +6,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import LauncherMechanism from './LauncherMechanism.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
@@ -20,7 +19,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 
@@ -43,8 +41,6 @@ export default class VSMField extends Field {
 
   // The most recent speed of a projectile launched by the launcher, in meters per second
   public readonly latestLaunchSpeedProperty: Property<number>;
-
-  public readonly customLauncherMechanismProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>;
 
   public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
 
@@ -73,7 +69,7 @@ export default class VSMField extends Field {
 
     const launcherProperty = new Property( launchers[ 0 ], {
       validValues: launchers,
-      tandem: providedOptions.tandem.createTandem( 'launcherProperty' ),
+      tandem: launchers.length === 1 ? Tandem.OPT_OUT : options.tandem.createTandem( 'launcherProperty' ),
       phetioReadOnly: options.isLauncherPropertyPhetioReadOnly,
       phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
@@ -98,11 +94,6 @@ export default class VSMField extends Field {
       highlightedProjectileNumber => {
         return this.landedProjectiles[ highlightedProjectileNumber - 1 ] || null;
       } );
-
-    this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>( this.launcherProperty, {
-      bidirectional: true,
-      derive: t => t.launcherMechanismProperty
-    } );
 
     this.stopwatchPhaseProperty = new Property<StopwatchPhase>( 'clear', {
       validValues: StopwatchPhaseValues,
@@ -193,7 +184,6 @@ export default class VSMField extends Field {
   public override reset(): void {
     super.reset();
 
-    this.customLauncherMechanismProperty.reset();
     this.standardDeviationAngleProperty.reset();
     this.continuousLaunchTimer.reset();
     this.stopwatchPhaseProperty.reset();

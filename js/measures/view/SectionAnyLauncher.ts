@@ -8,7 +8,6 @@ import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPa
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
 import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
@@ -17,6 +16,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import MysteryLauncherRadioButtonGroupWrapper from '../../common/view/MysteryLauncherRadioButtonGroupWrapper.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import Launcher from '../../common/model/Launcher.js';
+import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
 
 /**
  * The SectionAnyLauncher allows the user to select between the custom and mystery launchers.

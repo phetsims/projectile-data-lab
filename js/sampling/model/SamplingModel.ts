@@ -78,7 +78,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     // In the SamplingModel, the launcher is an independent variable that (with the sample size) determines the Field
     this.launcherProperty = new Property<Launcher>( MYSTERY_LAUNCHERS[ 0 ], {
       tandem: options.tandem.createTandem( 'launcherProperty' ),
-      phetioValueType: ReferenceIO( IOType.ObjectIO )
+      phetioValueType: ReferenceIO( IOType.ObjectIO ),
+      validValues: MYSTERY_LAUNCHERS
     } );
 
     this.singleOrContinuousProperty.link( launchMode => {

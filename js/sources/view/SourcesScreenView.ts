@@ -17,18 +17,17 @@ import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import Property from '../../../../axon/js/Property.js';
 import CustomizableLauncherNode from '../../common-vsm/view/CustomizableLauncherNode.js';
-import VSMField from '../../common-vsm/model/VSMField.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
+import SMField from '../../common-sm/model/SMField.js';
 
 type SelfOptions = EmptySelfOptions;
-
 type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
 
-export default class SourcesScreenView extends VSMScreenView<VSMField> {
+export default class SourcesScreenView extends VSMScreenView<SMField> {
 
   protected readonly launcherNode: CustomizableLauncherNode;
 

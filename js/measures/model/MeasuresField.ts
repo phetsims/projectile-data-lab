@@ -3,7 +3,6 @@
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
-import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
 import Property from '../../../../axon/js/Property.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -14,6 +13,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import SMField, { SMFieldOptions } from '../../common-sm/model/SMField.js';
 
 /**
  * The MeasuresField is an extension of the Field class that adds fields for the Measures model.
@@ -24,9 +24,9 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-export type MeasuresFieldOptions = SelfOptions & StrictOmit<VSMFieldOptions, 'isLauncherPropertyPhetioReadOnly'>;
+export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isLauncherPropertyPhetioReadOnly'>;
 
-export default class MeasuresField extends VSMField {
+export default class MeasuresField extends SMField {
 
   // This property represents the average distance (horizontal displacement) of landed projectiles.
   public readonly meanDistanceProperty: Property<number | null>;
@@ -44,7 +44,7 @@ export default class MeasuresField extends VSMField {
   public readonly mysteryLauncherProperty: Property<Launcher>;
 
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
-    const options = optionize<MeasuresFieldOptions, SelfOptions, VSMFieldOptions>()( {
+    const options = optionize<MeasuresFieldOptions, SelfOptions, SMFieldOptions>()( {
       isLauncherPropertyPhetioReadOnly: true
     }, providedOptions );
 

@@ -8,21 +8,24 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VSMModel from '../../common-vsm/model/VSMModel.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
-
-type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+type VariabilityModelOptions = SelfOptions & StrictOmit<WithRequired<VSMModelOptions<VSMField>, 'tandem'>, 'isStandardDeviationAnglePropertyPhetioInstrumented'>;
 
 export default class VariabilityModel extends VSMModel<VSMField> {
 
-  public constructor( providedOptions: PDLModelOptions ) {
+  public constructor( providedOptions: VariabilityModelOptions ) {
+
+    const options = optionize<VariabilityModelOptions, SelfOptions, VSMModelOptions<VSMField>>()( {
+      isStandardDeviationAnglePropertyPhetioInstrumented: false
+    }, providedOptions );
 
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
 
@@ -34,7 +37,7 @@ export default class VariabilityModel extends VSMModel<VSMField> {
       } );
     } );
 
-    super( fields, providedOptions );
+    super( fields, options );
   }
 }
 

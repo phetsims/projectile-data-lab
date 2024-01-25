@@ -8,10 +8,7 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VSMModel from '../../common-vsm/model/VSMModel.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
@@ -23,12 +20,16 @@ import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type PDLModelOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
+type Parent = WithRequired<SMModelOptions, 'tandem'>;
+type MeasuresModelOptions = SelfOptions & StrictOmit<Parent, 'isStandardDeviationAnglePropertyPhetioInstrumented'>;
 
-export default class MeasuresModel extends VSMModel<MeasuresField> {
+export default class MeasuresModel extends SMModel<MeasuresField> {
 
   // The mean distance of the landed projectiles
   public readonly meanDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
@@ -59,9 +60,13 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
 
   public readonly mysteryLauncherProperty: DynamicProperty<Launcher, Launcher, MeasuresField>;
 
-  public constructor( providedOptions: PDLModelOptions ) {
+  public constructor( providedOptions: MeasuresModelOptions ) {
 
-    const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
+    const options = optionize<MeasuresModelOptions, SelfOptions, SMModelOptions>()( {
+      isStandardDeviationAnglePropertyPhetioInstrumented: true
+    }, providedOptions );
+
+    const fieldsTandem = options.tandem.createTandem( 'fields' );
     const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
       const fieldTandem = fieldsTandem.createTandem( identifier );
 
@@ -81,7 +86,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
       } );
     } );
 
-    super( fields, providedOptions );
+    super( fields, options );
 
     this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, MeasuresField>( this.fieldProperty, {
       bidirectional: true,
@@ -96,7 +101,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     this.meanDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.meanDistanceProperty,
       phetioFeatured: true,
-      tandem: providedOptions.tandem.createTandem( 'meanDistanceProperty' ),
+      tandem: options.tandem.createTandem( 'meanDistanceProperty' ),
       phetioDocumentation: 'The mean distance of the landed projectiles, or null if no projectiles have landed.',
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
@@ -106,7 +111,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     this.standardDeviationDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.standardDeviationDistanceProperty,
       phetioFeatured: true,
-      tandem: providedOptions.tandem.createTandem( 'standardDeviationDistanceProperty' ),
+      tandem: options.tandem.createTandem( 'standardDeviationDistanceProperty' ),
       phetioDocumentation: 'The standard deviation of the distance of the landed projectiles, or null if no projectiles have landed.',
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
@@ -116,14 +121,14 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     this.standardErrorDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
       derive: t => t.standardErrorDistanceProperty,
       phetioFeatured: true,
-      tandem: providedOptions.tandem.createTandem( 'standardErrorDistanceProperty' ),
+      tandem: options.tandem.createTandem( 'standardErrorDistanceProperty' ),
       phetioDocumentation: 'The standard error of the mean distance of landed projectiles, or null if no projectiles have landed.',
       phetioValueType: NullableIO( NumberIO ),
       phetioReadOnly: true,
       phetioState: false
     } );
 
-    const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
+    const visiblePropertiesTandem = options.tandem.createTandem( 'visibleProperties' );
 
     this.isIntervalToolVisibleProperty = new BooleanProperty( false, {
       tandem: visiblePropertiesTandem.createTandem( 'isIntervalToolVisibleProperty' ),
@@ -146,7 +151,7 @@ export default class MeasuresModel extends VSMModel<MeasuresField> {
     } );
 
     this.intervalTool = new IntervalTool( {
-      tandem: providedOptions.tandem.createTandem( 'intervalTool' )
+      tandem: options.tandem.createTandem( 'intervalTool' )
     } );
 
     // Compute the percent of data within the interval tool, only considering the landedProjectiles.

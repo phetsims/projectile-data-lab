@@ -6,10 +6,10 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import LauncherMechanism from '../model/LauncherMechanism.js';
-import AngleStabilizerSection from './AngleStabilizerSection.js';
-import CustomLauncherTypeRadioButtonGroup from './CustomLauncherTypeRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
 
 /**
  * This SectionCustomLauncher is a panel section allows the user to customize a launcher.
