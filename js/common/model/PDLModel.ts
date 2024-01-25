@@ -158,11 +158,17 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
       bidirectional: true,
       derive: t => t.launcherConfigurationProperty,
-      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
+
+      // The DynamicProperty is instrumented if and only if the field launcherConfigurationProperty is instrumented.
+      tandem: this.fieldProperty.value.launcherConfigurationProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates the current launcher configuration.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues ),
-      phetioState: false
+      phetioState: false,
+
+      // Take whatever valid values were specified for the field launcherConfigurationProperty. In the sampling screen,
+      // it is constrained to angle45
+      validValues: this.fieldProperty.value.launcherConfigurationProperty.validValues
     } );
 
     this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, T>( this.fieldProperty, {
