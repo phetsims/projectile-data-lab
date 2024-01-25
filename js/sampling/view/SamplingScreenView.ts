@@ -28,6 +28,7 @@ import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -213,9 +214,18 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
     } );
 
-    model.numberOfStartedSamplesProperty.link( startedSamples => {
-      this.launchButton.enabled = startedSamples < PDLQueryParameters.maxSamples;
-    } );
+    Multilink.multilink( [ model.phaseProperty, model.numberOfStartedSamplesProperty, model.singleOrContinuousProperty ],
+      ( phase, startedSamples, singleOrContinuous ) => {
+        if ( singleOrContinuous === 'single' ) {
+
+          // gray out the button while samples are in the air or when the mean hasn't been shown yet
+          this.launchButton.enabled = ( phase === 'showingCompleteSampleWithMean' || phase === 'idle' ) &&
+                                      startedSamples < PDLQueryParameters.maxSamples;
+        }
+        else {
+          this.launchButton.enabled = startedSamples < PDLQueryParameters.maxSamples;
+        }
+      } );
 
     this.pdomControlAreaNode.pdomOrder = [
       this.launchButton,
