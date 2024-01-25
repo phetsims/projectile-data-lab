@@ -26,7 +26,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible'>;
+export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'fieldPropertyPhetioDocumentation' >;
 
 export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
@@ -62,7 +62,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
       fields: fields,
-      isPathsVisible: false
+      isPathsVisible: false,
+      fieldPropertyPhetioDocumentation: 'This Property represents the field that is currently selected.'
     }, providedOptions );
     super( options );
 

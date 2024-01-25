@@ -34,6 +34,7 @@ type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
   fields: T[];
   isPathsVisible: boolean;
+  fieldPropertyPhetioDocumentation: string;
 };
 export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem };
 
@@ -142,7 +143,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       validValues: this.fields,
       tandem: providedOptions.tandem.createTandem( 'fieldProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates the active field.',
+      phetioDocumentation: providedOptions.fieldPropertyPhetioDocumentation,
       phetioValueType: ReferenceIO( Field.FieldIO )
     } );
 
