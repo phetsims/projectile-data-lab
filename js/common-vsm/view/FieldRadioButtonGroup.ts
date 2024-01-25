@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2024, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
