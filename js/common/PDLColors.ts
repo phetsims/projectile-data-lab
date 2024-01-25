@@ -42,7 +42,11 @@ const PDLColors = {
   } ),
 
   launchButtonColorProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonFill', {
-    default: '#ea2621'
+    default: '#e33e3c'
+  } ),
+
+  launchButtonDisabledColorProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonDisabledFill', {
+    default: '#de4e4d'
   } ),
 
   timerDisplayColorProperty: new ProfileColorProperty( projectileDataLab, 'timerDisplayFill', {

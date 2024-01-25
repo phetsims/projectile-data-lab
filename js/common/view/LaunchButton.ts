@@ -57,6 +57,7 @@ export default class LaunchButton extends RectangularPushButton {
     const options = optionize<LaunchButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
       content: launchButtonToggleNode,
       baseColor: PDLColors.launchButtonColorProperty,
+      disabledColor: PDLColors.launchButtonDisabledColorProperty,
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
       phetioFeatured: true,
