@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2024, University of Colorado Boulder
 
 /**
  * The SMField adds functionality common between the Fields in the Sources and Measures screens.
