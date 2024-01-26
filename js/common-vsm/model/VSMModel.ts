@@ -70,6 +70,16 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     }, providedOptions );
     super( options );
 
+    const allLaunchers: Launcher[] = [];
+
+    this.fields.forEach( field => {
+      field.launchers.forEach( launcher => {
+        if ( !allLaunchers.includes( launcher ) ) {
+          allLaunchers.push( launcher );
+        }
+      } );
+    } );
+
     // In the VSM screens, the launcher can be chosen independently in each Field
     this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {
       bidirectional: true,
@@ -79,7 +89,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       tandem: this.fieldProperty.value.launcherProperty.isPhetioInstrumented() ? options.tandem.createTandem( 'launcherProperty' ) : Tandem.OPT_OUT,
       phetioState: false,
       phetioValueType: ReferenceIO( IOType.ObjectIO ),
-      validValues: this.fieldProperty.value.launcherProperty.validValues
+      phetioReadOnly: true,
+      validValues: allLaunchers
     } );
 
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
