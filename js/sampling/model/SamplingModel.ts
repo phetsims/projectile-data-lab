@@ -128,6 +128,21 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     this.sampleMeanProperty = new DynamicProperty<number | null, number | null, SamplingField>( this.fieldProperty, {
       derive: t => t.sampleMeanProperty
     } );
+
+    // When the user selects "continuous", if there were projectiles in the air, place them on the ground and show the mean
+    this.singleOrContinuousProperty.link( launchMode => {
+
+      if ( launchMode === 'continuous' ) {
+        const field = this.fieldProperty.value;
+        if ( field.phaseProperty.value === 'showingAirborneProjectiles' || field.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) {
+          field.finishCurrentSample();
+
+          field.phaseProperty.value = 'showingCompleteSampleWithMean';
+          field.updateComputedProperties();
+          field.projectilesChangedEmitter.emit();
+        }
+      }
+    } );
   }
 
   public override launchButtonPressed(): void {

@@ -163,7 +163,7 @@ export default class SamplingField extends Field {
    * In this simulation, some of the properties are computed from the state of the projectiles+phase, so we need to update
    * them accordingly.
    */
-  private updateComputedProperties(): void {
+  public updateComputedProperties(): void {
     const totalProjectiles = this.getTotalProjectileCount();
 
     // If the selected sample is greater than the number of started samples, then we are about to start creating projectiles for a new sample
