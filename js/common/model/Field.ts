@@ -185,7 +185,6 @@ export default abstract class Field extends PhetioObject {
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' ),
-      phetioFeatured: true,
       phetioReadOnly: true
     } );
   }
