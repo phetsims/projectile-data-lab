@@ -18,7 +18,7 @@ import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Field from './Field.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
-import { ProjectileType } from './ProjectileType.js';
+import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { SingleOrContinuous, SingleOrContinuousValues } from './SingleOrContinuous.js';
@@ -174,7 +174,19 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.projectileTypeProperty
+      derive: t => t.projectileTypeProperty,
+
+      // The DynamicProperty is instrumented if and only if the field projectileTypeProperty is instrumented.
+      tandem: this.fieldProperty.value.projectileTypeProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'projectileTypeProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true,
+      phetioDocumentation: 'This property indicates the type of projectile being launched.',
+      phetioValueType: StringUnionIO( ProjectileTypeValues ),
+      phetioReadOnly: true,
+      phetioState: false,
+
+      // Take whatever valid values were specified for the field projectileTypeProperty. In the sampling screen,
+      // it is constrained to a cannonball
+      validValues: this.fieldProperty.value.projectileTypeProperty.validValues
     } );
 
     this.meanLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {

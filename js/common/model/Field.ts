@@ -28,6 +28,9 @@ type SelfOptions = {
 
   // Only instrument the launcher configuration property in VSM screens.
   isLauncherConfigurationPhetioInstrumented: boolean;
+
+  // Only instrument the projectile type property in VSM screens.
+  isProjectileTypePhetioInstrumented: boolean;
 };
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
@@ -41,6 +44,8 @@ export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
 export default abstract class Field extends PhetioObject {
 
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
+
+  public readonly projectileTypeProperty: Property<ProjectileType>;
 
   public readonly meanSpeedProperty: DynamicProperty<number, number, Launcher>;
 
@@ -56,8 +61,6 @@ export default abstract class Field extends PhetioObject {
 
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launchHeightProperty: TReadOnlyProperty<number>;
-
-  public readonly projectileTypeProperty: Property<ProjectileType>;
 
   public readonly isContinuousLaunchingProperty: BooleanProperty;
 
@@ -131,7 +134,18 @@ export default abstract class Field extends PhetioObject {
       phetioDocumentation: 'This property configures the height and mean launch angle of the launcher.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
     } : { validValues: [ 'angle45' ] } as const;
+
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', launcherConfigurationOptions );
+
+    const projectileTypeOptions = options.isProjectileTypePhetioInstrumented ? {
+      validValues: ProjectileTypeValues,
+      tandem: providedOptions.tandem.createTandem( 'projectileTypeProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'This property configures the type of projectile.',
+      phetioValueType: StringUnionIO( ProjectileTypeValues )
+    } : { validValues: [ 'cannonball' ] } as const;
+
+    this.projectileTypeProperty = new Property<ProjectileType>( 'cannonball', projectileTypeOptions );
 
     this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
       configuration => MEAN_LAUNCH_ANGLES[ configuration ] );
@@ -167,13 +181,6 @@ export default abstract class Field extends PhetioObject {
       phetioReadOnly: true,
       phetioDocumentation: 'This property is the initial height of launched projectiles in meters.',
       phetioValueType: NumberIO
-    } );
-
-    this.projectileTypeProperty = new Property<ProjectileType>( 'cannonball', {
-      validValues: ProjectileTypeValues,
-      tandem: providedOptions.tandem.createTandem( 'projectileTypeProperty' ),
-      phetioDocumentation: 'This property configures the type of projectile.',
-      phetioValueType: StringUnionIO( ProjectileTypeValues )
     } );
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {

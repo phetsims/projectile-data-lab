@@ -36,7 +36,7 @@ type SelfOptions = {
   // of the mysteryOrCustomProperty and mysteryLauncherProperty.
   isLauncherPropertyPhetioReadOnly: boolean;
 };
-export type VSMFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented'>;
+export type VSMFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented'>;
 
 export default class VSMField extends Field {
 
@@ -65,7 +65,8 @@ export default class VSMField extends Field {
   public constructor( launchers: readonly Launcher[], public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
 
     const options = optionize<VSMFieldOptions, SelfOptions, FieldOptions>()( {
-      isLauncherConfigurationPhetioInstrumented: true
+      isLauncherConfigurationPhetioInstrumented: true,
+      isProjectileTypePhetioInstrumented: true
     }, providedOptions );
 
     const launcherProperty = new Property( launchers[ 0 ], {
