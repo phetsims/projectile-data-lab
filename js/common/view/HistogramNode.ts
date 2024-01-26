@@ -333,6 +333,13 @@ export default class HistogramNode extends Node {
         rightTop: this.chartNode.rightBottom.plusXY( -8, 10 )
       } );
     this.addChild( barBlockSwitch );
+
+    this.pdomOrder = [
+      zoomButtonGroup,
+      binControlNode,
+      barBlockSwitch,
+      this.chartNode
+    ];
   }
 }
 

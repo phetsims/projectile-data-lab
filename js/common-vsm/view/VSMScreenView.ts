@@ -53,6 +53,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
   protected readonly projectileSelectorNode: ProjectileSelectorNode;
   protected readonly topRightUIContainer: VBox;
   protected readonly eraserButton: EraserButton;
+  protected readonly measuringTapeNode: MeasuringTapeNode;
 
   protected constructor( model: VSMModel<T>,
                          public readonly launchPanel: VSMLaunchPanel,
@@ -160,7 +161,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     // tools
 
-    const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
+    this.measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
       visibleProperty: model.isMeasuringTapeVisibleProperty,
       modelViewTransform: this.modelViewTransform,
       dragBounds: new Bounds2(
@@ -187,7 +188,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // Allow the measuring tape to be dragged within the visible bounds of the screen, so that outliers can be measured.
     this.visibleBoundsProperty.link( visibleBounds => {
       const viewBounds = this.modelViewTransform.viewToModelBounds( visibleBounds.erodedXY( PDLConstants.SCREEN_VIEW_X_MARGIN, PDLConstants.SCREEN_VIEW_Y_MARGIN ) );
-      measuringTapeNode.setDragBounds( new Bounds2( 0, 0, viewBounds.maxX, viewBounds.maxY ) );
+      this.measuringTapeNode.setDragBounds( new Bounds2( 0, 0, viewBounds.maxX, viewBounds.maxY ) );
     } );
 
     const timeDisplayNode = new TimeDisplayNode( model.stopwatchElapsedTimeProperty, {
@@ -282,7 +283,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.toolsLayer.addChild( timeDisplayNode );
     this.toolsLayer.addChild( angleToolNode );
     this.toolsLayer.addChild( speedToolNode );
-    this.toolsLayer.addChild( measuringTapeNode );
+    this.toolsLayer.addChild( this.measuringTapeNode );
 
     this.addChild( this.projectileSelectorNode );
     this.addChild( this.fieldRadioButtonGroup );
@@ -359,19 +360,33 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     intervalToolNode?: Node ): void {
     this.pdomControlAreaNode.pdomOrder = [
 
+      // Launch controls
       this.launchButton,
       this.singleOrContinuousRadioButtonGroup,
 
+      // Experiment setup
       this.launchPanel,
 
+      // Field management
       this.fieldRadioButtonGroup,
+      this.eraserButton,
+
+      // Histogram
       this.accordionBox,
+
+      // Global tools
       staticToolPanel,
       interactiveToolPanel,
-      this.projectileSelectorNode,
       this.timeControlNode,
+
+      // Play area tools
+      this.measuringTapeNode,
       ...( intervalToolNode ? [ intervalToolNode ] : [] ),
-      this.eraserButton,
+
+      // Projectile selector
+      this.projectileSelectorNode,
+
+      // Reset all
       this.resetAllButton
     ];
   }
