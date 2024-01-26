@@ -87,9 +87,9 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the selected launcher within the selected field.',
       tandem: this.fieldProperty.value.launcherProperty.isPhetioInstrumented() ? options.tandem.createTandem( 'launcherProperty' ) : Tandem.OPT_OUT,
+      phetioReadOnly: true,
       phetioState: false,
       phetioValueType: ReferenceIO( IOType.ObjectIO ),
-      phetioReadOnly: true,
       validValues: allLaunchers
     } );
 
@@ -115,7 +115,9 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the selected projectile by number (1-indexed)',
       tandem: options.tandem.createTandem( 'selectedProjectileNumberProperty' ),
-      phetioValueType: NumberIO
+      phetioValueType: NumberIO,
+      phetioReadOnly: true,
+      phetioState: false
     } );
 
     this.selectedProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, T>( this.fieldProperty, {

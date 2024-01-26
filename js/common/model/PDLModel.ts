@@ -164,6 +164,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates the current launcher configuration.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues ),
+      phetioReadOnly: true,
       phetioState: false,
 
       // Take whatever valid values were specified for the field launcherConfigurationProperty. In the sampling screen,
