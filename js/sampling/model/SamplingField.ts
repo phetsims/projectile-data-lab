@@ -27,7 +27,7 @@ import Range from '../../../../dot/js/Range.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented'>;
+export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
 const SHOWING_SINGLE_SAMPLE_TIME = 0.3;
@@ -76,7 +76,8 @@ export default class SamplingField extends Field {
                       providedOptions: SamplingFieldOptions ) {
     const options = optionize<SamplingFieldOptions, SelfOptions, FieldOptions>()( {
       isLauncherConfigurationPhetioInstrumented: false,
-      isProjectileTypePhetioInstrumented: false
+      isProjectileTypePhetioInstrumented: false,
+      isLaunchHeightPhetioInstrumented: false
     }, providedOptions );
 
     super( [ launcher ],

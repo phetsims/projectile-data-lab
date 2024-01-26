@@ -31,6 +31,9 @@ type SelfOptions = {
 
   // Only instrument the projectile type property in VSM screens.
   isProjectileTypePhetioInstrumented: boolean;
+
+  // Only instrument the launch height property in VSM screens.
+  isLaunchHeightPhetioInstrumented: boolean;
 };
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
@@ -165,8 +168,7 @@ export default abstract class Field extends PhetioObject {
     this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
       return configuration === 'angle0Raised' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     }, {
-      tandem: providedOptions.tandem.createTandem( 'launchHeightProperty' ),
-      phetioReadOnly: true,
+      tandem: providedOptions.isLaunchHeightPhetioInstrumented ? providedOptions.tandem.createTandem( 'launchHeightProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'This property is the initial height of launched projectiles in meters.',
       phetioValueType: NumberIO
     } );
