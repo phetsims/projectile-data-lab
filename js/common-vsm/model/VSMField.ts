@@ -40,6 +40,9 @@ export type VSMFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncher
 
 export default class VSMField extends Field {
 
+  // The most recent launch angle on this field, in degrees
+  public readonly latestLaunchAngleProperty: Property<number>;
+
   // The most recent speed of a projectile launched by the launcher, in meters per second
   public readonly latestLaunchSpeedProperty: Property<number>;
 
@@ -77,6 +80,15 @@ export default class VSMField extends Field {
     } );
 
     super( launchers, launcherProperty, options );
+
+    this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
+      tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
+      phetioReadOnly: true,
+      phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
+                           + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.',
+      phetioValueType: NumberIO,
+      phetioFeatured: true
+    } );
 
     this.latestLaunchSpeedProperty = new Property<number>( this.meanSpeedProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),

@@ -53,9 +53,6 @@ export default abstract class Field extends PhetioObject {
 
   public readonly standardDeviationAngleProperty: DynamicProperty<number, number, Launcher>;
 
-  // The most recent launch angle on this field, in degrees
-  public readonly latestLaunchAngleProperty: Property<number>;
-
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
   public readonly meanAngleProperty: TReadOnlyProperty<number>;
 
@@ -149,15 +146,6 @@ export default abstract class Field extends PhetioObject {
 
     this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
       configuration => MEAN_LAUNCH_ANGLES[ configuration ] );
-
-    this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
-      tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
-      phetioReadOnly: true,
-      phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
-                           + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.',
-      phetioValueType: NumberIO,
-      phetioFeatured: true
-    } );
 
     this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,

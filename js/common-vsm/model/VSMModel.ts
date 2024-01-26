@@ -47,6 +47,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly measuringTapeBasePositionProperty;
   public readonly measuringTapeTipPositionProperty;
 
+  public readonly latestLaunchAngleProperty: DynamicProperty<number, number, T>;
   public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, T>;
 
   public readonly standardDeviationAngleProperty: DynamicProperty<number, number, T>;
@@ -92,6 +93,11 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioState: false,
       phetioValueType: ReferenceIO( IOType.ObjectIO ),
       validValues: allLaunchers
+    } );
+
+    this.latestLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+      bidirectional: true,
+      derive: t => t.latestLaunchAngleProperty
     } );
 
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
