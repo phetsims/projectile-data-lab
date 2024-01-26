@@ -26,7 +26,7 @@ type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
 export default class VSMFieldSignNode extends FieldSignNode {
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
-                      landedProjectileCountProperty: TReadOnlyProperty<number>,
+                      numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       fields: Field[],
                       modelViewTransform: ModelViewTransform2,
                       providedOptions?: VSMFieldSignNodeOptions ) {
@@ -45,7 +45,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
     } );
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.nEqualsProjectileCountPatternStringProperty, {
-      projectileCount: landedProjectileCountProperty
+      projectileCount: numberOfLandedProjectilesProperty
     } );
 
     const fieldNumberText = new Text( fieldSignStringProperty, {

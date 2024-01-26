@@ -52,7 +52,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
   public constructor(
     selectedProjectileNumberProperty: TProperty<number> & PhetioObject,
     totalProjectileCountProperty: TReadOnlyProperty<number>,
-    landedProjectileCountProperty: TReadOnlyProperty<number>,
+    numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
     selectedProjectileProperty: TReadOnlyProperty<Projectile | null>,
     providedOptions: ProjectileSelectorPanelOptions ) {
 
@@ -68,14 +68,14 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const standardDeviationAngleProperty = new Property( 0 );
     const latestLaunchSpeedProperty = new Property( 0 );
 
-    const rangeProperty = new DerivedProperty( [ selectedProjectileNumberProperty, landedProjectileCountProperty, totalProjectileCountProperty, selectedProjectileProperty ],
-      ( ( selectedProjectileNumber, landedProjectileCount, totalProjectileCount ) => {
+    const rangeProperty = new DerivedProperty( [ selectedProjectileNumberProperty, numberOfLandedProjectilesProperty, totalProjectileCountProperty, selectedProjectileProperty ],
+      ( ( selectedProjectileNumber, numberOfLandedProjectiles, totalProjectileCount ) => {
 
         // Projectiles are added to the data set when they land
-        if ( landedProjectileCount === 0 ) {
+        if ( numberOfLandedProjectiles === 0 ) {
           return new Range( 0, 0 );
         }
-        else if ( totalProjectileCount > landedProjectileCount ) {
+        else if ( totalProjectileCount > numberOfLandedProjectiles ) {
 
           // If some are airborne, then disable the buttons, freezing at the currently selected value
           return new Range( selectedProjectileNumber, selectedProjectileNumber );
@@ -83,7 +83,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
         else {
 
           // Everything is landed, everything can be selected
-          return new Range( 1, landedProjectileCount );
+          return new Range( 1, numberOfLandedProjectiles );
         }
       } ) );
 
@@ -142,7 +142,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       } ) )
     );
 
-    Multilink.multilink( [ selectedProjectileNumberProperty, landedProjectileCountProperty, selectedProjectileProperty ], ( projectileNumber, landedProjectileCount, selectedProjectile ) => {
+    Multilink.multilink( [ selectedProjectileNumberProperty, numberOfLandedProjectilesProperty, selectedProjectileProperty ], ( projectileNumber, numberOfLandedProjectiles, selectedProjectile ) => {
 
         if ( selectedProjectile ) {
 
@@ -198,12 +198,12 @@ export default class ProjectileSelectorNode extends SelectorNode {
 
     const patternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfCountPatternStringProperty, {
       number: selectedProjectileNumberProperty,
-      count: landedProjectileCountProperty
+      count: numberOfLandedProjectilesProperty
     } );
     const titleStringProperty = new DerivedProperty(
-      [ landedProjectileCountProperty, patternStringProperty, ProjectileDataLabStrings.noDataStringProperty ],
-      ( landedProjectileCount, patternString, noDataString ) => {
-        return landedProjectileCount === 0 ? noDataString : patternString;
+      [ numberOfLandedProjectilesProperty, patternStringProperty, ProjectileDataLabStrings.noDataStringProperty ],
+      ( numberOfLandedProjectiles, patternString, noDataString ) => {
+        return numberOfLandedProjectiles === 0 ? noDataString : patternString;
       } );
 
     const contents = new VBox( {

@@ -110,7 +110,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.projectileSelectorNode = new ProjectileSelectorNode(
       model.selectedProjectileNumberProperty,
       model.totalProjectileCountProperty,
-      model.landedProjectileCountProperty,
+      model.numberOfLandedProjectilesProperty,
       model.selectedProjectileProperty, {
         tandem: options.tandem.createTandem( 'projectileSelectorNode' )
       }
@@ -273,7 +273,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     const fieldSign = new VSMFieldSignNode(
       model.fieldProperty,
-      model.landedProjectileCountProperty,
+      model.numberOfLandedProjectilesProperty,
       model.fields,
       this.modelViewTransform
     );

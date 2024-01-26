@@ -38,9 +38,9 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly sampleSizeProperty: Property<number>;
 
   public readonly phaseProperty: DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>;
-  public readonly selectedSampleIndexProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly selectedSampleIndexProperty: DynamicProperty<number, number, SamplingField>;
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
 
   public readonly launcherProperty: Property<Launcher>;
@@ -114,15 +114,21 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioState: false
     } );
 
-    this.phaseProperty = new DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>( this.fieldProperty, {
-      derive: t => t.phaseProperty
-    } );
-
     this.selectedSampleIndexProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
 
       // The up/down carousel card changes the selected sample, so this is bidirectional
       bidirectional: true,
-      derive: t => t.selectedSampleIndexProperty
+      derive: t => t.selectedSampleIndexProperty,
+      tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
+      phetioFeatured: true,
+      phetioDocumentation: 'The index of the currently selected sample.',
+      phetioValueType: NumberIO,
+      phetioReadOnly: true,
+      phetioState: false
+    } );
+
+    this.phaseProperty = new DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>( this.fieldProperty, {
+      derive: t => t.phaseProperty
     } );
 
     this.sampleMeanProperty = new DynamicProperty<number | null, number | null, SamplingField>( this.fieldProperty, {

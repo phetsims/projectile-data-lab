@@ -21,6 +21,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import Range from '../../../../dot/js/Range.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -56,7 +57,7 @@ export default class VSMField extends Field {
       valueType: Projectile
     } ]
   } );
-  public readonly landedProjectileCountProperty: NumberProperty;
+  public readonly numberOfLandedProjectilesProperty: NumberProperty;
   public readonly totalProjectileCountProperty: NumberProperty;
 
   public override selectedSampleIndexProperty = new NumberProperty( 0 );
@@ -87,6 +88,11 @@ export default class VSMField extends Field {
     this.selectedProjectileNumberProperty = new NumberProperty( 0, {
       phetioFeatured: true,
       tandem: providedOptions.tandem.createTandem( 'selectedProjectileNumberProperty' ),
+      range: new Range( 0, PDLQueryParameters.maxProjectiles ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      },
+      numberType: 'Integer',
       phetioDocumentation: 'This property is the number of the selected projectile, in order of landing. This number is 1-indexed, and 0 means no projectile is selected.'
     } );
 
@@ -108,12 +114,17 @@ export default class VSMField extends Field {
     } );
 
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
-    this.landedProjectileCountProperty = new NumberProperty( 0, {
+    this.numberOfLandedProjectilesProperty = new NumberProperty( 0, {
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the number of projectiles that have landed.',
-      tandem: options.tandem.createTandem( 'landedProjectileCountProperty' ),
+      tandem: options.tandem.createTandem( 'numberOfLandedProjectilesProperty' ),
       phetioReadOnly: true,
-      phetioState: false
+      phetioState: false,
+      range: new Range( 0, PDLQueryParameters.maxProjectiles ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      },
+      numberType: 'Integer'
     } );
     this.totalProjectileCountProperty = new NumberProperty( 0 );
 
@@ -122,7 +133,7 @@ export default class VSMField extends Field {
       // After a projectile lands, update the selected projectile number and the number of landed projectiles
       this.selectedProjectileNumberProperty.value = this.landedProjectiles.indexOf( projectile ) + 1;
 
-      this.landedProjectileCountProperty.value = this.landedProjectiles.length;
+      this.numberOfLandedProjectilesProperty.value = this.landedProjectiles.length;
     } );
 
     this.projectileLaunchedEmitter.addListener( projectile => {
@@ -154,7 +165,7 @@ export default class VSMField extends Field {
   }
 
   public updateProjectileCounts(): void {
-    this.landedProjectileCountProperty.value = this.landedProjectiles.length;
+    this.numberOfLandedProjectilesProperty.value = this.landedProjectiles.length;
     this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
   }
 
@@ -198,7 +209,7 @@ export default class VSMField extends Field {
 
     this.selectedProjectileNumberProperty.reset();
 
-    this.landedProjectileCountProperty.reset();
+    this.numberOfLandedProjectilesProperty.reset();
     this.totalProjectileCountProperty.reset();
   }
 }

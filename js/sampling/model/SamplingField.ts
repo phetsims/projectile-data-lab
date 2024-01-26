@@ -15,6 +15,7 @@ import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
+import Range from '../../../../dot/js/Range.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -85,8 +86,15 @@ export default class SamplingField extends Field {
         validValues: [ launcher ]
       } ), options );
 
+
+    // TODO: This should be converted to selectedSampleNumberProperty - see https://github.com/phetsims/projectile-data-lab/issues/76
     this.selectedSampleIndexProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
+      range: new Range( 0, PDLQueryParameters.maxSamples ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      },
+      numberType: 'Integer',
       phetioFeatured: true,
       phetioDocumentation: 'The selected sample being shown on the field.'
     } );
@@ -98,6 +106,11 @@ export default class SamplingField extends Field {
     this.numberOfCompletedSamplesProperty = new NumberProperty( 0, {
       phetioDocumentation: 'The number of samples that have been completed.',
       tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
+      range: new Range( 0, PDLQueryParameters.maxSamples ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      },
+      numberType: 'Integer',
       phetioReadOnly: true,
       phetioFeatured: true,
 
