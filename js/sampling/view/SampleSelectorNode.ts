@@ -42,6 +42,7 @@ export default class SampleSelectorNode extends SelectorNode {
     numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
     sampleMeanProperty: TReadOnlyProperty<number | null>,
     phaseProperty: TReadOnlyProperty<SamplingPhase>,
+    isContinuousLaunchingProperty: TReadOnlyProperty<boolean>,
     providedOptions: SampleSelectorPanelOptions ) {
 
     const options = optionize<SampleSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
@@ -73,13 +74,13 @@ export default class SampleSelectorNode extends SelectorNode {
 
     // Note the similarity between this implementation and the one in ProjectileSelectorNode
     const rangeProperty = new DerivedProperty(
-      [ numberOfStartedSamplesProperty, selectedSampleIndexProperty, phaseProperty ],
-      ( startedSampleCount, selectedSampleIndex, phase ) => {
+      [ numberOfStartedSamplesProperty, selectedSampleIndexProperty, phaseProperty, isContinuousLaunchingProperty ],
+      ( startedSampleCount, selectedSampleIndex, phase, isContinuousLaunching ) => {
         if ( startedSampleCount === 0 ) {
           return new Range( 0, 0 );
         }
 
-        else if ( phase !== 'showingCompleteSampleWithMean' ) {
+        else if ( phase !== 'showingCompleteSampleWithMean' || isContinuousLaunching ) {
 
           // If some are airborne, then disable the buttons, freezing at the currently selected value
           return new Range( selectedSampleIndex, selectedSampleIndex );
