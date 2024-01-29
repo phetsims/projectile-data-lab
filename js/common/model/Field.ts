@@ -74,7 +74,7 @@ export default abstract class Field extends PhetioObject {
 
   public readonly projectilesClearedEmitter: Emitter;
 
-  public readonly abstract selectedSampleIndexProperty: NumberProperty;
+  public readonly abstract selectedSampleNumberProperty: NumberProperty;
 
   // Are there any landed projectiles in the field? This is used for the data indicator on the field selector panel.
   public readonly isContainingDataProperty = new BooleanProperty( false );
@@ -205,7 +205,7 @@ export default abstract class Field extends PhetioObject {
     this.projectilesChangedEmitter.emit();
     this.projectilesClearedEmitter.emit();
 
-    this.selectedSampleIndexProperty.reset();
+    this.selectedSampleNumberProperty.reset();
   }
 
   protected createProjectile( sampleNumber: number ): Projectile {

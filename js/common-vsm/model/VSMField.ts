@@ -63,7 +63,7 @@ export default class VSMField extends Field {
   public readonly numberOfLandedProjectilesProperty: NumberProperty;
   public readonly totalProjectileCountProperty: NumberProperty;
 
-  public override selectedSampleIndexProperty = new NumberProperty( 0 );
+  public override selectedSampleNumberProperty = new NumberProperty( 1 );
 
   public constructor( launchers: readonly Launcher[], public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
 

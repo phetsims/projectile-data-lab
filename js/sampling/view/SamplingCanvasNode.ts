@@ -26,12 +26,12 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
   public constructor( fieldProperty: Property<SamplingField>,
                       isPathsVisibleProperty: Property<boolean>,
                       modelViewTransform: ModelViewTransform2,
-                      selectedSampleIndexProperty: TReadOnlyProperty<number>,
+                      selectedSampleNumberProperty: TReadOnlyProperty<number>,
                       providedOptions: SamplingCanvasNodeOptions ) {
 
     const options = optionize<SamplingCanvasNodeOptions, SelfOptions, PDLCanvasNodeOptions>()( {}, providedOptions );
 
-    super( fieldProperty, isPathsVisibleProperty, modelViewTransform, selectedSampleIndexProperty, options );
+    super( fieldProperty, isPathsVisibleProperty, modelViewTransform, selectedSampleNumberProperty, options );
   }
 
   public override paintCanvas( context: CanvasRenderingContext2D ): void {
@@ -43,7 +43,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
 
     const field = this.fieldProperty.value;
     const phase = field.phaseProperty.value;
-    const isShowingLatestSample = field.selectedSampleIndexProperty.value === field.numberOfStartedSamplesProperty.value;
+    const isShowingLatestSample = field.selectedSampleNumberProperty.value === field.numberOfStartedSamplesProperty.value;
 
     const projectiles = field.getProjectilesInSelectedSample();
     const landedProjectiles = field.getLandedProjectilesInSelectedSample();

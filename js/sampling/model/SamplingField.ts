@@ -68,7 +68,7 @@ export default class SamplingField extends Field {
   // Current phase, see documentation above
   public readonly phaseProperty: StringUnionProperty<SamplingPhase>;
 
-  public readonly selectedSampleIndexProperty: NumberProperty;
+  public readonly selectedSampleNumberProperty: NumberProperty;
 
   public constructor( launcher: Launcher,
                       public readonly sampleSize: number,
@@ -88,11 +88,9 @@ export default class SamplingField extends Field {
         validValues: [ launcher ]
       } ), options );
 
-
-    // TODO: This should be converted to selectedSampleNumberProperty - see https://github.com/phetsims/projectile-data-lab/issues/76
-    this.selectedSampleIndexProperty = new NumberProperty( 0, {
-      tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
-      range: new Range( 0, PDLQueryParameters.maxSamples ),
+    this.selectedSampleNumberProperty = new NumberProperty( 1, {
+      tandem: options.tandem.createTandem( 'selectedSampleNumberProperty' ),
+      range: new Range( 1, PDLQueryParameters.maxSamples ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       },
@@ -150,9 +148,9 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
-    this.selectedSampleIndexProperty.link( ( newSampleIndex, oldSampleIndex ) => {
-      if ( typeof oldSampleIndex === 'number' && newSampleIndex < oldSampleIndex ) {
-        this.finishSample( oldSampleIndex );
+    this.selectedSampleNumberProperty.link( ( newSampleNumber, oldSampleNumber ) => {
+      if ( typeof oldSampleNumber === 'number' && newSampleNumber < oldSampleNumber ) {
+        this.finishSample( oldSampleNumber );
       }
       this.updateComputedProperties();
     } );
@@ -182,7 +180,7 @@ export default class SamplingField extends Field {
     const totalProjectiles = this.getTotalProjectileCount();
 
     // If the selected sample is greater than the number of started samples, then we are about to start creating projectiles for a new sample
-    this.numberOfStartedSamplesProperty.value = Math.max( Math.ceil( totalProjectiles / this.sampleSize ), this.selectedSampleIndexProperty.value );
+    this.numberOfStartedSamplesProperty.value = Math.max( Math.ceil( totalProjectiles / this.sampleSize ), this.selectedSampleNumberProperty.value );
 
     let numberOfCompletedSamples = Math.floor( totalProjectiles / this.sampleSize );
 
@@ -200,14 +198,10 @@ export default class SamplingField extends Field {
     const isComplete = this.phaseProperty.value === 'showingCompleteSampleWithMean' && projectilesInSelectedSample.length === this.sampleSize;
 
     this.sampleMeanProperty.value = isComplete ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) : null;
-
-    // if ( this.landedProjectiles.length === 0 ) {
-    //   assert && assert( this.numberOfCompletedSamplesProperty.value === 0, 'numberOfCompletedSamplesProperty should be 0 when there are no projectiles' );
-    // }
   }
 
   public getProjectilesInSelectedSample(): Projectile[] {
-    return this.getProjectilesInSample( this.selectedSampleIndexProperty.value );
+    return this.getProjectilesInSample( this.selectedSampleNumberProperty.value );
   }
 
   public getProjectilesInSample( sampleNumber: number ): Projectile[] {
@@ -215,7 +209,7 @@ export default class SamplingField extends Field {
   }
 
   public getLandedProjectilesInSelectedSample(): Projectile[] {
-    return this.landedProjectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleIndexProperty.value );
+    return this.landedProjectiles.filter( projectile => projectile.sampleNumber === this.selectedSampleNumberProperty.value );
   }
 
   /**
@@ -226,8 +220,7 @@ export default class SamplingField extends Field {
 
     const samples: HistogramData[] = [];
 
-    for ( let sampleIndex = 0; sampleIndex < this.numberOfCompletedSamplesProperty.value; sampleIndex++ ) {
-      const sampleNumber = sampleIndex + 1;
+    for ( let sampleNumber = 1; sampleNumber <= this.numberOfCompletedSamplesProperty.value; sampleNumber++ ) {
 
       const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === sampleNumber );
 
@@ -254,7 +247,7 @@ export default class SamplingField extends Field {
   // If the user fires a new sample while a prior sample was in progress, finish up the prior sample.
   // Most important for 'Single' mode
   public finishCurrentSample(): void {
-    this.finishSample( this.selectedSampleIndexProperty.value );
+    this.finishSample( this.selectedSampleNumberProperty.value );
   }
 
   private finishSample( sampleNumber: number ): void {
@@ -297,7 +290,7 @@ export default class SamplingField extends Field {
 
       let changed = false;
       while ( this.getProjectilesInSelectedSample().length < numberProjectilesToShow ) {
-        const projectile = this.createProjectile( this.selectedSampleIndexProperty.value );
+        const projectile = this.createProjectile( this.selectedSampleNumberProperty.value );
         this.airborneProjectiles.push( projectile );
         this.projectileCreatedEmitter.emit( projectile );
         changed = true;
@@ -328,7 +321,7 @@ export default class SamplingField extends Field {
         this.numberOfCompletedSamplesProperty.value < PDLQueryParameters.maxSamples ) {
 
         // Create all projectiles for this sample immediately and go to next one
-        this.selectedSampleIndexProperty.value++;
+        this.selectedSampleNumberProperty.value++;
 
         this.finishCurrentSample();
 

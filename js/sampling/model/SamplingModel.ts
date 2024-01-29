@@ -40,7 +40,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public readonly phaseProperty: DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>;
   public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
   public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly selectedSampleIndexProperty: DynamicProperty<number, number, SamplingField>;
+  public readonly selectedSampleNumberProperty: DynamicProperty<number, number, SamplingField>;
   public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
 
   public readonly launcherProperty: Property<Launcher>;
@@ -115,12 +115,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       phetioState: false
     } );
 
-    this.selectedSampleIndexProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
+    this.selectedSampleNumberProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
 
       // The up/down carousel card changes the selected sample, so this is bidirectional
       bidirectional: true,
-      derive: t => t.selectedSampleIndexProperty,
-      tandem: options.tandem.createTandem( 'selectedSampleIndexProperty' ),
+      derive: t => t.selectedSampleNumberProperty,
+      tandem: options.tandem.createTandem( 'selectedSampleNumberProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'The index of the currently selected sample.',
       phetioValueType: NumberIO,
@@ -173,7 +173,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
 
-      this.selectedSampleIndexProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
+      this.selectedSampleNumberProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
       phaseProperty.value = 'showingAirborneProjectiles';
     }
 
@@ -185,7 +185,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         // If the simulation is paused, unpause it.
         this.isPlayingProperty.value = true;
 
-        this.selectedSampleIndexProperty.value = 1;
+        this.selectedSampleNumberProperty.value = 1;
         field.finishCurrentSample();
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
@@ -195,7 +195,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
           // If the simulation is paused, unpause it.
           this.isPlayingProperty.value = true;
 
-          this.selectedSampleIndexProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
+          this.selectedSampleNumberProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
         }
 
         field.finishCurrentSample();

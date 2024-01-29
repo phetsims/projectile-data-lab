@@ -37,7 +37,7 @@ export default class SampleSelectorNode extends SelectorNode {
 
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
-    selectedSampleIndexProperty: TProperty<number> & PhetioObject,
+    selectedSampleNumberProperty: TProperty<number> & PhetioObject,
     numberOfStartedSamplesProperty: TReadOnlyProperty<number>,
     numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
     sampleMeanProperty: TReadOnlyProperty<number | null>,
@@ -52,7 +52,7 @@ export default class SampleSelectorNode extends SelectorNode {
     // Reuse text labels to avoid memory leaks
     const noDataText = new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SELECTOR_FONT, maxWidth: MAX_TEXT_WIDTH } );
     const titleText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleNumberOfCountPatternStringProperty, {
-      number: selectedSampleIndexProperty,
+      number: selectedSampleNumberProperty,
       count: numberOfStartedSamplesProperty
     } ), {
       font: PDLConstants.SELECTOR_FONT,
@@ -74,16 +74,16 @@ export default class SampleSelectorNode extends SelectorNode {
 
     // Note the similarity between this implementation and the one in ProjectileSelectorNode
     const rangeProperty = new DerivedProperty(
-      [ numberOfStartedSamplesProperty, selectedSampleIndexProperty, phaseProperty, isContinuousLaunchingProperty ],
-      ( startedSampleCount, selectedSampleIndex, phase, isContinuousLaunching ) => {
+      [ numberOfStartedSamplesProperty, selectedSampleNumberProperty, phaseProperty, isContinuousLaunchingProperty ],
+      ( startedSampleCount, selectedSampleNumber, phase, isContinuousLaunching ) => {
         if ( startedSampleCount === 0 ) {
-          return new Range( 0, 0 );
+          return new Range( 1, 1 );
         }
 
         else if ( phase !== 'showingCompleteSampleWithMean' || isContinuousLaunching ) {
 
           // If some are airborne, then disable the buttons, freezing at the currently selected value
-          return new Range( selectedSampleIndex, selectedSampleIndex );
+          return new Range( selectedSampleNumber, selectedSampleNumber );
         }
         else {
 
@@ -92,7 +92,7 @@ export default class SampleSelectorNode extends SelectorNode {
         }
       } );
 
-    Multilink.multilink( [ samplingFieldProperty, selectedSampleIndexProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
+    Multilink.multilink( [ samplingFieldProperty, selectedSampleNumberProperty, numberOfStartedSamplesProperty, numberOfCompletedSamplesProperty ],
       ( samplingField, selectedSample, numberOfStartedSamples, numberOfCompletedSamples ) => {
 
         if ( numberOfStartedSamples === 0 ) {
@@ -138,7 +138,7 @@ export default class SampleSelectorNode extends SelectorNode {
       maxHeight: 60
     } );
 
-    super( sampleCardContainer, selectedSampleIndexProperty, rangeProperty, {
+    super( sampleCardContainer, selectedSampleNumberProperty, rangeProperty, {
       tandem: options.tandem
     } );
   }

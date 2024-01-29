@@ -256,7 +256,7 @@ export default class HistogramNode extends Node {
         }
         else if ( field instanceof SamplingField ) {
           const samples = field.getHistogramData();
-          const selectedOne = field.selectedSampleIndexProperty.value;
+          const selectedOne = field.selectedSampleNumberProperty.value;
           histogramPainter.setHistogramData( samples, samples[ selectedOne - 1 ] );
         }
         else {
@@ -281,7 +281,7 @@ export default class HistogramNode extends Node {
       else if ( field instanceof SamplingField ) {
 
         // Show a different selected brick
-        field.selectedSampleIndexProperty.link( () => updateHistogram() );
+        field.selectedSampleNumberProperty.link( () => updateHistogram() );
 
         // When we get a new mean, redraw the histogram
         field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );

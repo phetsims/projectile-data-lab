@@ -164,7 +164,7 @@ export default class SampleThumbnailNode extends Node {
     fields.forEach( field => {
 
       field.projectilesClearedEmitter.addListener( () => updateHistogram() );
-      field.selectedSampleIndexProperty.link( () => updateHistogram() );
+      field.selectedSampleNumberProperty.link( () => updateHistogram() );
       field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
       field.phaseProperty.link( () => updateHistogram() );
     } );
