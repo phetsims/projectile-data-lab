@@ -203,8 +203,8 @@ export default class IntervalToolNode extends Node {
     readoutVBox.addInputListener( new KeyboardDragListener( {
       start: () => grabClip.play(),
       end: () => releaseClip.play(),
-      dragVelocity: 300, // velocity of the Node being dragged, in view coordinates per second
-      shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
+      dragSpeed: 300, // drag speed, in view coordinates per second
+      shiftDragSpeed: 20, // slower drag speed
       positionProperty: centerProperty,
       transform: modelViewTransform,
       tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' )
@@ -237,8 +237,8 @@ export default class IntervalToolNode extends Node {
     edge1Sphere.addInputListener( new KeyboardDragListener( {
       start: () => grabClip.play(),
       end: () => releaseClip.play(),
-      dragVelocity: 300, // velocity of the Node being dragged, in view coordinates per second
-      shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
+      dragSpeed: 300, // drag speed, in view coordinates per second
+      shiftDragSpeed: 20, // slower drag speed
       positionProperty: edge1Property,
       transform: modelViewTransform,
       tandem: providedOptions.tandem.createTandem( 'edge1KeyboardDragListener' ),
@@ -248,8 +248,8 @@ export default class IntervalToolNode extends Node {
     edge2Sphere.addInputListener( new KeyboardDragListener( {
       start: () => grabClip.play(),
       end: () => releaseClip.play(),
-      dragVelocity: 300, // velocity of the Node being dragged, in view coordinates per second
-      shiftDragVelocity: 20, // velocity with the Shift key pressed, typically slower than dragVelocity
+      dragSpeed: 300, // drag speed, in view coordinates per second
+      shiftDragSpeed: 20, // slower drag speed
       positionProperty: edge2Property,
       transform: modelViewTransform,
       tandem: providedOptions.tandem.createTandem( 'edge2KeyboardDragListener' ),
