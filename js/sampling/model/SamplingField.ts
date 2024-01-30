@@ -135,16 +135,19 @@ export default class SamplingField extends Field {
     this.phaseProperty = new StringUnionProperty<SamplingPhase>( 'idle', {
       validValues: SamplingPhaseValues,
       tandem: options.tandem.createTandem( 'phaseProperty' ),
+      phetioReadOnly: true,
       phetioDocumentation: 'The sampling screen is managed by a finite state machine. The possible states are called phases. For internal phet-io use only, for managing state save and load.'
     } );
 
     this.timeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeProperty' ),
+      phetioReadOnly: true,
       phetioDocumentation: 'The total elapsed time of running the model, so we can update the current phase and/or move to the next phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
     this.phaseStartTimeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'phaseStartTimeProperty' ),
+      phetioReadOnly: true,
       phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
@@ -336,7 +339,6 @@ export default class SamplingField extends Field {
 
   // When the eraser button is pressed, clear the selected Field's projectiles.
   public override clearProjectiles(): void {
-
     super.clearProjectiles();
     this.updateComputedProperties();
   }
