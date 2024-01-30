@@ -104,7 +104,6 @@ export default class MeasuresHistogramNode extends HistogramNode {
       fill: 'white',
       cornerRadius: 0
     } );
-    this.chartNode.addChild( textPanel );
 
     const dataMeasuresChartOverlay = new DataMeasuresOverlay(
       this.chartTransform,
@@ -120,7 +119,9 @@ export default class MeasuresHistogramNode extends HistogramNode {
         tandem: options.tandem.createTandem( 'dataMeasuresChartOverlay' )
       } );
 
+    // Put the text panel in front of the data measures overlay so that the text is not obscured by the overlay
     this.chartNode.addChild( dataMeasuresChartOverlay );
+    this.chartNode.addChild( textPanel );
 
     const intervalToolHighlight = new Rectangle( 0, 0, 0, 0, {
       fill: PDLColors.histogramIntervalToolFillColorProperty,

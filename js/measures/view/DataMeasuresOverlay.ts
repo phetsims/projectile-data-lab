@@ -34,13 +34,17 @@ type SelfOptions = {
 };
 export type DataMeasuresFieldOverlayOptions = SelfOptions & NodeOptions;
 
-const LINE_WIDTH = 1;
+const MEAN_LINE_WIDTH = 1.5;
+const SIDE_LINE_WIDTH = 1;
 
 // The y position of the arrows is a factor of the total height of the overlay
 const ARROW_Y_POSITION_FACTOR = 0.7;
 
+// The minimum standard deviation for which to show SD lines
+const MIN_SD_FOR_SHOW_SIDE_LINES = 0;
+
 // The minimum standard deviation for which to show span arrows
-const MIN_SD_FOR_SHOW_ARROWS = 0;
+const MIN_SD_FOR_SHOW_ARROWS = 0.2;
 
 // The vertical offset between the edge of the text label and the adjacent element
 const TEXT_OFFSET = 2;
@@ -62,7 +66,7 @@ export default class DataMeasuresOverlay extends Node {
 
     const origin = modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const isMeanVisibleProperty = new DerivedProperty(
+    const isMeanIndicatorVisibleProperty = new DerivedProperty(
       [ isMeanDisplayedProperty, meanDistanceProperty ],
       ( isMeanDisplayed, meanDistance ) => {
         return isMeanDisplayed && meanDistance !== null;
@@ -72,7 +76,7 @@ export default class DataMeasuresOverlay extends Node {
     const isSDLinesVisibleProperty = new DerivedProperty(
       [ isStandardDeviationDisplayedProperty, standardDeviationDistanceProperty ],
       ( isStandardDeviationDisplayed, standardDeviationDistance ) => {
-        return isStandardDeviationDisplayed && standardDeviationDistance !== null;
+        return isStandardDeviationDisplayed && standardDeviationDistance !== null && standardDeviationDistance > MIN_SD_FOR_SHOW_SIDE_LINES;
       } );
 
     // Show the standard deviation arrows if they are far enough apart to distinguish visually.
@@ -85,7 +89,7 @@ export default class DataMeasuresOverlay extends Node {
     const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 14;
 
     const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius, {
-      visibleProperty: isMeanVisibleProperty
+      visibleProperty: isMeanIndicatorVisibleProperty
     } );
 
     // On the field, the mean indicator is nudged down a bit so that it hides the bottom of the mean line
@@ -94,22 +98,28 @@ export default class DataMeasuresOverlay extends Node {
 
     const meanIndicatorHeight = meanIndicator.bounds.height;
 
-    const lineOptions = {
-      visibleProperty: isSDLinesVisibleProperty,
-      stroke: 'black',
-      lineWidth: LINE_WIDTH
-    };
-
-    const arrowYFactor = providedOptions.context === 'field' ? ARROW_Y_POSITION_FACTOR : 0.65;
+    const arrowYFactor = providedOptions.context === 'field' ? ARROW_Y_POSITION_FACTOR : 0.5;
 
     const arrowY = origin.y - arrowYFactor * totalHeight;
-    const ARROW_HEAD_WIDTH = 2;
+    const ARROW_HEAD_WIDTH = 6;
 
-    const meanLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), lineOptions );
+    const meanLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
+      visibleProperty: isStandardDeviationDisplayedProperty,
+      stroke: 'black',
+      lineWidth: MEAN_LINE_WIDTH
+    } );
 
-    const sideLineHeight = providedOptions.context === 'field' ? 0.78 * totalHeight : 0.7 * totalHeight;
-    const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), lineOptions );
-    const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), lineOptions );
+    const sideLineHeight = providedOptions.context === 'field' ? 0.78 * totalHeight : totalHeight;
+    const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
+      visibleProperty: isSDLinesVisibleProperty,
+      stroke: 'black',
+      lineWidth: SIDE_LINE_WIDTH
+    } );
+    const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
+      visibleProperty: isSDLinesVisibleProperty,
+      stroke: 'black',
+      lineWidth: SIDE_LINE_WIDTH
+    } );
 
     const arrowOptions: ArrowNodeOptions = {
       visibleProperty: isSDArrowsVisibleProperty,
@@ -136,7 +146,7 @@ export default class DataMeasuresOverlay extends Node {
     } );
 
     const meanLabelPanel = new PDLPanel( meanLabel, {
-      visibleProperty: DerivedProperty.and( [ isMeanVisibleProperty, isValuesDisplayedProperty ] ),
+      visibleProperty: DerivedProperty.and( [ isMeanIndicatorVisibleProperty, isValuesDisplayedProperty ] ),
       fill: 'white',
       lineWidth: 1,
       cornerRadius: 5,
@@ -148,26 +158,26 @@ export default class DataMeasuresOverlay extends Node {
       { standardDeviation: roundedStringProperty( standardDeviationDistanceProperty ) } );
 
     const sdLeftLabel = new PDLText( sdPatternStringProperty, {
-      visibleProperty: DerivedProperty.and( [ isSDLinesVisibleProperty, isValuesDisplayedProperty ] ),
+      visibleProperty: DerivedProperty.and( [ isStandardDeviationDisplayedProperty, isValuesDisplayedProperty ] ),
       font: PDLConstants.PRIMARY_FONT,
       bottom: origin.y - sideLineHeight - TEXT_OFFSET,
       maxWidth: TEXT_MAX_WIDTH
     } );
 
     const sdRightLabel = new PDLText( sdPatternStringProperty, {
-      visibleProperty: DerivedProperty.and( [ isSDLinesVisibleProperty, isValuesDisplayedProperty ] ),
+      visibleProperty: DerivedProperty.and( [ isStandardDeviationDisplayedProperty, isValuesDisplayedProperty ] ),
       font: PDLConstants.PRIMARY_FONT,
       bottom: origin.y - sideLineHeight - TEXT_OFFSET,
       maxWidth: TEXT_MAX_WIDTH
     } );
 
     Multilink.multilink( [ meanDistanceProperty, standardDeviationDistanceProperty, sdPatternStringProperty, meanLabelPanel.boundsProperty ],
-      ( average, standardDeviation ) => {
+      ( meanDistance, standardDeviationDistance ) => {
 
-        if ( average !== null && standardDeviation !== null ) {
-          const meanX = modelViewTransform.modelToViewX( average );
-          const leftX = modelViewTransform.modelToViewX( average - standardDeviation );
-          const rightX = modelViewTransform.modelToViewX( average + standardDeviation );
+        if ( meanDistance !== null && standardDeviationDistance !== null ) {
+          const meanX = modelViewTransform.modelToViewX( meanDistance );
+          const leftX = modelViewTransform.modelToViewX( meanDistance - standardDeviationDistance );
+          const rightX = modelViewTransform.modelToViewX( meanDistance + standardDeviationDistance );
 
           meanIndicator.x = meanX;
           meanLine.x = meanX;
@@ -177,13 +187,13 @@ export default class DataMeasuresOverlay extends Node {
           leftLine.x = leftX;
           rightLine.x = rightX;
 
-          leftArrow.setTail( leftX + LINE_WIDTH, leftArrow.tailY );
-          leftArrow.setTip( meanX - LINE_WIDTH, leftArrow.tipY );
-          rightArrow.setTail( rightX - LINE_WIDTH, rightArrow.tailY );
-          rightArrow.setTip( meanX + LINE_WIDTH, rightArrow.tipY );
+          leftArrow.setTail( leftX + 0.5 * SIDE_LINE_WIDTH, leftArrow.tailY );
+          leftArrow.setTip( meanX - 0.5 * MEAN_LINE_WIDTH, leftArrow.tipY );
+          rightArrow.setTail( meanX + 0.5 * MEAN_LINE_WIDTH, rightArrow.tailY );
+          rightArrow.setTip( rightX - 0.5 * SIDE_LINE_WIDTH, rightArrow.tipY );
 
-          sdLeftLabel.centerX = leftArrow.centerX;
-          sdRightLabel.centerX = rightArrow.centerX;
+          sdLeftLabel.centerX = _.mean( [ leftX, meanX ] );
+          sdRightLabel.centerX = _.mean( [ meanX, rightX ] );
 
           // Prevent the SD labels from overlapping the mean line
           if ( meanX - sdLeftLabel.right < MIN_SD_TEXT_MARGIN_X ) {
