@@ -194,11 +194,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
           // If the simulation is paused, unpause it.
           this.isPlayingProperty.value = true;
-
-          this.selectedSampleNumberProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
         }
 
-        field.finishCurrentSample();
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
     }
@@ -220,6 +217,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
   public override reset(): void {
     super.reset();
     this.sampleSizeProperty.reset();
+    this.fieldProperty.value.reset();
   }
 }
 

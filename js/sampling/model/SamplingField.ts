@@ -343,7 +343,14 @@ export default class SamplingField extends Field {
 
   public override reset(): void {
     super.reset();
+
     this.phaseProperty.reset();
+    this.timeProperty.reset();
+    this.phaseStartTimeProperty.reset();
+    this.selectedSampleNumberProperty.reset();
+    this.launchModeProperty.reset();
+
+    this.updateComputedProperties();
   }
 }
 
