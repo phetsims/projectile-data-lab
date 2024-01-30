@@ -239,7 +239,7 @@ export default class SamplingField extends Field {
   }
 
   public createLandedProjectile( sampleNumber: number ): void {
-    const projectile = this.createProjectile( sampleNumber );
+    const projectile = this.createProjectile( sampleNumber, false );
     projectile.setLanded();
 
     this.landedProjectiles.push( projectile );
@@ -293,7 +293,7 @@ export default class SamplingField extends Field {
 
       let changed = false;
       while ( this.getProjectilesInSelectedSample().length < numberProjectilesToShow ) {
-        const projectile = this.createProjectile( this.selectedSampleNumberProperty.value );
+        const projectile = this.createProjectile( this.selectedSampleNumberProperty.value, true );
         this.airborneProjectiles.push( projectile );
         this.projectileCreatedEmitter.emit( projectile );
         changed = true;

@@ -22,6 +22,10 @@ import Launcher from '../../common/model/Launcher.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import landing_mp3 from '../../../sounds/landing_mp3.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -29,6 +33,11 @@ import Range from '../../../../dot/js/Range.js';
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+const landSoundClip = new SoundClip( landing_mp3, {
+  initialOutputLevel: 1
+} );
+soundManager.addSoundGenerator( landSoundClip );
 
 type SelfOptions = {
 
@@ -115,6 +124,14 @@ export default class VSMField extends Field {
         return this.landedProjectiles[ highlightedProjectileNumber - 1 ] || null;
       } );
 
+    this.selectedProjectileProperty.link( selectedProjectile => {
+      if ( selectedProjectile ) {
+        const playbackRate = Utils.linear( 0, 100, 0.5, 3, selectedProjectile.x );
+        landSoundClip.setPlaybackRate( playbackRate );
+        landSoundClip.play();
+      }
+    } );
+
     this.stopwatchPhaseProperty = new Property<StopwatchPhase>( 'clear', {
       validValues: StopwatchPhaseValues,
       tandem: providedOptions.tandem.createTandem( 'stopwatchPhaseProperty' ),
@@ -188,7 +205,7 @@ export default class VSMField extends Field {
       return;
     }
 
-    const projectile = this.createProjectile( 0 );
+    const projectile = this.createProjectile( 0, true );
     this.airborneProjectiles.push( projectile );
 
     this.latestLaunchAngleProperty.value = projectile.launchAngle;

@@ -12,6 +12,7 @@ import launchButtonContinuous_png from '../../../images/launchButtonContinuous_p
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
 /**
  * Launch button for the projectile data lab.
@@ -61,7 +62,8 @@ export default class LaunchButton extends RectangularPushButton {
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
       phetioFeatured: true,
-      listener: launchButtonPressed
+      listener: launchButtonPressed,
+      soundPlayer: nullSoundPlayer
     }, providedOptions );
 
     super( options );

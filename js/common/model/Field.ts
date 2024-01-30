@@ -23,6 +23,15 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Launcher from './Launcher.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import Utils from '../../../../dot/js/Utils.js';
+import launch_mp3 from '../../../sounds/launch_mp3.js';
+
+const launchSoundClip = new SoundClip( launch_mp3, {
+  initialOutputLevel: 1
+} );
+soundManager.addSoundGenerator( launchSoundClip );
 
 type SelfOptions = {
 
@@ -208,8 +217,9 @@ export default abstract class Field extends PhetioObject {
     this.selectedSampleNumberProperty.reset();
   }
 
-  protected createProjectile( sampleNumber: number ): Projectile {
-    const launchAngle = this.meanAngleProperty.value + dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
+  protected createProjectile( sampleNumber: number, playSound: boolean ): Projectile {
+    const angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
+    const launchAngle = this.meanAngleProperty.value + angleDeviation;
     const launchSpeed = this.meanSpeedProperty.value + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
@@ -220,6 +230,14 @@ export default abstract class Field extends PhetioObject {
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
 
     const launcher = this.launcherProperty.value;
+
+    if ( playSound ) {
+      const playbackRate = Utils.linear( 20, 30, 0.4, 0.8, launchSpeed );
+      const clamped = Utils.clamp( playbackRate, 0.3, 0.9 );
+
+      launchSoundClip.setPlaybackRate( clamped );
+      launchSoundClip.play();
+    }
 
     return new Projectile(
       screenTandemName,

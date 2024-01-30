@@ -15,6 +15,7 @@ import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRight
 import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
 /**
  * Selector node for choosing between a projectile (VSM Screens) or sample (Sampling Screen). Adapted from NumberSpinner
@@ -73,6 +74,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
     // increment button
     const incrementButton = new RectangularPushButton( combineOptions<RectangularPushButtonOptions>( {
+        soundPlayer: nullSoundPlayer,
         tandem: options.tandem.createTandem( 'incrementButton' ),
         listener: () => {
           numberProperty.set( numberProperty.value + 1 );
@@ -84,6 +86,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
     // decrement button
     const decrementButton = new RectangularPushButton( combineOptions<RectangularPushButtonOptions>( {
+        soundPlayer: nullSoundPlayer,
         tandem: options.tandem.createTandem( 'decrementButton' ),
         listener: () => {
           numberProperty.set( numberProperty.value - 1 );
