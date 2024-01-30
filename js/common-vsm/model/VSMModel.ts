@@ -30,7 +30,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 type SelfOptions = {
   isStandardDeviationAnglePropertyPhetioInstrumented: boolean;
 };
-export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'isFieldPropertyPhetioReadonly' | 'fieldPropertyPhetioDocumentation'>;
+export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLModelOptions<T>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'isFieldPropertyPhetioReadonly' | 'fieldPropertyPhetioDocumentation' | 'isPathVisibilityPhetioInstrumented'>;
 
 export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
@@ -67,6 +67,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
       fields: fields,
       isPathsVisible: false,
+      isPathVisibilityPhetioInstrumented: true,
       isFieldPropertyPhetioReadonly: false,
       fieldPropertyPhetioDocumentation: 'This Property represents the field that is currently selected.'
     }, providedOptions );

@@ -34,6 +34,7 @@ type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
   fields: T[];
   isPathsVisible: boolean;
+  isPathVisibilityPhetioInstrumented: boolean;
   isFieldPropertyPhetioReadonly: boolean;
   fieldPropertyPhetioDocumentation: string;
 };
@@ -205,7 +206,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {
-      tandem: visiblePropertiesTandem.createTandem( 'isPathsVisibleProperty' ),
+      tandem: providedOptions.isPathVisibilityPhetioInstrumented ? visiblePropertiesTandem.createTandem( 'isPathsVisibleProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true
     } );
 

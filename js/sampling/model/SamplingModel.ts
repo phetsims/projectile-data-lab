@@ -29,7 +29,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'isFieldPropertyPhetioReadonly' | 'fieldPropertyPhetioDocumentation'>;
+type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'isFieldPropertyPhetioReadonly' | 'fieldPropertyPhetioDocumentation' | 'isPathVisibilityPhetioInstrumented'>;
 
 const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
 
@@ -69,6 +69,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],
       fields: fields,
       isPathsVisible: true,
+      isPathVisibilityPhetioInstrumented: false,
       isFieldPropertyPhetioReadonly: true,
       fieldPropertyPhetioDocumentation: 'This Property represents the field that is currently selected. '
                                         + 'On the Sampling screen, each combination of launcher and sample size has its own field.'
