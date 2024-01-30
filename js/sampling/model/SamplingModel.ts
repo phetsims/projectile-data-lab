@@ -181,11 +181,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       field.isContinuousLaunchingProperty.toggle();
 
       if ( phaseProperty.value === 'idle' ) {
+        assert && assert( this.selectedSampleNumberProperty.value === 1, 'selectedSampleNumberProperty should be 1 when in idle phase.' );
 
         // If the simulation is paused, unpause it.
         this.isPlayingProperty.value = true;
 
-        this.selectedSampleNumberProperty.value = 1;
         field.finishCurrentSample();
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
