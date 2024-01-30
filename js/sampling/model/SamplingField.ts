@@ -179,25 +179,28 @@ export default class SamplingField extends Field {
   public updateComputedProperties(): void {
     const totalProjectiles = this.getTotalProjectileCount();
 
-    // If the selected sample is greater than the number of started samples, then we are about to start creating projectiles for a new sample
-    this.numberOfStartedSamplesProperty.value = Math.max( Math.ceil( totalProjectiles / this.sampleSize ), this.selectedSampleNumberProperty.value );
-
-    let numberOfCompletedSamples = Math.floor( totalProjectiles / this.sampleSize );
-
-    if ( this.launchModeProperty.value === 'single' &&
-         ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' || this.phaseProperty.value === 'showingAirborneProjectiles' ) ) {
-      numberOfCompletedSamples--;
+    if ( this.phaseProperty.value === 'idle' ) {
+      this.numberOfStartedSamplesProperty.value = 0;
+      this.numberOfCompletedSamplesProperty.value = 0;
+      this.sampleMeanProperty.value = null;
     }
+    else {
 
-    this.numberOfCompletedSamplesProperty.value = Math.max( 0, numberOfCompletedSamples );
+      // If the selected sample is greater than the number of started samples, then we are about to start creating projectiles for a new sample
+      this.numberOfStartedSamplesProperty.value = Math.max( Math.ceil( totalProjectiles / this.sampleSize ), this.selectedSampleNumberProperty.value );
 
-    // Update the sample mean
-    const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
+      this.numberOfCompletedSamplesProperty.value =
+        this.phaseProperty.value === 'showingCompleteSampleWithMean' ? this.numberOfStartedSamplesProperty.value :
+        this.numberOfStartedSamplesProperty.value - 1;
 
-    // This multilink is called during transient intermediate phases, so we must guard and make sure we truly have a complete sample
-    const isComplete = this.phaseProperty.value === 'showingCompleteSampleWithMean' && projectilesInSelectedSample.length === this.sampleSize;
+      // Update the sample mean
+      const projectilesInSelectedSample = this.getProjectilesInSelectedSample();
 
-    this.sampleMeanProperty.value = isComplete ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) : null;
+      // This multilink is called during transient intermediate phases, so we must guard and make sure we truly have a complete sample
+      const isComplete = this.phaseProperty.value === 'showingCompleteSampleWithMean' && projectilesInSelectedSample.length === this.sampleSize;
+
+      this.sampleMeanProperty.value = isComplete ? _.mean( projectilesInSelectedSample.map( projectile => projectile.x ) ) : null;
+    }
   }
 
   public getProjectilesInSelectedSample(): Projectile[] {
