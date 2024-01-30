@@ -173,7 +173,9 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         phaseProperty.value = 'showingCompleteSampleWithMean';
       }
 
+      // Update the selected sample number before changing the phase, so that we have the correct phase on the current sample
       this.selectedSampleNumberProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
+
       phaseProperty.value = 'showingAirborneProjectiles';
     }
 
