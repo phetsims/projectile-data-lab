@@ -151,13 +151,6 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
-    this.selectedSampleNumberProperty.link( ( newSampleNumber, oldSampleNumber ) => {
-      if ( typeof oldSampleNumber === 'number' && newSampleNumber < oldSampleNumber ) {
-        this.finishSample( oldSampleNumber );
-      }
-      this.updateComputedProperties();
-    } );
-
     const phaseChanged = () => {
       this.phaseStartTimeProperty.value = this.timeProperty.value;
       this.updateComputedProperties();
@@ -340,19 +333,18 @@ export default class SamplingField extends Field {
   // When the eraser button is pressed, clear the selected Field's projectiles.
   public override clearProjectiles(): void {
     super.clearProjectiles();
-    this.updateComputedProperties();
-  }
-
-  public override reset(): void {
-    super.reset();
 
     this.phaseProperty.reset();
     this.timeProperty.reset();
     this.phaseStartTimeProperty.reset();
     this.selectedSampleNumberProperty.reset();
-    this.launchModeProperty.reset();
 
     this.updateComputedProperties();
+  }
+
+  public override reset(): void {
+    super.reset();
+    this.launchModeProperty.reset();
   }
 }
 
