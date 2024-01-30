@@ -66,25 +66,27 @@ export default class DataMeasuresOverlay extends Node {
 
     const origin = modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const isMeanIndicatorVisibleProperty = new DerivedProperty(
-      [ isMeanDisplayedProperty, meanDistanceProperty ],
-      ( isMeanDisplayed, meanDistance ) => {
-        return isMeanDisplayed && meanDistance !== null;
-      } );
+    const isNonNullProperty = ( nullableProperty: PhetioProperty<number | null> ) =>
+      new DerivedProperty( [ nullableProperty ], nullable => nullable !== null );
 
-    // Show the standard deviation lines if they are far enough apart to distinguish visually.
-    const isSDLinesVisibleProperty = new DerivedProperty(
-      [ isStandardDeviationDisplayedProperty, standardDeviationDistanceProperty ],
-      ( isStandardDeviationDisplayed, standardDeviationDistance ) => {
-        return isStandardDeviationDisplayed && standardDeviationDistance !== null && standardDeviationDistance > MIN_SD_FOR_SHOW_SIDE_LINES;
-      } );
+    const isGreaterThanProperty = ( property: PhetioProperty<number | null>, value: number ) =>
+      new DerivedProperty( [ property ], propertyValue => propertyValue !== null && propertyValue > value );
+
+    const isMeanIndicatorVisibleProperty = DerivedProperty.and( [
+      isMeanDisplayedProperty,
+      isNonNullProperty( meanDistanceProperty )
+    ] );
+
+    const isSDLinesVisibleProperty = DerivedProperty.and( [
+      isStandardDeviationDisplayedProperty,
+      isGreaterThanProperty( standardDeviationDistanceProperty, MIN_SD_FOR_SHOW_SIDE_LINES )
+    ] );
 
     // Show the standard deviation arrows if they are far enough apart to distinguish visually.
-    const isSDArrowsVisibleProperty = new DerivedProperty(
-      [ isStandardDeviationDisplayedProperty, standardDeviationDistanceProperty ],
-      ( isStandardDeviationDisplayed, standardDeviationDistance ) => {
-        return isStandardDeviationDisplayed && standardDeviationDistance !== null && standardDeviationDistance > MIN_SD_FOR_SHOW_ARROWS;
-      } );
+    const isSDArrowsVisibleProperty = DerivedProperty.and( [
+      isStandardDeviationDisplayedProperty,
+      isGreaterThanProperty( standardDeviationDistanceProperty, MIN_SD_FOR_SHOW_ARROWS )
+    ] );
 
     const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 14;
 
@@ -104,7 +106,7 @@ export default class DataMeasuresOverlay extends Node {
     const ARROW_HEAD_WIDTH = 6;
 
     const meanLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
-      visibleProperty: isStandardDeviationDisplayedProperty,
+      visibleProperty: DerivedProperty.and( [ isStandardDeviationDisplayedProperty, isNonNullProperty( meanDistanceProperty ) ] ),
       stroke: 'black',
       lineWidth: MEAN_LINE_WIDTH
     } );
@@ -157,15 +159,21 @@ export default class DataMeasuresOverlay extends Node {
     const sdPatternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.standardDeviationMPatternStringProperty,
       { standardDeviation: roundedStringProperty( standardDeviationDistanceProperty ) } );
 
+    const isSDValuesVisibleProperty = DerivedProperty.and( [
+      isStandardDeviationDisplayedProperty,
+      isValuesDisplayedProperty,
+      isNonNullProperty( standardDeviationDistanceProperty )
+    ] );
+
     const sdLeftLabel = new PDLText( sdPatternStringProperty, {
-      visibleProperty: DerivedProperty.and( [ isStandardDeviationDisplayedProperty, isValuesDisplayedProperty ] ),
+      visibleProperty: isSDValuesVisibleProperty,
       font: PDLConstants.PRIMARY_FONT,
       bottom: origin.y - sideLineHeight - TEXT_OFFSET,
       maxWidth: TEXT_MAX_WIDTH
     } );
 
     const sdRightLabel = new PDLText( sdPatternStringProperty, {
-      visibleProperty: DerivedProperty.and( [ isStandardDeviationDisplayedProperty, isValuesDisplayedProperty ] ),
+      visibleProperty: isSDValuesVisibleProperty,
       font: PDLConstants.PRIMARY_FONT,
       bottom: origin.y - sideLineHeight - TEXT_OFFSET,
       maxWidth: TEXT_MAX_WIDTH
