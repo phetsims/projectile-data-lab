@@ -108,7 +108,6 @@ export default abstract class Field extends PhetioObject {
         phetioType: Projectile.ProjectileIO
       } ],
       tandem: options.tandem.createTandem( 'projectileLandedEmitter' ),
-      phetioFeatured: true,
 
       // We must update the arrays before anything else, see below.
       hasListenerOrderDependencies: true
