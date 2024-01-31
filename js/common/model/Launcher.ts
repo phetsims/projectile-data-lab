@@ -55,15 +55,17 @@ export default class Launcher extends PhetioObject {
 
     this.launcherMechanismProperty = new Property( launcherMechanism, {
       tandem: options.tandem.createTandem( 'launcherMechanismProperty' ),
+      phetioFeatured: true,
       phetioValueType: LauncherMechanism.LauncherMechanismIO,
       validValues: [ SPRING, PRESSURE, EXPLOSION ]
     } );
     this.standardDeviationAngleProperty = new NumberProperty( standardDeviationAngle, {
+      tandem: options.tandem.createTandem( 'standardDeviationAngleProperty' ),
+      phetioFeatured: true,
       range: PDLConstants.ANGLE_STABILIZER_RANGE,
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
-      },
-      tandem: options.tandem.createTandem( 'standardDeviationAngleProperty' )
+      }
     } );
 
     this.meanLaunchSpeedProperty = new DynamicProperty<number, number, LauncherMechanism>( this.launcherMechanismProperty, {
