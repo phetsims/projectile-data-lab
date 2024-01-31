@@ -1,14 +1,14 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { DragListener, KeyboardDragListener, Line, Node, NodeOptions, VBox } from '../../../../scenery/js/imports.js';
+import { DragListener, DragListenerOptions, KeyboardDragListener, KeyboardDragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Panel from '../../../../sun/js/Panel.js';
 import PDLText from '../../common/view/PDLText.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -188,73 +188,62 @@ export default class IntervalToolNode extends Node {
     percentPatternProperty.link( update );
     intervalReadoutStringProperty.link( update );
 
-    readoutVBox.addInputListener( new DragListener( {
-      start: () => grabClip.play(),
-      end: () => releaseClip.play(),
-      applyOffset: true,
-      useParentOffset: true,
-
-      useInputListenerCursor: true,
-      positionProperty: centerProperty,
-      transform: modelViewTransform,
-      tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
-    } ) );
-
-    readoutVBox.addInputListener( new KeyboardDragListener( {
-      start: () => grabClip.play(),
-      end: () => releaseClip.play(),
-      dragSpeed: 300, // drag speed, in view coordinates per second
-      shiftDragSpeed: 20, // slower drag speed
-      positionProperty: centerProperty,
-      transform: modelViewTransform,
-      tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' )
-    } ) );
-
     const moveToFront = ( node: Node ) => {
       return () => node.moveToFront();
     };
 
-    edge1Sphere.addInputListener( new DragListener( {
+    const listenerOptions = {
       start: () => grabClip.play(),
       end: () => releaseClip.play(),
-      useInputListenerCursor: true,
+      transform: modelViewTransform
+    };
+
+    const dragListenerOptions = {
+      useInputListenerCursor: true
+    };
+
+    readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
+      applyOffset: true,
+      useParentOffset: true,
+      positionProperty: centerProperty,
+      tandem: providedOptions.tandem.createTandem( 'centerDragListener' ),
+      drag: moveToFront( readoutVBox )
+    }, listenerOptions, dragListenerOptions ) ) );
+
+    edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       positionProperty: edge1Property,
-      transform: modelViewTransform,
       tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
       drag: moveToFront( edge1Sphere )
-    } ) );
+    }, listenerOptions, dragListenerOptions ) ) );
 
-    edge2Sphere.addInputListener( new DragListener( {
-      start: () => grabClip.play(),
-      end: () => releaseClip.play(),
-      useInputListenerCursor: true,
+    edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       positionProperty: edge2Property,
-      transform: modelViewTransform,
       tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
       drag: moveToFront( edge2Sphere )
-    } ) );
+    }, listenerOptions, dragListenerOptions ) ) );
 
-    edge1Sphere.addInputListener( new KeyboardDragListener( {
-      start: () => grabClip.play(),
-      end: () => releaseClip.play(),
+    const keyboardDragListenerOptions = {
       dragSpeed: 300, // drag speed, in view coordinates per second
-      shiftDragSpeed: 20, // slower drag speed
+      shiftDragSpeed: 20 // slower drag speed
+    };
+
+    readoutVBox.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
+      positionProperty: centerProperty,
+      tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' ),
+      drag: moveToFront( readoutVBox )
+    }, listenerOptions, keyboardDragListenerOptions ) ) );
+
+    edge1Sphere.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
       positionProperty: edge1Property,
-      transform: modelViewTransform,
       tandem: providedOptions.tandem.createTandem( 'edge1KeyboardDragListener' ),
       drag: moveToFront( edge1Sphere )
-    } ) );
+    }, listenerOptions, keyboardDragListenerOptions ) ) );
 
-    edge2Sphere.addInputListener( new KeyboardDragListener( {
-      start: () => grabClip.play(),
-      end: () => releaseClip.play(),
-      dragSpeed: 300, // drag speed, in view coordinates per second
-      shiftDragSpeed: 20, // slower drag speed
+    edge2Sphere.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
       positionProperty: edge2Property,
-      transform: modelViewTransform,
       tandem: providedOptions.tandem.createTandem( 'edge2KeyboardDragListener' ),
       drag: moveToFront( edge2Sphere )
-    } ) );
+    }, listenerOptions, keyboardDragListenerOptions ) ) );
 
     this.pdomOrder = [
       edge1Sphere,
