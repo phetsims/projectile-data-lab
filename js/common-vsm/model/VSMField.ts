@@ -6,7 +6,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import Projectile from '../../common/model/Projectile.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
-import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -14,7 +13,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import { StopwatchPhase, StopwatchPhaseValues } from './StopwatchPhase.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -59,9 +57,6 @@ export default class VSMField extends Field {
 
   public readonly selectedProjectileNumberProperty: NumberProperty;
   public readonly selectedProjectileProperty: TReadOnlyProperty<Projectile | null>;
-
-  public readonly stopwatchPhaseProperty: Property<StopwatchPhase>;
-  public readonly stopwatchElapsedTimeProperty: NumberProperty;
 
   public readonly projectileLaunchedEmitter = new Emitter<[ Projectile ]>( {
     parameters: [ {
@@ -131,18 +126,6 @@ export default class VSMField extends Field {
         landSoundClip.setPlaybackRate( playbackRate );
         landSoundClip.play();
       }
-    } );
-
-    this.stopwatchPhaseProperty = new Property<StopwatchPhase>( 'clear', {
-      validValues: StopwatchPhaseValues,
-      tandem: providedOptions.tandem.createTandem( 'stopwatchPhaseProperty' ),
-      phetioDocumentation: 'This property represents the phase of the stopwatch used to time projectile flight.',
-      phetioValueType: StringUnionIO( StopwatchPhaseValues )
-    } );
-
-    this.stopwatchElapsedTimeProperty = new NumberProperty( 0, {
-      tandem: providedOptions.tandem.createTandem( 'stopwatchElapsedTimeProperty' ),
-      phetioDocumentation: 'This property is the elapsed time of the stopwatch, in seconds.'
     } );
 
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
@@ -216,11 +199,6 @@ export default class VSMField extends Field {
   }
 
   public step( dt: number ): void {
-
-    if ( this.stopwatchPhaseProperty.value === 'running' ) {
-      this.stopwatchElapsedTimeProperty.value += dt;
-    }
-
     this.stepAirborneParticles( dt );
   }
 
@@ -229,8 +207,6 @@ export default class VSMField extends Field {
 
     this.standardDeviationAngleProperty.reset();
     this.continuousLaunchTimer.reset();
-    this.stopwatchPhaseProperty.reset();
-    this.stopwatchElapsedTimeProperty.reset();
   }
 
   public override clearProjectiles(): void {

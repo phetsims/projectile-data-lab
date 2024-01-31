@@ -53,7 +53,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, T>;
   public readonly numberOfLandedProjectilesProperty: DynamicProperty<number, number, T>;
   public readonly totalProjectileCountProperty: DynamicProperty<number, number, T>;
-  public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, T>;
 
   public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
 
@@ -140,10 +139,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioReadOnly: true,
       phetioState: false,
       phetioValueType: NumberIO
-    } );
-
-    this.stopwatchElapsedTimeProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
-      derive: t => t.stopwatchElapsedTimeProperty
     } );
 
     const visiblePropertiesTandem = providedOptions.tandem.createTandem( 'visibleProperties' );
