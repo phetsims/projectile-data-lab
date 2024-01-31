@@ -96,7 +96,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: histogramTandem.createTandem( 'selectedBinWidthProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the bin width of the field and histogram.',
+      phetioDocumentation: 'This property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".',
       phetioValueType: NumberIO
     } );
 
@@ -104,7 +104,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       validValues: [ 10, 20, 50, 100, 200 ],
       tandem: histogramTandem.createTandem( 'selectedTotalBinsProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the total number of bins in the histogram.',
+      phetioDocumentation: 'This property configures the total number of bins in the histogram. It is used when the bin strategy is "total bins".',
       phetioValueType: NumberIO
     } );
 
