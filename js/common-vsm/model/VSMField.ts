@@ -85,6 +85,7 @@ export default class VSMField extends Field {
     const launcherProperty = new Property( launchers[ 0 ], {
       validValues: launchers,
       tandem: launchers.length === 1 ? Tandem.OPT_OUT : options.tandem.createTandem( 'launcherProperty' ),
+      phetioFeatured: true,
       phetioReadOnly: options.isLauncherPropertyPhetioReadOnly,
       phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
