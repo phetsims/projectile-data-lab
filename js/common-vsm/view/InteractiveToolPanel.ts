@@ -23,6 +23,7 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import TimeDisplayNode from './TimeDisplayNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -33,7 +34,7 @@ export default class InteractiveToolPanel extends PDLPanel {
 
   public constructor(
     isMeasuringTapeVisibleProperty: BooleanProperty,
-    isStopwatchVisibleProperty: BooleanProperty,
+    isStopwatchVisibleProperty: PhetioProperty<boolean>,
     providedOptions: InteractiveToolPanelOptions ) {
 
     const options = optionize<InteractiveToolPanelOptions, SelfOptions, PDLPanelOptions>()( {

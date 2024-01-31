@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, Image, ManualConstraint, Node, Path, Rectangle, VBox } from '../../../../scenery/js/imports.js';
+import { Color, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -24,17 +24,10 @@ import FieldRadioButtonGroup from './FieldRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import TimeDisplayNode from './TimeDisplayNode.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
-import { StopwatchPhase } from '../model/StopwatchPhase.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import PDLColors from '../../common/PDLColors.js';
-import Dimension2 from '../../../../dot/js/Dimension2.js';
-import UTurnArrowShape from '../../../../scenery-phet/js/UTurnArrowShape.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
+import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -54,6 +47,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
   protected readonly topRightUIContainer: VBox;
   protected readonly eraserButton: EraserButton;
   protected readonly measuringTapeNode: MeasuringTapeNode;
+  protected readonly stopwatchNode: StopwatchNode;
 
   protected constructor( model: VSMModel<T>,
                          public readonly launchPanel: VSMLaunchPanel,
@@ -116,49 +110,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       }
     );
 
-    // Create the timed launch button
-
-    const timedLaunchIconToggleNode = new ToggleNode<StopwatchPhase, Node>( model.stopwatchPhaseProperty, [
-      {
-        value: 'clear',
-        createNode: () => new Image( launchButtonSingle_png )
-      }, {
-        value: 'running',
-        createNode: () => new Rectangle( 0, 0, 50, 50, {
-          fill: 'black',
-          stroke: 'white',
-          lineWidth: 2,
-          cornerRadius: 5,
-          opacity: 0.75 // Adjusts the color of the icon to look more like part of the button
-        } )
-      },
-      {
-        value: 'stopped',
-        createNode: () => new Path( new UTurnArrowShape( 40 ), {
-          fill: 'black',
-          stroke: 'white',
-          lineWidth: 2,
-          opacity: 0.75 // Adjusts the color of the icon to look more like part of the button
-        } )
-      }
-    ], {} );
-
-    const timedLaunchButton = new RectangularPushButton( {
-      visibleProperty: model.isStopwatchVisibleProperty,
-      content: timedLaunchIconToggleNode,
-      fireOnDown: true,
-      left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.42 * PDLConstants.FIELD_WIDTH,
-      bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      baseColor: PDLColors.timerDisplayColorProperty,
-      size: new Dimension2( 85, 45 ),
-      yMargin: 5,
-      tandem: options.tandem.createTandem( 'timedLaunchButton' ),
-      phetioFeatured: true,
-      listener: () => {
-        model.launchButtonPressed();
-      }
-    } );
-
     // tools
 
     this.measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
@@ -185,21 +136,22 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       phetioDocumentation: 'The node for the measuring tape'
     } );
 
+    const dragBoundsProperty = new Property( new Bounds2( 0, 0, 100, 100 ) );
+
     // Allow the measuring tape to be dragged within the visible bounds of the screen, so that outliers can be measured.
     this.visibleBoundsProperty.link( visibleBounds => {
-      const viewBounds = this.modelViewTransform.viewToModelBounds( visibleBounds.erodedXY( PDLConstants.SCREEN_VIEW_X_MARGIN, PDLConstants.SCREEN_VIEW_Y_MARGIN ) );
-      this.measuringTapeNode.setDragBounds( new Bounds2( 0, 0, viewBounds.maxX, viewBounds.maxY ) );
+      const viewBounds = visibleBounds.erodedXY( PDLConstants.SCREEN_VIEW_X_MARGIN, PDLConstants.SCREEN_VIEW_Y_MARGIN );
+      const modelBounds = this.modelViewTransform.viewToModelBounds( viewBounds );
+
+      // Don't allow dragging left of x=0, or below y=0
+      this.measuringTapeNode.setDragBounds( new Bounds2( 0, 0, modelBounds.maxX, modelBounds.maxY ) );
+
+      dragBoundsProperty.value = viewBounds;
     } );
 
-    const timeDisplayNode = new TimeDisplayNode( model.stopwatchElapsedTimeProperty, {
-      visibleProperty: model.isStopwatchVisibleProperty,
-      tandem: options.tandem.createTandem( 'timeDisplayNode' )
-    } );
-    timeDisplayNode.leftCenter = this.launchButton.rightCenter;
-
-    model.isStopwatchVisibleProperty.link( isStopwatchVisible => {
-      this.launchButton.visible = !isStopwatchVisible;
-      this.singleOrContinuousRadioButtonGroup.visible = !isStopwatchVisible;
+    this.stopwatchNode = new StopwatchNode( model.stopwatch, {
+      tandem: options.tandem.createTandem( 'stopwatchNode' ),
+      dragBoundsProperty: dragBoundsProperty
     } );
 
     const isLauncherRaisedProperty = new DerivedProperty( [ model.launcherHeightProperty ], height => height > 0 );
@@ -280,14 +232,13 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     this.behindProjectilesLayer.addChild( fieldSign );
 
-    this.toolsLayer.addChild( timeDisplayNode );
     this.toolsLayer.addChild( angleToolNode );
     this.toolsLayer.addChild( speedToolNode );
     this.toolsLayer.addChild( this.measuringTapeNode );
+    this.toolsLayer.addChild( this.stopwatchNode );
 
     this.addChild( this.projectileSelectorNode );
     this.addChild( this.fieldRadioButtonGroup );
-    this.addChild( timedLaunchButton );
     this.addChild( this.accordionBox );
     this.addChild( this.launchPanel );
     this.addChild( this.topRightUIContainer );
@@ -381,6 +332,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
       // Play area tools
       this.measuringTapeNode,
+      this.stopwatchNode,
       ...( intervalToolNode ? [ intervalToolNode ] : [] ),
 
       // Projectile selector

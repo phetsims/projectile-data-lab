@@ -43,7 +43,7 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
     } );
     const interactiveToolPanel = new InteractiveToolPanel(
       model.isMeasuringTapeVisibleProperty,
-      model.isStopwatchVisibleProperty, {
+      model.stopwatch.isVisibleProperty, {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 

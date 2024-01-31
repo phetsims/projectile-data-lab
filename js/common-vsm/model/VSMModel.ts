@@ -18,8 +18,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import VSMField from './VSMField.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import Projectile from '../../common/model/Projectile.js';
-import { StopwatchPhase } from './StopwatchPhase.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
@@ -40,7 +38,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
   // Interactive tool visibility
   public readonly isMeasuringTapeVisibleProperty: BooleanProperty;
-  public readonly isStopwatchVisibleProperty: BooleanProperty;
 
   public readonly stopwatch: Stopwatch;
 
@@ -56,7 +53,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, T>;
   public readonly numberOfLandedProjectilesProperty: DynamicProperty<number, number, T>;
   public readonly totalProjectileCountProperty: DynamicProperty<number, number, T>;
-  public readonly stopwatchPhaseProperty: DynamicProperty<StopwatchPhase, StopwatchPhase, T>;
   public readonly stopwatchElapsedTimeProperty: DynamicProperty<number, number, T>;
 
   public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
@@ -146,11 +142,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioValueType: NumberIO
     } );
 
-    this.stopwatchPhaseProperty = new DynamicProperty<StopwatchPhase, StopwatchPhase, T>( this.fieldProperty, {
-      bidirectional: true,
-      derive: t => t.stopwatchPhaseProperty
-    } );
-
     this.stopwatchElapsedTimeProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       derive: t => t.stopwatchElapsedTimeProperty
     } );
@@ -188,60 +179,17 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       phetioReadOnly: true
     } );
 
-    this.isStopwatchVisibleProperty = new BooleanProperty( false, {
-      tandem: visiblePropertiesTandem.createTandem( 'isStopwatchVisibleProperty' ),
-      phetioFeatured: true
-    } );
-
     this.stopwatch = new Stopwatch( {
-      tandem: providedOptions.tandem.createTandem( 'stopwatch' )
-    } );
+      tandem: providedOptions.tandem.createTandem( 'stopwatch' ),
 
-    // When the stopwatch is hidden, clear it.
-    this.isStopwatchVisibleProperty.link( isStopwatchVisible => {
-      if ( !isStopwatchVisible ) {
-        this.stopwatchPhaseProperty.value = 'clear';
-      }
-    } );
-
-    // When displaying the stopwatch or switching field with the stopwatch displayed, stop continuous launching
-    Multilink.multilink( [ this.isStopwatchVisibleProperty, this.fieldProperty ],
-      ( isStopwatchVisible, field ) => {
-        if ( isStopwatchVisible ) {
-          field.isContinuousLaunchingProperty.value = false;
-        }
-      } );
-
-    this.stopwatchPhaseProperty.lazyLink( stopwatchPhase => {
-      if ( stopwatchPhase === 'clear' ) {
-        this.stopwatch.reset();
-        this.fieldProperty.value.stopwatchElapsedTimeProperty.reset();
-      }
-      else if ( stopwatchPhase === 'running' ) {
-        this.stopwatch.isRunningProperty.value = true;
-      }
-      else {
-        this.stopwatch.isRunningProperty.value = false;
-      }
+      // view coordinates
+      position: new Vector2( 675, 275 )
     } );
   }
 
   public override launchButtonPressed(): void {
 
-    if ( this.isStopwatchVisibleProperty.value ) {
-
-      if ( this.stopwatchPhaseProperty.value === 'clear' ) {
-        this.stopwatchPhaseProperty.value = 'running';
-        this.launchProjectile();
-      }
-      else if ( this.stopwatchPhaseProperty.value === 'running' ) {
-        this.stopwatchPhaseProperty.value = 'stopped';
-      }
-      else {
-        this.stopwatchPhaseProperty.value = 'clear';
-      }
-    }
-    else if ( this.singleOrContinuousProperty.value === 'single' ) {
+    if ( this.singleOrContinuousProperty.value === 'single' ) {
       this.launchProjectile();
     }
     else {
@@ -292,9 +240,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     this.isLaunchSpeedVisibleProperty.reset();
 
     this.isMeasuringTapeVisibleProperty.reset();
-    this.isStopwatchVisibleProperty.reset();
-    this.stopwatchPhaseProperty.reset();
-
     this.measuringTapeBasePositionProperty.reset();
     this.measuringTapeTipPositionProperty.reset();
 

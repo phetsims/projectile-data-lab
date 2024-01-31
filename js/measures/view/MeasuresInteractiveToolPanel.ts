@@ -12,6 +12,7 @@ import IntervalToolNode from './IntervalToolNode.js';
 import IntervalTool from '../model/IntervalTool.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOptions;
@@ -25,7 +26,7 @@ type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOpt
 export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
   public constructor(
     isMeasuringTapeVisibleProperty: BooleanProperty,
-    isStopwatchVisibleProperty: BooleanProperty,
+    isStopwatchVisibleProperty: PhetioProperty<boolean>,
     isIntervalToolVisibleProperty: BooleanProperty,
     providedOptions: PDLPanelOptions ) {
 
