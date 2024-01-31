@@ -17,6 +17,9 @@
   "singleLaunch": {
     "value": "Single"
   },
+  "launch": {
+    "value": "Launch"
+  },
   "continuousLaunch": {
     "value": "Continuous"
   },

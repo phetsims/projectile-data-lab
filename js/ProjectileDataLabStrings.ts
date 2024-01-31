@@ -19,6 +19,7 @@ type StringsType = {
     'samplingStringProperty': LocalizedStringProperty;
   };
   'singleLaunchStringProperty': LocalizedStringProperty;
+  'launchStringProperty': LocalizedStringProperty;
   'continuousLaunchStringProperty': LocalizedStringProperty;
   'singleSampleStringProperty': LocalizedStringProperty;
   'continuousSamplingStringProperty': LocalizedStringProperty;
