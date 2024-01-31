@@ -1,6 +1,9 @@
 // Copyright 2023, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * Abstraction for timed-event series that helps with variable frame-rates. Note this has similar functionality to
@@ -13,23 +16,25 @@ import projectileDataLab from '../../projectileDataLab.js';
  */
 export default class PDLEventTimer {
 
-  // Whether the timer is running
-  private isRunning = false;
-
   // Amount of time between events, in seconds
-  private period: number;
+  private readonly period: number;
+
+  // Whether the timer is running
+  private readonly isRunningProperty: BooleanProperty;
 
   // Remaining time until the next event, in seconds
-  private timeRemaining: number;
+  private readonly timeRemainingProperty: NumberProperty;
 
-  // The original period of the timer, in seconds, for resetting
-  private readonly originalPeriod: number;
-
-  public constructor( period: number ) {
+  public constructor( period: number, tandem: Tandem ) {
     this.period = period;
-    this.timeRemaining = period;
 
-    this.originalPeriod = period;
+    this.isRunningProperty = new BooleanProperty( false, {
+      tandem: tandem.createTandem( 'isRunningProperty' )
+    } );
+
+    this.timeRemainingProperty = new NumberProperty( period, {
+      tandem: tandem.createTandem( 'timeRemainingProperty' )
+    } );
   }
 
   /**
@@ -38,17 +43,17 @@ export default class PDLEventTimer {
    */
   public step( dt: number, callback: () => void ): void {
 
-    if ( this.isRunning ) {
+    if ( this.isRunningProperty.value ) {
 
       // isRunning may be changed in the callbacks, so we much check it each time
-      while ( dt >= this.timeRemaining && this.isRunning ) {
-        dt -= this.timeRemaining;
-        this.timeRemaining = this.period;
+      while ( dt >= this.timeRemainingProperty.value && this.isRunningProperty.value ) {
+        dt -= this.timeRemainingProperty.value;
+        this.timeRemainingProperty.value = this.period;
         callback();
       }
 
       // use up the remaining time
-      this.timeRemaining -= dt;
+      this.timeRemainingProperty.value -= dt;
     }
   }
 
@@ -56,24 +61,16 @@ export default class PDLEventTimer {
    * Called from reset(), restore all the initial state.
    */
   public reset(): void {
-    this.period = this.originalPeriod;
-    this.timeRemaining = this.period;
-    this.isRunning = false;
+    this.timeRemainingProperty.reset();
+    this.isRunningProperty.reset();
   }
 
   /**
    * Schedule the next event to occur at the current period, and start the timer.
    */
   public restart(): void {
-    this.timeRemaining = this.period;
-    this.isRunning = true;
-  }
-
-  /**
-   * Stop the timer, and do not schedule the next event. Any accumulated time remains.
-   */
-  public stop(): void {
-    this.isRunning = false;
+    this.timeRemainingProperty.value = this.period;
+    this.isRunningProperty.value = true;
   }
 
   /**
@@ -81,14 +78,7 @@ export default class PDLEventTimer {
    * event would occur when unpaused.
    */
   public setZeroTimeRemaining(): void {
-    this.timeRemaining = 0;
-  }
-
-  /**
-   * Change the period of the timer. May be changed while the timer is sending events.
-   */
-  public setPeriod( period: number ): void {
-    this.period = period;
+    this.timeRemainingProperty.value = 0;
   }
 }
 

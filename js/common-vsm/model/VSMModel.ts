@@ -207,7 +207,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   }
 
   public step( dt: number ): void {
-
+    
     if ( !this.isPlayingProperty.value ) {
       return;
     }

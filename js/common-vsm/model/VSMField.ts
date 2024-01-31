@@ -53,7 +53,7 @@ export default class VSMField extends Field {
   // The most recent speed of a projectile launched by the launcher, in meters per second
   public readonly latestLaunchSpeedProperty: Property<number>;
 
-  public readonly continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES );
+  public readonly continuousLaunchTimer;
 
   public readonly selectedProjectileNumberProperty: NumberProperty;
   public readonly selectedProjectileProperty: TReadOnlyProperty<Projectile | null>;
@@ -86,6 +86,7 @@ export default class VSMField extends Field {
     } );
 
     super( launchers, launcherProperty, options );
+    this.continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES, options.tandem.createTandem( 'continuousLaunchTimer' ) );
 
     this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
