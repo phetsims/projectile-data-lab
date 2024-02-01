@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import optionize from '../../../../phet-core/js/optionize.js';
-import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Line, LineOptions, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -44,7 +44,7 @@ const ARROW_Y_POSITION_FACTOR = 0.7;
 const MIN_SD_FOR_SHOW_SIDE_LINES = 0;
 
 // The minimum standard deviation for which to show span arrows
-const MIN_SD_FOR_SHOW_ARROWS = 0.2;
+const MIN_SD_FOR_SHOW_ARROWS = 1;
 
 // The vertical offset between the edge of the text label and the adjacent element
 const TEXT_OFFSET = 2;
@@ -72,12 +72,15 @@ export default class DataMeasuresOverlay extends Node {
     const isGreaterThanProperty = ( property: PhetioProperty<number | null>, value: number ) =>
       new DerivedProperty( [ property ], propertyValue => propertyValue !== null && propertyValue > value );
 
+    const isLessThanOrEqualToProperty = ( property: PhetioProperty<number | null>, value: number ) =>
+      new DerivedProperty( [ property ], propertyValue => propertyValue !== null && propertyValue <= value );
+
     const isMeanIndicatorVisibleProperty = DerivedProperty.and( [
       isMeanDisplayedProperty,
       isNonNullProperty( meanDistanceProperty )
     ] );
 
-    const isSDLinesVisibleProperty = DerivedProperty.and( [
+    const isSDVerticalLinesVisibleProperty = DerivedProperty.and( [
       isStandardDeviationDisplayedProperty,
       isGreaterThanProperty( standardDeviationDistanceProperty, MIN_SD_FOR_SHOW_SIDE_LINES )
     ] );
@@ -86,6 +89,12 @@ export default class DataMeasuresOverlay extends Node {
     const isSDArrowsVisibleProperty = DerivedProperty.and( [
       isStandardDeviationDisplayedProperty,
       isGreaterThanProperty( standardDeviationDistanceProperty, MIN_SD_FOR_SHOW_ARROWS )
+    ] );
+
+    // If the SD arrows are visible, then the SD horizontal lines are not visible
+    const isSDHorizontalLinesVisibleProperty = DerivedProperty.and( [
+      isStandardDeviationDisplayedProperty,
+      isLessThanOrEqualToProperty( standardDeviationDistanceProperty, MIN_SD_FOR_SHOW_ARROWS )
     ] );
 
     const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 14;
@@ -113,12 +122,12 @@ export default class DataMeasuresOverlay extends Node {
 
     const sideLineHeight = providedOptions.context === 'field' ? 0.78 * totalHeight : totalHeight;
     const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
-      visibleProperty: isSDLinesVisibleProperty,
+      visibleProperty: isSDVerticalLinesVisibleProperty,
       stroke: 'black',
       lineWidth: SIDE_LINE_WIDTH
     } );
     const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
-      visibleProperty: isSDLinesVisibleProperty,
+      visibleProperty: isSDVerticalLinesVisibleProperty,
       stroke: 'black',
       lineWidth: SIDE_LINE_WIDTH
     } );
@@ -128,13 +137,22 @@ export default class DataMeasuresOverlay extends Node {
       doubleHead: true,
       headWidth: ARROW_HEAD_WIDTH,
       headHeight: 6,
-      lineWidth: 0.5,
+      lineWidth: 0.75,
       tailWidth: 1,
       stroke: 'black'
     };
 
     const leftArrow = new ArrowNode( 0, arrowY, 0, arrowY, arrowOptions );
     const rightArrow = new ArrowNode( 0, arrowY, 0, arrowY, arrowOptions );
+
+    const sdHorizontalLineOptions: LineOptions = {
+      visibleProperty: isSDHorizontalLinesVisibleProperty,
+      lineWidth: 1.5,
+      stroke: 'black'
+    };
+
+    const leftSDHorizontalLine = new Line( 0, arrowY, 0, arrowY, sdHorizontalLineOptions );
+    const rightSDHorizontalLine = new Line( 0, arrowY, 0, arrowY, sdHorizontalLineOptions );
 
     const roundedStringProperty = ( nullableNumberProperty: PhetioProperty<number | null> ) =>
       new DerivedProperty( [ nullableNumberProperty ], nullableNumber => {
@@ -200,6 +218,11 @@ export default class DataMeasuresOverlay extends Node {
           rightArrow.setTail( meanX + 0.5 * MEAN_LINE_WIDTH, rightArrow.tailY );
           rightArrow.setTip( rightX - 0.5 * SIDE_LINE_WIDTH, rightArrow.tipY );
 
+          leftSDHorizontalLine.x1 = leftX;
+          leftSDHorizontalLine.x2 = meanX;
+          rightSDHorizontalLine.x1 = meanX;
+          rightSDHorizontalLine.x2 = rightX;
+
           sdLeftLabel.centerX = _.mean( [ leftX, meanX ] );
           sdRightLabel.centerX = _.mean( [ meanX, rightX ] );
 
@@ -215,7 +238,19 @@ export default class DataMeasuresOverlay extends Node {
 
 
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
-      children: [ leftLine, rightLine, meanLine, leftArrow, rightArrow, sdLeftLabel, sdRightLabel, meanIndicator, meanLabelPanel ]
+      children: [
+        leftArrow,
+        rightArrow,
+        leftSDHorizontalLine,
+        rightSDHorizontalLine,
+        leftLine,
+        rightLine,
+        meanLine,
+        sdLeftLabel,
+        sdRightLabel,
+        meanIndicator,
+        meanLabelPanel
+      ]
     }, providedOptions );
 
     super( options );

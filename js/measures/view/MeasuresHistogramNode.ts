@@ -102,7 +102,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
     const textPanel = new PDLPanel( textVBox, {
       visibleProperty: isValuesVisibleProperty,
       fill: 'white',
-      cornerRadius: 0
+      cornerRadius: 5
     } );
 
     const dataMeasuresChartOverlay = new DataMeasuresOverlay(
