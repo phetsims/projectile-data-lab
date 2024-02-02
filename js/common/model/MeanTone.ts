@@ -11,7 +11,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import { playbackRateForPosition } from './LandingSound.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import numberTone172Hz_mp3 from '../../../sounds/numberTone172Hz_mp3.js';
+import numberTone_mp3 from '../../../sounds/numberTone_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
 // This is the dominant frequency of numberTone_mp3. If the audio file is changed, this will need to be updated.
@@ -25,7 +25,7 @@ const meanFilter = new BiquadFilterNode( phetAudioContext, {
   Q: 2
 } );
 
-const meanSoundClip = new SoundClip( numberTone172Hz_mp3, {
+const meanSoundClip = new SoundClip( numberTone_mp3, {
   initialOutputLevel: INITIAL_OUTPUT_LEVEL,
   additionalAudioNodes: [ meanFilter ]
 } );
