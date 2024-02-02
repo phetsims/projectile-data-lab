@@ -158,8 +158,6 @@ export default class SamplingField extends Field {
       this.updateComputedProperties();
 
       if ( phase === 'showingCompleteSampleWithMean' ) {
-        console.log( 'play mean sound' );
-        console.log( this.sampleMeanProperty.value! );
         MeanTone.playMean( this.sampleMeanProperty.value! );
       }
     };
