@@ -134,7 +134,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       significantFigures: 1,
       textFont: PDLConstants.MEASURING_TAPE_FONT,
       tandem: options.tandem.createTandem( 'measuringTapeNode' ),
-      phetioDocumentation: 'The node for the measuring tape'
+      phetioDocumentation: 'The node for the measuring tape',
+      phetioFeaturedMeasuredDistanceProperty: true
     } );
 
     const dragBoundsProperty = new Property( new Bounds2( 0, 0, 100, 100 ) );
