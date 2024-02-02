@@ -15,6 +15,7 @@ import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherCo
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import Launcher from './Launcher.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
+import LandingSound from './LandingSound.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -110,6 +111,7 @@ export default class Projectile {
     if ( this.y <= 0 ) {
       this.setLanded();
       field.projectileLandedEmitter.emit( this );
+      LandingSound.play( this.x );
     }
   }
 

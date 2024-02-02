@@ -23,7 +23,6 @@ import Range from '../../../../dot/js/Range.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import landing_mp3 from '../../../sounds/landing_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import LandingSound from '../../common/model/LandingSound.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -120,12 +119,6 @@ export default class VSMField extends Field {
       highlightedProjectileNumber => {
         return this.landedProjectiles[ highlightedProjectileNumber - 1 ] || null;
       } );
-
-    this.selectedProjectileProperty.link( selectedProjectile => {
-      if ( selectedProjectile ) {
-        LandingSound.play( selectedProjectile.x );
-      }
-    } );
 
     // A projectile is counted if it is landed or if it goes below y=0 meters (beyond the 100m mark horizontally)
     this.numberOfLandedProjectilesProperty = new NumberProperty( 0, {

@@ -26,6 +26,7 @@ import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import { MeanTone } from '../../common/model/MeanTone.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -168,6 +169,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       // If the simulation is paused, unpause it.
       this.isPlayingProperty.value = true;
 
+      //TODO: Is this needed now that the launch button is disabled when the phase is not idle? - see https://github.com/phetsims/projectile-data-lab/issues/106
       if ( phaseProperty.value !== 'idle' ) {
 
         // When firing a sample while another was in progress, finish out the prior one first
@@ -192,6 +194,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
         field.finishCurrentSample();
         phaseProperty.value = 'showingCompleteSampleWithMean';
+
+        MeanTone.playMean( this.sampleMeanProperty.value! );
       }
       else {
         if ( field.isContinuousLaunchingProperty.value ) {

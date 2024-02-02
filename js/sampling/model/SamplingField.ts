@@ -16,7 +16,6 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import Range from '../../../../dot/js/Range.js';
-import LandingSound from '../../common/model/LandingSound.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 
 /**
@@ -156,10 +155,6 @@ export default class SamplingField extends Field {
     const phaseChanged = ( phase: SamplingPhase ) => {
       this.phaseStartTimeProperty.value = this.timeProperty.value;
       this.updateComputedProperties();
-
-      if ( phase === 'showingCompleteSampleWithMean' ) {
-        MeanTone.playMean( this.sampleMeanProperty.value! );
-      }
     };
 
     this.phaseProperty.link( phaseChanged );
@@ -177,8 +172,6 @@ export default class SamplingField extends Field {
         this.isContinuousLaunchingProperty.value = false;
       }
     } );
-
-    this.projectileLandedEmitter.addListener( projectile => LandingSound.play( projectile.x ) );
   }
 
   /**
@@ -271,8 +264,11 @@ export default class SamplingField extends Field {
 
     // Anything in the air should end up on the ground.
     this.getProjectilesInSample( sampleNumber ).forEach( projectile => {
-      projectile.setLanded();
-      changed = true;
+      if ( this.airborneProjectiles.includes( projectile ) ) {
+        projectile.setLanded();
+        this.projectileLandedEmitter.emit( projectile );
+        changed = true;
+      }
     } );
 
     if ( changed ) {
@@ -323,6 +319,7 @@ export default class SamplingField extends Field {
 
       if ( timeInMode > SHOWING_SINGLE_SAMPLE_TIME ) {
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
+        MeanTone.playMean( this.sampleMeanProperty.value! );
       }
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
@@ -339,6 +336,8 @@ export default class SamplingField extends Field {
 
         // Manually restart the phase timer, since the phase will not change when showing sequential continuous samples
         this.phaseStartTimeProperty.value = this.timeProperty.value;
+
+        MeanTone.playMean( this.sampleMeanProperty.value! );
       }
     }
   }

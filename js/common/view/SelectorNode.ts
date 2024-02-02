@@ -79,6 +79,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
         listener: () => {
           numberProperty.set( numberProperty.value + 1 );
           this.focus();
+          // TODO: Play the projectile landing sound or mean indicator sound - see https://github.com/phetsims/projectile-data-lab/issues/106
         },
         content: new Path( angleRightSolidShape, { fill: 'gray', scale: 0.05 } )
       }, arrowButtonOptions )
@@ -91,6 +92,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
         listener: () => {
           numberProperty.set( numberProperty.value - 1 );
           this.focus();
+          // TODO: Play the projectile landing sound or mean indicator sound - see https://github.com/phetsims/projectile-data-lab/issues/106
         },
         content: new Path( angleLeftSolidShape, { fill: 'gray', scale: 0.05 } )
       }, arrowButtonOptions )
