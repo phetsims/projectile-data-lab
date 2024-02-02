@@ -120,23 +120,23 @@ export default class HistogramNode extends Node {
     const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty,
       blockFillProperty, blockStrokeProperty );
 
-    // Changes based on the zoom level
-    const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {
+    // Grid lines along the y-axis (the lines themselves are horizontal). Changes based on the zoom level
+    const verticalAxisGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 5, {
       stroke: 'lightGray',
       lineWidth: 0.5
     } );
 
-    const majorVerticalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 10, {
+    const majorVerticalAxisGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 10, {
       stroke: 'lightGray',
       lineWidth: 1.0
     } );
 
-    // Changes based on the bin width
-    const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
+    // Grid lines along the x-axis (the lines themselves are vertical). Changes based on the bin width
+    const horizontalAxisGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: 'lightGray',
       lineWidth: 0.5
     } );
-    const majorHorizontalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 5, {
+    const majorHorizontalAxisGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 10, {
       stroke: 'lightGray',
       lineWidth: 1.0
     } );
@@ -148,11 +148,11 @@ export default class HistogramNode extends Node {
       children: [
 
         // grid lines
-        verticalGridLines,
-        horizontalGridLines,
+        verticalAxisGridLines,
+        horizontalAxisGridLines,
 
-        majorVerticalGridLines,
-        majorHorizontalGridLines,
+        majorVerticalAxisGridLines,
+        majorHorizontalAxisGridLines,
 
         this.chartClipLayer,
 
@@ -192,7 +192,7 @@ export default class HistogramNode extends Node {
     } );
 
     binWidthProperty.link( binWidth => {
-      horizontalGridLines.setSpacing( binWidth );
+      horizontalAxisGridLines.setSpacing( binWidth );
       chartCanvasNode.update();
     } );
 
@@ -310,12 +310,12 @@ export default class HistogramNode extends Node {
 
       verticalTickLabelSet.setSpacing( tickSpacing );
       verticalTickMarkSet.setSpacing( tickSpacing );
-      majorVerticalGridLines.setSpacing( tickSpacing );
+      majorVerticalAxisGridLines.setSpacing( tickSpacing );
       const spacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].minorSpacing;
       if ( spacing !== null ) {
-        verticalGridLines.setSpacing( spacing );
+        verticalAxisGridLines.setSpacing( spacing );
       }
-      verticalGridLines.visible = spacing !== null;
+      verticalAxisGridLines.visible = spacing !== null;
 
       updateHistogram();
     } );
