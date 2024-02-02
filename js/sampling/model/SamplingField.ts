@@ -157,6 +157,10 @@ export default class SamplingField extends Field {
     };
     this.phaseProperty.link( phaseChanged );
 
+    this.selectedSampleNumberProperty.link( () => {
+      this.updateComputedProperties();
+    } );
+
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
       this.updateComputedProperties();
     } );

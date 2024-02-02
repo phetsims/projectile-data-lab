@@ -60,7 +60,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       field.selectedSampleNumberProperty.link( () => samplingCanvasNode.invalidatePaint() );
     } );
 
-    this.projectileCanvasLayer.addChild( samplingCanvasNode );
+    this.projectileLayer.addChild( samplingCanvasNode );
 
     const meanIndicatorVisibleProperty = new DerivedProperty( [ model.phaseProperty ], phase => phase === 'showingCompleteSampleWithMean' );
 
@@ -68,7 +68,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       visibleProperty: meanIndicatorVisibleProperty,
       bottom: this.modelViewTransform.modelToViewY( 0 )
     } );
-    this.projectileCanvasLayer.addChild( meanIndicatorNode );
+    this.projectileLayer.addChild( meanIndicatorNode );
 
     const meanReadoutStringProperty = new PatternStringProperty( ProjectileDataLabStrings.meanMetersPatternStringProperty, {
       mean: new DerivedProperty( [ model.sampleMeanProperty ],
@@ -79,7 +79,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       visibleProperty: meanIndicatorVisibleProperty,
       fontSize: 13
     } );
-    this.projectileCanvasLayer.addChild( meanReadoutNode );
+    this.projectileLayer.addChild( meanReadoutNode );
 
     model.sampleMeanProperty.link( mean => {
       if ( mean !== null ) {

@@ -43,8 +43,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected readonly canvasBounds: Bounds2;
 
   protected readonly launcherLayer = new Node();
-  protected readonly projectileCanvasLayer = new Node();
   protected readonly behindProjectilesLayer = new Node();
+  protected readonly projectileLayer = new Node();
 
   protected abstract readonly launcherNode: LauncherNode;
 
@@ -182,7 +182,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( fieldBack );
     this.addChild( fieldOverlayBack );
     this.addChild( this.behindProjectilesLayer );
-    this.addChild( this.projectileCanvasLayer );
+    this.addChild( this.projectileLayer );
     this.addChild( this.launcherLayer );
     this.addChild( fieldFront );
     this.addChild( fieldOverlayFront );

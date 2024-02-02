@@ -84,7 +84,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       this.modelViewTransform, {
         canvasBounds: this.canvasBounds
       } );
-    this.projectileCanvasLayer.addChild( projectileCanvas );
+    this.projectileLayer.addChild( projectileCanvas );
 
     this.accordionBox = new HistogramAccordionBox(
       createHistogramNode( this ), {
