@@ -17,6 +17,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import Range from '../../../../dot/js/Range.js';
 import LandingSound from '../../common/model/LandingSound.js';
+import { MeanTone } from '../../common/model/MeanTone.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -152,10 +153,17 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
-    const phaseChanged = () => {
+    const phaseChanged = ( phase: SamplingPhase ) => {
       this.phaseStartTimeProperty.value = this.timeProperty.value;
       this.updateComputedProperties();
+
+      if ( phase === 'showingCompleteSampleWithMean' ) {
+        console.log( 'play mean sound' );
+        console.log( this.sampleMeanProperty.value! );
+        MeanTone.playMean( this.sampleMeanProperty.value! );
+      }
     };
+
     this.phaseProperty.link( phaseChanged );
 
     this.selectedSampleNumberProperty.link( () => {
