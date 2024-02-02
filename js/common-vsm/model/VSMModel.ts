@@ -176,6 +176,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.stopwatch = new Stopwatch( {
       tandem: providedOptions.tandem.createTandem( 'stopwatch' ),
+      phetioFeatured: true,
 
       // view coordinates
       position: new Vector2( 675, 275 )

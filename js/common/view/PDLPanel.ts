@@ -21,7 +21,11 @@ export class PDLPanel extends Panel {
     const options = optionize<PDLPanelOptions, SelfOptions, PanelOptions>()( {
       fill: PDLColors.panelColorProperty,
       stroke: PDLColors.panelStrokeColorProperty,
-      cornerRadius: 5
+      cornerRadius: 5,
+      phetioFeatured: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     }, providedOptions );
 
     super( content, options );

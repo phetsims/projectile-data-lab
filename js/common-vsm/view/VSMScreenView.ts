@@ -135,6 +135,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       textFont: PDLConstants.MEASURING_TAPE_FONT,
       tandem: options.tandem.createTandem( 'measuringTapeNode' ),
       phetioDocumentation: 'The node for the measuring tape',
+      phetioFeatured: true,
       phetioFeaturedMeasuredDistanceProperty: true
     } );
 
