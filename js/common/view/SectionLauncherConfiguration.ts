@@ -2,7 +2,6 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import { Image } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../model/LauncherConfiguration.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
@@ -15,6 +14,7 @@ import configurationButton1_png from '../../../images/configurationButton1_png.j
 import configurationButton2_png from '../../../images/configurationButton2_png.js';
 import configurationButton3_png from '../../../images/configurationButton3_png.js';
 import configurationButton4_png from '../../../images/configurationButton4_png.js';
+import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 
 /**
  * The SectionLauncherConfiguration shows the launcher configuration radio buttons.
@@ -31,7 +31,7 @@ const IMAGE_MAX_WIDTH = 30;
 export default class SectionLauncherConfiguration extends PDLPanelSection {
 
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, providedOptions: SectionLauncherConfigurationOptions ) {
-    const launcherConfigurationRadioButtonGroup = new RectangularRadioButtonGroup( launcherConfigurationProperty, [ {
+    const launcherConfigurationRadioButtonGroup = new PDLRectangularRadioButtonGroup( launcherConfigurationProperty, [ {
       value: 'angle30' as const,
       tandemName: 'angleThirtyRadioButton',
       createNode: () => new Image( configurationButton1_png, {
@@ -56,22 +56,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
         maxWidth: IMAGE_MAX_WIDTH
       } )
     } ], {
-      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' ),
-      phetioFeatured: true,
-      orientation: 'horizontal',
-      spacing: 5,
-      radioButtonOptions: {
-        baseColor: 'rgb(240,240,240)',
-        xMargin: 1,
-        yMargin: 1,
-        cornerRadius: 2,
-        buttonAppearanceStrategyOptions: {
-          selectedStroke: 'rgb(87,178,226)'
-        }
-      },
-      layoutOptions: {
-        align: 'center'
-      }
+      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' )
     } );
     super( ProjectileDataLabStrings.configurationStringProperty, launcherConfigurationRadioButtonGroup, providedOptions );
   }
