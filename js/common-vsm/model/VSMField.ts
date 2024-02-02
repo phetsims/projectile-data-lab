@@ -20,10 +20,10 @@ import Launcher from '../../common/model/Launcher.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Range from '../../../../dot/js/Range.js';
-import Utils from '../../../../dot/js/Utils.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import landing_mp3 from '../../../sounds/landing_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import LandingSound from '../../common/model/LandingSound.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -123,9 +123,7 @@ export default class VSMField extends Field {
 
     this.selectedProjectileProperty.link( selectedProjectile => {
       if ( selectedProjectile ) {
-        const playbackRate = Utils.linear( 0, 100, 0.5, 3, selectedProjectile.x );
-        landSoundClip.setPlaybackRate( playbackRate );
-        landSoundClip.play();
+        LandingSound.play( selectedProjectile.x );
       }
     } );
 

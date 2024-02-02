@@ -16,6 +16,7 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import Range from '../../../../dot/js/Range.js';
+import LandingSound from '../../common/model/LandingSound.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -170,6 +171,8 @@ export default class SamplingField extends Field {
         this.isContinuousLaunchingProperty.value = false;
       }
     } );
+
+    this.projectileLandedEmitter.addListener( projectile => LandingSound.play( projectile.x ) );
   }
 
   /**
