@@ -16,10 +16,14 @@ const landSoundClip = new SoundClip( landing_mp3, {
 } );
 soundManager.addSoundGenerator( landSoundClip );
 
+export const playbackRateForPosition = ( x: number ): number => {
+  return Utils.linear( 0, 100, 0.5, 3, x );
+};
+
 export default class LandingSound {
+
   public static play( x: number ): void {
-    const playbackRate = Utils.linear( 0, 100, 0.5, 3, x );
-    landSoundClip.setPlaybackRate( playbackRate );
+    landSoundClip.setPlaybackRate( playbackRateForPosition( x ) );
     landSoundClip.play();
   }
 }
