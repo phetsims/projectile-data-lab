@@ -61,9 +61,13 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
       orientation: 'horizontal',
       spacing: 5,
       radioButtonOptions: {
-        baseColor: 'white',
-        xMargin: 2,
-        yMargin: 2
+        baseColor: 'rgb(240,240,240)',
+        xMargin: 1,
+        yMargin: 1,
+        cornerRadius: 2,
+        buttonAppearanceStrategyOptions: {
+          selectedStroke: 'rgb(87,178,226)'
+        }
       },
       layoutOptions: {
         align: 'center'
