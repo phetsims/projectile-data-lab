@@ -110,6 +110,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         tandem: options.tandem.createTandem( 'projectileSelectorNode' ),
         visiblePropertyOptions: {
           phetioFeatured: true
+        },
+        enabledPropertyOptions: {
+          phetioFeatured: false
         }
       }
     );
