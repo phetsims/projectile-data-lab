@@ -96,8 +96,7 @@ export default class BinControlNode extends HBox {
           alignChildren: ToggleNode.RIGHT,
           layoutOptions: {
             rightMargin: margin
-          },
-          tandem: providedOptions.tandem.createTandem( 'binWidthLabel' )
+          }
         } ),
         new ToggleNode( BIN_STRATEGY_PROPERTY, [ {
           value: 'binWidth',
