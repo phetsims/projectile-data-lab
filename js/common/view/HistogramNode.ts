@@ -8,7 +8,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import GridLineSet from '../../../../bamboo/js/GridLineSet.js';
 import Orientation from '../../../../phet-core/js/Orientation.js';
 import TickLabelSet from '../../../../bamboo/js/TickLabelSet.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
@@ -90,8 +90,12 @@ export default class HistogramNode extends Node {
                       comboBoxParent: Node,
                       blockFillProperty: ColorProperty,
                       blockStrokeProperty: ColorProperty,
-                      options: HistogramNodeOptions ) {
+                      providedOptions: HistogramNodeOptions ) {
     super();
+
+    const options = optionize<HistogramNodeOptions, SelfOptions, NodeOptions>()( {
+      phetioVisiblePropertyInstrumented: false
+    }, providedOptions );
 
     const maxZoomLevel = ZOOM_LEVELS.length - 1;
 
