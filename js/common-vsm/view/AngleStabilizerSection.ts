@@ -44,8 +44,7 @@ export default class AngleStabilizerSection extends VBox {
       thumbSize: new Dimension2( 13, 22 ),
       thumbTouchAreaXDilation: 6,
       thumbTouchAreaYDilation: 4, // smaller to prevent overlap with above number spinner buttons
-      phetioVisiblePropertyInstrumented: false,
-      phetioEnabledPropertyInstrumented: false
+      phetioVisiblePropertyInstrumented: false
     } );
     slider.addMajorTick( range.min, new PDLText( ProjectileDataLabStrings.narrowStringProperty, {
       fontSize: 10,
