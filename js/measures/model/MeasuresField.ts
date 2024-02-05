@@ -64,17 +64,20 @@ export default class MeasuresField extends SMField {
 
     this.meanDistanceProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'meanDistanceProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
 
     this.standardDeviationDistanceProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'standardDeviationDistanceProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
 
     this.standardErrorDistanceProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'standardErrorDistanceProperty' ),
-      phetioValueType: NullableIO( NumberIO )
+      phetioValueType: NullableIO( NumberIO ),
+      phetioReadOnly: true
     } );
 
     this.projectileLandedEmitter.addListener( () => {
