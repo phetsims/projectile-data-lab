@@ -5,7 +5,6 @@ import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from 
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLText from '../../common/view/PDLText.js';
-import Panel from '../../../../sun/js/Panel.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Circle, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
@@ -30,7 +29,6 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
       spacing: 3,
       radioButtonOptions: {
         preferredWidth: 40,
-        baseColor: PDLColors.fieldSignFillColorProperty,
         buttonAppearanceStrategyOptions: {
           selectedStroke: PDLColors.fieldSignTextColorProperty,
           selectedLineWidth: 3,
@@ -44,7 +42,8 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
 
     const fieldRadioButtons = fields.map( field => {
 
-      const fieldNumber = fields.indexOf( field ) + 1;
+      const fieldIndex = fields.indexOf( field );
+      const fieldNumber = fieldIndex + 1;
 
       const dataIndicator = new Circle( 3, {
         visibleProperty: field.isContainingDataProperty,
@@ -68,14 +67,15 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
       buttonText.centerX = buttonContents.centerX;
 
       return {
-        value: fieldProperty.validValues![ fieldNumber - 1 ],
+        value: fieldProperty.validValues![ fieldIndex ],
         tandemName: 'field' + fieldNumber + 'RadioButton',
-        createNode: () => new Panel( buttonContents, {
-          fill: null,
-          stroke: null,
-          xMargin: 0,
-          yMargin: 0
-        } )
+        createNode: () => buttonContents,
+        options: {
+
+          // TODO: Refactor this logic so that it is not duplicated in the FieldNode, FieldSignNode and here - see https://github.com/phetsims/projectile-data-lab/issues/46
+          baseColor: PDLColors.fieldFill1ColorProperty.value.blend(
+            PDLColors.fieldFill2ColorProperty.value, fieldIndex / ( fieldProperty.validValues!.length - 1 ) )
+        }
       };
     } );
 

@@ -54,11 +54,11 @@ const PDLColors = {
   } ),
 
   fieldFill1ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill1', {
-    default: '#1A974E'
+    default: '#41d27e'
   } ),
 
   fieldFill2ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill2', {
-    default: '#1A974E'
+    default: '#096d3c'
   } ),
 
   fieldLineColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLine', {
