@@ -158,8 +158,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       dragBoundsProperty.value = viewBounds;
     } );
 
+    const stopwatchNodeTandem = options.tandem.createTandem( 'stopwatchNode' );
     this.stopwatchNode = new StopwatchNode( model.stopwatch, {
-      tandem: options.tandem.createTandem( 'stopwatchNode' ),
+      tandem: stopwatchNodeTandem,
       dragBoundsProperty: dragBoundsProperty,
       otherControls: [
         new RectangularPushButton( {
@@ -171,7 +172,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
             stretch: true,
             xMargin: 6.3
           },
-          tandem: options.tandem.createTandem( 'stopwatchLaunchButton' ),
+          tandem: stopwatchNodeTandem.createTandem( 'launchButton' ),
           listener: () => {
             model.stopwatch.timeProperty.reset();
             model.launchProjectile();
