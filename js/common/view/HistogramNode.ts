@@ -99,7 +99,11 @@ export default class HistogramNode extends Node {
 
     const maxZoomLevel = ZOOM_LEVELS.length - 1;
 
-    this.zoomLevelProperty = new NumberProperty( maxZoomLevel, { range: new Range( 0, maxZoomLevel ) } );
+    this.zoomLevelProperty = new NumberProperty( maxZoomLevel, {
+      range: new Range( 0, maxZoomLevel ),
+      tandem: options.tandem.createTandem( 'zoomLevelProperty' ),
+      numberType: 'Integer'
+    } );
 
     this.chartTransform = new ChartTransform( {
 
