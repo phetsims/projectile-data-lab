@@ -107,7 +107,10 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       model.totalProjectileCountProperty,
       model.numberOfLandedProjectilesProperty,
       model.selectedProjectileProperty, {
-        tandem: options.tandem.createTandem( 'projectileSelectorNode' )
+        tandem: options.tandem.createTandem( 'projectileSelectorNode' ),
+        visiblePropertyOptions: {
+          phetioFeatured: true
+        }
       }
     );
 
