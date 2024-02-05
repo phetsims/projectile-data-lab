@@ -58,8 +58,9 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     const createHistogramNode = ( comboBoxParent: Node ) => new MeasuresHistogramNode(
       model.fieldProperty,
       model.fields,
-      model.binWidthProperty,
-      model.histogramRepresentationProperty,
+      model.histogram.zoomProperty,
+      model.histogram.binWidthProperty,
+      model.histogram.representationProperty,
       ProjectileDataLabStrings.distanceStringProperty,
       model.isMeanVisibleProperty,
       model.isStandardDeviationVisibleProperty,
@@ -69,8 +70,8 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.standardErrorDistanceProperty,
       model.intervalTool,
       model.isIntervalToolVisibleProperty,
-      model.selectedBinWidthProperty,
-      model.selectedTotalBinsProperty,
+      model.histogram.selectedBinWidthProperty,
+      model.histogram.selectedTotalBinsProperty,
       comboBoxParent, {
         tandem: options.tandem.createTandem( histogramAccordionBoxTandemName ).createTandem( 'histogramNode' )
       } );

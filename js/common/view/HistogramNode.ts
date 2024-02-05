@@ -13,7 +13,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import PlusMinusZoomButtonGroup from '../../../../scenery-phet/js/PlusMinusZoomButtonGroup.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
@@ -30,6 +29,8 @@ import HistogramRepresentationIconNode from './HistogramRepresentationIconNode.j
 import Property from '../../../../axon/js/Property.js';
 import BinControlNode from './BinControlNode.js';
 import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
+import { ZOOM_LEVELS } from '../model/Histogram.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -40,48 +41,16 @@ import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
-export const ZOOM_LEVELS = [ {
-  maxCount: 500,
-  minorSpacing: 10,
-
-  numberOfThumbnailGridLines: 15
-}, {
-  maxCount: 200,
-  minorSpacing: 8,
-
-  numberOfThumbnailGridLines: 13
-}, {
-  maxCount: 100,
-  minorSpacing: 5,
-
-  numberOfThumbnailGridLines: 11
-}, {
-  maxCount: 75,
-  minorSpacing: 5,
-
-  numberOfThumbnailGridLines: 9
-}, {
-  maxCount: 50,
-  minorSpacing: 5,
-
-  numberOfThumbnailGridLines: 7
-}, {
-  maxCount: 25,
-  minorSpacing: null,
-
-  numberOfThumbnailGridLines: 5
-} ];
-
 export default class HistogramNode extends Node {
 
   protected readonly chartNode: Node;
   protected readonly chartTransform: ChartTransform;
   protected readonly chartClipLayer: Node;
-  public readonly zoomLevelProperty: NumberProperty;
   protected readonly chartBackground: ChartRectangle;
 
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
+                      zoomProperty: NumberProperty,
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
@@ -96,14 +65,6 @@ export default class HistogramNode extends Node {
     const options = optionize<HistogramNodeOptions, SelfOptions, NodeOptions>()( {
       phetioVisiblePropertyInstrumented: false
     }, providedOptions );
-
-    const maxZoomLevel = ZOOM_LEVELS.length - 1;
-
-    this.zoomLevelProperty = new NumberProperty( maxZoomLevel, {
-      range: new Range( 0, maxZoomLevel ),
-      tandem: options.tandem.createTandem( 'zoomLevelProperty' ),
-      numberType: 'Integer'
-    } );
 
     this.chartTransform = new ChartTransform( {
 
@@ -212,7 +173,7 @@ export default class HistogramNode extends Node {
       chartCanvasNode.update();
     } );
 
-    const zoomButtonGroup = new PlusMinusZoomButtonGroup( this.zoomLevelProperty, {
+    const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomProperty, {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',
       bottom: this.chartTransform.viewHeight,
@@ -308,18 +269,18 @@ export default class HistogramNode extends Node {
     // When the field or bin width changes, redraw the histogram
     fieldProperty.link( () => updateHistogram() );
     binWidthProperty.link( () => updateHistogram() );
-    this.zoomLevelProperty.link( () => {
+    zoomProperty.link( () => {
 
-      const maxCount = ZOOM_LEVELS[ this.zoomLevelProperty.value ].maxCount;
+      const maxCount = ZOOM_LEVELS[ zoomProperty.value ].maxCount;
 
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
-      const tickSpacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].maxCount / 5;
+      const tickSpacing = ZOOM_LEVELS[ zoomProperty.value ].maxCount / 5;
 
       verticalTickLabelSet.setSpacing( tickSpacing );
       verticalTickMarkSet.setSpacing( tickSpacing );
       majorVerticalAxisGridLines.setSpacing( tickSpacing );
-      const spacing = ZOOM_LEVELS[ this.zoomLevelProperty.value ].minorSpacing;
+      const spacing = ZOOM_LEVELS[ zoomProperty.value ].minorSpacing;
       if ( spacing !== null ) {
         verticalAxisGridLines.setSpacing( spacing );
       }

@@ -22,6 +22,7 @@ import { PDLPanel } from '../../common/view/PDLPanel.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * The measures histogram node is a histogram node that also shows the mean and standard deviation of the data.
@@ -37,6 +38,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
 
   public constructor( fieldProperty: TReadOnlyProperty<MeasuresField>,
                       fields: Field[],
+                      zoomProperty: NumberProperty,
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
@@ -55,6 +57,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
     super(
       fieldProperty,
       fields,
+      zoomProperty,
       binWidthProperty,
       histogramRepresentationProperty,
       horizontalAxisLabelText,

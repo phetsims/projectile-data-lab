@@ -134,11 +134,12 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
       model.fieldProperty,
       model.fields,
-      model.selectedBinWidthProperty,
-      model.selectedTotalBinsProperty,
-      model.binWidthProperty,
+      model.histogram.zoomProperty,
+      model.histogram.selectedBinWidthProperty,
+      model.histogram.selectedTotalBinsProperty,
+      model.histogram.binWidthProperty,
       this,
-      model.histogramRepresentationProperty,
+      model.histogram.representationProperty,
       () => model.clearCurrentField(), {
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         centerX: this.layoutBounds.centerX,

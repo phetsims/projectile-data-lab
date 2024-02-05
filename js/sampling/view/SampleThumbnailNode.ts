@@ -16,9 +16,9 @@ import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioS
 import SamplingField from '../model/SamplingField.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLText from '../../common/view/PDLText.js';
-import { ZOOM_LEVELS } from '../../common/view/HistogramNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
 
 /**
  * SampleThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large

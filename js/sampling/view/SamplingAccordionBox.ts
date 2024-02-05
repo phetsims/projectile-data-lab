@@ -14,6 +14,7 @@ import PDLColors from '../../common/PDLColors.js';
 import SampleThumbnailNode from './SampleThumbnailNode.js';
 import SamplingHistogramNode from './SamplingHistogramNode.js';
 import Launcher from '../../common/model/Launcher.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -37,6 +38,7 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
     numberOfSamplesProperty: TReadOnlyProperty<number>,
     fieldProperty: TReadOnlyProperty<SamplingField>,
     fields: SamplingField[],
+    zoomProperty: NumberProperty,
     selectedBinWidthProperty: Property<number>,
     selectedTotalBinsProperty: Property<number>,
     binWidthProperty: TReadOnlyProperty<number>,
@@ -51,6 +53,7 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       numberOfSamplesProperty,
       fieldProperty,
       fields,
+      zoomProperty,
       binWidthProperty,
       histogramRepresentationProperty,
       ProjectileDataLabStrings.meanDistanceStringProperty,
@@ -61,10 +64,8 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 
-    const zoomLevelProperty = histogramNode.zoomLevelProperty;
-
     const bottomThumbnailNode = new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty );
+      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty );
     super( new HBox( {
 
       // TODO: https://github.com/phetsims/projectile-data-lab/issues/50 Would be nice to top align with the top border of the chart
@@ -75,11 +76,11 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
           spacing: 4,
           children: [
             new SampleThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty ),
             new SampleThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty ),
             new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomLevelProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty ),
             bottomThumbnailNode
           ]
         } )

@@ -19,6 +19,7 @@ import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 /**
  * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
@@ -32,6 +33,7 @@ export default class SamplingHistogramNode extends HistogramNode {
                       numberOfSamplesProperty: TReadOnlyProperty<number>,
                       fieldProperty: TReadOnlyProperty<SamplingField>,
                       fields: Field[],
+                      zoomProperty: NumberProperty,
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: Property<HistogramRepresentation>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
@@ -43,6 +45,7 @@ export default class SamplingHistogramNode extends HistogramNode {
     super(
       fieldProperty,
       fields,
+      zoomProperty,
       binWidthProperty,
       histogramRepresentationProperty,
       horizontalAxisLabelText,
