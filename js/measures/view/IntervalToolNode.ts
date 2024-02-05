@@ -44,7 +44,9 @@ export default class IntervalToolNode extends Node {
 
   public constructor( intervalTool: IntervalTool, modelViewTransform: ModelViewTransform2, providedOptions: IntervalToolNodeOptions ) {
 
-    const options = optionize<IntervalToolNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
+    const options = optionize<IntervalToolNodeOptions, SelfOptions, NodeOptions>()( {
+      phetioFeatured: true
+    }, providedOptions );
     super( options );
 
     const lineOptions = {

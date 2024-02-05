@@ -36,7 +36,8 @@ export default class IntervalTool extends PhetioObject {
     const options = optionize<IntervalToolOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: IntervalTool.IntervalToolIO,
       phetioDocumentation: 'The interval tool indicates the percent of data within a selected horizontal range. To find ' +
-                           'the location of each edge, please query the state of this PhET-iO Element.'
+                           'the location of each edge, please query the state of this PhET-iO Element.',
+      phetioFeatured: true
     }, providedOptions );
 
     super( options );
