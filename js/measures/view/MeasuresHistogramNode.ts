@@ -102,10 +102,20 @@ export default class MeasuresHistogramNode extends HistogramNode {
       children: []
     } );
 
-    const textPanel = new PDLPanel( textVBox, {
-      visibleProperty: isValuesVisibleProperty,
+    const valuesChartOverlayTandem = options.tandem.createTandem( 'valuesChartOverlay' );
+
+    const showValuesChartOverlayProperty = new BooleanProperty( true, {
+      tandem: valuesChartOverlayTandem.createTandem( 'showValuesChartOverlayProperty' ),
+      phetioDocumentation: 'An additional gate that controls the visibility of the valuesChartOverlay. For the valuesChartOverlay to be displayed, this property and the isValuesVisibleProperty must both be true.'
+    } );
+
+    // const parent = new Node();
+
+    const valuesChartOverlay = new PDLPanel( textVBox, {
+      visibleProperty: DerivedProperty.and( [ isValuesVisibleProperty, showValuesChartOverlayProperty ] ),
       fill: 'white',
-      cornerRadius: 5
+      cornerRadius: 5,
+      tandem: valuesChartOverlayTandem
     } );
 
     const dataMeasuresChartOverlay = new DataMeasuresOverlay(
@@ -124,7 +134,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
 
     // Put the text panel in front of the data measures overlay so that the text is not obscured by the overlay
     this.chartNode.addChild( dataMeasuresChartOverlay );
-    this.chartNode.addChild( textPanel );
+    this.chartNode.addChild( valuesChartOverlay );
 
     const intervalToolHighlight = new Rectangle( 0, 0, 0, 0, {
       fill: PDLColors.histogramIntervalToolFillColorProperty,
@@ -146,7 +156,7 @@ export default class MeasuresHistogramNode extends HistogramNode {
       textVBox.setChildren( mean === null ? [ noDataLabel ] : dataLabels );
     } );
 
-    ManualConstraint.create( this, [ textPanel, this.chartBackground ], ( textPanelProxy, chartBackgroundProxy ) => {
+    ManualConstraint.create( this, [ valuesChartOverlay, this.chartBackground ], ( textPanelProxy, chartBackgroundProxy ) => {
       textPanelProxy.left = chartBackgroundProxy.left + PDLConstants.HISTOGRAM_PANEL_MARGIN;
       textPanelProxy.top = chartBackgroundProxy.top + PDLConstants.HISTOGRAM_PANEL_MARGIN;
     } );
