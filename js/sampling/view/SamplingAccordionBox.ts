@@ -64,23 +64,38 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 
+    const thumbnailNode = providedOptions.tandem.createTandem( 'thumbnailContainerNode' );
     const bottomThumbnailNode = new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty );
-    super( new HBox( {
+      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+        tandem: thumbnailNode.createTandem( 'sample40ThumbnailNode' )
+      } );
 
-      // TODO: https://github.com/phetsims/projectile-data-lab/issues/50 Would be nice to top align with the top border of the chart
-      spacing: 7,
+    super( new HBox( {
+      spacing: 10,
+      align: 'top',
       children: [
         histogramNode,
         new VBox( {
-          spacing: 4,
+
+          // Top align with the top border of the chart. This margin compensates for the amount the vertical axis label
+          // exceeds the top of the chart
+          topMargin: 7,
+
+          spacing: -2,
+          tandem: thumbnailNode,
           children: [
             new SampleThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+                tandem: thumbnailNode.createTandem( 'sample2ThumbnailNode' )
+              } ),
             new SampleThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+                tandem: thumbnailNode.createTandem( 'sample5ThumbnailNode' )
+              } ),
             new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty ),
+              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+                tandem: thumbnailNode.createTandem( 'sample15ThumbnailNode' )
+              } ),
             bottomThumbnailNode
           ]
         } )

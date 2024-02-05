@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { Color, Node } from '../../../../scenery/js/imports.js';
+import { Color, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -19,6 +19,7 @@ import PDLText from '../../common/view/PDLText.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 /**
  * SampleThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large
@@ -39,8 +40,9 @@ export default class SampleThumbnailNode extends Node {
                       histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
                       blockFillProperty: TReadOnlyProperty<Color>,
                       blockStrokeProperty: TReadOnlyProperty<Color>,
-                      zoomLevelProperty: NumberProperty ) {
-    super();
+                      zoomLevelProperty: NumberProperty,
+                      providedOptions: PickRequired<NodeOptions, 'tandem'> ) {
+    super( providedOptions );
 
     this.chartTransform = new ChartTransform( {
       viewWidth: 160,
