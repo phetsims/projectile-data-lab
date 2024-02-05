@@ -41,6 +41,7 @@ export default class SectionProjectileType extends PDLPanelSection {
       createNode: () => new Image( piano_png, { scale: 0.15 } )
     } ], {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
+      phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
       phetioFeatured: true,
       orientation: 'horizontal',
       radioButtonOptions: {

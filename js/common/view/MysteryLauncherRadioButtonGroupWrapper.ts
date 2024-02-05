@@ -82,6 +82,7 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
       lineSpacing: 3,
       spacing: 4,
       wrap: true,
+      phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
       radioButtonOptions: {
         baseColor: 'white',
         xMargin: 0,

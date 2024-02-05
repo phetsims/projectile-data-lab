@@ -33,6 +33,7 @@ export default class SectionSampleSize extends PDLPanelSection {
 
     const sampleSizeRadioButtonGroup = new RectangularRadioButtonGroup( sampleSizeProperty, sampleSizeRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'sampleSizeRadioButtonGroup' ),
+      phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
       phetioFeatured: true,
       orientation: 'horizontal',
       spacing: 6,

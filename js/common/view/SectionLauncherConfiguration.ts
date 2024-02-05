@@ -56,7 +56,8 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
         maxWidth: IMAGE_MAX_WIDTH
       } )
     } ], {
-      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' )
+      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' ),
+      phetioVisiblePropertyInstrumented: false // As the only UI control in the panel, the visibility is controlled by the parent panel
     } );
     super( ProjectileDataLabStrings.configurationStringProperty, launcherConfigurationRadioButtonGroup, providedOptions );
   }
