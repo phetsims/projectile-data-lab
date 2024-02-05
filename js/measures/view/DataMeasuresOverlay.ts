@@ -214,6 +214,9 @@ export default class DataMeasuresOverlay extends Node {
 
 
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      },
       children: [
         leftArrow,
         rightArrow,
