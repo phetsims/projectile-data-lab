@@ -40,7 +40,10 @@ export default class PDLPanelSection extends VBox {
       children: children,
       align: 'left',
       spacing: 5,
-      titleFont: titleFont
+      titleFont: titleFont,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     }, providedOptions );
 
     super( options );
