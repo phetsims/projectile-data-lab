@@ -139,7 +139,10 @@ export default class SampleSelectorNode extends SelectorNode {
     } );
 
     super( sampleCardContainer, selectedSampleNumberProperty, rangeProperty, {
-      tandem: options.tandem
+      tandem: options.tandem,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
   }
 }
