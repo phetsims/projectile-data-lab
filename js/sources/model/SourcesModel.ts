@@ -40,7 +40,8 @@ export default class SourcesModel extends SMModel<SMField> {
         SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         1, {
-          tandem: fieldTandem.createTandem( 'customLauncher' )
+          tandem: fieldTandem.createTandem( 'customLauncher' ),
+          phetioFeatured: true
         } );
 
       return new SMField( [ customLauncher ], identifier, {

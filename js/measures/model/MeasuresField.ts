@@ -53,31 +53,36 @@ export default class MeasuresField extends SMField {
     this.mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
       tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomProperty' ),
       phetioDocumentation: 'This property represents whether the launcher is a mystery or custom launcher.',
-      validValues: MysteryOrCustomValues
+      validValues: MysteryOrCustomValues,
+      phetioFeatured: true
     } );
 
     this.mysteryLauncherProperty = new Property( MYSTERY_LAUNCHERS[ 0 ], {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherProperty' ),
       phetioValueType: ReferenceIO( IOType.ObjectIO ),
-      validValues: MYSTERY_LAUNCHERS
+      validValues: MYSTERY_LAUNCHERS,
+      phetioFeatured: true
     } );
 
     this.meanDistanceProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'meanDistanceProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
 
     this.standardDeviationDistanceProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'standardDeviationDistanceProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
 
     this.standardErrorDistanceProperty = new Property<number | null>( null, {
       tandem: providedOptions.tandem.createTandem( 'standardErrorDistanceProperty' ),
       phetioValueType: NullableIO( NumberIO ),
-      phetioReadOnly: true
+      phetioReadOnly: true,
+      phetioFeatured: true
     } );
 
     this.projectileLandedEmitter.addListener( () => {
