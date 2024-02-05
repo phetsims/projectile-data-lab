@@ -51,11 +51,11 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     } ];
 
     // radio button group, vertically layout so that i18n text has enough space to grow to the right.
-    const isLauncherCustomRadioButtonGroup = new VerticalAquaRadioButtonGroup( mysteryOrCustomProperty, radioButtonItems, {
+    const mysteryOrCustomRadioButtonGroup = new VerticalAquaRadioButtonGroup( mysteryOrCustomProperty, radioButtonItems, {
       radioButtonOptions: { radius: 8 },
       touchAreaYDilation: 15,
       spacing: 4,
-      tandem: providedOptions.tandem.createTandem( 'isLauncherCustomRadioButtonGroup' ),
+      tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomRadioButtonGroup' ),
       phetioFeatured: true
     } );
 
@@ -87,7 +87,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       createNode: () => customLauncherControls
     } ] );
 
-    const contentContainer = new VBox( { children: [ isLauncherCustomRadioButtonGroup, launcherControlsToggleNode ], spacing: 5, stretch: true } );
+    const contentContainer = new VBox( { children: [ mysteryOrCustomRadioButtonGroup, launcherControlsToggleNode ], spacing: 5, stretch: true } );
 
     super( null, contentContainer, providedOptions );
   }
