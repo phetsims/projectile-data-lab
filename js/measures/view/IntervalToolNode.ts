@@ -192,7 +192,12 @@ export default class IntervalToolNode extends Node {
     intervalReadoutStringProperty.link( update );
 
     const moveToFront = ( node: Node ) => {
-      return () => node.moveToFront();
+      return () => {
+        node.moveToFront();
+
+        // The readout should always be in front of the handles
+        readoutVBox.moveToFront();
+      };
     };
 
     const listenerOptions = {
@@ -209,8 +214,7 @@ export default class IntervalToolNode extends Node {
       applyOffset: true,
       useParentOffset: true,
       positionProperty: centerProperty,
-      tandem: providedOptions.tandem.createTandem( 'centerDragListener' ),
-      drag: moveToFront( readoutVBox )
+      tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
     }, listenerOptions, dragListenerOptions ) ) );
 
     edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
@@ -232,8 +236,7 @@ export default class IntervalToolNode extends Node {
 
     readoutVBox.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
       positionProperty: centerProperty,
-      tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' ),
-      drag: moveToFront( readoutVBox )
+      tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' )
     }, listenerOptions, keyboardDragListenerOptions ) ) );
 
     edge1Sphere.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
@@ -250,8 +253,8 @@ export default class IntervalToolNode extends Node {
 
     this.pdomOrder = [
       edge1Sphere,
-      readoutVBox,
-      edge2Sphere
+      edge2Sphere,
+      readoutVBox
     ];
 
     this.addLinkedElement( intervalTool );
