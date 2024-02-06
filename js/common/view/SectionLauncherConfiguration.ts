@@ -15,6 +15,7 @@ import configurationButton2_png from '../../../images/configurationButton2_png.j
 import configurationButton3_png from '../../../images/configurationButton3_png.js';
 import configurationButton4_png from '../../../images/configurationButton4_png.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
+import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 /**
  * The SectionLauncherConfiguration shows the launcher configuration radio buttons.
@@ -36,25 +37,37 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
       tandemName: 'angleThirtyRadioButton',
       createNode: () => new Image( configurationButton1_png, {
         maxWidth: IMAGE_MAX_WIDTH
-      } )
+      } ),
+      options: {
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 0 )
+      }
     }, {
       value: 'angle45' as const,
       tandemName: 'angleFortyFiveRadioButton',
       createNode: () => new Image( configurationButton2_png, {
         maxWidth: IMAGE_MAX_WIDTH
-      } )
+      } ),
+      options: {
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 1 )
+      }
     }, {
       value: 'angle60' as const,
       tandemName: 'angleSixtyRadioButton',
       createNode: () => new Image( configurationButton3_png, {
         maxWidth: IMAGE_MAX_WIDTH
-      } )
+      } ),
+      options: {
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 2 )
+      }
     }, {
       value: 'angle0Raised' as const,
       tandemName: 'angleZeroRadioButton',
       createNode: () => new Image( configurationButton4_png, {
         maxWidth: IMAGE_MAX_WIDTH
-      } )
+      } ),
+      options: {
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 5 )
+      }
     } ], {
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false // As the only UI control in the panel, the visibility is controlled by the parent panel
