@@ -70,9 +70,16 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     } );
 
     const angleStabilizerSection = new AngleStabilizerSection( angleStandardDeviationProperty, {
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' ),
-      phetioFeatured: true
-    } );
+        tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' ),
+        phetioFeatured: true,
+        layoutOptions: {
+          stretch: true,
+
+          // Workaround since ToggleNode doesn't appear to support layoutOptions.stretch
+          minContentWidth: 150
+        }
+      }
+    );
 
     const customLauncherControls = new VBox( {
       children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ],

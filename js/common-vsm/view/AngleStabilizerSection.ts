@@ -11,24 +11,21 @@
 
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { NumberControlOptions } from '../../../../scenery-phet/js/NumberControl.js';
-import { VBox } from '../../../../scenery/js/imports.js';
+import { VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
 import HSlider from '../../../../sun/js/HSlider.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = EmptySelfOptions;
-type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<NumberControlOptions, 'tandem'>;
+type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
 
 export default class AngleStabilizerSection extends VBox {
 
   public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
-
-    const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, NumberControlOptions>()( {}, providedOptions );
 
     const range = PDLConstants.ANGLE_STABILIZER_RANGE;
 
@@ -36,7 +33,7 @@ export default class AngleStabilizerSection extends VBox {
       layoutOptions: {
         stretch: true
       },
-      tandem: options.tandem.createTandem( 'slider' ),
+      tandem: providedOptions.tandem.createTandem( 'slider' ),
       majorTickLength: 12,
       minorTickLength: 5,
       tickLabelSpacing: 2,
@@ -57,15 +54,15 @@ export default class AngleStabilizerSection extends VBox {
     for ( let i = 1; i < range.max; i++ ) {
       slider.addMinorTick( i );
     }
-    super( {
-      tandem: options.tandem,
+    const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, VBoxOptions>()( {
       children: [
         new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty, {
           maxWidth: 150
         } ),
         slider
       ]
-    } );
+    }, providedOptions );
+    super( options );
   }
 }
 
