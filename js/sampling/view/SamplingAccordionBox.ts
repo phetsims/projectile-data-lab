@@ -11,7 +11,7 @@ import Property from '../../../../axon/js/Property.js';
 import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import SamplingField from '../model/SamplingField.js';
 import PDLColors from '../../common/PDLColors.js';
-import SampleThumbnailNode from './SampleThumbnailNode.js';
+import SampleSizeThumbnailNode from './SampleSizeThumbnailNode.js';
 import SamplingHistogramNode from './SamplingHistogramNode.js';
 import Launcher from '../../common/model/Launcher.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -30,7 +30,7 @@ export type VSMAccordionBoxOptions =
   SelfOptions & WithRequired<HistogramAccordionBoxOptions, 'tandem'>;
 
 export default class SamplingAccordionBox extends HistogramAccordionBox {
-  public readonly bottomThumbnailNode: SampleThumbnailNode;
+  public readonly bottomThumbnailNode: SampleSizeThumbnailNode;
 
   public constructor(
     launcherProperty: TReadOnlyProperty<Launcher>,
@@ -65,7 +65,7 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       } );
 
     const thumbnailNode = providedOptions.tandem.createTandem( 'thumbnailContainerNode' );
-    const bottomThumbnailNode = new SampleThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+    const bottomThumbnailNode = new SampleSizeThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
       PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
         tandem: thumbnailNode.createTandem( 'sample40ThumbnailNode' )
       } );
@@ -84,17 +84,17 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
           spacing: -2,
           tandem: thumbnailNode,
           children: [
-            new SampleThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+            new SampleSizeThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
               PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-                tandem: thumbnailNode.createTandem( 'sample2ThumbnailNode' )
+                tandem: thumbnailNode.createTandem( 'sampleSize2ThumbnailNode' )
               } ),
-            new SampleThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+            new SampleSizeThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
               PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-                tandem: thumbnailNode.createTandem( 'sample5ThumbnailNode' )
+                tandem: thumbnailNode.createTandem( 'sampleSize5ThumbnailNode' )
               } ),
-            new SampleThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+            new SampleSizeThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
               PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-                tandem: thumbnailNode.createTandem( 'sample15ThumbnailNode' )
+                tandem: thumbnailNode.createTandem( 'sampleSize15ThumbnailNode' )
               } ),
             bottomThumbnailNode
           ]

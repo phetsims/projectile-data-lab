@@ -22,12 +22,12 @@ import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 
 /**
- * SampleThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large
+ * SampleSizeThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large
  * histogram, and are designed to make it easy to compare the widths of sample means for different n=? sample sizes.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
-export default class SampleThumbnailNode extends Node {
+export default class SampleSizeThumbnailNode extends Node {
 
   protected readonly chartNode: Node;
   protected readonly chartTransform: ChartTransform;
@@ -195,4 +195,4 @@ export default class SampleThumbnailNode extends Node {
   }
 }
 
-projectileDataLab.register( 'SampleThumbnailNode', SampleThumbnailNode );
+projectileDataLab.register( 'SampleSizeThumbnailNode', SampleSizeThumbnailNode );
