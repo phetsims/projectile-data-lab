@@ -212,22 +212,24 @@ export default class DataMeasuresOverlay extends Node {
         }
       } );
 
+    const children: Node[] = [
+      leftArrow,
+      rightArrow,
+      leftLine,
+      rightLine,
+      meanLine,
+      meanIndicator
+    ];
+
+    if ( providedOptions.context === 'field' ) {
+      children.push( meanLabelPanel, sdLeftLabel, sdRightLabel );
+    }
 
     const options = optionize<DataMeasuresFieldOverlayOptions, SelfOptions, NodeOptions>()( {
       visiblePropertyOptions: {
         phetioFeatured: true
       },
-      children: [
-        leftArrow,
-        rightArrow,
-        leftLine,
-        rightLine,
-        meanLine,
-        sdLeftLabel,
-        sdRightLabel,
-        meanIndicator,
-        meanLabelPanel
-      ]
+      children: children
     }, providedOptions );
 
     super( options );
