@@ -55,6 +55,13 @@ export default class AngleStabilizerSection extends VBox {
       slider.addMinorTick( i );
     }
     const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, VBoxOptions>()( {
+      phetioFeatured: true,
+      layoutOptions: {
+        stretch: true,
+
+        // Workaround since ToggleNode doesn't appear to support layoutOptions.stretch
+        minContentWidth: 150
+      },
       children: [
         new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty, {
           maxWidth: 150

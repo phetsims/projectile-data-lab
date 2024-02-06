@@ -70,14 +70,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     } );
 
     const angleStabilizerSection = new AngleStabilizerSection( angleStandardDeviationProperty, {
-        tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' ),
-        phetioFeatured: true,
-        layoutOptions: {
-          stretch: true,
-
-          // Workaround since ToggleNode doesn't appear to support layoutOptions.stretch
-          minContentWidth: 150
-        }
+        tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' )
       }
     );
 
@@ -92,7 +85,9 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     }, {
       value: 'custom',
       createNode: () => customLauncherControls
-    } ] );
+    } ], {
+      unselectedChildrenSceneGraphStrategy: 'excluded'
+    } );
 
     const contentContainer = new VBox( { children: [ mysteryOrCustomRadioButtonGroup, launcherControlsToggleNode ], spacing: 5, stretch: true } );
 

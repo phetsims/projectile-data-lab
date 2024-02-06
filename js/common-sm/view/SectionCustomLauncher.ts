@@ -37,8 +37,7 @@ export default class SectionCustomLauncher extends PDLPanelSection {
 
     // Note that the Angle Stabilizer controls the standard deviation of the launch angle.
     const angleStabilizerSection = new AngleStabilizerSection( standardDeviationAngleProperty, {
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' ),
-      phetioFeatured: true
+      tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' )
     } );
 
     const contentContainer = new VBox( {
@@ -47,7 +46,7 @@ export default class SectionCustomLauncher extends PDLPanelSection {
       stretch: true,
 
       // Tuned to make sure the panels have the same width on all screens
-      xMargin: 8.5
+      xMargin: 5
     } );
 
     super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, options );
