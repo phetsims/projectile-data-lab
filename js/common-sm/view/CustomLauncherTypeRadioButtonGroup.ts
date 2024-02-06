@@ -8,7 +8,7 @@
  */
 
 import { Image } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -24,6 +24,7 @@ import launcherMechanismButtonPressure2_mp3 from '../../../sounds/launcherMechan
 import launcherMechanismButtonPressure1_mp3 from '../../../sounds/launcherMechanismButtonPressure1_mp3.js';
 import launcherMechanismButtonPressure3_mp3 from '../../../sounds/launcherMechanismButtonPressure3_mp3.js';
 import launcherMechanismButtonExplosion_mp3 from '../../../sounds/launcherMechanismButtonExplosion_mp3.js';
+import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
@@ -43,7 +44,7 @@ soundManager.addSoundGenerator( pressureSound3 );
 const explosionSound = new SoundClip( launcherMechanismButtonExplosion_mp3 );
 soundManager.addSoundGenerator( explosionSound );
 
-export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadioButtonGroup<LauncherMechanism> {
+export default class CustomLauncherTypeRadioButtonGroup extends PDLRectangularRadioButtonGroup<LauncherMechanism> {
   public constructor( customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, providedOptions: CustomLauncherTypeRadioButtonGroupOptions ) {
 
     const items: RectangularRadioButtonGroupItem<LauncherMechanism>[] = [
@@ -75,7 +76,9 @@ export default class CustomLauncherTypeRadioButtonGroup extends RectangularRadio
       orientation: 'horizontal',
       align: 'center',
       radioButtonOptions: {
-        baseColor: 'white'
+        baseColor: 'white',
+        xMargin: 5,
+        yMargin: 5
       }
     } );
   }

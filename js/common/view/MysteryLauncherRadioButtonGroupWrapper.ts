@@ -1,15 +1,15 @@
 // Copyright 2023-2024, University of Colorado Boulder
 import { KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLText from './PDLText.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 
-const LAUNCHER_BUTTON_CORNER_RADIUS = 5;
+const LAUNCHER_BUTTON_CORNER_RADIUS = 2;
 
 /**
  * MysteryLauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
@@ -28,7 +28,7 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
         // The Panel provides larger bounds around the text, for making the button the size we want.
         createNode: () => {
           const launcherIcon = new MysteryLauncherIcon( mysteryLauncher );
-          const launcherIconPaddingX = 7;
+          const launcherIconPaddingX = 6;
           const launcherIconPaddingTopY = 1;
 
           const launcherIconBoundsWithPadding = launcherIcon.bounds.dilatedX( launcherIconPaddingX ).dilatedY( launcherIconPaddingTopY ).shiftY( -launcherIconPaddingTopY );
@@ -54,7 +54,7 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
             left: 0,
             fill: '#FCFCFC',
             stroke: 'black',
-            lineWidth: 0.5
+            lineWidth: 1
           } );
 
           numberLabel.center = numberLabelBackground.center;
@@ -74,13 +74,12 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
       };
     } );
 
-    const mysteryLauncherRadioButtonGroup = new RectangularRadioButtonGroup( launcherProperty, mysteryLauncherRadioButtonGroupItems, {
+    const mysteryLauncherRadioButtonGroup = new PDLRectangularRadioButtonGroup( launcherProperty, mysteryLauncherRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroup' ),
       phetioFeatured: true,
       orientation: 'horizontal',
       preferredWidth: 160,
-      lineSpacing: 3,
-      spacing: 4,
+      lineSpacing: 6,
       wrap: true,
       phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
       radioButtonOptions: {

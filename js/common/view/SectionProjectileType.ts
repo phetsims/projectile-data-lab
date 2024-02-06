@@ -2,7 +2,6 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import { Image } from '../../../../scenery/js/imports.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import { ProjectileType } from '../model/ProjectileType.js';
@@ -12,6 +11,7 @@ import cannonball_png from '../../../images/cannonball_png.js';
 import piano_png from '../../../images/piano_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 
 /**
  * The SectionProjectileType shows the projectile type radio buttons.
@@ -27,7 +27,7 @@ export default class SectionProjectileType extends PDLPanelSection {
 
   public constructor( projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: SectionProjectileTypeOptions ) {
 
-    const projectileTypeRadioButtonGroup = new RectangularRadioButtonGroup( projectileTypeProperty, [ {
+    const projectileTypeRadioButtonGroup = new PDLRectangularRadioButtonGroup( projectileTypeProperty, [ {
       value: 'cannonball' as const,
       tandemName: 'cannonballRadioButton',
       createNode: () => new Image( cannonball_png, { scale: 0.22 } )
@@ -45,7 +45,9 @@ export default class SectionProjectileType extends PDLPanelSection {
       phetioFeatured: true,
       orientation: 'horizontal',
       radioButtonOptions: {
-        baseColor: 'white'
+        baseColor: 'white',
+        xMargin: 5,
+        yMargin: 5
       },
       layoutOptions: {
         align: 'center'

@@ -1,13 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import RectangularRadioButtonGroup from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLText from '../../common/view/PDLText.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
 
 /**
  * The SectionSampleSize shows the sample size radio buttons.
@@ -31,7 +31,7 @@ export default class SectionSampleSize extends PDLPanelSection {
       };
     } );
 
-    const sampleSizeRadioButtonGroup = new RectangularRadioButtonGroup( sampleSizeProperty, sampleSizeRadioButtonGroupItems, {
+    const sampleSizeRadioButtonGroup = new PDLRectangularRadioButtonGroup( sampleSizeProperty, sampleSizeRadioButtonGroupItems, {
       tandem: providedOptions.tandem.createTandem( 'sampleSizeRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
       phetioFeatured: true,
