@@ -39,7 +39,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
-        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 0 )
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 5 )
       }
     }, {
       value: 'angle45' as const,
@@ -48,7 +48,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
-        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 1 )
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 4 )
       }
     }, {
       value: 'angle60' as const,
@@ -57,7 +57,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
-        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 2 )
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 3 )
       }
     }, {
       value: 'angle0Raised' as const,
@@ -66,7 +66,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
-        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 5 )
+        soundPlayer: multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( 0 )
       }
     } ], {
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationRadioButtonGroup' ),
