@@ -164,18 +164,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const field = this.fieldProperty.value;
     const phaseProperty = field.phaseProperty;
 
+    assert && assert( phaseProperty.value === 'idle' || phaseProperty.value === 'showingCompleteSampleWithMean', 'The launch button should only be enabled in phase: idle|showingCompleteSampleWithMean' );
+
     if ( this.singleOrContinuousProperty.value === 'single' ) {
 
       // If the simulation is paused, unpause it.
       this.isPlayingProperty.value = true;
-
-      //TODO: Is this needed now that the launch button is disabled when the phase is not idle? - see https://github.com/phetsims/projectile-data-lab/issues/106
-      if ( phaseProperty.value !== 'idle' ) {
-
-        // When firing a sample while another was in progress, finish out the prior one first
-        field.finishCurrentSample();
-        phaseProperty.value = 'showingCompleteSampleWithMean';
-      }
 
       // Update the selected sample number before changing the phase, so that we have the correct phase on the current sample
       this.selectedSampleNumberProperty.value = field.numberOfCompletedSamplesProperty.value + 1;
