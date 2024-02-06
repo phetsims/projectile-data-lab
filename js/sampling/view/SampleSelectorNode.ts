@@ -2,7 +2,6 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
 import Panel from '../../../../sun/js/Panel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -16,10 +15,12 @@ import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import SelectorNode from '../../common/view/SelectorNode.js';
+import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
 import Range from '../../../../dot/js/Range.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import { SamplingPhase } from '../model/SamplingPhase.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import { MeanTone } from '../../common/model/MeanTone.js';
 
 /**
  * The SampleSelectorNode allows the user to select from the various started samples.
@@ -29,7 +30,7 @@ import { SamplingPhase } from '../model/SamplingPhase.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type SampleSelectorPanelOptions = SelfOptions & PDLPanelOptions;
+type SampleSelectorPanelOptions = SelfOptions & StrictOmit<SelectorNodeOptions, 'playSound'>;
 
 const MAX_TEXT_WIDTH = 120;
 
@@ -45,7 +46,15 @@ export default class SampleSelectorNode extends SelectorNode {
     isContinuousLaunchingProperty: TReadOnlyProperty<boolean>,
     providedOptions: SampleSelectorPanelOptions ) {
 
-    const options = optionize<SampleSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
+    const options = optionize<SampleSelectorPanelOptions, SelfOptions, SelectorNodeOptions>()( {
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      },
+      playSound: sampleNumber => {
+        const mean = _.mean( samplingFieldProperty.value.getProjectilesInSample( sampleNumber ).map( projectile => projectile.x ) );
+        MeanTone.playMean( mean );
+      }
+    }, providedOptions );
 
     const dataContainer = new Node();
 
@@ -138,12 +147,7 @@ export default class SampleSelectorNode extends SelectorNode {
       maxHeight: 60
     } );
 
-    super( sampleCardContainer, selectedSampleNumberProperty, rangeProperty, {
-      tandem: options.tandem,
-      visiblePropertyOptions: {
-        phetioFeatured: true
-      }
-    } );
+    super( sampleCardContainer, selectedSampleNumberProperty, rangeProperty, options );
   }
 }
 

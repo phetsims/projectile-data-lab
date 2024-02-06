@@ -4,7 +4,7 @@ import { Color, Node, NodeOptions, Path, SceneryConstants } from '../../../../sc
 import AccessibleNumberSpinner, { AccessibleNumberSpinnerOptions } from '../../../../sun/js/accessibility/AccessibleNumberSpinner.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import InstanceRegistry from '../../../../phet-core/js/documentation/InstanceRegistry.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -24,7 +24,9 @@ import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSound
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  playSound: ( selectedItem: number ) => void;
+};
 type ParentOptions = AccessibleNumberSpinnerOptions & NodeOptions;
 export type SelectorNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'children' | 'valueProperty' | 'enabledRangeProperty' | 'keyboardStep' | 'shiftKeyboardStep' | 'pageKeyboardStep'>;
 
@@ -76,8 +78,8 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
         tandem: options.tandem.createTandem( 'incrementButton' ),
         listener: () => {
           numberProperty.set( numberProperty.value + 1 );
+          options.playSound( numberProperty.value );
           this.focus();
-          // TODO: Play the projectile landing sound or mean indicator sound - see https://github.com/phetsims/projectile-data-lab/issues/106
         },
         content: new Path( angleRightSolidShape, { fill: 'gray', scale: 0.05 } )
       }, arrowButtonOptions )
@@ -89,8 +91,8 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
         tandem: options.tandem.createTandem( 'decrementButton' ),
         listener: () => {
           numberProperty.set( numberProperty.value - 1 );
+          options.playSound( numberProperty.value );
           this.focus();
-          // TODO: Play the projectile landing sound or mean indicator sound - see https://github.com/phetsims/projectile-data-lab/issues/106
         },
         content: new Path( angleLeftSolidShape, { fill: 'gray', scale: 0.05 } )
       }, arrowButtonOptions )

@@ -3,7 +3,7 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
+import { PDLPanel } from '../../common/view/PDLPanel.js';
 import { HBox, Image, Node, VBox } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -33,6 +33,9 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import { ProjectileType } from '../../common/model/ProjectileType.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Field from '../../common/model/Field.js';
+import LandingSound from '../../common/model/LandingSound.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
 
@@ -45,18 +48,23 @@ const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png
  * @author Sam Reid (PhET Interactive Simulations)
  */
 type SelfOptions = EmptySelfOptions;
-type ProjectileSelectorPanelOptions = SelfOptions & SelectorNodeOptions;
+type ProjectileSelectorNodeOptions = SelfOptions & StrictOmit<SelectorNodeOptions, 'playSound'>;
 
 export default class ProjectileSelectorNode extends SelectorNode {
 
   public constructor(
+    fieldProperty: TReadOnlyProperty<Field>,
     selectedProjectileNumberProperty: TProperty<number> & PhetioObject,
     totalProjectileCountProperty: TReadOnlyProperty<number>,
     numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
     selectedProjectileProperty: TReadOnlyProperty<Projectile | null>,
-    providedOptions: ProjectileSelectorPanelOptions ) {
+    providedOptions: ProjectileSelectorNodeOptions ) {
 
-    const options = optionize<ProjectileSelectorPanelOptions, SelfOptions, PDLPanelOptions>()( {}, providedOptions );
+    const options = optionize<ProjectileSelectorNodeOptions, SelfOptions, SelectorNodeOptions>()( {
+      playSound: projectileNumber => {
+        LandingSound.play( fieldProperty.value.landedProjectiles[ projectileNumber - 1 ].x );
+      }
+    }, providedOptions );
 
     // Create adapters for that will reflect the values for the selected projectile.
     const launchAngleProperty = new NumberProperty( 30 );

@@ -103,6 +103,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     this.projectileSelectorNode = new ProjectileSelectorNode(
+      model.fieldProperty,
       model.selectedProjectileNumberProperty,
       model.totalProjectileCountProperty,
       model.numberOfLandedProjectilesProperty,
