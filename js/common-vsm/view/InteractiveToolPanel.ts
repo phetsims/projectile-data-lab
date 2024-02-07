@@ -19,10 +19,11 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import TimeDisplayNode from './TimeDisplayNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
+import PDLStopwatchNode from './PDLStopwatchNode.js';
+import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -42,8 +43,14 @@ export default class InteractiveToolPanel extends PDLPanel {
 
     class StopwatchNodeIcon extends Node {
       public constructor() {
-        const stopwatchNode = new TimeDisplayNode( new Property( 0 ), { isIcon: true } )
-          .rasterized( { resolution: 1.25 } );
+        const stopwatch = new Stopwatch( { tandem: Tandem.OPT_OUT } );
+        stopwatch.isVisibleProperty.value = true;
+        const stopwatchNode = new PDLStopwatchNode( stopwatch, _.noop, { tandem: Tandem.OPT_OUT } ).rasterized( {
+          resolution: 1.25,
+          imageOptions: {
+            scale: 0.83
+          }
+        } );
         super( {
           children: [ stopwatchNode ],
           pickable: false,

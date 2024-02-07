@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Color, ManualConstraint, Node, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Color, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -28,7 +28,7 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import PDLStopwatchNode from './PDLStopwatchNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -160,27 +160,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     const stopwatchNodeTandem = options.tandem.createTandem( 'stopwatchNode' );
-    this.stopwatchNode = new StopwatchNode( model.stopwatch, {
+    this.stopwatchNode = new PDLStopwatchNode( model.stopwatch, () => model.launchProjectile(), {
       tandem: stopwatchNodeTandem,
-      dragBoundsProperty: dragBoundsProperty,
-      otherControls: [
-        new RectangularPushButton( {
-          baseColor: 'lightgray',
-          content: new Text( ProjectileDataLabStrings.launchStringProperty, {
-            maxWidth: 50
-          } ),
-          layoutOptions: {
-            stretch: true,
-            xMargin: 6.3
-          },
-          tandem: stopwatchNodeTandem.createTandem( 'launchButton' ),
-          listener: () => {
-            model.stopwatch.timeProperty.reset();
-            model.launchProjectile();
-            model.stopwatch.isRunningProperty.value = true;
-          }
-        } )
-      ]
+      dragBoundsProperty: dragBoundsProperty
     } );
 
     const isLauncherRaisedProperty = new DerivedProperty( [ model.launcherHeightProperty ], height => height > 0 );
