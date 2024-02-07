@@ -17,26 +17,26 @@ import PDLColors from '../PDLColors.js';
 import Projectile from '../model/Projectile.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import cannonball_png from '../../../images/cannonball_png.js';
-import cannonballHighlighted_png from '../../../images/cannonballHighlighted_png.js';
-import cannonballGray_png from '../../../images/cannonballGray_png.js';
+import cannonballLanded_png from '../../../images/cannonballLanded_png.js';
+import cannonballLandedSelected_png from '../../../images/cannonballLandedSelected_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
-import pumpkin1Highlighted_png from '../../../images/pumpkin1Highlighted_png.js';
-import pumpkin2Highlighted_png from '../../../images/pumpkin2Highlighted_png.js';
-import pumpkin3Highlighted_png from '../../../images/pumpkin3Highlighted_png.js';
-import pumpkin1Dark_png from '../../../images/pumpkin1Dark_png.js';
-import pumpkin2Dark_png from '../../../images/pumpkin2Dark_png.js';
-import pumpkin3Dark_png from '../../../images/pumpkin3Dark_png.js';
+import pumpkin1Landed_png from '../../../images/pumpkin1Landed_png.js';
+import pumpkin2Landed_png from '../../../images/pumpkin2Landed_png.js';
+import pumpkin3Landed_png from '../../../images/pumpkin3Landed_png.js';
+import pumpkin1LandedSelected_png from '../../../images/pumpkin1LandedSelected_png.js';
+import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_png.js';
+import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
 import piano_png from '../../../images/piano_png.js';
-import pianoHighlighted_png from '../../../images/pianoHighlighted_png.js';
-import pianoDark_png from '../../../images/pianoDark_png.js';
+import pianoLanded_png from '../../../images/pianoLanded_png.js';
+import pianoLandedSelected_png from '../../../images/pianoLandedSelected_png.js';
 import forceField_png from '../../../images/forceField_png.js';
 import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
 
-const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
-const PUMPKIN_LANDED_DARK_IMAGES = [ pumpkin1Dark_png, pumpkin2Dark_png, pumpkin3Dark_png ];
+const PUMPKIN_LANDED_IMAGES = [ pumpkin1Landed_png, pumpkin2Landed_png, pumpkin3Landed_png ];
+const PUMPKIN_LANDED_SELECTED_IMAGES = [ pumpkin1LandedSelected_png, pumpkin2LandedSelected_png, pumpkin3LandedSelected_png ];
 
 export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode {
   protected constructor(
@@ -116,7 +116,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     context.stroke();
   }
 
-  protected drawProjectile( context: CanvasRenderingContext2D, projectile: Projectile, isLanded: boolean, isDarkened: boolean ): void {
+  protected drawProjectile( context: CanvasRenderingContext2D, projectile: Projectile, isLanded: boolean, isSelected: boolean ): void {
 
     const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
     let image: HTMLImageElement;
@@ -124,17 +124,17 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     switch( projectile.type ) {
       case 'pumpkin':
         if ( isLanded ) {
-          image = isDarkened ? PUMPKIN_LANDED_DARK_IMAGES[ projectile.landedImageIndex ] : PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ];
+          image = isSelected ? PUMPKIN_LANDED_SELECTED_IMAGES[ projectile.landedImageIndex ] : PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ];
         }
         else {
           image = pumpkin_png;
         }
         break;
       case 'piano':
-        image = isLanded ? ( isDarkened ? pianoDark_png : pianoHighlighted_png ) : piano_png;
+        image = isLanded ? ( isSelected ? pianoLandedSelected_png : pianoLanded_png ) : piano_png;
         break;
       default:
-        image = isLanded ? ( isDarkened ? cannonballGray_png : cannonballHighlighted_png ) : cannonball_png;
+        image = isLanded ? ( isSelected ? cannonballLandedSelected_png : cannonballLanded_png ) : cannonball_png;
         break;
     }
 

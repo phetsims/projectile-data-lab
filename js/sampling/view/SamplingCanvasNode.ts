@@ -9,7 +9,7 @@ import PDLColors from '../../common/PDLColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import SamplingField from '../model/SamplingField.js';
 import cannonball_png from '../../../images/cannonball_png.js';
-import cannonballGray_png from '../../../images/cannonballGray_png.js';
+import cannonballLanded_png from '../../../images/cannonballLanded_png.js';
 import PDLConstants from '../../common/PDLConstants.js';
 
 /**
@@ -70,7 +70,7 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
       const projectile = projectiles[ i ];
 
       const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
-      const image = phase === 'showingCompleteSampleWithMean' ? cannonballGray_png : cannonball_png;
+      const image = phase === 'showingCompleteSampleWithMean' ? cannonballLanded_png : cannonball_png;
 
       context.save();
 

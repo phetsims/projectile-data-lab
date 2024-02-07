@@ -9,11 +9,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Projectile from '../../common/model/Projectile.js';
-import pianoHighlighted_png from '../../../images/pianoHighlighted_png.js';
 import cannonball_png from '../../../images/cannonball_png.js';
-import pumpkin1Highlighted_png from '../../../images/pumpkin1Highlighted_png.js';
-import pumpkin2Highlighted_png from '../../../images/pumpkin2Highlighted_png.js';
-import pumpkin3Highlighted_png from '../../../images/pumpkin3Highlighted_png.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import Range from '../../../../dot/js/Range.js';
 import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
@@ -36,8 +32,12 @@ import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Field from '../../common/model/Field.js';
 import LandingSound from '../../common/model/LandingSound.js';
+import pumpkin1LandedSelected_png from '../../../images/pumpkin1LandedSelected_png.js';
+import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_png.js';
+import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
+import pianoLandedSelected_png from '../../../images/pianoLandedSelected_png.js';
 
-const PUMPKIN_LANDED_IMAGES = [ pumpkin1Highlighted_png, pumpkin2Highlighted_png, pumpkin3Highlighted_png ];
+const PUMPKIN_LANDED_IMAGES = [ pumpkin1LandedSelected_png, pumpkin2LandedSelected_png, pumpkin3LandedSelected_png ];
 
 /**
  * Panel that allows the user to select a projectile. This appears in all VSM screens. The selected projectile is displayed
@@ -133,7 +133,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
 
     const createNode = ( depiction: Depiction ) => {
       const imagePNG = depiction.type === 'pumpkin' ? PUMPKIN_LANDED_IMAGES[ depiction.landedImageIndex! ] :
-                       depiction.type === 'piano' ? pianoHighlighted_png :
+                       depiction.type === 'piano' ? pianoLandedSelected_png :
                        cannonball_png;
 
       const imageScale = depiction.type === 'pumpkin' ? 0.18 : depiction.type === 'piano' ? 0.14 : 0.2;

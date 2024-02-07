@@ -72,7 +72,7 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
     // 3: Landed projectiles that are not the most recent
     landedProjectiles.forEach( projectile => {
       if ( projectile !== highlightedProjectile ) {
-        this.drawProjectile( context, projectile, true, true );
+        this.drawProjectile( context, projectile, true, false );
       }
     } );
 
@@ -97,7 +97,7 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
 
     // 7: Most recent landed projectile
     if ( highlightedProjectile ) {
-      this.drawProjectile( context, highlightedProjectile, true, false );
+      this.drawProjectile( context, highlightedProjectile, true, true );
     }
   }
 }
