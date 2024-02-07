@@ -22,7 +22,10 @@ export class PDLLaunchPanel extends PDLPanel {
 
     const options = optionize<PDLLaunchPanelOptions, SelfOptions, PDLPanelOptions>()( {
       left: PDLConstants.SCREEN_VIEW_X_MARGIN,
-      top: PDLConstants.SCREEN_VIEW_Y_MARGIN
+      top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
+
+      // Fill all the space on the left, even if the child components don't use all the space
+      preferredWidth: 171
     }, providedOptions );
 
     // Add a separator between each of the children, but not after the last one
