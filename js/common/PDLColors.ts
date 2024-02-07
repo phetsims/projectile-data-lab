@@ -26,11 +26,11 @@ const PDLColors = {
 
   // Background color for screens in this sim
   screenBackgroundTopColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundTop', {
-    default: '#29b5ff'
+    default: '#0094f0'
   } ),
 
   screenBackgroundBottomColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundBottom', {
-    default: '#c3d7ff'
+    default: '#a3bfff'
   } ),
 
   panelColorProperty: new ProfileColorProperty( projectileDataLab, 'panelFill', {
@@ -54,11 +54,11 @@ const PDLColors = {
   } ),
 
   fieldFill1ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill1', {
-    default: '#41d27e'
+    default: '#00c753'
   } ),
 
   fieldFill2ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill2', {
-    default: '#096d3c'
+    default: '#008f2b'
   } ),
 
   fieldLineColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLine', {
