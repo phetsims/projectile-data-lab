@@ -60,7 +60,10 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     } );
 
     const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
-      tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroupWrapper' ),
+
+      // Note there is a "Wrapper" level in order to handle the line break for the mystery radio buttons. Hence, the wrapper
+      // creates the RadioButtonGroup. The correct tandem is specified at that point.
+      tandem: providedOptions.tandem,
       phetioFeatured: true
     } );
 
