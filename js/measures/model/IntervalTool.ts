@@ -46,6 +46,7 @@ export default class IntervalTool extends PhetioObject {
 
     this.dataFractionProperty = new Property<number>( 0, {
       tandem: options.tandem.createTandem( 'dataFractionProperty' ),
+      phetioFeatured: true,
       phetioDocumentation: 'The fraction of data within the interval tool',
       phetioValueType: NumberIO,
       phetioReadOnly: true
