@@ -255,10 +255,7 @@ export default class HistogramNode extends Node {
         // When we get a new mean, redraw the histogram
         field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
         field.phaseProperty.link( () => updateHistogram() );
-        field.numberOfStartedSamplesProperty.link( () => updateHistogram() );
         field.sampleMeanProperty.link( () => updateHistogram() );
-
-        field.projectilesChangedEmitter.addListener( () => updateHistogram() );
       }
     } );
 
