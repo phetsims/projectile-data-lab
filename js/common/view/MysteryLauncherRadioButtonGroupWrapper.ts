@@ -8,6 +8,7 @@ import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 const LAUNCHER_BUTTON_CORNER_RADIUS = 2;
 
@@ -49,11 +50,18 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
               bottomLeft: 0
             } );
 
+          const strokeProperty = new DerivedProperty( [ launcherProperty ], launcher => {
+            return launcher === mysteryLauncher ? null : 'black';
+          } );
+          const fillProperty = new DerivedProperty( [ launcherProperty ], launcher => {
+            return launcher === mysteryLauncher ? 'rgb(87,178,226)' : '#FCFCFC';
+          } );
+
           const numberLabelBackground = new Path( numberLabelBackgroundShape, {
             top: 0,
             left: 0,
-            fill: '#FCFCFC',
-            stroke: 'black',
+            fill: fillProperty,
+            stroke: strokeProperty,
             lineWidth: 1
           } );
 
