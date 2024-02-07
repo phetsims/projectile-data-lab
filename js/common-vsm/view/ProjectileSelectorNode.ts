@@ -62,7 +62,8 @@ export default class ProjectileSelectorNode extends SelectorNode {
 
     const options = optionize<ProjectileSelectorNodeOptions, SelfOptions, SelectorNodeOptions>()( {
       playSound: projectileNumber => {
-        LandingSound.play( fieldProperty.value.landedProjectiles[ projectileNumber - 1 ].x );
+        const projectile = fieldProperty.value.landedProjectiles[ projectileNumber - 1 ];
+        LandingSound.play( projectile.type, projectile.x );
       }
     }, providedOptions );
 
