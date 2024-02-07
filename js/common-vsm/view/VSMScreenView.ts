@@ -320,11 +320,23 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     staticToolPanel: StaticToolPanel,
     interactiveToolPanel: InteractiveToolPanel,
     intervalToolNode?: Node ): void {
-    this.pdomControlAreaNode.pdomOrder = [
+
+    this.pdomPlayAreaNode.pdomOrder = [
 
       // Launch controls
       this.launchButton,
       this.singleOrContinuousRadioButtonGroup,
+
+      // Play area tools
+      this.measuringTapeNode,
+      this.stopwatchNode,
+      ...( intervalToolNode ? [ intervalToolNode ] : [] ),
+
+      // Projectile selector
+      this.projectileSelectorNode
+    ];
+
+    this.pdomControlAreaNode.pdomOrder = [
 
       // Experiment setup
       this.launchPanel,
@@ -340,14 +352,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       staticToolPanel,
       interactiveToolPanel,
       this.timeControlNode,
-
-      // Play area tools
-      this.measuringTapeNode,
-      this.stopwatchNode,
-      ...( intervalToolNode ? [ intervalToolNode ] : [] ),
-
-      // Projectile selector
-      this.projectileSelectorNode,
 
       // Reset all
       this.resetAllButton
