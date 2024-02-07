@@ -105,7 +105,6 @@ export default class LauncherNode extends Node {
     this.addChild( this.launcherBarrel );
     this.addChild( this.launcherFrameFront );
 
-    // TODO: Consider a third property - currentAngleProperty - that knows how to handle the mean and animating launcher rotation - see https://github.com/phetsims/projectile-data-lab/issues/28
     this.meanLaunchAngleProperty.link( meanLaunchAngle => {
       this.launcherBarrel.setRotation( Utils.toRadians( -meanLaunchAngle ) );
     } );
@@ -118,7 +117,10 @@ export default class LauncherNode extends Node {
       this.updateMysteryLauncher( mysteryLauncher.launcherNumber, options.isIcon );
     } );
 
-    fieldProperty && fieldProperty.link( () => this.cancelBarrelRotationAnimation() );
+    fieldProperty && fieldProperty.link( () => {
+      this.cancelBarrelRotationAnimation();
+      this.launcherBarrel.setRotation( Utils.toRadians( -this.meanLaunchAngleProperty.value ) );
+    } );
   }
 
   private cancelBarrelRotationAnimation(): void {
@@ -132,7 +134,6 @@ export default class LauncherNode extends Node {
   public playLaunchAnimation( angle: number ): void {
 
     this.launcherBarrel.setRotation( Utils.toRadians( -angle ) );
-
     this.cancelBarrelRotationAnimation();
 
     this.barrelRotationAnimation = new Animation( {
