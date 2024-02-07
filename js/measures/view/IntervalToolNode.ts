@@ -30,8 +30,8 @@ const TEXT_PANEL_BOUNDS_DILATION = 5;
 
 const grabClip = new SoundClip( grab_mp3, { initialOutputLevel: 0.4 } );
 const releaseClip = new SoundClip( release_mp3, { initialOutputLevel: 0.4 } );
-soundManager.addSoundGenerator( grabClip );
-soundManager.addSoundGenerator( releaseClip );
+soundManager.addSoundGenerator( grabClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( releaseClip, { categoryName: 'user-interface' } );
 
 /**
  * IntervalToolNode displays the IntervalTool, which allows the user to select an interval in the data set. It can be

@@ -30,19 +30,19 @@ type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
 
 const springSound = new SoundClip( launcherMechanismButtonSpring_mp3 );
-soundManager.addSoundGenerator( springSound );
+soundManager.addSoundGenerator( springSound, { categoryName: 'user-interface' } );
 
 const pressureSound1 = new SoundClip( launcherMechanismButtonPressure1_mp3 );
-soundManager.addSoundGenerator( pressureSound1 );
+soundManager.addSoundGenerator( pressureSound1, { categoryName: 'user-interface' } );
 
 const pressureSound2 = new SoundClip( launcherMechanismButtonPressure2_mp3 );
-soundManager.addSoundGenerator( pressureSound2 );
+soundManager.addSoundGenerator( pressureSound2, { categoryName: 'user-interface' } );
 
 const pressureSound3 = new SoundClip( launcherMechanismButtonPressure3_mp3 );
-soundManager.addSoundGenerator( pressureSound3 );
+soundManager.addSoundGenerator( pressureSound3, { categoryName: 'user-interface' } );
 
 const explosionSound = new SoundClip( launcherMechanismButtonExplosion_mp3 );
-soundManager.addSoundGenerator( explosionSound );
+soundManager.addSoundGenerator( explosionSound, { categoryName: 'user-interface' } );
 
 export default class CustomLauncherTypeRadioButtonGroup extends PDLRectangularRadioButtonGroup<LauncherMechanism> {
   public constructor( customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, providedOptions: CustomLauncherTypeRadioButtonGroupOptions ) {
