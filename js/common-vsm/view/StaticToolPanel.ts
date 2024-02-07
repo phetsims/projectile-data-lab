@@ -9,18 +9,17 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { AlignGroup, CanvasNode, CanvasNodeOptions, HBox, Node } from '../../../../scenery/js/imports.js';
+import { CanvasNode, CanvasNodeOptions, Node } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import PDLText from '../../common/view/PDLText.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PDLColors from '../../common/PDLColors.js';
 import AngleToolNode from './AngleToolNode.js';
 import SpeedToolNode from './SpeedToolNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -114,15 +113,15 @@ export default class StaticToolPanel extends PDLPanel {
 
     const checkboxGroup = new VerticalCheckboxGroup( [ {
       property: arePathsVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.pathsStringProperty, new PathsIcon() ),
+      createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.pathsStringProperty, new PathsIcon() ),
       tandemName: 'pathsCheckbox'
     }, {
       property: isLaunchAngleVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchAngleStringProperty, new AngleToolIconNode() ),
+      createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.launchAngleStringProperty, new AngleToolIconNode() ),
       tandemName: 'launchAngleCheckbox'
     }, {
       property: isLaunchSpeedVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.launchSpeedStringProperty, new SpeedToolIconNode() ),
+      createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.launchSpeedStringProperty, new SpeedToolIconNode() ),
       tandemName: 'launchSpeedCheckbox'
     },
       ...options.additionalVerticalCheckboxGroupItems
@@ -136,19 +135,6 @@ export default class StaticToolPanel extends PDLPanel {
     } );
     super( checkboxGroup, options );
   }
-
-  public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
-
-    return new HBox( {
-      spacing: 5,
-      stretch: true, children: [ new PDLText( label, {
-        maxWidth: 110
-      } ), alignGroup.createBox( icon ) ]
-    } );
-  }
 }
-
-// All icons from all screens fit the same footprint, so we can use the same alignGroup for all of them
-const alignGroup = new AlignGroup();
 
 projectileDataLab.register( 'StaticToolPanel', StaticToolPanel );

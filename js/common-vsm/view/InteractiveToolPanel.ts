@@ -9,14 +9,12 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Color, HBox, Node } from '../../../../scenery/js/imports.js';
+import { Color, Node } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import StaticToolPanel, { ICON_WIDTH } from './StaticToolPanel.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PDLText from '../../common/view/PDLText.js';
+import { ICON_WIDTH } from './StaticToolPanel.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
 import Property from '../../../../axon/js/Property.js';
@@ -24,6 +22,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import TimeDisplayNode from './TimeDisplayNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -77,11 +76,11 @@ export default class InteractiveToolPanel extends PDLPanel {
 
     const checkboxGroup = new VerticalCheckboxGroup( [ {
       property: isMeasuringTapeVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new MeasuringTapeIconNode() ),
+      createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new MeasuringTapeIconNode() ),
       tandemName: 'measuringTapeCheckbox'
     }, {
       property: isStopwatchVisibleProperty,
-      createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new StopwatchNodeIcon() ),
+      createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new StopwatchNodeIcon() ),
       tandemName: 'stopwatchCheckbox'
     },
       ...options.additionalVerticalCheckboxGroupItems
@@ -94,14 +93,6 @@ export default class InteractiveToolPanel extends PDLPanel {
       }
     } );
     super( checkboxGroup, options );
-  }
-
-  public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
-    return new HBox( {
-      stretch: true, children: [ new PDLText( label, {
-        maxWidth: 90
-      } ), icon ]
-    } );
   }
 }
 

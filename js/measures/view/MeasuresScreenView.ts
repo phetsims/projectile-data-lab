@@ -95,6 +95,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     this.launcherLayer.addChild( this.launcherNode );
 
     const intervalToolNode = new IntervalToolNode( model.intervalTool, this.modelViewTransform, {
+      isIcon: false,
       visibleProperty: model.isIntervalToolVisibleProperty,
       tandem: options.tandem.createTandem( 'intervalToolNode' )
     } );

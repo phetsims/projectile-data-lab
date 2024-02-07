@@ -8,7 +8,7 @@ import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import Panel from '../../../../sun/js/Panel.js';
 import PDLText from '../../common/view/PDLText.js';
-import optionize, { combineOptions, EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -23,7 +23,9 @@ import grab_mp3 from '../../../../tambo/sounds/grab_mp3.js';
 import release_mp3 from '../../../../tambo/sounds/release_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  isIcon: boolean;
+};
 export type IntervalToolNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 const TEXT_PANEL_BOUNDS_DILATION = 5;
@@ -175,7 +177,9 @@ export default class IntervalToolNode extends Node {
 
       const SPHERE_Y = modelViewTransform.modelToViewY( 18 );
       const ARROW_Y = modelViewTransform.modelToViewY( 14.5 );
-      const y0 = modelViewTransform.modelToViewY( 0 );
+
+      // The icon has shorter legs
+      const y0 = modelViewTransform.modelToViewY( options.isIcon ? 5 : 0 );
 
       edge1Sphere.center = new Vector2( viewEdge1X, SPHERE_Y );
       edge2Sphere.center = new Vector2( viewEdge2X, SPHERE_Y );

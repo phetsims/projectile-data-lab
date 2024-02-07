@@ -13,6 +13,7 @@ import IntervalTool from '../model/IntervalTool.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOptions;
@@ -40,13 +41,14 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
           tandem: Tandem.OPT_OUT
         } );
         const intervalToolNode = new IntervalToolNode( intervalTool, transform, {
+          isIcon: true,
           visibleProperty: new BooleanProperty( true ),
           tandem: Tandem.OPT_OUT
         } ).rasterized( { resolution: 2 } );
         super( {
           children: [ intervalToolNode ],
           pickable: false,
-          maxWidth: 25
+          maxWidth: 22
         } );
       }
     }
@@ -55,7 +57,7 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
       additionalVerticalCheckboxGroupItems: [
         {
           property: isIntervalToolVisibleProperty,
-          createNode: () => InteractiveToolPanel.createCheckboxRow( ProjectileDataLabStrings.intervalToolStringProperty, new IntervalToolIcon() ),
+          createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.intervalToolStringProperty, new IntervalToolIcon() ),
           tandemName: 'intervalToolCheckbox'
         }
       ]

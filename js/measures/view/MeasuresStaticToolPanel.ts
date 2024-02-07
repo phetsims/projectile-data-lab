@@ -10,6 +10,7 @@ import Property from '../../../../axon/js/Property.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
@@ -55,15 +56,15 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
       additionalVerticalCheckboxGroupItems: [
         {
           property: isMeanVisibleProperty,
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.meanStringProperty, new DataMeasuresIconNode( true, false ) ),
+          createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.meanStringProperty, new DataMeasuresIconNode( true, false ) ),
           tandemName: 'meanCheckbox'
         }, {
           property: isStandardDeviationVisibleProperty,
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.standardDeviationStringProperty, new DataMeasuresIconNode( false, true ) ),
+          createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.standardDeviationStringProperty, new DataMeasuresIconNode( false, true ) ),
           tandemName: 'standardDeviationCheckbox'
         }, {
           property: isValuesVisibleProperty,
-          createNode: () => StaticToolPanel.createCheckboxRow( ProjectileDataLabStrings.valuesStringProperty, new Node() ),
+          createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.valuesStringProperty, new Node() ),
           tandemName: 'valuesCheckbox'
         }
       ]
