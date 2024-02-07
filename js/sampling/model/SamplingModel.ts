@@ -59,10 +59,12 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const fieldsTandem = providedOptions.tandem.createTandem( 'fields' );
     for ( let i = 0; i < NUM_LAUNCHERS; i++ ) {
       for ( let j = 0; j < SAMPLE_SIZES.length; j++ ) {
-        fields.push( new SamplingField( MYSTERY_LAUNCHERS[ i ], SAMPLE_SIZES[ j ], samplingLaunchModeProperty, {
-          tandem: fieldsTandem.createTandem( `launcher${i + 1}SampleSize${SAMPLE_SIZES[ j ]}Field` ),
-          phetioFeatured: true
-        } ) );
+        fields.push( new SamplingField( MYSTERY_LAUNCHERS[ i ],
+          SAMPLE_SIZES[ j ],
+          samplingLaunchModeProperty, {
+            tandem: fieldsTandem.createTandem( `launcher${i + 1}SampleSize${SAMPLE_SIZES[ j ]}Field` ),
+            phetioFeatured: true
+          } ) );
       }
     }
 
@@ -209,8 +211,10 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       return;
     }
 
-    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? PDLConstants.TIME_SPEED_FAST : 1 );
-    this.fieldProperty.value.step( dt );
+    const isFast = this.timeSpeedProperty.value === TimeSpeed.FAST;
+
+    dt = dt * ( isFast ? PDLConstants.TIME_SPEED_FAST : 1 );
+    this.fieldProperty.value.step( dt, isFast );
   }
 
   /**

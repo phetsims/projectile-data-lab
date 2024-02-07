@@ -31,7 +31,8 @@ type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
-const SHOWING_SINGLE_SAMPLE_TIME = 0.3;
+const MEAN_DELAY = 0.4;
+const MEAN_DELAY_FAST = 1.5;
 
 // This is the duration of the sample and mean symbol being visible, in 'Continuous' mode.
 const CONTINUOUS_MODE_PERIOD = 0.4;
@@ -277,7 +278,7 @@ export default class SamplingField extends Field {
     }
   }
 
-  public step( dt: number ): void {
+  public step( dt: number, isFast: boolean ): void {
 
     this.stepAirborneParticles( dt );
 
@@ -317,7 +318,9 @@ export default class SamplingField extends Field {
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) { // Only for single mode
 
-      if ( timeInMode > SHOWING_SINGLE_SAMPLE_TIME ) {
+      const delayForShowingMean = isFast ? MEAN_DELAY_FAST : MEAN_DELAY;
+
+      if ( timeInMode > delayForShowingMean ) {
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
         MeanTone.playMean( this.sampleMeanProperty.value! );
       }
