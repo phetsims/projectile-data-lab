@@ -36,6 +36,10 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
 
           const numberLabel = new PDLText( mysteryLauncher.launcherNumber.toString(), { fontSize: 14 } );
 
+          launcherProperty.link( launcher => {
+            numberLabel.fontWeight = launcher === mysteryLauncher ? 'bold' : 'normal';
+          } );
+
           const numberLabelBounds = numberLabel.bounds;
 
           const numberLabelBackgroundShape = Shape.roundedRectangleWithRadii(
