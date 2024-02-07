@@ -96,7 +96,7 @@ export default class VSMField extends Field {
       phetioFeatured: true
     } );
 
-    this.latestLaunchSpeedProperty = new Property<number>( this.meanSpeedProperty.value, {
+    this.latestLaunchSpeedProperty = new Property<number>( 0, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This property is the latest launch speed, in meters per second. When a projectile is launched, this is set to the launch speed.',
@@ -207,6 +207,9 @@ export default class VSMField extends Field {
 
     this.numberOfLandedProjectilesProperty.reset();
     this.totalProjectileCountProperty.reset();
+
+    this.latestLaunchAngleProperty.value = this.meanAngleProperty.value;
+    this.latestLaunchSpeedProperty.reset();
   }
 }
 

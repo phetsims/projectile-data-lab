@@ -33,7 +33,9 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
   private displayOffset: Vector2;
 
-  public constructor( isLauncherRaised: TReadOnlyProperty<boolean>, providedOptions: SpeedToolNodeOptions ) {
+  public constructor( latestValueProperty: TReadOnlyProperty<number>,
+                      isLauncherRaised: TReadOnlyProperty<boolean>,
+                      providedOptions: SpeedToolNodeOptions ) {
 
     const bodyRadius = 60;
     const needleLength = 55;
@@ -91,7 +93,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       isClockwise: true,
       isIcon: false
     }, providedOptions );
-    super( options );
+    super( latestValueProperty, options );
 
     this.displayOffset = options.displayOffset;
 

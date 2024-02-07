@@ -42,7 +42,9 @@ export default class AngleToolNode extends HeatMapToolNode {
   private readonly elementsForGround: Node[] = [];
   private readonly elementsForRaised: Node[] = [];
 
-  public constructor( isRaisedProperty: TReadOnlyProperty<boolean>, providedOptions: AngleToolNodeOptions ) {
+  public constructor( latestValueProperty: TReadOnlyProperty<number>,
+                      isRaisedProperty: TReadOnlyProperty<boolean>,
+                      providedOptions: AngleToolNodeOptions ) {
 
     const innerBodyRadius = 60;
     const outerBodyRadius = 95;
@@ -104,7 +106,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       readoutPatternStringProperty: ProjectileDataLabStrings.degreesPatternStringProperty,
       isIcon: false
     }, providedOptions );
-    super( options );
+    super( latestValueProperty, options );
 
     const rotatedElements = [ ...this.heatNodes, ...this.tickMarks ];
     rotatedElements.forEach( rotatedElement => {
@@ -141,10 +143,6 @@ export default class AngleToolNode extends HeatMapToolNode {
       this.valueReadoutNode.x = isRaised ? 0.45 * innerBodyRadius : 0.5 * innerBodyRadius;
       this.valueReadoutNode.y = isRaised ? VALUE_READOUT_Y_RAISED : VALUE_READOUT_Y_GROUND;
     } );
-  }
-
-  public setNeedleForValue( value: number ): void {
-    this.needleNode.setRotation( Utils.toRadians( -value ) );
   }
 
   private drawBodyNodes( bodyShape: Shape ): void {

@@ -10,10 +10,8 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import Property from '../../../../axon/js/Property.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TProperty from '../../../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
@@ -50,20 +48,16 @@ type SelfOptions = {
   minorTickMarkLength?: number;
   isWithMinorTickMarks?: boolean;
   isWithInnerTickMarks?: boolean;
-  initialNeedleValue?: number;
   isClockwise?: boolean;
   isIcon?: boolean;
 };
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
 export default class HeatMapToolNode extends Node {
-  private mostRecentValueStringProperty: TProperty<string | null>;
   private readonly minValue: number;
   private readonly maxValue: number;
   private readonly binWidth: number;
   private readonly numValuesInBin: number[] = [];
-
-  private initialNeedleValue: number;
 
   protected readonly heatNodes: Path[] = [];
   protected readonly tickMarks: Path[] = [];
@@ -82,25 +76,22 @@ export default class HeatMapToolNode extends Node {
   private readonly minAngle: number;
   private readonly maxAngle: number;
 
-  public constructor( providedOptions: HeatMapToolNodeOptions ) {
+  public constructor( private readonly latestValueProperty: TReadOnlyProperty<number>,
+                      providedOptions: HeatMapToolNodeOptions ) {
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {
       isWithMinorTickMarks: false,
       isWithInnerTickMarks: false,
       majorTickMarkLength: 0,
       minorTickMarkIncrement: 0,
       minorTickMarkLength: 0,
-      initialNeedleValue: 0,
       isClockwise: false,
       isIcon: false
     }, providedOptions );
     super( options );
 
-    this.mostRecentValueStringProperty = new Property( null );
     this.minValue = options.minValue;
     this.maxValue = options.maxValue;
     this.binWidth = options.binWidth;
-
-    this.initialNeedleValue = options.initialNeedleValue;
 
     this.displayNode = new Node( { x: options.displayOffset.x, y: options.displayOffset.y } );
     this.addChild( this.displayNode );
@@ -130,16 +121,16 @@ export default class HeatMapToolNode extends Node {
 
     this.needleNode = this.createNeedleNode( options.needleShape );
 
-    const valueUnitsPatternStringProperty = new PatternStringProperty( options.readoutPatternStringProperty, {
-      value: this.mostRecentValueStringProperty
+    const formattedValueProperty = new DerivedProperty( [ latestValueProperty ], latestValue => {
+      return Utils.toFixed( latestValue, 1 );
     } );
 
-    const readoutStringProperty = new DerivedProperty( [ this.mostRecentValueStringProperty, valueUnitsPatternStringProperty, ProjectileDataLabStrings.longDashStringProperty ], ( value, patternString, longDashString ) => {
-      return value === null ? longDashString : patternString;
+    const valueUnitsPatternStringProperty = new PatternStringProperty( options.readoutPatternStringProperty, {
+      value: formattedValueProperty
     } );
 
     this.valueReadoutNode = new Node( { x: 0, y: options.valueReadoutY } );
-    this.valueReadout = new Text( readoutStringProperty, {
+    this.valueReadout = new Text( valueUnitsPatternStringProperty, {
       centerX: 0,
       centerY: 0,
       font: PDLConstants.PRIMARY_FONT,
@@ -180,18 +171,9 @@ export default class HeatMapToolNode extends Node {
     this.minAngle = options.minAngle;
     this.maxAngle = options.maxAngle;
 
-    this.setNeedleRotation( this.initialNeedleValue );
-  }
-
-  public setInitialNeedleValue( value: number ): void {
-    this.initialNeedleValue = value;
-    this.setNeedleRotation( value );
-    this.mostRecentValueStringProperty.value = null;
-  }
-
-  public updateNeedleAndText( value: number ): void {
-    this.mostRecentValueStringProperty.value = Utils.toFixed( value, 1 );
-    this.setNeedleRotation( value );
+    latestValueProperty.link( latestValue => {
+      this.setNeedleRotation( latestValue );
+    } );
   }
 
   private setNeedleRotation( value: number ): void {
@@ -330,9 +312,6 @@ export default class HeatMapToolNode extends Node {
       this.numValuesInBin[ index ] = 0;
       this.heatNodes[ index ].opacity = 0;
     } );
-
-    this.mostRecentValueStringProperty.value = null;
-    this.setNeedleRotation( this.initialNeedleValue );
   }
 }
 

@@ -168,14 +168,17 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     const isLauncherRaisedProperty = new DerivedProperty( [ model.launcherHeightProperty ], height => height > 0 );
 
     // Create the heat map tools
-    const speedToolNode = new SpeedToolNode( isLauncherRaisedProperty, {
+    const speedToolNode = new SpeedToolNode(
+      model.latestLaunchSpeedProperty,
+      isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchSpeedVisibleProperty,
       x: originPosition.x, y: originPosition.y
     } );
 
-    const angleToolNode = new AngleToolNode( isLauncherRaisedProperty, {
+    const angleToolNode = new AngleToolNode(
+      model.latestLaunchAngleProperty,
+      isLauncherRaisedProperty, {
       visibleProperty: model.isLaunchAngleVisibleProperty,
-      initialNeedleValue: model.latestLaunchAngleProperty.value,
       x: originPosition.x, y: originPosition.y
     } );
 
@@ -186,10 +189,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         if ( model.fieldProperty.value === field ) {
 
           speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
-          speedToolNode.updateNeedleAndText( projectile.launchSpeed );
-
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
-          angleToolNode.updateNeedleAndText( projectile.launchAngle );
 
           this.launcherNode.playLaunchAnimation( projectile.launchAngle );
         }
@@ -214,20 +214,12 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
         speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
         angleToolNode.updateHeatMapWithData( projectile.launchAngle );
       } );
-
-      if ( projectiles.length > 0 ) {
-        speedToolNode.updateNeedleAndText( projectiles[ projectiles.length - 1 ].launchSpeed );
-        angleToolNode.updateNeedleAndText( projectiles[ projectiles.length - 1 ].launchAngle );
-      }
     } );
 
     model.launcherHeightProperty.link( launcherHeight => {
       const launcherY = this.modelViewTransform.modelToViewY( launcherHeight );
       speedToolNode.y = launcherY;
       angleToolNode.y = launcherY;
-    } );
-    model.latestLaunchAngleProperty.link( launcherAngle => {
-      angleToolNode.setInitialNeedleValue( launcherAngle );
     } );
 
     this.fieldRadioButtonGroup = new FieldRadioButtonGroup( model.fieldProperty, model.fields, {

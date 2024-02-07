@@ -20,6 +20,7 @@ import AngleToolNode from './AngleToolNode.js';
 import SpeedToolNode from './SpeedToolNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -80,10 +81,11 @@ export default class StaticToolPanel extends PDLPanel {
     class AngleToolIconNode extends Node {
       public constructor() {
 
-        const angleToolNode = new AngleToolNode( new Property( false ), {
-          isIcon: true,
-          initialNeedleValue: 45
-        } ).rasterized( {
+        const angleToolNode = new AngleToolNode(
+          new NumberProperty( 45 ),
+          new Property( false ), {
+            isIcon: true
+          } ).rasterized( {
           resolution: 1.25
         } );
         super( {
@@ -97,9 +99,11 @@ export default class StaticToolPanel extends PDLPanel {
     class SpeedToolIconNode extends Node {
       public constructor() {
 
-        const speedToolNode = new SpeedToolNode( new Property( false ), {
-          isIcon: true
-        } )
+        const speedToolNode = new SpeedToolNode(
+          new NumberProperty( 15 ),
+          new Property( false ), {
+            isIcon: true
+          } )
           .rasterized( {
             resolution: 1.25
           } );
