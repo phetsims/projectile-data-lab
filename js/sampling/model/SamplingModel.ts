@@ -211,10 +211,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       return;
     }
 
-    const isFast = this.timeSpeedProperty.value === TimeSpeed.FAST;
-
-    dt = dt * ( isFast ? PDLConstants.TIME_SPEED_FAST : 1 );
-    this.fieldProperty.value.step( dt, isFast );
+    dt = dt * ( this.timeSpeedProperty.value === TimeSpeed.FAST ? PDLConstants.TIME_SPEED_FAST : 1 );
+    this.fieldProperty.value.step( dt, this.timeSpeedProperty.value );
   }
 
   /**

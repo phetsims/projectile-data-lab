@@ -17,6 +17,7 @@ import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import Range from '../../../../dot/js/Range.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -31,7 +32,7 @@ type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
-const MEAN_DELAY = 0.4;
+const MEAN_DELAY_NORMAL = 0.5;
 const MEAN_DELAY_FAST = 1.5;
 
 // This is the duration of the sample and mean symbol being visible, in 'Continuous' mode.
@@ -287,7 +288,7 @@ export default class SamplingField extends Field {
     }
   }
 
-  public step( dt: number, isFast: boolean ): void {
+  public step( dt: number, timeSpeed: TimeSpeed ): void {
 
     this.stepAirborneParticles( dt );
 
@@ -327,7 +328,7 @@ export default class SamplingField extends Field {
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) { // Only for single mode
 
-      const delayForShowingMean = isFast ? MEAN_DELAY_FAST : MEAN_DELAY;
+      const delayForShowingMean = timeSpeed === TimeSpeed.FAST ? MEAN_DELAY_FAST : MEAN_DELAY_NORMAL;
 
       if ( timeInMode > delayForShowingMean ) {
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
