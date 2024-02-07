@@ -161,13 +161,9 @@ export default class VSMField extends Field {
       this.latestLaunchAngleProperty.value = configuredLaunchAngle;
     } );
 
-    // TODO: Find a better way to do this - see https://github.com/phetsims/projectile-data-lab/issues/28
     // If the angle standard deviation is changed, re-center the launcher so that there is no overlap between the two.
-    // Do not do this during a continuous launch, because it causes flicker.
     this.standardDeviationAngleProperty.lazyLink( () => {
-      if ( !this.isContinuousLaunchingProperty.value ) {
         this.latestLaunchAngleProperty.value = this.meanAngleProperty.value;
-      }
     } );
   }
 
