@@ -80,9 +80,17 @@ export default class IntervalToolNode extends Node {
     this.addChild( edge1Sphere );
     this.addChild( edge2Sphere );
 
+    const ARROW_HEAD_WIDTH = 8;
+
     this.arrowNode = new ArrowNode( 0, 0, 0, 0, {
       doubleHead: true,
-      tailWidth: 3
+      isHeadDynamic: true,
+      scaleTailToo: true,
+      headWidth: ARROW_HEAD_WIDTH,
+      headHeight: ARROW_HEAD_WIDTH,
+      fractionalHeadHeight: 0.3,
+      tailWidth: 1,
+      stroke: 'black'
     } );
 
     this.addChild( this.arrowNode );

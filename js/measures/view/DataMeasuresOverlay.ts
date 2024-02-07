@@ -125,7 +125,6 @@ export default class DataMeasuresOverlay extends Node {
       headWidth: ARROW_HEAD_WIDTH,
       headHeight: ARROW_HEAD_WIDTH,
       fractionalHeadHeight: 0.3,
-      lineWidth: 0.75,
       tailWidth: 1,
       stroke: 'black'
     };
