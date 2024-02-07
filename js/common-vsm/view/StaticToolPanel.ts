@@ -9,7 +9,7 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { CanvasNode, CanvasNodeOptions, HBox, Node } from '../../../../scenery/js/imports.js';
+import { AlignGroup, CanvasNode, CanvasNodeOptions, HBox, Node } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import PDLText from '../../common/view/PDLText.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -138,13 +138,17 @@ export default class StaticToolPanel extends PDLPanel {
   }
 
   public static createCheckboxRow( label: TReadOnlyProperty<string>, icon: Node ): HBox {
+
     return new HBox( {
       spacing: 5,
       stretch: true, children: [ new PDLText( label, {
         maxWidth: 110
-      } ), icon ]
+      } ), alignGroup.createBox( icon ) ]
     } );
   }
 }
+
+// All icons from all screens fit the same footprint, so we can use the same alignGroup for all of them
+const alignGroup = new AlignGroup();
 
 projectileDataLab.register( 'StaticToolPanel', StaticToolPanel );
