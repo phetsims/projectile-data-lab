@@ -99,6 +99,7 @@ export default class Histogram {
     this.zoomProperty = new NumberProperty( maxZoomLevel, {
       range: new Range( 0, maxZoomLevel ),
       tandem: tandem.createTandem( 'zoomProperty' ),
+      phetioFeatured: true,
       numberType: 'Integer'
     } );
 
