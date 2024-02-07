@@ -224,20 +224,29 @@ export default class SamplingField extends Field {
    */
   public getHistogramData(): HistogramData[] {
 
+    // Map to accumulate projectiles by their sample number
+    const sampleAccumulator = new Map<number, Projectile[]>();
+
+    // Iterate through landed projectiles once, grouping them by sample number
+    this.landedProjectiles.forEach( projectile => {
+      if ( !sampleAccumulator.has( projectile.sampleNumber ) ) {
+        sampleAccumulator.set( projectile.sampleNumber, [] );
+      }
+      sampleAccumulator.get( projectile.sampleNumber )!.push( projectile );
+    } );
+
+    // Array to hold the final histogram data
     const samples: HistogramData[] = [];
 
-    for ( let sampleNumber = 1; sampleNumber <= this.numberOfCompletedSamplesProperty.value; sampleNumber++ ) {
-
-      const members = this.landedProjectiles.filter( projectile => projectile.sampleNumber === sampleNumber );
-
-      if ( members.length === this.sampleSize ) {
-
-        const mean = _.mean( members.map( projectile => projectile.x ) );
+    // Iterate through the accumulated sample data to compute means
+    sampleAccumulator.forEach( ( projectiles, sampleNumber ) => {
+      if ( projectiles.length === this.sampleSize && sampleNumber <= this.numberOfCompletedSamplesProperty.value ) {
+        const mean = _.mean( projectiles.map( projectile => projectile.x ) );
         assert && assert( !isNaN( mean ), 'mean should not be NaN' );
-
         samples.push( { x: mean } );
       }
-    }
+    } );
+
     return samples;
   }
 
