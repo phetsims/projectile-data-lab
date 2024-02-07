@@ -106,6 +106,7 @@ export default class LauncherNode extends Node {
     this.addChild( this.launcherFrameFront );
 
     this.meanLaunchAngleProperty.link( meanLaunchAngle => {
+      this.cancelBarrelRotationAnimation();
       this.launcherBarrel.setRotation( Utils.toRadians( -meanLaunchAngle ) );
     } );
 
