@@ -48,7 +48,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         // Colorize based on the sample size
         // This one band-aid type annotation workaround is preferable to adding generic types to a mountain of classes
         const f = field as SamplingField;
-        return PDLUtils.colorForSamplingSize( f.sampleSize );
+        return PDLUtils.colorForSampleSize( f.sampleSize );
       }
     }, providedOptions );
     super( model,

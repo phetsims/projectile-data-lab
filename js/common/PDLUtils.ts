@@ -29,7 +29,7 @@ export default class PDLUtils {
       PDLColors.fieldFill2ColorProperty.value, index / ( VSMFieldIdentifierValues.length - 1 ) );
   }
 
-  public static colorForSamplingSize( sampleSize: number ): Color {
+  public static colorForSampleSize( sampleSize: number ): Color {
     const index = SAMPLE_SIZES.indexOf( sampleSize );
 
     return PDLColors.fieldFill1ColorProperty.value.blend(
