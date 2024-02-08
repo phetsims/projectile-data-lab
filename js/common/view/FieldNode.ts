@@ -102,11 +102,7 @@ export default class FieldNode extends Node {
 
     // If the field changes, update the color of the fieldBackground.
     fieldProperty.link( field => {
-      const fieldIndex = fields.indexOf( field );
-
-      // Interpolate between fieldFillColorProperty and fieldStrokeColorProperty based on the field index.
-      const fieldColor = PDLColors.fieldFill1ColorProperty.value.blend( PDLColors.fieldFill2ColorProperty.value, fieldIndex / ( fields.length - 1 ) );
-      fieldBackground.fill = fieldColor;
+      fieldBackground.fill = PDLUtils.colorForFieldIndex( fields.indexOf( field ) );
     } );
 
     // If the bin width changes, remove the old field lines and create new ones.

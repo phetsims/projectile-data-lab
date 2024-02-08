@@ -8,6 +8,7 @@ import PDLText from '../../common/view/PDLText.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Circle, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
+import PDLUtils from '../../common/PDLUtils.js';
 
 /**
  * The FieldRadioButtonGroup is a group of buttons that allows the user to select a field.
@@ -71,10 +72,7 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
         tandemName: 'field' + fieldNumber + 'RadioButton',
         createNode: () => buttonContents,
         options: {
-
-          // TODO: Refactor this logic so that it is not duplicated in the FieldNode, FieldSignNode and here - see https://github.com/phetsims/projectile-data-lab/issues/46
-          baseColor: PDLColors.fieldFill1ColorProperty.value.blend(
-            PDLColors.fieldFill2ColorProperty.value, fieldIndex / ( fieldProperty.validValues!.length - 1 ) )
+          baseColor: PDLUtils.colorForFieldIndex( fieldIndex )
         }
       };
     } );
