@@ -171,16 +171,16 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     const speedToolNode = new SpeedToolNode(
       model.latestLaunchSpeedProperty,
       isLauncherRaisedProperty, {
-      visibleProperty: model.isLaunchSpeedVisibleProperty,
-      x: originPosition.x, y: originPosition.y
-    } );
+        visibleProperty: model.isLaunchSpeedVisibleProperty,
+        x: originPosition.x, y: originPosition.y
+      } );
 
     const angleToolNode = new AngleToolNode(
       model.latestLaunchAngleProperty,
       isLauncherRaisedProperty, {
-      visibleProperty: model.isLaunchAngleVisibleProperty,
-      x: originPosition.x, y: originPosition.y
-    } );
+        visibleProperty: model.isLaunchAngleVisibleProperty,
+        x: originPosition.x, y: originPosition.y
+      } );
 
     model.fields.forEach( field => {
 
@@ -319,30 +319,31 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       this.launchButton,
       this.singleOrContinuousRadioButtonGroup,
 
-      // Play area tools
-      this.measuringTapeNode,
-      this.stopwatchNode,
-      ...( intervalToolNode ? [ intervalToolNode ] : [] ),
-
-      // Projectile selector
-      this.projectileSelectorNode
-    ];
-
-    this.pdomControlAreaNode.pdomOrder = [
-
       // Experiment setup
       this.launchPanel,
+
+      // Histogram
+      this.accordionBox,
+
+      // Projectile selector
+      this.projectileSelectorNode,
 
       // Field management
       this.fieldRadioButtonGroup,
       this.eraserButton,
 
-      // Histogram
-      this.accordionBox,
+      // Play area tools
+      this.measuringTapeNode,
+      this.stopwatchNode,
+      ...( intervalToolNode ? [ intervalToolNode ] : [] )
+    ];
+
+    this.pdomControlAreaNode.pdomOrder = [
 
       // Global tools
       staticToolPanel,
       interactiveToolPanel,
+
       this.timeControlNode,
 
       // Reset all
