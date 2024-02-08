@@ -33,7 +33,7 @@ export default class FieldNode extends Node {
   private fieldLines: Node[];
 
   // The field
-  private fieldBorder: Node;
+  private readonly fieldBorder: Node;
 
   public constructor( fields: Field[], fieldProperty: TReadOnlyProperty<Field>, binWidthProperty: TReadOnlyProperty<number>, providedOptions: FieldNodeOptions ) {
 
