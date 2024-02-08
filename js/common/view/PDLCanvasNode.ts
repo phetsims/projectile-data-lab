@@ -31,6 +31,7 @@ import pianoLanded_png from '../../../images/pianoLanded_png.js';
 import pianoLandedSelected_png from '../../../images/pianoLandedSelected_png.js';
 import forceField_png from '../../../images/forceField_png.js';
 import PDLConstants from '../PDLConstants.js';
+import { PIANO, PUMPKIN } from '../model/ProjectileType.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLCanvasNodeOptions = SelfOptions & CanvasNodeOptions;
@@ -121,21 +122,19 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );
     let image: HTMLImageElement;
 
-    switch( projectile.type ) {
-      case 'pumpkin':
-        if ( isLanded ) {
-          image = isSelected ? PUMPKIN_LANDED_SELECTED_IMAGES[ projectile.landedImageIndex ] : PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ];
-        }
-        else {
-          image = pumpkin_png;
-        }
-        break;
-      case 'piano':
-        image = isLanded ? ( isSelected ? pianoLandedSelected_png : pianoLanded_png ) : piano_png;
-        break;
-      default:
-        image = isLanded ? ( isSelected ? cannonballLandedSelected_png : cannonballLanded_png ) : cannonball_png;
-        break;
+    if ( projectile.type === PUMPKIN ) {
+      if ( isLanded ) {
+        image = isSelected ? PUMPKIN_LANDED_SELECTED_IMAGES[ projectile.landedImageIndex ] : PUMPKIN_LANDED_IMAGES[ projectile.landedImageIndex ];
+      }
+      else {
+        image = pumpkin_png;
+      }
+    }
+    else if ( projectile.type === PIANO ) {
+      image = isLanded ? ( isSelected ? pianoLandedSelected_png : pianoLanded_png ) : piano_png;
+    }
+    else {
+      image = isLanded ? ( isSelected ? cannonballLandedSelected_png : cannonballLanded_png ) : cannonball_png;
     }
 
     // Save the current state of the canvas

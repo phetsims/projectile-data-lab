@@ -18,13 +18,13 @@ import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Field from './Field.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
-import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { SingleOrContinuous, SingleOrContinuousValues } from './SingleOrContinuous.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import Launcher from './Launcher.js';
 import Histogram from './Histogram.js';
+import ProjectileType from './ProjectileType.js';
 
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
@@ -136,7 +136,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       tandem: this.fieldProperty.value.projectileTypeProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'projectileTypeProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates the type of projectile being launched.',
-      phetioValueType: StringUnionIO( ProjectileTypeValues ),
+      phetioValueType: ProjectileType.ProjectileTypeIO,
       phetioReadOnly: true,
       phetioState: false,
 

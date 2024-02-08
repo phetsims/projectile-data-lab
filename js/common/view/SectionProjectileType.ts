@@ -4,7 +4,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import { Image } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import { ProjectileType } from '../model/ProjectileType.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import cannonball_png from '../../../images/cannonball_png.js';
@@ -12,6 +11,7 @@ import piano_png from '../../../images/piano_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
+import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
 
 /**
  * The SectionProjectileType shows the projectile type radio buttons.
@@ -28,15 +28,15 @@ export default class SectionProjectileType extends PDLPanelSection {
   public constructor( projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: SectionProjectileTypeOptions ) {
 
     const projectileTypeRadioButtonGroup = new PDLRectangularRadioButtonGroup( projectileTypeProperty, [ {
-      value: 'cannonball' as const,
+      value: CANNONBALL,
       tandemName: 'cannonballRadioButton',
       createNode: () => new Image( cannonball_png, { scale: 0.22 } )
     }, {
-      value: 'pumpkin' as const,
+      value: PUMPKIN,
       tandemName: 'pumpkinRadioButton',
       createNode: () => new Image( pumpkin_png, { scale: 0.20 } )
     }, {
-      value: 'piano' as const,
+      value: PIANO,
       tandemName: 'pianoRadioButton',
       createNode: () => new Image( piano_png, { scale: 0.15 } )
     } ], {
@@ -54,7 +54,7 @@ export default class SectionProjectileType extends PDLPanelSection {
       }
     } );
 
-    super( ProjectileDataLabStrings.projectile10kgStringProperty, projectileTypeRadioButtonGroup, providedOptions );
+    super( ProjectileDataLabStrings.projectileStringProperty, projectileTypeRadioButtonGroup, providedOptions );
   }
 }
 

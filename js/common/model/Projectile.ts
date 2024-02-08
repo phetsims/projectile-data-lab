@@ -1,6 +1,5 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -16,6 +15,7 @@ import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import Launcher from './Launcher.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import LandingSound from './LandingSound.js';
+import ProjectileType from './ProjectileType.js';
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
@@ -133,7 +133,7 @@ export default class Projectile {
       launcherStandardDeviationAngle: NumberIO,
       x: NumberIO,
       y: NumberIO,
-      type: StringUnionIO( ProjectileTypeValues ),
+      type: ProjectileType.ProjectileTypeIO,
       isFlippedHorizontally: BooleanIO,
       landedImageIndex: NumberIO,
       timeAirborne: NumberIO,

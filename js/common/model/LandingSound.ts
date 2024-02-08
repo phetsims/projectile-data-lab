@@ -10,7 +10,7 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import landing_mp3 from '../../../sounds/landing_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import Utils from '../../../../dot/js/Utils.js';
-import { ProjectileType } from './ProjectileType.js';
+import ProjectileType from './ProjectileType.js';
 
 const landSoundClip = new SoundClip( landing_mp3, {
   initialOutputLevel: 1

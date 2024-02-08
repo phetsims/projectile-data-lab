@@ -8,7 +8,6 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import Property from '../../../../axon/js/Property.js';
 import { LauncherConfiguration, LauncherConfigurationValues, MEAN_LAUNCH_ANGLES } from './LauncherConfiguration.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
-import { ProjectileType, ProjectileTypeValues } from './ProjectileType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PDLConstants from '../PDLConstants.js';
 import Projectile, { ProjectileStateObject } from './Projectile.js';
@@ -27,6 +26,7 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import Utils from '../../../../dot/js/Utils.js';
 import launch_mp3 from '../../../sounds/launch_mp3.js';
+import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, {
   initialOutputLevel: 1
@@ -146,14 +146,14 @@ export default abstract class Field extends PhetioObject {
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', launcherConfigurationOptions );
 
     const projectileTypeOptions = options.isProjectileTypePhetioInstrumented ? {
-      validValues: ProjectileTypeValues,
+      validValues: [ CANNONBALL, PUMPKIN, PIANO ],
       tandem: providedOptions.tandem.createTandem( 'projectileTypeProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property configures the type of projectile.',
-      phetioValueType: StringUnionIO( ProjectileTypeValues )
-    } : { validValues: [ 'cannonball' ] } as const;
+      phetioValueType: ProjectileType.ProjectileTypeIO
+    } : { validValues: [ CANNONBALL ] } as const;
 
-    this.projectileTypeProperty = new Property<ProjectileType>( 'cannonball', projectileTypeOptions );
+    this.projectileTypeProperty = new Property<ProjectileType>( CANNONBALL, projectileTypeOptions );
 
     this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
       configuration => MEAN_LAUNCH_ANGLES[ configuration ] );
@@ -219,11 +219,12 @@ export default abstract class Field extends PhetioObject {
   protected createProjectile( sampleNumber: number, playSound: boolean ): Projectile {
     const angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
     const launchAngle = this.meanAngleProperty.value + angleDeviation;
-    const launchSpeed = this.meanSpeedProperty.value + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
+    const meanLaunchSpeed = this.projectileTypeProperty.value.speedMultiplierProperty.value * this.meanSpeedProperty.value;
+    const launchSpeed = meanLaunchSpeed + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
-    const isFlippedHorizontally = this.projectileTypeProperty.value === 'cannonball' ? false : dotRandom.nextBoolean();
+    const isFlippedHorizontally = this.projectileTypeProperty.value === CANNONBALL ? false : dotRandom.nextBoolean();
 
     const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );

@@ -9,7 +9,8 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 
 /**
- * Enumeration that describes the mechanism used to launch the projectile.
+ * Type that describes the mechanism used to launch the projectile. Each mechanism has a mean launch speed and a standard
+ * deviation of launch speed.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */

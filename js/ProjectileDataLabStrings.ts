@@ -25,7 +25,7 @@ type StringsType = {
   'continuousSamplingStringProperty': LocalizedStringProperty;
   'noAirResistanceStringProperty': LocalizedStringProperty;
   'configurationStringProperty': LocalizedStringProperty;
-  'projectile10kgStringProperty': LocalizedStringProperty;
+  'projectileStringProperty': LocalizedStringProperty;
   'launcherNumberPatternStringProperty': LocalizedStringProperty;
   'angleStabilizerStringProperty': LocalizedStringProperty;
   'narrowStringProperty': LocalizedStringProperty;

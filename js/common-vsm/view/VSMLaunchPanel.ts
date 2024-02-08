@@ -6,11 +6,11 @@ import SectionLauncherConfiguration from '../../common/view/SectionLauncherConfi
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import SectionProjectileType from '../../common/view/SectionProjectileType.js';
-import { ProjectileType } from '../../common/model/ProjectileType.js';
 import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import ProjectileType from '../../common/model/ProjectileType.js';
 
 /**
  * The VSMLaunchPanel presents a UI so the user can choose the launcher configuration and projectile type.

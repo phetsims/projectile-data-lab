@@ -26,7 +26,6 @@ import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/La
 import LauncherMechanism, { SPRING } from '../model/LauncherMechanism.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import { ProjectileType } from '../../common/model/ProjectileType.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -36,6 +35,7 @@ import pumpkin1LandedSelected_png from '../../../images/pumpkin1LandedSelected_p
 import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_png.js';
 import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
 import pianoLandedSelected_png from '../../../images/pianoLandedSelected_png.js';
+import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../../common/model/ProjectileType.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1LandedSelected_png, pumpkin2LandedSelected_png, pumpkin3LandedSelected_png ];
 
@@ -118,26 +118,26 @@ export default class ProjectileSelectorNode extends SelectorNode {
     };
 
     const depictions: Depiction[] = [
-      { type: 'cannonball', isFlippedHorizontally: false },
-      { type: 'cannonball', isFlippedHorizontally: true },
-      { type: 'piano', isFlippedHorizontally: false },
-      { type: 'piano', isFlippedHorizontally: true },
-      { type: 'pumpkin', isFlippedHorizontally: false, landedImageIndex: 0 },
-      { type: 'pumpkin', isFlippedHorizontally: true, landedImageIndex: 0 },
-      { type: 'pumpkin', isFlippedHorizontally: false, landedImageIndex: 1 },
-      { type: 'pumpkin', isFlippedHorizontally: true, landedImageIndex: 1 },
-      { type: 'pumpkin', isFlippedHorizontally: false, landedImageIndex: 2 },
-      { type: 'pumpkin', isFlippedHorizontally: true, landedImageIndex: 2 }
+      { type: CANNONBALL, isFlippedHorizontally: false },
+      { type: CANNONBALL, isFlippedHorizontally: true },
+      { type: PIANO, isFlippedHorizontally: false },
+      { type: PIANO, isFlippedHorizontally: true },
+      { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 0 },
+      { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 0 },
+      { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 1 },
+      { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 1 },
+      { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 2 },
+      { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 2 }
     ];
 
     const depictionProperty = new Property<Depiction>( depictions[ 0 ] );
 
     const createNode = ( depiction: Depiction ) => {
-      const imagePNG = depiction.type === 'pumpkin' ? PUMPKIN_LANDED_IMAGES[ depiction.landedImageIndex! ] :
-                       depiction.type === 'piano' ? pianoLandedSelected_png :
+      const imagePNG = depiction.type === PUMPKIN ? PUMPKIN_LANDED_IMAGES[ depiction.landedImageIndex! ] :
+                       depiction.type === PIANO ? pianoLandedSelected_png :
                        cannonball_png;
 
-      const imageScale = depiction.type === 'pumpkin' ? 0.18 : depiction.type === 'piano' ? 0.14 : 0.2;
+      const imageScale = depiction.type === PUMPKIN ? 0.18 : depiction.type === PIANO ? 0.14 : 0.2;
 
       return new Node( {
         children: [ new Image( imagePNG, { scale: imageScale } ) ],
@@ -158,7 +158,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
           // Use a reference lookup because it is what ToggleNode supports for equality checking
           const lookup = depictions.find( depiction => {
 
-            if ( depiction.type === 'cannonball' || depiction.type === 'piano' ) {
+            if ( depiction.type === CANNONBALL || depiction.type === PIANO ) {
               return depiction.type === selectedProjectile.type &&
                      depiction.isFlippedHorizontally === selectedProjectile.isFlippedHorizontally;
             }
