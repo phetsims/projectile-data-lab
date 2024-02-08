@@ -285,7 +285,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // Position the 'No air resistance' text
     ManualConstraint.create( this, [ this.noAirResistanceText, this.launchPanel ], ( noAirResistanceTextProxy, launchPanelProxy ) => {
       noAirResistanceTextProxy.centerX = launchPanelProxy.centerX;
-      noAirResistanceTextProxy.top = launchPanelProxy.bottom + 15;
+      noAirResistanceTextProxy.top = launchPanelProxy.bottom + 8;
     } );
 
     // Position the eraser button
