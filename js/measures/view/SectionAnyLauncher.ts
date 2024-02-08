@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { Node, VBox } from '../../../../scenery/js/imports.js';
+import { AlignGroup, Node, VBox } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
@@ -54,9 +54,12 @@ export default class SectionAnyLauncher extends PDLPanelSection {
     const mysteryOrCustomRadioButtonGroup = new VerticalAquaRadioButtonGroup( mysteryOrCustomProperty, radioButtonItems, {
       radioButtonOptions: { radius: 8 },
       touchAreaYDilation: 15,
-      spacing: 4,
+      spacing: 5,
       tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomRadioButtonGroup' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      layoutOptions: {
+        yMargin: 6
+      }
     } );
 
     const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
@@ -79,20 +82,30 @@ export default class SectionAnyLauncher extends PDLPanelSection {
 
     const customLauncherControls = new VBox( {
       children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ],
-      spacing: 4, stretch: true, topMargin: 3
+      spacing: 4
+    } );
+
+    // To avoid the panel changing size between 'mystery' and 'custom', ensure that both content nodes have the same footprint.
+    // This is because we use the 'excluded' strategy for unselected children in the ToggleNode.
+    const alignGroup = new AlignGroup( {
+      matchHorizontal: true,
+      matchVertical: false
     } );
 
     const launcherControlsToggleNode = new ToggleNode<MysteryOrCustom, Node>( mysteryOrCustomProperty, [ {
       value: 'mystery',
-      createNode: () => mysteryLauncherRadioButtonGroupWrapper
+      createNode: () => alignGroup.createBox( mysteryLauncherRadioButtonGroupWrapper )
     }, {
       value: 'custom',
-      createNode: () => customLauncherControls
+      createNode: () => alignGroup.createBox( customLauncherControls )
     } ], {
       unselectedChildrenSceneGraphStrategy: 'excluded'
     } );
 
-    const contentContainer = new VBox( { children: [ mysteryOrCustomRadioButtonGroup, launcherControlsToggleNode ], spacing: 5, stretch: true } );
+    const contentContainer = new VBox( {
+      children: [ mysteryOrCustomRadioButtonGroup, launcherControlsToggleNode ],
+      spacing: 5
+    } );
 
     super( null, contentContainer, providedOptions );
   }

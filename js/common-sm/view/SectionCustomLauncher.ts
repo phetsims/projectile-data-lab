@@ -41,12 +41,7 @@ export default class SectionCustomLauncher extends PDLPanelSection {
     } );
 
     const contentContainer = new VBox( {
-      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ],
-      spacing: 5,
-      stretch: true,
-
-      // Tuned to make sure the panels have the same width on all screens
-      xMargin: 5
+      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ]
     } );
 
     super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, options );
