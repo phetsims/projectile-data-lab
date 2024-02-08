@@ -178,8 +178,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       tandem: providedOptions.tandem.createTandem( 'stopwatch' ),
       phetioFeatured: true,
 
-      // view coordinates
-      position: new Vector2( 675, 275 )
+      // View coordinates. Positioned so it doesn't overlap with the histogram or field sign.
+      position: new Vector2( 650, 350 )
     } );
   }
 
@@ -208,7 +208,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   }
 
   public step( dt: number ): void {
-    
+
     if ( !this.isPlayingProperty.value ) {
       return;
     }
