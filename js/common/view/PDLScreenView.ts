@@ -8,10 +8,9 @@
  */
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { Color, HBox, Node, Text } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -34,7 +33,7 @@ import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import LaunchButton from './LaunchButton.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = { getFieldColor: ( fields: Field[], field: Field ) => Color };
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
 
 export default abstract class PDLScreenView<T extends Field> extends ScreenView {
@@ -116,8 +115,17 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     } );
 
 
-    const fieldBack = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, { x: fieldX, y: fieldY } );
-    const fieldFront = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, { isBottomHalf: true, x: fieldX, y: fieldY } );
+    const fieldBack = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, {
+      x: fieldX,
+      y: fieldY,
+      getFieldColor: options.getFieldColor
+    } );
+    const fieldFront = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, {
+      isBottomHalf: true,
+      x: fieldX,
+      y: fieldY,
+      getFieldColor: options.getFieldColor
+    } );
     const fieldOverlayBack = new FieldOverlayNode( this.modelViewTransform, {} );
     const fieldOverlayFront = new FieldOverlayNode( this.modelViewTransform, { isLeftSide: true } );
     fieldOverlayBack.x = fieldX;

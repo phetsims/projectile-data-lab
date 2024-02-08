@@ -6,11 +6,10 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import SamplingModel from '../model/SamplingModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLScreenView from '../../common/view/PDLScreenView.js';
+import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
 import SamplingLaunchPanel from './SamplingLaunchPanel.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -29,10 +28,12 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import PDLUtils from '../../common/PDLUtils.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingScreenViewOptions = SelfOptions & ScreenViewOptions;
+type SamplingScreenViewOptions = SelfOptions & StrictOmit<PDLScreenViewOptions, 'getFieldColor'>;
 
 export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
@@ -41,7 +42,15 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
   protected readonly accordionBox: SamplingAccordionBox;
 
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
-    const options = optionize<SamplingScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
+    const options = optionize<SamplingScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {
+      getFieldColor: ( fields, field ) => {
+
+        // Colorize based on the sample size
+        // This one band-aid type annotation workaround is preferable to adding generic types to a mountain of classes
+        const f = field as SamplingField;
+        return PDLUtils.colorForSamplingSize( f.sampleSize );
+      }
+    }, providedOptions );
     super( model,
       ProjectileDataLabStrings.singleLaunchStringProperty,
       ProjectileDataLabStrings.continuousLaunchStringProperty,

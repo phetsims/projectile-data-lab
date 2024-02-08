@@ -32,7 +32,7 @@ type SelfOptions = EmptySelfOptions;
 
 type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'isFieldPropertyPhetioReadonly' | 'fieldPropertyPhetioDocumentation' | 'isPathVisibilityPhetioInstrumented'>;
 
-const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
+export const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
 
 export default class SamplingModel extends PDLModel<SamplingField> {
 

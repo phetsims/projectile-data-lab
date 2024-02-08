@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Color, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -29,6 +29,8 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import PDLUtils from '../../common/PDLUtils.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -38,7 +40,7 @@ import PDLStopwatchNode from './PDLStopwatchNode.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
+type VSMScreenViewOptions = SelfOptions & StrictOmit<WithRequired<PDLScreenViewOptions, 'tandem'>, 'getFieldColor'>;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;
@@ -57,7 +59,13 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
                          // Closure that creates the HistogramNode. We need to access 'this' to be the combo box parent
                          // hence must create it lazily.
                          createHistogramNode: ( node: Node ) => HistogramNode,
-                         options: VSMScreenViewOptions ) {
+                         providedOptions: VSMScreenViewOptions ) {
+
+    const options = optionize<VSMScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {
+
+      getFieldColor: ( fields, field ) => PDLUtils.colorForFieldIndex( fields.indexOf( field ) )
+    }, providedOptions );
+
     super(
       model,
       ProjectileDataLabStrings.singleLaunchStringProperty,
