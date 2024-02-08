@@ -216,17 +216,17 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.launchButton,
       this.singleOrContinuousRadioButtonGroup,
 
-      // Sample selector
-      sampleSelectorNode
-    ];
-
-    this.pdomControlAreaNode.pdomOrder = [
-
       // Experiment setup
       this.launchPanel,
 
       // Histogram
       this.accordionBox,
+
+      // Sample selector
+      sampleSelectorNode
+    ];
+
+    this.pdomControlAreaNode.pdomOrder = [
 
       // Global controls
       this.timeControlNode,
