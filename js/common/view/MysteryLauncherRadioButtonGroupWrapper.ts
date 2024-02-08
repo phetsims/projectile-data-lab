@@ -38,6 +38,7 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
 
           launcherProperty.link( launcher => {
             numberLabel.fontWeight = launcher === mysteryLauncher ? 'bold' : 'normal';
+            numberLabel.setFill( launcher === mysteryLauncher ? 'white' : 'black' );
           } );
 
           const numberLabelBounds = numberLabel.bounds;
@@ -55,18 +56,21 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
             } );
 
           const strokeProperty = new DerivedProperty( [ launcherProperty ], launcher => {
-            return launcher === mysteryLauncher ? null : 'black';
+            return launcher === mysteryLauncher ? null : '#333333';
           } );
           const fillProperty = new DerivedProperty( [ launcherProperty ], launcher => {
             return launcher === mysteryLauncher ? 'rgb(87,178,226)' : '#FCFCFC';
           } );
 
+          // The stroke width of the mystery launcher number panel
+          const lineWidth = 1;
+
           const numberLabelBackground = new Path( numberLabelBackgroundShape, {
-            top: 0,
-            left: 0,
+            top: -lineWidth,
+            left: -lineWidth,
             fill: fillProperty,
             stroke: strokeProperty,
-            lineWidth: 1
+            lineWidth: lineWidth
           } );
 
           numberLabel.center = numberLabelBackground.center;
