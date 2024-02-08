@@ -6,6 +6,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLText from './PDLText.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import PDLConstants from '../PDLConstants.js';
 
 /**
  * Shows a title and content in a VBox. For the first 3 screens, the content is rectangular radio buttons.
@@ -25,12 +26,9 @@ export default class PDLPanelSection extends VBox {
 
     const children: Node[] = [];
 
-    const titleFont = providedOptions?.titleFont ?? new PhetFont( 12 );
-
     if ( titleString ) {
       children.push( new PDLText( titleString, {
-        maxWidth: 160,
-        font: titleFont
+        maxWidth: 160
       } ) );
     }
 
@@ -40,7 +38,7 @@ export default class PDLPanelSection extends VBox {
       children: children,
       align: 'left',
       spacing: 5,
-      titleFont: titleFont,
+      titleFont: PDLConstants.PRIMARY_FONT,
       visiblePropertyOptions: {
         phetioFeatured: true
       }

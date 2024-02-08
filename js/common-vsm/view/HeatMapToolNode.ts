@@ -12,6 +12,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PDLText from '../../common/view/PDLText.js';
 
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
@@ -130,7 +131,7 @@ export default class HeatMapToolNode extends Node {
     } );
 
     this.valueReadoutNode = new Node( { x: 0, y: options.valueReadoutY } );
-    this.valueReadout = new Text( valueUnitsPatternStringProperty, {
+    this.valueReadout = new PDLText( valueUnitsPatternStringProperty, {
       centerX: 0,
       centerY: 0,
       font: PDLConstants.PRIMARY_FONT,
@@ -217,7 +218,7 @@ export default class HeatMapToolNode extends Node {
 
     for ( let i = minLabeledValue; i <= maxLabeledValue; i += labeledValueIncrement ) {
       const labelAngle = Utils.linear( minLabeledValue, maxLabeledValue, labelMinAngle, labelMaxAngle, i );
-      const label = new Text( i.toString(), {
+      const label = new PDLText( i.toString(), {
         centerX: labelDistanceFromCenter * Math.cos( Utils.toRadians( -labelAngle ) ),
         centerY: labelDistanceFromCenter * Math.sin( Utils.toRadians( -labelAngle ) ),
         font: PDLConstants.HEATMAP_TOOL_LABEL_FONT

@@ -3,11 +3,11 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import StopwatchNode, { StopwatchNodeOptions } from '../../../../scenery-phet/js/StopwatchNode.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import { Text } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PDLText from '../../common/view/PDLText.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLStopwatchNodeOptions = SelfOptions & WithRequired<StopwatchNodeOptions, 'tandem'>;
@@ -25,7 +25,7 @@ export default class PDLStopwatchNode extends StopwatchNode {
       otherControls: [
         new RectangularPushButton( {
           baseColor: 'lightgray',
-          content: new Text( ProjectileDataLabStrings.launchStringProperty, {
+          content: new PDLText( ProjectileDataLabStrings.launchStringProperty, {
             maxWidth: 50
           } ),
           layoutOptions: {

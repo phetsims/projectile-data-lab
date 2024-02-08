@@ -10,7 +10,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Color, HBox, Node, Text } from '../../../../scenery/js/imports.js';
+import { Color, HBox, Node } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -145,15 +145,13 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     const radioButtonLabelMaxWidth = 120;
     this.singleOrContinuousRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.singleOrContinuousProperty, [ {
       value: 'single' as const,
-      createNode: () => new Text( singleStringProperty, {
-        font: PDLConstants.LAUNCH_CONTROL_FONT,
+      createNode: () => new PDLText( singleStringProperty, {
         maxWidth: radioButtonLabelMaxWidth
       } ),
       tandemName: 'singleLaunchRadioButton'
     }, {
       value: 'continuous' as const,
-      createNode: () => new Text( continuousStringProperty, {
-        font: PDLConstants.LAUNCH_CONTROL_FONT,
+      createNode: () => new PDLText( continuousStringProperty, {
         maxWidth: radioButtonLabelMaxWidth
       } ),
       tandemName: 'continuousLaunchRadioButton'

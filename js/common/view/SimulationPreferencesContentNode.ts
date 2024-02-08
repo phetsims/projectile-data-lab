@@ -26,11 +26,11 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     const binStrategyControlTandem = tandem.createTandem( 'binStrategyControl' );
 
     const binTypeRadioButtonGroup = new PDLPanel( new VerticalAquaRadioButtonGroup<BinStrategy>( BIN_STRATEGY_PROPERTY, [ {
-      createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, { fontSize: 14, maxWidth: 200 } ),
+      createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, { maxWidth: 200 } ),
       value: 'binWidth',
       tandemName: 'binWidthRadioButton'
     }, {
-      createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, { fontSize: 14, maxWidth: 200 } ),
+      createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, { maxWidth: 200 } ),
       value: 'totalBins',
       tandemName: 'totalBinsRadioButton'
     } ], {

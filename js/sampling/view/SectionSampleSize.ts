@@ -27,7 +27,7 @@ export default class SectionSampleSize extends PDLPanelSection {
       return {
         value: sampleSize,
         tandemName: `sampleSize${sampleSize}RadioButton`,
-        createNode: () => new PDLText( sampleSize.toString(), { fontSize: 16 } )
+        createNode: () => new PDLText( sampleSize.toString() )
       };
     } );
 

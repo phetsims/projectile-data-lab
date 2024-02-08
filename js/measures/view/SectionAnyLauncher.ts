@@ -36,14 +36,12 @@ export default class SectionAnyLauncher extends PDLPanelSection {
 
     const radioButtonItems: AquaRadioButtonGroupItem<MysteryOrCustom>[] = [ {
       createNode: () => new PDLText( ProjectileDataLabStrings.mysteryLauncherStringProperty, {
-        fontSize: 12,
         maxWidth: 120
       } ),
       value: 'mystery',
       tandemName: 'standardLauncherRadioButton'
     }, {
       createNode: () => new PDLText( ProjectileDataLabStrings.customLauncherStringProperty, {
-        fontSize: 12,
         maxWidth: 120
       } ),
       value: 'custom',
