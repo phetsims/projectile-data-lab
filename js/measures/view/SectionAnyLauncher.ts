@@ -56,7 +56,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomRadioButtonGroup' ),
       phetioFeatured: true,
       layoutOptions: {
-        yMargin: 6
+        yMargin: 2
       }
     } );
 
