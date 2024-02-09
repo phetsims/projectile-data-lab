@@ -101,8 +101,8 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     // Because range may change via rangeProperty, the size of contents may change, in which case layout will need
     // to be revised. See https://github.com/phetsims/sun/issues/709
     const updateLayout = () => {
-      incrementButton.left = contents.right + 5;
-      decrementButton.right = contents.left - 5;
+      incrementButton.left = contents.right + 6;
+      decrementButton.right = contents.left - 6;
       incrementButton.centerY = decrementButton.centerY = contents.centerY;
     };
     contents.boundsProperty.link( () => updateLayout() );

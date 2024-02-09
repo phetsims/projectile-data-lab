@@ -217,12 +217,13 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const contents = new VBox( {
       children: [
         new PDLText( titleStringProperty, {
-          maxWidth: 64,
+          maxWidth: 68,
           font: PDLConstants.SELECTOR_FONT
         } ),
         projectileToggleNode
       ],
-      spacing: 5,
+      minContentWidth: 68,
+      spacing: 4,
       align: 'center',
       justify: 'center'
     } );
@@ -235,8 +236,10 @@ export default class ProjectileSelectorNode extends SelectorNode {
         customLauncherNode,
         contents
       ],
-      align: 'center',
-      spacing: 8
+      justify: 'center',
+      preferredWidth: 107,
+      preferredHeight: 45,
+      leftMargin: 5
     } );
 
     super( contentsWithLauncherIcon, selectedProjectileNumberProperty, rangeProperty, options );

@@ -51,9 +51,8 @@ export default class FieldSignNode extends VBox {
       textNode.centerY = headingContainer.height / 2;
     } );
 
-
     // The margins around the selector node
-    const SELECTOR_MARGIN_X = 5;
+    const SELECTOR_MARGIN_X = 6;
     const SELECTOR_MARGIN_Y = 5;
 
     ManualConstraint.create( this, [ selectorNode ], selectorNodeProxy => {
@@ -68,21 +67,18 @@ export default class FieldSignNode extends VBox {
       selectorNode.centerY = selectorContainer.height / 2;
     } );
 
-    this.addChild( headingContainer );
-    this.addChild( selectorContainer );
-
     const createSignPost = () => {
-      const signPostWidth = 10;
-      const signPostRectHeight = 20;
-      const signPostEllipseHeight = 5;
+      const signPostWidth = 5;
+      const signPostRectHeight = 16;
+      const signPostEllipseHeight = 3;
 
       const signPostRect = new Rectangle( 0, -0, signPostWidth, signPostRectHeight, {
-        fill: '#444444'
+        fill: '#6d7c54'
       } );
 
       const signPostBase = new Path( new Shape().ellipse( new Vector2( 0.5 * signPostWidth, signPostRectHeight ),
         0.5 * signPostWidth, 0.5 * signPostEllipseHeight, 0 ), {
-        fill: '#444444'
+        fill: '#6d7c54'
       } );
 
       return new Node( {
@@ -94,10 +90,12 @@ export default class FieldSignNode extends VBox {
     const rightPost = createSignPost();
 
     const signPostContainer = new HBox( {
-      spacing: 40,
+      spacing: 100,
       children: [ leftPost, rightPost ]
     } );
 
+    this.addChild( headingContainer );
+    this.addChild( selectorContainer );
     this.addChild( signPostContainer );
   }
 }
