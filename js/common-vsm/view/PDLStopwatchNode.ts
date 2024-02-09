@@ -28,6 +28,9 @@ export default class PDLStopwatchNode extends StopwatchNode {
 
     // The button toggles between "Launch" and "Stop". When launching, the timer starts automatically.
     const launchStopButton = new RectangularPushButton( {
+
+      // Fire the button on down, so that the user can time the launch in a similar way to a real stopwatch
+      fireOnDown: true,
       baseColor: 'lightgray',
       content: new PDLText( labelProperty, {
         maxWidth: 50
