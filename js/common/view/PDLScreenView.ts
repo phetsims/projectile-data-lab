@@ -146,12 +146,14 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.singleOrContinuousRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.singleOrContinuousProperty, [ {
       value: 'single' as const,
       createNode: () => new PDLText( singleStringProperty, {
+        font: PDLConstants.LAUNCH_MODE_FONT,
         maxWidth: radioButtonLabelMaxWidth
       } ),
       tandemName: 'singleLaunchRadioButton'
     }, {
       value: 'continuous' as const,
       createNode: () => new PDLText( continuousStringProperty, {
+        font: PDLConstants.LAUNCH_MODE_FONT,
         maxWidth: radioButtonLabelMaxWidth
       } ),
       tandemName: 'continuousLaunchRadioButton'

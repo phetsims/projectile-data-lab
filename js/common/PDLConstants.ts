@@ -73,7 +73,9 @@ const PDLConstants = {
   PROJECTILE_IMAGE_SCALE_FACTOR: 0.15,
 
   HEATMAP_TOOL_LABEL_FONT: new PhetFont( { size: 11 } ),
-  PRIMARY_FONT: new PhetFont( { size: 13 } ),
+  PRIMARY_FONT: new PhetFont( { size: 14 } ),
+  LAUNCH_MODE_FONT: new PhetFont( { size: 15 } ),
+  HISTOGRAM_AXIS_LABEL_FONT: new PhetFont( { size: 15 } ),
   FIELD_LABEL_FONT: new PhetFont( { size: 15 } ),
   FIELD_SIGN_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
   FIELD_SIGN_COUNT_FONT: new PhetFont( { size: 15, weight: 'bold' } ),
