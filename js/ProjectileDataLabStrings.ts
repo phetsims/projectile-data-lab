@@ -20,6 +20,7 @@ type StringsType = {
   };
   'singleLaunchStringProperty': LocalizedStringProperty;
   'launchStringProperty': LocalizedStringProperty;
+  'stopStringProperty': LocalizedStringProperty;
   'continuousLaunchStringProperty': LocalizedStringProperty;
   'singleSampleStringProperty': LocalizedStringProperty;
   'continuousSamplingStringProperty': LocalizedStringProperty;

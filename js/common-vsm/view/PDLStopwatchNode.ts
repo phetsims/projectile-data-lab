@@ -8,6 +8,7 @@ import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLText from '../../common/view/PDLText.js';
+import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLStopwatchNodeOptions = SelfOptions & WithRequired<StopwatchNodeOptions, 'tandem'>;
@@ -21,25 +22,34 @@ type PDLStopwatchNodeOptions = SelfOptions & WithRequired<StopwatchNodeOptions, 
 export default class PDLStopwatchNode extends StopwatchNode {
   public constructor( stopwatch: Stopwatch, launchProjectile: () => void, providedOptions: PDLStopwatchNodeOptions ) {
 
+    const labelProperty = new DerivedStringProperty( [ ProjectileDataLabStrings.stopStringProperty, ProjectileDataLabStrings.launchStringProperty, stopwatch.isRunningProperty ], ( stopString, launchString, isRunning ) => {
+      return isRunning ? stopString : launchString;
+    } );
+
+    // The button toggles between "Launch" and "Stop". When launching, the timer starts automatically.
+    const launchStopButton = new RectangularPushButton( {
+      baseColor: 'lightgray',
+      content: new PDLText( labelProperty, {
+        maxWidth: 50
+      } ),
+      layoutOptions: {
+        stretch: true,
+        xMargin: 6.3
+      },
+      tandem: providedOptions.tandem.createTandem( 'launchStopButton' ),
+      listener: () => {
+        stopwatch.isRunningProperty.value = !stopwatch.isRunningProperty.value;
+
+        if ( stopwatch.isRunningProperty.value ) {
+          stopwatch.timeProperty.reset();
+          launchProjectile();
+        }
+      }
+    } );
+
     const options = optionize<PDLStopwatchNodeOptions, SelfOptions, StopwatchNodeOptions>()( {
-      otherControls: [
-        new RectangularPushButton( {
-          baseColor: 'lightgray',
-          content: new PDLText( ProjectileDataLabStrings.launchStringProperty, {
-            maxWidth: 50
-          } ),
-          layoutOptions: {
-            stretch: true,
-            xMargin: 6.3
-          },
-          tandem: providedOptions.tandem.createTandem( 'launchButton' ),
-          listener: () => {
-            stopwatch.timeProperty.reset();
-            launchProjectile();
-            stopwatch.isRunningProperty.value = true;
-          }
-        } )
-      ]
+      includePlayPauseResetButtons: false,
+      otherControls: [ launchStopButton ]
     }, providedOptions );
     super( stopwatch, options );
   }
