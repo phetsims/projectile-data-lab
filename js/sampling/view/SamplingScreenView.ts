@@ -30,6 +30,7 @@ import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAcco
 import Multilink from '../../../../axon/js/Multilink.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import PDLUtils from '../../common/PDLUtils.js';
+import FieldSignNode from '../../common/view/FieldSignNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -37,6 +38,7 @@ type SamplingScreenViewOptions = SelfOptions & StrictOmit<PDLScreenViewOptions, 
 
 export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
+  protected readonly fieldSignNode: FieldSignNode;
   protected readonly launcherNode: LauncherNode;
   protected readonly launchPanel: SamplingLaunchPanel;
   protected readonly accordionBox: SamplingAccordionBox;
@@ -110,12 +112,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 
-    const fieldSign = new SamplingFieldSignNode(
-      model.launcherProperty,
-      model.sampleSizeProperty,
-      this.modelViewTransform
-    );
-
     const sampleSelectorNode = new SampleSelectorNode(
       model.fieldProperty,
       model.selectedSampleNumberProperty,
@@ -127,13 +123,18 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         tandem: options.tandem.createTandem( 'sampleSelectorNode' )
       } );
 
+    this.fieldSignNode = new SamplingFieldSignNode(
+      model.launcherProperty,
+      model.sampleSizeProperty,
+      this.modelViewTransform,
+      sampleSelectorNode
+    );
+
+    this.positionFieldSignNode();
+
     this.addChild( this.timeControlNode );
     this.addChild( this.launchPanel );
-    this.behindProjectilesLayer.addChild( fieldSign );
-    this.behindProjectilesLayer.addChild( sampleSelectorNode );
-
-    sampleSelectorNode.centerX = fieldSign.centerX;
-    sampleSelectorNode.bottom = fieldSign.top - PDLConstants.INTER_PANEL_SPACING;
+    this.behindProjectilesLayer.addChild( this.fieldSignNode );
 
     this.accordionBox = new SamplingAccordionBox(
       model.launcherProperty,
@@ -186,14 +187,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         accordionBoxProxy.left = launchPanelProxy.right + PDLConstants.INTER_PANEL_SPACING;
       } );
 
-    // Position the sample selector panel
-    ManualConstraint.create(
-      this,
-      [ sampleSelectorNode, fieldSign ], ( sampleSelectorNodeProxy, fieldSignProxy ) => {
-        sampleSelectorNodeProxy.bottom = fieldSignProxy.top - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
-        sampleSelectorNodeProxy.centerX = fieldSignProxy.centerX;
-      } );
-
     // Position the time control node so that it is right-aligned underneath the accordion box
     ManualConstraint.create( this, [ this.timeControlNode, this.accordionBox.bottomThumbnailNode, this.accordionBox ],
       ( timeControlNodeProxy, bottomThumbnailNodeProxy, accordionBoxProxy ) => {
@@ -228,10 +221,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       this.launchPanel,
 
       // Histogram
-      this.accordionBox,
-
-      // Sample selector
-      sampleSelectorNode
+      this.accordionBox
     ];
 
     this.pdomControlAreaNode.pdomOrder = [

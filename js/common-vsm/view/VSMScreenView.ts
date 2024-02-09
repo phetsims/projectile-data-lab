@@ -31,6 +31,7 @@ import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import PDLUtils from '../../common/PDLUtils.js';
+import FieldSignNode from '../../common/view/FieldSignNode.js';
 
 /**
  * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
@@ -45,6 +46,7 @@ type VSMScreenViewOptions = SelfOptions & StrictOmit<WithRequired<PDLScreenViewO
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;
   protected readonly accordionBox: HistogramAccordionBox;
+  protected readonly fieldSignNode: FieldSignNode;
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorNode: ProjectileSelectorNode;
   protected readonly topRightUIContainer: VBox;
@@ -234,21 +236,23 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       tandem: options.tandem.createTandem( 'fieldRadioButtonGroup' )
     } );
 
-    const fieldSign = new VSMFieldSignNode(
+    this.fieldSignNode = new VSMFieldSignNode(
       model.fieldProperty,
       model.numberOfLandedProjectilesProperty,
       model.fields,
-      this.modelViewTransform
+      this.modelViewTransform,
+      this.projectileSelectorNode
     );
 
-    this.behindProjectilesLayer.addChild( fieldSign );
+    this.positionFieldSignNode();
+
+    this.behindProjectilesLayer.addChild( this.fieldSignNode );
 
     this.toolsLayer.addChild( angleToolNode );
     this.toolsLayer.addChild( speedToolNode );
     this.toolsLayer.addChild( this.measuringTapeNode );
     this.toolsLayer.addChild( this.stopwatchNode );
 
-    this.addChild( this.projectileSelectorNode );
     this.addChild( this.fieldRadioButtonGroup );
     this.addChild( this.accordionBox );
     this.addChild( this.launchPanel );
@@ -260,8 +264,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.fieldRadioButtonGroup.left = this.layoutBounds.centerX - 60;
 
     // Positioning field sign and eraser button
-    const fieldSignEraserButtonSpacing = 20;
-    this.eraserButton.left = fieldSign.right + fieldSignEraserButtonSpacing;
+    // const fieldSignEraserButtonSpacing = 20;
+    // this.eraserButton.left = this.fieldSignNode.right + fieldSignEraserButtonSpacing;
 
     model.totalProjectileCountProperty.link( totalProjectileCount => {
       this.launchButton.enabled = totalProjectileCount < PDLQueryParameters.maxProjectiles;
@@ -282,13 +286,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       this.accordionBox.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
       this.topRightUIContainer.top = topY + PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
-
-    // Position the projectile selector panel
-    ManualConstraint.create( this, [ this.projectileSelectorNode, fieldSign ],
-      ( projectileSelectorPanelProxy, fieldSignProxy ) => {
-        projectileSelectorPanelProxy.bottom = fieldSignProxy.top - PDLConstants.FIELD_SIGN_PROJECTILE_SELECTOR_SEPARATION;
-        projectileSelectorPanelProxy.centerX = fieldSignProxy.centerX;
-      } );
 
     // Position the 'No air resistance' text
     ManualConstraint.create( this, [ this.noAirResistanceText, this.launchPanel ], ( noAirResistanceTextProxy, launchPanelProxy ) => {
@@ -332,9 +329,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
       // Histogram
       this.accordionBox,
-
-      // Projectile selector
-      this.projectileSelectorNode,
 
       // Field management
       this.fieldRadioButtonGroup,

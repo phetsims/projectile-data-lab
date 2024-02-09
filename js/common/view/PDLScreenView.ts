@@ -32,6 +32,7 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import LaunchButton from './LaunchButton.js';
+import FieldSignNode from './FieldSignNode.js';
 
 type SelfOptions = { getFieldColor: ( fields: Field[], field: Field ) => Color };
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
@@ -49,6 +50,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
   protected abstract readonly launchPanel: PDLLaunchPanel;
   protected abstract readonly accordionBox: HistogramAccordionBox;
+  protected abstract readonly fieldSignNode: FieldSignNode;
 
   protected readonly bottomUIContainer: HBox;
 
@@ -198,6 +200,10 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( this.singleOrContinuousRadioButtonGroup );
     this.addChild( this.noAirResistanceText );
     this.addChild( this.resetAllButton );
+
+    // ManualConstraint.create( this, [ this.fieldNode, this.fieldSignNode ], ( fieldNodeProxy, fieldSignNodeProxy ) => {
+    //   // Right-align the field sign with the fieldNode, and subtract a constant so that it lines up with the top-right corner of the field
+    // } );
   }
 
   /**
@@ -207,6 +213,16 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     super.layout( viewBounds, {
       verticalAlign: 'bottom'
     } );
+  }
+
+  public positionFieldSignNode(): void {
+
+    // The feet of the field sign should roughly be halfway between the dotted line and the back of the field. So this
+    // is the distance above the center line in model units
+    this.fieldSignNode.bottom = this.modelViewTransform.modelToViewY( 1 );
+
+    // The field sign is right aligned with the top right corner of the field
+    this.fieldSignNode.right = this.modelViewTransform.modelToViewX( PDLConstants.MAX_FIELD_DISTANCE ) - 0.5 * PDLConstants.FIELD_SCALING_FACTOR_HORIZONTAL;
   }
 
   /**
