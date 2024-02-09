@@ -200,10 +200,6 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( this.singleOrContinuousRadioButtonGroup );
     this.addChild( this.noAirResistanceText );
     this.addChild( this.resetAllButton );
-
-    // ManualConstraint.create( this, [ this.fieldNode, this.fieldSignNode ], ( fieldNodeProxy, fieldSignNodeProxy ) => {
-    //   // Right-align the field sign with the fieldNode, and subtract a constant so that it lines up with the top-right corner of the field
-    // } );
   }
 
   /**
