@@ -187,6 +187,7 @@ export default abstract class Field extends PhetioObject {
     } );
   }
 
+
   public getTotalProjectileCount(): number {
     return this.airborneProjectiles.length + this.landedProjectiles.length;
   }

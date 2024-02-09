@@ -33,6 +33,11 @@ const SCHEMA_MAP = {
     type: 'number' as const,
     defaultValue: 200,
     public: false
+  },
+
+  populate: {
+    type: 'flag' as const,
+    public: false
   }
 };
 
