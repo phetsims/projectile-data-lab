@@ -290,7 +290,7 @@ export default class SamplingField extends Field {
 
   public step( dt: number, timeSpeed: TimeSpeed ): void {
 
-    this.stepAirborneParticles( dt );
+    this.stepAirborneProjectiles( dt );
 
     this.timeProperty.value += dt;
     const timeInMode = this.timeProperty.value - this.phaseStartTimeProperty.value;

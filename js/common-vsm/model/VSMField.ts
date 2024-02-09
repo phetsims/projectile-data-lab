@@ -187,7 +187,7 @@ export default class VSMField extends Field {
   }
 
   public step( dt: number ): void {
-    this.stepAirborneParticles( dt );
+    this.stepAirborneProjectiles( dt );
   }
 
   public override reset(): void {

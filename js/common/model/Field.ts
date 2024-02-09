@@ -258,7 +258,7 @@ export default abstract class Field extends PhetioObject {
       this.launchHeightProperty.value );
   }
 
-  protected stepAirborneParticles( dt: number ): void {
+  protected stepAirborneProjectiles( dt: number ): void {
 
     // If any projectiles were airborne at the beginning of the step, repaint the canvas at the end
     const numInitialAirborneProjectiles = this.airborneProjectiles.length;
