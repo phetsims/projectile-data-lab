@@ -152,7 +152,7 @@ export default class Projectile {
         stateObject.launcherStandardDeviationAngle,
         stateObject.x,
         stateObject.y,
-        stateObject.type,
+        ProjectileType.ProjectileTypeIO.fromStateObject( stateObject.type ),
         stateObject.isFlippedHorizontally,
         stateObject.landedImageIndex,
         stateObject.timeAirborne,
