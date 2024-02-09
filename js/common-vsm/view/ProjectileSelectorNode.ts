@@ -3,7 +3,6 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { PDLPanel } from '../../common/view/PDLPanel.js';
 import { HBox, Image, Node, VBox } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -240,11 +239,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       spacing: 8
     } );
 
-    super( new PDLPanel( contentsWithLauncherIcon, {
-      minWidth: 118,
-      minHeight: 55,
-      align: 'center'
-    } ), selectedProjectileNumberProperty, rangeProperty, options );
+    super( contentsWithLauncherIcon, selectedProjectileNumberProperty, rangeProperty, options );
   }
 }
 

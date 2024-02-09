@@ -1,9 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import PDLColors from '../PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import SelectorNode from './SelectorNode.js';
@@ -37,8 +36,11 @@ export default class FieldSignNode extends VBox {
     selectorContainer.addChild( selectorNode );
     selectorContainer.center = headingContainer.center;
 
+    // The vertical margin around the text in the heading container
+    const HEADING_MARGIN_Y = 5;
+
     ManualConstraint.create( this, [ selectorContainer, textNode ], selectorContainerProxy => {
-      headingContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorContainerProxy.width, textNode.height + 20, {
+      headingContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorContainerProxy.width, textNode.height + 2 * HEADING_MARGIN_Y, {
         bottomLeft: 0,
         bottomRight: 0,
         topRight: 5,
@@ -49,8 +51,13 @@ export default class FieldSignNode extends VBox {
       textNode.centerY = headingContainer.height / 2;
     } );
 
+
+    // The margins around the selector node
+    const SELECTOR_MARGIN_X = 5;
+    const SELECTOR_MARGIN_Y = 5;
+
     ManualConstraint.create( this, [ selectorNode ], selectorNodeProxy => {
-      selectorContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorNodeProxy.width, selectorNodeProxy.height + 20, {
+      selectorContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorNodeProxy.width + 2 * SELECTOR_MARGIN_X, selectorNodeProxy.height + 2 * SELECTOR_MARGIN_Y, {
         bottomLeft: 5,
         bottomRight: 5,
         topRight: 0,
@@ -64,46 +71,34 @@ export default class FieldSignNode extends VBox {
     this.addChild( headingContainer );
     this.addChild( selectorContainer );
 
-    // this.drawSign( options.signPostOffsetX );
-  }
+    const createSignPost = () => {
+      const signPostWidth = 10;
+      const signPostRectHeight = 20;
+      const signPostEllipseHeight = 5;
 
-  private drawSign( signPostOffsetX: number ): void {
-    const signMarginX = 10;
-    const signMarginY = 6;
-    const signOffsetY = 44;
-    const signPostWidth = 7;
-    const signPostBaseRadiusY = 1;
-
-    const signRect = this.bounds.dilatedXY( signMarginX, signMarginY );
-    const sign = new Rectangle( signRect, {
-      fill: PDLColors.fieldSignFillColorProperty,
-      stroke: PDLColors.fieldSignStrokeColorProperty,
-      lineWidth: 1.5,
-      cornerRadius: 4
-    } );
-
-    const signPostRect = ( x: number ) => new Rectangle(
-      x, -0.5 * signRect.height, signPostWidth, signOffsetY + 0.5 * signRect.height, {
+      const signPostRect = new Rectangle( 0, -0, signPostWidth, signPostRectHeight, {
         fill: '#444444'
       } );
 
-    const signPostRectLeft = signPostRect( -signPostOffsetX - 0.5 * signPostWidth );
-    const signPostRectRight = signPostRect( signPostOffsetX - 0.5 * signPostWidth );
+      const signPostBase = new Path( new Shape().ellipse( new Vector2( 0.5 * signPostWidth, signPostRectHeight ),
+        0.5 * signPostWidth, 0.5 * signPostEllipseHeight, 0 ), {
+        fill: '#444444'
+      } );
 
-    const signPostBase = ( x: number ) => new Path( new Shape().ellipse( new Vector2( x, signOffsetY ),
-      0.5 * signPostWidth, signPostBaseRadiusY, 0 ), {
-      fill: '#444444'
+      return new Node( {
+        children: [ signPostRect, signPostBase ]
+      } );
+    };
+
+    const leftPost = createSignPost();
+    const rightPost = createSignPost();
+
+    const signPostContainer = new HBox( {
+      spacing: 40,
+      children: [ leftPost, rightPost ]
     } );
 
-    const signPostBaseLeft = signPostBase( -signPostOffsetX );
-    const signPostBaseRight = signPostBase( signPostOffsetX );
-
-    const signGraphicsContainer = new Node( {
-      children: [ sign, signPostRectLeft, signPostRectRight, signPostBaseLeft, signPostBaseRight ]
-    } );
-
-    this.addChild( signGraphicsContainer );
-    signGraphicsContainer.moveToBack();
+    this.addChild( signPostContainer );
   }
 }
 projectileDataLab.register( 'FieldSignNode', FieldSignNode );

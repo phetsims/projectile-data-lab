@@ -10,7 +10,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Color, HBox, Node } from '../../../../scenery/js/imports.js';
+import { Color, HBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -212,13 +212,15 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   }
 
   public positionFieldSignNode(): void {
+    ManualConstraint.create( this, [ this.fieldSignNode ], fieldSignNodeProxy => {
 
-    // The feet of the field sign should roughly be halfway between the dotted line and the back of the field. So this
-    // is the distance above the center line in model units
-    this.fieldSignNode.bottom = this.modelViewTransform.modelToViewY( 1 );
+      // The feet of the field sign should roughly be halfway between the dotted line and the back of the field. So this
+      // is the distance above the center line in model units
+      this.fieldSignNode.bottom = this.modelViewTransform.modelToViewY( 1 );
 
-    // The field sign is right aligned with the top right corner of the field
-    this.fieldSignNode.right = this.modelViewTransform.modelToViewX( PDLConstants.MAX_FIELD_DISTANCE ) - 0.5 * PDLConstants.FIELD_SCALING_FACTOR_HORIZONTAL;
+      // The field sign is right aligned with the top right corner of the field
+      this.fieldSignNode.right = this.modelViewTransform.modelToViewX( PDLConstants.MAX_FIELD_DISTANCE ) - 14;
+    } );
   }
 
   /**

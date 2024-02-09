@@ -3,7 +3,6 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
-import Panel from '../../../../sun/js/Panel.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
@@ -137,17 +136,7 @@ export default class SampleSelectorNode extends SelectorNode {
         }
       } );
 
-    const sampleCardContainer = new Panel( dataContainer, {
-      align: 'center',
-
-      // Keep the right edge on-screen for stringTest=long
-      maxWidth: 150,
-      minWidth: 150,
-      minHeight: 60,
-      maxHeight: 60
-    } );
-
-    super( sampleCardContainer, selectedSampleNumberProperty, rangeProperty, options );
+    super( dataContainer, selectedSampleNumberProperty, rangeProperty, options );
   }
 }
 
