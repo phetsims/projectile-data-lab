@@ -41,6 +41,8 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
+const CHART_UI_MARGIN = 10;
+
 export default class HistogramNode extends Node {
 
   protected readonly chartNode: Node;
@@ -176,7 +178,7 @@ export default class HistogramNode extends Node {
     const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomProperty, {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',
-      bottom: this.chartTransform.viewHeight,
+      centerY: this.chartTransform.viewHeight,
       spacing: 0,
       iconOptions: {
         scale: 1.2
@@ -185,31 +187,23 @@ export default class HistogramNode extends Node {
 
     const verticalAxisLabel = new PDLText( ProjectileDataLabStrings.countStringProperty, {
       rotation: -Math.PI / 2,
-      maxWidth: 86
+      maxWidth: 86,
+      font: PDLConstants.HISTOGRAM_AXIS_LABEL_FONT
     } );
     const horizontalAxisLabel = new PDLText( horizontalAxisLabelText, {
-      maxWidth: 100
+      maxWidth: 100,
+      font: PDLConstants.HISTOGRAM_AXIS_LABEL_FONT
     } );
 
     this.children = [
       zoomButtonGroup,
 
       // Translate the chart node to the right far enough that it won't overlap with the zoom buttons even at the furthest zoomed out level
-      this.chartNode.mutate( { left: zoomButtonGroup.right + 14 } ),
+      this.chartNode.mutate( { left: zoomButtonGroup.right + CHART_UI_MARGIN } ),
       verticalAxisLabel,
       horizontalAxisLabel
     ];
     this.mutate( options );
-
-    ManualConstraint.create( this, [ this.chartNode, verticalAxisLabel, zoomButtonGroup ], ( chartNodeProxy, verticalAxisLabel, zoomButtonGroup ) => {
-      verticalAxisLabel.centerX = zoomButtonGroup.centerX;
-      verticalAxisLabel.bottom = zoomButtonGroup.top - 17;
-    } );
-
-    ManualConstraint.create( this, [ this.chartNode, horizontalAxisLabel, this.chartBackground ], ( chartNodeProxy, horizontalAxisLabelProxy, chartBackgroundProxy ) => {
-      horizontalAxisLabelProxy.centerX = chartBackgroundProxy.centerX;
-      horizontalAxisLabelProxy.top = chartNodeProxy.bottom;
-    } );
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {
@@ -286,7 +280,7 @@ export default class HistogramNode extends Node {
 
     const binControlNode = new BinControlNode( comboBoxParent, selectedBinWidthProperty, selectedTotalBinsProperty, {
       tandem: options.tandem.createTandem( 'binControlNode' ),
-      leftTop: this.chartNode.leftBottom.plusXY( 8, 10 )
+      leftTop: this.chartNode.leftBottom.plusXY( 15, CHART_UI_MARGIN )
     } );
     this.addChild( binControlNode );
 
@@ -299,9 +293,19 @@ export default class HistogramNode extends Node {
         toggleSwitchOptions: {
           maxWidth: 32
         },
-        rightTop: this.chartNode.rightBottom.plusXY( -8, 10 )
+        rightTop: this.chartNode.rightBottom.plusXY( -12, CHART_UI_MARGIN )
       } );
     this.addChild( barBlockSwitch );
+
+    ManualConstraint.create( this, [ this.chartNode, this.chartBackground, horizontalAxisLabel ], ( chartNodeProxy, chartBackgroundProxy, horizontalAxisLabelProxy ) => {
+      horizontalAxisLabelProxy.centerX = chartBackgroundProxy.centerX;
+      horizontalAxisLabelProxy.top = chartNodeProxy.bottom + CHART_UI_MARGIN;
+    } );
+
+    ManualConstraint.create( this, [ this.chartNode, this.chartBackground, verticalAxisLabel ], ( chartNodeProxy, chartBackgroundProxy, verticalAxisLabelProxy ) => {
+      verticalAxisLabel.right = chartNodeProxy.left - CHART_UI_MARGIN;
+      verticalAxisLabel.centerY = chartBackgroundProxy.centerY;
+    } );
 
     this.pdomOrder = [
       zoomButtonGroup,
