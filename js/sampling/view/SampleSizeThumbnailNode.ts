@@ -19,7 +19,6 @@ import PDLText from '../../common/view/PDLText.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
