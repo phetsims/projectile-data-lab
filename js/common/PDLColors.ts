@@ -26,11 +26,11 @@ const PDLColors = {
 
   // Background color for screens in this sim
   screenBackgroundTopColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundTop', {
-    default: '#25a9fc'
+    default: '#42a4ff'
   } ),
 
   screenBackgroundBottomColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundBottom', {
-    default: '#a3bfff'
+    default: '#a9c2ff'
   } ),
 
   panelColorProperty: new ProfileColorProperty( projectileDataLab, 'panelFill', {
@@ -74,11 +74,11 @@ const PDLColors = {
   } ),
 
   pathStrokeLandedInitialColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedInitial', {
-    default: new Color( 0xFFFFFF, 0.3 )
+    default: new Color( 0xFFFFFF, 0.5 )
   } ),
 
   pathStrokeLandedFinalColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedFinal', {
-    default: new Color( 0xFFFFFF, 0.05 )
+    default: new Color( 0xFFFFFF, 0.08 )
   } ),
 
   pathStrokeHighlightedColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeHighlighted', {
