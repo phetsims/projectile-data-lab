@@ -19,17 +19,25 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
 import ProjectileSelectorNode from './ProjectileSelectorNode.js';
+import { optionize } from '../../../../phet-core/js/imports.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import PDLUtils from '../../common/PDLUtils.js';
 
 type SelfOptions = EmptySelfOptions;
-type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
+type VSMFieldSignNodeOptions = SelfOptions & StrictOmit<FieldSignNodeOptions, 'getFieldColor'>;
 
 export default class VSMFieldSignNode extends FieldSignNode {
-  public constructor( fieldProperty: TReadOnlyProperty<Field>,
+  public constructor( fields: Field[],
+                      fieldProperty: TReadOnlyProperty<Field>,
                       numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
-                      fields: Field[],
                       modelViewTransform: ModelViewTransform2,
                       projectileSelectorNode: ProjectileSelectorNode,
                       providedOptions?: VSMFieldSignNodeOptions ) {
+
+    const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
+      getFieldColor: ( fields, field ) => PDLUtils.colorForFieldIndex( fields.indexOf( field ) )
+    }, providedOptions );
+
     const fieldSignStringProperty = new PatternStringProperty( ProjectileDataLabStrings.fieldValuePatternStringProperty, {
       value: new DerivedProperty( [ fieldProperty ], field => {
         return fields.indexOf( field ) + 1;
@@ -38,7 +46,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
 
     const fieldNumberText = new Text( fieldSignStringProperty, {
       fill: PDLColors.fieldSignTextColorProperty,
-      font: PDLConstants.FIELD_SIGN_FONT
+      font: PDLConstants.VSM_FIELD_SIGN_FONT
     } );
 
     const fieldSignTextContainer = new VBox( {
@@ -48,7 +56,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
       maxWidth: 80
     } );
 
-    super( fieldSignTextContainer, projectileSelectorNode, providedOptions );
+    super( fields, fieldProperty, fieldSignTextContainer, projectileSelectorNode, options );
   }
 }
 

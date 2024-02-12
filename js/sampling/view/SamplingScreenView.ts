@@ -124,6 +124,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
 
     this.fieldSignNode = new SamplingFieldSignNode(
+      model.fields,
+      model.fieldProperty,
       model.launcherProperty,
       model.sampleSizeProperty,
       this.modelViewTransform,

@@ -1,11 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HBox, ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import { Color, HBox, ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import SelectorNode from './SelectorNode.js';
+import Field from '../model/Field.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 /**
  * The FieldSignNode contains the field sign, which displays text about the field number and landed projectiles.
@@ -14,11 +15,17 @@ import SelectorNode from './SelectorNode.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  getFieldColor: ( fields: Field[], field: Field ) => Color;
+};
 export type FieldSignNodeOptions = SelfOptions & VBoxOptions;
 
 export default class FieldSignNode extends VBox {
-  public constructor( private readonly textNode: Node, selectorNode: SelectorNode, providedOptions?: FieldSignNodeOptions ) {
+  public constructor( fields: Field[],
+                      fieldProperty: TReadOnlyProperty<Field>,
+                      private readonly textNode: Node,
+                      selectorNode: SelectorNode,
+                      providedOptions: FieldSignNodeOptions ) {
 
     super( providedOptions );
 
@@ -29,6 +36,10 @@ export default class FieldSignNode extends VBox {
     textNode.centerY = headingContainer.height / 2;
     headingContainer.addChild( textNode );
 
+    fieldProperty.link( field => {
+      headingContainer.fill = providedOptions.getFieldColor( fields, field );
+    } );
+
     const selectorContainer = new Path( Shape.rect( 0, 0, 1, 1 ), {
       fill: 'white'
     } );
@@ -36,11 +47,17 @@ export default class FieldSignNode extends VBox {
     selectorContainer.addChild( selectorNode );
     selectorContainer.center = headingContainer.center;
 
-    // The vertical margin around the text in the heading container
-    const HEADING_MARGIN_Y = 5;
+    // The minimum height of the text node
+    const MIN_HEADING_AREA_HEIGHT = 29;
 
-    ManualConstraint.create( this, [ selectorContainer, textNode ], selectorContainerProxy => {
-      headingContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorContainerProxy.width, textNode.height + 2 * HEADING_MARGIN_Y, {
+    // The vertical margin around the text in the heading container
+    const HEADING_MARGIN_Y = 6;
+
+    ManualConstraint.create( this, [ selectorContainer, textNode ], ( selectorContainerProxy, textNodeProxy ) => {
+
+      const textHeight = Math.max( textNodeProxy.height + 2 * HEADING_MARGIN_Y, MIN_HEADING_AREA_HEIGHT );
+
+      headingContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorContainerProxy.width, textHeight, {
         bottomLeft: 0,
         bottomRight: 0,
         topRight: 5,

@@ -237,9 +237,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     this.fieldSignNode = new VSMFieldSignNode(
+      model.fields,
       model.fieldProperty,
       model.numberOfLandedProjectilesProperty,
-      model.fields,
       this.modelViewTransform,
       this.projectileSelectorNode
     );

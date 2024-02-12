@@ -13,9 +13,14 @@ import PDLColors from '../../common/PDLColors.js';
 import Launcher from '../../common/model/Launcher.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import SampleSelectorNode from './SampleSelectorNode.js';
+import { optionize } from '../../../../phet-core/js/imports.js';
+import PDLUtils from '../../common/PDLUtils.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import SamplingField from '../model/SamplingField.js';
+import Field from '../../common/model/Field.js';
 
 type SelfOptions = EmptySelfOptions;
-type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
+type SamplingFieldSignNodeOptions = SelfOptions & StrictOmit<FieldSignNodeOptions, 'getFieldColor'>;
 
 /**
  * The SamplingFieldSignNode shows the launcher number and the number of projectiles that have landed in that field.
@@ -23,11 +28,25 @@ type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 export default class SamplingFieldSignNode extends FieldSignNode {
-  public constructor( launcherProperty: TReadOnlyProperty<Launcher>,
+  public constructor( fields: Field[],
+                      fieldProperty: TReadOnlyProperty<Field>,
+                      launcherProperty: TReadOnlyProperty<Launcher>,
                       sampleSizeProperty: TReadOnlyProperty<number>,
                       modelViewTransform: ModelViewTransform2,
                       sampleSelectorNode: SampleSelectorNode,
                       providedOptions?: SamplingFieldSignNodeOptions ) {
+
+    const options = optionize<SamplingFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
+      getFieldColor: ( fields, field ) => {
+
+        // TODO: Is this okay to duplicate? See https://github.com/phetsims/projectile-data-lab/issues/104
+        // Colorize based on the sample size
+        // This one band-aid type annotation workaround is preferable to adding generic types to a mountain of classes
+        const f = field as SamplingField;
+        return PDLUtils.colorForSampleSize( f.sampleSize );
+      }
+    }, providedOptions );
+
     const launcherNumberProperty = new DerivedProperty( [ launcherProperty ], launcher => launcher.launcherNumber );
     const launcherNumberStringProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty, {
       number: launcherNumberProperty
@@ -39,12 +58,12 @@ export default class SamplingFieldSignNode extends FieldSignNode {
 
     const launcherNumberText = new Text( launcherNumberStringProperty, {
       fill: PDLColors.fieldSignTextColorProperty,
-      font: PDLConstants.FIELD_SIGN_FONT
+      font: PDLConstants.SAMPLING_FIELD_SIGN_FONT
     } );
 
     const sampleSizeText = new Text( sampleSizeStringProperty, {
       fill: PDLColors.fieldSignTextColorProperty,
-      font: PDLConstants.FIELD_SIGN_FONT
+      font: PDLConstants.SAMPLING_FIELD_SIGN_FONT
     } );
 
     const fieldSignTextNodes = [ launcherNumberText, sampleSizeText ];
@@ -64,7 +83,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
       ]
     } );
 
-    super( fieldSignContents, sampleSelectorNode, providedOptions );
+    super( fields, fieldProperty, fieldSignContents, sampleSelectorNode, options );
   }
 }
 
