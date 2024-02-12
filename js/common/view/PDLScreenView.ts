@@ -110,10 +110,11 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     // Create the eraser button
     this.eraserButton = new EraserButton( {
-      iconWidth: 27,
+      iconWidth: 28,
       listener: () => model.clearCurrentField(),
       tandem: options.tandem.createTandem( 'eraserButton' ),
-      phetioFeatured: true
+      phetioFeatured: true,
+      minimumWidth: 100
     } );
 
     this.resetAllButton = new ResetAllButton( {
@@ -127,7 +128,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     } );
 
     this.eraseResetContainer = new HBox( {
-      spacing: 10,
+      spacing: 15,
+      stretch: true,
       children: [ this.eraserButton, this.resetAllButton ]
     } );
 

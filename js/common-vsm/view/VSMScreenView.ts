@@ -248,10 +248,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.fieldRadioButtonGroup.bottom = this.layoutBounds.bottom - PDLConstants.SCREEN_VIEW_Y_MARGIN - 5;
     this.fieldRadioButtonGroup.left = this.layoutBounds.centerX - 60;
 
-    // Positioning field sign and eraser button
-    // const fieldSignEraserButtonSpacing = 20;
-    // this.eraserButton.left = this.fieldSignNode.right + fieldSignEraserButtonSpacing;
-
     model.totalProjectileCountProperty.link( totalProjectileCount => {
       this.launchButton.enabled = totalProjectileCount < PDLQueryParameters.maxProjectiles;
 
