@@ -19,7 +19,7 @@ import explosion_png from '../../../images/explosion_png.js';
 import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import launcherMechanismButtonSpring_mp3 from '../../../sounds/launcherMechanismButtonSpring_mp3.js';
+import pdlCustomLauncherButtonSpringv2_mp3 from '../../../sounds/pdlCustomLauncherButtonSpringv2_mp3.js';
 import launcherMechanismButtonPressure2_mp3 from '../../../sounds/launcherMechanismButtonPressure2_mp3.js';
 import launcherMechanismButtonPressure1_mp3 from '../../../sounds/launcherMechanismButtonPressure1_mp3.js';
 import launcherMechanismButtonPressure3_mp3 from '../../../sounds/launcherMechanismButtonPressure3_mp3.js';
@@ -29,7 +29,7 @@ import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadi
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
 
-const springSound = new SoundClip( launcherMechanismButtonSpring_mp3 );
+const springSound = new SoundClip( pdlCustomLauncherButtonSpringv2_mp3 );
 soundManager.addSoundGenerator( springSound, { categoryName: 'user-interface' } );
 
 const pressureSound1 = new SoundClip( launcherMechanismButtonPressure1_mp3 );
