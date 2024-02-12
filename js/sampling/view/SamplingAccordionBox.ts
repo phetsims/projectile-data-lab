@@ -64,41 +64,47 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 
-    const thumbnailNode = providedOptions.tandem.createTandem( 'thumbnailContainerNode' );
+    const thumbnailContainerNode = providedOptions.tandem.createTandem( 'thumbnailContainerNode' );
     const bottomThumbnailNode = new SampleSizeThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
       PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-        tandem: thumbnailNode.createTandem( 'sample40ThumbnailNode' )
+        tandem: thumbnailContainerNode.createTandem( 'sample40ThumbnailNode' ),
+        visiblePropertyOptions: { phetioFeatured: true }
       } );
 
+    const thumbnailNodeVBox = new VBox( {
+
+      // Top align with the top border of the chart. This margin compensates for the amount the vertical axis label
+      // exceeds the top of the chart
+      topMargin: 7,
+
+      spacing: -2,
+      tandem: thumbnailContainerNode,
+      visiblePropertyOptions: { phetioFeatured: true },
+      children: [
+        new SampleSizeThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+          PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+            tandem: thumbnailContainerNode.createTandem( 'sampleSize2ThumbnailNode' ),
+            visiblePropertyOptions: { phetioFeatured: true }
+          } ),
+        new SampleSizeThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+          PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+            tandem: thumbnailContainerNode.createTandem( 'sampleSize5ThumbnailNode' ),
+            visiblePropertyOptions: { phetioFeatured: true }
+          } ),
+        new SampleSizeThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+          PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+            tandem: thumbnailContainerNode.createTandem( 'sampleSize15ThumbnailNode' ),
+            visiblePropertyOptions: { phetioFeatured: true }
+          } ),
+        bottomThumbnailNode
+      ]
+    } );
     super( new HBox( {
       spacing: 10,
       align: 'top',
       children: [
         histogramNode,
-        new VBox( {
-
-          // Top align with the top border of the chart. This margin compensates for the amount the vertical axis label
-          // exceeds the top of the chart
-          topMargin: 7,
-
-          spacing: -2,
-          tandem: thumbnailNode,
-          children: [
-            new SampleSizeThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-                tandem: thumbnailNode.createTandem( 'sampleSize2ThumbnailNode' )
-              } ),
-            new SampleSizeThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-                tandem: thumbnailNode.createTandem( 'sampleSize5ThumbnailNode' )
-              } ),
-            new SampleSizeThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-              PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-                tandem: thumbnailNode.createTandem( 'sampleSize15ThumbnailNode' )
-              } ),
-            bottomThumbnailNode
-          ]
-        } )
+        thumbnailNodeVBox
       ]
     } ), providedOptions );
 

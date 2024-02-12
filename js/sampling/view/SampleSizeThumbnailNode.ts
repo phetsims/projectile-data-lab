@@ -20,6 +20,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 /**
  * SampleSizeThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large
@@ -41,7 +42,7 @@ export default class SampleSizeThumbnailNode extends Node {
                       blockFillProperty: TReadOnlyProperty<Color>,
                       blockStrokeProperty: TReadOnlyProperty<Color>,
                       zoomLevelProperty: NumberProperty,
-                      providedOptions: PickRequired<NodeOptions, 'tandem'> ) {
+                      providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
     super( providedOptions );
 
     this.chartTransform = new ChartTransform( {

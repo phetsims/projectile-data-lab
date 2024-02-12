@@ -280,7 +280,10 @@ export default class HistogramNode extends Node {
 
     const binControlNode = new BinControlNode( comboBoxParent, selectedBinWidthProperty, selectedTotalBinsProperty, {
       tandem: options.tandem.createTandem( 'binControlNode' ),
-      leftTop: this.chartNode.leftBottom.plusXY( 15, CHART_UI_MARGIN )
+      leftTop: this.chartNode.leftBottom.plusXY( 15, CHART_UI_MARGIN ),
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
     } );
     this.addChild( binControlNode );
 

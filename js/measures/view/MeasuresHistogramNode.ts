@@ -106,7 +106,8 @@ export default class MeasuresHistogramNode extends HistogramNode {
 
     const showValuesChartOverlayProperty = new BooleanProperty( true, {
       tandem: valuesChartOverlayTandem.createTandem( 'showValuesChartOverlayProperty' ),
-      phetioDocumentation: 'An additional gate that controls the visibility of the valuesChartOverlay. For the valuesChartOverlay to be displayed, this property and the isValuesVisibleProperty must both be true.'
+      phetioDocumentation: 'An additional gate that controls the visibility of the valuesChartOverlay. For the valuesChartOverlay to be displayed, this property and the isValuesVisibleProperty must both be true.',
+      phetioFeatured: true
     } );
 
     // const parent = new Node();

@@ -114,6 +114,9 @@ export default class AngleStabilizerSection extends VBox {
     const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, VBoxOptions>()( {
       phetioFeatured: true,
       topMargin: 4,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      },
       layoutOptions: {
         stretch: true,
 
