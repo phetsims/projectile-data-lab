@@ -29,6 +29,7 @@ import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import generalBoundaryBoop_mp3 from '../../../../tambo/sounds/generalBoundaryBoop_mp3.js';
+import { MappedProperty } from '../../../../axon/js/imports.js';
 
 const filter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -54,14 +55,21 @@ type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<VBo
 
 export default class AngleStabilizerSection extends VBox {
 
-  public constructor( valueProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
-
+  public constructor( standardDeviationProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
     const range = PDLConstants.ANGLE_STABILIZER_RANGE;
     const PITCH_SCALE_FACTOR = 4;
 
     const playbackRateMapper = ( value: number ) => Utils.linear( 0, 8, 1.4 / PITCH_SCALE_FACTOR, 1 / PITCH_SCALE_FACTOR, value );
 
-    const slider = new HSlider( valueProperty, range, {
+    // The launchers and model are defined in terms of standard deviation, but the UI uses the term "Angle Stabilizer"
+    // which goes from 0-1
+    const stabilizationProperty = new MappedProperty( standardDeviationProperty, {
+      bidirectional: true,
+      map: ( value: number ) => Utils.linear( range.min, range.max, 1, 0, value ),
+      inverseMap: ( value: number ) => Utils.linear( 1, 0, range.min, range.max, value )
+    } );
+
+    const slider = new HSlider( stabilizationProperty, new Range( 0, 1 ), {
       layoutOptions: {
         stretch: true
       },
@@ -91,15 +99,16 @@ export default class AngleStabilizerSection extends VBox {
         minimumInterMiddleSoundTime: 0.035
       } )
     } );
-    slider.addMajorTick( range.min, new PDLText( ProjectileDataLabStrings.narrowStringProperty, {
+    slider.addMajorTick( 0, new PDLText( ProjectileDataLabStrings.wideStringProperty, {
       fontSize: 10,
       maxWidth: 60
     } ) );
-    slider.addMajorTick( range.max, new PDLText( ProjectileDataLabStrings.wideStringProperty, {
+    slider.addMajorTick( 1, new PDLText( ProjectileDataLabStrings.narrowStringProperty, {
       fontSize: 10,
       maxWidth: 60
     } ) );
-    for ( let i = 1; i < range.max; i++ ) {
+    const distanceBetweenMinorTicks = 1 / 8;
+    for ( let i = distanceBetweenMinorTicks; i < 1 - 1E-6; i += distanceBetweenMinorTicks ) {
       slider.addMinorTick( i );
     }
     const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, VBoxOptions>()( {
