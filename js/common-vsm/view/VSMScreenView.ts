@@ -62,7 +62,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
                          providedOptions: VSMScreenViewOptions ) {
 
     const options = optionize<VSMScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {
-
       getFieldColor: ( fields, field ) => PDLUtils.colorForFieldIndex( fields.indexOf( field ) )
     }, providedOptions );
 
