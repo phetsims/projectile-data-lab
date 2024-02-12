@@ -51,6 +51,7 @@ export default class PDLStopwatchNode extends StopwatchNode {
     } );
 
     const options = optionize<PDLStopwatchNodeOptions, SelfOptions, StopwatchNodeOptions>()( {
+      visibleProperty: stopwatch.isVisibleProperty,
       includePlayPauseResetButtons: false,
       otherControls: [ launchStopButton ]
     }, providedOptions );
