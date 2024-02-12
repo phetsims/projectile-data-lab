@@ -123,8 +123,8 @@ export default class SpeedToolNode extends HeatMapToolNode {
   }
 
   private setForIsLauncherRaised( isLauncherRaised: boolean ): void {
-    const speedToolX = -60;
-    const speedToolY = isLauncherRaised ? 100 : -112;
+    const speedToolX = -62;
+    const speedToolY = isLauncherRaised ? 100 : -103;
 
     this.displayOffset = new Vector2( speedToolX, speedToolY );
 
@@ -141,7 +141,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
   }
 
   private connectingWireShapeForIsRaised( isRaised: boolean ): Shape {
-    const controlPoint1 = new Vector2( this.displayOffset.x, this.displayOffset.y );
+    const controlPoint1 = new Vector2( this.displayOffset.x, 0.8 * this.displayOffset.y );
     const controlPoint2 = new Vector2( this.displayOffset.x, 0.5 * this.displayOffset.y );
     return new Shape().moveTo( this.displayOffset.x, this.displayOffset.y ).cubicCurveTo(
       controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, 0, 0 );
