@@ -33,6 +33,7 @@ import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import LaunchButton from './LaunchButton.js';
 import FieldSignNode from './FieldSignNode.js';
+import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 
 type SelfOptions = { getFieldColor: ( fields: Field[], field: Field ) => Color };
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
@@ -57,8 +58,11 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected readonly launchButton: RectangularPushButton;
   protected readonly singleOrContinuousRadioButtonGroup: VerticalAquaRadioButtonGroup<SingleOrContinuous>;
   protected readonly timeControlNode: TimeControlNode;
+  protected readonly eraserButton: RectangularPushButton;
   protected readonly resetAllButton: ResetAllButton;
+
   protected readonly noAirResistanceText: PDLText;
+  private readonly eraseResetContainer: HBox;
 
   protected constructor( model: PDLModel<T>,
                          singleStringProperty: TReadOnlyProperty<string>,
@@ -104,18 +108,33 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       maxWidth: 160
     } );
 
+    // Create the eraser button
+    this.eraserButton = new EraserButton( {
+      iconWidth: 27,
+      listener: () => model.clearCurrentField(),
+      tandem: options.tandem.createTandem( 'eraserButton' ),
+      phetioFeatured: true
+    } );
+
     this.resetAllButton = new ResetAllButton( {
+      tandem: options.tandem.createTandem( 'resetAllButton' ),
       listener: () => {
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
         this.reset();
       },
-      right: this.layoutBounds.maxX - PDLConstants.SCREEN_VIEW_X_MARGIN,
-      bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
-      tandem: options.tandem.createTandem( 'resetAllButton' ),
       phetioFeatured: true
     } );
 
+    this.eraseResetContainer = new HBox( {
+      spacing: 10,
+      children: [ this.eraserButton, this.resetAllButton ]
+    } );
+
+    ManualConstraint.create( this, [ this.eraseResetContainer ], eraseResetContainerProxy => {
+      eraseResetContainerProxy.right = this.layoutBounds.maxX - PDLConstants.SCREEN_VIEW_X_MARGIN;
+      eraseResetContainerProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
+    } );
 
     const fieldBack = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, {
       x: fieldX,
@@ -199,7 +218,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( this.launchButton );
     this.addChild( this.singleOrContinuousRadioButtonGroup );
     this.addChild( this.noAirResistanceText );
-    this.addChild( this.resetAllButton );
+    this.addChild( this.eraseResetContainer );
   }
 
   /**

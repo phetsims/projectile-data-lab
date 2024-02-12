@@ -12,9 +12,7 @@ import PDLText from '../../common/view/PDLText.js';
 import SamplingField from '../model/SamplingField.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-
 import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
-import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
@@ -90,24 +88,9 @@ export default class SamplingHistogramNode extends HistogramNode {
     } );
     this.chartNode.addChild( textPanel );
 
-    // Create the eraser button
-    const eraserButton = new EraserButton( {
-      iconWidth: 27,
-      listener: clearCurrentField,
-      tandem: options.tandem.createTandem( 'eraserButton' ),
-      phetioFeatured: true
-    } );
-
-    this.chartNode.addChild( eraserButton );
-
     ManualConstraint.create( this, [ textPanel, this.chartBackground ], ( textPanelProxy, chartBackgroundProxy ) => {
       textPanelProxy.left = chartBackgroundProxy.left + PDLConstants.HISTOGRAM_PANEL_MARGIN;
       textPanelProxy.top = chartBackgroundProxy.top + PDLConstants.HISTOGRAM_PANEL_MARGIN;
-    } );
-
-    ManualConstraint.create( this, [ eraserButton, this.chartBackground ], ( eraserButtonProxy, chartBackgroundProxy ) => {
-      eraserButtonProxy.right = chartBackgroundProxy.right - PDLConstants.HISTOGRAM_PANEL_MARGIN;
-      eraserButtonProxy.top = chartBackgroundProxy.top + PDLConstants.HISTOGRAM_PANEL_MARGIN;
     } );
   }
 }

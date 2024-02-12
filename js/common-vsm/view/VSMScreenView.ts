@@ -24,7 +24,6 @@ import FieldRadioButtonGroup from './FieldRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
@@ -50,7 +49,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
   protected readonly toolsLayer: Node = new Node();
   protected readonly projectileSelectorNode: ProjectileSelectorNode;
   protected readonly topRightUIContainer: VBox;
-  protected readonly eraserButton: EraserButton;
   protected readonly measuringTapeNode: MeasuringTapeNode;
   protected readonly stopwatchNode: StopwatchNode;
 
@@ -74,17 +72,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       ProjectileDataLabStrings.continuousLaunchStringProperty,
       options
     );
-
-    // Create the eraser button
-    this.eraserButton = new EraserButton( {
-      iconWidth: 27,
-      listener: () => model.clearCurrentField(),
-      tandem: options.tandem.createTandem( 'eraserButton' ),
-      phetioFeatured: true
-    } );
-
-    // Create the effect that the eraser button is next to the field sign
-    this.behindProjectilesLayer.addChild( this.eraserButton );
 
     const originPosition = this.modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
@@ -291,13 +278,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       noAirResistanceTextProxy.top = launchPanelProxy.bottom + 8;
     } );
 
-    // Position the eraser button
-    ManualConstraint.create( this, [ this.eraserButton, this.fieldRadioButtonGroup ],
-      ( eraserButtonProxy, fieldSelectorPanelProxy ) => {
-        eraserButtonProxy.left = fieldSelectorPanelProxy.right + 10;
-        eraserButtonProxy.centerY = fieldSelectorPanelProxy.centerY;
-      } );
-
     // Keyboard order
     this.setVSMPDOMOrder( staticToolPanel, interactiveToolPanel );
   }
@@ -330,7 +310,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
       // Field management
       this.fieldRadioButtonGroup,
-      this.eraserButton,
 
       // Play area tools
       this.measuringTapeNode,
@@ -345,6 +324,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       interactiveToolPanel,
 
       this.timeControlNode,
+
+      // Erase
+      this.eraserButton,
 
       // Reset all
       this.resetAllButton
