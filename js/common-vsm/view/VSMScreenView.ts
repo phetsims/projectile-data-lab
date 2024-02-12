@@ -78,9 +78,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // Create the eraser button
     this.eraserButton = new EraserButton( {
       iconWidth: 27,
-      listener: () => {
-        model.clearCurrentField();
-      },
+      listener: () => model.clearCurrentField(),
       tandem: options.tandem.createTandem( 'eraserButton' ),
       phetioFeatured: true
     } );
