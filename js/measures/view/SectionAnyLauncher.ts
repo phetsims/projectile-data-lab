@@ -31,7 +31,7 @@ type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptio
 export default class SectionAnyLauncher extends PDLPanelSection {
 
   public constructor( mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>, mysteryLauncherProperty: PhetioProperty<Launcher>,
-                      customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStandardDeviationProperty: PhetioProperty<number>,
+                      customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SectionAnyLauncherOptions ) {
 
     const radioButtonItems: AquaRadioButtonGroupItem<MysteryOrCustom>[] = [ {
@@ -73,7 +73,7 @@ export default class SectionAnyLauncher extends PDLPanelSection {
       phetioFeatured: true
     } );
 
-    const angleStabilizerSection = new AngleStabilizerSection( angleStandardDeviationProperty, {
+    const angleStabilizerSection = new AngleStabilizerSection( angleStabilizerProperty, {
         tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' )
       }
     );

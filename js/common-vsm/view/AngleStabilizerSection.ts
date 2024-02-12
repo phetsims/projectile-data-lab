@@ -15,7 +15,6 @@ import { VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -29,7 +28,9 @@ import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
 import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
 import generalBoundaryBoop_mp3 from '../../../../tambo/sounds/generalBoundaryBoop_mp3.js';
-import { MappedProperty } from '../../../../axon/js/imports.js';
+import PDLConstants from '../../common/PDLConstants.js';
+
+const DISTANCE_BETWEEN_MINOR_TICKS = 1 / ( PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.getLength() );
 
 const filter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -55,21 +56,11 @@ type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<VBo
 
 export default class AngleStabilizerSection extends VBox {
 
-  public constructor( standardDeviationProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
-    const range = PDLConstants.ANGLE_STABILIZER_RANGE;
+  public constructor( angleStabilizerProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
     const PITCH_SCALE_FACTOR = 4;
+    const playbackRateMapper = ( value: number ) => Utils.linear( 0, 1, 1 / PITCH_SCALE_FACTOR, 1.4 / PITCH_SCALE_FACTOR, value );
 
-    const playbackRateMapper = ( value: number ) => Utils.linear( 0, 8, 1.4 / PITCH_SCALE_FACTOR, 1 / PITCH_SCALE_FACTOR, value );
-
-    // The launchers and model are defined in terms of standard deviation, but the UI uses the term "Angle Stabilizer"
-    // which goes from 0-1
-    const stabilizationProperty = new MappedProperty( standardDeviationProperty, {
-      bidirectional: true,
-      map: ( value: number ) => Utils.linear( range.min, range.max, 1, 0, value ),
-      inverseMap: ( value: number ) => Utils.linear( 1, 0, range.min, range.max, value )
-    } );
-
-    const slider = new HSlider( stabilizationProperty, new Range( 0, 1 ), {
+    const slider = new HSlider( angleStabilizerProperty, new Range( 0, 1 ), {
       layoutOptions: {
         stretch: true
       },
@@ -87,15 +78,15 @@ export default class AngleStabilizerSection extends VBox {
       // 1. The pitch goes down as you go to the right
       // 2. Different sound clips
       // 3. PlaybackRateMappers change the pitch as you cross tick marks
-      soundGenerator: new ValueChangeSoundPlayer( new Range( 0, 8 ), {
+      soundGenerator: new ValueChangeSoundPlayer( new Range( 0, 1 ), {
         middleMovingUpSoundPlayer: angleStabilizerSoundClip,
         middleMovingDownSoundPlayer: angleStabilizerSoundClip,
         middleMovingUpPlaybackRateMapper: playbackRateMapper,
         middleMovingDownPlaybackRateMapper: playbackRateMapper,
-        interThresholdDelta: 1,
+        interThresholdDelta: DISTANCE_BETWEEN_MINOR_TICKS,
         // constrainValue: ( value: number ) => Utils.roundToInterval( value, 0.000000001 ),
-        minSoundPlayer: generalBoundaryBoopSoundPlayer,
-        maxSoundPlayer: DEFAULT_MIN_SOUND_PLAYER,
+        minSoundPlayer: DEFAULT_MIN_SOUND_PLAYER,
+        maxSoundPlayer: generalBoundaryBoopSoundPlayer,
         minimumInterMiddleSoundTime: 0.035
       } )
     } );
@@ -107,8 +98,10 @@ export default class AngleStabilizerSection extends VBox {
       fontSize: 10,
       maxWidth: 60
     } ) );
-    const distanceBetweenMinorTicks = 1 / 8;
-    for ( let i = distanceBetweenMinorTicks; i < 1 - 1E-6; i += distanceBetweenMinorTicks ) {
+
+    // Compensate for round-off error, prevent drawing a minor tick mark over the rightmost major tick mark
+    const MACHINE_EPSILON = 1E-6;
+    for ( let i = DISTANCE_BETWEEN_MINOR_TICKS; i < 1 - MACHINE_EPSILON; i += DISTANCE_BETWEEN_MINOR_TICKS ) {
       slider.addMinorTick( i );
     }
     const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, VBoxOptions>()( {

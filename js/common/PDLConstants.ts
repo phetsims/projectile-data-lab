@@ -27,7 +27,7 @@ const PDLConstants = {
 
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.7, // seconds
 
-  ANGLE_STABILIZER_RANGE: new Range( 0, maxAngleStandardDeviation ),
+  ANGLE_STANDARD_DEVIATION_RANGE: new Range( 0, maxAngleStandardDeviation ),
 
   // In field units
   MAX_FIELD_DISTANCE: maxFieldDistance,

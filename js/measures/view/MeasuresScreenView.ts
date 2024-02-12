@@ -35,7 +35,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
 
     const launchPanel = new MeasuresLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
-      model.mysteryOrCustomProperty, model.mysteryLauncherProperty, model.customLauncherMechanismProperty, model.standardDeviationAngleProperty, {
+      model.mysteryOrCustomProperty, model.mysteryLauncherProperty, model.customLauncherMechanismProperty, model.angleStabilizerProperty, {
         tandem: options.tandem.createTandem( 'launchPanel' )
       } );
 

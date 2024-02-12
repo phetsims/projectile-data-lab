@@ -24,7 +24,7 @@ type SectionCustomLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOp
 export default class SectionCustomLauncher extends PDLPanelSection {
 
   public constructor( customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>,
-                      angleStandardDeviationProperty: PhetioProperty<number>, providedOptions: SectionCustomLauncherOptions ) {
+                      angleStabilizerProperty: PhetioProperty<number>, providedOptions: SectionCustomLauncherOptions ) {
 
     const options = optionize<SectionCustomLauncherOptions, SelfOptions, PDLPanelSectionOptions>()( {
       stretch: true
@@ -36,7 +36,7 @@ export default class SectionCustomLauncher extends PDLPanelSection {
     } );
 
     // Note that the Angle Stabilizer controls the standard deviation of the launch angle.
-    const angleStabilizerSection = new AngleStabilizerSection( angleStandardDeviationProperty, {
+    const angleStabilizerSection = new AngleStabilizerSection( angleStabilizerProperty, {
       tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' )
     } );
 

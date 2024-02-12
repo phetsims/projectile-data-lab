@@ -47,6 +47,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly latestLaunchAngleProperty: DynamicProperty<number, number, T>;
   public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, T>;
 
+  // The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.
+  public readonly angleStabilizerProperty: DynamicProperty<number, number, T>;
   public readonly standardDeviationAngleProperty: DynamicProperty<number, number, T>;
 
   public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, T>;
@@ -101,8 +103,18 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       derive: t => t.latestLaunchSpeedProperty
     } );
 
-    this.standardDeviationAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+    this.angleStabilizerProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
+      derive: t => t.angleStabilizerProperty,
+      tandem: options.isStandardDeviationAnglePropertyPhetioInstrumented ? options.tandem.createTandem( 'angleStabilizerProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true,
+      phetioDocumentation: 'The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.',
+      phetioValueType: NumberIO,
+      phetioReadOnly: true,
+      phetioState: false
+    } );
+
+    this.standardDeviationAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       derive: t => t.standardDeviationAngleProperty,
       tandem: options.isStandardDeviationAnglePropertyPhetioInstrumented ? options.tandem.createTandem( 'standardDeviationAngleProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,

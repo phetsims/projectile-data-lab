@@ -25,11 +25,11 @@ export default class SourcesLaunchPanel extends VSMLaunchPanel {
   public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
                       projectileTypeProperty: PhetioProperty<ProjectileType>,
                       customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>,
-                      standardDeviationAngleProperty: PhetioProperty<number>,
+                      angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SourcesLaunchPanelOptions ) {
 
     const customLauncherSection = new SectionCustomLauncher( customLauncherMechanismProperty,
-      standardDeviationAngleProperty, {
+      angleStabilizerProperty, {
         tandem: providedOptions.tandem.createTandem( 'customLauncherSection' )
       } );
 

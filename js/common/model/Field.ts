@@ -65,6 +65,8 @@ export default abstract class Field extends PhetioObject {
 
   public readonly standardDeviationAngleProperty: DynamicProperty<number, number, Launcher>;
 
+  public readonly angleStabilizerProperty: DynamicProperty<number, number, Launcher>;
+
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
   public readonly meanAngleProperty: TReadOnlyProperty<number>;
 
@@ -168,8 +170,12 @@ export default abstract class Field extends PhetioObject {
       derive: t => t.standardDeviationSpeedProperty
     } );
 
-    this.standardDeviationAngleProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+    this.angleStabilizerProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
+      derive: t => t.angleStabilizerProperty
+    } );
+
+    this.standardDeviationAngleProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       derive: t => t.standardDeviationAngleProperty
     } );
 
