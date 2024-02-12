@@ -7,6 +7,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import SelectorNode from './SelectorNode.js';
 import Field from '../model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { optionize } from '../../../../phet-core/js/imports.js';
 
 /**
  * The FieldSignNode contains the field sign, which displays text about the field number and landed projectiles.
@@ -27,11 +28,13 @@ export default class FieldSignNode extends VBox {
                       selectorNode: SelectorNode,
                       providedOptions: FieldSignNodeOptions ) {
 
-    super( providedOptions );
+    const options = optionize<FieldSignNodeOptions, SelfOptions, VBoxOptions>()( {
+      stretch: true
+    }, providedOptions );
 
-    const headingContainer = new Path( Shape.rect( 0, 0, 1, 1 ), {
-      fill: 'green'
-    } );
+    super( options );
+
+    const headingContainer = new Path( Shape.rect( 0, 0, 1, 1 ) );
     textNode.centerX = headingContainer.width / 2;
     textNode.centerY = headingContainer.height / 2;
     headingContainer.addChild( textNode );
@@ -107,7 +110,7 @@ export default class FieldSignNode extends VBox {
     const rightPost = createSignPost();
 
     const signPostContainer = new HBox( {
-      spacing: 100,
+      xMargin: 20,
       children: [ leftPost, rightPost ]
     } );
 
