@@ -24,7 +24,7 @@ export type FieldSignNodeOptions = SelfOptions & VBoxOptions;
 export default class FieldSignNode extends VBox {
   public constructor( fields: Field[],
                       fieldProperty: TReadOnlyProperty<Field>,
-                      private readonly textNode: Node,
+                      private readonly headingText: Node,
                       selectorNode: SelectorNode,
                       providedOptions: FieldSignNodeOptions ) {
 
@@ -35,9 +35,7 @@ export default class FieldSignNode extends VBox {
     super( options );
 
     const headingContainer = new Path( Shape.rect( 0, 0, 1, 1 ) );
-    textNode.centerX = headingContainer.width / 2;
-    textNode.centerY = headingContainer.height / 2;
-    headingContainer.addChild( textNode );
+    headingContainer.addChild( headingText );
 
     fieldProperty.link( field => {
       headingContainer.fill = providedOptions.getFieldColor( fields, field );
@@ -56,32 +54,31 @@ export default class FieldSignNode extends VBox {
     // The vertical margin around the text in the heading container
     const HEADING_MARGIN_Y = 6;
 
-    ManualConstraint.create( this, [ selectorContainer, textNode ], ( selectorContainerProxy, textNodeProxy ) => {
+    // The margins around the selector node
+    const SIGN_MARGIN_X = 6;
+    const SELECTOR_MARGIN_Y = 5;
 
-      const textHeight = Math.max( textNodeProxy.height + 2 * HEADING_MARGIN_Y, MIN_HEADING_AREA_HEIGHT );
+    ManualConstraint.create( this, [ headingText, selectorNode ], ( headingTextProxy, selectorNodeProxy ) => {
 
-      headingContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorContainerProxy.width, textHeight, {
+      const signWidth = Math.max( headingTextProxy.width + 2 * SIGN_MARGIN_X, selectorNodeProxy.width + 2 * SIGN_MARGIN_X );
+      const headingTextHeight = Math.max( headingTextProxy.height + 2 * HEADING_MARGIN_Y, MIN_HEADING_AREA_HEIGHT );
+
+      headingContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, signWidth, headingTextHeight, {
         bottomLeft: 0,
         bottomRight: 0,
         topRight: 5,
         topLeft: 5
       } );
 
-      textNode.centerX = headingContainer.width / 2;
-      textNode.centerY = headingContainer.height / 2;
-    } );
-
-    // The margins around the selector node
-    const SELECTOR_MARGIN_X = 6;
-    const SELECTOR_MARGIN_Y = 5;
-
-    ManualConstraint.create( this, [ selectorNode ], selectorNodeProxy => {
-      selectorContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, selectorNodeProxy.width + 2 * SELECTOR_MARGIN_X, selectorNodeProxy.height + 2 * SELECTOR_MARGIN_Y, {
+      selectorContainer.shape = Shape.roundedRectangleWithRadii( 0, 0, signWidth, selectorNodeProxy.height + 2 * SELECTOR_MARGIN_Y, {
         bottomLeft: 5,
         bottomRight: 5,
         topRight: 0,
         topLeft: 0
       } );
+
+      headingText.centerX = headingContainer.width / 2;
+      headingText.centerY = headingContainer.height / 2;
 
       selectorNode.centerX = selectorContainer.width / 2;
       selectorNode.centerY = selectorContainer.height / 2;

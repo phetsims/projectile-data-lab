@@ -132,7 +132,12 @@ export default class SampleSelectorNode extends SelectorNode {
             );
           }
 
-          dataContainer.children = [ new VBox( { align: 'left', spacing: 2, children: children } ) ];
+          dataContainer.children = [
+            new VBox( {
+              align: 'left',
+              spacing: 2,
+              children: children
+            } ) ];
         }
       } );
 

@@ -4,7 +4,7 @@ import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSign
 import projectileDataLab from '../../projectileDataLab.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { HBox, Text, VBox } from '../../../../scenery/js/imports.js';
+import { Text, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -66,24 +66,13 @@ export default class SamplingFieldSignNode extends FieldSignNode {
       font: PDLConstants.SAMPLING_FIELD_SIGN_FONT
     } );
 
-    const fieldSignTextNodes = [ launcherNumberText, sampleSizeText ];
-
-    const fieldSignTextContainer = new VBox( {
-      children: [ ...fieldSignTextNodes ],
+    const fieldSignHeadingContainer = new VBox( {
+      children: [ launcherNumberText, sampleSizeText ],
       align: 'center',
-      spacing: 3,
-      maxWidth: 140,
-      yMargin: 2
+      spacing: 3
     } );
 
-    const fieldSignContents = new HBox( {
-      spacing: 7,
-      children: [
-        fieldSignTextContainer
-      ]
-    } );
-
-    super( fields, fieldProperty, fieldSignContents, sampleSelectorNode, options );
+    super( fields, fieldProperty, fieldSignHeadingContainer, sampleSelectorNode, options );
   }
 }
 

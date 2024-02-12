@@ -49,14 +49,13 @@ export default class VSMFieldSignNode extends FieldSignNode {
       font: PDLConstants.VSM_FIELD_SIGN_FONT
     } );
 
-    const fieldSignTextContainer = new VBox( {
+    const fieldSignHeadingContainer = new VBox( {
       children: [ fieldNumberText ],
       align: 'center',
-      spacing: 4,
       maxWidth: 80
     } );
 
-    super( fields, fieldProperty, fieldSignTextContainer, projectileSelectorNode, options );
+    super( fields, fieldProperty, fieldSignHeadingContainer, projectileSelectorNode, options );
   }
 }
 
