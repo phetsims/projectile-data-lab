@@ -70,11 +70,11 @@ export default class SamplingHistogramNode extends HistogramNode {
       align: 'left',
       children: [
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty,
-          { launcher: launcherNumberProperty } ), { font: PDLConstants.SELECTOR_FONT } ),
+          { launcher: launcherNumberProperty } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } ),
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
-          { sampleSize: sampleSizeProperty } ), { font: PDLConstants.SELECTOR_FONT } ),
+          { sampleSize: sampleSizeProperty } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } ),
         new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
-          { numberOfSamples: numberOfSamplesProperty } ), { font: PDLConstants.SELECTOR_FONT } )
+          { numberOfSamples: numberOfSamplesProperty } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } )
       ]
     } );
     iconNode.maxHeight = textVBox.height;
