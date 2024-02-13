@@ -43,7 +43,7 @@ export default class LandingSound {
     landSoundClip.setPlaybackRate( playbackRateForPosition( x ) );
     landSoundClip.play();
 
-    const random = dotRandom.nextDoubleBetween( -4, 4 );
+    const random = dotRandom.nextDoubleBetween( -2, 2 );
     const playbackRate = toPlaybackRate( random );
     if ( projectileType === CANNONBALL ) {
       cannonSoundClip.setPlaybackRate( playbackRate );
