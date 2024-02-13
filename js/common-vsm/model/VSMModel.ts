@@ -29,9 +29,7 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import pdlStopwatchTickA_mp3 from '../../../sounds/pdlStopwatchTickA_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
-const tickSound = new SoundClip( pdlStopwatchTickA_mp3, {
-  initialOutputLevel: 1
-} );
+const tickSound = new SoundClip( pdlStopwatchTickA_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( tickSound );
 
 type SelfOptions = {
@@ -202,19 +200,6 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       // View coordinates. Positioned so it doesn't overlap with the histogram or field sign.
       position: new Vector2( 650, 350 )
     } );
-
-    this.stopwatch.timeProperty.link( ( time, oldTime ) => {
-      if ( oldTime !== null ) {
-
-        // if time crossed over an integer second, play a sound
-        if ( Math.floor( time ) !== Math.floor( oldTime ) &&
-
-             // do not compete with the launch sound
-             time > 0.5 ) {
-          tickSound.play();
-        }
-      }
-    } );
   }
 
   public override launchButtonPressed(): void {
@@ -259,7 +244,18 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     this.fieldProperty.value.step( dt );
 
     if ( this.stopwatch.isRunningProperty.value ) {
+
+      const oldTime = this.stopwatch.timeProperty.value;
+
       this.stopwatch.step( dt );
+
+      const time = this.stopwatch.timeProperty.value;
+
+      // if time crossed over an integer second, play a sound
+      // do not compete with the launch sound
+      if ( time > 0.5 && Math.floor( time ) !== Math.floor( oldTime ) ) {
+        tickSound.play();
+      }
     }
   }
 
