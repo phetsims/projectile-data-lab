@@ -116,7 +116,7 @@ export default class MeasuresField extends SMField {
       sum += Math.pow( landedProjectile.x - average, 2 );
       count++;
     } );
-    return count > 0 ? Math.sqrt( sum / count ) : 0;
+    return count > 1 ? Math.sqrt( sum / ( count - 1 ) ) : 0;
   }
 
   public override clearProjectiles(): void {
