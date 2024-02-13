@@ -18,7 +18,7 @@ import pdlPumpkinLand_mp3 from '../../../sounds/pdlPumpkinLand_mp3.js';
 const landSoundClip = new SoundClip( landing_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( landSoundClip );
 
-// TODO: https://github.com/phetsims/projectile-data-lab/issues/140 The sound levels are not supposed to be balanced until the end.
+// TODO: https://github.com/phetsims/projectile-data-lab/issues/147 The sound levels are not supposed to be balanced until the end.
 // However, with initialOutputLevel: 1 here it is impossible to hear the landSoundClip (which conveys the pitch) at all.
 const cannonSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( cannonSoundClip );
