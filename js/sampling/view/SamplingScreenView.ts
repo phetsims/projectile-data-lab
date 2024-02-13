@@ -28,13 +28,11 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import PDLUtils from '../../common/PDLUtils.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingScreenViewOptions = SelfOptions & StrictOmit<PDLScreenViewOptions, 'getFieldColor'>;
+type SamplingScreenViewOptions = SelfOptions & PDLScreenViewOptions;
 
 export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
@@ -44,15 +42,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
   protected readonly accordionBox: SamplingAccordionBox;
 
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
-    const options = optionize<SamplingScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {
-      getFieldColor: ( fields, field ) => {
-
-        // Colorize based on the sample size
-        // This one band-aid type annotation workaround is preferable to adding generic types to a mountain of classes
-        const f = field as SamplingField;
-        return PDLUtils.colorForSampleSize( f.sampleSize );
-      }
-    }, providedOptions );
+    const options = optionize<SamplingScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {}, providedOptions );
     super( model,
       ProjectileDataLabStrings.singleLaunchStringProperty,
       ProjectileDataLabStrings.continuousLaunchStringProperty,

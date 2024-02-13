@@ -10,7 +10,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { Color, HBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -34,8 +34,9 @@ import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import LaunchButton from './LaunchButton.js';
 import FieldSignNode from './FieldSignNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
-type SelfOptions = { getFieldColor: ( fields: Field[], field: Field ) => Color };
+type SelfOptions = EmptySelfOptions;
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
 
 export default abstract class PDLScreenView<T extends Field> extends ScreenView {
@@ -140,14 +141,12 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     const fieldBack = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, {
       x: fieldX,
-      y: fieldY,
-      getFieldColor: options.getFieldColor
+      y: fieldY
     } );
     const fieldFront = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, {
       isBottomHalf: true,
       x: fieldX,
-      y: fieldY,
-      getFieldColor: options.getFieldColor
+      y: fieldY
     } );
     const fieldOverlayBack = new FieldOverlayNode( this.modelViewTransform, {} );
     const fieldOverlayFront = new FieldOverlayNode( this.modelViewTransform, { isLeftSide: true } );

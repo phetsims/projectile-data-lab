@@ -28,8 +28,6 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import PDLUtils from '../../common/PDLUtils.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
 
 /**
@@ -40,7 +38,7 @@ import FieldSignNode from '../../common/view/FieldSignNode.js';
  */
 
 type SelfOptions = EmptySelfOptions;
-type VSMScreenViewOptions = SelfOptions & StrictOmit<WithRequired<PDLScreenViewOptions, 'tandem'>, 'getFieldColor'>;
+type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;
@@ -61,9 +59,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
                          createHistogramNode: ( node: Node ) => HistogramNode,
                          providedOptions: VSMScreenViewOptions ) {
 
-    const options = optionize<VSMScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {
-      getFieldColor: ( fields, field ) => PDLUtils.colorForFieldIndex( fields.indexOf( field ) )
-    }, providedOptions );
+    const options = optionize<VSMScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {}, providedOptions );
 
     super(
       model,

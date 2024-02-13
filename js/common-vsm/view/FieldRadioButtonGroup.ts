@@ -8,7 +8,6 @@ import PDLText from '../../common/view/PDLText.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Circle, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
-import PDLUtils from '../../common/PDLUtils.js';
 
 /**
  * The FieldRadioButtonGroup is a group of buttons that allows the user to select a field.
@@ -72,7 +71,7 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
         tandemName: 'field' + fieldNumber + 'RadioButton',
         createNode: () => buttonContents,
         options: {
-          baseColor: PDLUtils.colorForFieldIndex( fieldIndex )
+          baseColor: field.color
         }
       };
     } );

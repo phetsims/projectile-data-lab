@@ -27,6 +27,7 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import Utils from '../../../../dot/js/Utils.js';
 import launch_mp3 from '../../../sounds/launch_mp3.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
+import { Color } from '../../../../scenery/js/imports.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, {
   initialOutputLevel: 1
@@ -95,6 +96,7 @@ export default abstract class Field extends PhetioObject {
   protected constructor(
     public readonly launchers: readonly Launcher[],
     public readonly launcherProperty: Property<Launcher>,
+    public readonly color: Color, // The color associated with this Field. Shown on the grass and in the sign.
     providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,

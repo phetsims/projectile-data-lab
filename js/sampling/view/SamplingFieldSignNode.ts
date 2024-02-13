@@ -14,13 +14,10 @@ import Launcher from '../../common/model/Launcher.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import SampleSelectorNode from './SampleSelectorNode.js';
 import { optionize } from '../../../../phet-core/js/imports.js';
-import PDLUtils from '../../common/PDLUtils.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import SamplingField from '../model/SamplingField.js';
 import Field from '../../common/model/Field.js';
 
 type SelfOptions = EmptySelfOptions;
-type SamplingFieldSignNodeOptions = SelfOptions & StrictOmit<FieldSignNodeOptions, 'getFieldColor'>;
+type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
 /**
  * The SamplingFieldSignNode shows the launcher number and the number of projectiles that have landed in that field.
@@ -36,16 +33,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
                       sampleSelectorNode: SampleSelectorNode,
                       providedOptions?: SamplingFieldSignNodeOptions ) {
 
-    const options = optionize<SamplingFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
-      getFieldColor: ( fields, field ) => {
-
-        // TODO: Is this okay to duplicate? See https://github.com/phetsims/projectile-data-lab/issues/104
-        // Colorize based on the sample size
-        // This one band-aid type annotation workaround is preferable to adding generic types to a mountain of classes
-        const f = field as SamplingField;
-        return PDLUtils.colorForSampleSize( f.sampleSize );
-      }
-    }, providedOptions );
+    const options = optionize<SamplingFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {}, providedOptions );
 
     const launcherNumberProperty = new DerivedProperty( [ launcherProperty ], launcher => launcher.launcherNumber );
     const launcherNumberStringProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty, {

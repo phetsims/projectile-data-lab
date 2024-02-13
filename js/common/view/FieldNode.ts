@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { Color, Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -24,8 +24,6 @@ type SelfOptions = {
 
   // Is this the bottom half of the field? If so, it will be clipped to the bottom half of the field.
   isBottomHalf?: boolean;
-
-  getFieldColor: ( fields: Field[], field: Field ) => Color;
 };
 type FieldNodeOptions = SelfOptions & NodeOptions;
 
@@ -102,9 +100,7 @@ export default class FieldNode extends Node {
     } );
     this.addChild( this.fieldBorder );
 
-    fieldProperty.link( field => {
-      fieldBackground.fill = options.getFieldColor( fields, field );
-    } );
+    fieldProperty.link( field => fieldBackground.setFill( field.color ) );
 
     // If the bin width changes, remove the old field lines and create new ones.
     binWidthProperty.link( binWidth => {

@@ -7,7 +7,7 @@ import Projectile from '../../common/model/Projectile.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import { VSMFieldIdentifier } from './VSMFieldIdentifier.js';
+import { VSMFieldIdentifier, VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -23,6 +23,7 @@ import Range from '../../../../dot/js/Range.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import landing_mp3 from '../../../sounds/landing_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import PDLUtils from '../../common/PDLUtils.js';
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
@@ -84,7 +85,7 @@ export default class VSMField extends Field {
       phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
 
-    super( launchers, launcherProperty, options );
+    super( launchers, launcherProperty, PDLUtils.colorForFieldIndex( VSMFieldIdentifierValues.indexOf( identifier ) ), options );
     this.continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES, options.tandem.createTandem( 'continuousLaunchTimer' ) );
 
     this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
@@ -163,7 +164,7 @@ export default class VSMField extends Field {
 
     // If the angle standard deviation is changed, re-center the launcher so that there is no overlap between the two.
     this.standardDeviationAngleProperty.lazyLink( () => {
-        this.latestLaunchAngleProperty.value = this.meanAngleProperty.value;
+      this.latestLaunchAngleProperty.value = this.meanAngleProperty.value;
     } );
   }
 

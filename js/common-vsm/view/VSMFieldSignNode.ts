@@ -20,11 +20,9 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
 import ProjectileSelectorNode from './ProjectileSelectorNode.js';
 import { optionize } from '../../../../phet-core/js/imports.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import PDLUtils from '../../common/PDLUtils.js';
 
 type SelfOptions = EmptySelfOptions;
-type VSMFieldSignNodeOptions = SelfOptions & StrictOmit<FieldSignNodeOptions, 'getFieldColor'>;
+type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
 export default class VSMFieldSignNode extends FieldSignNode {
   public constructor( fields: Field[],
@@ -34,9 +32,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
                       projectileSelectorNode: ProjectileSelectorNode,
                       providedOptions?: VSMFieldSignNodeOptions ) {
 
-    const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {
-      getFieldColor: ( fields, field ) => PDLUtils.colorForFieldIndex( fields.indexOf( field ) )
-    }, providedOptions );
+    const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {}, providedOptions );
 
     const fieldSignStringProperty = new PatternStringProperty( ProjectileDataLabStrings.fieldValuePatternStringProperty, {
       value: new DerivedProperty( [ fieldProperty ], field => {

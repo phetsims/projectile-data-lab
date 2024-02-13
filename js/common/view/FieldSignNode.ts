@@ -1,13 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { Color, HBox, ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import SelectorNode from './SelectorNode.js';
 import Field from '../model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { optionize } from '../../../../phet-core/js/imports.js';
+import { EmptySelfOptions, optionize } from '../../../../phet-core/js/imports.js';
 
 /**
  * The FieldSignNode contains the field sign, which displays text about the field number and landed projectiles.
@@ -16,9 +16,7 @@ import { optionize } from '../../../../phet-core/js/imports.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-type SelfOptions = {
-  getFieldColor: ( fields: Field[], field: Field ) => Color;
-};
+type SelfOptions = EmptySelfOptions;
 export type FieldSignNodeOptions = SelfOptions & VBoxOptions;
 
 export default class FieldSignNode extends VBox {
@@ -38,7 +36,7 @@ export default class FieldSignNode extends VBox {
     headingContainer.addChild( headingText );
 
     fieldProperty.link( field => {
-      headingContainer.fill = providedOptions.getFieldColor( fields, field );
+      headingContainer.fill = field.color;
     } );
 
     const selectorContainer = new Path( Shape.rect( 0, 0, 1, 1 ), {

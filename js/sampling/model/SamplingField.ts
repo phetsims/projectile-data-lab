@@ -18,6 +18,7 @@ import Launcher from '../../common/model/Launcher.js';
 import Range from '../../../../dot/js/Range.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
+import PDLUtils from '../../common/PDLUtils.js';
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
@@ -89,7 +90,11 @@ export default class SamplingField extends Field {
       // the DynamicProperty instances.
       new Property( launcher, {
         validValues: [ launcher ]
-      } ), options );
+      } ),
+
+      PDLUtils.colorForSampleSize( sampleSize ),
+
+      options );
 
     this.selectedSampleNumberProperty = new NumberProperty( 1, {
       tandem: options.tandem.createTandem( 'selectedSampleNumberProperty' ),
