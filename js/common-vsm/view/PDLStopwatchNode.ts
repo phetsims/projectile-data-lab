@@ -9,6 +9,7 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLText from '../../common/view/PDLText.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import pushButtonSoundPlayer from '../../../../tambo/js/shared-sound-players/pushButtonSoundPlayer.js';
 
 type SelfOptions = EmptySelfOptions;
 type PDLStopwatchNodeOptions = SelfOptions & WithRequired<StopwatchNodeOptions, 'tandem'>;
@@ -47,6 +48,12 @@ export default class PDLStopwatchNode extends StopwatchNode {
           stopwatch.timeProperty.reset();
           launchProjectile();
         }
+      },
+      soundPlayer: {
+
+        // Don't compete with the launch sound or the landing sound
+        stop: _.noop,
+        play: _.noop
       }
     } );
 

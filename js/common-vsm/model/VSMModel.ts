@@ -24,6 +24,15 @@ import Launcher from '../../common/model/Launcher.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+
+import pdlStopwatchTickA_mp3 from '../../../sounds/pdlStopwatchTickA_mp3.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+
+const tickSound = new SoundClip( pdlStopwatchTickA_mp3, {
+  initialOutputLevel: 1
+} );
+soundManager.addSoundGenerator( tickSound );
 
 type SelfOptions = {
   isStandardDeviationAnglePropertyPhetioInstrumented: boolean;
@@ -192,6 +201,19 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
       // View coordinates. Positioned so it doesn't overlap with the histogram or field sign.
       position: new Vector2( 650, 350 )
+    } );
+
+    this.stopwatch.timeProperty.link( ( time, oldTime ) => {
+      if ( oldTime !== null ) {
+
+        // if time crossed over an integer second, play a sound
+        if ( Math.floor( time ) !== Math.floor( oldTime ) &&
+
+             // do not compete with the launch sound
+             time > 0.5 ) {
+          tickSound.play();
+        }
+      }
     } );
   }
 
