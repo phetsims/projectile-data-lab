@@ -127,7 +127,7 @@ export default class SampleSelectorNode extends SelectorNode {
       justify: 'center',
       children: [ sampleDataToggleNode ],
       preferredWidth: 120,
-      preferredHeight: 50
+      preferredHeight: 45
     } );
 
     // Note the similarity between this implementation and the one in ProjectileSelectorNode

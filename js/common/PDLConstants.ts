@@ -78,7 +78,7 @@ const PDLConstants = {
   HISTOGRAM_AXIS_LABEL_FONT: new PhetFont( { size: 15 } ),
   FIELD_LABEL_FONT: new PhetFont( { size: 15 } ),
   VSM_FIELD_SIGN_FONT: new PhetFont( { size: 16, weight: 'bold' } ),
-  SAMPLING_FIELD_SIGN_FONT: new PhetFont( { size: 15, weight: 'bold' } ),
+  SAMPLING_FIELD_SIGN_FONT: new PhetFont( { size: 14, weight: 'bold' } ),
   LAUNCH_CONTROL_FONT: new PhetFont( { size: 15 } ),
   NO_AIR_RESISTANCE_FONT: new PhetFont( { size: 15 } ),
   MEASURING_TAPE_FONT: new PhetFont( { size: 13, weight: 'bold' } ),
