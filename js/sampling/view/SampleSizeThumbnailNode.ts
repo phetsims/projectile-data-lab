@@ -73,10 +73,22 @@ export default class SampleSizeThumbnailNode extends Node {
       stroke: 'black'
     } );
 
+    // A stroke that has the same lineWidth as the selected stroke, but is transparent, in order that the chart spacing
+    // remains the same and the charts don't move when the selection changes
+    const chartSpacingRectangle = new ChartRectangle( this.chartTransform, {
+      fill: null,
+      stroke: new Color( 0, 0, 0 ).withAlpha( 0 ),
+      lineWidth: 2
+    } );
+
     // Show the frame in front, so it overlaps the bottom of the bars
     const chartFrame = new ChartRectangle( this.chartTransform, {
       fill: null,
       stroke: 'black'
+    } );
+
+    fieldProperty.link( field => {
+      chartFrame.lineWidth = field.sampleSize === thumbnailSampleSize ? 2 : 1;
     } );
 
     const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty,
@@ -117,11 +129,13 @@ export default class SampleSizeThumbnailNode extends Node {
         // Background
         chartBackground,
 
-        // Background
-        chartFrame,
-
         // Clipped contents
-        chartClip
+        chartClip,
+
+        chartSpacingRectangle,
+
+        // Outline
+        chartFrame
       ]
     } );
 
