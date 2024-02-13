@@ -12,20 +12,20 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 import pdlCannonLandandGeneralThudV1_mp3 from '../../../sounds/pdlCannonLandandGeneralThudV1_mp3.js';
-import pdlPianoLandv1_mp3 from '../../../sounds/pdlPianoLandv1_mp3.js';
 // eslint-disable-next-line default-import-match-filename
 import pdlPumpkinLand001_mp3 from '../../../sounds/pdlPumpkinLand-001_mp3.js';
 import { dotRandom } from '../../../../dot/js/imports.js';
+import pdlPianoLand_mp3 from '../../../sounds/pdlPianoLand_mp3.js';
 
 const toneSoundClip = new SoundClip( landing_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( toneSoundClip );
 
 // TODO: https://github.com/phetsims/projectile-data-lab/issues/147 The sound levels are not supposed to be balanced until the end.
 // However, with initialOutputLevel: 1 here it is impossible to hear the landSoundClip (which conveys the pitch) at all.
-const cannonSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 1 } );
-soundManager.addSoundGenerator( cannonSoundClip );
+const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 1 } );
+soundManager.addSoundGenerator( cannonballSoundClip );
 
-const pianoSoundClip = new SoundClip( pdlPianoLandv1_mp3, { initialOutputLevel: 0.4 } );
+const pianoSoundClip = new SoundClip( pdlPianoLand_mp3, { initialOutputLevel: 0.4 } );
 soundManager.addSoundGenerator( pianoSoundClip );
 
 const pumpkinSoundClip = new SoundClip( pdlPumpkinLand001_mp3, { initialOutputLevel: 0.4 } );
@@ -47,8 +47,8 @@ export default class ProjectileSound {
       const random = dotRandom.nextDoubleBetween( -2, 2 );
       const playbackRate = toPlaybackRate( random );
       if ( projectileType === CANNONBALL ) {
-        cannonSoundClip.setPlaybackRate( playbackRate );
-        cannonSoundClip.play();
+        cannonballSoundClip.setPlaybackRate( playbackRate );
+        cannonballSoundClip.play();
       }
       else if ( projectileType === PUMPKIN ) {
         pumpkinSoundClip.setPlaybackRate( playbackRate );

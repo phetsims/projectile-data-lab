@@ -12,6 +12,22 @@ import pumpkin_png from '../../../images/pumpkin_png.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import pdlCannonLandandGeneralThudV1_mp3 from '../../../sounds/pdlCannonLandandGeneralThudV1_mp3.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import pdlPianoLand_mp3 from '../../../sounds/pdlPianoLand_mp3.js';
+
+// eslint-disable-next-line default-import-match-filename
+import pdlPumpkinLand001_mp3 from '../../../sounds/pdlPumpkinLand-001_mp3.js';
+
+const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 1 } );
+soundManager.addSoundGenerator( cannonballSoundClip );
+
+const pianoSoundClip = new SoundClip( pdlPianoLand_mp3, { initialOutputLevel: 1 } );
+soundManager.addSoundGenerator( pianoSoundClip );
+
+const pumpkinSoundClip = new SoundClip( pdlPumpkinLand001_mp3, { initialOutputLevel: 1 } );
+soundManager.addSoundGenerator( pumpkinSoundClip );
 
 /**
  * The SectionProjectileType shows the projectile type radio buttons.
@@ -30,15 +46,24 @@ export default class SectionProjectileType extends PDLPanelSection {
     const projectileTypeRadioButtonGroup = new PDLRectangularRadioButtonGroup( projectileTypeProperty, [ {
       value: CANNONBALL,
       tandemName: 'cannonballRadioButton',
-      createNode: () => new Image( cannonball_png, { scale: 0.22 } )
+      createNode: () => new Image( cannonball_png, { scale: 0.22 } ),
+      options: {
+        soundPlayer: cannonballSoundClip
+      }
     }, {
       value: PUMPKIN,
       tandemName: 'pumpkinRadioButton',
-      createNode: () => new Image( pumpkin_png, { scale: 0.20 } )
+      createNode: () => new Image( pumpkin_png, { scale: 0.20 } ),
+      options: {
+        soundPlayer: pumpkinSoundClip
+      }
     }, {
       value: PIANO,
       tandemName: 'pianoRadioButton',
-      createNode: () => new Image( piano_png, { scale: 0.15 } )
+      createNode: () => new Image( piano_png, { scale: 0.15 } ),
+      options: {
+        soundPlayer: pianoSoundClip
+      }
     } ], {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeRadioButtonGroup' ),
       phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
