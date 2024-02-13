@@ -18,6 +18,8 @@ import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import { Multilink } from '../../../../axon/js/imports.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 
 /**
  * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
@@ -62,6 +64,18 @@ export default class SamplingHistogramNode extends HistogramNode {
 
     const launcherNumberProperty = new DerivedProperty( [ launcherProperty ], launcher => launcher.launcherNumber );
 
+    const maxTextNode = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
+      { numberOfSamples: new Property( PDLQueryParameters.maxSamples ) } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } );
+
+    const launcherTextProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty,
+      { launcher: launcherNumberProperty } );
+    const sampleSizeTextProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
+      { sampleSize: sampleSizeProperty } );
+    const numberOfSamplesTextProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
+      { numberOfSamples: numberOfSamplesProperty } );
+    const launcherText = new PDLText( launcherTextProperty, { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } );
+    const sampleSizeText = new PDLText( sampleSizeTextProperty, { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } );
+    const sampleNumberText = new PDLText( numberOfSamplesTextProperty, { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } );
     const textVBox = new VBox( {
 
       // Prevent from overlapping with the majority of the data in ?stringTest=long
@@ -69,15 +83,16 @@ export default class SamplingHistogramNode extends HistogramNode {
 
       align: 'left',
       children: [
-        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty,
-          { launcher: launcherNumberProperty } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } ),
-        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
-          { sampleSize: sampleSizeProperty } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } ),
-        new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
-          { numberOfSamples: numberOfSamplesProperty } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } )
+        launcherText,
+        sampleSizeText,
+        sampleNumberText
       ]
     } );
-    iconNode.maxHeight = textVBox.height;
+
+    Multilink.multilink( [ maxTextNode.boundsProperty, launcherTextProperty, sampleSizeTextProperty, numberOfSamplesTextProperty, launcherText.boundsProperty, sampleSizeText.boundsProperty, sampleNumberText.boundsProperty ], () => {
+      textVBox.minContentWidth = Math.max( maxTextNode.width, launcherText.width, sampleSizeText.width, sampleNumberText.width );
+      iconNode.maxHeight = textVBox.height;
+    } );
 
     const textPanel = new PDLPanel( new HBox( {
       spacing: 5,
