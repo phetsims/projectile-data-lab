@@ -9,7 +9,7 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
-import { playbackRateForPosition } from './LandingSound.js';
+import { playbackRateForPosition } from './ProjectileSound.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import numberTone_mp3 from '../../../sounds/numberTone_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';

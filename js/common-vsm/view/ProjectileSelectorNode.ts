@@ -21,7 +21,7 @@ import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Field from '../../common/model/Field.js';
-import LandingSound from '../../common/model/LandingSound.js';
+import ProjectileSound from '../../common/model/ProjectileSound.js';
 import pumpkin1LandedSelected_png from '../../../images/pumpkin1LandedSelected_png.js';
 import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_png.js';
 import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
@@ -55,7 +55,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const options = optionize<ProjectileSelectorNodeOptions, SelfOptions, SelectorNodeOptions>()( {
       playSound: projectileNumber => {
         const projectile = fieldProperty.value.landedProjectiles[ projectileNumber - 1 ];
-        LandingSound.play( projectile.type, projectile.x );
+        ProjectileSound.play( projectile.type, projectile.x, false );
       }
     }, providedOptions );
 

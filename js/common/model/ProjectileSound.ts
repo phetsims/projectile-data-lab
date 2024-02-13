@@ -17,8 +17,8 @@ import pdlPianoLandv1_mp3 from '../../../sounds/pdlPianoLandv1_mp3.js';
 import pdlPumpkinLand001_mp3 from '../../../sounds/pdlPumpkinLand-001_mp3.js';
 import { dotRandom } from '../../../../dot/js/imports.js';
 
-const landSoundClip = new SoundClip( landing_mp3, { initialOutputLevel: 1 } );
-soundManager.addSoundGenerator( landSoundClip );
+const toneSoundClip = new SoundClip( landing_mp3, { initialOutputLevel: 1 } );
+soundManager.addSoundGenerator( toneSoundClip );
 
 // TODO: https://github.com/phetsims/projectile-data-lab/issues/147 The sound levels are not supposed to be balanced until the end.
 // However, with initialOutputLevel: 1 here it is impossible to hear the landSoundClip (which conveys the pitch) at all.
@@ -37,27 +37,29 @@ export const playbackRateForPosition = ( x: number ): number => {
 
 const toPlaybackRate = ( semitones: number ): number => Math.pow( 2, semitones / 12 );
 
-export default class LandingSound {
+export default class ProjectileSound {
 
-  public static play( projectileType: ProjectileType, x: number ): void {
-    landSoundClip.setPlaybackRate( playbackRateForPosition( x ) );
-    landSoundClip.play();
+  public static play( projectileType: ProjectileType, x: number, isLanding: boolean ): void {
+    toneSoundClip.setPlaybackRate( playbackRateForPosition( x ) );
+    toneSoundClip.play();
 
-    const random = dotRandom.nextDoubleBetween( -2, 2 );
-    const playbackRate = toPlaybackRate( random );
-    if ( projectileType === CANNONBALL ) {
-      cannonSoundClip.setPlaybackRate( playbackRate );
-      cannonSoundClip.play();
-    }
-    else if ( projectileType === PUMPKIN ) {
-      pumpkinSoundClip.setPlaybackRate( playbackRate );
-      pumpkinSoundClip.play();
-    }
-    else if ( projectileType === PIANO ) {
-      pianoSoundClip.setPlaybackRate( playbackRate );
-      pianoSoundClip.play();
+    if ( isLanding ) {
+      const random = dotRandom.nextDoubleBetween( -2, 2 );
+      const playbackRate = toPlaybackRate( random );
+      if ( projectileType === CANNONBALL ) {
+        cannonSoundClip.setPlaybackRate( playbackRate );
+        cannonSoundClip.play();
+      }
+      else if ( projectileType === PUMPKIN ) {
+        pumpkinSoundClip.setPlaybackRate( playbackRate );
+        pumpkinSoundClip.play();
+      }
+      else if ( projectileType === PIANO ) {
+        pianoSoundClip.setPlaybackRate( playbackRate );
+        pianoSoundClip.play();
+      }
     }
   }
 }
 
-projectileDataLab.register( 'LandingSound', LandingSound );
+projectileDataLab.register( 'ProjectileSound', ProjectileSound );

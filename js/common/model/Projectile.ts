@@ -14,7 +14,7 @@ import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherCo
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import Launcher from './Launcher.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
-import LandingSound from './LandingSound.js';
+import ProjectileSound from './ProjectileSound.js';
 import ProjectileType from './ProjectileType.js';
 
 /**
@@ -111,7 +111,7 @@ export default class Projectile {
     if ( this.y <= 0 ) {
       this.setLanded();
       field.projectileLandedEmitter.emit( this );
-      LandingSound.play( this.type, this.x );
+      ProjectileSound.play( this.type, this.x, true );
     }
   }
 
