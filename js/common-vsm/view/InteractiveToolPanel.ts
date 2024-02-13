@@ -46,10 +46,7 @@ export default class InteractiveToolPanel extends PDLPanel {
         const stopwatch = new Stopwatch( { tandem: Tandem.OPT_OUT } );
         stopwatch.isVisibleProperty.value = true;
         const stopwatchNode = new PDLStopwatchNode( stopwatch, _.noop, { tandem: Tandem.OPT_OUT } ).rasterized( {
-          resolution: 1.25,
-          imageOptions: {
-            scale: 0.83
-          }
+          resolution: 1.25
         } );
         super( {
           children: [ stopwatchNode ],
@@ -70,9 +67,7 @@ export default class InteractiveToolPanel extends PDLPanel {
           tapeLineWidth: 1.8,
           tandem: Tandem.OPT_OUT,
           hasValue: false
-        } ).rasterized( {
-          resolution: 1.25
-        } );
+        } ).rasterized( { resolution: 1.25 } );
         super( {
           children: [ measuringTapeNode ],
           pickable: false,
