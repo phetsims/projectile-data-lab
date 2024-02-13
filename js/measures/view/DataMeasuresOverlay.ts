@@ -100,7 +100,7 @@ export default class DataMeasuresOverlay extends Node {
     const ARROW_HEAD_WIDTH = 6;
 
     const meanLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - totalHeight ), {
-      visibleProperty: DerivedProperty.and( [ isStandardDeviationDisplayedProperty, isNonNullProperty( meanDistanceProperty ) ] ),
+      visibleProperty: DerivedProperty.and( [ isSDIndicatorVisibleProperty, isNonNullProperty( meanDistanceProperty ) ] ),
       stroke: 'black',
       lineWidth: MEAN_LINE_WIDTH
     } );
@@ -178,35 +178,38 @@ export default class DataMeasuresOverlay extends Node {
     Multilink.multilink( [ meanDistanceProperty, standardDeviationDistanceProperty, sdPatternStringProperty, meanLabelPanel.boundsProperty ],
       ( meanDistance, standardDeviationDistance ) => {
 
-        if ( meanDistance !== null && standardDeviationDistance !== null ) {
+        if ( meanDistance !== null ) {
           const meanX = modelViewTransform.modelToViewX( meanDistance );
-          const leftX = modelViewTransform.modelToViewX( meanDistance - standardDeviationDistance );
-          const rightX = modelViewTransform.modelToViewX( meanDistance + standardDeviationDistance );
 
           meanIndicator.x = meanX;
           meanLine.x = meanX;
           meanLabelPanel.centerX = meanX;
           meanLabelPanel.bottom = origin.y - meanIndicatorHeight - TEXT_OFFSET;
 
-          leftLine.x = leftX;
-          rightLine.x = rightX;
+          if ( standardDeviationDistance !== null ) {
+            const leftX = modelViewTransform.modelToViewX( meanDistance - standardDeviationDistance );
+            const rightX = modelViewTransform.modelToViewX( meanDistance + standardDeviationDistance );
 
-          if ( standardDeviationDistance > 0 ) {
-            leftArrow.setTail( leftX + 0.5 * SIDE_LINE_WIDTH, leftArrow.tailY );
-            leftArrow.setTip( meanX - 0.5 * MEAN_LINE_WIDTH, leftArrow.tipY );
-            rightArrow.setTail( meanX + 0.5 * MEAN_LINE_WIDTH, rightArrow.tailY );
-            rightArrow.setTip( rightX - 0.5 * SIDE_LINE_WIDTH, rightArrow.tipY );
-          }
+            leftLine.x = leftX;
+            rightLine.x = rightX;
 
-          sdLeftLabel.centerX = _.mean( [ leftX, meanX ] );
-          sdRightLabel.centerX = _.mean( [ meanX, rightX ] );
+            if ( standardDeviationDistance > 0 ) {
+              leftArrow.setTail( leftX + 0.5 * SIDE_LINE_WIDTH, leftArrow.tailY );
+              leftArrow.setTip( meanX - 0.5 * MEAN_LINE_WIDTH, leftArrow.tipY );
+              rightArrow.setTail( meanX + 0.5 * MEAN_LINE_WIDTH, rightArrow.tailY );
+              rightArrow.setTip( rightX - 0.5 * SIDE_LINE_WIDTH, rightArrow.tipY );
+            }
 
-          // Prevent the SD labels from overlapping the mean line
-          if ( meanX - sdLeftLabel.right < MIN_SD_TEXT_MARGIN_X ) {
-            sdLeftLabel.right = meanX - MIN_SD_TEXT_MARGIN_X;
-          }
-          if ( sdRightLabel.left - meanX < MIN_SD_TEXT_MARGIN_X ) {
-            sdRightLabel.left = meanX + MIN_SD_TEXT_MARGIN_X;
+            sdLeftLabel.centerX = _.mean( [ leftX, meanX ] );
+            sdRightLabel.centerX = _.mean( [ meanX, rightX ] );
+
+            // Prevent the SD labels from overlapping the mean line
+            if ( meanX - sdLeftLabel.right < MIN_SD_TEXT_MARGIN_X ) {
+              sdLeftLabel.right = meanX - MIN_SD_TEXT_MARGIN_X;
+            }
+            if ( sdRightLabel.left - meanX < MIN_SD_TEXT_MARGIN_X ) {
+              sdRightLabel.left = meanX + MIN_SD_TEXT_MARGIN_X;
+            }
           }
         }
       } );

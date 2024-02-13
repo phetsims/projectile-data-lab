@@ -77,6 +77,8 @@ export default class MeasuresHistogramNode extends HistogramNode {
         return nullableNumber === null ? '' : Utils.toFixed( nullableNumber, 2 );
       } );
 
+    const isStandardDeviationNonNullProperty = new DerivedProperty( [ standardDeviationProperty ], standardDeviation => standardDeviation !== null );
+
     const dataLabels = [
       new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanXBarEqualsValueMPatternStringProperty,
         { value: roundedStringProperty( meanProperty ) } ), {
@@ -84,11 +86,13 @@ export default class MeasuresHistogramNode extends HistogramNode {
       } ),
       new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardDeviationEqualsValueMPatternStringProperty,
         { value: roundedStringProperty( standardDeviationProperty ) } ), {
-        font: PDLConstants.HISTOGRAM_PANEL_FONT
+        font: PDLConstants.HISTOGRAM_PANEL_FONT,
+        visibleProperty: isStandardDeviationNonNullProperty
       } ),
       new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardErrorOfXBarEqualsValueMPatternStringProperty,
         { value: roundedStringProperty( standardErrorProperty ) } ), {
-        font: PDLConstants.HISTOGRAM_PANEL_FONT
+        font: PDLConstants.HISTOGRAM_PANEL_FONT,
+        visibleProperty: isStandardDeviationNonNullProperty
       } )
     ];
 

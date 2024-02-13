@@ -87,8 +87,9 @@ export default class MeasuresField extends SMField {
 
     this.projectileLandedEmitter.addListener( () => {
       this.meanDistanceProperty.value = _.mean( this.landedProjectiles.map( landedProjectile => landedProjectile.x ) );
-      this.standardDeviationDistanceProperty.value = this.getStandardDeviationDistance();
-      this.standardErrorDistanceProperty.value = this.getStandardDeviationDistance() / Math.sqrt( this.landedProjectiles.length );
+      const standardDeviation = this.getStandardDeviationDistance();
+      this.standardDeviationDistanceProperty.value = standardDeviation;
+      this.standardErrorDistanceProperty.value = standardDeviation === null ? null : standardDeviation / Math.sqrt( this.landedProjectiles.length );
     } );
 
     // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
@@ -107,7 +108,7 @@ export default class MeasuresField extends SMField {
     } );
   }
 
-  private getStandardDeviationDistance(): number {
+  private getStandardDeviationDistance(): number | null {
     let sum = 0;
     let count = 0;
     const average = _.mean( this.landedProjectiles.map( landedProjectile => landedProjectile.x ) );
@@ -116,7 +117,7 @@ export default class MeasuresField extends SMField {
       sum += Math.pow( landedProjectile.x - average, 2 );
       count++;
     } );
-    return count > 1 ? Math.sqrt( sum / ( count - 1 ) ) : 0;
+    return count > 1 ? Math.sqrt( sum / ( count - 1 ) ) : null;
   }
 
   public override clearProjectiles(): void {
