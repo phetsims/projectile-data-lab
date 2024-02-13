@@ -166,7 +166,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     const field = this.fieldProperty.value;
     const phaseProperty = field.phaseProperty;
 
-    assert && assert( phaseProperty.value === 'idle' || phaseProperty.value === 'showingCompleteSampleWithMean', 'The launch button should only be enabled in phase: idle|showingCompleteSampleWithMean' );
+    assert && assert( phaseProperty.value === 'idle' || phaseProperty.value === 'showingCompleteSampleWithMean',
+      'The launch button should only be enabled in phase: idle | showingCompleteSampleWithMean.\n' +
+      `Current phase: ${phaseProperty.value}\n
+      Number of started samples: ${this.numberOfStartedSamplesProperty.value}\n  
+      Number of completed samples: ${this.numberOfCompletedSamplesProperty.value}` );
 
     if ( this.singleOrContinuousProperty.value === 'single' ) {
 
