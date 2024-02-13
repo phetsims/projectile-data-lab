@@ -306,8 +306,8 @@ export default class HistogramNode extends Node {
         spacing: 8,
         toggleSwitchOptions: {
           maxWidth: 32,
-          switchToLeftSoundPlayer: pdlToggleButtonASoundClip,
-          switchToRightSoundPlayer: pdlToggleButtonBSoundClip
+          switchToLeftSoundPlayer: pdlToggleButtonBSoundClip,
+          switchToRightSoundPlayer: pdlToggleButtonASoundClip
         },
         rightTop: this.chartNode.rightBottom.plusXY( -12, CHART_UI_MARGIN )
       } );
