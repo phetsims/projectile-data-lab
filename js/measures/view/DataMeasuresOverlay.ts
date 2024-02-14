@@ -40,9 +40,6 @@ const SIDE_LINE_WIDTH = 1;
 // The y position of the arrows is a factor of the total height of the overlay
 const ARROW_Y_POSITION_FACTOR = 0.7;
 
-// The vertical offset between the edge of the text label and the adjacent element
-const TEXT_OFFSET = 2;
-
 // The minimum distance between the edge of the SD label text and the mean line
 const MIN_SD_TEXT_MARGIN_X = 3;
 
@@ -82,7 +79,7 @@ export default class DataMeasuresOverlay extends Node {
       isGreaterThanProperty( standardDeviationDistanceProperty, 0 )
     ] );
 
-    const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 14;
+    const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 12;
 
     const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius, {
       visibleProperty: isMeanIndicatorVisibleProperty
@@ -146,10 +143,10 @@ export default class DataMeasuresOverlay extends Node {
     const meanLabelPanel = new PDLPanel( meanLabel, {
       visibleProperty: DerivedProperty.and( [ isMeanIndicatorVisibleProperty, isValuesDisplayedProperty ] ),
       fill: 'white',
-      lineWidth: 1,
-      cornerRadius: 5,
+      stroke: null,
+      cornerRadius: 4,
       xMargin: 3,
-      yMargin: 2
+      yMargin: 0
     } );
 
     const sdPatternStringProperty = new PatternStringProperty( ProjectileDataLabStrings.standardDeviationMPatternStringProperty,
@@ -164,14 +161,14 @@ export default class DataMeasuresOverlay extends Node {
     const sdLeftLabel = new PDLText( sdPatternStringProperty, {
       visibleProperty: isSDValuesVisibleProperty,
       font: PDLConstants.PRIMARY_FONT,
-      bottom: origin.y - sideLineHeight - TEXT_OFFSET,
+      bottom: origin.y - sideLineHeight,
       maxWidth: TEXT_MAX_WIDTH
     } );
 
     const sdRightLabel = new PDLText( sdPatternStringProperty, {
       visibleProperty: isSDValuesVisibleProperty,
       font: PDLConstants.PRIMARY_FONT,
-      bottom: origin.y - sideLineHeight - TEXT_OFFSET,
+      bottom: origin.y - sideLineHeight,
       maxWidth: TEXT_MAX_WIDTH
     } );
 
@@ -184,7 +181,7 @@ export default class DataMeasuresOverlay extends Node {
           meanIndicator.x = meanX;
           meanLine.x = meanX;
           meanLabelPanel.centerX = meanX;
-          meanLabelPanel.bottom = origin.y - meanIndicatorHeight - TEXT_OFFSET;
+          meanLabelPanel.bottom = origin.y - meanIndicatorHeight - 1;
 
           if ( standardDeviationDistance !== null ) {
             const leftX = modelViewTransform.modelToViewX( meanDistance - standardDeviationDistance );

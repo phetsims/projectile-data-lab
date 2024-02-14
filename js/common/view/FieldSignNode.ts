@@ -24,6 +24,7 @@ export default class FieldSignNode extends VBox {
                       fieldProperty: TReadOnlyProperty<Field>,
                       private readonly headingText: Node,
                       selectorNode: SelectorNode,
+                      signPostHeight: number,
                       providedOptions: FieldSignNodeOptions ) {
 
     const options = optionize<FieldSignNodeOptions, SelfOptions, VBoxOptions>()( {
@@ -53,8 +54,8 @@ export default class FieldSignNode extends VBox {
     const HEADING_MARGIN_Y = 6;
 
     // The margins around the selector node
-    const SIGN_MARGIN_X = 6;
-    const SELECTOR_MARGIN_Y = 5;
+    const SIGN_MARGIN_X = 7;
+    const SELECTOR_MARGIN_Y = 12;
 
     ManualConstraint.create( this, [ headingText, selectorNode ], ( headingTextProxy, selectorNodeProxy ) => {
 
@@ -84,14 +85,13 @@ export default class FieldSignNode extends VBox {
 
     const createSignPost = () => {
       const signPostWidth = 5;
-      const signPostRectHeight = 16;
       const signPostEllipseHeight = 3;
 
-      const signPostRect = new Rectangle( 0, -0, signPostWidth, signPostRectHeight, {
+      const signPostRect = new Rectangle( 0, -0, signPostWidth, signPostHeight, {
         fill: '#6d7c54'
       } );
 
-      const signPostBase = new Path( new Shape().ellipse( new Vector2( 0.5 * signPostWidth, signPostRectHeight ),
+      const signPostBase = new Path( new Shape().ellipse( new Vector2( 0.5 * signPostWidth, signPostHeight ),
         0.5 * signPostWidth, 0.5 * signPostEllipseHeight, 0 ), {
         fill: '#6d7c54'
       } );
@@ -105,7 +105,7 @@ export default class FieldSignNode extends VBox {
     const rightPost = createSignPost();
 
     const signPostContainer = new HBox( {
-      xMargin: 20,
+      xMargin: 28,
       children: [ leftPost, rightPost ]
     } );
 

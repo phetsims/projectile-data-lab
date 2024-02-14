@@ -57,10 +57,11 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     const fieldSignHeadingContainer = new VBox( {
       children: [ launcherNumberText, sampleSizeText ],
       align: 'center',
-      spacing: 3
+      spacing: 3,
+      maxWidth: 120
     } );
 
-    super( fields, fieldProperty, fieldSignHeadingContainer, sampleSelectorNode, options );
+    super( fields, fieldProperty, fieldSignHeadingContainer, sampleSelectorNode, 25, options );
   }
 }
 

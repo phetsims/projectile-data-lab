@@ -48,10 +48,10 @@ export default class VSMFieldSignNode extends FieldSignNode {
     const fieldSignHeadingContainer = new VBox( {
       children: [ fieldNumberText ],
       align: 'center',
-      maxWidth: 80
+      maxWidth: 100
     } );
 
-    super( fields, fieldProperty, fieldSignHeadingContainer, projectileSelectorNode, options );
+    super( fields, fieldProperty, fieldSignHeadingContainer, projectileSelectorNode, 34, options );
   }
 }
 

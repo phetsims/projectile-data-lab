@@ -100,7 +100,7 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       ]
     } );
     super( new HBox( {
-      spacing: 10,
+      spacing: 12,
       align: 'top',
       children: [
         histogramNode,
