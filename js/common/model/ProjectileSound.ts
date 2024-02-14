@@ -20,7 +20,7 @@ import pdlPianoLand_mp3 from '../../../sounds/pdlPianoLand_mp3.js';
 const toneSoundClip = new SoundClip( landing_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( toneSoundClip );
 
-// TODO: https://github.com/phetsims/projectile-data-lab/issues/147 The sound levels are not supposed to be balanced until the end.
+// TODO: https://github.com/phetsims/projectile-data-lab/issues/161 The sound levels are not supposed to be balanced until the end.
 // However, with initialOutputLevel: 1 here it is impossible to hear the landSoundClip (which conveys the pitch) at all.
 const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( cannonballSoundClip );
