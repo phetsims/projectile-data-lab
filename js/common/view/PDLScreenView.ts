@@ -68,6 +68,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected constructor( model: PDLModel<T>,
                          singleStringProperty: TReadOnlyProperty<string>,
                          continuousStringProperty: TReadOnlyProperty<string>,
+                         launchButtonEnabledProperty: TReadOnlyProperty<boolean>,
                          options: PDLScreenViewOptions ) {
     super( options );
 
@@ -161,7 +162,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
         left: this.layoutBounds.centerX + PDLConstants.FIELD_CENTER_OFFSET_X - 0.45 * PDLConstants.FIELD_WIDTH,
         bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
         tandem: options.tandem.createTandem( 'launchButton' ),
-        phetioEnabledPropertyInstrumented: false
+        phetioEnabledPropertyInstrumented: false,
+        enabledProperty: launchButtonEnabledProperty
       } );
 
     const radioButtonLabelMaxWidth = 120;

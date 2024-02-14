@@ -61,10 +61,15 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     const options = optionize<VSMScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {}, providedOptions );
 
+    const launchButtonEnabledProperty = new DerivedProperty( [ model.totalProjectileCountProperty ], totalProjectileCount => {
+      return totalProjectileCount < PDLQueryParameters.maxProjectiles;
+    } );
+
     super(
       model,
       ProjectileDataLabStrings.singleLaunchStringProperty,
       ProjectileDataLabStrings.continuousLaunchStringProperty,
+      launchButtonEnabledProperty,
       options
     );
 
@@ -244,7 +249,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.fieldRadioButtonGroup.left = this.layoutBounds.centerX - 60;
 
     model.totalProjectileCountProperty.link( totalProjectileCount => {
-      this.launchButton.enabled = totalProjectileCount < PDLQueryParameters.maxProjectiles;
 
       // If it is the last projectile, set isContinuousLaunching to false, so that:
       // * pressing clear won't resume launching
