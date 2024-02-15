@@ -10,10 +10,10 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 //TODO: Update these images or use graphics drawing - see https://github.com/phetsims/projectile-data-lab/issues/53
-import configurationButton1_png from '../../../images/configurationButton1_png.js';
-import configurationButton2_png from '../../../images/configurationButton2_png.js';
-import configurationButton3_png from '../../../images/configurationButton3_png.js';
-import configurationButton4_png from '../../../images/configurationButton4_png.js';
+import configurationButton1_svg from '../../../images/configurationButton1_svg.js';
+import configurationButton2_svg from '../../../images/configurationButton2_svg.js';
+import configurationButton3_svg from '../../../images/configurationButton3_svg.js';
+import configurationButton4_svg from '../../../images/configurationButton4_svg.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
@@ -35,7 +35,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
     const launcherConfigurationRadioButtonGroup = new PDLRectangularRadioButtonGroup( launcherConfigurationProperty, [ {
       value: 'angle30' as const,
       tandemName: 'angleThirtyRadioButton',
-      createNode: () => new Image( configurationButton1_png, {
+      createNode: () => new Image( configurationButton1_svg, {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
@@ -44,7 +44,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
     }, {
       value: 'angle45' as const,
       tandemName: 'angleFortyFiveRadioButton',
-      createNode: () => new Image( configurationButton2_png, {
+      createNode: () => new Image( configurationButton2_svg, {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
@@ -53,7 +53,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
     }, {
       value: 'angle60' as const,
       tandemName: 'angleSixtyRadioButton',
-      createNode: () => new Image( configurationButton3_png, {
+      createNode: () => new Image( configurationButton3_svg, {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
@@ -62,7 +62,7 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
     }, {
       value: 'angle0Raised' as const,
       tandemName: 'angleZeroRadioButton',
-      createNode: () => new Image( configurationButton4_png, {
+      createNode: () => new Image( configurationButton4_svg, {
         maxWidth: IMAGE_MAX_WIDTH
       } ),
       options: {
