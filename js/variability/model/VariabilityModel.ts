@@ -49,7 +49,7 @@ export default class VariabilityModel extends VSMModel<VSMField> {
         myField.projectileLaunchedEmitter.addListener( projectile => projectile.setLanded() );
         this.launcherProperty.value = MYSTERY_LAUNCHERS[ f ];
 
-        for ( let i = 0; i < 250; i++ ) {
+        for ( let i = 0; i < PDLQueryParameters.maxProjectilesVSMField; i++ ) {
           this.launchProjectile();
         }
       }

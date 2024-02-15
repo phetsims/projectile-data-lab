@@ -18,6 +18,8 @@ const maxAngleStandardDeviation = 8; // degrees
 
 const PDLConstants = {
 
+  MAX_PROJECTILES_VSM_FIELD_DEFAULT: 500,
+
   SCREEN_VIEW_X_MARGIN: 8,
   SCREEN_VIEW_Y_MARGIN: 8,
   BOTTOM_UI_HEIGHT: 55,

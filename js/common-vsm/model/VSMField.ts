@@ -108,7 +108,7 @@ export default class VSMField extends Field {
     this.selectedProjectileNumberProperty = new NumberProperty( 0, {
       phetioFeatured: true,
       tandem: providedOptions.tandem.createTandem( 'selectedProjectileNumberProperty' ),
-      range: new Range( 0, PDLQueryParameters.maxProjectiles ),
+      range: new Range( 0, PDLQueryParameters.maxProjectilesVSMField ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       },
@@ -128,7 +128,7 @@ export default class VSMField extends Field {
       tandem: options.tandem.createTandem( 'numberOfLandedProjectilesProperty' ),
       phetioReadOnly: true,
       phetioState: false,
-      range: new Range( 0, PDLQueryParameters.maxProjectiles ),
+      range: new Range( 0, PDLQueryParameters.maxProjectilesVSMField ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       },
@@ -174,7 +174,7 @@ export default class VSMField extends Field {
   }
 
   public launchProjectile(): void {
-    if ( this.getTotalProjectileCount() >= PDLQueryParameters.maxProjectiles ) {
+    if ( this.getTotalProjectileCount() >= PDLQueryParameters.maxProjectilesVSMField ) {
       return;
     }
 

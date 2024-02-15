@@ -12,6 +12,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import Tandem from '../../../tandem/js/Tandem.js';
 import StringUnionProperty from '../../../axon/js/StringUnionProperty.js';
 import { BinStrategy, BinStrategyValues } from './BinStrategy.js';
+import PDLConstants from './PDLConstants.js';
 
 const SCHEMA_MAP = {
   binStrategy: {
@@ -22,9 +23,9 @@ const SCHEMA_MAP = {
   },
 
   // Per field for VSM, for testing.
-  maxProjectiles: {
+  maxProjectilesVSMField: {
     type: 'number' as const,
-    defaultValue: 500,
+    defaultValue: PDLConstants.MAX_PROJECTILES_VSM_FIELD_DEFAULT,
     public: false
   },
 

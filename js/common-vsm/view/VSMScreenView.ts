@@ -62,7 +62,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     const options = optionize<VSMScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {}, providedOptions );
 
     const launchButtonEnabledProperty = new DerivedProperty( [ model.totalProjectileCountProperty ], totalProjectileCount => {
-      return totalProjectileCount < PDLQueryParameters.maxProjectiles;
+      return totalProjectileCount < PDLQueryParameters.maxProjectilesVSMField;
     } );
 
     super(
@@ -253,7 +253,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       // If it is the last projectile, set isContinuousLaunching to false, so that:
       // * pressing clear won't resume launching
       // * the icon will show as a launch icon rather than a stop icon
-      if ( totalProjectileCount === PDLQueryParameters.maxProjectiles ) {
+      if ( totalProjectileCount === PDLQueryParameters.maxProjectilesVSMField ) {
         model.isContinuousLaunchingProperty.value = false;
       }
     } );
@@ -293,12 +293,12 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     this.pdomPlayAreaNode.pdomOrder = [
 
+      // Experiment setup
+      this.launchPanel,
+
       // Launch controls
       this.launchButton,
       this.singleOrContinuousRadioButtonGroup,
-
-      // Experiment setup
-      this.launchPanel,
 
       // Histogram
       this.accordionBox,
