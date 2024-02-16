@@ -155,6 +155,14 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         }
       }
     } );
+
+    // When the field is changed, if the phase is showingAirborneProjectiles or showingCompleteSampleWithoutMean, change the mode from
+    // continuous to single
+    this.fieldProperty.link( field => {
+      if ( field.phaseProperty.value === 'showingAirborneProjectiles' || field.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) {
+        this.singleOrContinuousProperty.value = 'single';
+      }
+    } );
   }
 
   public override launchButtonPressed(): void {
