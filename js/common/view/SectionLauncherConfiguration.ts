@@ -9,7 +9,6 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
-//TODO: Update these images or use graphics drawing - see https://github.com/phetsims/projectile-data-lab/issues/53
 import configurationButton1_svg from '../../../images/configurationButton1_svg.js';
 import configurationButton2_svg from '../../../images/configurationButton2_svg.js';
 import configurationButton3_svg from '../../../images/configurationButton3_svg.js';
