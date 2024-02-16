@@ -167,9 +167,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public override launchButtonPressed(): void {
 
-    if ( this.numberOfStartedSamplesProperty.value >= PDLQueryParameters.maxSamples ) {
-      return;
-    }
+    assert && assert( this.numberOfStartedSamplesProperty.value < PDLQueryParameters.maxSamples, 'Cannot launch when all samples have already been launched' );
 
     const field = this.fieldProperty.value;
     const phaseProperty = field.phaseProperty;
