@@ -19,15 +19,12 @@ import PDLText from '../../common/view/PDLText.js';
 import HSlider from '../../../../sun/js/HSlider.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
-import generalBoundaryBoopSoundPlayer from '../../../../tambo/js/shared-sound-players/generalBoundaryBoopSoundPlayer.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
-import SoundClipPlayer from '../../../../tambo/js/sound-generators/SoundClipPlayer.js';
-import generalBoundaryBoop_mp3 from '../../../../tambo/sounds/generalBoundaryBoop_mp3.js';
 import PDLConstants from '../../common/PDLConstants.js';
 
 const DISTANCE_BETWEEN_MINOR_TICKS = 1 / ( PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.getLength() );
@@ -38,18 +35,27 @@ const filter = new BiquadFilterNode( phetAudioContext, {
   frequency: 800
 } );
 
-const DEFAULT_MIN_SOUND_PLAYER = new SoundClipPlayer( generalBoundaryBoop_mp3, {
-  soundClipOptions: {
-    initialOutputLevel: 0.2,
-    initialPlaybackRate: 1 / Math.pow( 2, 1 / 6 ) // a major second lower
-  },
-  soundManagerOptions: { categoryName: 'user-interface' }
+const minMaxFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'bandpass',
+  Q: 1,
+  frequency: 600
 } );
 
 const angleStabilizerSoundClip = new SoundClip( angleStabilizerClick_mp3, {
   additionalAudioNodes: [ filter ]
 } );
+const angleStabilizerMinSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  additionalAudioNodes: [ minMaxFilter ],
+  initialPlaybackRate: 0.8
+} );
+const angleStabilizerMaxSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  additionalAudioNodes: [ minMaxFilter ],
+  initialPlaybackRate: 1.6
+} );
+
 soundManager.addSoundGenerator( angleStabilizerSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( angleStabilizerMinSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( angleStabilizerMaxSoundClip, { categoryName: 'user-interface' } );
 
 type SelfOptions = EmptySelfOptions;
 type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
@@ -57,7 +63,7 @@ type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<VBo
 export default class AngleStabilizerSection extends VBox {
 
   public constructor( angleStabilizerProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
-    const PITCH_SCALE_FACTOR = 4;
+    const PITCH_SCALE_FACTOR = 1;
     const playbackRateMapper = ( value: number ) => Utils.linear( 0, 1, 1 / PITCH_SCALE_FACTOR, 1.4 / PITCH_SCALE_FACTOR, value );
 
     const slider = new HSlider( angleStabilizerProperty, new Range( 0, 1 ), {
@@ -85,8 +91,8 @@ export default class AngleStabilizerSection extends VBox {
         middleMovingDownPlaybackRateMapper: playbackRateMapper,
         interThresholdDelta: DISTANCE_BETWEEN_MINOR_TICKS,
         // constrainValue: ( value: number ) => Utils.roundToInterval( value, 0.000000001 ),
-        minSoundPlayer: DEFAULT_MIN_SOUND_PLAYER,
-        maxSoundPlayer: generalBoundaryBoopSoundPlayer,
+        minSoundPlayer: angleStabilizerMinSoundClip,
+        maxSoundPlayer: angleStabilizerMaxSoundClip,
         minimumInterMiddleSoundTime: 0.035
       } )
     } );
