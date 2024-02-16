@@ -24,7 +24,7 @@ import Field from '../../common/model/Field.js';
 import Launcher from '../../common/model/Launcher.js';
 
 /**
- * The CustomizableLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
+ * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
  * It also contains a symbol that represents the type of launcher. The symbol is a spring for the spring launcher, a pressure
  * gauge for the pressure launcher, and an explosion for the explosion launcher.
  *
@@ -43,7 +43,7 @@ const LAUNCH_ANGLE_LIMITER_WIDTH = 5;
 // This is the multiple of launch angle standard deviations to use for the gap of the angle stabilizer.
 const ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS = 3;
 
-export default class CustomizableLauncherNode extends LauncherNode {
+export default class CustomLauncherNode extends LauncherNode {
 
   private readonly angleStabilizersContainer = new Node();
 
@@ -61,7 +61,7 @@ export default class CustomizableLauncherNode extends LauncherNode {
 
     super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherProperty, fieldProperty, providedOptions );
 
-    const launcherTypeIcon = new Image( CustomizableLauncherNode.getImageKeyForCustomLauncherMechanism( launcherMechanismProperty.value ), {
+    const launcherTypeIcon = new Image( CustomLauncherNode.getImageKeyForCustomLauncherMechanism( launcherMechanismProperty.value ), {
       centerX: 0,
       centerY: 0
     } );
@@ -86,7 +86,7 @@ export default class CustomizableLauncherNode extends LauncherNode {
     const launchAngleLimiter = new Rectangle( -BARREL_LENGTH_BEFORE_ORIGIN - LAUNCH_ANGLE_LIMITER_LENGTH, -0.5 * LAUNCH_ANGLE_LIMITER_WIDTH,
       LAUNCH_ANGLE_LIMITER_LENGTH, LAUNCH_ANGLE_LIMITER_WIDTH, {
         visibleProperty: isLauncherCustomProperty,
-        fill: PDLColors.mysteryLauncherFillColorProperties[ 0 ].primary,
+        fill: PDLColors.mysteryLauncherFillColorProperties[ 6 ].frame,
         stroke: PDLColors.launcherStrokeColorProperty,
         cornerRadius: 2
       } );
@@ -95,7 +95,7 @@ export default class CustomizableLauncherNode extends LauncherNode {
     const customLauncherFrameFront = new Node( {
       visibleProperty: isLauncherCustomProperty
     } );
-    const customLauncherFrameFrontGraphics = this.launcherFrameFrontGraphicsForType( 1, GUIDE_RAIL_OUTER_CUTOFF );
+    const customLauncherFrameFrontGraphics = this.launcherFrameFrontGraphicsForType( 7, GUIDE_RAIL_OUTER_CUTOFF );
     customLauncherFrameFrontGraphics.forEach( graphic => customLauncherFrameFront.addChild( graphic ) );
     this.addChild( customLauncherFrameFront );
 
@@ -142,7 +142,7 @@ export default class CustomizableLauncherNode extends LauncherNode {
     Multilink.multilink( [ mysteryOrCustomProperty, mysteryLauncherProperty ], ( mysteryOrCustom, mysteryLauncher ) => {
 
       // The custom launcher is based on the graphics from mystery launcher 1
-      this.updateMysteryLauncher( mysteryOrCustom === 'custom' ? 1 : mysteryLauncher.launcherNumber );
+      this.updateMysteryLauncher( mysteryOrCustom === 'custom' ? 7 : mysteryLauncher.launcherNumber );
       this.launcherFrameFront.opacity = mysteryOrCustom === 'custom' ? 0.2 : 1; // Do not set invisible because of 60 degree launch.
 
       // Only show the label node for mystery launchers
@@ -150,7 +150,7 @@ export default class CustomizableLauncherNode extends LauncherNode {
     } );
 
     launcherMechanismProperty.link( launcherType => {
-      launcherTypeIcon.image = CustomizableLauncherNode.getImageKeyForCustomLauncherMechanism( launcherType );
+      launcherTypeIcon.image = CustomLauncherNode.getImageKeyForCustomLauncherMechanism( launcherType );
       launcherTypeIcon.rotation = launcherType === PRESSURE ? -Math.PI / 2 : launcherType === EXPLOSION ? Math.PI / 2 : 0;
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
@@ -202,4 +202,4 @@ export default class CustomizableLauncherNode extends LauncherNode {
   }
 }
 
-projectileDataLab.register( 'CustomizableLauncherNode', CustomizableLauncherNode );
+projectileDataLab.register( 'CustomLauncherNode', CustomLauncherNode );

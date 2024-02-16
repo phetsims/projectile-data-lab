@@ -9,7 +9,7 @@ import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../model/LauncherConf
 import { MysteryOrCustom } from '../model/MysteryOrCustom.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import LauncherMechanism, { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
-import CustomizableLauncherNode from '../../common-vsm/view/CustomizableLauncherNode.js';
+import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PDLConstants from '../PDLConstants.js';
 
@@ -39,7 +39,7 @@ export default class LauncherIconNode extends Node {
 
     super( providedOptions );
 
-    const launcherNode = new CustomizableLauncherNode(
+    const launcherNode = new CustomLauncherNode(
       ModelViewTransform2.createIdentity(),
       this.launcherConfigurationProperty,
       this.launchAngleProperty,

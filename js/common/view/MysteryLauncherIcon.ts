@@ -18,7 +18,7 @@ export class MysteryLauncherIcon extends Node {
 
     const mysteryLauncherIcon = new LauncherNode( ModelViewTransform2.createIdentity(), new Property( 45 ), new Property( 0 ),
       new Property( mysteryLauncher ), null, { isIcon: true } ).rasterized( {
-      resolution: 1.25
+      resolution: 2.22
     } );
     super( {
       children: [ mysteryLauncherIcon ],

@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { Circle, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
@@ -17,6 +17,13 @@ import PDLText from './PDLText.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../model/Field.js';
 import Launcher from '../model/Launcher.js';
+import launcherPattern1_svg from '../../../images/launcherPattern1_svg.js';
+import launcherPattern2_svg from '../../../images/launcherPattern2_svg.js';
+import launcherPattern3_svg from '../../../images/launcherPattern3_svg.js';
+import launcherPattern4_svg from '../../../images/launcherPattern4_svg.js';
+import launcherPattern5_svg from '../../../images/launcherPattern5_svg.js';
+import launcherPattern6_svg from '../../../images/launcherPattern6_svg.js';
+import launcherPatternCustom_svg from '../../../images/launcherPatternCustom_svg.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -84,7 +91,7 @@ export default class LauncherNode extends Node {
     const labelBackground = new Circle( Math.max( labelText.width, labelText.height ) * 0.65, {
       fill: 'white',
       stroke: 'black',
-      opacity: 0.6,
+      opacity: 0.7,
       lineWidth: 1
     } );
     labelText.center = labelBackground.center;
@@ -192,10 +199,11 @@ export default class LauncherNode extends Node {
   }
 
   private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
-    const barrelPrimaryColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].primary;
-    const barrelPrimaryDarkColorProperty = new DerivedProperty( [ barrelPrimaryColorProperty ],
+    const barrelColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].barrel;
+    const barrelDarkColorProperty = new DerivedProperty( [ barrelColorProperty ],
       color => color.darkerColor( 0.8 ) );
-    const barrelSecondaryColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].secondary;
+
+    const nozzleColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].nozzle;
 
     const barrelBaseRadius = 0.5 * BARREL_BASE_WIDTH;
     const barrelBaseX = -BARREL_LENGTH_BEFORE_ORIGIN + barrelBaseRadius;
@@ -212,13 +220,16 @@ export default class LauncherNode extends Node {
     const barrelShape = barrelBaseShape.shapeUnion( barrelNozzleShape );
 
     const barrelFillGradient = new LinearGradient( 0, -barrelBaseRadius, 0, barrelBaseRadius );
-    barrelFillGradient.addColorStop( 0, barrelPrimaryDarkColorProperty );
-    barrelFillGradient.addColorStop( 0.4, barrelPrimaryColorProperty );
-    barrelFillGradient.addColorStop( 0.6, barrelPrimaryColorProperty );
-    barrelFillGradient.addColorStop( 1, barrelPrimaryDarkColorProperty );
+    barrelFillGradient.addColorStop( 0, barrelDarkColorProperty );
+    barrelFillGradient.addColorStop( 0.4, barrelColorProperty );
+    barrelFillGradient.addColorStop( 0.6, barrelColorProperty );
+    barrelFillGradient.addColorStop( 1, barrelDarkColorProperty );
 
     const barrel = new Path( barrelShape, {
-      fill: barrelFillGradient,
+      fill: barrelFillGradient
+    } );
+
+    const barrelBorder = new Path( barrelShape, {
       stroke: PDLColors.launcherStrokeColorProperty
     } );
 
@@ -230,14 +241,30 @@ export default class LauncherNode extends Node {
       -0.5 * launcherEndRectWidth,
       launcherEndRectLength,
       launcherEndRectWidth, {
-        fill: barrelSecondaryColorProperty,
+        fill: nozzleColorProperty,
         stroke: PDLColors.launcherStrokeColorProperty,
         lineWidth: 1,
         cornerRadius: 0.1 * launcherEndRectLength
       }
     );
 
-    return [ barrel, launcherEndRect, ...( isIcon ? [] : [ this.labelNode ] ) ];
+    const patternImages = [
+      launcherPattern1_svg,
+      launcherPattern2_svg,
+      launcherPattern3_svg,
+      launcherPattern4_svg,
+      launcherPattern5_svg,
+      launcherPattern6_svg,
+      launcherPatternCustom_svg
+    ];
+
+    const patternImage = new Image( patternImages[ mysteryLauncherNumber - 1 ] );
+    const imageScale = ( BARREL_LENGTH_BEFORE_ORIGIN + BARREL_LENGTH_AFTER_ORIGIN ) / patternImage.width;
+    patternImage.scale( imageScale );
+    patternImage.right = BARREL_LENGTH_AFTER_ORIGIN;
+    patternImage.centerY = 0;
+
+    return [ barrel, patternImage, barrelBorder, ...( isIcon ? [] : [ this.labelNode ] ), launcherEndRect ];
   }
 
   private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
@@ -245,7 +272,7 @@ export default class LauncherNode extends Node {
       fill: PDLColors.launcherFrameBackgroundColorProperty
     } );
 
-    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].secondary;
+    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frame;
     const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
       color => color.darkerColor( 0.8 ) );
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
@@ -294,7 +321,7 @@ export default class LauncherNode extends Node {
 
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
-    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].secondary;
+    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frame;
     const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
       color => color.darkerColor( 0.8 ) );
     const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],

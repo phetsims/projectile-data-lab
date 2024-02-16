@@ -91,28 +91,39 @@ const PDLColors = {
 
   mysteryLauncherFillColorProperties: [
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher1Primary', { default: '#908C99' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher1Secondary', { default: '#828089' } )
+      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel1', { default: '#CC3333' } ),
+      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle1', { default: '#FFE300' } ),
+      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame1', { default: '#bb2e2e' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher2Primary', { default: '#de0e0e' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher2Secondary', { default: '#d53b07' } )
+      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel2', { default: '#588C7C' } ),
+      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle2', { default: '#406357' } ),
+      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame2', { default: '#4a7365' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher3Primary', { default: '#ffcf08' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher3Secondary', { default: '#ff9900' } )
+      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel3', { default: '#FFE300' } ),
+      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle3', { default: '#E5C400' } ),
+      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame3', { default: '#f1d400' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher4Primary', { default: '#9EC62A' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher4Secondary', { default: '#44902f' } )
+      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel4', { default: '#009EFF' } ),
+      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle4', { default: '#006ABA' } ),
+      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame4', { default: '#0077d2' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher5Primary', { default: '#4d93d9' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher5Secondary', { default: '#349cb6' } )
+      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel5', { default: '#ffffff' } ),
+      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle5', { default: '#626262' } ),
+      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame5', { default: '#808080' } )
     },
     {
-      primary: new ProfileColorProperty( projectileDataLab, 'launcher6Primary', { default: '#c369d0' } ),
-      secondary: new ProfileColorProperty( projectileDataLab, 'launcher6Secondary', { default: '#a4399e' } )
+      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel6', { default: '#9470CE' } ),
+      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle6', { default: '#7158A0' } ),
+      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame6', { default: '#9470CE' } )
+    },
+    {
+      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrelCustom', { default: '#adadad' } ),
+      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzleCustom', { default: '#8d8d8d' } ),
+      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrameCustom', { default: '#919191' } )
     }
   ],
 
