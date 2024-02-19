@@ -259,6 +259,10 @@ export default class LauncherNode extends Node {
     ];
 
     const patternImage = new Image( patternImages[ mysteryLauncherNumber - 1 ] );
+    assert && assert( Number.isFinite( patternImage.width ) && patternImage.width > 0,
+      'patternImage.width should be a number greater than 0. patternImage.width = ' + patternImage.width +
+      ' mysteryLauncherNumber = ' + mysteryLauncherNumber + ' isIcon = ' + isIcon );
+
     const imageScale = ( BARREL_LENGTH_BEFORE_ORIGIN + BARREL_LENGTH_AFTER_ORIGIN ) / patternImage.width;
     patternImage.scale( imageScale );
     patternImage.right = BARREL_LENGTH_AFTER_ORIGIN;
