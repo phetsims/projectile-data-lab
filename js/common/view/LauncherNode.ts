@@ -260,6 +260,11 @@ export default class LauncherNode extends Node {
     let patternImage = null;
     if ( svgPattern ) {
       patternImage = new Image( svgPattern );
+
+      assert && assert( Number.isFinite( patternImage.width ) && Number.isFinite( patternImage.height ),
+        'patternImage width and height must be finite, current values are: ' + patternImage.width + ', ' +
+        patternImage.height + ', for mysteryLauncher: ' + mysteryLauncherNumber );
+
       const imageScale = ( BARREL_LENGTH_BEFORE_ORIGIN + BARREL_LENGTH_AFTER_ORIGIN ) / patternImage.width;
       patternImage.scale( imageScale );
       patternImage.right = BARREL_LENGTH_AFTER_ORIGIN;
