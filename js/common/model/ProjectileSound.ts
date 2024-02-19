@@ -22,13 +22,13 @@ soundManager.addSoundGenerator( toneSoundClip );
 
 // TODO: https://github.com/phetsims/projectile-data-lab/issues/161 The sound levels are not supposed to be balanced until the end.
 // However, with initialOutputLevel: 1 here it is impossible to hear the landSoundClip (which conveys the pitch) at all.
-const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 1 } );
+const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( cannonballSoundClip );
 
-const pianoSoundClip = new SoundClip( pdlPianoLand_mp3, { initialOutputLevel: 0.4 } );
+const pianoSoundClip = new SoundClip( pdlPianoLand_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( pianoSoundClip );
 
-const pumpkinSoundClip = new SoundClip( pdlPumpkinLand001_mp3, { initialOutputLevel: 0.4 } );
+const pumpkinSoundClip = new SoundClip( pdlPumpkinLand001_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( pumpkinSoundClip );
 
 export const playbackRateForPosition = ( x: number ): number => {
