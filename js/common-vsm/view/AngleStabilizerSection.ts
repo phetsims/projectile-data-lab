@@ -63,8 +63,7 @@ type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<VBo
 export default class AngleStabilizerSection extends VBox {
 
   public constructor( angleStabilizerProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
-    const PITCH_SCALE_FACTOR = 1;
-    const playbackRateMapper = ( value: number ) => Utils.linear( 0, 1, 1 / PITCH_SCALE_FACTOR, 1.4 / PITCH_SCALE_FACTOR, value );
+    const playbackRateMapper = ( value: number ) => Utils.linear( 0, 1, 1, 1.4, value );
 
     const slider = new HSlider( angleStabilizerProperty, new Range( 0, 1 ), {
       layoutOptions: {
