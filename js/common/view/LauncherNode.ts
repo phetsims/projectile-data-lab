@@ -23,7 +23,6 @@ import launcherPattern3_svg from '../../../images/launcherPattern3_svg.js';
 import launcherPattern4_svg from '../../../images/launcherPattern4_svg.js';
 import launcherPattern5_svg from '../../../images/launcherPattern5_svg.js';
 import launcherPattern6_svg from '../../../images/launcherPattern6_svg.js';
-import launcherPatternCustom_svg from '../../../images/launcherPatternCustom_svg.js';
 
 /**
  * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
@@ -254,21 +253,20 @@ export default class LauncherNode extends Node {
       launcherPattern3_svg,
       launcherPattern4_svg,
       launcherPattern5_svg,
-      launcherPattern6_svg,
-      launcherPatternCustom_svg
+      launcherPattern6_svg
     ];
 
-    const patternImage = new Image( patternImages[ mysteryLauncherNumber - 1 ] );
-    assert && assert( Number.isFinite( patternImage.width ) && patternImage.width > 0,
-      'patternImage.width should be a number greater than 0. patternImage.width = ' + patternImage.width +
-      ' mysteryLauncherNumber = ' + mysteryLauncherNumber + ' isIcon = ' + isIcon );
+    const svgPattern = patternImages[ mysteryLauncherNumber - 1 ];
+    let patternImage = null;
+    if ( svgPattern ) {
+      patternImage = new Image( svgPattern );
+      const imageScale = ( BARREL_LENGTH_BEFORE_ORIGIN + BARREL_LENGTH_AFTER_ORIGIN ) / patternImage.width;
+      patternImage.scale( imageScale );
+      patternImage.right = BARREL_LENGTH_AFTER_ORIGIN;
+      patternImage.centerY = 0;
+    }
 
-    const imageScale = ( BARREL_LENGTH_BEFORE_ORIGIN + BARREL_LENGTH_AFTER_ORIGIN ) / patternImage.width;
-    patternImage.scale( imageScale );
-    patternImage.right = BARREL_LENGTH_AFTER_ORIGIN;
-    patternImage.centerY = 0;
-
-    return [ barrel, patternImage, barrelBorder, ...( isIcon ? [] : [ this.labelNode ] ), launcherEndRect ];
+    return [ barrel, ...( patternImage ? [ patternImage ] : [] ), barrelBorder, ...( isIcon ? [] : [ this.labelNode ] ), launcherEndRect ];
   }
 
   private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {

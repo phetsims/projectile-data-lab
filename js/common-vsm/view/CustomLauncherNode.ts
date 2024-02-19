@@ -141,7 +141,7 @@ export default class CustomLauncherNode extends LauncherNode {
 
     Multilink.multilink( [ mysteryOrCustomProperty, mysteryLauncherProperty ], ( mysteryOrCustom, mysteryLauncher ) => {
 
-      // The custom launcher is based on the graphics from mystery launcher 1
+      // The color array is 0-indexed and the custom launcher is listed last
       this.updateMysteryLauncher( mysteryOrCustom === 'custom' ? 7 : mysteryLauncher.launcherNumber );
       this.launcherFrameFront.opacity = mysteryOrCustom === 'custom' ? 0.2 : 1; // Do not set invisible because of 60 degree launch.
 
