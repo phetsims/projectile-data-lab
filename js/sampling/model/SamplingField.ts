@@ -12,7 +12,7 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import { SingleOrContinuous } from '../../common/model/SingleOrContinuous.js';
 import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import PDLQueryParameters, { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import Range from '../../../../dot/js/Range.js';
@@ -370,6 +370,22 @@ export default class SamplingField extends Field {
     this.selectedSampleNumberProperty.reset();
 
     this.updateComputedProperties();
+
+    // Regenerate data if set for autogeneration
+    if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+
+      this.phaseProperty.value = 'showingCompleteSampleWithMean';
+      this.isContinuousLaunchingProperty.value = true;
+
+      while ( this.numberOfCompletedSamplesProperty.value < PDLQueryParameters.maxSamples ) {
+
+        // Create all projectiles for this sample immediately and go to next one
+        this.selectedSampleNumberProperty.value++;
+
+        this.finishCurrentSample();
+        this.updateComputedProperties();
+      }
+    }
   }
 
   public override reset(): void {

@@ -163,6 +163,18 @@ export default class SamplingModel extends PDLModel<SamplingField> {
         this.singleOrContinuousProperty.value = 'single';
       }
     } );
+
+    // When the field is changed, if the phase is showingAirborneProjectiles or showingCompleteSampleWithoutMean, change the mode from
+    // continuous to single
+    this.fieldProperty.lazyLink( field => {
+
+      // redo all fields with the same mystery launcher, unless they already have data.
+      this.fields.forEach( field => {
+        if ( field.launcherProperty.value === this.launcherProperty.value && field.numberOfCompletedSamplesProperty.value === 0 ) {
+          field.clearProjectiles();
+        }
+      } );
+    } );
   }
 
   public override launchButtonPressed(): void {

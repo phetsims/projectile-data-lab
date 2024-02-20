@@ -25,7 +25,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
 import SamplingFieldSignNode from './SamplingFieldSignNode.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import PDLQueryParameters, { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
 
@@ -167,7 +167,9 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       // When a projectile is created in 'single' mode, play the launch animation
       field.projectileCreatedEmitter.addListener( projectile => {
         if ( model.fieldProperty.value === field && model.singleOrContinuousProperty.value === 'single' ) {
-          this.launcherNode.playLaunchAnimation( projectile.launchAngle );
+          if ( !AUTO_GENERATE_DATA_PROPERTY.value ) {
+            this.launcherNode.playLaunchAnimation( projectile.launchAngle );
+          }
         }
       } );
     } );
