@@ -24,7 +24,7 @@ import FieldRadioButtonGroup from './FieldRadioButtonGroup.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import PDLQueryParameters, { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
@@ -186,7 +186,9 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
           speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
 
-          this.launcherNode.playLaunchAnimation( projectile.launchAngle );
+          if ( !AUTO_GENERATE_DATA_PROPERTY.value ) {
+            this.launcherNode.playLaunchAnimation( projectile.launchAngle );
+          }
         }
       } );
 

@@ -15,7 +15,6 @@ import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentif
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & StrictOmit<WithRequired<VSMModelOptions<VSMField>, 'tandem'>, 'isStandardDeviationAnglePropertyPhetioInstrumented'>;
@@ -39,21 +38,6 @@ export default class VariabilityModel extends VSMModel<VSMField> {
     } );
 
     super( fields, options );
-
-    // When using the populate flag, we want to populate the model with a large number of projectiles for each field.
-    // Each field will use a different launcher.
-    if ( PDLQueryParameters.populate ) {
-      for ( let f = 0; f < fields.length; f++ ) {
-        const myField = fields[ f ];
-        this.fieldProperty.value = myField;
-        myField.projectileLaunchedEmitter.addListener( projectile => projectile.setLanded() );
-        this.launcherProperty.value = MYSTERY_LAUNCHERS[ f ];
-
-        for ( let i = 0; i < PDLQueryParameters.maxProjectilesVSMField; i++ ) {
-          this.launchProjectile();
-        }
-      }
-    }
   }
 }
 

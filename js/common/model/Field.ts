@@ -28,6 +28,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import launch_mp3 from '../../../sounds/launch_mp3.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 import { Color } from '../../../../scenery/js/imports.js';
+import { AUTO_GENERATE_DATA_PROPERTY } from '../PDLQueryParameters.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, {
   initialOutputLevel: 1
@@ -240,7 +241,7 @@ export default abstract class Field extends PhetioObject {
 
     const launcher = this.launcherProperty.value;
 
-    if ( playSound ) {
+    if ( playSound && !AUTO_GENERATE_DATA_PROPERTY.value ) {
       const playbackRate = Utils.linear( 20, 30, 0.4, 0.8, launchSpeed );
       const clamped = Utils.clamp( playbackRate, 0.3, 0.9 );
 

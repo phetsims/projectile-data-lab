@@ -28,6 +28,7 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 
 import pdlStopwatchTickA_mp3 from '../../../sounds/pdlStopwatchTickA_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import PDLQueryParameters, { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 
 const tickSound = new SoundClip( pdlStopwatchTickA_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( tickSound );
@@ -200,6 +201,45 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       // View coordinates. Positioned so it doesn't overlap with the histogram or field sign.
       position: new Vector2( 650, 350 )
     } );
+
+    // TODO: Factor out the listener? See https://github.com/phetsims/projectile-data-lab/issues/146
+    this.fieldProperty.lazyLink( field => {
+      if ( AUTO_GENERATE_DATA_PROPERTY.value &&
+
+           // If the old field already had data, don't resample it. Just show what we already had.
+           // TODO: If changing the field changes the launcher or projectiles, etc. Then we shouldn't resample, see https://github.com/phetsims/projectile-data-lab/issues/146
+           field.getTotalProjectileCount() !== PDLQueryParameters.maxProjectilesVSMField ) {
+        field.clearProjectiles();
+      }
+    } );
+
+    this.launcherProperty.lazyLink( launcher => {
+      if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+        this.fieldProperty.value.clearProjectiles();
+      }
+    } );
+
+    this.launcherConfigurationProperty.lazyLink( () => {
+      if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+        this.fieldProperty.value.clearProjectiles();
+      }
+    } );
+
+    this.projectileTypeProperty.lazyLink( () => {
+      if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+        this.fieldProperty.value.clearProjectiles();
+      }
+    } );
+
+    this.angleStabilizerProperty.lazyLink( () => {
+      if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+        this.fieldProperty.value.clearProjectiles();
+      }
+    } );
+
+    if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+      this.fieldProperty.value.clearProjectiles();
+    }
   }
 
   public override launchButtonPressed(): void {

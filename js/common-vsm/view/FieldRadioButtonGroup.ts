@@ -8,6 +8,8 @@ import PDLText from '../../common/view/PDLText.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Circle, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
+import { DerivedProperty } from '../../../../axon/js/imports.js';
+import { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 
 /**
  * The FieldRadioButtonGroup is a group of buttons that allows the user to select a field.
@@ -46,7 +48,7 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
       const fieldNumber = fieldIndex + 1;
 
       const dataIndicator = new Circle( 3, {
-        visibleProperty: field.isContainingDataProperty,
+        visibleProperty: DerivedProperty.or( [ field.isContainingDataProperty, AUTO_GENERATE_DATA_PROPERTY ] ),
         fill: PDLColors.fieldSignTextColorProperty,
         pickable: false
       } );

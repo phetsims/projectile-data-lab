@@ -39,25 +39,24 @@ const toPlaybackRate = ( semitones: number ): number => Math.pow( 2, semitones /
 
 export default class ProjectileSound {
 
-  public static play( projectileType: ProjectileType, x: number, isLanding: boolean ): void {
+  public static play( projectileType: ProjectileType, x: number ): void {
+
     toneSoundClip.setPlaybackRate( playbackRateForPosition( x ) );
     toneSoundClip.play();
 
-    if ( isLanding ) {
-      const random = dotRandom.nextDoubleBetween( -2, 2 );
-      const playbackRate = toPlaybackRate( random );
-      if ( projectileType === CANNONBALL ) {
-        cannonballSoundClip.setPlaybackRate( playbackRate );
-        cannonballSoundClip.play();
-      }
-      else if ( projectileType === PUMPKIN ) {
-        pumpkinSoundClip.setPlaybackRate( playbackRate );
-        pumpkinSoundClip.play();
-      }
-      else if ( projectileType === PIANO ) {
-        pianoSoundClip.setPlaybackRate( playbackRate );
-        pianoSoundClip.play();
-      }
+    const random = dotRandom.nextDoubleBetween( -2, 2 );
+    const playbackRate = toPlaybackRate( random );
+    if ( projectileType === CANNONBALL ) {
+      cannonballSoundClip.setPlaybackRate( playbackRate );
+      cannonballSoundClip.play();
+    }
+    else if ( projectileType === PUMPKIN ) {
+      pumpkinSoundClip.setPlaybackRate( playbackRate );
+      pumpkinSoundClip.play();
+    }
+    else if ( projectileType === PIANO ) {
+      pianoSoundClip.setPlaybackRate( playbackRate );
+      pianoSoundClip.play();
     }
   }
 }
