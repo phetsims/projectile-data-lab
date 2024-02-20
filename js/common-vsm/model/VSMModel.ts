@@ -266,7 +266,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     this.fieldProperty.value.launchProjectile();
   }
 
-  public step( dt: number ): void {
+  public override step( dt: number ): void {
+    super.step( dt );
 
     if ( !this.isPlayingProperty.value ) {
       return;

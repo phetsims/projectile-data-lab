@@ -8,6 +8,7 @@ import CanvasPainter from '../../../../bamboo/js/CanvasPainter.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import HistogramData from '../../common/model/HistogramData.js';
+import Histogram from '../model/Histogram.js';
 
 /**
  * Shows bars or blocks for histogram-related numerical data.
@@ -26,7 +27,8 @@ export default class HistogramCanvasPainter extends CanvasPainter {
   private data: HistogramData[] = [];
   private selectedData: HistogramData | null = null;
 
-  public constructor( private readonly chartTransform: ChartTransform,
+  public constructor( private histogram: Histogram | null,
+                      private readonly chartTransform: ChartTransform,
                       private readonly binWidthProperty: TReadOnlyProperty<number>,
                       private readonly histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
                       private readonly blockFillProperty: TReadOnlyProperty<Color>,
@@ -45,6 +47,12 @@ export default class HistogramCanvasPainter extends CanvasPainter {
   }
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
+    const getFillColorForBin = ( bin: number ) => {
+      const isInSonifiedColumn = this.histogram && this.histogram.histogramSonifier.sonifiedBinProperty.value &&
+                                 this.histogram.histogramSonifier.sonifiedBinProperty.value === bin;
+
+      return isInSonifiedColumn ? '#ffb371' : this.blockFillProperty.value.toCSS();
+    };
 
     const histogramRepresentation = this.histogramRepresentationProperty.value;
     context.save();
@@ -53,6 +61,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     context.strokeStyle = this.blockStrokeProperty.value.toCSS();
 
     const lineWidth = Math.abs( this.chartTransform.modelToViewDeltaY( 0.15 ) );
+
 
     // Canvas cannot render a lineWidth < 1 (it rounds up to 1), so we scale the canvas to compensate
     const scaleFactor = 1 / lineWidth;
@@ -72,6 +81,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const projectile = this.data[ i ];
       const isHighlighted = this.selectedData === projectile;
 
+
       // Calculate the bin for this value by its lower bound
       const bin = Math.floor( projectile.x / binWidth ) * binWidth;
 
@@ -83,6 +93,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const y = this.chartTransform.modelToViewY( binCount );
 
       if ( histogramRepresentation === 'blocks' ) {
+        context.fillStyle = getFillColorForBin( bin );
         context.fillRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
         context.strokeRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
       }
@@ -95,6 +106,9 @@ export default class HistogramCanvasPainter extends CanvasPainter {
 
     if ( histogramRepresentation === 'bars' ) {
       for ( const [ bin, count ] of histogram ) {
+
+        context.fillStyle = getFillColorForBin( bin );
+
         const x = this.chartTransform.modelToViewX( bin );
         const y = this.chartTransform.modelToViewY( 0 );
         const height = this.chartTransform.modelToViewDeltaY( count );

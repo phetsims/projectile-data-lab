@@ -5,7 +5,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Property from '../../../../axon/js/Property.js';
-import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import { HBox, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 import PDLText from '../../common/view/PDLText.js';
@@ -17,9 +16,9 @@ import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { Multilink } from '../../../../axon/js/imports.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import Histogram from '../../common/model/Histogram.js';
 
 /**
  * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
@@ -33,24 +32,18 @@ export default class SamplingHistogramNode extends HistogramNode {
                       numberOfSamplesProperty: TReadOnlyProperty<number>,
                       fieldProperty: TReadOnlyProperty<SamplingField>,
                       fields: Field[],
-                      zoomProperty: NumberProperty,
-                      binWidthProperty: TReadOnlyProperty<number>,
-                      histogramRepresentationProperty: Property<HistogramRepresentation>,
+                      numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
+                      histogram: Histogram,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      selectedBinWidthProperty: Property<number>,
-                      selectedTotalBinsProperty: Property<number>,
                       comboBoxParent: Node,
                       clearCurrentField: () => void,
                       options: HistogramNodeOptions ) {
     super(
       fieldProperty,
       fields,
-      zoomProperty,
-      binWidthProperty,
-      histogramRepresentationProperty,
+      numberOfLandedProjectilesProperty,
       horizontalAxisLabelText,
-      selectedBinWidthProperty,
-      selectedTotalBinsProperty,
+      histogram,
       comboBoxParent,
       PDLColors.meanMarkerFillProperty,
       PDLColors.meanMarkerStrokeProperty,

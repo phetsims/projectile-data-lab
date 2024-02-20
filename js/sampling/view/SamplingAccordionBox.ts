@@ -15,6 +15,7 @@ import SampleSizeThumbnailNode from './SampleSizeThumbnailNode.js';
 import SamplingHistogramNode from './SamplingHistogramNode.js';
 import Launcher from '../../common/model/Launcher.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Histogram from '../../common/model/Histogram.js';
 
 /**
  * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
@@ -33,14 +34,13 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
   public readonly bottomThumbnailNode: SampleSizeThumbnailNode;
 
   public constructor(
+    histogram: Histogram,
     launcherProperty: TReadOnlyProperty<Launcher>,
     sampleSizeProperty: TReadOnlyProperty<number>,
     numberOfSamplesProperty: TReadOnlyProperty<number>,
     fieldProperty: TReadOnlyProperty<SamplingField>,
     fields: SamplingField[],
     zoomProperty: NumberProperty,
-    selectedBinWidthProperty: Property<number>,
-    selectedTotalBinsProperty: Property<number>,
     binWidthProperty: TReadOnlyProperty<number>,
     comboBoxParent: Node,
     histogramRepresentationProperty: Property<HistogramRepresentation>,
@@ -53,12 +53,9 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       numberOfSamplesProperty,
       fieldProperty,
       fields,
-      zoomProperty,
-      binWidthProperty,
-      histogramRepresentationProperty,
+      numberOfSamplesProperty,
+      histogram,
       ProjectileDataLabStrings.meanDistanceStringProperty,
-      selectedBinWidthProperty,
-      selectedTotalBinsProperty,
       comboBoxParent,
       clearCurrentField, {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )

@@ -101,7 +101,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioReadOnly: providedOptions.isFieldPropertyPhetioReadonly
     } );
 
-    this.histogram = new Histogram( providedOptions.tandem.createTandem( 'histogram' ), {} );
+    this.histogram = new Histogram( { tandem: providedOptions.tandem.createTandem( 'histogram' ) } );
 
     this.singleOrContinuousProperty = new Property<SingleOrContinuous>( 'single', {
       validValues: SingleOrContinuousValues,
@@ -173,6 +173,10 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   }
 
   public abstract launchButtonPressed(): void;
+
+  public step( dt: number ): void {
+    this.histogram.step( dt );
+  }
 
   public reset(): void {
     this.singleOrContinuousProperty.reset();

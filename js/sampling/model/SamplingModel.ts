@@ -228,7 +228,8 @@ model.phase = ${this.phaseProperty.value}` );
     }
   }
 
-  public step( dt: number ): void {
+  public override step( dt: number ): void {
+    super.step( dt );
 
     if ( !this.isPlayingProperty.value ) {
       return;

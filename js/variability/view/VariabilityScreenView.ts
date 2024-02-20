@@ -50,12 +50,9 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
     const createHistogramNode = ( node: Node ) => new HistogramNode(
       model.fieldProperty,
       model.fields,
-      model.histogram.zoomProperty,
-      model.histogram.binWidthProperty,
-      model.histogram.representationProperty,
+      model.numberOfLandedProjectilesProperty,
       ProjectileDataLabStrings.distanceStringProperty,
-      model.histogram.selectedBinWidthProperty,
-      model.histogram.selectedTotalBinsProperty,
+      model.histogram,
       node,
       PDLColors.histogramDataFillColorProperty,
       PDLColors.histogramDataStrokeColorProperty, {

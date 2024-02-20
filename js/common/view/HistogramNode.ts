@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { ColorProperty, ManualConstraint, Node, NodeOptions, Text } from '../../../../scenery/js/imports.js';
+import { Color, ColorProperty, ManualConstraint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
@@ -19,22 +19,25 @@ import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import SamplingField from '../../sampling/model/SamplingField.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
-import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import PDLText from './PDLText.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import ABSwitch from '../../../../sun/js/ABSwitch.js';
 import HistogramRepresentationIconNode from './HistogramRepresentationIconNode.js';
-import Property from '../../../../axon/js/Property.js';
 import BinControlNode from './BinControlNode.js';
 import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
-import { ZOOM_LEVELS } from '../model/Histogram.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Histogram, { ZOOM_LEVELS } from '../model/Histogram.js';
 import pdlToggleButtonA_mp3 from '../../../sounds/pdlToggleButtonA_mp3.js';
 import pdlToggleButtonB_mp3 from '../../../sounds/pdlToggleButtonB_mp3.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import { RectangularPushButton } from '../../../../sun/js/imports.js';
+import bullhornSolidShape from '../../../../sherpa/js/fontawesome-5/bullhornSolidShape.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
+import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import { DerivedProperty } from '../../../../axon/js/imports.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -63,12 +66,9 @@ export default class HistogramNode extends Node {
 
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
-                      zoomProperty: NumberProperty,
-                      binWidthProperty: TReadOnlyProperty<number>,
-                      histogramRepresentationProperty: Property<HistogramRepresentation>,
+                      numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      selectedBinWidthProperty: Property<number>,
-                      selectedTotalBinsProperty: Property<number>,
+                      histogram: Histogram,
                       comboBoxParent: Node,
                       blockFillProperty: ColorProperty,
                       blockStrokeProperty: ColorProperty,
@@ -99,7 +99,7 @@ export default class HistogramNode extends Node {
       stroke: 'black'
     } );
 
-    const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty,
+    const histogramPainter = new HistogramCanvasPainter( histogram, this.chartTransform, histogram.binWidthProperty, histogram.representationProperty,
       blockFillProperty, blockStrokeProperty );
 
     // Grid lines along the y-axis (the lines themselves are horizontal). Changes based on the zoom level
@@ -125,6 +125,12 @@ export default class HistogramNode extends Node {
 
     this.chartClipLayer = new Node();
     const chartCanvasNode = new ChartCanvasNode( this.chartTransform, [ histogramPainter ] );
+
+    // Update the histogram when the sonified column changes
+    histogram.histogramSonifier.sonifiedBinProperty.link( () => {
+      chartCanvasNode.update();
+    } );
+
     const chartClip = new Node( {
       clipArea: this.chartBackground.getShape(),
       children: [
@@ -173,7 +179,7 @@ export default class HistogramNode extends Node {
       ]
     } );
 
-    binWidthProperty.link( binWidth => {
+    histogram.binWidthProperty.link( binWidth => {
       horizontalAxisGridLines.setSpacing( binWidth );
       chartCanvasNode.update();
     } );
@@ -182,11 +188,11 @@ export default class HistogramNode extends Node {
       chartCanvasNode.update();
     } );
 
-    histogramRepresentationProperty.link( () => {
+    histogram.representationProperty.link( () => {
       chartCanvasNode.update();
     } );
 
-    const zoomButtonGroup = new PlusMinusZoomButtonGroup( zoomProperty, {
+    const zoomButtonGroup = new PlusMinusZoomButtonGroup( histogram.zoomProperty, {
       tandem: options.tandem.createTandem( 'zoomButtonGroup' ),
       orientation: 'vertical',
       centerY: this.chartTransform.viewHeight,
@@ -225,15 +231,19 @@ export default class HistogramNode extends Node {
         const field = fieldProperty.value;
         if ( field instanceof VSMField ) {
           histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
+          histogram.histogramSonifier.setHistogramData( fieldProperty.value.landedProjectiles );
         }
         else if ( field instanceof SamplingField ) {
           const samples = field.getHistogramData();
           const selectedSampleNumber = field.selectedSampleNumberProperty.value;
           histogramPainter.setHistogramData( samples, samples[ selectedSampleNumber - 1 ] );
+
+          histogram.histogramSonifier.setHistogramData( samples );
         }
         else {
           assert && assert( false, 'unhandled field type' );
         }
+
         chartCanvasNode.update();
       }
     };
@@ -268,19 +278,19 @@ export default class HistogramNode extends Node {
 
     // When the field or bin width changes, redraw the histogram
     fieldProperty.link( () => updateHistogram() );
-    binWidthProperty.link( () => updateHistogram() );
-    zoomProperty.link( () => {
+    histogram.binWidthProperty.link( () => updateHistogram() );
+    histogram.zoomProperty.link( () => {
 
-      const maxCount = ZOOM_LEVELS[ zoomProperty.value ].maxCount;
+      const maxCount = ZOOM_LEVELS[ histogram.zoomProperty.value ].maxCount;
 
       this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
 
-      const tickSpacing = ZOOM_LEVELS[ zoomProperty.value ].maxCount / 5;
+      const tickSpacing = ZOOM_LEVELS[ histogram.zoomProperty.value ].maxCount / 5;
 
       verticalTickLabelSet.setSpacing( tickSpacing );
       verticalTickMarkSet.setSpacing( tickSpacing );
       majorVerticalAxisGridLines.setSpacing( tickSpacing );
-      const spacing = ZOOM_LEVELS[ zoomProperty.value ].minorSpacing;
+      const spacing = ZOOM_LEVELS[ histogram.zoomProperty.value ].minorSpacing;
       if ( spacing !== null ) {
         verticalAxisGridLines.setSpacing( spacing );
       }
@@ -289,7 +299,7 @@ export default class HistogramNode extends Node {
       updateHistogram();
     } );
 
-    const binControlNode = new BinControlNode( comboBoxParent, selectedBinWidthProperty, selectedTotalBinsProperty, {
+    const binControlNode = new BinControlNode( comboBoxParent, histogram.selectedBinWidthProperty, histogram.selectedTotalBinsProperty, {
       tandem: options.tandem.createTandem( 'binControlNode' ),
       leftTop: this.chartNode.leftBottom.plusXY( 15, CHART_UI_MARGIN ),
       visiblePropertyOptions: {
@@ -299,7 +309,7 @@ export default class HistogramNode extends Node {
     this.addChild( binControlNode );
 
     const barBlockSwitch = new ABSwitch(
-      histogramRepresentationProperty,
+      histogram.representationProperty,
       'blocks', new HistogramRepresentationIconNode( blockFillProperty, blockStrokeProperty, 'blocks' ),
       'bars', new HistogramRepresentationIconNode( blockFillProperty, blockStrokeProperty, 'bars' ), {
         tandem: options.tandem.createTandem( 'barBlockSwitch' ),
@@ -313,6 +323,24 @@ export default class HistogramNode extends Node {
       } );
     this.addChild( barBlockSwitch );
 
+    const playHistogramSoundButton = new RectangularPushButton( {
+      content: new Path( bullhornSolidShape, {
+        fill: Color.BLACK
+      } ),
+      soundPlayer: nullSoundPlayer,
+      enabledProperty: new DerivedProperty( [ numberOfLandedProjectilesProperty ],
+        numberOfLandedProjectiles => numberOfLandedProjectiles > 0 ),
+      size: new Dimension2( 34, 34 ),
+      xMargin: 5,
+      yMargin: 5,
+      baseColor: PhetColorScheme.BUTTON_YELLOW,
+      tandem: options.tandem.createTandem( 'playHistogramSoundButton' ),
+      listener: () => {
+        histogram.histogramSonifier.startHistogramSoundSequence();
+      }
+    } );
+    this.addChild( playHistogramSoundButton );
+
     ManualConstraint.create( this, [ this.chartNode, this.chartBackground, horizontalAxisLabel ], ( chartNodeProxy, chartBackgroundProxy, horizontalAxisLabelProxy ) => {
       horizontalAxisLabelProxy.centerX = chartBackgroundProxy.centerX;
       horizontalAxisLabelProxy.top = chartNodeProxy.bottom + CHART_UI_MARGIN;
@@ -323,10 +351,16 @@ export default class HistogramNode extends Node {
       verticalAxisLabel.centerY = chartBackgroundProxy.centerY;
     } );
 
+    ManualConstraint.create( this, [ this.chartBackground, playHistogramSoundButton ], ( chartBackgroundProxy, playHistogramSoundButtonProxy ) => {
+      playHistogramSoundButtonProxy.right = chartBackgroundProxy.right - 5;
+      playHistogramSoundButtonProxy.top = chartBackgroundProxy.top + 5;
+    } );
+
     this.pdomOrder = [
       zoomButtonGroup,
       binControlNode,
       barBlockSwitch,
+      playHistogramSoundButton,
       this.chartNode
     ];
   }

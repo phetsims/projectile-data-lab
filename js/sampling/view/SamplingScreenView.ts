@@ -143,6 +143,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.behindProjectilesLayer.addChild( this.fieldSignNode );
 
     this.accordionBox = new SamplingAccordionBox(
+      model.histogram,
       model.launcherProperty,
       model.sampleSizeProperty,
       model.numberOfCompletedSamplesProperty,
@@ -150,8 +151,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       model.fieldProperty,
       model.fields,
       model.histogram.zoomProperty,
-      model.histogram.selectedBinWidthProperty,
-      model.histogram.selectedTotalBinsProperty,
       model.histogram.binWidthProperty,
       this,
       model.histogram.representationProperty,

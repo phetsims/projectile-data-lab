@@ -4,7 +4,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import Field from '../../common/model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
@@ -13,7 +12,6 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import { ManualConstraint, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import PDLColors from '../../common/PDLColors.js';
-import Property from '../../../../axon/js/Property.js';
 import MeasuresField from '../model/MeasuresField.js';
 import PDLText from '../../common/view/PDLText.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -22,7 +20,7 @@ import { PDLPanel } from '../../common/view/PDLPanel.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Histogram from '../../common/model/Histogram.js';
 
 /**
  * The measures histogram node is a histogram node that also shows the mean and standard deviation of the data.
@@ -38,9 +36,8 @@ export default class MeasuresHistogramNode extends HistogramNode {
 
   public constructor( fieldProperty: TReadOnlyProperty<MeasuresField>,
                       fields: Field[],
-                      zoomProperty: NumberProperty,
-                      binWidthProperty: TReadOnlyProperty<number>,
-                      histogramRepresentationProperty: Property<HistogramRepresentation>,
+                      numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
+                      histogram: Histogram,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       isMeanVisibleProperty: BooleanProperty,
                       isStandardDeviationVisibleProperty: BooleanProperty,
@@ -50,19 +47,14 @@ export default class MeasuresHistogramNode extends HistogramNode {
                       standardErrorProperty: PhetioProperty<number | null>,
                       intervalTool: IntervalTool,
                       intervalToolVisibleProperty: TReadOnlyProperty<boolean>,
-                      selectedBinWidthProperty: Property<number>,
-                      selectedTotalBinsProperty: Property<number>,
                       comboBoxParent: Node,
                       options: MeasuresHistogramNodeOptions ) {
     super(
       fieldProperty,
       fields,
-      zoomProperty,
-      binWidthProperty,
-      histogramRepresentationProperty,
+      numberOfLandedProjectilesProperty,
       horizontalAxisLabelText,
-      selectedBinWidthProperty,
-      selectedTotalBinsProperty,
+      histogram,
       comboBoxParent,
 
       PDLColors.histogramDataFillColorProperty,

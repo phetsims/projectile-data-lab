@@ -29,6 +29,7 @@ export default class HistogramRepresentationIconNode extends Node {
       modelYRange: new Range( 0, 3 )
     } );
     const histogramPainter = new HistogramCanvasPainter(
+      null,
       chartTransform,
       new NumberProperty( 1 ),
       new Property<HistogramRepresentation>( histogramRepresentation ),

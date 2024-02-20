@@ -91,7 +91,8 @@ export default class SampleSizeThumbnailNode extends Node {
       chartFrame.stroke = field.sampleSize === thumbnailSampleSize ? 'black' : '#989898';
     } );
 
-    const histogramPainter = new HistogramCanvasPainter( this.chartTransform, binWidthProperty, histogramRepresentationProperty,
+    const histogramPainter = new HistogramCanvasPainter(
+      null, this.chartTransform, binWidthProperty, histogramRepresentationProperty,
       blockFillProperty, blockStrokeProperty );
 
     // Changes based on the zoom level

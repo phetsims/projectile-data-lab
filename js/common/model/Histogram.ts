@@ -3,7 +3,6 @@
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -13,6 +12,9 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PDLConstants from '../PDLConstants.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import HistogramSonifier from './HistogramSonifier.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 
 /**
  * The Histogram class is used to represent the histogram in the Projectile Data Lab.
@@ -54,8 +56,7 @@ export const ZOOM_LEVELS = [ {
 } ];
 
 type SelfOptions = EmptySelfOptions;
-
-type HistogramOptions = SelfOptions;
+type HistogramOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
 
 export default class Histogram {
 
@@ -77,10 +78,12 @@ export default class Histogram {
 
   public readonly representationProperty: Property<HistogramRepresentation>;
 
-  public constructor( tandem: Tandem, providedOptions: HistogramOptions ) {
+  public readonly histogramSonifier: HistogramSonifier;
+
+  public constructor( providedOptions: HistogramOptions ) {
     this.selectedBinWidthProperty = new Property<number>( 1, {
       validValues: [ 0.5, 1, 2, 5, 10 ],
-      tandem: tandem.createTandem( 'selectedBinWidthProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".',
       phetioValueType: NumberIO
@@ -88,7 +91,7 @@ export default class Histogram {
 
     this.selectedTotalBinsProperty = new Property<number>( 10, {
       validValues: [ 10, 20, 50, 100, 200 ],
-      tandem: tandem.createTandem( 'selectedTotalBinsProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property configures the total number of bins in the histogram. It is used when the bin strategy is "total bins".',
       phetioValueType: NumberIO
@@ -98,7 +101,7 @@ export default class Histogram {
 
     this.zoomProperty = new NumberProperty( maxZoomLevel, {
       range: new Range( 0, maxZoomLevel ),
-      tandem: tandem.createTandem( 'zoomProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'zoomProperty' ),
       phetioFeatured: true,
       numberType: 'Integer'
     } );
@@ -110,10 +113,16 @@ export default class Histogram {
 
     this.representationProperty = new StringUnionProperty<HistogramRepresentation>( 'blocks', {
       validValues: HistogramRepresentationValues,
-      tandem: tandem.createTandem( 'representationProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'representationProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
     } );
+
+    this.histogramSonifier = new HistogramSonifier( this.binWidthProperty );
+  }
+
+  public step( dt: number ): void {
+    this.histogramSonifier.step( dt );
   }
 
   public reset(): void {
