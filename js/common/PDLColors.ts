@@ -54,11 +54,11 @@ const PDLColors = {
   } ),
 
   fieldFill1ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill1', {
-    default: '#00c753'
+    default: '#03ab46'
   } ),
 
   fieldFill2ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill2', {
-    default: '#008f2b'
+    default: '#026e2c'
   } ),
 
   fieldLineColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLine', {
@@ -153,6 +153,10 @@ const PDLColors = {
 
   fieldSignTextColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignText', {
     default: '#ffffff'
+  } ),
+
+  fieldSignPostColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignPost', {
+    default: '#c7baba'
   } ),
 
   heatMapColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMap', {

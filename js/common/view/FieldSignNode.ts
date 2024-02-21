@@ -8,6 +8,7 @@ import SelectorNode from './SelectorNode.js';
 import Field from '../model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { EmptySelfOptions, optionize } from '../../../../phet-core/js/imports.js';
+import PDLColors from '../PDLColors.js';
 
 /**
  * The FieldSignNode contains the field sign, which displays text about the field number and landed projectiles.
@@ -88,12 +89,12 @@ export default class FieldSignNode extends VBox {
       const signPostEllipseHeight = 3;
 
       const signPostRect = new Rectangle( 0, -0, signPostWidth, signPostHeight, {
-        fill: '#6d7c54'
+        fill: PDLColors.fieldSignPostColorProperty
       } );
 
       const signPostBase = new Path( new Shape().ellipse( new Vector2( 0.5 * signPostWidth, signPostHeight ),
         0.5 * signPostWidth, 0.5 * signPostEllipseHeight, 0 ), {
-        fill: '#6d7c54'
+        fill: PDLColors.fieldSignPostColorProperty
       } );
 
       return new Node( {
