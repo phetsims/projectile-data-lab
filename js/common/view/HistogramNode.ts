@@ -38,6 +38,8 @@ import Dimension2 from '../../../../dot/js/Dimension2.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
 
 /**
  * Shows the Histogram in the Projectile Data Lab simulation.
@@ -323,15 +325,26 @@ export default class HistogramNode extends Node {
       } );
     this.addChild( barBlockSwitch );
 
-    const playHistogramSoundButton = new RectangularPushButton( {
-      content: new Path( bullhornSolidShape, {
+    const histogramSoundIconToggleNode = new ToggleNode<boolean, Node>( new DerivedProperty( [
+      histogram.histogramSonifier.sonifiedBinProperty
+    ], sonifiedBin => sonifiedBin !== null ), [ {
+      value: false,
+      createNode: () => new Path( bullhornSolidShape, {
         fill: 'black',
-
-        // The bullhorn is a solid shape. To adjust the line width, we simulate that by adding an opaque stroke that
-        // matches the background.
         stroke: PhetColorScheme.BUTTON_YELLOW,
-        lineWidth: 25
-      } ),
+        lineWidth: 20
+      } )
+    }, {
+      value: true,
+      createNode: () => new Path( stopSolidShape, {
+        fill: 'black',
+        stroke: PhetColorScheme.BUTTON_YELLOW,
+        lineWidth: 20
+      } )
+    } ], {} );
+
+    const toggleHistogramSoundButton = new RectangularPushButton( {
+      content: histogramSoundIconToggleNode,
       soundPlayer: nullSoundPlayer,
       enabledProperty: new DerivedProperty( [ numberOfLandedProjectilesProperty ],
         numberOfLandedProjectiles => numberOfLandedProjectiles > 0 ),
@@ -339,12 +352,12 @@ export default class HistogramNode extends Node {
       xMargin: 5,
       yMargin: 5,
       baseColor: PhetColorScheme.BUTTON_YELLOW,
-      tandem: options.tandem.createTandem( 'playHistogramSoundButton' ),
+      tandem: options.tandem.createTandem( 'toggleHistogramSoundButton' ),
       listener: () => {
-        histogram.histogramSonifier.startHistogramSoundSequence();
+        histogram.histogramSonifier.toggleSonification();
       }
     } );
-    this.addChild( playHistogramSoundButton );
+    this.addChild( toggleHistogramSoundButton );
 
     ManualConstraint.create( this, [ this.chartNode, this.chartBackground, horizontalAxisLabel ], ( chartNodeProxy, chartBackgroundProxy, horizontalAxisLabelProxy ) => {
       horizontalAxisLabelProxy.centerX = chartBackgroundProxy.centerX;
@@ -356,7 +369,7 @@ export default class HistogramNode extends Node {
       verticalAxisLabel.centerY = chartBackgroundProxy.centerY;
     } );
 
-    ManualConstraint.create( this, [ this.chartBackground, playHistogramSoundButton ], ( chartBackgroundProxy, playHistogramSoundButtonProxy ) => {
+    ManualConstraint.create( this, [ this.chartBackground, toggleHistogramSoundButton ], ( chartBackgroundProxy, playHistogramSoundButtonProxy ) => {
       playHistogramSoundButtonProxy.right = chartBackgroundProxy.right - 5;
       playHistogramSoundButtonProxy.top = chartBackgroundProxy.top + 5;
     } );
@@ -365,7 +378,7 @@ export default class HistogramNode extends Node {
       zoomButtonGroup,
       binControlNode,
       barBlockSwitch,
-      playHistogramSoundButton,
+      toggleHistogramSoundButton,
       this.chartNode
     ];
   }

@@ -85,8 +85,17 @@ export default class HistogramSonifier {
     }
   }
 
+  public toggleSonification( ): void {
+    if ( this.sonifiedBinProperty.value === null ) {
+      this.startHistogramSoundSequence();
+    }
+    else {
+      this.sonifiedBinProperty.value = null;
+    }
+  }
+
   // Initiate the sequence of sounds for the histogram bins
-  public startHistogramSoundSequence(): void {
+  private startHistogramSoundSequence(): void {
 
     // If binned data is empty, don't play anything
     if ( this.binnedData.size === 0 ) {
