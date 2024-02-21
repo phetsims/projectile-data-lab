@@ -28,7 +28,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import launch_mp3 from '../../../sounds/launch_mp3.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 import { Color } from '../../../../scenery/js/imports.js';
-import { AUTO_GENERATE_DATA_PROPERTY } from '../PDLQueryParameters.js';
+import { AUTO_GENERATE_DATA_PROPERTY, PROJECTILE_TYPE_AFFECTS_SPEED_PROPERTY } from '../PDLQueryParameters.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, {
   initialOutputLevel: 0.2
@@ -256,7 +256,10 @@ export default abstract class Field extends PhetioObject {
   protected createProjectile( sampleNumber: number, playSound: boolean ): Projectile {
     const angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
     const launchAngle = this.meanAngleProperty.value + angleDeviation;
-    const meanLaunchSpeed = this.projectileTypeProperty.value.speedMultiplierProperty.value * this.meanSpeedProperty.value;
+
+    const speedMultiplier = PROJECTILE_TYPE_AFFECTS_SPEED_PROPERTY.value ? this.projectileTypeProperty.value.speedMultiplierProperty.value : 1;
+
+    const meanLaunchSpeed = speedMultiplier * this.meanSpeedProperty.value;
     const launchSpeed = meanLaunchSpeed + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
     const landedImageIndex = dotRandom.nextInt( 3 );
 
