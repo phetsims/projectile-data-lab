@@ -1,6 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { Color, ColorProperty, ManualConstraint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
+import { ColorProperty, ManualConstraint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
@@ -325,7 +325,12 @@ export default class HistogramNode extends Node {
 
     const playHistogramSoundButton = new RectangularPushButton( {
       content: new Path( bullhornSolidShape, {
-        fill: Color.BLACK
+        fill: 'black',
+
+        // The bullhorn is a solid shape. To adjust the line width, we simulate that by adding an opaque stroke that
+        // matches the background.
+        stroke: PhetColorScheme.BUTTON_YELLOW,
+        lineWidth: 25
       } ),
       soundPlayer: nullSoundPlayer,
       enabledProperty: new DerivedProperty( [ numberOfLandedProjectilesProperty ],
