@@ -76,6 +76,7 @@ export default class Histogram {
 // Current bin width, selecting from the two strategies: binWidth or totalBins (see above)
   public readonly binWidthProperty: TReadOnlyProperty<number>;
 
+  // This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).
   public readonly representationProperty: Property<HistogramRepresentation>;
 
   public readonly histogramSonifier: HistogramSonifier;
