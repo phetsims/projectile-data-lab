@@ -45,7 +45,10 @@ export default class InteractiveToolPanel extends PDLPanel {
       public constructor() {
         const stopwatch = new Stopwatch( { tandem: Tandem.OPT_OUT } );
         stopwatch.isVisibleProperty.value = true;
-        const stopwatchNode = new PDLStopwatchNode( stopwatch, _.noop, { tandem: Tandem.OPT_OUT } ).rasterized( {
+        const stopwatchNode = new PDLStopwatchNode( stopwatch, _.noop, {
+          tandem: Tandem.OPT_OUT,
+          launchButtonEnabledProperty: new BooleanProperty( true )
+        } ).rasterized( {
           resolution: 1.25
         } );
         super( {

@@ -5,12 +5,15 @@ import StopwatchNode, { StopwatchNodeOptions } from '../../../../scenery-phet/js
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLText from '../../common/view/PDLText.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
+import { DerivedProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  launchButtonEnabledProperty: TReadOnlyProperty<boolean>;
+};
 type PDLStopwatchNodeOptions = SelfOptions & WithRequired<StopwatchNodeOptions, 'tandem'>;
 
 /**
@@ -32,6 +35,10 @@ export default class PDLStopwatchNode extends StopwatchNode {
       // Fire the button on down, so that the user can time the launch in a similar way to a real stopwatch
       fireOnDown: true,
       baseColor: 'lightgray',
+
+      // Disable the button when all projectiles have been exhausted, but always allow the user to stop the stopwatch
+      enabledProperty: DerivedProperty.or( [ providedOptions.launchButtonEnabledProperty, stopwatch.isRunningProperty ] ),
+
       content: new PDLText( labelProperty, {
         maxWidth: 50
       } ),
@@ -61,6 +68,7 @@ export default class PDLStopwatchNode extends StopwatchNode {
       includePlayPauseResetButtons: false,
       otherControls: [ launchStopButton ]
     }, providedOptions );
+
     super( stopwatch, options );
   }
 }
