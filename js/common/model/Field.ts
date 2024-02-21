@@ -240,6 +240,13 @@ export default abstract class Field extends PhetioObject {
     this.selectedSampleNumberProperty.reset();
   }
 
+  /**
+   * Generates a new Projectile object with calculated launch parameters and randomized properties.
+   *
+   * @param sampleNumber - The number (1-indexed) of the sample that the Projectile will belong to.
+   * @param playSound - Determines if a launch sound should be played. Note that no sound is played if the data is being auto-generated.
+   * @returns The newly created Projectile object.
+   */
   protected createProjectile( sampleNumber: number, playSound: boolean ): Projectile {
     const angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
     const launchAngle = this.meanAngleProperty.value + angleDeviation;
