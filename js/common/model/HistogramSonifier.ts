@@ -15,8 +15,6 @@ import Utils from '../../../../dot/js/Utils.js';
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-const BIN_SOUND_DURATION = 0.06;
-
 const binSoundClip = new SoundClip( generalBoundaryBoop_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( binSoundClip );
 
@@ -94,7 +92,7 @@ export default class HistogramSonifier {
     }
 
     this.currentBinIndex = 0;
-    this.timeRemainingInCurrentBin = BIN_SOUND_DURATION * this.binWidthProperty.value;
+    this.timeRemainingInCurrentBin = this.soundDelayForBinWidth( this.binWidthProperty.value );
 
     this.sonifiedBinProperty.value = this.sortedBins[ this.currentBinIndex ];
   }
@@ -108,7 +106,7 @@ export default class HistogramSonifier {
       if ( this.timeRemainingInCurrentBin <= 0 ) {
         this.currentBinIndex++;
 
-        this.timeRemainingInCurrentBin = BIN_SOUND_DURATION * this.binWidthProperty.value;
+        this.timeRemainingInCurrentBin = this.soundDelayForBinWidth( this.binWidthProperty.value );
 
 
         // If we went past the edge of the bins, stop playing
@@ -124,7 +122,14 @@ export default class HistogramSonifier {
 
   // Maps the height of the bin to the playback rate of the sound
   private playbackRateForBinHeight = ( binHeight: number ): number => {
-    return Utils.linear( 0, 500, 0.4, 4, binHeight );
+
+    // This power function passes through (1, 0.44) and (500, 3.1) with a decreasing slope
+    return 1.6 * Math.pow( ( binHeight + 5.5 ), 0.18 ) - 1.8;
+  };
+
+  // Maps the width of the bin to the duration of the sound
+  private soundDelayForBinWidth = ( binWidth: number ): number => {
+    return Utils.linear( 0.5, 10, 0.08, 0.3, binWidth );
   };
 }
 
