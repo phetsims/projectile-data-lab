@@ -265,10 +265,7 @@ export default class LauncherNode extends Node {
         'patternImage width and height must be finite, current values are: ' + patternImage.width + ', ' +
         patternImage.height + ', for mysteryLauncher: ' + mysteryLauncherNumber );
 
-      // TODO: The image width is hard-coded in case the SVG dimensions are not available on startup, see https://github.com/phetsims/projectile-data-lab/issues/168
-      const PATTERN_IMAGE_WIDTH = 300;
-
-      const imageScale = ( BARREL_LENGTH_BEFORE_ORIGIN + BARREL_LENGTH_AFTER_ORIGIN ) / PATTERN_IMAGE_WIDTH;
+      const imageScale = ( BARREL_LENGTH_BEFORE_ORIGIN + BARREL_LENGTH_AFTER_ORIGIN ) / patternImage.width;
       patternImage.scale( imageScale );
       patternImage.right = BARREL_LENGTH_AFTER_ORIGIN;
       patternImage.centerY = 0;
