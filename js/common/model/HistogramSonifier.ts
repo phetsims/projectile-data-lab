@@ -55,7 +55,7 @@ export default class HistogramSonifier {
   }
 
   // Set the histogram data, which is used to determine the sonification
-  public setHistogramData( data: HistogramData[] ): void {
+  public setHistogramData( data: HistogramData[], cancelSonification: boolean ): void {
 
     const binnedData = new Map<number, HistogramData[]>();
     const binWidth = this.binWidthProperty.value;
@@ -80,7 +80,9 @@ export default class HistogramSonifier {
     this.sortedBins = Array.from( this.binnedData.keys() ).sort( ( a, b ) => a - b );
 
     // If the data changes, stop playing the sound
-    this.sonifiedBinProperty.value = null;
+    if ( cancelSonification ) {
+      this.sonifiedBinProperty.value = null;
+    }
   }
 
   // Initiate the sequence of sounds for the histogram bins
@@ -107,7 +109,6 @@ export default class HistogramSonifier {
         this.currentBinIndex++;
 
         this.timeRemainingInCurrentBin = this.soundDelayForBinWidth( this.binWidthProperty.value );
-
 
         // If we went past the edge of the bins, stop playing
         if ( this.currentBinIndex >= this.binnedData.size ) {

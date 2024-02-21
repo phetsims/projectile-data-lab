@@ -223,7 +223,7 @@ export default class HistogramNode extends Node {
     this.mutate( options );
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
-    const updateHistogram = () => {
+    const updateHistogram = ( cancelSonification: boolean ) => {
 
       // Avoid an inconsistent intermediate state while the phet-io state is being set
       if ( !isSettingPhetioStateProperty.value ) {
@@ -231,14 +231,14 @@ export default class HistogramNode extends Node {
         const field = fieldProperty.value;
         if ( field instanceof VSMField ) {
           histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
-          histogram.histogramSonifier.setHistogramData( fieldProperty.value.landedProjectiles );
+          histogram.histogramSonifier.setHistogramData( fieldProperty.value.landedProjectiles, cancelSonification );
         }
         else if ( field instanceof SamplingField ) {
           const samples = field.getHistogramData();
           const selectedSampleNumber = field.selectedSampleNumberProperty.value;
           histogramPainter.setHistogramData( samples, samples[ selectedSampleNumber - 1 ] );
 
-          histogram.histogramSonifier.setHistogramData( samples );
+          histogram.histogramSonifier.setHistogramData( samples, cancelSonification );
         }
         else {
           assert && assert( false, 'unhandled field type' );
@@ -248,37 +248,37 @@ export default class HistogramNode extends Node {
       }
     };
 
-    isSettingPhetioStateProperty.addListener( updateHistogram );
+    isSettingPhetioStateProperty.addListener( () => updateHistogram( true ) );
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
     fields.forEach( field => {
 
-      field.projectilesClearedEmitter.addListener( () => updateHistogram() );
+      field.projectilesClearedEmitter.addListener( () => updateHistogram( true ) );
 
       // For VSM, redraw when the selected projectile changes
       if ( field instanceof VSMField ) {
-        field.selectedProjectileProperty.link( () => updateHistogram() );
-        field.projectileLandedEmitter.addListener( () => updateHistogram() );
+        field.selectedProjectileProperty.link( () => updateHistogram( false ) );
+        field.projectileLandedEmitter.addListener( () => updateHistogram( true ) );
       }
       else if ( field instanceof SamplingField ) {
 
         // Show a different selected brick
-        field.selectedSampleNumberProperty.link( () => updateHistogram() );
+        field.selectedSampleNumberProperty.link( () => updateHistogram( true ) );
 
         // When we get a new mean, redraw the histogram
-        field.numberOfCompletedSamplesProperty.link( () => updateHistogram() );
-        field.phaseProperty.link( () => updateHistogram() );
-        field.sampleMeanProperty.link( () => updateHistogram() );
+        field.numberOfCompletedSamplesProperty.link( () => updateHistogram( true ) );
+        field.phaseProperty.link( () => updateHistogram( true ) );
+        field.sampleMeanProperty.link( () => updateHistogram( true ) );
       }
     } );
 
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
-      updateHistogram();
+      updateHistogram( true );
     } );
 
     // When the field or bin width changes, redraw the histogram
-    fieldProperty.link( () => updateHistogram() );
-    histogram.binWidthProperty.link( () => updateHistogram() );
+    fieldProperty.link( () => updateHistogram( true ) );
+    histogram.binWidthProperty.link( () => updateHistogram( true ) );
     histogram.zoomProperty.link( () => {
 
       const maxCount = ZOOM_LEVELS[ histogram.zoomProperty.value ].maxCount;
@@ -296,7 +296,7 @@ export default class HistogramNode extends Node {
       }
       verticalAxisGridLines.visible = spacing !== null;
 
-      updateHistogram();
+      updateHistogram( false );
     } );
 
     const binControlNode = new BinControlNode( comboBoxParent, histogram.selectedBinWidthProperty, histogram.selectedTotalBinsProperty, {
