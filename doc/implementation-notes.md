@@ -1,4 +1,10 @@
-TODO implementation overview
+# Implementation Notes
+
+## Architecture and Design:
+
+The simulation is structured around a model/view architecture, separating the physics and statistics modeling (model)
+from the graphical representation (view). The sonification is implemented in the model, since it is often triggered
+directly by model events rather than through a listener abstraction.
 
 ### Screens
 
@@ -11,7 +17,8 @@ Measurement. The Sampling screen is more about firing a complete sample at once,
 This simulation has a notion of scenes where each scene contains its own state data. The scenes in this simulation are
 called `Field`s. The models that contain `Field[]` also provide `DynamicProperty` to present the value of the selected
 Field. Note the VSM screens have an independently selectable `Field` whereas on the Sampling screen, the `SamplingField`
-is determined by the selection of mystery launcher and sample size.
+is determined by the selection of mystery launcher and sample size. Also be aware there is a
+doubly-nested `DynamicProperty` in the VSM screens, like this: Model --> Field --> Launcher.
 
 ### Enumeration patterns
 
@@ -28,8 +35,8 @@ The string keys are designed as a camel-cased version of the English translation
 
 ```json
 "binWidthMPattern": {
-    "value": "{{binWidth}} m"
-  }
+"value": "{{binWidth}} m"
+}
 ```
 
 Note that if the English strings are changed after 1.0, the keys will not be updated.
@@ -46,3 +53,20 @@ files, and to have a usage site like `new MeasuringTapeIconNode()`.
 For this simulation, individual projectiles are not PhET-iO instrumented. Instead, the parent Field is instrumented.
 Please see FieldIO which describes how the serialization is implemented. Note however that ProjectileIO defines how a
 Projectile is serialized as part of the Field serialization.
+
+A flat structure is chosen for the design of the ProjectileIO, so that it can be easily serialized and deserialized. The
+same data structure for ProjectileIO is used in the VSM screens and the Sampling screen, to keep a simple interface for
+PhET-iO clients.
+
+## Performance
+
+Good performance is critical in this simulation, and has led to several implementation decisions such as:
+
+1. Objects are not dynamically allocated, and are instead statically allocated.
+2. View elements are created only once, and are re-used to represent different Fields or Launchers based on the result
+   of a `DynamicProperty`.
+3. The simulation is designed to be able to handle a large number of projectiles, and to be able to run at a high frame
+   rate.
+4. Methods to render the heat maps are optimized to support updating based on a single value being added, where
+   appropriate (rather than re-rendering the entire object). In some cases (such as the Histogram), where re-rendering
+   the entire object is fast enough, we do that instead.
