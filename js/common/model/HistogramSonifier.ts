@@ -129,7 +129,7 @@ export default class HistogramSonifier {
 
   // Maps the width of the bin to the duration of the sound
   private soundDelayForBinWidth = ( binWidth: number ): number => {
-    return Utils.linear( 0.5, 10, 0.08, 0.3, binWidth );
+    return Utils.linear( 0.5, 10, 0.05, 0.3, binWidth );
   };
 }
 
