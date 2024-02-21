@@ -32,7 +32,7 @@ const DISTANCE_BETWEEN_MINOR_TICKS = 1 / ( PDLConstants.ANGLE_STANDARD_DEVIATION
 const filter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
   Q: 1,
-  frequency: 800
+  frequency: 900
 } );
 
 const minMaxFilter = new BiquadFilterNode( phetAudioContext, {
@@ -89,10 +89,8 @@ export default class AngleStabilizerSection extends VBox {
         middleMovingUpPlaybackRateMapper: playbackRateMapper,
         middleMovingDownPlaybackRateMapper: playbackRateMapper,
         interThresholdDelta: DISTANCE_BETWEEN_MINOR_TICKS,
-        // constrainValue: ( value: number ) => Utils.roundToInterval( value, 0.000000001 ),
         minSoundPlayer: angleStabilizerMinSoundClip,
-        maxSoundPlayer: angleStabilizerMaxSoundClip,
-        minimumInterMiddleSoundTime: 0.035
+        maxSoundPlayer: angleStabilizerMaxSoundClip
       } )
     } );
     slider.addMajorTick( 0, new PDLText( ProjectileDataLabStrings.wideStringProperty, {
