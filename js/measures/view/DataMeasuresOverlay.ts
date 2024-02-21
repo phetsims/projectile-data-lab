@@ -17,7 +17,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLText from '../../common/view/PDLText.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLConstants from '../../common/PDLConstants.js';
+import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 
 /**
@@ -172,8 +172,13 @@ export default class DataMeasuresOverlay extends Node {
       maxWidth: TEXT_MAX_WIDTH
     } );
 
-    Multilink.multilink( [ meanDistanceProperty, standardDeviationDistanceProperty, sdPatternStringProperty, meanLabelPanel.boundsProperty ],
-      ( meanDistance, standardDeviationDistance ) => {
+    Multilink.multilink( [ IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY, meanDistanceProperty, standardDeviationDistanceProperty, sdPatternStringProperty, meanLabelPanel.boundsProperty ],
+      ( isCurrentlyAutoGeneratingData, meanDistance, standardDeviationDistance ) => {
+
+        // To improve performance, do not incrementally update the graphics every time a projectile is auto-generated
+        if ( isCurrentlyAutoGeneratingData ) {
+          return;
+        }
 
         if ( meanDistance !== null ) {
           const meanX = modelViewTransform.modelToViewX( meanDistance );

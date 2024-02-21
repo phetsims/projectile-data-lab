@@ -13,7 +13,7 @@ import Matrix3 from '../../../../dot/js/Matrix3.js';
 import Range from '../../../../dot/js/Range.js';
 import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import PDLConstants from '../../common/PDLConstants.js';
+import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import Property from '../../../../axon/js/Property.js';
@@ -59,11 +59,11 @@ export default class ProjectileSelectorNode extends SelectorNode {
       }
     }, providedOptions );
 
-    const rangeProperty = new DerivedProperty( [ selectedProjectileNumberProperty, numberOfLandedProjectilesProperty, totalProjectileCountProperty, selectedProjectileProperty ],
-      ( ( selectedProjectileNumber, numberOfLandedProjectiles, totalProjectileCount ) => {
+    const rangeProperty = new DerivedProperty( [ IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY, selectedProjectileNumberProperty, numberOfLandedProjectilesProperty, totalProjectileCountProperty, selectedProjectileProperty ],
+      ( ( isCurrentlyAutoGeneratingData, selectedProjectileNumber, numberOfLandedProjectiles, totalProjectileCount ) => {
 
         // Projectiles are added to the data set when they land
-        if ( numberOfLandedProjectiles === 0 ) {
+        if ( numberOfLandedProjectiles === 0 || isCurrentlyAutoGeneratingData ) {
           return new Range( 0, 0 );
         }
         else if ( totalProjectileCount > numberOfLandedProjectiles ) {
@@ -76,7 +76,9 @@ export default class ProjectileSelectorNode extends SelectorNode {
           // Everything is landed, everything can be selected
           return new Range( 1, numberOfLandedProjectiles );
         }
-      } ) );
+      } ), {
+        valueComparisonStrategy: 'equalsFunction'
+      } );
 
     type Depiction = {
       type: ProjectileType;

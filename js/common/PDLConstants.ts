@@ -9,6 +9,7 @@
 import Range from '../../../dot/js/Range.js';
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import { BooleanProperty } from '../../../axon/js/imports.js';
 
 const maxFieldDistance = 100;
 const fieldWidth = 850;
@@ -96,6 +97,10 @@ const PDLConstants = {
 
   VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH: 14
 } as const;
+
+// Implementation detail about AUTO_GENERATE_DATA_PROPERTY to get a performance boost by avoiding unnecessary intermediate work
+const IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY = new BooleanProperty( false );
+export { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY };
 
 projectileDataLab.register( 'PDLConstants', PDLConstants );
 export default PDLConstants;
