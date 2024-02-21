@@ -57,16 +57,22 @@ export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
  */
 export default abstract class Field extends PhetioObject {
 
+  // Indicates which LauncherConfiguration is currently in effect. Please see LauncherConfiguration for more details.
   public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
 
+  // Specifies the type of projectile being used.
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
+  // Specifies the average speed of launched projectiles
   public readonly meanSpeedProperty: DynamicProperty<number, number, Launcher>;
 
+  // Specifies the speed standard deviation for launched projectiles.
   public readonly standardDeviationSpeedProperty: DynamicProperty<number, number, Launcher>;
 
+  // Indicates the current value for the standard deviation of the angle of launch.
   public readonly standardDeviationAngleProperty: DynamicProperty<number, number, Launcher>;
 
+  // Indicates the current value for the angle stabilizer.
   public readonly angleStabilizerProperty: DynamicProperty<number, number, Launcher>;
 
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
@@ -75,23 +81,31 @@ export default abstract class Field extends PhetioObject {
   // Launcher height is the vertical distance between the launch point and the origin, in field units.
   public readonly launchHeightProperty: TReadOnlyProperty<number>;
 
+  // True if the continuous mode is set to launching or false if not launching
   public readonly isContinuousLaunchingProperty: BooleanProperty;
 
-  // NOTE: Make sure no Projectile appears in both arrays at the same time
+  // An array of projectiles that are currently in the air. Note: No projectile should be in the airborneProjectiles and landedProjectiles array simultaneously.
   public readonly airborneProjectiles: Projectile[] = [];
+
+  // An array of projectiles that have landed.
   public readonly landedProjectiles: Projectile[] = [];
 
+  // Broad Emitter for when the projectiles have changed.
   public readonly projectilesChangedEmitter = new Emitter();
 
+  // Emitter for when a projectile has landed.
   public readonly projectileLandedEmitter: Emitter<[ Projectile ]>;
 
+  // Emitter for when projectiles have been cleared.
   public readonly projectilesClearedEmitter: Emitter;
 
+  // Property for the selected sample number.
   public readonly abstract selectedSampleNumberProperty: NumberProperty;
 
   // Are there any landed projectiles in the field? This is used for the data indicator on the field selector panel.
   public readonly isContainingDataProperty = new BooleanProperty( false );
 
+  // Unique identifier for the Field
   public readonly abstract identifier: string;
 
   protected constructor(
