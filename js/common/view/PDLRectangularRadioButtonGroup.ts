@@ -28,7 +28,7 @@ export default class PDLRectangularRadioButtonGroup<T> extends RectangularRadioB
         cornerRadius: 2,
         buttonAppearanceStrategyOptions: {
           selectedStroke: 'rgb(87,178,226)',
-          selectedLineWidth: 2.25
+          selectedLineWidth: 2.5
         }
       },
       layoutOptions: {
