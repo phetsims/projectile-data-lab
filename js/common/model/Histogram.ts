@@ -60,20 +60,20 @@ type HistogramOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'
 
 export default class Histogram {
 
-// Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
-// The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
-// depending on the BIN_STRATEGY_PROPERTY.
+  // Bin width represents the distance between adjacent field lines. It also affects how data is grouped for the histogram.
+  // The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
+  // depending on the BIN_STRATEGY_PROPERTY.
   public readonly selectedBinWidthProperty: Property<number>;
 
-// Total bins represents the number of bins in the histogram.
-// The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
-// depending on the BIN_STRATEGY_PROPERTY.
+  // Total bins represents the number of bins in the histogram.
+  // The prefix 'selected' means it is the value selected by the user, and may differ from the displayed bin width
+  // depending on the BIN_STRATEGY_PROPERTY.
   public readonly selectedTotalBinsProperty: Property<number>;
 
-// The zoom level of the histogram
+  // The zoom level of the histogram
   public readonly zoomProperty: NumberProperty;
 
-// Current bin width, selecting from the two strategies: binWidth or totalBins (see above)
+  // Current bin width, selecting from the two strategies: binWidth or totalBins (see above)
   public readonly binWidthProperty: TReadOnlyProperty<number>;
 
   // This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).

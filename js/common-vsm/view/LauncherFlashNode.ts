@@ -32,7 +32,7 @@ export default class LauncherFlashNode extends Node {
     }
     flameShape.lineTo( -radius, 0 );
 
-// create paths based on shape
+    // create paths based on shape
     const outerFlame = new Path( flameShape, { fill: 'rgb( 255, 255, 0 )', stroke: null } );
     const innerFlame = new Path( flameShape, { fill: 'rgb( 255, 200, 0 )', stroke: null } );
     innerFlame.setScaleMagnitude( 0.7 );
