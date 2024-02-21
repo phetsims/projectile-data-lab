@@ -31,7 +31,7 @@ import { Color } from '../../../../scenery/js/imports.js';
 import { AUTO_GENERATE_DATA_PROPERTY } from '../PDLQueryParameters.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, {
-  initialOutputLevel: 1
+  initialOutputLevel: 0.2
 } );
 soundManager.addSoundGenerator( launchSoundClip );
 
