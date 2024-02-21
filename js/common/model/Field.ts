@@ -109,9 +109,15 @@ export default abstract class Field extends PhetioObject {
   public readonly abstract identifier: string;
 
   protected constructor(
+    //
+    // The launchers available to be used on this Field
     public readonly launchers: readonly Launcher[],
+    //
+    // Property that indicates the active Launcher
     public readonly launcherProperty: Property<Launcher>,
-    public readonly color: Color, // The color associated with this Field. Shown on the grass and in the sign.
+    //
+    // The color associated with this Field. Shown on the grass and in the sign.
+    public readonly color: Color,
     providedOptions: FieldOptions ) {
     const options = optionize<FieldOptions, SelfOptions, PhetioObjectOptions>()( {
       phetioType: Field.FieldIO,
