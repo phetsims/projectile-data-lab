@@ -87,16 +87,14 @@ export default class LauncherNode extends Node {
     const labelText = new PDLText( new DerivedProperty( [ mysteryLauncher ], mysteryLauncher => Utils.toFixed( mysteryLauncher.launcherNumber, 0 ) ), {
       fontSize: 18
     } );
-    const labelBackground = new Circle( Math.max( labelText.width, labelText.height ) * 0.65, {
-      fill: 'white',
+    const labelPanel = new Circle( Math.max( labelText.width, labelText.height ) * 0.65, {
       stroke: 'black',
-      opacity: 0.7,
       lineWidth: 1
     } );
-    labelText.center = labelBackground.center;
+    labelText.center = labelPanel.center;
 
     this.labelNode = new Node( {
-      children: [ labelBackground, labelText ],
+      children: [ labelPanel, labelText ],
       x: -63
     } );
 
@@ -122,6 +120,7 @@ export default class LauncherNode extends Node {
 
     mysteryLauncher.link( mysteryLauncher => {
       this.updateMysteryLauncher( mysteryLauncher.launcherNumber, options.isIcon );
+      labelPanel.fill = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher.launcherNumber - 1 ].labelPanel;
     } );
 
     fieldProperty && fieldProperty.link( () => {
