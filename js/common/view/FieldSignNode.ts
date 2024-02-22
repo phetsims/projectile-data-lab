@@ -38,7 +38,7 @@ export default class FieldSignNode extends VBox {
     headingContainer.addChild( headingText );
 
     fieldProperty.link( field => {
-      headingContainer.fill = field.color;
+      headingContainer.fill = field.color.darkerColor( 0.9 );
     } );
 
     const selectorContainer = new Path( Shape.rect( 0, 0, 1, 1 ), {
