@@ -14,6 +14,7 @@ import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SMFieldOptions = SelfOptions & VSMFieldOptions;
@@ -28,6 +29,12 @@ export default class SMField extends VSMField {
     this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>( this.launcherProperty, {
       bidirectional: true,
       derive: t => t.launcherMechanismProperty
+    } );
+
+    this.customLauncherMechanismProperty.lazyLink( () => {
+      if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+        this.clearProjectiles();
+      }
     } );
   }
 

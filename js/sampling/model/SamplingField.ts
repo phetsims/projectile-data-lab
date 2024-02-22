@@ -288,8 +288,11 @@ export default class SamplingField extends Field {
     } );
 
     if ( changed ) {
-      this.updateComputedProperties();
-      this.projectilesChangedEmitter.emit();
+
+      if ( !AUTO_GENERATE_DATA_PROPERTY.value ) {
+        this.updateComputedProperties();
+        this.projectilesChangedEmitter.emit();
+      }
     }
   }
 
@@ -383,8 +386,10 @@ export default class SamplingField extends Field {
         this.selectedSampleNumberProperty.value++;
 
         this.finishCurrentSample();
-        this.updateComputedProperties();
+
       }
+      this.updateComputedProperties();
+      this.projectilesChangedEmitter.emit();
     }
   }
 

@@ -13,7 +13,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
 import SMField from './SMField.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SMModelOptions = SelfOptions & VSMModelOptions<SMField>;
@@ -35,12 +34,6 @@ export default class SMModel<T extends SMField> extends VSMModel<T> {
       phetioReadOnly: true,
       phetioState: false,
       phetioValueType: LauncherMechanism.LauncherMechanismIO
-    } );
-
-    this.customLauncherMechanismProperty.lazyLink( () => {
-      if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
-        this.fieldProperty.value.clearProjectiles();
-      }
     } );
   }
 }
