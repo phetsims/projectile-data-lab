@@ -34,16 +34,19 @@ export default class SamplingHistogramNode extends HistogramNode {
                       fields: Field[],
                       numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       histogram: Histogram,
+                      histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       comboBoxParent: Node,
                       clearCurrentField: () => void,
                       options: HistogramNodeOptions ) {
+    
     super(
       fieldProperty,
       fields,
       numberOfLandedProjectilesProperty,
       horizontalAxisLabelText,
       histogram,
+      histogramSoundEnabledProperty,
       comboBoxParent,
       PDLColors.meanMarkerFillProperty,
       PDLColors.meanMarkerStrokeProperty,

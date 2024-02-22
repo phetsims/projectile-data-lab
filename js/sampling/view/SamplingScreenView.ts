@@ -142,18 +142,28 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.addChild( this.launchPanel );
     this.behindProjectilesLayer.addChild( this.fieldSignNode );
 
+    const histogramSoundEnabledProperty = new DerivedProperty( [ model.phaseProperty, model.singleOrContinuousProperty, model.isContinuousLaunchingProperty ],
+      ( phase, singleOrContinuous, isContinuousLaunching ) => {
+        if ( singleOrContinuous === 'single' ) {
+          return phase === 'showingCompleteSampleWithMean';
+        }
+        else {
+          return !isContinuousLaunching;
+        }
+      } );
+
     this.accordionBox = new SamplingAccordionBox(
       model.histogram,
       model.launcherProperty,
       model.sampleSizeProperty,
       model.numberOfCompletedSamplesProperty,
-
       model.fieldProperty,
       model.fields,
       model.histogram.zoomProperty,
       model.histogram.binWidthProperty,
       this,
       model.histogram.representationProperty,
+      histogramSoundEnabledProperty,
       () => model.clearCurrentField(), {
         top: PDLConstants.SCREEN_VIEW_Y_MARGIN,
         centerX: this.layoutBounds.centerX,

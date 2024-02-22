@@ -19,9 +19,9 @@ import LauncherNode from '../../common/view/LauncherNode.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import HistogramNode from '../../common/view/HistogramNode.js';
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
+import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -47,9 +47,10 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
         tandem: options.tandem.createTandem( 'interactiveToolPanel' )
       } );
 
-    const createHistogramNode = ( node: Node ) => new HistogramNode(
+    const createHistogramNode = ( node: Node ) => new VSMHistogramNode(
       model.fieldProperty,
       model.fields,
+      model.totalProjectileCountProperty,
       model.numberOfLandedProjectilesProperty,
       ProjectileDataLabStrings.distanceStringProperty,
       model.histogram,

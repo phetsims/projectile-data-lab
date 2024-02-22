@@ -71,6 +71,7 @@ export default class HistogramNode extends Node {
                       numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       histogram: Histogram,
+                      histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
                       comboBoxParent: Node,
                       blockFillProperty: ColorProperty,
                       blockStrokeProperty: ColorProperty,
@@ -265,12 +266,12 @@ export default class HistogramNode extends Node {
       else if ( field instanceof SamplingField ) {
 
         // Show a different selected brick
-        field.selectedSampleNumberProperty.link( () => updateHistogram( true ) );
+        field.selectedSampleNumberProperty.link( () => updateHistogram( false ) );
 
         // When we get a new mean, redraw the histogram
         field.numberOfCompletedSamplesProperty.link( () => updateHistogram( true ) );
         field.phaseProperty.link( () => updateHistogram( true ) );
-        field.sampleMeanProperty.link( () => updateHistogram( true ) );
+        field.sampleMeanProperty.link( () => updateHistogram( false ) );
       }
     } );
 
@@ -344,8 +345,7 @@ export default class HistogramNode extends Node {
     const toggleHistogramSoundButton = new RectangularPushButton( {
       content: histogramSoundIconToggleNode,
       soundPlayer: nullSoundPlayer,
-      enabledProperty: new DerivedProperty( [ numberOfLandedProjectilesProperty ],
-        numberOfLandedProjectiles => numberOfLandedProjectiles > 0 ),
+      enabledProperty: histogramSoundEnabledProperty,
       size: new Dimension2( 34, 34 ),
       xMargin: 5,
       yMargin: 5,

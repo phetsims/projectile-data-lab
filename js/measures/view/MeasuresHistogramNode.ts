@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
+import { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import Field from '../../common/model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -21,6 +21,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Histogram from '../../common/model/Histogram.js';
+import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 
 /**
  * The measures histogram node is a histogram node that also shows the mean and standard deviation of the data.
@@ -32,10 +33,11 @@ import Histogram from '../../common/model/Histogram.js';
 type SelfOptions = EmptySelfOptions;
 type MeasuresHistogramNodeOptions = SelfOptions & WithRequired<HistogramNodeOptions, 'tandem'>;
 
-export default class MeasuresHistogramNode extends HistogramNode {
+export default class MeasuresHistogramNode extends VSMHistogramNode {
 
   public constructor( fieldProperty: TReadOnlyProperty<MeasuresField>,
                       fields: Field[],
+                      totalProjectileCountProperty: TReadOnlyProperty<number>,
                       numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       histogram: Histogram,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
@@ -52,14 +54,13 @@ export default class MeasuresHistogramNode extends HistogramNode {
     super(
       fieldProperty,
       fields,
+      totalProjectileCountProperty,
       numberOfLandedProjectilesProperty,
       horizontalAxisLabelText,
       histogram,
       comboBoxParent,
-
       PDLColors.histogramDataFillColorProperty,
       PDLColors.histogramDataStrokeColorProperty,
-
       options );
 
     const noDataLabel = new PDLText( ProjectileDataLabStrings.noDataStringProperty, {} );

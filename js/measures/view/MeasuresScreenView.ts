@@ -58,6 +58,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     const createHistogramNode = ( comboBoxParent: Node ) => new MeasuresHistogramNode(
       model.fieldProperty,
       model.fields,
+      model.totalProjectileCountProperty,
       model.numberOfLandedProjectilesProperty,
       model.histogram,
       ProjectileDataLabStrings.distanceStringProperty,
