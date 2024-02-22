@@ -206,6 +206,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public override launchButtonPressed(): void {
 
     if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+      this.fieldProperty.value.clearProjectiles();
       for ( let i = 0; i < PDLQueryParameters.maxProjectilesVSMField; i++ ) {
         this.fieldProperty.value.createLandedProjectile();
       }

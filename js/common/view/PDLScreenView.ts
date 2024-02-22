@@ -35,6 +35,9 @@ import LaunchButton from './LaunchButton.js';
 import FieldSignNode from './FieldSignNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { AUTO_GENERATE_DATA_PROPERTY } from '../PDLQueryParameters.js';
+import { DerivedProperty } from '../../../../axon/js/imports.js';
+import { createGatedVisibleProperty } from '../model/createGatedVisibleProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
@@ -163,10 +166,12 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
         bottom: this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN,
         tandem: options.tandem.createTandem( 'launchButton' ),
         phetioEnabledPropertyInstrumented: false,
-        enabledProperty: launchButtonEnabledProperty
+        enabledProperty: DerivedProperty.or( [ launchButtonEnabledProperty, AUTO_GENERATE_DATA_PROPERTY ] )
       } );
 
     const radioButtonLabelMaxWidth = 120;
+    const singleOrContinuousRadioButtonGroupTandem = options.tandem.createTandem( 'singleOrContinuousRadioButtonGroup' );
+
     this.singleOrContinuousRadioButtonGroup = new VerticalAquaRadioButtonGroup( model.singleOrContinuousProperty, [ {
       value: 'single' as const,
       createNode: () => new PDLText( singleStringProperty, {
@@ -185,7 +190,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       left: this.launchButton.right + 15,
       centerY: this.launchButton.centerY,
       spacing: 10,
-      tandem: options.tandem.createTandem( 'singleOrContinuousRadioButtonGroup' ),
+      visibleProperty: createGatedVisibleProperty( DerivedProperty.not( AUTO_GENERATE_DATA_PROPERTY ), singleOrContinuousRadioButtonGroupTandem ),
+      tandem: singleOrContinuousRadioButtonGroupTandem,
       phetioFeatured: true,
       radioButtonOptions: {
         phetioVisiblePropertyInstrumented: false,
@@ -193,8 +199,11 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       }
     } );
 
+    const timeControlNodeTandem = options.tandem.createTandem( 'timeControlNode' );
+
     this.timeControlNode = new TimeControlNode( model.isPlayingProperty, {
-      tandem: options.tandem.createTandem( 'timeControlNode' ),
+      tandem: timeControlNodeTandem,
+      visibleProperty: createGatedVisibleProperty( DerivedProperty.not( AUTO_GENERATE_DATA_PROPERTY ), timeControlNodeTandem ),
       phetioFeatured: true,
       playPauseStepButtonOptions: {
         includeStepForwardButton: false

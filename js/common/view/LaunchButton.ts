@@ -9,10 +9,12 @@ import PDLColors from '../PDLColors.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
 import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
+import launchButtonAutoGenerate_png from '../../../images/launchButtonAutoGenerate_png.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import { AUTO_GENERATE_DATA_PROPERTY } from '../PDLQueryParameters.js';
+import pushButtonSoundPlayer from '../../../../tambo/js/shared-sound-players/pushButtonSoundPlayer.js';
 
 /**
  * Launch button for the projectile data lab.
@@ -55,15 +57,30 @@ export default class LaunchButton extends RectangularPushButton {
       } )
     } ], {} );
 
+    const launchButtonWithAutogenerateToggleNode = new ToggleNode<boolean, Node>( AUTO_GENERATE_DATA_PROPERTY, [ {
+      value: false,
+      createNode: () => launchButtonToggleNode
+    }, {
+      value: true,
+      createNode: () => new Image( launchButtonAutoGenerate_png )
+    } ], {} );
+
     const options = optionize<LaunchButtonOptions, SelfOptions, RectangularPushButtonOptions>()( {
-      content: launchButtonToggleNode,
+      content: launchButtonWithAutogenerateToggleNode,
       baseColor: PDLColors.launchButtonColorProperty,
       disabledColor: PDLColors.launchButtonDisabledColorProperty,
       size: new Dimension2( 85, 45 ),
       yMargin: 5,
       phetioFeatured: true,
       listener: launchButtonPressed,
-      soundPlayer: nullSoundPlayer
+      soundPlayer: {
+        play: () => {
+          if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+            pushButtonSoundPlayer.play();
+          }
+        },
+        stop: _.noop
+      }
     }, providedOptions );
 
     super( options );

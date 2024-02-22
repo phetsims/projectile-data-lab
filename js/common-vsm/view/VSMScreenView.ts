@@ -61,9 +61,10 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
 
     const options = optionize<VSMScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {}, providedOptions );
 
-    const launchButtonEnabledProperty = new DerivedProperty( [ model.totalProjectileCountProperty ], totalProjectileCount => {
-      return totalProjectileCount < PDLQueryParameters.maxProjectilesVSMField;
-    } );
+    const launchButtonEnabledProperty = new DerivedProperty( [ model.totalProjectileCountProperty ],
+      totalProjectileCount => {
+        return totalProjectileCount < PDLQueryParameters.maxProjectilesVSMField;
+      } );
 
     super(
       model,

@@ -24,6 +24,9 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
+import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
+import { DerivedProperty } from '../../../../axon/js/imports.js';
+import { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
@@ -79,6 +82,9 @@ export default class InteractiveToolPanel extends PDLPanel {
       }
     }
 
+    const checkboxGroupTandem = options.tandem.createTandem( 'checkboxGroup' );
+    const stopwatchCheckboxTandemName = 'stopwatchCheckbox';
+
     const checkboxGroup = new VerticalCheckboxGroup( [ {
       property: isMeasuringTapeVisibleProperty,
       createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.measuringTapeStringProperty, new MeasuringTapeIconNode() ),
@@ -86,11 +92,15 @@ export default class InteractiveToolPanel extends PDLPanel {
     }, {
       property: isStopwatchVisibleProperty,
       createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.stopwatchStringProperty, new StopwatchNodeIcon() ),
-      tandemName: 'stopwatchCheckbox'
+      tandemName: stopwatchCheckboxTandemName,
+      options: {
+        visibleProperty: createGatedVisibleProperty( DerivedProperty.not( AUTO_GENERATE_DATA_PROPERTY ),
+          checkboxGroupTandem.createTandem( stopwatchCheckboxTandemName ) )
+      }
     },
       ...options.additionalVerticalCheckboxGroupItems
     ], {
-      tandem: options.tandem.createTandem( 'checkboxGroup' ),
+      tandem: checkboxGroupTandem,
       phetioFeatured: true,
       phetioVisiblePropertyInstrumented: false,
       checkboxOptions: {

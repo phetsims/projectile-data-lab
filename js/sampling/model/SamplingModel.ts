@@ -179,20 +179,13 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public override launchButtonPressed(): void {
 
-    assert && assert( this.numberOfStartedSamplesProperty.value < PDLQueryParameters.maxSamples, 'Cannot launch when all samples have already been launched' );
-
     const field = this.fieldProperty.value;
     const phaseProperty = field.phaseProperty;
 
-    assert && assert( phaseProperty.value === 'idle' || phaseProperty.value === 'showingCompleteSampleWithMean',
-      `The launch button should only be enabled in phase: idle | showingCompleteSampleWithMean
-Current phase: ${phaseProperty.value}
-Number of started samples: ${this.numberOfStartedSamplesProperty.value}  
-Number of completed samples: ${this.numberOfCompletedSamplesProperty.value}
-model.phase = ${this.phaseProperty.value}` );
-
     // Regenerate data if set for autogeneration
     if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
+
+      field.clearProjectiles();
 
       // TODO: These should be investigated: https://github.com/phetsims/projectile-data-lab/issues/146
       field.phaseProperty.value = 'showingCompleteSampleWithMean';
@@ -210,6 +203,14 @@ model.phase = ${this.phaseProperty.value}` );
       field.projectilesChangedEmitter.emit();
     }
     else {
+
+      assert && assert( this.numberOfStartedSamplesProperty.value < PDLQueryParameters.maxSamples, 'Cannot launch when all samples have already been launched' );
+      assert && assert( phaseProperty.value === 'idle' || phaseProperty.value === 'showingCompleteSampleWithMean',
+        `The launch button should only be enabled in phase: idle | showingCompleteSampleWithMean
+Current phase: ${phaseProperty.value}
+Number of started samples: ${this.numberOfStartedSamplesProperty.value}  
+Number of completed samples: ${this.numberOfCompletedSamplesProperty.value}
+model.phase = ${this.phaseProperty.value}` );
 
       if ( this.singleOrContinuousProperty.value === 'single' ) {
 
