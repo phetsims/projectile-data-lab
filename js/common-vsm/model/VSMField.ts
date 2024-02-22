@@ -8,13 +8,13 @@ import Emitter from '../../../../axon/js/Emitter.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import { VSMFieldIdentifier, VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
-import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
+import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import PDLQueryParameters, { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Launcher from '../../common/model/Launcher.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
@@ -228,16 +228,6 @@ export default class VSMField extends Field {
 
     this.latestLaunchAngleProperty.value = this.meanAngleProperty.value;
     this.latestLaunchSpeedProperty.reset();
-
-    if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
-
-      // TODO: Only run once per frameCounter? https://github.com/phetsims/projectile-data-lab/issues/146
-      IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY.value = true;
-      for ( let i = 0; i < PDLQueryParameters.maxProjectilesVSMField; i++ ) {
-        this.createLandedProjectile();
-      }
-      IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY.value = false;
-    }
   }
 }
 

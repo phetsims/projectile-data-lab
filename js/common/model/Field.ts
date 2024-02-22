@@ -29,7 +29,6 @@ import launch_mp3 from '../../../sounds/launch_mp3.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 import { Color } from '../../../../scenery/js/imports.js';
 import { AUTO_GENERATE_DATA_PROPERTY, PROJECTILE_TYPE_AFFECTS_SPEED_PROPERTY } from '../PDLQueryParameters.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, {
   initialOutputLevel: 0.2
@@ -214,12 +213,6 @@ export default abstract class Field extends PhetioObject {
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {
       tandem: providedOptions.tandem.createTandem( 'isContinuousLaunchingProperty' ),
       phetioReadOnly: true
-    } );
-
-    Multilink.lazyMultilink( [ this.launcherProperty, this.launcherConfigurationProperty, this.projectileTypeProperty, this.angleStabilizerProperty ], () => {
-      if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
-        this.clearProjectiles();
-      }
     } );
   }
 

@@ -373,24 +373,6 @@ export default class SamplingField extends Field {
     this.selectedSampleNumberProperty.reset();
 
     this.updateComputedProperties();
-
-    // Regenerate data if set for autogeneration
-    if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
-
-      this.phaseProperty.value = 'showingCompleteSampleWithMean';
-      this.isContinuousLaunchingProperty.value = true;
-
-      while ( this.numberOfCompletedSamplesProperty.value < PDLQueryParameters.maxSamples ) {
-
-        // Create all projectiles for this sample immediately and go to next one
-        this.selectedSampleNumberProperty.value++;
-
-        this.finishCurrentSample();
-
-      }
-      this.updateComputedProperties();
-      this.projectilesChangedEmitter.emit();
-    }
   }
 
   public override reset(): void {

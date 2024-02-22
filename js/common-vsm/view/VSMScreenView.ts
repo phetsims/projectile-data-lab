@@ -189,6 +189,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
           speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
           angleToolNode.updateHeatMapWithData( projectile.launchAngle );
 
+          // When launching many projectiles at once in the auto-generate mode, suppress the individual launch animations
+          // to improve performance
           if ( !AUTO_GENERATE_DATA_PROPERTY.value ) {
             this.launcherNode.playLaunchAnimation( projectile.launchAngle );
           }

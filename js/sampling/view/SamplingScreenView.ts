@@ -176,6 +176,9 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       // When a projectile is created in 'single' mode, play the launch animation
       field.projectileCreatedEmitter.addListener( projectile => {
         if ( model.fieldProperty.value === field && model.singleOrContinuousProperty.value === 'single' ) {
+
+          // When launching many projectiles at once in the auto-generate mode, suppress the individual launch animations
+          // to improve performance
           if ( !AUTO_GENERATE_DATA_PROPERTY.value ) {
             this.launcherNode.playLaunchAnimation( projectile.launchAngle );
           }
