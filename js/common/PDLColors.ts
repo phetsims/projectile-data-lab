@@ -163,7 +163,7 @@ const PDLColors = {
   } ),
 
   fieldSignPostColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignPost', {
-    default: '#c7baba'
+    default: '#c4bcbc'
   } ),
 
   heatMapColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMap', {
