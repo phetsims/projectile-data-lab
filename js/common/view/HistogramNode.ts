@@ -325,22 +325,20 @@ export default class HistogramNode extends Node {
       } );
     this.addChild( barBlockSwitch );
 
+    const soundIconNodeOptions = {
+      fill: 'black',
+      stroke: PhetColorScheme.BUTTON_YELLOW,
+      lineWidth: 20
+    };
+
     const histogramSoundIconToggleNode = new ToggleNode<boolean, Node>( new DerivedProperty( [
       histogram.histogramSonifier.sonifiedBinProperty
     ], sonifiedBin => sonifiedBin !== null ), [ {
       value: false,
-      createNode: () => new Path( bullhornSolidShape, {
-        fill: 'black',
-        stroke: PhetColorScheme.BUTTON_YELLOW,
-        lineWidth: 20
-      } )
+      createNode: () => new Path( bullhornSolidShape, soundIconNodeOptions )
     }, {
       value: true,
-      createNode: () => new Path( stopSolidShape, {
-        fill: 'black',
-        stroke: PhetColorScheme.BUTTON_YELLOW,
-        lineWidth: 20
-      } )
+      createNode: () => new Path( stopSolidShape, soundIconNodeOptions )
     } ], {} );
 
     const toggleHistogramSoundButton = new RectangularPushButton( {
