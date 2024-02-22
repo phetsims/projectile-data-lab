@@ -121,13 +121,10 @@ export default class MeasuresField extends SMField {
   }
 
   public override clearProjectiles(): void {
-
-    // Clear the properties first, so that data auto-generation in clearProjectiles will take the correct data measures values
+    super.clearProjectiles();
     this.meanDistanceProperty.value = null;
     this.standardDeviationDistanceProperty.value = null;
     this.standardErrorDistanceProperty.value = null;
-
-    super.clearProjectiles();
   }
 
   public override reset(): void {
