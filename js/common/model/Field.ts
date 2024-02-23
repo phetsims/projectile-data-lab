@@ -168,7 +168,8 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
     } : { validValues: [ 'angle45' ] } as const;
 
-    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle45', launcherConfigurationOptions );
+    const initialAngle = options.isLauncherConfigurationPhetioInstrumented ? 'angle30' : 'angle45';
+    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( initialAngle, launcherConfigurationOptions );
 
     const projectileTypeOptions = options.isProjectileTypePhetioInstrumented ? {
       validValues: [ CANNONBALL, PUMPKIN, PIANO ],
