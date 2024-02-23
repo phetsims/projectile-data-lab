@@ -19,7 +19,7 @@ export default class VSMKeyboardShortcutsHelpSection extends KeyboardHelpSection
   public constructor() {
 
     const launchRow = KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(), LetterKeyNode.l() ], ProjectileDataLabStrings.pressTheLaunchButtonStringProperty );
-    const fieldRow = KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(), KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 0 ), new NumberKeyNode( 8 ) ) ], ProjectileDataLabStrings.selectAFieldStringProperty );
+    const fieldRow = KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(), KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 1 ), new NumberKeyNode( 6 ) ) ], ProjectileDataLabStrings.selectAFieldStringProperty );
 
     super( ProjectileDataLabStrings.keyboardShortcutsStringProperty, [ launchRow, fieldRow ], {
       textMaxWidth: 250,
