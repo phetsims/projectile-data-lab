@@ -10,7 +10,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { HBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { HBox, ManualConstraint, Node, createGatedVisibleProperty } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -37,7 +37,6 @@ import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { AUTO_GENERATE_DATA_PROPERTY } from '../PDLQueryParameters.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
-import { createGatedVisibleProperty } from '../model/createGatedVisibleProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;

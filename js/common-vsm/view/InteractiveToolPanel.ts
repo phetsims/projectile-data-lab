@@ -9,7 +9,7 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Color, Node } from '../../../../scenery/js/imports.js';
+import { Color, Node, createGatedVisibleProperty } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -24,7 +24,6 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import { createGatedVisibleProperty } from '../../common/model/createGatedVisibleProperty.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
 import { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 
