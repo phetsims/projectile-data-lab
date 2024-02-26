@@ -20,7 +20,8 @@ const DEFAULT_EDGE_1 = 40;
 const DEFAULT_EDGE_2 = 60;
 
 /**
- * IntervalTool is a tool that allows the user to select an interval in the data set.
+ * IntervalTool is a tool that allows the user to select an interval in the data set. The IntervalTool treats its left and
+ * right values atomically rather than independently to prevent things from going out of bounds or errors due to re-entrancy.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

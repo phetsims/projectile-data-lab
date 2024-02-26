@@ -16,12 +16,47 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PDLColors from '../../common/PDLColors.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import grab_mp3 from '../../../../tambo/sounds/grab_mp3.js';
 import release_mp3 from '../../../../tambo/sounds/release_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import { BooleanProperty, NumberProperty } from '../../../../axon/js/imports.js';
+import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
+import Range from '../../../../dot/js/Range.js';
+import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+
+// TODO: See https://github.com/phetsims/projectile-data-lab/issues/173, replace with correct sounds
+const filter = new BiquadFilterNode( phetAudioContext, {
+  type: 'lowpass',
+  Q: 1,
+  frequency: 900
+} );
+
+const minMaxFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'bandpass',
+  Q: 1,
+  frequency: 600
+} );
+
+const angleStabilizerSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  additionalAudioNodes: [ filter ]
+} );
+const angleStabilizerMinSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  additionalAudioNodes: [ minMaxFilter ],
+  initialPlaybackRate: 0.8
+} );
+const angleStabilizerMaxSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  additionalAudioNodes: [ minMaxFilter ],
+  initialPlaybackRate: 1.6
+} );
+
+soundManager.addSoundGenerator( angleStabilizerSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( angleStabilizerMinSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( angleStabilizerMaxSoundClip, { categoryName: 'user-interface' } );
 
 type SelfOptions = {
   isIcon: boolean;
@@ -48,6 +83,9 @@ export default class IntervalToolNode extends Node {
 
   // The center line is only visible while the interval tool is being translationally dragged (via keyboard or mouse)
   private readonly centerLineNode: Line;
+
+  // This Property represents whether the user is dragging via the center readout, which translates the entire interval.
+  private readonly isCenterDraggingProperty = new BooleanProperty( false );
 
   public constructor( intervalTool: IntervalTool, modelViewTransform: ModelViewTransform2, providedOptions: IntervalToolNodeOptions ) {
 
@@ -106,7 +144,7 @@ export default class IntervalToolNode extends Node {
     this.centerLineNode = new Line( 0, 0, 0, 0, {
       stroke: 'black',
       lineWidth: 1,
-      visible: false
+      visibleProperty: this.isCenterDraggingProperty
     } );
 
     this.addChild( this.centerLineNode );
@@ -158,6 +196,9 @@ export default class IntervalToolNode extends Node {
     } );
     this.addChild( readoutVBox );
 
+    /**
+     * Here, we create adapters to work with the 2D DragListeners (even though we really only need the horizontal values).
+     */
     const centerProperty = {
       get value(): Vector2 {
         return new Vector2( intervalTool.center, 0 );
@@ -184,6 +225,11 @@ export default class IntervalToolNode extends Node {
         intervalTool.edge2 = v.x;
       }
     };
+
+    // These are a downstream Properties (only updated in the update function) that is used for sonification only. Please see the documentation
+    // in IntervalTool.ts about atomicity.
+    const edge1XProperty = new NumberProperty( intervalTool.edge1 );
+    const edge2XProperty = new NumberProperty( intervalTool.edge2 );
 
     const update = () => {
       const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1 );
@@ -212,6 +258,10 @@ export default class IntervalToolNode extends Node {
 
       readoutVBox.centerX = ( viewEdge1X + viewEdge2X ) / 2;
       readoutVBox.top = ARROW_Y - intervalReadout.height / 2;
+
+      // Update the downstream Properties which are only used for sonification.
+      edge1XProperty.value = intervalTool.edge1;
+      edge2XProperty.value = intervalTool.edge2;
     };
 
     intervalTool.dataFractionProperty.link( fraction => update() );
@@ -241,11 +291,11 @@ export default class IntervalToolNode extends Node {
 
     const translateDragListenerOptions = {
       start: () => {
-        this.centerLineNode.visible = true;
+        this.isCenterDraggingProperty.value = true;
         grabClip.play();
       },
       end: () => {
-        this.centerLineNode.visible = false;
+        this.isCenterDraggingProperty.value = false;
         releaseClip.play();
       },
       transform: modelViewTransform
@@ -263,6 +313,43 @@ export default class IntervalToolNode extends Node {
       tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
       drag: moveToFront( edge1Sphere )
     }, listenerOptions, dragListenerOptions ) ) );
+
+
+    // Play a ratcheting sound as either edge is dragged. The sound is played when passing thresholds on the field,
+    // but the sound played is a function of the width of the interval.
+    const playbackRateMapper = ( value: number ) => Utils.linear( 0, 100, 2, 1, value );
+
+    const valueChangeSoundPlayer = new ValueChangeSoundPlayer( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ), {
+      middleMovingUpSoundPlayer: angleStabilizerSoundClip,
+      middleMovingDownSoundPlayer: angleStabilizerSoundClip,
+      middleMovingUpPlaybackRateMapper: playbackRateMapper,
+      middleMovingDownPlaybackRateMapper: playbackRateMapper,
+      interThresholdDelta: 5,
+      minSoundPlayer: nullSoundPlayer,
+      maxSoundPlayer: nullSoundPlayer
+    } );
+
+    const createEdgeSonificationListener = ( otherEdgeProperty: { value: Vector2 } ) => {
+      return ( newValue: number, oldValue: number ) => {
+
+        if ( !this.isCenterDraggingProperty.value ) {
+
+          const newWidth = otherEdgeProperty.value.x - newValue;
+          const oldWidth = otherEdgeProperty.value.x - oldValue;
+
+          valueChangeSoundPlayer.playSoundIfThresholdReached( Math.abs( newWidth ), Math.abs( oldWidth ) );
+          if ( newValue === 0 ) {
+            angleStabilizerMinSoundClip.play();
+          }
+          else if ( newValue === PDLConstants.MAX_FIELD_DISTANCE ) {
+            angleStabilizerMaxSoundClip.play();
+          }
+        }
+      };
+    };
+
+    edge1XProperty.lazyLink( createEdgeSonificationListener( edge2Property ) );
+    edge2XProperty.lazyLink( createEdgeSonificationListener( edge1Property ) );
 
     edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       positionProperty: edge2Property,
