@@ -32,7 +32,6 @@ export default class SamplingHistogramNode extends HistogramNode {
                       numberOfSamplesProperty: TReadOnlyProperty<number>,
                       fieldProperty: TReadOnlyProperty<SamplingField>,
                       fields: Field[],
-                      numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       histogram: Histogram,
                       histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,

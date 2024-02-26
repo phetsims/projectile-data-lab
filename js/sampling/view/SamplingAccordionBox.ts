@@ -45,7 +45,6 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
     comboBoxParent: Node,
     histogramRepresentationProperty: Property<HistogramRepresentation>,
     histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
-    clearCurrentField: () => void,
     providedOptions: VSMAccordionBoxOptions ) {
 
     const histogramNode = new SamplingHistogramNode(
@@ -54,7 +53,6 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       numberOfSamplesProperty,
       fieldProperty,
       fields,
-      numberOfSamplesProperty,
       histogram,
       histogramSoundEnabledProperty,
       ProjectileDataLabStrings.meanDistanceStringProperty,
