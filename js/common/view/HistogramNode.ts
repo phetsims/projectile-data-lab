@@ -68,7 +68,6 @@ export default class HistogramNode extends Node {
 
   public constructor( fieldProperty: TReadOnlyProperty<Field>,
                       fields: Field[],
-                      numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       histogram: Histogram,
                       histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
@@ -362,7 +361,7 @@ export default class HistogramNode extends Node {
       horizontalAxisLabelProxy.top = chartNodeProxy.bottom + CHART_UI_MARGIN;
     } );
 
-    ManualConstraint.create( this, [ this.chartNode, this.chartBackground, verticalAxisLabel ], ( chartNodeProxy, chartBackgroundProxy, verticalAxisLabelProxy ) => {
+    ManualConstraint.create( this, [ this.chartNode, this.chartBackground, verticalAxisLabel ], ( chartNodeProxy, chartBackgroundProxy ) => {
       verticalAxisLabel.right = chartNodeProxy.left - CHART_UI_MARGIN;
       verticalAxisLabel.centerY = chartBackgroundProxy.centerY;
     } );

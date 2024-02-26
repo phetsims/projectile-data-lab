@@ -270,7 +270,7 @@ export default class IntervalToolNode extends Node {
       centerXProperty.value = intervalTool.center;
     };
 
-    intervalTool.dataFractionProperty.link( fraction => update() );
+    intervalTool.dataFractionProperty.link( update );
     intervalTool.changedEmitter.addListener( update );
     update();
     percentPatternProperty.link( update );

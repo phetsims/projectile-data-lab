@@ -246,10 +246,10 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
       // The feet of the field sign should roughly be halfway between the dotted line and the back of the field. So this
       // is the distance above the center line in model units
-      this.fieldSignNode.bottom = this.modelViewTransform.modelToViewY( 1.4 );
+      fieldSignNodeProxy.bottom = this.modelViewTransform.modelToViewY( 1.4 );
 
       // The field sign is right aligned with the top right corner of the field
-      this.fieldSignNode.right = this.modelViewTransform.modelToViewX( PDLConstants.MAX_FIELD_DISTANCE );
+      fieldSignNodeProxy.right = this.modelViewTransform.modelToViewX( PDLConstants.MAX_FIELD_DISTANCE );
     } );
   }
 

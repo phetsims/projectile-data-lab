@@ -144,7 +144,7 @@ export default class VSMField extends Field {
       this.numberOfLandedProjectilesProperty.value = this.landedProjectiles.length;
     } );
 
-    this.projectileLaunchedEmitter.addListener( projectile => {
+    this.projectileLaunchedEmitter.addListener( () => {
       this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
     } );
 

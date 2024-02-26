@@ -105,7 +105,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
     // Create the graphics for the wire connected to the launcher
     const launcherCircle = new Circle( 4, { fill: 'black' } );
 
-    const connectingWireShape = this.connectingWireShapeForIsRaised( false );
+    const connectingWireShape = this.connectingWireShapeForIsRaised( );
     this.connectingWire = new Node();
     this.connectingWire.addChild( new Path( connectingWireShape, {
       stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
@@ -128,7 +128,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
     this.displayOffset = new Vector2( speedToolX, speedToolY );
 
-    const connectingWireShape = this.connectingWireShapeForIsRaised( isLauncherRaised );
+    const connectingWireShape = this.connectingWireShapeForIsRaised( );
 
     if ( this.connectingWire ) {
       this.connectingWire.children = [ new Path( connectingWireShape, {
@@ -140,7 +140,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
     this.displayNode.setY( speedToolY );
   }
 
-  private connectingWireShapeForIsRaised( isRaised: boolean ): Shape {
+  private connectingWireShapeForIsRaised(): Shape {
     const controlPoint1 = new Vector2( this.displayOffset.x, 0.8 * this.displayOffset.y );
     const controlPoint2 = new Vector2( this.displayOffset.x, 0.5 * this.displayOffset.y );
     return new Shape().moveTo( this.displayOffset.x, this.displayOffset.y ).cubicCurveTo(

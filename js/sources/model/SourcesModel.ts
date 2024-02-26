@@ -32,7 +32,7 @@ export default class SourcesModel extends SMModel<SMField> {
 
     const fieldsTandem = options.tandem.createTandem( 'fields' );
 
-    const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
+    const fields = VSMFieldIdentifierValues.map( identifier => {
       const fieldTandem = fieldsTandem.createTandem( identifier );
 
       const customLauncher = new Launcher(

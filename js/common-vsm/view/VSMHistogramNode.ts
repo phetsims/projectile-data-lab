@@ -43,15 +43,9 @@ export default class VSMHistogramNode extends HistogramNode {
     super(
       fieldProperty,
       fields,
-      numberOfLandedProjectilesProperty,
       horizontalAxisLabelText,
       histogram,
-      histogramSoundEnabledProperty,
-      comboBoxParent,
-      blockFillProperty,
-      blockStrokeProperty,
-      providedOptions
-    );
+      histogramSoundEnabledProperty, comboBoxParent, blockFillProperty, blockStrokeProperty, providedOptions );
   }
 }
 

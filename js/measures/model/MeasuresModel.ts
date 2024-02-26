@@ -67,7 +67,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
     }, providedOptions );
 
     const fieldsTandem = options.tandem.createTandem( 'fields' );
-    const fields = VSMFieldIdentifierValues.map( ( identifier, index ) => {
+    const fields = VSMFieldIdentifierValues.map( identifier => {
       const fieldTandem = fieldsTandem.createTandem( identifier );
 
       const lastMysteryLauncherNumber = MYSTERY_LAUNCHERS[ MYSTERY_LAUNCHERS.length - 1 ].launcherNumber;
@@ -172,7 +172,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
       field.projectileLandedEmitter.addListener( updateIntervalToolDataPercentage );
       field.projectilesClearedEmitter.addListener( updateIntervalToolDataPercentage );
     } );
-    this.fieldProperty.link( field => updateIntervalToolDataPercentage() );
+    this.fieldProperty.link( updateIntervalToolDataPercentage );
     this.intervalTool.changedEmitter.addListener( updateIntervalToolDataPercentage );
   }
 

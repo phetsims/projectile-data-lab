@@ -62,7 +62,7 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
       const pathColor = PDLColors.pathStrokeLandedInitialColorProperty.value.blend( PDLColors.pathStrokeLandedFinalColorProperty.value, colorRatio );
       context.strokeStyle = pathColor.toCSS();
 
-      landedProjectiles.forEach( ( projectile, index ) => {
+      landedProjectiles.forEach( projectile => {
         if ( projectile !== highlightedProjectile ) {
           this.drawPathForProjectile( context, projectile );
         }

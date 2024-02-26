@@ -115,7 +115,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
     };
 
     const projectileToggleNode = new ToggleNode( depictionProperty, depictions.map( depiction => ( {
-        createNode: tandem => createNode( depiction ),
+        createNode: () => createNode( depiction ),
         value: depiction
       } ) )
     );

@@ -43,7 +43,6 @@ export default class SamplingHistogramNode extends HistogramNode {
     super(
       fieldProperty,
       fields,
-      numberOfLandedProjectilesProperty,
       horizontalAxisLabelText,
       histogram,
       histogramSoundEnabledProperty,
