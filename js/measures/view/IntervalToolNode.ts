@@ -42,7 +42,12 @@ soundManager.addSoundGenerator( releaseClip, { categoryName: 'user-interface' } 
  * @author Sam Reid (PhET Interactive Simulations)
  */
 export default class IntervalToolNode extends Node {
+
+  // The horizontal arrow indicates the width of the interval
   private readonly arrowNode: ArrowNode;
+
+  // The center line is only visible while the interval tool is being translationally dragged (via keyboard or mouse)
+  private readonly centerLineNode: Line;
 
   public constructor( intervalTool: IntervalTool, modelViewTransform: ModelViewTransform2, providedOptions: IntervalToolNodeOptions ) {
 
@@ -96,6 +101,15 @@ export default class IntervalToolNode extends Node {
     } );
 
     this.addChild( this.arrowNode );
+
+    // The correct geometry for the center line will be set in update()
+    this.centerLineNode = new Line( 0, 0, 0, 0, {
+      stroke: 'black',
+      lineWidth: 1,
+      visible: false
+    } );
+
+    this.addChild( this.centerLineNode );
 
     const intervalProperty = new Property( Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 ) );
     intervalTool.changedEmitter.addListener( () => {
@@ -187,6 +201,9 @@ export default class IntervalToolNode extends Node {
       edge1Line.setLine( viewEdge1X, SPHERE_Y, viewEdge1X, y0 );
       edge2Line.setLine( viewEdge2X, SPHERE_Y, viewEdge2X, y0 );
 
+      const centerX = ( viewEdge1X + viewEdge2X ) / 2;
+      this.centerLineNode.setLine( centerX, SPHERE_Y, centerX, y0 );
+
       // Note if the edge1 and edge2 are the same, the arrow will have the empty bounds
       this.arrowNode.setTailAndTip( viewEdge1X, ARROW_Y, viewEdge2X, ARROW_Y );
 
@@ -222,12 +239,24 @@ export default class IntervalToolNode extends Node {
       useInputListenerCursor: true
     };
 
+    const translateDragListenerOptions = {
+      start: () => {
+        this.centerLineNode.visible = true;
+        grabClip.play();
+      },
+      end: () => {
+        this.centerLineNode.visible = false;
+        releaseClip.play();
+      },
+      transform: modelViewTransform
+    };
+
     readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       applyOffset: true,
       useParentOffset: true,
       positionProperty: centerProperty,
       tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
-    }, listenerOptions, dragListenerOptions ) ) );
+    }, translateDragListenerOptions, dragListenerOptions ) ) );
 
     edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       positionProperty: edge1Property,
@@ -249,7 +278,7 @@ export default class IntervalToolNode extends Node {
     readoutVBox.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
       positionProperty: centerProperty,
       tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' )
-    }, listenerOptions, keyboardDragListenerOptions ) ) );
+    }, translateDragListenerOptions, keyboardDragListenerOptions ) ) );
 
     edge1Sphere.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
       positionProperty: edge1Property,
