@@ -26,11 +26,11 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 
-import pdlStopwatchTickA_mp3 from '../../../sounds/pdlStopwatchTickA_mp3.js';
+import stopwatchTick_mp3 from '../../../sounds/stopwatchTick_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import PDLQueryParameters, { AUTO_GENERATE_DATA_PROPERTY } from '../../common/PDLQueryParameters.js';
 
-const tickSound = new SoundClip( pdlStopwatchTickA_mp3, { initialOutputLevel: 1 } );
+const tickSound = new SoundClip( stopwatchTick_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( tickSound );
 
 type SelfOptions = {

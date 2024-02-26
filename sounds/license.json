@@ -7,6 +7,14 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
+  "landingTone.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
+  },
   "generalBoundaryBoop.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
@@ -87,6 +95,14 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
+  "pdlCannonLand.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
+  },
   "pdlCannonLandandGeneralThudV1.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
@@ -104,22 +120,6 @@
     "notes": "created by Ashton Morris"
   },
   "pdlPumpkinLand.mp3": {
-    "text": [
-      "Copyright 2024 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "pdlStopwatchTickA.mp3": {
-    "text": [
-      "Copyright 2024 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
-  "pdlStopwatchTickB.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -167,7 +167,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "pdlPumpkinLand-001.mp3": {
+  "stopwatchTick.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],

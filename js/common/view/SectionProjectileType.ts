@@ -17,16 +17,15 @@ import pdlCannonLandandGeneralThudV1_mp3 from '../../../sounds/pdlCannonLandandG
 import soundManager from '../../../../tambo/js/soundManager.js';
 import pdlPianoLand_mp3 from '../../../sounds/pdlPianoLand_mp3.js';
 
-// eslint-disable-next-line default-import-match-filename
-import pdlPumpkinLand001_mp3 from '../../../sounds/pdlPumpkinLand-001_mp3.js';
+import pdlPumpkinLand_mp3 from '../../../sounds/pdlPumpkinLand_mp3.js';
 
-const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 1 } );
+const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( cannonballSoundClip );
 
-const pianoSoundClip = new SoundClip( pdlPianoLand_mp3, { initialOutputLevel: 1 } );
+const pianoSoundClip = new SoundClip( pdlPianoLand_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( pianoSoundClip );
 
-const pumpkinSoundClip = new SoundClip( pdlPumpkinLand001_mp3, { initialOutputLevel: 1 } );
+const pumpkinSoundClip = new SoundClip( pdlPumpkinLand_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( pumpkinSoundClip );
 
 /**
