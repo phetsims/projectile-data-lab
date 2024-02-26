@@ -24,16 +24,16 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import { BooleanProperty, NumberProperty } from '../../../../axon/js/imports.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import Range from '../../../../dot/js/Range.js';
-import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
+import intervalToolEdge_mp3 from '../../../sounds/intervalToolEdge_mp3.js';
+import intervalToolCenter_mp3 from '../../../sounds/intervalToolCenter_mp3.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
-// TODO: See https://github.com/phetsims/projectile-data-lab/issues/173, replace with correct sounds
 const filter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
   Q: 1,
-  frequency: 900
+  frequency: 800
 } );
 
 const minMaxFilter = new BiquadFilterNode( phetAudioContext, {
@@ -42,21 +42,25 @@ const minMaxFilter = new BiquadFilterNode( phetAudioContext, {
   frequency: 600
 } );
 
-const angleStabilizerSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+const edgeSoundClip = new SoundClip( intervalToolEdge_mp3, {
   additionalAudioNodes: [ filter ]
 } );
-const angleStabilizerMinSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+const centerSoundClip = new SoundClip( intervalToolCenter_mp3, {
+  additionalAudioNodes: [ filter ]
+} );
+const minSoundClip = new SoundClip( intervalToolEdge_mp3, {
   additionalAudioNodes: [ minMaxFilter ],
   initialPlaybackRate: 0.8
 } );
-const angleStabilizerMaxSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+const maxSoundClip = new SoundClip( intervalToolEdge_mp3, {
   additionalAudioNodes: [ minMaxFilter ],
   initialPlaybackRate: 1.6
 } );
 
-soundManager.addSoundGenerator( angleStabilizerSoundClip, { categoryName: 'user-interface' } );
-soundManager.addSoundGenerator( angleStabilizerMinSoundClip, { categoryName: 'user-interface' } );
-soundManager.addSoundGenerator( angleStabilizerMaxSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( edgeSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( centerSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( minSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( maxSoundClip, { categoryName: 'user-interface' } );
 
 type SelfOptions = {
   isIcon: boolean;
@@ -319,12 +323,11 @@ export default class IntervalToolNode extends Node {
 
     // Play a ratcheting sound as either edge is dragged. The sound is played when passing thresholds on the field,
     // but the sound played is a function of the width of the interval.
-    const edgePlaybackRateMapper = ( value: number ) => Utils.linear( 0, 100, 2, 1, value );
+    const edgePlaybackRateMapper = ( value: number ) => Utils.linear( 0, 100, 3, 1, value );
 
-    //TODO: Update sound clip - see https://github.com/phetsims/projectile-data-lab/issues/173
     const edgeValueChangeSoundPlayer = new ValueChangeSoundPlayer( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ), {
-      middleMovingUpSoundPlayer: angleStabilizerSoundClip,
-      middleMovingDownSoundPlayer: angleStabilizerSoundClip,
+      middleMovingUpSoundPlayer: edgeSoundClip,
+      middleMovingDownSoundPlayer: edgeSoundClip,
       middleMovingUpPlaybackRateMapper: edgePlaybackRateMapper,
       middleMovingDownPlaybackRateMapper: edgePlaybackRateMapper,
       interThresholdDelta: 5,
@@ -344,10 +347,10 @@ export default class IntervalToolNode extends Node {
 
         // Play the boundary sound if the edges reach the min/max, either by stretching or translating the tool
         if ( newValue === 0 ) {
-          angleStabilizerMinSoundClip.play();
+          minSoundClip.play();
         }
         else if ( newValue === PDLConstants.MAX_FIELD_DISTANCE ) {
-          angleStabilizerMaxSoundClip.play();
+          maxSoundClip.play();
         }
       };
     };
@@ -357,11 +360,11 @@ export default class IntervalToolNode extends Node {
 
     // Play a sound when the interval tool is being translated, and its center crosses a threshold value.
     // The sound played is a function of the horizontal position of the center position.
-    const centerPlaybackRateMapper = ( value: number ) => Utils.linear( 0, 100, 0.5, 3, value );
+    const centerPlaybackRateMapper = ( value: number ) => Utils.linear( 0, 100, 0.8, 3, value );
 
     const centerValueChangeSoundPlayer = new ValueChangeSoundPlayer( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ), {
-      middleMovingUpSoundPlayer: angleStabilizerSoundClip,
-      middleMovingDownSoundPlayer: angleStabilizerSoundClip,
+      middleMovingUpSoundPlayer: centerSoundClip,
+      middleMovingDownSoundPlayer: centerSoundClip,
       middleMovingUpPlaybackRateMapper: centerPlaybackRateMapper,
       middleMovingDownPlaybackRateMapper: centerPlaybackRateMapper,
       interThresholdDelta: 5,
