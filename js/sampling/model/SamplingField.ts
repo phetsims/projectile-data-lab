@@ -159,7 +159,7 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
     } );
 
-    const phaseChanged = ( phase: SamplingPhase ) => {
+    const phaseChanged = () => {
       this.phaseStartTimeProperty.value = this.timeProperty.value;
       this.updateComputedProperties();
     };

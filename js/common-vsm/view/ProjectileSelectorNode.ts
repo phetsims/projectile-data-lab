@@ -124,8 +124,8 @@ export default class ProjectileSelectorNode extends SelectorNode {
       visibleProperty: new DerivedProperty( [ selectedProjectileProperty ], projectile => projectile !== null )
     } );
 
-    Multilink.multilink( [ selectedProjectileNumberProperty, numberOfLandedProjectilesProperty, selectedProjectileProperty ],
-      ( selectedProjectileNumber, numberOfLandedProjectiles, selectedProjectile ) => {
+    Multilink.multilink( [ selectedProjectileProperty, selectedProjectileNumberProperty, numberOfLandedProjectilesProperty ],
+      selectedProjectile => {
 
         if ( selectedProjectile ) {
 

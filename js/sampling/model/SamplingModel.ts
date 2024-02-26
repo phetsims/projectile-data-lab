@@ -166,7 +166,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
     // When the field is changed, if the phase is showingAirborneProjectiles or showingCompleteSampleWithoutMean, change the mode from
     // continuous to single
-    this.fieldProperty.lazyLink( field => {
+    this.fieldProperty.lazyLink( () => {
 
       // redo all fields with the same mystery launcher, unless they already have data.
       this.fields.forEach( field => {

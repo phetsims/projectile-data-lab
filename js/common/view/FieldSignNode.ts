@@ -21,12 +21,12 @@ type SelfOptions = EmptySelfOptions;
 export type FieldSignNodeOptions = SelfOptions & VBoxOptions;
 
 export default class FieldSignNode extends VBox {
-  public constructor( fields: Field[],
-                      fieldProperty: TReadOnlyProperty<Field>,
-                      private readonly headingText: Node,
-                      selectorNode: SelectorNode,
-                      signPostHeight: number,
-                      providedOptions: FieldSignNodeOptions ) {
+  public constructor(
+    fieldProperty: TReadOnlyProperty<Field>,
+    private readonly headingText: Node,
+    selectorNode: SelectorNode,
+    signPostHeight: number,
+    providedOptions: FieldSignNodeOptions ) {
 
     const options = optionize<FieldSignNodeOptions, SelfOptions, VBoxOptions>()( {
       stretch: true

@@ -132,7 +132,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       model.fieldProperty,
       model.launcherProperty,
       model.sampleSizeProperty,
-      this.modelViewTransform,
       sampleSelectorNode
     );
 
@@ -206,8 +205,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
 
     // Position the time control node so that it is right-aligned underneath the accordion box
-    ManualConstraint.create( this, [ this.timeControlNode, this.accordionBox.bottomThumbnailNode, this.accordionBox ],
-      ( timeControlNodeProxy, bottomThumbnailNodeProxy, accordionBoxProxy ) => {
+    ManualConstraint.create( this, [ this.timeControlNode, this.accordionBox, this.accordionBox.bottomThumbnailNode ],
+      ( timeControlNodeProxy, accordionBoxProxy ) => {
         timeControlNodeProxy.right = accordionBoxProxy.right - 3;
         timeControlNodeProxy.top = accordionBoxProxy.bottom + PDLConstants.INTER_PANEL_SPACING + PDLConstants.TIME_CONTROL_MARGIN_TOP;
       } );

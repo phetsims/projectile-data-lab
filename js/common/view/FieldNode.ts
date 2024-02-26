@@ -35,7 +35,7 @@ export default class FieldNode extends Node {
   // The field
   private readonly fieldBorder: Node;
 
-  public constructor( fields: Field[], fieldProperty: TReadOnlyProperty<Field>, binWidthProperty: TReadOnlyProperty<number>, providedOptions: FieldNodeOptions ) {
+  public constructor( fieldProperty: TReadOnlyProperty<Field>, binWidthProperty: TReadOnlyProperty<number>, providedOptions: FieldNodeOptions ) {
 
     const fieldBounds = new Bounds2(
       -0.5 * PDLConstants.FIELD_WIDTH,

@@ -58,8 +58,7 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       histogram,
       histogramSoundEnabledProperty,
       ProjectileDataLabStrings.meanDistanceStringProperty,
-      comboBoxParent,
-      clearCurrentField, {
+      comboBoxParent, {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 

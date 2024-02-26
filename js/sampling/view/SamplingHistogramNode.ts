@@ -37,7 +37,6 @@ export default class SamplingHistogramNode extends HistogramNode {
                       histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
                       comboBoxParent: Node,
-                      clearCurrentField: () => void,
                       options: HistogramNodeOptions ) {
     
     super(

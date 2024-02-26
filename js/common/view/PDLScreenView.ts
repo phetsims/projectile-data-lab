@@ -142,11 +142,11 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       eraseResetContainerProxy.bottom = this.layoutBounds.maxY - PDLConstants.SCREEN_VIEW_Y_MARGIN;
     } );
 
-    const fieldBack = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, {
+    const fieldBack = new FieldNode( model.fieldProperty, model.histogram.binWidthProperty, {
       x: fieldX,
       y: fieldY
     } );
-    const fieldFront = new FieldNode( model.fields, model.fieldProperty, model.histogram.binWidthProperty, {
+    const fieldFront = new FieldNode( model.fieldProperty, model.histogram.binWidthProperty, {
       isBottomHalf: true,
       x: fieldX,
       y: fieldY

@@ -15,7 +15,6 @@ import { Text, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
 import ProjectileSelectorNode from './ProjectileSelectorNode.js';
@@ -27,8 +26,6 @@ type VSMFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 export default class VSMFieldSignNode extends FieldSignNode {
   public constructor( fields: Field[],
                       fieldProperty: TReadOnlyProperty<Field>,
-                      numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
-                      modelViewTransform: ModelViewTransform2,
                       projectileSelectorNode: ProjectileSelectorNode,
                       providedOptions?: VSMFieldSignNodeOptions ) {
 
@@ -51,7 +48,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
       maxWidth: 100
     } );
 
-    super( fields, fieldProperty, fieldSignHeadingContainer, projectileSelectorNode, 34, options );
+    super( fieldProperty, fieldSignHeadingContainer, projectileSelectorNode, 34, options );
   }
 }
 

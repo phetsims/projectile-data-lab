@@ -7,7 +7,6 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
 import Launcher from '../../common/model/Launcher.js';
@@ -29,7 +28,6 @@ export default class SamplingFieldSignNode extends FieldSignNode {
                       fieldProperty: TReadOnlyProperty<Field>,
                       launcherProperty: TReadOnlyProperty<Launcher>,
                       sampleSizeProperty: TReadOnlyProperty<number>,
-                      modelViewTransform: ModelViewTransform2,
                       sampleSelectorNode: SampleSelectorNode,
                       providedOptions?: SamplingFieldSignNodeOptions ) {
 
@@ -61,7 +59,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
       maxWidth: 120
     } );
 
-    super( fields, fieldProperty, fieldSignHeadingContainer, sampleSelectorNode, 25, options );
+    super( fieldProperty, fieldSignHeadingContainer, sampleSelectorNode, 25, options );
   }
 }
 

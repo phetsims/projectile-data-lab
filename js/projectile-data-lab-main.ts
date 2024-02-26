@@ -27,7 +27,7 @@ simLauncher.launch( () => {
   const preferencesModel = new PreferencesModel( {
     simulationOptions: {
       customPreferences: [ {
-        createContent: tandem => new SimulationPreferencesContentNode( phet.joist.sim.topLayer, tandem.createTandem( 'simPreferences' ) )
+        createContent: tandem => new SimulationPreferencesContentNode( tandem.createTandem( 'simPreferences' ) )
       } ]
     }
   } );
