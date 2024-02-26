@@ -230,6 +230,7 @@ export default class IntervalToolNode extends Node {
     // in IntervalTool.ts about atomicity.
     const edge1XProperty = new NumberProperty( intervalTool.edge1 );
     const edge2XProperty = new NumberProperty( intervalTool.edge2 );
+    const centerXProperty = new NumberProperty( intervalTool.center );
 
     const update = () => {
       const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1 );
@@ -262,6 +263,7 @@ export default class IntervalToolNode extends Node {
       // Update the downstream Properties which are only used for sonification.
       edge1XProperty.value = intervalTool.edge1;
       edge2XProperty.value = intervalTool.edge2;
+      centerXProperty.value = intervalTool.center;
     };
 
     intervalTool.dataFractionProperty.link( fraction => update() );
@@ -317,13 +319,14 @@ export default class IntervalToolNode extends Node {
 
     // Play a ratcheting sound as either edge is dragged. The sound is played when passing thresholds on the field,
     // but the sound played is a function of the width of the interval.
-    const playbackRateMapper = ( value: number ) => Utils.linear( 0, 100, 2, 1, value );
+    const edgePlaybackRateMapper = ( value: number ) => Utils.linear( 0, 100, 2, 1, value );
 
-    const valueChangeSoundPlayer = new ValueChangeSoundPlayer( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ), {
+    //TODO: Update sound clip - see https://github.com/phetsims/projectile-data-lab/issues/173
+    const edgeValueChangeSoundPlayer = new ValueChangeSoundPlayer( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ), {
       middleMovingUpSoundPlayer: angleStabilizerSoundClip,
       middleMovingDownSoundPlayer: angleStabilizerSoundClip,
-      middleMovingUpPlaybackRateMapper: playbackRateMapper,
-      middleMovingDownPlaybackRateMapper: playbackRateMapper,
+      middleMovingUpPlaybackRateMapper: edgePlaybackRateMapper,
+      middleMovingDownPlaybackRateMapper: edgePlaybackRateMapper,
       interThresholdDelta: 5,
       minSoundPlayer: nullSoundPlayer,
       maxSoundPlayer: nullSoundPlayer
@@ -333,23 +336,44 @@ export default class IntervalToolNode extends Node {
       return ( newValue: number, oldValue: number ) => {
 
         if ( !this.isCenterDraggingProperty.value ) {
-
           const newWidth = otherEdgeProperty.value.x - newValue;
           const oldWidth = otherEdgeProperty.value.x - oldValue;
 
-          valueChangeSoundPlayer.playSoundIfThresholdReached( Math.abs( newWidth ), Math.abs( oldWidth ) );
-          if ( newValue === 0 ) {
-            angleStabilizerMinSoundClip.play();
-          }
-          else if ( newValue === PDLConstants.MAX_FIELD_DISTANCE ) {
-            angleStabilizerMaxSoundClip.play();
-          }
+          edgeValueChangeSoundPlayer.playSoundIfThresholdReached( Math.abs( newWidth ), Math.abs( oldWidth ) );
+        }
+
+        // Play the boundary sound if the edges reach the min/max, either by stretching or translating the tool
+        if ( newValue === 0 ) {
+          angleStabilizerMinSoundClip.play();
+        }
+        else if ( newValue === PDLConstants.MAX_FIELD_DISTANCE ) {
+          angleStabilizerMaxSoundClip.play();
         }
       };
     };
 
     edge1XProperty.lazyLink( createEdgeSonificationListener( edge2Property ) );
     edge2XProperty.lazyLink( createEdgeSonificationListener( edge1Property ) );
+
+    // Play a sound when the interval tool is being translated, and its center crosses a threshold value.
+    // The sound played is a function of the horizontal position of the center position.
+    const centerPlaybackRateMapper = ( value: number ) => Utils.linear( 0, 100, 0.5, 3, value );
+
+    const centerValueChangeSoundPlayer = new ValueChangeSoundPlayer( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ), {
+      middleMovingUpSoundPlayer: angleStabilizerSoundClip,
+      middleMovingDownSoundPlayer: angleStabilizerSoundClip,
+      middleMovingUpPlaybackRateMapper: centerPlaybackRateMapper,
+      middleMovingDownPlaybackRateMapper: centerPlaybackRateMapper,
+      interThresholdDelta: 5,
+      minSoundPlayer: nullSoundPlayer,
+      maxSoundPlayer: nullSoundPlayer
+    } );
+
+    centerXProperty.lazyLink( ( newValue: number, oldValue: number ) => {
+      if ( this.isCenterDraggingProperty.value ) {
+        centerValueChangeSoundPlayer.playSoundIfThresholdReached( newValue, oldValue );
+      }
+    } );
 
     edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       positionProperty: edge2Property,
