@@ -141,13 +141,18 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     this.addChild( this.launchPanel );
     this.behindProjectilesLayer.addChild( this.fieldSignNode );
 
-    const histogramSoundEnabledProperty = new DerivedProperty( [ model.phaseProperty, model.singleOrContinuousProperty, model.isContinuousLaunchingProperty ],
-      ( phase, singleOrContinuous, isContinuousLaunching ) => {
+    const histogramSoundEnabledProperty = new DerivedProperty( [
+        model.phaseProperty,
+        model.singleOrContinuousProperty,
+        model.isContinuousLaunchingProperty,
+        model.numberOfCompletedSamplesProperty
+      ],
+      ( phase, singleOrContinuous, isContinuousLaunching, numberOfCompletedSamples ) => {
         if ( singleOrContinuous === 'single' ) {
           return phase === 'showingCompleteSampleWithMean';
         }
         else {
-          return !isContinuousLaunching;
+          return !isContinuousLaunching && numberOfCompletedSamples > 0;
         }
       } );
 
