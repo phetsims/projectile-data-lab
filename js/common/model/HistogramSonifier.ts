@@ -85,7 +85,7 @@ export default class HistogramSonifier {
     }
   }
 
-  public toggleSonification( ): void {
+  public toggleSonification(): void {
     if ( this.sonifiedBinProperty.value === null ) {
       this.startHistogramSoundSequence();
     }
@@ -103,7 +103,8 @@ export default class HistogramSonifier {
     }
 
     this.currentBinIndex = 0;
-    this.timeRemainingInCurrentBin = this.soundDelayForBinWidth( this.binWidthProperty.value );
+
+    this.timeRemainingInCurrentBin = this.getSoundDelayForCurrentBin();
 
     this.sonifiedBinProperty.value = this.sortedBins[ this.currentBinIndex ];
   }
@@ -115,9 +116,10 @@ export default class HistogramSonifier {
       this.timeRemainingInCurrentBin -= dt;
 
       if ( this.timeRemainingInCurrentBin <= 0 ) {
+
         this.currentBinIndex++;
 
-        this.timeRemainingInCurrentBin = this.soundDelayForBinWidth( this.binWidthProperty.value );
+        this.timeRemainingInCurrentBin = this.getSoundDelayForCurrentBin();
 
         // If we went past the edge of the bins, stop playing
         if ( this.currentBinIndex >= this.binnedData.size ) {
@@ -137,9 +139,24 @@ export default class HistogramSonifier {
     return 1.6 * Math.pow( ( binHeight + 5.5 ), 0.18 ) - 1.8;
   };
 
-  // Maps the width of the bin to the duration of the sound
-  private soundDelayForBinWidth = ( binWidth: number ): number => {
-    return Utils.linear( 0.5, 10, 0.05, 0.3, binWidth );
+  // Determines the delay of the sound between the current bin and the next bin.
+  // This will add gaps between the sounds for bins that have empty bins between them.
+  private getSoundDelayForCurrentBin = (): number => {
+
+    // Get the difference in the horizontal position of the current bin and the next bin
+    const currentBin: number | undefined = this.sortedBins[ this.currentBinIndex ];
+    const nextBin: number | undefined = this.sortedBins[ this.currentBinIndex + 1 ];
+    const binDifference = typeof currentBin === 'number' && typeof nextBin === 'number' ? nextBin - currentBin : this.binWidthProperty.value;
+
+    // The delay for the sound is a function of the bin width
+    const binWidthDelay = Utils.linear( 0.5, 10, 0.05, 0.3, this.binWidthProperty.value );
+
+    // The maximum delay for the sound is 0.6 seconds or 3 times the bin width delay, whichever is smaller
+    const maxSoundDelay = Math.min( 0.6, 3 * binWidthDelay );
+
+    const numBinsToSonify = binDifference / this.binWidthProperty.value;
+
+    return Math.min( maxSoundDelay, binWidthDelay * numBinsToSonify );
   };
 }
 
