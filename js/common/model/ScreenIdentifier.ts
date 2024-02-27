@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * ScreenIdentifier is a string literal union enumeration the context for a screen in the simulation.
+ * ScreenIdentifier is a string literal union enumeration representing the context for a screen in the simulation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
