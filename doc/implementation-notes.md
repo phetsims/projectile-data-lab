@@ -1,10 +1,9 @@
 # Projectile Data Lab - Implementation Notes
 
-## Architecture and Design:
+## Architecture and Design
 
 The simulation is structured around a model/view architecture, separating the physics and statistics modeling (model)
-from the graphical representation (view). The sonification is implemented in the model, since it is often triggered
-directly by model events rather than through a listener abstraction.
+from the graphical representation (view).
 
 ### Screens
 
@@ -47,6 +46,10 @@ For this simulation, for trivial classes that are only used by one class, we som
 search for
 `class MeasuringTapeIconNode`. This allows us to keep code co-located with where it is used, without proliferating
 files, and to have a usage site like `new MeasuringTapeIconNode()`.
+
+### Sonfication (sound)
+
+Sonification is implemented in the model, since it is often triggered directly by model events, rather than through a listener abstraction.
 
 ### PhET-iO
 
