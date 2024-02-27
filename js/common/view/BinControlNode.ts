@@ -80,7 +80,7 @@ export default class BinControlNode extends HBox {
       align: 'center',
       children: [
 
-        // Use a separate ToggleNode for each one, so they don't change location on the screen when changing between
+        // Use a separate ToggleNode for each one, so they don't change position on the screen when changing between
         // strategies
         new ToggleNode( BIN_STRATEGY_PROPERTY, [ {
           value: 'binWidth',
