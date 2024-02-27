@@ -177,6 +177,15 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     } );
   }
 
+  /**
+   * When the launch button is pressed, the behavior depends on a variety of factors:
+   * - If AUTO_GENERATE_DATA_PROPERTY is true, then the field is cleared and new samples are generated.
+   * - If the singleOrContinuousProperty is 'single', then a single projectile is launched, beginning a new sample.
+   * - If the singleOrContinuousProperty is 'continuous', then isContinuousLaunchingProperty is toggled
+   *      If toggled to true, it starts creating samples.
+   *
+   * See also the superclass documentation.
+   */
   public override launchButtonPressed(): void {
 
     const field = this.fieldProperty.value;

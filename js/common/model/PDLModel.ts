@@ -172,6 +172,10 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
   }
 
+  /**
+   * This method is called when the launch button is pressed. The launch button has multi-modal behaviors where its behavior
+   * differs depending on the current state of the simulation.
+   */
   public abstract launchButtonPressed(): void;
 
   public step( dt: number ): void {

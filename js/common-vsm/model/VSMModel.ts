@@ -203,6 +203,15 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     } );
   }
 
+  /**
+   * When the launch button is pressed, the behavior depends on a variety of factors:
+   * - If AUTO_GENERATE_DATA_PROPERTY is true, then the field is cleared and new projectiles are generated.
+   * - If the singleOrContinuousProperty is 'single', then a single projectile is launched.
+   * - If the singleOrContinuousProperty is 'continuous', then isContinuousLaunchingProperty is toggled
+   *      If toggled to true, it begins by launching the first projectile in that series.
+   *
+   * See also the superclass documentation.
+   */
   public override launchButtonPressed(): void {
 
     if ( AUTO_GENERATE_DATA_PROPERTY.value ) {
