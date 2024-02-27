@@ -27,68 +27,90 @@ export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptio
   | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
   | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'minorTickMarkIncrement' | 'valueReadoutY'
   | 'majorTickMarkLength' | 'minorTickMarkLength'>;
+
+// The min speed is the minimum value that the tool can display.
+const MIN_SPEED = 0;
+
+// The max speed is the maximum value that the tool can display.
+const MAX_SPEED = 30;
+
+// The body radius is the radius of the display panel, which the is background of the heat map display.
+const BODY_RADIUS = 60;
+
+// The needle length is the length of the needle that points to the current value.
+const NEEDLE_LENGTH = 55;
+
+// The needle angle overhang is the number of degrees that the needle rotates below the horizontal at 0 and max values.
+const NEEDLE_ANGLE_OVERHANG = 9;
+
+// The bottom margin angle is number of degrees that the body extends below the lowest overhang point
+const BOTTOM_MARGIN_ANGLE = 8;
+
+// The total angle overhang is the sum of the needle angle overhang and the bottom margin angle
+const TOTAL_ANGLE_OVERHANG = NEEDLE_ANGLE_OVERHANG + BOTTOM_MARGIN_ANGLE;
+
+// The needle base radius is the radius of the semicircular base of the needle.
+const NEEDLE_BASE_RADIUS = 2.5;
+
+// The needle tip radius is the radius of the semicircular tip of the needle.
+const NEEDLE_TIP_RADIUS = 1;
+
+// The needle tip offset is the distance from the center of the needle's base to the center of the needle's tip.
+const NEEDLE_TIP_OFFSET = NEEDLE_LENGTH - NEEDLE_BASE_RADIUS - NEEDLE_TIP_RADIUS;
+
 export default class SpeedToolNode extends HeatMapToolNode {
 
-  private readonly connectingWire?;
+  // The connecting wire connects the tool to the launcher (not created when the tool is an icon).
+  private readonly connectingWire?: Node;
 
+  // The display offset is the position of the tool display panel relative to its origin.
   private displayOffset: Vector2;
 
-  public constructor( latestValueProperty: TReadOnlyProperty<number>,
-                      isLauncherRaised: TReadOnlyProperty<boolean>,
-                      providedOptions: SpeedToolNodeOptions ) {
+  public constructor( latestValueProperty: TReadOnlyProperty<number>, isLauncherRaised: TReadOnlyProperty<boolean>, providedOptions: SpeedToolNodeOptions ) {
 
-    const bodyRadius = 60;
-    const needleLength = 55;
+    // The body shape is an arc that represents the background of the heat map display.
+    const bodyShape = new Shape().arc( 0, 0, BODY_RADIUS,
+      Math.PI - Utils.toRadians( TOTAL_ANGLE_OVERHANG ), Utils.toRadians( TOTAL_ANGLE_OVERHANG ) ).close();
 
-    // Create the body shape
-    const needleAngleOverhang = 9; // The number of degrees that the needle rotates below the horizontal at 0 and max values
-    const bottomMarginAngle = 8; // The number of degrees that the body extends below the lowest overhang point
-    const totalAngleOverhang = needleAngleOverhang + bottomMarginAngle;
-    const bodyShape = new Shape().arc( 0, 0, bodyRadius,
-      Math.PI - Utils.toRadians( totalAngleOverhang ), Utils.toRadians( totalAngleOverhang ) ).close();
+    // The needle base shape is the semicircular base of the needle.
+    const needleBaseShape = new Shape().arc( 0, 0, NEEDLE_BASE_RADIUS, Math.PI / 2, 3 * Math.PI / 2 );
 
-    // Create the needle shape
-    const needleBaseRadius = 2.5;
-    const needleTipRadius = 1;
-    const needleTipX = needleLength - needleBaseRadius - needleTipRadius;
+    // The needle tip shape is the semicircular tip of the needle.
+    const needleTipShape = new Shape().arc( NEEDLE_TIP_OFFSET, 0, NEEDLE_TIP_RADIUS, 3 * Math.PI / 2, Math.PI / 2 );
 
-    const needleBaseShape = new Shape().arc( 0, 0, needleBaseRadius, Math.PI / 2, 3 * Math.PI / 2 );
-    const needleTipShape = new Shape().arc( needleTipX, 0, needleTipRadius, 3 * Math.PI / 2, Math.PI / 2 );
+    // The needle arm shape is the polygon that connects the base and tip of the needle.
     const needleArmShape = new Shape().polygon( [
-      new Vector2( 0, needleBaseRadius ),
-      new Vector2( needleTipX, needleTipRadius ),
-      new Vector2( needleTipX, -needleTipRadius ),
-      new Vector2( 0, -needleBaseRadius )
+      new Vector2( 0, NEEDLE_BASE_RADIUS ),
+      new Vector2( NEEDLE_TIP_OFFSET, NEEDLE_TIP_RADIUS ),
+      new Vector2( NEEDLE_TIP_OFFSET, -NEEDLE_TIP_RADIUS ),
+      new Vector2( 0, -NEEDLE_BASE_RADIUS )
     ] );
 
-    // Create a shape that is the union of the three needle shapes
+    // The needle is a shape that is the union of the three needle component shapes
     const needleShape = Shape.union( [ needleArmShape, needleBaseShape, needleTipShape ] );
-
-    const minValue = 0;
-    const maxValue = 30;
 
     const options = optionize<SpeedToolNodeOptions, SelfOptions, HeatMapToolNodeOptions>()( {
       displayOffset: new Vector2( -20, -150 ),
       bodyShape: bodyShape,
       needleShape: needleShape,
       binWidth: 0.25,
-      minValue: minValue,
-      maxValue: maxValue,
-      minAngle: 180 + needleAngleOverhang,
-      maxAngle: -needleAngleOverhang,
-      innerHeatNodeRadius: 0.5 * bodyRadius,
-      outerHeatNodeRadius: bodyRadius,
-      minLabeledValue: minValue,
-      maxLabeledValue: maxValue,
+      minValue: MIN_SPEED,
+      maxValue: MAX_SPEED,
+      minAngle: 180 + NEEDLE_ANGLE_OVERHANG,
+      maxAngle: -NEEDLE_ANGLE_OVERHANG,
+      innerHeatNodeRadius: 0.5 * BODY_RADIUS,
+      outerHeatNodeRadius: BODY_RADIUS,
+      minLabeledValue: MIN_SPEED,
+      maxLabeledValue: MAX_SPEED,
       labeledValueIncrement: 5,
-      labelDistanceFromCenter: 0.8 * bodyRadius,
-      labelMinAngle: 180 + needleAngleOverhang,
-      labelMaxAngle: -needleAngleOverhang,
+      labelDistanceFromCenter: 0.8 * BODY_RADIUS,
+      labelMinAngle: 180 + NEEDLE_ANGLE_OVERHANG,
+      labelMaxAngle: -NEEDLE_ANGLE_OVERHANG,
       isWithMinorTickMarks: true,
       minorTickMarkIncrement: 1,
       majorTickMarkLength: 5,
       minorTickMarkLength: 3,
-      valueReadoutY: bodyRadius * Math.sin( Utils.toRadians( totalAngleOverhang ) ),
+      valueReadoutY: BODY_RADIUS * Math.sin( Utils.toRadians( TOTAL_ANGLE_OVERHANG ) ),
       readoutPatternStringProperty: ProjectileDataLabStrings.metersPerSecondPatternStringProperty,
       isClockwise: true,
       isIcon: false
@@ -97,15 +119,15 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
     this.displayOffset = options.displayOffset;
 
-    // If this is an icon, create the launcher circle or the connecting wire
+    // If this is an icon, do not create the connecting wire or the launcher circle
     if ( options.isIcon ) {
       return;
     }
 
-    // Create the graphics for the wire connected to the launcher
+    // If this is not an icon, create the graphics for the wire connected to the launcher
     const launcherCircle = new Circle( 4, { fill: 'black' } );
-
     const connectingWireShape = this.connectingWireShapeForIsRaised( );
+
     this.connectingWire = new Node();
     this.connectingWire.addChild( new Path( connectingWireShape, {
       stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
@@ -117,11 +139,13 @@ export default class SpeedToolNode extends HeatMapToolNode {
     launcherCircle.moveToBack();
     this.connectingWire.moveToBack();
 
+    // When the launcher is raised or lowered, update the positioning of the display panel and the connecting wire
     isLauncherRaised.link( isRaised => {
       this.setForIsLauncherRaised( isRaised );
     } );
   }
 
+  // When the launcher is raised or lowered, update the positioning of the display panel and the connecting wire
   private setForIsLauncherRaised( isLauncherRaised: boolean ): void {
     const speedToolX = -62;
     const speedToolY = isLauncherRaised ? 100 : -103;
@@ -140,6 +164,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
     this.displayNode.setY( speedToolY );
   }
 
+  // The connecting wire shape is the shape of the wire that connects the tool to the launcher
   private connectingWireShapeForIsRaised(): Shape {
     const controlPoint1 = new Vector2( this.displayOffset.x, 0.8 * this.displayOffset.y );
     const controlPoint2 = new Vector2( this.displayOffset.x, 0.5 * this.displayOffset.y );

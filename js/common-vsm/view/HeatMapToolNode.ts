@@ -4,7 +4,7 @@
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
  * array of graphical elements that update opacity as the data changes, as well as background and foreground graphics.
  *
- * NOTE: Due to simulation-specific design and the need to coordinate with the SpeedToolNode AngleToolNode,
+ * NOTE: Due to simulation-specific design and the need to coordinate with the SpeedToolNode and AngleToolNode,
  * this does not extend or compose GaugeNode.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -26,32 +26,84 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLText from '../../common/view/PDLText.js';
 
 type SelfOptions = {
+
+  // The readout pattern string property is used to format the value readout.
   readoutPatternStringProperty: LocalizedStringProperty;
+
+  // The display offset is used to position the main display node, which may be offset from the origin of the node.
   displayOffset: Vector2;
+
+  // The needle shape is the shape of the needle that points to the latest value.
   needleShape: Shape;
+
+  // The body shape is the shape of the display panel of the heat map tool.
   bodyShape: Shape;
+
+  // The bin width is the width of each bin in the heat map.
   binWidth: number;
+
+  // The min value is the minimum value that the heat map tool can display.
   minValue: number;
+
+  // The max value is the maximum value that the heat map tool can display.
   maxValue: number;
+
+  // The inner heat node radius is the radius of the inner circle of the heat node.
   innerHeatNodeRadius: number;
+
+  // The outer heat node radius is the radius of the outer circle of the heat node.
   outerHeatNodeRadius: number;
+
+  // The min angle is the minimum angle of the heat map needle and heat nodes, in degrees.
   minAngle: number;
+
+  // The max angle is the maximum angle of the heat map needle and heat nodes, in degrees.
   maxAngle: number;
+
+  // The min labeled value is the minimum value that will be labeled on the heat map.
   minLabeledValue: number;
+
+  // The max labeled value is the maximum value that will be labeled on the heat map.
   maxLabeledValue: number;
+
+  // The labeled value increment is the increment between labeled values on the heat map.
+  // This is also the increment between major tick marks.
   labeledValueIncrement: number;
+
+  // The label distance is the labels' offset from the display origin.
   labelDistanceFromCenter: number;
+
+  // The label min angle is the minimum angle of the labels relative to the minAngle, in degrees.
   labelMinAngle: number;
+
+  // The label max angle is the maximum angle of the labels relative to the minAngle, in degrees.
   labelMaxAngle: number;
+
+  // The value readout y is the y position of the value readout, relative to the display origin.
   valueReadoutY: number;
+
+  // The majorTickMarkLength is the length of the major tick marks.
   majorTickMarkLength?: number;
+
+  // The minorTickMarkIncrement is the increment between minor tick marks.
   minorTickMarkIncrement?: number;
+
+  // The minorTickMarkLength is the length of the minor tick marks.
   minorTickMarkLength?: number;
+
+  // This determines whether to show minor tick marks.
   isWithMinorTickMarks?: boolean;
+
+  // This determines whether to show inner tick marks, between the labels and the display origin.
   isWithInnerTickMarks?: boolean;
+
+  // This determines whether the values of the heat nodes are increasing clockwise or counterclockwise.
   isClockwise?: boolean;
+
+  // This determines whether the heat map tool is an icon, which affects the layout of the value readout.
   isIcon?: boolean;
 };
+
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
 export default class HeatMapToolNode extends Node {
@@ -77,8 +129,9 @@ export default class HeatMapToolNode extends Node {
   private readonly minAngle: number;
   private readonly maxAngle: number;
 
-  public constructor( private readonly latestValueProperty: TReadOnlyProperty<number>,
-                      providedOptions: HeatMapToolNodeOptions ) {
+  // The latest value property is used to update the heat map tool's needle rotation.
+  public constructor( private readonly latestValueProperty: TReadOnlyProperty<number>, providedOptions: HeatMapToolNodeOptions ) {
+
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {
       isWithMinorTickMarks: false,
       isWithInnerTickMarks: false,
@@ -150,6 +203,7 @@ export default class HeatMapToolNode extends Node {
     this.valueReadoutNode.addChild( valueReadoutBackground );
     this.valueReadoutNode.addChild( this.valueReadout );
 
+    // Position the value readout and its background
     ManualConstraint.create( this.valueReadoutNode, [ this.valueReadout ], valueReadoutProxy => {
       valueReadoutProxy.x = -0.5 * valueReadoutProxy.width;
       valueReadoutProxy.centerY = 0;
@@ -158,6 +212,7 @@ export default class HeatMapToolNode extends Node {
       valueReadoutBackground.setRectX( -0.5 * rectWidth );
     } );
 
+    // Add the graphical elements to the display node
     this.displayNode.addChild( this.bodyBackNode );
     this.heatNodes.forEach( heatNode => this.displayNode.addChild( heatNode ) );
     this.labels.forEach( label => this.displayNode.addChild( label ) );
@@ -172,16 +227,19 @@ export default class HeatMapToolNode extends Node {
     this.minAngle = options.minAngle;
     this.maxAngle = options.maxAngle;
 
+    // Update the needle rotation when the latest value changes
     latestValueProperty.link( latestValue => {
       this.setNeedleRotation( latestValue );
     } );
   }
 
+  // setNeedleRotation sets the rotation of the needle node based on the latest value
   private setNeedleRotation( value: number ): void {
     const needleAngle = -Utils.linear( this.minValue, this.maxValue, this.minAngle, this.maxAngle, value );
     this.needleNode.setRotation( Utils.toRadians( needleAngle ) );
   }
 
+  // createHeatNodes creates the heat nodes that represent the heat map tool's data
   private createHeatNodes( minAngle: number, heatNodeArcLength: number, innerRadius: number, outerRadius: number, isClockwise: boolean ): Path[] {
     const heatNodes = [];
 
@@ -212,6 +270,7 @@ export default class HeatMapToolNode extends Node {
     return heatNodes;
   }
 
+  // createLabels creates the numerical labels for the major increments on the heat map tool
   private createLabels( minLabeledValue: number, maxLabeledValue: number, labeledValueIncrement: number,
                         labelDistanceFromCenter: number, labelMinAngle: number, labelMaxAngle: number ): Text[] {
     const labels = [];
@@ -229,6 +288,7 @@ export default class HeatMapToolNode extends Node {
     return labels;
   }
 
+  // createMajorTickMarks creates the major tick marks for the heat map tool
   private createMajorTickMarks( minLabeledValue: number, maxLabeledValue: number, labeledValueIncrement: number,
                                 labelMinAngle: number, labelMaxAngle: number, majorTickMarkLength: number,
                                 isWithInnerTickMarks: boolean, innerRadius: number, outerRadius: number ): Path[] {
@@ -257,6 +317,7 @@ export default class HeatMapToolNode extends Node {
     return majorTickMarks;
   }
 
+  // createMinorTickMarks creates the minor tick marks for the heat map tool
   private createMinorTickMarks( minValue: number, maxValue: number, minAngle: number, maxAngle: number, minorTickMarkIncrement: number,
                                 minorTickMarkLength: number, outerRadius: number ): Path[] {
     const minorTickMarks: Path[] = [];
@@ -275,6 +336,7 @@ export default class HeatMapToolNode extends Node {
     return minorTickMarks;
   }
 
+  // createNeedleNode creates the needle node for the heat map tool
   private createNeedleNode( needleShape: Shape ): Node {
     const needleNode = new Path( needleShape, {
       fill: PDLColors.heatMapNeedleFillColorProperty,
@@ -286,7 +348,10 @@ export default class HeatMapToolNode extends Node {
     return needleNode;
   }
 
-  // updateHeatMapWithData updates the opacity of each heat node based on the number of values in the bin
+  // updateHeatMapWithData updates the opacity of each heat node based on the number of values in the bin.
+  // The minimum opacity is 0.2, and the bin with the largest number of values has an opacity of 1.
+  // The opacity of each heat node is scaled based on the number of values in the bin relative to the bin with the
+  // largest number of values.
   public updateHeatMapWithData( data: number ): void {
     const minOpacity = 0.2;
     const index = Math.floor( ( data - this.minValue ) / this.binWidth );
@@ -308,6 +373,7 @@ export default class HeatMapToolNode extends Node {
     }
   }
 
+  // Clear the heat map tool by setting the opacity of each heat node to 0
   public clear(): void {
     this.numValuesInBin.forEach( ( value, index ) => {
       this.numValuesInBin[ index ] = 0;
