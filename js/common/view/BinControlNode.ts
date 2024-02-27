@@ -14,10 +14,10 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Utils from '../../../../dot/js/Utils.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Property from '../../../../axon/js/Property.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PDLPreferences from '../PDLPreferences.js';
 
 type SelfOptions = EmptySelfOptions;
 type BinControlNodeOptions = SelfOptions & WithRequired<HBoxOptions, 'tandem'>;
@@ -82,7 +82,7 @@ export default class BinControlNode extends HBox {
 
         // Use a separate ToggleNode for each one, so they don't change position on the screen when changing between
         // strategies
-        new ToggleNode( BIN_STRATEGY_PROPERTY, [ {
+        new ToggleNode( PDLPreferences.binStrategyProperty, [ {
           value: 'binWidth',
           createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, {
             maxWidth: 120
@@ -98,7 +98,7 @@ export default class BinControlNode extends HBox {
             rightMargin: margin
           }
         } ),
-        new ToggleNode( BIN_STRATEGY_PROPERTY, [ {
+        new ToggleNode( PDLPreferences.binStrategyProperty, [ {
           value: 'binWidth',
           createNode: () => new BinWidthComboBox()
         }, {

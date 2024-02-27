@@ -16,12 +16,12 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { BIN_STRATEGY_PROPERTY } from '../PDLQueryParameters.js';
 import PDLConstants from '../PDLConstants.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import HistogramSonifier from './HistogramSonifier.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import PDLPreferences from '../PDLPreferences.js';
 
 export const ZOOM_LEVELS = [ {
   maxCount: 500,
@@ -107,7 +107,7 @@ export default class Histogram {
       numberType: 'Integer'
     } );
 
-    this.binWidthProperty = new DerivedProperty( [ BIN_STRATEGY_PROPERTY, this.selectedBinWidthProperty, this.selectedTotalBinsProperty ],
+    this.binWidthProperty = new DerivedProperty( [ PDLPreferences.binStrategyProperty, this.selectedBinWidthProperty, this.selectedTotalBinsProperty ],
       ( binStrategy, selectedBinWidth, totalBins ) => {
         return binStrategy === 'binWidth' ? selectedBinWidth : PDLConstants.MAX_FIELD_DISTANCE / totalBins;
       } );
