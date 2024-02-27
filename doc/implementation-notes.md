@@ -1,4 +1,4 @@
-# Implementation Notes
+# Projectile Data Lab - Implementation Notes
 
 ## Architecture and Design:
 
