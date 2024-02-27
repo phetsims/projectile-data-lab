@@ -1,4 +1,6 @@
-# Overview
+# Projectile Data Lab - Model Description
+
+## Overview
 
 This simulation enables exploration of both mathematical and statistical principles, through the backdrop of the
 familiar
