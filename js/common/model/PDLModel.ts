@@ -26,10 +26,13 @@ import Launcher from './Launcher.js';
 import Histogram from './Histogram.js';
 import ProjectileType from './ProjectileType.js';
 
+// See the documentation at the PDLModel class attributes for more information on these options.
 type SelfOptions<T extends Field> = {
   timeSpeedValues: TimeSpeed[];
   fields: T[];
   isPathsVisible: boolean;
+
+  // Additional options for PhET-iO instrumentation, since the VSM screens and the Sampling screen are instrumented differently.
   isPathVisibilityPhetioInstrumented: boolean;
   isFieldPropertyPhetioReadonly: boolean;
   fieldPropertyPhetioDocumentation: string;
@@ -44,17 +47,31 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   // The rate of animation when the simulation is playing
   public readonly timeSpeedProperty: EnumerationProperty<TimeSpeed>;
 
+  // The allowed time speeds for this screen
   public readonly timeSpeedValues: TimeSpeed[];
 
+  // The fields that are available for the user to select on this screen
   public readonly fields: T[];
 
+  // The currently selected Field.
   public readonly fieldProperty: Property<T>;
 
+  // The model for the Histogram
   public readonly histogram: Histogram;
 
   // single launch vs continuous launch (rapid fire) mode.
   public readonly singleOrContinuousProperty: Property<SingleOrContinuous>;
 
+  // Setting for whether the user wants to see the paths of the projectiles
+  public readonly isPathsVisibleProperty: BooleanProperty;
+
+  // Abstract Property that indicates the selected Launcher
+  public readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;
+
+  /***
+   * The following DynamicProperties are computed based on the current Field. Please see the documentation at the declarations
+   * within Field.ts for more information.
+   */
   public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
 
   public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
@@ -64,10 +81,6 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly launcherHeightProperty: DynamicProperty<number, number, T>;
 
   public readonly isContinuousLaunchingProperty: DynamicProperty<boolean, boolean, T>;
-
-  public readonly isPathsVisibleProperty: BooleanProperty;
-
-  public readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
 
