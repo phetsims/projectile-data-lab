@@ -166,13 +166,13 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.isLaunchAngleVisibleProperty = new BooleanProperty( false, {
       tandem: visiblePropertiesTandem.createTandem( 'isLaunchAngleVisibleProperty' ),
-      phetioDocumentation: 'This property indicates whether the launch angle tool is showing.',
+      phetioDocumentation: 'This Property indicates whether the launch angle tool is showing.',
       phetioFeatured: true
     } );
 
     this.isLaunchSpeedVisibleProperty = new BooleanProperty( false, {
       tandem: visiblePropertiesTandem.createTandem( 'isLaunchSpeedVisibleProperty' ),
-      phetioDocumentation: 'This property indicates whether the launch speed tool is showing.',
+      phetioDocumentation: 'This Property indicates whether the launch speed tool is showing.',
       phetioFeatured: true
     } );
 

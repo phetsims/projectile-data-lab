@@ -49,7 +49,7 @@ export default class SamplingField extends Field {
   // A sample is "completed" when the mean indicator is shown after a delay following the last projectile landing.
   public readonly numberOfCompletedSamplesProperty: NumberProperty;
 
-  // This property is used to set the visibility and position of the mean indicator.
+  // This Property is used to set the visibility and position of the mean indicator.
   // If it is null, the current sample is not yet complete and the mean indicator is not visible.
   // Note: In 'Single sample' mode, there is a delay between the last projectile in a sample and the mean indicator appearing.
   public readonly sampleMeanProperty: Property<number | null>;

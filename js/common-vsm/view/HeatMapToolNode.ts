@@ -27,7 +27,7 @@ import PDLText from '../../common/view/PDLText.js';
 
 type SelfOptions = {
 
-  // The readout pattern string property is used to format the value readout.
+  // The readout pattern string Property is used to format the value readout.
   readoutPatternStringProperty: LocalizedStringProperty;
 
   // The display offset is used to position the main display node, which may be offset from the origin of the node.
@@ -129,8 +129,8 @@ export default class HeatMapToolNode extends Node {
   private readonly minAngle: number;
   private readonly maxAngle: number;
 
-  // The latest value property is used to update the heat map tool's needle rotation.
-  public constructor( private readonly latestValueProperty: TReadOnlyProperty<number>, providedOptions: HeatMapToolNodeOptions ) {
+  // The latest value Property is used to update the heat map tool's needle rotation.
+  public constructor( latestValueProperty: TReadOnlyProperty<number>, providedOptions: HeatMapToolNodeOptions ) {
 
     const options = optionize<HeatMapToolNodeOptions, SelfOptions, NodeOptions>()( {
       isWithMinorTickMarks: false,

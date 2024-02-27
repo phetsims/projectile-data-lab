@@ -97,11 +97,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       validValues: SAMPLE_SIZES,
       tandem: options.tandem.createTandem( 'sampleSizeProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the number of projectiles in a sample.',
+      phetioDocumentation: 'This Property configures the number of projectiles in a sample.',
       phetioValueType: NumberIO
     } );
 
-    // In the SamplingModel, the field acts like a derived property based on the selected launcher and sample size
+    // In the SamplingModel, the field acts like a derived Property based on the selected launcher and sample size
     Multilink.multilink( [ this.sampleSizeProperty, this.launcherProperty ], ( sampleSize, launcher ) => {
       const field = this.fields.find( field => field.sampleSize === sampleSize && field.launcherProperty.value === launcher )!;
       this.fieldProperty.value = field;

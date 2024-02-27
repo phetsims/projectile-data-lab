@@ -39,7 +39,7 @@ soundManager.addSoundGenerator( landSoundClip );
 
 type SelfOptions = {
 
-  // On the Measures screen, the launcher property is read-only, because the value is determined by the combination
+  // On the Measures screen, the launcher Property is read-only, because the value is determined by the combination
   // of the mysteryOrCustomProperty and mysteryLauncherProperty.
   isLauncherPropertyPhetioReadOnly: boolean;
 };
@@ -91,8 +91,8 @@ export default class VSMField extends Field {
     this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'This property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
-                           + ' When the launcher configuration or angle stabilizer changes, this property is set to the configured launch angle.',
+      phetioDocumentation: 'This Property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
+                           + ' When the launcher configuration or angle stabilizer changes, this Property is set to the configured launch angle.',
       phetioValueType: NumberIO,
       phetioFeatured: true
     } );
@@ -100,7 +100,7 @@ export default class VSMField extends Field {
     this.latestLaunchSpeedProperty = new Property<number>( 0, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'This property is the latest launch speed, in meters per second. When a projectile is launched, this is set to the launch speed.',
+      phetioDocumentation: 'This Property is the latest launch speed, in meters per second. When a projectile is launched, this is set to the launch speed.',
       phetioValueType: NumberIO,
       phetioFeatured: true
     } );
@@ -113,7 +113,7 @@ export default class VSMField extends Field {
         tandem: Tandem.OPT_OUT
       },
       numberType: 'Integer',
-      phetioDocumentation: 'This property is the number of the selected projectile, in order of landing. This number is 1-indexed, and 0 means no projectile is selected.'
+      phetioDocumentation: 'This Property is the number of the selected projectile, in order of landing. This number is 1-indexed, and 0 means no projectile is selected.'
     } );
 
     this.selectedProjectileProperty = new DerivedProperty( [ this.selectedProjectileNumberProperty ],

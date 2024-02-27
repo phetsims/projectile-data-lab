@@ -76,7 +76,7 @@ export default class Histogram {
   // Current bin width, selecting from the two strategies: binWidth or totalBins (see above)
   public readonly binWidthProperty: TReadOnlyProperty<number>;
 
-  // This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).
+  // This Property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).
   public readonly representationProperty: Property<HistogramRepresentation>;
 
   public readonly histogramSonifier: HistogramSonifier;
@@ -87,7 +87,7 @@ export default class Histogram {
       validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".',
+      phetioDocumentation: 'This Property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".',
       phetioValueType: NumberIO
     } );
 
@@ -95,7 +95,7 @@ export default class Histogram {
       validValues: [ 10, 20, 50, 100, 200 ],
       tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the total number of bins in the histogram. It is used when the bin strategy is "total bins".',
+      phetioDocumentation: 'This Property configures the total number of bins in the histogram. It is used when the bin strategy is "total bins".',
       phetioValueType: NumberIO
     } );
 
@@ -117,7 +117,7 @@ export default class Histogram {
       validValues: HistogramRepresentationValues,
       tandem: providedOptions.tandem.createTandem( 'representationProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
+      phetioDocumentation: 'This Property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
     } );
 
     this.histogramSonifier = new HistogramSonifier( playMeanTone, shouldPlayMeanTone, this.binWidthProperty );

@@ -28,19 +28,19 @@ export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isL
 
 export default class MeasuresField extends SMField {
 
-  // This property represents the average distance (horizontal displacement) of landed projectiles.
+  // This Property represents the average distance (horizontal displacement) of landed projectiles.
   public readonly meanDistanceProperty: Property<number | null>;
 
-  // This property represents the standard deviation of the distance (horizontal displacement) of landed projectiles.
+  // This Property represents the standard deviation of the distance (horizontal displacement) of landed projectiles.
   public readonly standardDeviationDistanceProperty: Property<number | null>;
 
-  // This property represents the standard error of the mean distance (horizontal displacement) of landed projectiles.
+  // This Property represents the standard error of the mean distance (horizontal displacement) of landed projectiles.
   public readonly standardErrorDistanceProperty: Property<number | null>;
 
-  // This property represents whether the launcher is custom or mystery.
+  // This Property represents whether the launcher is custom or mystery.
   public readonly mysteryOrCustomProperty: Property<MysteryOrCustom>;
 
-  // This property represents the mystery launcher.
+  // This Property represents the mystery launcher.
   public readonly mysteryLauncherProperty: Property<Launcher>;
 
   public constructor( launchers: readonly Launcher[], identifier: VSMFieldIdentifier, providedOptions: MeasuresFieldOptions ) {
@@ -52,7 +52,7 @@ export default class MeasuresField extends SMField {
 
     this.mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
       tandem: providedOptions.tandem.createTandem( 'mysteryOrCustomProperty' ),
-      phetioDocumentation: 'This property represents whether the launcher is a mystery or custom launcher.',
+      phetioDocumentation: 'This Property represents whether the launcher is a mystery or custom launcher.',
       validValues: MysteryOrCustomValues,
       phetioFeatured: true
     } );
@@ -92,7 +92,7 @@ export default class MeasuresField extends SMField {
       this.standardErrorDistanceProperty.value = standardDeviation === null ? null : standardDeviation / Math.sqrt( this.landedProjectiles.length );
     } );
 
-    // if the user changes the mystery launcher, set the launcher property to the corresponding launcher
+    // if the user changes the mystery launcher, set the launcher Property to the corresponding launcher
     Multilink.multilink( [ this.mysteryLauncherProperty, this.mysteryOrCustomProperty ], ( mysteryLauncher, mysteryOrCustom ) => {
 
       this.launcherProperty.value = this.launchers.find( launcher => {

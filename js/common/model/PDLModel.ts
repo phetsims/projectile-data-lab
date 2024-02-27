@@ -91,14 +91,14 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.isPlayingProperty = new BooleanProperty( true, {
       tandem: timeControlTandem.createTandem( 'isPlayingProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates whether the simulation is playing. When false, the simulation is paused.'
+      phetioDocumentation: 'This Property indicates whether the simulation is playing. When false, the simulation is paused.'
     } );
 
     this.timeSpeedProperty = new EnumerationProperty( TimeSpeed.NORMAL, {
       validValues: providedOptions.timeSpeedValues,
       tandem: timeControlTandem.createTandem( 'timeSpeedProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates the rate of animation when the simulation is playing.'
+      phetioDocumentation: 'This Property indicates the rate of animation when the simulation is playing.'
     } );
 
     this.timeSpeedValues = providedOptions.timeSpeedValues;
@@ -122,7 +122,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       validValues: SingleOrContinuousValues,
       tandem: providedOptions.tandem.createTandem( 'singleOrContinuousProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates whether the launcher is in single or continuous launch mode.',
+      phetioDocumentation: 'This Property indicates whether the launcher is in single or continuous launch mode.',
       phetioValueType: StringUnionIO( SingleOrContinuousValues )
     } );
 
@@ -133,7 +133,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       // The DynamicProperty is instrumented if and only if the field launcherConfigurationProperty is instrumented.
       tandem: this.fieldProperty.value.launcherConfigurationProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates the current launcher configuration.',
+      phetioDocumentation: 'This Property indicates the current launcher configuration.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues ),
       phetioReadOnly: true,
       phetioState: false,
@@ -150,7 +150,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       // The DynamicProperty is instrumented if and only if the field projectileTypeProperty is instrumented.
       tandem: this.fieldProperty.value.projectileTypeProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'projectileTypeProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
-      phetioDocumentation: 'This property indicates the type of projectile being launched.',
+      phetioDocumentation: 'This Property indicates the type of projectile being launched.',
       phetioValueType: ProjectileType.ProjectileTypeIO,
       phetioReadOnly: true,
       phetioState: false,

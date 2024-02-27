@@ -45,13 +45,13 @@ soundManager.addSoundGenerator( launchSoundClip );
 
 type SelfOptions = {
 
-  // Only instrument the launcher configuration property in VSM screens.
+  // Only instrument the launcher configuration Property in VSM screens.
   isLauncherConfigurationPhetioInstrumented: boolean;
 
-  // Only instrument the projectile type property in VSM screens.
+  // Only instrument the projectile type Property in VSM screens.
   isProjectileTypePhetioInstrumented: boolean;
 
-  // Only instrument the launch height property in VSM screens.
+  // Only instrument the launch height Property in VSM screens.
   isLaunchHeightPhetioInstrumented: boolean;
 };
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -165,7 +165,7 @@ export default abstract class Field extends PhetioObject {
       validValues: LauncherConfigurationValues,
       tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the height and mean launch angle of the launcher.',
+      phetioDocumentation: 'This Property configures the height and mean launch angle of the launcher.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
     } : { validValues: [ 'angle45' ] } as const;
 
@@ -176,7 +176,7 @@ export default abstract class Field extends PhetioObject {
       validValues: [ CANNONBALL, PUMPKIN, PIANO ],
       tandem: providedOptions.tandem.createTandem( 'projectileTypeProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This property configures the type of projectile.',
+      phetioDocumentation: 'This Property configures the type of projectile.',
       phetioValueType: ProjectileType.ProjectileTypeIO
     } : { validValues: [ CANNONBALL ] } as const;
 
@@ -208,7 +208,7 @@ export default abstract class Field extends PhetioObject {
       return configuration === 'angle0Raised' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     }, {
       tandem: providedOptions.isLaunchHeightPhetioInstrumented ? providedOptions.tandem.createTandem( 'launchHeightProperty' ) : Tandem.OPT_OUT,
-      phetioDocumentation: 'This property is the initial height of launched projectiles in meters.',
+      phetioDocumentation: 'This Property is the initial height of launched projectiles in meters.',
       phetioValueType: NumberIO
     } );
 
