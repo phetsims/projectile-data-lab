@@ -144,15 +144,14 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     const histogramSoundEnabledProperty = new DerivedProperty( [
         model.phaseProperty,
         model.singleOrContinuousProperty,
-        model.isContinuousLaunchingProperty,
-        model.numberOfCompletedSamplesProperty
+        model.isContinuousLaunchingProperty
       ],
-      ( phase, singleOrContinuous, isContinuousLaunching, numberOfCompletedSamples ) => {
+      ( phase, singleOrContinuous, isContinuousLaunching ) => {
         if ( singleOrContinuous === 'single' ) {
           return phase === 'showingCompleteSampleWithMean';
         }
         else {
-          return !isContinuousLaunching && numberOfCompletedSamples > 0;
+          return !isContinuousLaunching && phase === 'showingCompleteSampleWithMean';
         }
       } );
 
