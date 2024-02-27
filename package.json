@@ -56,7 +56,6 @@
               "ts-nocheck": true
             }
           ],
-          "no-object-spread-on-non-literals": "error",
           "additional-bad-text": [
             "error",
             {
@@ -64,8 +63,7 @@
                 "dispose"
               ]
             }
-          ],
-          "author-annotation": "error"
+          ]
         }
       }
     ]
