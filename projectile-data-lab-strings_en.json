@@ -26,12 +26,6 @@
   "continuousLaunch": {
     "value": "Continuous"
   },
-  "singleSample": {
-    "value": "Single sample"
-  },
-  "continuousSampling": {
-    "value": "Continuous sampling"
-  },
   "noAirResistance": {
     "value": "No air resistance"
   },
@@ -62,9 +56,6 @@
   "histogram": {
     "value": "Histogram"
   },
-  "field": {
-    "value": "Field"
-  },
   "fieldValuePattern": {
     "value": "Field {{value}}"
   },
@@ -83,9 +74,6 @@
   "sampleSize": {
     "value": "Sample size (n)"
   },
-  "sampleSizeValuePattern": {
-    "value": "Sample size: {{value}}"
-  },
   "paths": {
     "value": "Paths"
   },
@@ -103,12 +91,6 @@
   },
   "intervalTool": {
     "value": "Interval tool"
-  },
-  "meters": {
-    "value": "m"
-  },
-  "longDash": {
-    "value": "—"
   },
   "meanEqualsValueMPattern": {
     "value": "Mean = {{value}} m"
@@ -130,9 +112,6 @@
   },
   "degreesPattern": {
     "value": "{{value}}°"
-  },
-  "nEqualsProjectileCountPattern": {
-    "value": "n = {{projectileCount}}"
   },
   "nEqualsSampleSizePattern": {
     "value": "n = {{sampleSize}}"
