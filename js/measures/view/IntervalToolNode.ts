@@ -331,7 +331,7 @@ export default class IntervalToolNode extends Node {
       middleMovingDownSoundPlayer: edgeSoundClip,
       middleMovingUpPlaybackRateMapper: edgePlaybackRateMapper,
       middleMovingDownPlaybackRateMapper: edgePlaybackRateMapper,
-      interThresholdDelta: 5,
+      interThresholdDelta: 2,
       minSoundPlayer: nullSoundPlayer,
       maxSoundPlayer: nullSoundPlayer
     } );
