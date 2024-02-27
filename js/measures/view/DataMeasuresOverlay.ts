@@ -134,7 +134,7 @@ export default class DataMeasuresOverlay extends Node {
         return nullableNumber === null ? '' : Utils.toFixed( nullableNumber, 2 );
       } );
 
-    const meanLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMetersPatternStringProperty,
+    const meanLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty,
       { mean: roundedStringProperty( meanDistanceProperty ) } ), {
       font: PDLConstants.PRIMARY_FONT,
       maxWidth: TEXT_MAX_WIDTH

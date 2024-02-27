@@ -111,7 +111,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
       majorTickMarkLength: 5,
       minorTickMarkLength: 3,
       valueReadoutY: BODY_RADIUS * Math.sin( Utils.toRadians( TOTAL_ANGLE_OVERHANG ) ),
-      readoutPatternStringProperty: ProjectileDataLabStrings.metersPerSecondPatternStringProperty,
+      readoutPatternStringProperty: ProjectileDataLabStrings.valueMetersPerSecondPatternStringProperty,
       isClockwise: true,
       isIcon: false
     }, providedOptions );

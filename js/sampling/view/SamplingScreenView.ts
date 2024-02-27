@@ -57,8 +57,8 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
 
     super( model,
-      ProjectileDataLabStrings.singleLaunchStringProperty,
-      ProjectileDataLabStrings.continuousLaunchStringProperty,
+      ProjectileDataLabStrings.singleStringProperty,
+      ProjectileDataLabStrings.continuousStringProperty,
       launchButtonEnabledProperty,
       options );
 
@@ -85,7 +85,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     } );
     this.projectileLayer.addChild( meanIndicatorNode );
 
-    const meanReadoutStringProperty = new PatternStringProperty( ProjectileDataLabStrings.meanMetersPatternStringProperty, {
+    const meanReadoutStringProperty = new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
       mean: new DerivedProperty( [ model.sampleMeanProperty ],
         mean => mean === null ? '' : Utils.toFixed( mean, 1 )
       )

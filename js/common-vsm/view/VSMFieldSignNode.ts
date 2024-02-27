@@ -31,8 +31,8 @@ export default class VSMFieldSignNode extends FieldSignNode {
 
     const options = optionize<VSMFieldSignNodeOptions, SelfOptions, FieldSignNodeOptions>()( {}, providedOptions );
 
-    const fieldSignStringProperty = new PatternStringProperty( ProjectileDataLabStrings.fieldValuePatternStringProperty, {
-      value: new DerivedProperty( [ fieldProperty ], field => {
+    const fieldSignStringProperty = new PatternStringProperty( ProjectileDataLabStrings.fieldNumberPatternStringProperty, {
+      number: new DerivedProperty( [ fieldProperty ], field => {
         return fields.indexOf( field ) + 1;
       } )
     } );

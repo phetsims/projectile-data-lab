@@ -46,7 +46,7 @@ export default class SectionSampleSize extends PDLPanelSection {
         align: 'center'
       }
     } );
-    super( ProjectileDataLabStrings.sampleSizeStringProperty, sampleSizeRadioButtonGroup, providedOptions );
+    super( ProjectileDataLabStrings.sampleSizeNStringProperty, sampleSizeRadioButtonGroup, providedOptions );
   }
 }
 

@@ -61,9 +61,9 @@ export default class SamplingHistogramNode extends HistogramNode {
     const maxTextNode = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
       { numberOfSamples: new Property( PDLQueryParameters.maxSamples ) } ), { font: PDLConstants.SAMPLING_HISTOGRAM_PANEL_FONT } );
 
-    const launcherTextProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherPatternStringProperty,
-      { launcher: launcherNumberProperty } );
-    const sampleSizeTextProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty,
+    const launcherTextProperty = new PatternStringProperty( ProjectileDataLabStrings.launcherNumberPatternStringProperty,
+      { number: launcherNumberProperty } );
+    const sampleSizeTextProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizeNPatternStringProperty,
       { sampleSize: sampleSizeProperty } );
     const numberOfSamplesTextProperty = new PatternStringProperty( ProjectileDataLabStrings.numberOfSamplesPatternStringProperty,
       { numberOfSamples: numberOfSamplesProperty } );

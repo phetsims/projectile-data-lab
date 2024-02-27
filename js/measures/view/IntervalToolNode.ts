@@ -160,7 +160,7 @@ export default class IntervalToolNode extends Node {
     } );
 
     // Pattern for the interval readout, not instrumented and hence does not support studio autoselect.
-    const intervalReadoutStringProperty = new PatternStringProperty( ProjectileDataLabStrings.intervalMetersPatternStringProperty, {
+    const intervalReadoutStringProperty = new PatternStringProperty( ProjectileDataLabStrings.intervalMPatternStringProperty, {
       interval: intervalProperty
     } );
 
@@ -180,7 +180,7 @@ export default class IntervalToolNode extends Node {
     } );
 
     // Pattern for the percent readout, not instrumented and hence does not support studio autoselect.
-    const percentPatternProperty = new PatternStringProperty( ProjectileDataLabStrings.intervalToolPercentStringProperty, {
+    const percentPatternProperty = new PatternStringProperty( ProjectileDataLabStrings.percentPatternStringProperty, {
       percent: nonNullProperty
     } );
 

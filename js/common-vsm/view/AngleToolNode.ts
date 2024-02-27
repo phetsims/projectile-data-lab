@@ -123,7 +123,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       isWithInnerTickMarks: true,
       majorTickMarkLength: 5,
       valueReadoutY: VALUE_READOUT_Y_GROUND,
-      readoutPatternStringProperty: ProjectileDataLabStrings.degreesPatternStringProperty,
+      readoutPatternStringProperty: ProjectileDataLabStrings.valueDegreesPatternStringProperty,
       isIcon: false
     }, providedOptions );
     super( latestValueProperty, options );

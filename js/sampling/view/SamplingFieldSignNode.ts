@@ -39,7 +39,7 @@ export default class SamplingFieldSignNode extends FieldSignNode {
       number: launcherNumberProperty
     } );
 
-    const sampleSizeStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizePatternStringProperty, {
+    const sampleSizeStringProperty = new PatternStringProperty( ProjectileDataLabStrings.sampleSizeNPatternStringProperty, {
       sampleSize: sampleSizeProperty
     } );
 
