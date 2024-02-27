@@ -340,7 +340,11 @@ export default class SamplingField extends Field {
 
       if ( timeInMode > delayForShowingMean ) {
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
-        MeanTone.playMean( this.sampleMeanProperty.value! );
+
+        // TODO: See https://github.com/phetsims/projectile-data-lab/issues/189
+        if ( this.sampleMeanProperty.value !== null ) {
+          MeanTone.playMean( this.sampleMeanProperty.value );
+        }
       }
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
