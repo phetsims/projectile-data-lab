@@ -363,7 +363,9 @@ export default class SamplingField extends Field {
         // Manually restart the phase timer, since the phase will not change when showing sequential continuous samples
         this.phaseStartTimeProperty.value = this.timeProperty.value;
 
-        MeanTone.playMean( this.sampleMeanProperty.value! );
+        if ( typeof this.sampleMeanProperty.value === 'number' ) {
+          MeanTone.playMean( this.sampleMeanProperty.value );
+        }
       }
     }
   }
