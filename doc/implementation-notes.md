@@ -26,7 +26,7 @@ example.
 
 ### Disposal
 
-Everything in the simulation is statically allocated and there is no need for disposal.
+Everything in the simulation is statically allocated, exists for the lifetime of the simulation, and there is no need for disposal.
 
 ### Strings
 
