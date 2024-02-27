@@ -34,7 +34,7 @@ The string keys are designed as a camel-cased version of the English translation
 
 ```json
 "binWidthMPattern": {
-"value": "{{binWidth}} m"
+  "value": "{{binWidth}} m"
 }
 ```
 
