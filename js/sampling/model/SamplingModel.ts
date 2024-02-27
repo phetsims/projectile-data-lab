@@ -187,7 +187,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
       field.clearProjectiles();
 
-      // TODO: These should be investigated: https://github.com/phetsims/projectile-data-lab/issues/146
+      // TODO: These should be investigated: https://github.com/phetsims/projectile-data-lab/issues/193
       field.phaseProperty.value = 'showingCompleteSampleWithMean';
       field.isContinuousLaunchingProperty.value = true;
 
