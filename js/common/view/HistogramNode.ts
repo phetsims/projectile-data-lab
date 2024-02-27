@@ -201,7 +201,9 @@ export default class HistogramNode extends Node {
       spacing: 0,
       iconOptions: {
         scale: 1.2
-      }
+      },
+      touchAreaXDilation: 5,
+      touchAreaYDilation: 5
     } );
 
     const verticalAxisLabel = new PDLText( ProjectileDataLabStrings.countStringProperty, {
