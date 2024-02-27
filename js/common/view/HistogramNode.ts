@@ -129,7 +129,7 @@ export default class HistogramNode extends Node {
     const chartCanvasNode = new ChartCanvasNode( this.chartTransform, [ histogramPainter ] );
 
     // Update the histogram when the sonified column changes
-    histogram.histogramSonifier.sonifiedBinProperty.link( () => {
+    histogram.histogramSonifier.histogramSonifierPhaseProperty.link( () => {
       chartCanvasNode.update();
     } );
 
@@ -334,8 +334,8 @@ export default class HistogramNode extends Node {
     };
 
     const histogramSoundIconToggleNode = new ToggleNode<boolean, Node>( new DerivedProperty( [
-      histogram.histogramSonifier.sonifiedBinProperty
-    ], sonifiedBin => sonifiedBin !== null ), [ {
+      histogram.histogramSonifier.histogramSonifierPhaseProperty
+    ], histogramSonifierPhase => histogramSonifierPhase?.phaseName !== 'idlePhase' ), [ {
       value: false,
       createNode: () => new Path( bullhornSolidShape, soundIconNodeOptions )
     }, {

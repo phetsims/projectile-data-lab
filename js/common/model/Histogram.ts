@@ -81,7 +81,8 @@ export default class Histogram {
 
   public readonly histogramSonifier: HistogramSonifier;
 
-  public constructor( providedOptions: HistogramOptions ) {
+  // TODO: Swap the order of the first 2 parameters - see https://github.com/phetsims/projectile-data-lab/issues/179
+  public constructor( playMeanTone: () => void, shouldPlayMeanTone: () => boolean, providedOptions: HistogramOptions ) {
     this.selectedBinWidthProperty = new Property<number>( 1, {
       validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
@@ -119,7 +120,7 @@ export default class Histogram {
       phetioDocumentation: 'This property indicates whether the histogram is showing bars (one per bin) or blocks (one per projectile).'
     } );
 
-    this.histogramSonifier = new HistogramSonifier( this.binWidthProperty );
+    this.histogramSonifier = new HistogramSonifier( playMeanTone, shouldPlayMeanTone, this.binWidthProperty );
   }
 
   public step( dt: number ): void {

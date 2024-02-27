@@ -48,8 +48,11 @@ export default class HistogramCanvasPainter extends CanvasPainter {
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
     const getFillColorForBin = ( bin: number ) => {
-      const isInSonifiedColumn = this.histogram && this.histogram.histogramSonifier.sonifiedBinProperty.value &&
-                                 this.histogram.histogramSonifier.sonifiedBinProperty.value === bin;
+
+      //TODO: Local variable for phaseProperty to help type checking - see https://github.com/phetsims/projectile-data-lab/issues/179
+      const isInSonifiedColumn = this.histogram &&
+                                 this.histogram.histogramSonifier.histogramSonifierPhaseProperty.value.phaseName === 'highlightingBinPhase' &&
+                                 this.histogram.histogramSonifier.histogramSonifierPhaseProperty.value.highlightedBin === bin;
 
       return isInSonifiedColumn ? '#ffb371' : this.blockFillProperty.value.toCSS();
     };

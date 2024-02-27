@@ -114,7 +114,9 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioReadOnly: providedOptions.isFieldPropertyPhetioReadonly
     } );
 
-    this.histogram = new Histogram( { tandem: providedOptions.tandem.createTandem( 'histogram' ) } );
+    // TODO: Also swap the order of the first 2 parameters here - see https://github.com/phetsims/projectile-data-lab/issues/179
+    // TODO: Do we need to re-closure these? See https://github.com/phetsims/projectile-data-lab/issues/179
+    this.histogram = new Histogram( () => this.playMeanTone(), () => this.shouldPlayMeanTone(), { tandem: providedOptions.tandem.createTandem( 'histogram' ) } );
 
     this.singleOrContinuousProperty = new Property<SingleOrContinuous>( 'single', {
       validValues: SingleOrContinuousValues,
@@ -183,6 +185,16 @@ export default abstract class PDLModel<T extends Field> implements TModel {
         this.fieldProperty.value.isContinuousLaunchingProperty.value = false;
       }
     } );
+  }
+
+  // TODO: Documentation, see https://github.com/phetsims/projectile-data-lab/issues/179
+  public playMeanTone(): void {
+//nothing to do here
+  }
+
+  // TODO: Documentation, see https://github.com/phetsims/projectile-data-lab/issues/179
+  public shouldPlayMeanTone(): boolean {
+    return false;
   }
 
   /**

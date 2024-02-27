@@ -105,7 +105,8 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       model.isMeanVisibleProperty,
       model.isStandardDeviationVisibleProperty,
       model.isValuesVisibleProperty,
-      62, {
+      62,
+      null, {
         context: 'field',
         tandem: options.tandem.createTandem( 'dataMeasuresFieldOverlay' )
       } );

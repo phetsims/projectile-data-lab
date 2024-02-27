@@ -28,6 +28,9 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
+import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import PDLColors from '../../common/PDLColors.js';
+import { HistogramSonifierPhase } from '../../common/model/HistogramSonifier.js';
 
 type SelfOptions = {
   context: 'histogram' | 'field' | 'icon';
@@ -53,6 +56,7 @@ export default class DataMeasuresOverlay extends Node {
                       isStandardDeviationDisplayedProperty: BooleanProperty,
                       isValuesDisplayedProperty: BooleanProperty,
                       totalHeight: number,
+                      histogramSonifierPhaseProperty: TReadOnlyProperty<HistogramSonifierPhase> | null,
                       providedOptions: DataMeasuresFieldOverlayOptions ) {
 
     const origin = modelViewTransform.modelToViewPosition( Vector2.ZERO );
@@ -81,8 +85,14 @@ export default class DataMeasuresOverlay extends Node {
 
     const meanIndicatorRadius = providedOptions.context === 'icon' ? 8 : 12;
 
+    const meanIndicatorFillProperty = histogramSonifierPhaseProperty ? new DerivedProperty( [ histogramSonifierPhaseProperty, PDLColors.meanMarkerFillProperty ],
+      ( histogramSonifierPhase, meanMarkerFill ) => {
+        return histogramSonifierPhase.phaseName === 'highlightingMeanPhase' && histogramSonifierPhase.isMeanHighlighted ? '#ff49e1' : meanMarkerFill;
+      } ) : PDLColors.meanMarkerFillProperty;
+
     const meanIndicator = new MeanIndicatorNode( meanIndicatorRadius, {
-      visibleProperty: isMeanIndicatorVisibleProperty
+      visibleProperty: isMeanIndicatorVisibleProperty,
+      fill: meanIndicatorFillProperty
     } );
 
     // On the field, the mean indicator is nudged down a bit so that it hides the bottom of the mean line

@@ -18,10 +18,17 @@ import Utils from '../../../../dot/js/Utils.js';
 const binSoundClip = new SoundClip( generalBoundaryBoop_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( binSoundClip );
 
+// The histogram sonifier phase is used to keep track of the current state of the sonification, which can be
+// 'idlePhase', 'highlightingBinPhase', or 'highlightingMeanPhase'. In the 'highlightingBinPhase', we keep track of the bin
+// that is currently being sonified. In the 'highlightingMeanPhase', we keep track of whether the mean is currently being highlighted.
+export type HistogramSonifierPhase =
+  { phaseName: 'idlePhase' } |
+  { phaseName: 'highlightingBinPhase'; highlightedBin: number } |
+  { phaseName: 'highlightingMeanPhase'; isMeanHighlighted: boolean };
+
 export default class HistogramSonifier {
 
-  // The bin that is currently being sonified
-  public readonly sonifiedBinProperty: Property<number | null> = new Property<number | null>( null );
+  public readonly histogramSonifierPhaseProperty = new Property<HistogramSonifierPhase>( { phaseName: 'idlePhase' } );
 
   // The sorted data from the left to the rightmost bin
   private binnedData = new Map<number, HistogramData[]>();
@@ -35,17 +42,21 @@ export default class HistogramSonifier {
   // The time remaining for sonifying the current bin
   private timeRemainingInCurrentBin = 0;
 
-  public constructor( private binWidthProperty: TReadOnlyProperty<number> ) {
+  public constructor(
+    private readonly playMeanTone: () => void,
+    private readonly shouldPlayMeanTone: () => boolean,
+    private binWidthProperty: TReadOnlyProperty<number>
+  ) {
 
     // When the bin width changes, stop playing the sound
     binWidthProperty.link( () => {
-      this.sonifiedBinProperty.value = null;
+      this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
     } );
 
     // This plays a tone for each bin, with the pitch corresponding to the number of projectiles in the bin
-    this.sonifiedBinProperty.link( sonifiedBin => {
-      if ( sonifiedBin !== null ) {
-        const sonifiedBinData = this.binnedData.get( sonifiedBin )!;
+    this.histogramSonifierPhaseProperty.link( histogramSonifierPhase => {
+      if ( histogramSonifierPhase.phaseName === 'highlightingBinPhase' ) {
+        const sonifiedBinData = this.binnedData.get( histogramSonifierPhase.highlightedBin )!;
         const binHeight = sonifiedBinData.length;
 
         binSoundClip.setPlaybackRate( this.playbackRateForBinHeight( binHeight ) );
@@ -81,16 +92,16 @@ export default class HistogramSonifier {
 
     // If the data changes, stop playing the sound
     if ( cancelSonification ) {
-      this.sonifiedBinProperty.value = null;
+      this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
     }
   }
 
   public toggleSonification(): void {
-    if ( this.sonifiedBinProperty.value === null ) {
+    if ( this.histogramSonifierPhaseProperty.value.phaseName === 'idlePhase' ) {
       this.startHistogramSoundSequence();
     }
     else {
-      this.sonifiedBinProperty.value = null;
+      this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
     }
   }
 
@@ -106,27 +117,49 @@ export default class HistogramSonifier {
 
     this.timeRemainingInCurrentBin = this.getSoundDelayForCurrentBin();
 
-    this.sonifiedBinProperty.value = this.sortedBins[ this.currentBinIndex ];
+    this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingBinPhase', highlightedBin: this.sortedBins[ this.currentBinIndex ] };
   }
 
   public step( dt: number ): void {
 
-    if ( this.sonifiedBinProperty.value !== null ) {
+    if ( this.histogramSonifierPhaseProperty.value.phaseName !== 'idlePhase' ) {
 
       this.timeRemainingInCurrentBin -= dt;
 
       if ( this.timeRemainingInCurrentBin <= 0 ) {
 
-        this.currentBinIndex++;
+        if ( this.histogramSonifierPhaseProperty.value.phaseName === 'highlightingMeanPhase' ) {
 
-        this.timeRemainingInCurrentBin = this.getSoundDelayForCurrentBin();
-
-        // If we went past the edge of the bins, stop playing
-        if ( this.currentBinIndex >= this.binnedData.size ) {
-          this.sonifiedBinProperty.value = null;
+          if ( this.histogramSonifierPhaseProperty.value.isMeanHighlighted ) {
+            this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
+          }
+          else {
+            this.playMeanTone();
+            this.timeRemainingInCurrentBin = 0.5;
+            this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingMeanPhase', isMeanHighlighted: true };
+          }
         }
         else {
-          this.sonifiedBinProperty.value = this.sortedBins[ this.currentBinIndex ];
+          this.currentBinIndex++;
+
+          this.timeRemainingInCurrentBin = this.getSoundDelayForCurrentBin();
+
+          // If we went past the edge of the bins, stop playing
+          if ( this.currentBinIndex >= this.binnedData.size ) {
+
+            if ( this.shouldPlayMeanTone() ) {
+
+              // TODO: Make this a constant at the top - see https://github.com/phetsims/projectile-data-lab/issues/179
+              this.timeRemainingInCurrentBin = 0.5;
+              this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingMeanPhase', isMeanHighlighted: false };
+            }
+            else {
+              this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
+            }
+          }
+          else {
+            this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingBinPhase', highlightedBin: this.sortedBins[ this.currentBinIndex ] };
+          }
         }
       }
     }

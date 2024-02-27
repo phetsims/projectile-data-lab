@@ -23,6 +23,7 @@ import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { MeanTone } from '../../common/model/MeanTone.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -174,6 +175,14 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
     } );
     this.fieldProperty.link( updateIntervalToolDataPercentage );
     this.intervalTool.changedEmitter.addListener( updateIntervalToolDataPercentage );
+  }
+
+  public override playMeanTone(): void {
+    MeanTone.playMean( this.meanDistanceProperty.value! );
+  }
+
+  public override shouldPlayMeanTone(): boolean {
+    return this.isMeanVisibleProperty.value && this.meanDistanceProperty.value !== null;
   }
 
   public override reset(): void {
