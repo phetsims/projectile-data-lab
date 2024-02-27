@@ -1,4 +1,4 @@
-// Copyright 2023, University of Colorado Boulder
+// Copyright 2023-2024, University of Colorado Boulder
 
 /**
  * Represents values that can be depicted in the histogram. For the first 3 screens, the data for the histogram is one
