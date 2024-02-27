@@ -149,7 +149,7 @@ export default class HistogramSonifier {
     const binDifference = typeof currentBin === 'number' && typeof nextBin === 'number' ? nextBin - currentBin : this.binWidthProperty.value;
 
     // The delay for the sound is a function of the bin width
-    const binWidthDelay = Utils.linear( 0.5, 10, 0.05, 0.3, this.binWidthProperty.value );
+    const binWidthDelay = Utils.linear( 0.5, 10, 0.075, 0.4, this.binWidthProperty.value );
 
     // The maximum delay for the sound is 0.6 seconds or 3 times the bin width delay, whichever is smaller
     const maxSoundDelay = Math.min( 0.6, 3 * binWidthDelay );
