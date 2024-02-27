@@ -1,5 +1,11 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * Shows bars or blocks for histogram-related numerical data.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import { Color, NodeOptions } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -9,12 +15,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import HistogramData from '../../common/model/HistogramData.js';
 import Histogram from '../model/Histogram.js';
-
-/**
- * Shows bars or blocks for histogram-related numerical data.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 export type BarPlotOptions = SelfOptions & NodeOptions;

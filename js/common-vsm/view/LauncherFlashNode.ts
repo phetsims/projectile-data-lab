@@ -1,16 +1,16 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
-
 /**
  * The LauncherFlashNode is the visual representation of the flash that occurs when the launcher is fired.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type LauncherFlashNodeOptions = SelfOptions & NodeOptions;

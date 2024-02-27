@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The AngleToolNode is a static tool that displays a heat map representation of angle data.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
@@ -11,13 +18,6 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLColors from '../../common/PDLColors.js';
-
-/**
- * The AngleToolNode is a static tool that displays a heat map representation of angle data.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = {
   isIcon?: boolean;

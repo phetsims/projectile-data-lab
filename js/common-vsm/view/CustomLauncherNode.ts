@@ -1,5 +1,14 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
+ * It also contains a symbol that represents the type of launcher. The symbol is a spring for the spring launcher, a pressure
+ * gauge for the pressure launcher, and an explosion for the explosion launcher.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { Image, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -22,15 +31,6 @@ import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../model/Launche
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Launcher from '../../common/model/Launcher.js';
-
-/**
- * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
- * It also contains a symbol that represents the type of launcher. The symbol is a spring for the spring launcher, a pressure
- * gauge for the pressure launcher, and an explosion for the explosion launcher.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherNodeOptions = SelfOptions & NodeOptions;

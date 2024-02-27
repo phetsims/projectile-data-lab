@@ -1,4 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
+
+/**
+ * MysteryLauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
+ * mystery launchers. A wrapper is needed to help the layout wrap.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import { KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -12,12 +20,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 const LAUNCHER_BUTTON_CORNER_RADIUS = 2;
 
-/**
- * MysteryLauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
- * mystery launchers. A wrapper is needed to help the layout wrap.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- */
 export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
   public constructor( launcherProperty: PhetioProperty<Launcher>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
 

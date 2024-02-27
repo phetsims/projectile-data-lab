@@ -1,5 +1,12 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * The HistogramSonifier class is used to manage the sounds for the histogram in the Projectile Data Lab.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import HistogramData from './HistogramData.js';
 import { Property, TReadOnlyProperty } from '../../../../axon/js/imports.js';
@@ -7,13 +14,6 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import generalBoundaryBoop_mp3 from '../../../sounds/generalBoundaryBoop_mp3.js';
 import Utils from '../../../../dot/js/Utils.js';
-
-/**
- * The HistogramSonifier class is used to manage the sounds for the histogram in the Projectile Data Lab.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 const binSoundClip = new SoundClip( generalBoundaryBoop_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( binSoundClip );

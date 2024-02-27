@@ -1,5 +1,12 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * The PDLStopwatchNode represents the stopwatch node for the Projectile Data Lab. It is like a normal stopwatch node,
+ * but with an additional Launch button that is used to launch the projectile and start the stopwatch at the same time.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import StopwatchNode, { StopwatchNodeOptions } from '../../../../scenery-phet/js/StopwatchNode.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
@@ -16,12 +23,6 @@ type SelfOptions = {
 };
 type PDLStopwatchNodeOptions = SelfOptions & WithRequired<StopwatchNodeOptions, 'tandem'>;
 
-/**
- * The PDLStopwatchNode represents the stopwatch node for the Projectile Data Lab. It is like a normal stopwatch node,
- * but with an additional Launch button that is used to launch the projectile and start the stopwatch at the same time.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class PDLStopwatchNode extends StopwatchNode {
   public constructor( stopwatch: Stopwatch, launchProjectile: () => void, providedOptions: PDLStopwatchNodeOptions ) {
 

@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
+ * It contains a histogram as well as associated controls.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
 import HistogramAccordionBox, { HistogramAccordionBoxOptions } from '../../common/view/HistogramAccordionBox.js';
@@ -16,14 +24,6 @@ import SamplingHistogramNode from './SamplingHistogramNode.js';
 import Launcher from '../../common/model/Launcher.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Histogram from '../../common/model/Histogram.js';
-
-/**
- * The SamplingAccordionBox is an accordion UI component for the Projectile Data Lab simulation.
- * It contains a histogram as well as associated controls.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 

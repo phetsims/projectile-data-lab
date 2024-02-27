@@ -1,5 +1,13 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * Launcher is the model for a projectile launcher. It defines the mean launch speed, standard deviation of launch speed,
+ * and standard deviation of launch angle.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import Property from '../../../../axon/js/Property.js';
@@ -16,14 +24,6 @@ import Utils from '../../../../dot/js/Utils.js';
 import Range from '../../../../dot/js/Range.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-
-/**
- * Launcher is the model for a projectile launcher. It defines the mean launch speed, standard deviation of launch speed,
- * and standard deviation of launch angle.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 const MAX_STANDARD_DEVIATION_ANGLE = 8; // degrees
 

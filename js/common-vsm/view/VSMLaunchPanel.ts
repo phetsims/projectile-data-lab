@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The VSMLaunchPanel presents a UI so the user can choose the launcher configuration and projectile type.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import SectionLauncherConfiguration from '../../common/view/SectionLauncherConfiguration.js';
@@ -11,13 +18,6 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
-
-/**
- * The VSMLaunchPanel presents a UI so the user can choose the launcher configuration and projectile type.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 export type VSMLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;

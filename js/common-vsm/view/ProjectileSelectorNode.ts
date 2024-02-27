@@ -1,5 +1,14 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * Panel that allows the user to select a projectile. This appears in all VSM screens. The selected projectile is displayed
+ * in the panel  and highlighted in the play area. The ProjectileSelectorPanel is analogous to the
+ * SampleSelectorNode that appears on the Sampling screen.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -31,14 +40,6 @@ import LauncherIconNode from '../../common/view/LauncherIconNode.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1LandedSelected_png, pumpkin2LandedSelected_png, pumpkin3LandedSelected_png ];
 
-/**
- * Panel that allows the user to select a projectile. This appears in all VSM screens. The selected projectile is displayed
- * in the panel  and highlighted in the play area. The ProjectileSelectorPanel is analogous to the
- * SampleSelectorNode that appears on the Sampling screen.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 type SelfOptions = EmptySelfOptions;
 type ProjectileSelectorNodeOptions = SelfOptions & StrictOmit<SelectorNodeOptions, 'playSound'>;
 

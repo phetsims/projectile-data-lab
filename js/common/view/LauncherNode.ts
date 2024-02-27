@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { Circle, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -23,13 +30,6 @@ import launcherPattern3_svg from '../../../images/launcherPattern3_svg.js';
 import launcherPattern4_svg from '../../../images/launcherPattern4_svg.js';
 import launcherPattern5_svg from '../../../images/launcherPattern5_svg.js';
 import launcherPattern6_svg from '../../../images/launcherPattern6_svg.js';
-
-/**
- * The LauncherNode is the visual representation of the projectile launcher. It contains a launcher, frame and a stand.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = {
   isIcon?: boolean;

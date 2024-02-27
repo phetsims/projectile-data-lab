@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The MeasuresInteractiveToolPanel extends the InteractiveToolPanel and provides a specialized user interface for
+ * interacting with additional tools on the Measures screen.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -18,12 +25,6 @@ import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 type SelfOptions = EmptySelfOptions;
 type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOptions;
 
-/**
- * The MeasuresInteractiveToolPanel extends the InteractiveToolPanel and provides a specialized user interface for
- * interacting with additional tools on the Measures screen.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- */
 export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
   public constructor(
     isMeasuringTapeVisibleProperty: BooleanProperty,

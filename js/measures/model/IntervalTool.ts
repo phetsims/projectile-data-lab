@@ -1,5 +1,14 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * IntervalTool is a tool that allows the user to select an interval in the data set. The IntervalTool treats its left and
+ * right values atomically rather than independently to prevent things from going out of bounds or errors due to re-entrant
+ * problems. Compare to center-and-variability/IntervalToolModel which uses the Property-based approach, which yielded
+ * numerous problems and was difficult to maintain.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -19,14 +28,6 @@ type IntervalToolOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
 const DEFAULT_EDGE_1 = 40;
 const DEFAULT_EDGE_2 = 60;
 
-/**
- * IntervalTool is a tool that allows the user to select an interval in the data set. The IntervalTool treats its left and
- * right values atomically rather than independently to prevent things from going out of bounds or errors due to re-entrant
- * problems. Compare to center-and-variability/IntervalToolModel which uses the Property-based approach, which yielded
- * numerous problems and was difficult to maintain.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class IntervalTool extends PhetioObject {
 
   private _edge1: number;

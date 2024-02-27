@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * SampleSizeThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large
+ * histogram, and are designed to make it easy to compare the widths of sample means for different n=? sample sizes.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import { Color, Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -21,12 +28,6 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
-/**
- * SampleSizeThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large
- * histogram, and are designed to make it easy to compare the widths of sample means for different n=? sample sizes.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class SampleSizeThumbnailNode extends Node {
 
   protected readonly chartNode: Node;

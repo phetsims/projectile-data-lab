@@ -1,5 +1,12 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * The LauncherIconNode is the visual representation of the projectile launcher used in the UI of Projectile Data Lab.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -12,13 +19,6 @@ import LauncherMechanism, { SPRING } from '../../common-vsm/model/LauncherMechan
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PDLConstants from '../PDLConstants.js';
-
-/**
- * The LauncherIconNode is the visual representation of the projectile launcher used in the UI of Projectile Data Lab.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type LauncherIconNodeOptions = SelfOptions & NodeOptions;

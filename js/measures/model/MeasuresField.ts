@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The MeasuresField is an extension of the Field class that adds fields for the Measures model.
+ * These fields will keep track of the average distance and standard deviation of distance for landed projectiles.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
@@ -14,14 +22,6 @@ import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/Myste
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import SMField, { SMFieldOptions } from '../../common-sm/model/SMField.js';
-
-/**
- * The MeasuresField is an extension of the Field class that adds fields for the Measures model.
- * These fields will keep track of the average distance and standard deviation of distance for landed projectiles.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isLauncherPropertyPhetioReadOnly'>;

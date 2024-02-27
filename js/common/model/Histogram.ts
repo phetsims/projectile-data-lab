@@ -1,5 +1,12 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * The Histogram class is used to represent the histogram in the Projectile Data Lab.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
@@ -15,13 +22,6 @@ import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import HistogramSonifier from './HistogramSonifier.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-
-/**
- * The Histogram class is used to represent the histogram in the Projectile Data Lab.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 export const ZOOM_LEVELS = [ {
   maxCount: 500,

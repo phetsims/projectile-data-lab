@@ -1,5 +1,12 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * Selector node for choosing between a projectile (VSM Screens) or sample (Sampling Screen). Adapted from NumberSpinner
+ * in order to maintain a similar look and feel, but also to show arbitrary contents in the display area.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { Color, Node, NodeOptions, Path, SceneryConstants } from '../../../../scenery/js/imports.js';
 import AccessibleNumberSpinner, { AccessibleNumberSpinnerOptions } from '../../../../sun/js/accessibility/AccessibleNumberSpinner.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -16,13 +23,6 @@ import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSo
 import TProperty from '../../../../axon/js/TProperty.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
-
-/**
- * Selector node for choosing between a projectile (VSM Screens) or sample (Sampling Screen). Adapted from NumberSpinner
- * in order to maintain a similar look and feel, but also to show arbitrary contents in the display area.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = {
   playSound: ( selectedItem: number ) => void;

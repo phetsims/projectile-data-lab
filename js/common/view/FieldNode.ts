@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The FieldNode is the floating horizontal surface on which projectiles land. Its elements are drawn using a nonlinear
+ * perspective transform to simulate depth. It contains a rectangular background and vertical field lines to show bins.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -11,14 +19,6 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import PDLUtils from '../PDLUtils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../model/Field.js';
-
-/**
- * The FieldNode is the floating horizontal surface on which projectiles land. Its elements are drawn using a nonlinear
- * perspective transform to simulate depth. It contains a rectangular background and vertical field lines to show bins.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = {
 

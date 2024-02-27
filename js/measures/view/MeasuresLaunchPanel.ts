@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The MeasuresLaunchPanel extends VSMLaunchPanel and adds the SectionAnyLauncher which allows the user to select
+ * between the custom and mystery launchers.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
@@ -10,14 +18,6 @@ import SectionAnyLauncher from './SectionAnyLauncher.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import Launcher from '../../common/model/Launcher.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
-
-/**
- * The MeasuresLaunchPanel extends VSMLaunchPanel and adds the SectionAnyLauncher which allows the user to select
- * between the custom and mystery launchers.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;

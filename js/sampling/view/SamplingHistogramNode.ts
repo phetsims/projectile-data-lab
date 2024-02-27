@@ -1,5 +1,12 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
+ * Sampling-screen-specific elements.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -20,12 +27,6 @@ import { Multilink } from '../../../../axon/js/imports.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import Histogram from '../../common/model/Histogram.js';
 
-/**
- * The SamplingHistogramNode shows the histogram for a sampling field, extending the standard HistogramNode and adding
- * Sampling-screen-specific elements.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class SamplingHistogramNode extends HistogramNode {
   public constructor( launcherProperty: TReadOnlyProperty<Launcher>,
                       sampleSizeProperty: TReadOnlyProperty<number>,

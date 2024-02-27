@@ -1,5 +1,16 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
+ * array of graphical elements that update opacity as the data changes, as well as background and foreground graphics.
+ *
+ * NOTE: Due to simulation-specific design and the need to coordinate with the SpeedToolNode AngleToolNode,
+ * this does not extend or compose GaugeNode.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import optionize from '../../../../phet-core/js/optionize.js';
 import { ManualConstraint, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -13,17 +24,6 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLText from '../../common/view/PDLText.js';
-
-/**
- * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an
- * array of graphical elements that update opacity as the data changes, as well as background and foreground graphics.
- *
- * NOTE: Due to simulation-specific design and the need to coordinate with the SpeedToolNode AngleToolNode,
- * this does not extend or compose GaugeNode.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = {
   readoutPatternStringProperty: LocalizedStringProperty;

@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The VariabilityLaunchPanel extends VSMLaunchPanel and adds the SectionMysteryLauncher which allows the user to select
+ * between the mystery launchers.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
@@ -8,14 +16,6 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js';
 import Launcher from '../../common/model/Launcher.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
-
-/**
- * The VariabilityLaunchPanel extends VSMLaunchPanel and adds the SectionMysteryLauncher which allows the user to select
- * between the mystery launchers.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;

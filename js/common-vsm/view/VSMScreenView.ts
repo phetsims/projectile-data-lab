@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Color, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
 import VSMModel from '../model/VSMModel.js';
@@ -29,13 +36,6 @@ import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../co
 import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
-
-/**
- * ScreenView for the Variability, Sources and Measures (VSM) screens on the Projectile Data Lab sim.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;

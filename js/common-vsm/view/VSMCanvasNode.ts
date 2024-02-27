@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * Render the paths and projectiles for the Variability, Sources and Measures screens of Projectile Data Lab.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import Property from '../../../../axon/js/Property.js';
 import VSMField from '../model/VSMField.js';
 import PDLCanvasNode, { PDLCanvasNodeOptions } from '../../common/view/PDLCanvasNode.js';
@@ -8,13 +15,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../../common/PDLColors.js';
 import Projectile from '../../common/model/Projectile.js';
-
-/**
- * Render the paths and projectiles for the Variability, Sources and Measures screens of Projectile Data Lab.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Matthew Blackman (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type VSMCanvasNodeOptions = SelfOptions & PDLCanvasNodeOptions;

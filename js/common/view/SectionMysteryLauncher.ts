@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The SectionMysteryLauncher shows the mystery launcher radio buttons.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -8,13 +15,6 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import MysteryLauncherRadioButtonGroupWrapper from './MysteryLauncherRadioButtonGroupWrapper.js';
 import Launcher from '../model/Launcher.js';
-
-/**
- * The SectionMysteryLauncher shows the mystery launcher radio buttons.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type SectionMysteryLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;

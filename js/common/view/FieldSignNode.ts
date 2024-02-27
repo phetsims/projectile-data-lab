@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The FieldSignNode contains the field sign, which displays text about the field number and landed projectiles.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { HBox, ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -9,13 +16,6 @@ import Field from '../model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { EmptySelfOptions, optionize } from '../../../../phet-core/js/imports.js';
 import PDLColors from '../PDLColors.js';
-
-/**
- * The FieldSignNode contains the field sign, which displays text about the field number and landed projectiles.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 export type FieldSignNodeOptions = SelfOptions & VBoxOptions;

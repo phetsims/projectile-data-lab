@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The measures histogram node is a histogram node that also shows the mean and standard deviation of the data.
+ * It is used in the Measures screen in the Projectile Data Lab simulation.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import Field from '../../common/model/Field.js';
@@ -22,13 +29,6 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Histogram from '../../common/model/Histogram.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
-
-/**
- * The measures histogram node is a histogram node that also shows the mean and standard deviation of the data.
- * It is used in the Measures screen in the Projectile Data Lab simulation.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresHistogramNodeOptions = SelfOptions & WithRequired<HistogramNodeOptions, 'tandem'>;

@@ -1,5 +1,11 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The SamplingFieldSignNode shows the launcher number and the number of projectiles that have landed in that field.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSignNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
@@ -18,11 +24,6 @@ import Field from '../../common/model/Field.js';
 type SelfOptions = EmptySelfOptions;
 type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
-/**
- * The SamplingFieldSignNode shows the launcher number and the number of projectiles that have landed in that field.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- */
 export default class SamplingFieldSignNode extends FieldSignNode {
   public constructor( fields: Field[],
                       fieldProperty: TReadOnlyProperty<Field>,

@@ -1,5 +1,11 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * Shows the Histogram in the Projectile Data Lab simulation.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import { ColorProperty, ManualConstraint, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import Range from '../../../../dot/js/Range.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
@@ -40,12 +46,6 @@ import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSound
 import { DerivedProperty } from '../../../../axon/js/imports.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
-
-/**
- * Shows the Histogram in the Projectile Data Lab simulation.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;

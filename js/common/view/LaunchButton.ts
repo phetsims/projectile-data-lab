@@ -1,5 +1,11 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * Launch button for the projectile data lab.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
@@ -15,12 +21,6 @@ import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { AUTO_GENERATE_DATA_PROPERTY } from '../PDLQueryParameters.js';
 import pushButtonSoundPlayer from '../../../../tambo/js/shared-sound-players/pushButtonSoundPlayer.js';
-
-/**
- * Launch button for the projectile data lab.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type LaunchButtonOptions = SelfOptions & RectangularPushButtonOptions;

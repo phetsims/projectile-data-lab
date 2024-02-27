@@ -1,10 +1,5 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import projectileDataLab from '../../projectileDataLab.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-
 /**
  * Abstraction for timed-event series that helps with variable frame-rates. Note this has similar functionality to
  * EventTimer, but has an interface and simplifications that are appropriate for the Projectile Data Lab.
@@ -14,6 +9,12 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
+
+import projectileDataLab from '../../projectileDataLab.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+
 export default class PDLEventTimer {
 
   // Amount of time between events, in seconds

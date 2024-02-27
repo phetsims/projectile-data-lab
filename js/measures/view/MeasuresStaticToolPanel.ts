@@ -1,5 +1,11 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The MeasuresStaticToolPanel shows checkboxes to select the static (non-interactive) tools.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import StaticToolPanel, { ICON_WIDTH, StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
 import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
@@ -15,11 +21,6 @@ import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 type SelfOptions = EmptySelfOptions;
 type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;
 
-/**
- * The MeasuresStaticToolPanel shows checkboxes to select the static (non-interactive) tools.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- */
 export default class MeasuresStaticToolPanel extends StaticToolPanel {
   public constructor( arePathsVisibleProperty: Property<boolean>, isLaunchAngleVisibleProperty: Property<boolean>,
                       isLaunchSpeedVisibleProperty: Property<boolean>,

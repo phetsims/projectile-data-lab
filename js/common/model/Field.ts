@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The Field is the area where projectiles are launched and land. Each Field manages its own configuration, sequencing,
+ * and projectiles.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
@@ -48,13 +56,6 @@ type SelfOptions = {
 };
 export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
-/**
- * The Field is the area where projectiles are launched and land. Each Field manages its own configuration, sequencing,
- * and projectiles.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- * @author Matthew Blackman (PhET Interactive Simulations)
- */
 export default abstract class Field extends PhetioObject {
 
   // Indicates which LauncherConfiguration is currently in effect. Please see LauncherConfiguration for more details.

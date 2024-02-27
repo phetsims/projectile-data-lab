@@ -1,5 +1,11 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * MysteryLauncherIcon shows the icon for a mystery launcher.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ */
+
 import { Node } from '../../../../scenery/js/imports.js';
 import LauncherNode from './LauncherNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
@@ -8,11 +14,6 @@ import Launcher from '../model/Launcher.js';
 
 const LAUNCHER_ICON_WIDTH = 35;
 
-/**
- * MysteryLauncherIcon shows the icon for a mystery launcher.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- */
 export class MysteryLauncherIcon extends Node {
   public constructor( mysteryLauncher: Launcher ) {
 

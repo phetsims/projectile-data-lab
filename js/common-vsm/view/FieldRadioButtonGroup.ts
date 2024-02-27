@@ -1,5 +1,13 @@
 // Copyright 2024, University of Colorado Boulder
 
+/**
+ * The FieldRadioButtonGroup is a group of buttons that allows the user to select a field.
+ * This appears beneath the fields on the VSM screens.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
@@ -8,14 +16,6 @@ import PDLText from '../../common/view/PDLText.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Circle, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
-
-/**
- * The FieldRadioButtonGroup is a group of buttons that allows the user to select a field.
- * This appears beneath the fields on the VSM screens.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type FieldRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;

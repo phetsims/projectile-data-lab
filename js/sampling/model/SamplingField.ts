@@ -1,5 +1,14 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
+ * CODAP, the "sample" is a number stored within the Projectile (rather than adding arrays or data structures here).
+ * This allows CODAP students to see projectiles from different samples, or to filter by sample.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -19,15 +28,6 @@ import Range from '../../../../dot/js/Range.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import PDLUtils from '../../common/PDLUtils.js';
-
-/**
- * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support
- * CODAP, the "sample" is a number stored within the Projectile (rather than adding arrays or data structures here).
- * This allows CODAP students to see projectiles from different samples, or to filter by sample.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;

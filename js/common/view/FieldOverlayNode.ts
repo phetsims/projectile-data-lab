@@ -1,14 +1,5 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import { Node, NodeOptions, Path, Circle, Text } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import PDLConstants from '../PDLConstants.js';
-import PDLColors from '../PDLColors.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import PDLUtils from '../PDLUtils.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-
 /**
  * The FieldOverlayNode contains the portions of the field that are not drawn using a perspective transform.
  * It consists of the horizontal dashed line, origin circle and field distance labels.
@@ -17,6 +8,15 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
+
+import { Node, NodeOptions, Path, Circle, Text } from '../../../../scenery/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import PDLConstants from '../PDLConstants.js';
+import PDLColors from '../PDLColors.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import PDLUtils from '../PDLUtils.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 
 type SelfOptions = {
   isLeftSide?: boolean;

@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The SampleSelectorNode allows the user to select from the various started samples.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
@@ -20,13 +27,6 @@ import { SamplingPhase } from '../model/SamplingPhase.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
-
-/**
- * The SampleSelectorNode allows the user to select from the various started samples.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type SampleSelectorPanelOptions = SelfOptions & StrictOmit<SelectorNodeOptions, 'playSound'>;

@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * This SectionCustomLauncher is a panel section allows the user to customize a launcher.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import { VBox } from '../../../../scenery/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
@@ -10,13 +17,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
-
-/**
- * This SectionCustomLauncher is a panel section allows the user to customize a launcher.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type SectionCustomLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;

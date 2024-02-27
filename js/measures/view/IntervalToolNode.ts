@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * IntervalToolNode displays the IntervalTool, which allows the user to select an interval in the data set. It can be
+ * dragged by either handle and also by the main readout (to translate). It can also be dragged via keyboard.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import { DragListener, DragListenerOptions, KeyboardDragListener, KeyboardDragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
@@ -74,12 +81,6 @@ const releaseClip = new SoundClip( release_mp3, { initialOutputLevel: 0.4 } );
 soundManager.addSoundGenerator( grabClip, { categoryName: 'user-interface' } );
 soundManager.addSoundGenerator( releaseClip, { categoryName: 'user-interface' } );
 
-/**
- * IntervalToolNode displays the IntervalTool, which allows the user to select an interval in the data set. It can be
- * dragged by either handle and also by the main readout (to translate). It can also be dragged via keyboard.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 export default class IntervalToolNode extends Node {
 
   // The horizontal arrow indicates the width of the interval

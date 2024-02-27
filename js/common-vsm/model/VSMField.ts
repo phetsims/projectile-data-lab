@@ -1,5 +1,12 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The VSMField is an extension of the Field class that adds fields for the VSM models.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import optionize from '../../../../phet-core/js/optionize.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -24,13 +31,6 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import landing_mp3 from '../../../sounds/landing_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import PDLUtils from '../../common/PDLUtils.js';
-
-/**
- * The VSMField is an extension of the Field class that adds fields for the VSM models.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 const landSoundClip = new SoundClip( landing_mp3, {
   initialOutputLevel: 1

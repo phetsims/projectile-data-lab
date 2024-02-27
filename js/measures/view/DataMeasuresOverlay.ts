@@ -1,5 +1,14 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * The DataMeasuresOverlay shows the graphics for the visual representation of the average and standard deviation
+ * of the landed projectiles. It has a mean indicator node, a mean line, and two standard deviation lines with arrows.
+ * It is used in both the field overlay and histogram overlay components on the Measures screen.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import optionize from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -19,15 +28,6 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
-
-/**
- * The DataMeasuresOverlay shows the graphics for the visual representation of the average and standard deviation
- * of the landed projectiles. It has a mean indicator node, a mean line, and two standard deviation lines with arrows.
- * It is used in both the field overlay and histogram overlay components on the Measures screen.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = {
   context: 'histogram' | 'field' | 'icon';

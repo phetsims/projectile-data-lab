@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+/**
+ * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
+ * projectile type, launch angle, launch speed, initial height.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import projectileDataLab from '../../projectileDataLab.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
@@ -16,14 +24,6 @@ import Launcher from './Launcher.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import ProjectileSound from './ProjectileSound.js';
 import ProjectileType from './ProjectileType.js';
-
-/**
- * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
- * projectile type, launch angle, launch speed, initial height.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 export default class Projectile {
 
