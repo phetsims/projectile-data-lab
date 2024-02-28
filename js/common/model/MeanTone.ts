@@ -8,17 +8,39 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import { playbackRateForPosition } from './ProjectileSound.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import meanTone_wav from '../../../sounds/meanTone_wav.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import Utils from '../../../../dot/js/Utils.js';
 
-const meanSoundClip = new SoundClip( meanTone_wav, { initialOutputLevel: 0.2 } );
+// This is the dominant frequency of numberTone_mp3. If the audio file is changed, this will need to be updated.
+const E3 = 164.81; // Hz
+
+const INITIAL_OUTPUT_LEVEL = 0.25;
+
+// Filter to make the mean sound different from the main sound and from the median sound
+const meanFilter = new BiquadFilterNode( phetAudioContext, {
+  type: 'bandpass',
+  Q: 2
+} );
+
+const meanSoundClip = new SoundClip( meanTone_wav, {
+  initialOutputLevel: INITIAL_OUTPUT_LEVEL,
+  additionalAudioNodes: [ meanFilter ]
+} );
+
 soundManager.addSoundGenerator( meanSoundClip );
 
 export class MeanTone {
   public static playMean( value: number ): void {
-    meanSoundClip.setPlaybackRate( Utils.linear( 0, 100, 1, 2, value ) );
+    const playbackRate = playbackRateForPosition( value );
+
+    // set the frequency of the band pass filter to be equal to the frequency of the adjusted sound
+    const frequency = E3 * playbackRate;
+    meanFilter.frequency.setTargetAtTime( frequency, phetAudioContext.currentTime, 0 );
+
+    meanSoundClip.setPlaybackRate( playbackRate );
     meanSoundClip.play();
   }
 }
