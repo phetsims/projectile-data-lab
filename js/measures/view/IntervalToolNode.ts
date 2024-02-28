@@ -25,8 +25,6 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PDLColors from '../../common/PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import grab_mp3 from '../../../../tambo/sounds/grab_mp3.js';
-import release_mp3 from '../../../../tambo/sounds/release_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import { BooleanProperty, NumberProperty } from '../../../../axon/js/imports.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
@@ -75,11 +73,6 @@ type SelfOptions = {
 export type IntervalToolNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 const TEXT_PANEL_BOUNDS_DILATION = 5;
-
-const grabClip = new SoundClip( grab_mp3, { initialOutputLevel: 0.4 } );
-const releaseClip = new SoundClip( release_mp3, { initialOutputLevel: 0.4 } );
-soundManager.addSoundGenerator( grabClip, { categoryName: 'user-interface' } );
-soundManager.addSoundGenerator( releaseClip, { categoryName: 'user-interface' } );
 
 export default class IntervalToolNode extends Node {
 
@@ -287,8 +280,6 @@ export default class IntervalToolNode extends Node {
     };
 
     const listenerOptions = {
-      start: () => grabClip.play(),
-      end: () => releaseClip.play(),
       transform: modelViewTransform
     };
 
@@ -299,11 +290,9 @@ export default class IntervalToolNode extends Node {
     const translateDragListenerOptions = {
       start: () => {
         this.isCenterDraggingProperty.value = true;
-        grabClip.play();
       },
       end: () => {
         this.isCenterDraggingProperty.value = false;
-        releaseClip.play();
       },
       transform: modelViewTransform
     };
