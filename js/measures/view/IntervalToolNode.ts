@@ -29,37 +29,38 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import { BooleanProperty, NumberProperty } from '../../../../axon/js/imports.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import Range from '../../../../dot/js/Range.js';
-import intervalToolEdge_mp3 from '../../../sounds/intervalToolEdge_mp3.js';
-import intervalToolCenter_mp3 from '../../../sounds/intervalToolCenter_mp3.js';
+import intervalTool_wav from '../../../sounds/intervalTool_wav.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 
-const filter = new BiquadFilterNode( phetAudioContext, {
+const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
   Q: 1,
   frequency: 800
 } );
 
-const minMaxFilter = new BiquadFilterNode( phetAudioContext, {
+const centerFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'bandpass',
   Q: 1,
   frequency: 600
 } );
 
-const edgeSoundClip = new SoundClip( intervalToolEdge_mp3, {
-  additionalAudioNodes: [ filter ]
+const edgeSoundClip = new SoundClip( intervalTool_wav, {
+  additionalAudioNodes: [ edgeFilter ],
+  initialOutputLevel: 0.6
 } );
-const centerSoundClip = new SoundClip( intervalToolCenter_mp3, {
-  additionalAudioNodes: [ filter ]
+const centerSoundClip = new SoundClip( intervalTool_wav, {
+  additionalAudioNodes: [ centerFilter ],
+  initialOutputLevel: 0.6
 } );
-const minSoundClip = new SoundClip( intervalToolEdge_mp3, {
-  additionalAudioNodes: [ minMaxFilter ],
-  initialPlaybackRate: 0.8
+const minSoundClip = new SoundClip( intervalTool_wav, {
+  initialPlaybackRate: 0.8,
+  initialOutputLevel: 0.3
 } );
-const maxSoundClip = new SoundClip( intervalToolEdge_mp3, {
-  additionalAudioNodes: [ minMaxFilter ],
-  initialPlaybackRate: 1.6
+const maxSoundClip = new SoundClip( intervalTool_wav, {
+  initialPlaybackRate: 3,
+  initialOutputLevel: 0.3
 } );
 
 soundManager.addSoundGenerator( edgeSoundClip, { categoryName: 'user-interface' } );
