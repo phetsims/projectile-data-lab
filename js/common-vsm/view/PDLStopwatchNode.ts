@@ -61,7 +61,9 @@ export default class PDLStopwatchNode extends StopwatchNode {
         // Don't compete with the launch sound or the landing sound
         stop: _.noop,
         play: _.noop
-      }
+      },
+      touchAreaXDilation: 3,
+      touchAreaYDilation: 3
     } );
 
     const options = optionize<PDLStopwatchNodeOptions, SelfOptions, StopwatchNodeOptions>()( {
