@@ -218,7 +218,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     // Position the 'No air resistance' text
     ManualConstraint.create( this, [ this.launchPanel ], launchPanelProxy => {
       this.noAirResistanceText.centerX = launchPanelProxy.centerX;
-      this.noAirResistanceText.top = launchPanelProxy.bottom + 15;
+      this.noAirResistanceText.top = launchPanelProxy.bottom + 8;
     } );
 
     this.pdomPlayAreaNode.pdomOrder = [
