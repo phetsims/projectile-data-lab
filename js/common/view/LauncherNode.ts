@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Circle, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, Color, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
@@ -59,6 +59,9 @@ export const GUIDE_RAIL_MAX_ANGLE = Utils.toRadians( 180 + ANGLE_PAST_TOP_HORIZO
 const SUPPORT_BAR_CENTER_X = -20;
 const SUPPORT_BAR_WIDTH = 30;
 const SUPPORT_BAR_HEIGHT = 200;
+
+// Cache the darker color properties to avoid creating new ones for each launcher, to avoid a memory leak, see https://github.com/phetsims/projectile-data-lab/issues/24
+const darkerColorCacheMap = new Map<TReadOnlyProperty<Color>, TReadOnlyProperty<Color>>();
 
 export default class LauncherNode extends Node {
 
@@ -196,10 +199,16 @@ export default class LauncherNode extends Node {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
+  private getCachedDarkerColorProperty( colorProperty: TReadOnlyProperty<Color> ): TReadOnlyProperty<Color> {
+    if ( !darkerColorCacheMap.has( colorProperty ) ) {
+      darkerColorCacheMap.set( colorProperty, new DerivedProperty( [ colorProperty ], color => color.darkerColor( 0.8 ) ) );
+    }
+    return darkerColorCacheMap.get( colorProperty )!;
+  }
+
   private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
     const barrelColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].barrel;
-    const barrelDarkColorProperty = new DerivedProperty( [ barrelColorProperty ],
-      color => color.darkerColor( 0.8 ) );
+    const barrelDarkColorProperty = this.getCachedDarkerColorProperty( barrelColorProperty );
 
     const nozzleColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].nozzle;
 
@@ -279,12 +288,9 @@ export default class LauncherNode extends Node {
     } );
 
     const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frame;
-    const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
-      color => color.darkerColor( 0.8 ) );
-    const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
-      color => color.darkerColor( 0.8 ) );
-    const frameFillDarkerColorProperty = new DerivedProperty( [ frameFillDarkColorProperty ],
-      color => color.darkerColor( 0.8 ) );
+    const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
+    const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
+    const frameFillDarkerColorProperty = this.getCachedDarkerColorProperty( frameFillDarkColorProperty );
 
     const FRAME_BAR_WIDTH = 4;
 
@@ -328,10 +334,8 @@ export default class LauncherNode extends Node {
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
     const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frame;
-    const frameFillColorProperty = new DerivedProperty( [ fillColorProperty ],
-      color => color.darkerColor( 0.8 ) );
-    const frameFillDarkColorProperty = new DerivedProperty( [ frameFillColorProperty ],
-      color => color.darkerColor( 0.8 ) );
+    const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
+    const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
 
     const guideRailOuterShape = this.guideRailOuterShape( outerRadiusCutoff );
     const guideRailShape = guideRailOuterShape.shapeDifference( this.guideRailInnerShape() );
