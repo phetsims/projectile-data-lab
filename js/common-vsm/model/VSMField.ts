@@ -27,15 +27,7 @@ import Launcher from '../../common/model/Launcher.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Range from '../../../../dot/js/Range.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import landing_mp3 from '../../../sounds/landing_mp3.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
 import PDLUtils from '../../common/PDLUtils.js';
-
-const landSoundClip = new SoundClip( landing_mp3, {
-  initialOutputLevel: 1
-} );
-soundManager.addSoundGenerator( landSoundClip );
 
 type SelfOptions = {
 

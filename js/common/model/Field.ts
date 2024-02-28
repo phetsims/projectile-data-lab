@@ -38,9 +38,7 @@ import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js'
 import { Color } from '../../../../scenery/js/imports.js';
 import PDLPreferences from '../PDLPreferences.js';
 
-const launchSoundClip = new SoundClip( launch_mp3, {
-  initialOutputLevel: 0.2
-} );
+const launchSoundClip = new SoundClip( launch_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( launchSoundClip );
 
 type SelfOptions = {

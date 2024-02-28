@@ -20,20 +20,18 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import pdlCannonLandandGeneralThudV1_mp3 from '../../../sounds/pdlCannonLandandGeneralThudV1_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import pdlPianoLand_mp3 from '../../../sounds/pdlPianoLand_mp3.js';
+import cannonballLand_mp3 from '../../../sounds/cannonballLand_mp3.js';
+import pumpkinLand_mp3 from '../../../sounds/pumpkinLand_mp3.js';
+import pianoLand_mp3 from '../../../sounds/pianoLand_mp3.js';
 
-import pdlPumpkinLand_mp3 from '../../../sounds/pdlPumpkinLand_mp3.js';
+const cannonballSoundClip = new SoundClip( cannonballLand_mp3, { initialOutputLevel: 0.1 } );
+const pumpkinSoundClip = new SoundClip( pumpkinLand_mp3, { initialOutputLevel: 0.1 } );
+const pianoSoundClip = new SoundClip( pianoLand_mp3, { initialOutputLevel: 0.1 } );
 
-const cannonballSoundClip = new SoundClip( pdlCannonLandandGeneralThudV1_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( cannonballSoundClip );
-
-const pianoSoundClip = new SoundClip( pdlPianoLand_mp3, { initialOutputLevel: 0.1 } );
-soundManager.addSoundGenerator( pianoSoundClip );
-
-const pumpkinSoundClip = new SoundClip( pdlPumpkinLand_mp3, { initialOutputLevel: 0.1 } );
 soundManager.addSoundGenerator( pumpkinSoundClip );
+soundManager.addSoundGenerator( pianoSoundClip );
 
 type SelfOptions = EmptySelfOptions;
 type SectionProjectileTypeOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;

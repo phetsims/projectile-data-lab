@@ -23,14 +23,6 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "landingTone.mp3": {
-    "text": [
-      "Copyright 2024 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Matthew Blackman"
-  },
   "generalBoundaryBoop.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
@@ -63,14 +55,6 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "landing.mp3": {
-    "text": [
-      "Copyright 2024 University of Colorado Boulder"
-    ],
-    "projectURL": "https://phet.colorado.edu",
-    "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
-  },
   "launch.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
@@ -87,7 +71,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "pdlCannonLand.mp3": {
+  "cannonballTone.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -95,7 +79,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Matthew Blackman"
   },
-  "pdlCannonLandandGeneralThudV1.mp3": {
+  "cannonballLand.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -103,7 +87,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "pdlPianoLand.mp3": {
+  "pianoLand.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -111,13 +95,29 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "pdlPumpkinLand.mp3": {
+  "pumpkinLand.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
-    "notes": "created by Ashton Morris"
+    "notes": "created by Matthew Blackman"
+  },
+  "pianoTone.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
+  },
+  "pumpkinTone.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
   },
   "pdlToggleButtonA.mp3": {
     "text": [
@@ -134,6 +134,14 @@
     "projectURL": "https://phet.colorado.edu",
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
+  },
+  "histogramTone.wav": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
   },
   "stopwatchTick.mp3": {
     "text": [

@@ -115,7 +115,7 @@ export default class Projectile {
     if ( this.y <= 0 ) {
       this.setLanded();
       field.projectileLandedEmitter.emit( this );
-      ProjectileSound.play( this.type, this.x );
+      ProjectileSound.play( this.type, this.x, true );
     }
   }
 
