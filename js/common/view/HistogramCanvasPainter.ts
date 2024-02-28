@@ -47,13 +47,15 @@ export default class HistogramCanvasPainter extends CanvasPainter {
   }
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
+
+    const isSonifiedBin = ( bin: number ) => {
+      return !!( this.histogram &&
+                 this.histogram.histogramSonifier.histogramSonifierPhaseProperty.value.phaseName === 'highlightingBinPhase' &&
+                 this.histogram.histogramSonifier.histogramSonifierPhaseProperty.value.highlightedBin === bin );
+    };
+
     const getFillColorForBin = ( bin: number ) => {
-
-      const isInSonifiedColumn = this.histogram &&
-                                 this.histogram.histogramSonifier.histogramSonifierPhaseProperty.value.phaseName === 'highlightingBinPhase' &&
-                                 this.histogram.histogramSonifier.histogramSonifierPhaseProperty.value.highlightedBin === bin;
-
-      return isInSonifiedColumn ? '#ffb371' : this.blockFillProperty.value.toCSS();
+      return isSonifiedBin( bin ) ? '#ffb371' : this.blockFillProperty.value.toCSS();
     };
 
     const histogramRepresentation = this.histogramRepresentationProperty.value;
@@ -83,7 +85,6 @@ export default class HistogramCanvasPainter extends CanvasPainter {
       const projectile = this.data[ i ];
       const isHighlighted = this.selectedData === projectile;
 
-
       // Calculate the bin for this value by its lower bound
       const bin = Math.floor( projectile.x / binWidth ) * binWidth;
 
@@ -100,7 +101,8 @@ export default class HistogramCanvasPainter extends CanvasPainter {
         context.strokeRect( x * scaleFactor, y * scaleFactor, blockWidth * scaleFactor, blockHeight * scaleFactor );
       }
 
-      if ( isHighlighted ) {
+      // If the highlighted data block is in the sonified bin, don't draw the dot
+      if ( isHighlighted && !isSonifiedBin( bin ) ) {
         highlightDotX = x;
         highlightDotY = y;
       }
