@@ -139,8 +139,8 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     // and the buttons look depressed
     const increasedListener = ( isDown: boolean ) => isDown && incrementButton.pdomClick();
     const decreasedListener = ( isDown: boolean ) => isDown && decrementButton.pdomClick();
-    this.incrementDownEmitter.addListener( increasedListener );
-    this.decrementDownEmitter.addListener( decreasedListener );
+    this.pdomIncrementDownEmitter.addListener( increasedListener );
+    this.pdomDecrementDownEmitter.addListener( decreasedListener );
 
     this.addLinkedElement( numberProperty );
 
