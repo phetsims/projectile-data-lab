@@ -27,7 +27,8 @@ export type HistogramSonifierPhase =
   { phaseName: 'highlightingMeanPhase'; isMeanHighlighted: boolean };
 
 // In the Measures screen, when the mean is displayed, wait this many seconds before playing the mean tone
-const MEAN_TONE_DELAY = 0.5;
+const MEAN_HIGHLIGHT_DELAY = 0.3;
+const MEAN_HIGHLIGHT_DURATION = 0.6;
 
 export default class HistogramSonifier {
 
@@ -138,7 +139,7 @@ export default class HistogramSonifier {
           }
           else {
             this.playMeanTone();
-            this.timeRemainingInCurrentBin = 0.5;
+            this.timeRemainingInCurrentBin = MEAN_HIGHLIGHT_DURATION;
             this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingMeanPhase', isMeanHighlighted: true };
           }
         }
@@ -152,7 +153,7 @@ export default class HistogramSonifier {
 
             if ( this.shouldPlayMeanTone() ) {
 
-              this.timeRemainingInCurrentBin = MEAN_TONE_DELAY;
+              this.timeRemainingInCurrentBin = MEAN_HIGHLIGHT_DELAY;
               this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingMeanPhase', isMeanHighlighted: false };
             }
             else {
