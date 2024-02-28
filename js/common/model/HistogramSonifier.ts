@@ -26,6 +26,9 @@ export type HistogramSonifierPhase =
   { phaseName: 'highlightingBinPhase'; highlightedBin: number } |
   { phaseName: 'highlightingMeanPhase'; isMeanHighlighted: boolean };
 
+// In the Measures screen, when the mean is displayed, wait this many seconds before playing the mean tone
+const MEAN_TONE_DELAY = 0.5;
+
 export default class HistogramSonifier {
 
   public readonly histogramSonifierPhaseProperty = new Property<HistogramSonifierPhase>( { phaseName: 'idlePhase' } );
@@ -43,8 +46,8 @@ export default class HistogramSonifier {
   private timeRemainingInCurrentBin = 0;
 
   public constructor(
-    private readonly playMeanTone: () => void,
-    private readonly shouldPlayMeanTone: () => boolean,
+    private readonly shouldPlayMeanTone: () => boolean, // See the method declaration in PDLModel.ts
+    private readonly playMeanTone: () => void, // See the method declaration in PDLModel.ts
     private binWidthProperty: TReadOnlyProperty<number>
   ) {
 
@@ -149,8 +152,7 @@ export default class HistogramSonifier {
 
             if ( this.shouldPlayMeanTone() ) {
 
-              // TODO: Make this a constant at the top - see https://github.com/phetsims/projectile-data-lab/issues/179
-              this.timeRemainingInCurrentBin = 0.5;
+              this.timeRemainingInCurrentBin = MEAN_TONE_DELAY;
               this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingMeanPhase', isMeanHighlighted: false };
             }
             else {

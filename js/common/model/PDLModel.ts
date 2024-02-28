@@ -114,9 +114,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioReadOnly: providedOptions.isFieldPropertyPhetioReadonly
     } );
 
-    // TODO: Also swap the order of the first 2 parameters here - see https://github.com/phetsims/projectile-data-lab/issues/179
-    // TODO: Do we need to re-closure these? See https://github.com/phetsims/projectile-data-lab/issues/179
-    this.histogram = new Histogram( () => this.playMeanTone(), () => this.shouldPlayMeanTone(), { tandem: providedOptions.tandem.createTandem( 'histogram' ) } );
+    this.histogram = new Histogram( () => this.shouldPlayMeanTone(), () => this.playMeanTone(), { tandem: providedOptions.tandem.createTandem( 'histogram' ) } );
 
     this.singleOrContinuousProperty = new Property<SingleOrContinuous>( 'single', {
       validValues: SingleOrContinuousValues,
@@ -187,14 +185,20 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     } );
   }
 
-  // TODO: Documentation, see https://github.com/phetsims/projectile-data-lab/issues/179
-  public playMeanTone(): void {
-//nothing to do here
-  }
-
-  // TODO: Documentation, see https://github.com/phetsims/projectile-data-lab/issues/179
+  /**
+   * When the HistogramSonifier is playing a sound, this method is called to determine whether the mean tone should be played at the end.
+   * This is played only on the Measures screen.
+   */
   public shouldPlayMeanTone(): boolean {
     return false;
+  }
+
+  /**
+   * When the HistogramSonifier is playing a sound, this method is called to play the mean tone at the end. This is played only on the Measures screen.
+   * This method is called only when shouldPlayMeanTone() returns true.
+   */
+  public playMeanTone(): void {
+    //nothing to do here, see documentation above
   }
 
   /**
