@@ -28,7 +28,7 @@ export type HistogramSonifierPhase =
 
 // In the Measures screen, when the mean is displayed, wait this many seconds before playing the mean tone
 const MEAN_HIGHLIGHT_DELAY = 0.3;
-const MEAN_HIGHLIGHT_DURATION = 0.6;
+const MEAN_HIGHLIGHT_DURATION = 0.4;
 
 export default class HistogramSonifier {
 
