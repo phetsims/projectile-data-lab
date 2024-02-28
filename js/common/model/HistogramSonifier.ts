@@ -13,9 +13,9 @@ import { Property, TReadOnlyProperty } from '../../../../axon/js/imports.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import Utils from '../../../../dot/js/Utils.js';
-import histogramTone_wav from '../../../sounds/histogramTone_wav.js';
+import generalBoundaryBoop_mp3 from '../../../sounds/generalBoundaryBoop_mp3.js';
 
-const binSoundClip = new SoundClip( histogramTone_wav, { initialOutputLevel: 0.8 } );
+const binSoundClip = new SoundClip( generalBoundaryBoop_mp3, { initialOutputLevel: 0.8 } );
 soundManager.addSoundGenerator( binSoundClip );
 
 // The histogram sonifier phase is used to keep track of the current state of the sonification, which can be
@@ -171,8 +171,8 @@ export default class HistogramSonifier {
   // Maps the height of the bin to the playback rate of the sound
   private playbackRateForBinHeight = ( binHeight: number ): number => {
 
-    // This power function passes through (1, 1) and (500, 3.7) with a decreasing slope
-    return 1.6 * Math.pow( ( binHeight + 5.5 ), 0.18 ) - 1.2;
+    // This power function passes through (1, 0.44) and (500, 3.1) with a decreasing slope
+    return 1.6 * Math.pow( ( binHeight + 5.5 ), 0.18 ) - 1.8;
   };
 
   // Determines the delay of the sound between the current bin and the next bin.
