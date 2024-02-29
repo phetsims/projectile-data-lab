@@ -23,6 +23,7 @@ import launcherTypeSpring_mp3 from '../../../sounds/launcherTypeSpring_mp3.js';
 import launcherTypePressure_mp3 from '../../../sounds/launcherTypePressure_mp3.js';
 import launcherTypeExplosion_mp3 from '../../../sounds/launcherTypeExplosion_mp3.js';
 import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
@@ -33,7 +34,16 @@ soundManager.addSoundGenerator( springSound, { categoryName: 'user-interface' } 
 const pressureSound = new SoundClip( launcherTypePressure_mp3 );
 soundManager.addSoundGenerator( pressureSound, { categoryName: 'user-interface' } );
 
-const explosionSound = new SoundClip( launcherTypeExplosion_mp3 );
+const explosionSound = new SoundClip( launcherTypeExplosion_mp3, {
+  additionalAudioNodes: [
+    new BiquadFilterNode( phetAudioContext, {
+      type: 'lowpass',
+      Q: 1,
+      frequency: 100
+    } )
+  ]
+} );
+
 soundManager.addSoundGenerator( explosionSound, { categoryName: 'user-interface' } );
 
 export default class CustomLauncherTypeRadioButtonGroup extends PDLRectangularRadioButtonGroup<LauncherMechanism> {
