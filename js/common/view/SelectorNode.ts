@@ -23,6 +23,7 @@ import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSo
 import TProperty from '../../../../axon/js/TProperty.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import { platform } from '../../../../phet-core/js/imports.js';
 
 type SelfOptions = {
   playSound: ( selectedItem: number ) => void;
@@ -44,6 +45,10 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
       // The focus highlight surrounds the entire component, but the spinner display is not interactive with
       // mouse and touch events so this highlight is hidden. Instead, default highlights surround the arrow buttons.
       interactiveHighlight: 'invisible',
+
+      // Prevent a spurious white rectangle artifact that appears on Safari when the buttons become enable and disabled
+      // which seems to be related to the filters used for the enabled/disabled appearance. See https://github.com/phetsims/projectile-data-lab/issues/178
+      layerSplit: platform.safari,
 
       // PhET-iO
       tandem: Tandem.REQUIRED,
