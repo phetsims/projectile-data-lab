@@ -59,7 +59,7 @@ const minSoundClip = new SoundClip( intervalTool_wav, {
   initialOutputLevel: 0.3
 } );
 const maxSoundClip = new SoundClip( intervalTool_wav, {
-  initialPlaybackRate: 3,
+  initialPlaybackRate: 2.5,
   initialOutputLevel: 0.3
 } );
 
@@ -358,7 +358,7 @@ export default class IntervalToolNode extends Node {
       middleMovingDownSoundPlayer: centerSoundClip,
       middleMovingUpPlaybackRateMapper: centerPlaybackRateMapper,
       middleMovingDownPlaybackRateMapper: centerPlaybackRateMapper,
-      interThresholdDelta: 5,
+      interThresholdDelta: 2,
       minSoundPlayer: nullSoundPlayer,
       maxSoundPlayer: nullSoundPlayer
     } );
