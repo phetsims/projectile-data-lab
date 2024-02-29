@@ -1,7 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * PDLKeyboardHelpNode is the keyboard help for all screens.
+ * PDLKeyboardHelpNode is the keyboard help for all screens. The majority of elements are relevant to all screens.
+ * Elements that are not relevant to all screens may be omitted via providedOptions.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Chris Malley (PixelZoom, Inc.)
