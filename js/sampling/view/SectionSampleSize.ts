@@ -62,11 +62,11 @@ export default class SectionSampleSize extends PDLPanelSection {
       phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
       phetioFeatured: true,
       orientation: 'horizontal',
-      spacing: 6,
+      spacing: 5,
       radioButtonOptions: {
         baseColor: 'white',
-        xMargin: 7,
-        yMargin: 7
+        xMargin: 9,
+        yMargin: 9
       },
       layoutOptions: {
         align: 'center'
