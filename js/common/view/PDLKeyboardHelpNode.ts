@@ -51,6 +51,9 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
   }
 }
 
+/**
+ * The section labeled 'Keyboard Shortcuts'.
+ */
 class KeyboardShortcutsHelpSection extends KeyboardHelpSection {
 
   public constructor( hasSelectAFieldShortcut: boolean ) {
