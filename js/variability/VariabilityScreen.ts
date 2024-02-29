@@ -12,8 +12,8 @@ import projectileDataLab from '../projectileDataLab.js';
 import VariabilityModel from './model/VariabilityModel.js';
 import VariabilityScreenView from './view/VariabilityScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
-import VariabilityKeyboardHelpNode from './view/VariabilityKeyboardHelpNode.js';
 import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
+import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +26,7 @@ export default class VariabilityScreen extends Screen<VariabilityModel, Variabil
     const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.variabilityStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createVariabilityScreenIcon(),
-      createKeyboardHelpNode: () => new VariabilityKeyboardHelpNode()
+      createKeyboardHelpNode: () => new PDLKeyboardHelpNode()
     }, providedOptions );
 
     super(
