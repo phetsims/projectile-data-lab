@@ -123,7 +123,7 @@ export default class LauncherNode extends Node {
 
     mysteryLauncher.link( mysteryLauncher => {
       this.updateMysteryLauncher( mysteryLauncher.launcherNumber, options.isIcon );
-      labelPanel.fill = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher.launcherNumber - 1 ].labelPanelFillProperty;
+      labelPanel.fill = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncher.launcherNumber - 1 ].labelPanelFillProperty;
     } );
 
     fieldProperty && fieldProperty.link( () => {
@@ -207,10 +207,10 @@ export default class LauncherNode extends Node {
   }
 
   private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
-    const barrelColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].barrelFillProperty;
+    const barrelColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncherNumber - 1 ].barrelFillProperty;
     const barrelDarkColorProperty = this.getCachedDarkerColorProperty( barrelColorProperty );
 
-    const nozzleColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].nozzleFillProperty;
+    const nozzleColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncherNumber - 1 ].nozzleFillProperty;
 
     const barrelBaseRadius = 0.5 * BARREL_BASE_WIDTH;
     const barrelBaseX = -BARREL_LENGTH_BEFORE_ORIGIN + barrelBaseRadius;
@@ -287,7 +287,7 @@ export default class LauncherNode extends Node {
       fill: PDLColors.launcherBackFillProperty
     } );
 
-    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frameFillProperty;
+    const fillColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncher - 1 ].frameFillProperty;
     const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
     const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
     const frameFillDarkerColorProperty = this.getCachedDarkerColorProperty( frameFillDarkColorProperty );
@@ -333,7 +333,7 @@ export default class LauncherNode extends Node {
 
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
-    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frameFillProperty;
+    const fillColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncher - 1 ].frameFillProperty;
     const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
     const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
 

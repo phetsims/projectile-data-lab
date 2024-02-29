@@ -17,7 +17,61 @@
 import { Color, ProfileColorProperty } from '../../../scenery/js/imports.js';
 import projectileDataLab from '../projectileDataLab.js';
 
+type LauncherColorProfile = {
+  barrelFillProperty: ProfileColorProperty;
+  nozzleFillProperty: ProfileColorProperty;
+  frameFillProperty: ProfileColorProperty;
+  labelPanelFillProperty: ProfileColorProperty;
+};
+
+const MYSTERY_LAUNCHER_COLOR_PROFILES: LauncherColorProfile[] = [
+  {
+    barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher1.barrelFill', { default: '#CC3333' } ),
+    nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher1.nozzleFill', { default: '#FFE300' } ),
+    frameFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher1.frameFill', { default: '#bb2e2e' } ),
+    labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher1.labelPanelFill', { default: '#F5B8B8' } )
+  },
+  {
+    barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher2.barrelFill', { default: '#588C7C' } ),
+    nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher2.nozzleFill', { default: '#406357' } ),
+    frameFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher2.frameFill', { default: '#4a7365' } ),
+    labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher2.labelPanelFill', { default: '#E0F1EB' } )
+  },
+  {
+    barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher3.barrelFill', { default: '#FFE300' } ),
+    nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher3.nozzleFill', { default: '#E5C400' } ),
+    frameFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher3.frameFill', { default: '#f1d400' } ),
+    labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher3.labelPanelFill', { default: '#FFF7B8' } )
+  },
+  {
+    barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher4.barrelFill', { default: '#009EFF' } ),
+    nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher4.nozzleFill', { default: '#006ABA' } ),
+    frameFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher4.frameFill', { default: '#0077d2' } ),
+    labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher4.labelPanelFill', { default: '#B8E4FF' } )
+  },
+  {
+    barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher5.barrelFill', { default: '#ffffff' } ),
+    nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher5.nozzleFill', { default: '#626262' } ),
+    frameFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher5.frameFill', { default: '#808080' } ),
+    labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher5.labelPanelFill', { default: '#f5f5f5' } )
+  },
+  {
+    barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher6.barrelFill', { default: '#9470CE' } ),
+    nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher6.nozzleFill', { default: '#7158A0' } ),
+    frameFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher6.frameFill', { default: '#9470CE' } ),
+    labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'mysteryLauncher6.labelPanelFill', { default: '#E3D8F3' } )
+  },
+  {
+    barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'customLauncher.barrelFill', { default: '#adadad' } ),
+    nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'customLauncher.nozzleFill', { default: '#8d8d8d' } ),
+    frameFillProperty: new ProfileColorProperty( projectileDataLab, 'customLauncher.frameFill', { default: '#919191' } ),
+    labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'customLauncher.labelPanelFill', { default: '#ffffff' } )
+  }
+];
+
 const PDLColors = {
+
+  mysteryLauncherColorProfiles: MYSTERY_LAUNCHER_COLOR_PROFILES,
 
   screenIconFillProperty: new ProfileColorProperty( projectileDataLab, 'screenIconFill', {
     default: '#f7f7f7'
@@ -82,51 +136,6 @@ const PDLColors = {
   pathSamplingStrokeProperty: new ProfileColorProperty( projectileDataLab, 'pathSamplingStroke', {
     default: new Color( 0xFFFFFF, 0.2 )
   } ),
-
-  mysteryLauncherFillColorProperties: [
-    {
-      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill1', { default: '#CC3333' } ),
-      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill1', { default: '#FFE300' } ),
-      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill1', { default: '#bb2e2e' } ),
-      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill1', { default: '#F5B8B8' } )
-    },
-    {
-      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill2', { default: '#588C7C' } ),
-      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill2', { default: '#406357' } ),
-      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill2', { default: '#4a7365' } ),
-      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill2', { default: '#E0F1EB' } )
-    },
-    {
-      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill3', { default: '#FFE300' } ),
-      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill3', { default: '#E5C400' } ),
-      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill3', { default: '#f1d400' } ),
-      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill3', { default: '#FFF7B8' } )
-    },
-    {
-      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill4', { default: '#009EFF' } ),
-      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill4', { default: '#006ABA' } ),
-      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill4', { default: '#0077d2' } ),
-      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill4', { default: '#B8E4FF' } )
-    },
-    {
-      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill5', { default: '#ffffff' } ),
-      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill5', { default: '#626262' } ),
-      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill5', { default: '#808080' } ),
-      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill5', { default: '#f5f5f5' } )
-    },
-    {
-      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill6', { default: '#9470CE' } ),
-      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill6', { default: '#7158A0' } ),
-      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill6', { default: '#9470CE' } ),
-      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill6', { default: '#E3D8F3' } )
-    },
-    {
-      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFillCustom', { default: '#adadad' } ),
-      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFillCustom', { default: '#8d8d8d' } ),
-      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFillCustom', { default: '#919191' } ),
-      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFillCustom', { default: '#ffffff' } )
-    }
-  ],
 
   launcherStrokeProperty: new ProfileColorProperty( projectileDataLab, 'launcherStroke', {
     default: '#111111'
