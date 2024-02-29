@@ -30,10 +30,10 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
       radioButtonOptions: {
         preferredWidth: 40,
         buttonAppearanceStrategyOptions: {
-          selectedStroke: PDLColors.fieldSignTextColorProperty,
+          selectedStroke: PDLColors.fieldSignTextFillProperty,
           selectedLineWidth: 3,
-          overStroke: PDLColors.fieldSignTextColorProperty,
-          deselectedStroke: PDLColors.fieldSignTextColorProperty,
+          overStroke: PDLColors.fieldSignTextFillProperty,
+          deselectedStroke: PDLColors.fieldSignTextFillProperty,
           deselectedLineWidth: 2,
           deselectedButtonOpacity: 0.8
         }
@@ -47,12 +47,12 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
 
       const dataIndicator = new Circle( 3, {
         visibleProperty: field.isContainingDataProperty,
-        fill: PDLColors.fieldSignTextColorProperty,
+        fill: PDLColors.fieldSignTextFillProperty,
         pickable: false
       } );
 
       const buttonText = new PDLText( fieldNumber.toString(), {
-        fill: PDLColors.fieldSignTextColorProperty,
+        fill: PDLColors.fieldSignTextFillProperty,
         fontSize: 20,
         fontWeight: 'bold'
       } );

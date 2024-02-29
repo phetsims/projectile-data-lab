@@ -19,8 +19,8 @@ export class PDLPanel extends Panel {
   public constructor( content: Node, providedOptions?: PDLPanelOptions ) {
 
     const options = optionize<PDLPanelOptions, SelfOptions, PanelOptions>()( {
-      fill: PDLColors.panelColorProperty,
-      stroke: PDLColors.panelStrokeColorProperty,
+      fill: PDLColors.panelFillProperty,
+      stroke: PDLColors.panelStrokeProperty,
       cornerRadius: 5,
       phetioFeatured: true,
       visiblePropertyOptions: {

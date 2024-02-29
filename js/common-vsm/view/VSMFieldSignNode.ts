@@ -38,7 +38,7 @@ export default class VSMFieldSignNode extends FieldSignNode {
     } );
 
     const fieldNumberText = new Text( fieldSignStringProperty, {
-      fill: PDLColors.fieldSignTextColorProperty,
+      fill: PDLColors.fieldSignTextFillProperty,
       font: PDLConstants.VSM_FIELD_SIGN_FONT
     } );
 

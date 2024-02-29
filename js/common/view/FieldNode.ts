@@ -49,7 +49,7 @@ export default class FieldNode extends Node {
     } );
 
     const fieldBackground = new Path( transformedShape, {
-      fill: PDLColors.fieldFill1ColorProperty
+      fill: PDLColors.fieldFillLightProperty
     } );
 
     const defaultOptions = { isBottomHalf: false, children: [ fieldBackground ] };
@@ -96,7 +96,7 @@ export default class FieldNode extends Node {
       pointMap: PDLUtils.transformField
     } );
     this.fieldBorder = new Path( transformedFieldBorderShape, {
-      fill: PDLColors.fieldBorderColorProperty
+      fill: PDLColors.fieldBorderFillProperty
     } );
     this.addChild( this.fieldBorder );
 
@@ -144,17 +144,17 @@ export default class FieldNode extends Node {
     for ( let i = 0; i < totalFieldLines; i++ ) {
       const x = -0.5 * PDLConstants.FIELD_WIDTH + deltaX * ( i + 1 );
       const isNumberedLine = ( i + 1 ) * binWidth % PDLConstants.FIELD_LABEL_INCREMENT === 0;
-      const strokeColorProperty =
+      const fieldLineFillProperty =
         isNumberedLine ?
-        PDLColors.fieldBorderColorProperty :
-        PDLColors.fieldLineColorProperty;
+        PDLColors.fieldBorderFillProperty :
+        PDLColors.fieldLineFillProperty;
       const strokeWidth = isNumberedLine ? PDLConstants.FIELD_LINE_NUMBERED_WIDTH : PDLConstants.FIELD_LINE_WIDTH;
       const lineShape = new Shape().rect( x - 0.5 * strokeWidth, -0.5 * lineHeight, strokeWidth, lineHeight );
       const transformedLineShape = lineShape.nonlinearTransformed( {
         pointMap: PDLUtils.transformField
       } );
       const fieldLine = new Path( transformedLineShape, {
-        fill: strokeColorProperty
+        fill: fieldLineFillProperty
       } );
       fieldLines.push( fieldLine );
     }

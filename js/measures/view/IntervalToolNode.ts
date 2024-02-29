@@ -95,7 +95,7 @@ export default class IntervalToolNode extends Node {
     super( options );
 
     const lineOptions = {
-      stroke: PDLColors.intervalToolLineColorProperty,
+      stroke: PDLColors.intervalToolLineStrokeProperty,
       lineWidth: 2
     };
 
@@ -105,7 +105,7 @@ export default class IntervalToolNode extends Node {
     this.addChild( edge2Line );
 
     const sphereOptions = {
-      mainColor: PDLColors.intervalToolSphereColorProperty,
+      mainColor: PDLColors.intervalToolSphereFillProperty,
       focusable: true,
       tagName: 'div',
       translation: Vector2.ZERO

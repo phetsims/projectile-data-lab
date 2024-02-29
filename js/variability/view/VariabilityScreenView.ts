@@ -55,8 +55,8 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
       ProjectileDataLabStrings.distanceStringProperty,
       model.histogram,
       node,
-      PDLColors.histogramDataFillColorProperty,
-      PDLColors.histogramDataStrokeColorProperty, {
+      PDLColors.histogramDataFillProperty,
+      PDLColors.histogramDataStrokeProperty, {
         tandem: options.tandem.createTandem( histogramAccordionBoxTandemName ).createTandem( 'histogramNode' )
       } );
 

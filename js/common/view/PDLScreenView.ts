@@ -91,8 +91,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       0,
       1,
       1,
-      PDLColors.screenBackgroundTopColorProperty,
-      PDLColors.screenBackgroundBottomColorProperty,
+      PDLColors.skyTopProperty,
+      PDLColors.skyBottomProperty,
       0,
       1
     );

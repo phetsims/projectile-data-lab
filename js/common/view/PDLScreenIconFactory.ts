@@ -41,7 +41,7 @@ const PDLScreenIconFactory = {
           new Path(
             new Shape().moveTo( info.x, info.y ).quadraticCurveToPointRelative( new Vector2( info.bezierX, info.bezierY ), new Vector2( info.lineDx, info.lineDy ) ),
             {
-              stroke: PDLColors.pathStrokeAirborneColorProperty,
+              stroke: PDLColors.pathAirborneStrokeProperty,
               lineWidth: 6
             } ),
           new Image( cannonball_png, { centerX: info.x, centerY: info.y } )
@@ -55,7 +55,7 @@ const PDLScreenIconFactory = {
     } );
 
     return new ScreenIcon( iconNode, {
-      fill: PDLColors.screenIconBackgroundColorProperty
+      fill: PDLColors.screenIconFillProperty
     } );
   },
 
@@ -67,7 +67,7 @@ const PDLScreenIconFactory = {
     const springNode = new Image( spring_png );
 
     return new ScreenIcon( new HBox( { children: [ springNode ], yMargin: 20 } ), {
-      fill: PDLColors.screenIconBackgroundColorProperty
+      fill: PDLColors.screenIconFillProperty
     } );
   },
 
@@ -100,8 +100,8 @@ const PDLScreenIconFactory = {
         const dataBlockNode = new Rectangle( 0, 0, dataBlockSize, dataBlockSize, {
           centerX: i * dataBlockSize,
           centerY: -j * dataBlockSize,
-          fill: PDLColors.histogramDataFillColorProperty,
-          stroke: PDLColors.histogramDataStrokeColorProperty,
+          fill: PDLColors.histogramDataFillProperty,
+          stroke: PDLColors.histogramDataStrokeProperty,
           lineWidth: 1
         } );
 
@@ -128,7 +128,7 @@ const PDLScreenIconFactory = {
     } );
 
     return new ScreenIcon( new HBox( { children: [ iconNode ], yMargin: 5 } ), {
-      fill: PDLColors.screenIconBackgroundColorProperty
+      fill: PDLColors.screenIconFillProperty
     } );
   },
 
@@ -159,7 +159,7 @@ const PDLScreenIconFactory = {
     const iconNode = new Node( { children: [ ...projectileImages, meanIndicatorNode ] } );
 
     return new ScreenIcon( iconNode, {
-      fill: PDLColors.screenIconBackgroundColorProperty
+      fill: PDLColors.screenIconFillProperty
     } );
   }
 };

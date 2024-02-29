@@ -58,8 +58,8 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
       ProjectileDataLabStrings.distanceStringProperty,
       model.histogram,
       node,
-      PDLColors.histogramDataFillColorProperty,
-      PDLColors.histogramDataStrokeColorProperty, {
+      PDLColors.histogramDataFillProperty,
+      PDLColors.histogramDataStrokeProperty, {
         tandem: options.tandem.createTandem( histogramAccordionBoxTandemName ).createTandem( 'histogramNode' )
       } );
 

@@ -19,182 +19,160 @@ import projectileDataLab from '../projectileDataLab.js';
 
 const PDLColors = {
 
-  // Background color for screen icons in this sim
-  screenIconBackgroundColorProperty: new ProfileColorProperty( projectileDataLab, 'iconBackground', {
+  screenIconFillProperty: new ProfileColorProperty( projectileDataLab, 'screenIconFill', {
     default: '#f7f7f7'
   } ),
 
-  // Background color for screens in this sim
-  screenBackgroundTopColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundTop', {
+  skyTopProperty: new ProfileColorProperty( projectileDataLab, 'skyTop', {
     default: '#42a4ff'
   } ),
 
-  screenBackgroundBottomColorProperty: new ProfileColorProperty( projectileDataLab, 'backgroundBottom', {
+  skyBottomProperty: new ProfileColorProperty( projectileDataLab, 'skyBottom', {
     default: '#a9c2ff'
   } ),
 
-  panelColorProperty: new ProfileColorProperty( projectileDataLab, 'panelFill', {
+  panelFillProperty: new ProfileColorProperty( projectileDataLab, 'panelFill', {
     default: 'rgb(243,243,243)'
   } ),
 
-  panelStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'panelStroke', {
+  panelStrokeProperty: new ProfileColorProperty( projectileDataLab, 'panelStroke', {
     default: 'rgb(131,131,131)'
   } ),
 
-  launchButtonColorProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonFill', {
+  launchButtonFillProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonFill', {
     default: '#e33e3c'
   } ),
 
-  launchButtonDisabledColorProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonDisabledFill', {
+  launchButtonDisabledFillProperty: new ProfileColorProperty( projectileDataLab, 'launchButtonDisabledFill', {
     default: '#de4e4d'
   } ),
 
-  timerDisplayColorProperty: new ProfileColorProperty( projectileDataLab, 'timerDisplayFill', {
-    default: '#5082e6'
-  } ),
-
-  fieldFill1ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill1', {
+  fieldFillLightProperty: new ProfileColorProperty( projectileDataLab, 'fieldFillLight', {
     default: '#38bb70'
   } ),
 
-  fieldFill2ColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldFill2', {
+  fieldFillDarkProperty: new ProfileColorProperty( projectileDataLab, 'fieldFillDark', {
     default: '#098548'
   } ),
 
-  fieldLineColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldLine', {
+  fieldLineFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineFill', {
     default: new Color( 0xFFFFFF, 0.5 )
   } ),
 
-  fieldBorderColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldBorder', {
+  fieldBorderFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldBorderFill', {
     default: '#FFFFFF'
   } ),
 
-  pathStrokeAirborneColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeAirborne', {
+  pathAirborneStrokeProperty: new ProfileColorProperty( projectileDataLab, 'pathAirborneStroke', {
     default: new Color( 0x701AC3, 0.65 )
   } ),
 
-  pathStrokeLandedInitialColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedInitial', {
+  pathLandedInitialStrokeProperty: new ProfileColorProperty( projectileDataLab, 'pathLandedInitialStroke', {
     default: new Color( 0xFFFFFF, 0.4 )
   } ),
 
-  pathStrokeLandedFinalColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeLandedFinal', {
+  pathLandedFinalStrokeProperty: new ProfileColorProperty( projectileDataLab, 'pathLandedFinalStroke', {
     default: new Color( 0xFFFFFF, 0.06 )
   } ),
 
-  pathStrokeHighlightedColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeHighlighted', {
+  pathHighlightedStrokeProperty: new ProfileColorProperty( projectileDataLab, 'pathHighlightedStroke', {
     default: new Color( 0x5B2194, 1 )
   } ),
 
-  pathStrokeSamplingColorProperty: new ProfileColorProperty( projectileDataLab, 'pathStrokeSampling', {
+  pathSamplingStrokeProperty: new ProfileColorProperty( projectileDataLab, 'pathSamplingStroke', {
     default: new Color( 0xFFFFFF, 0.2 )
   } ),
 
   mysteryLauncherFillColorProperties: [
     {
-      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel1', { default: '#CC3333' } ),
-      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle1', { default: '#FFE300' } ),
-      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame1', { default: '#bb2e2e' } ),
-      labelPanel: new ProfileColorProperty( projectileDataLab, 'launcherLabelPanel1', { default: '#F5B8B8' } )
+      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill1', { default: '#CC3333' } ),
+      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill1', { default: '#FFE300' } ),
+      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill1', { default: '#bb2e2e' } ),
+      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill1', { default: '#F5B8B8' } )
     },
     {
-      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel2', { default: '#588C7C' } ),
-      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle2', { default: '#406357' } ),
-      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame2', { default: '#4a7365' } ),
-      labelPanel: new ProfileColorProperty( projectileDataLab, 'launcherLabelPanel2', { default: '#E0F1EB' } )
+      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill2', { default: '#588C7C' } ),
+      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill2', { default: '#406357' } ),
+      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill2', { default: '#4a7365' } ),
+      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill2', { default: '#E0F1EB' } )
     },
     {
-      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel3', { default: '#FFE300' } ),
-      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle3', { default: '#E5C400' } ),
-      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame3', { default: '#f1d400' } ),
-      labelPanel: new ProfileColorProperty( projectileDataLab, 'launcherLabelPanel3', { default: '#FFF7B8' } )
+      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill3', { default: '#FFE300' } ),
+      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill3', { default: '#E5C400' } ),
+      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill3', { default: '#f1d400' } ),
+      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill3', { default: '#FFF7B8' } )
     },
     {
-      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel4', { default: '#009EFF' } ),
-      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle4', { default: '#006ABA' } ),
-      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame4', { default: '#0077d2' } ),
-      labelPanel: new ProfileColorProperty( projectileDataLab, 'launcherLabelPanel4', { default: '#B8E4FF' } )
+      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill4', { default: '#009EFF' } ),
+      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill4', { default: '#006ABA' } ),
+      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill4', { default: '#0077d2' } ),
+      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill4', { default: '#B8E4FF' } )
     },
     {
-      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel5', { default: '#ffffff' } ),
-      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle5', { default: '#626262' } ),
-      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame5', { default: '#808080' } ),
-      labelPanel: new ProfileColorProperty( projectileDataLab, 'launcherLabelPanel5', { default: '#f5f5f5' } )
+      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill5', { default: '#ffffff' } ),
+      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill5', { default: '#626262' } ),
+      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill5', { default: '#808080' } ),
+      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill5', { default: '#f5f5f5' } )
     },
     {
-      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrel6', { default: '#9470CE' } ),
-      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzle6', { default: '#7158A0' } ),
-      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrame6', { default: '#9470CE' } ),
-      labelPanel: new ProfileColorProperty( projectileDataLab, 'launcherLabelPanel6', { default: '#E3D8F3' } )
+      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFill6', { default: '#9470CE' } ),
+      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFill6', { default: '#7158A0' } ),
+      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFill6', { default: '#9470CE' } ),
+      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFill6', { default: '#E3D8F3' } )
     },
     {
-      barrel: new ProfileColorProperty( projectileDataLab, 'launcherBarrelCustom', { default: '#adadad' } ),
-      nozzle: new ProfileColorProperty( projectileDataLab, 'launcherNozzleCustom', { default: '#8d8d8d' } ),
-      frame: new ProfileColorProperty( projectileDataLab, 'launcherFrameCustom', { default: '#919191' } ),
-      labelPanel: new ProfileColorProperty( projectileDataLab, 'launcherLabelPanelCustom', { default: '#ffffff' } )
+      barrelFillProperty: new ProfileColorProperty( projectileDataLab, 'barrelFillCustom', { default: '#adadad' } ),
+      nozzleFillProperty: new ProfileColorProperty( projectileDataLab, 'nozzleFillCustom', { default: '#8d8d8d' } ),
+      frameFillProperty: new ProfileColorProperty( projectileDataLab, 'frameFillCustom', { default: '#919191' } ),
+      labelPanelFillProperty: new ProfileColorProperty( projectileDataLab, 'labelPanelFillCustom', { default: '#ffffff' } )
     }
   ],
 
-  launcherStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherStroke', {
+  launcherStrokeProperty: new ProfileColorProperty( projectileDataLab, 'launcherStroke', {
     default: '#111111'
   } ),
 
-  launcherFrameBackgroundColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherFrameBackground', {
+  launcherBackFillProperty: new ProfileColorProperty( projectileDataLab, 'launcherBackFill', {
     default: new Color( 0xffffff, 0.35 )
   } ),
 
-  launcherGuideBoltInnerColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherGuideBoltInner', {
-    default: '#888888'
-  } ),
-
-  launcherGuideBoltOuterColorProperty: new ProfileColorProperty( projectileDataLab, 'launcherGuideBoltOuter', {
-    default: '#aaaaaa'
-  } ),
-
-  fieldSignFillColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignFill', {
-    default: '#349380'
-  } ),
-
-  fieldSignStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignStroke', {
-    default: '#105b52'
-  } ),
-
-  fieldSignTextColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignText', {
+  fieldSignTextFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignTextFill', {
     default: '#ffffff'
   } ),
 
-  fieldSignPostColorProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignPost', {
+  fieldSignPostFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldSignPostFill', {
     default: '#c4bcbc'
   } ),
 
-  heatMapColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMap', {
-    default: '#EE6102'
-  } ),
-
-  heatMapBodyFillColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapBodyFill', {
+  heatMapDisplayFillProperty: new ProfileColorProperty( projectileDataLab, 'heatMapDisplayFill', {
     default: '#FCFCFC'
   } ),
 
-  heatMapBodyStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapBodyStroke', {
-    default: '#111111'
-  } ),
-
-  heatMapNeedleFillColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapNeedleFill', {
+  heatNodeFillProperty: new ProfileColorProperty( projectileDataLab, 'heatNodeFill', {
     default: '#EE6102'
   } ),
 
-  heatMapNeedleStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'heatMapNeedleStroke', {
+  heatMapDisplayStrokeProperty: new ProfileColorProperty( projectileDataLab, 'heatMapDisplayStroke', {
     default: '#111111'
   } ),
 
-  speedToolConnectorColorProperty: new ProfileColorProperty( projectileDataLab, 'speedToolConnector', {
+  heatMapNeedleFillProperty: new ProfileColorProperty( projectileDataLab, 'heatMapNeedleFill', {
+    default: '#EE6102'
+  } ),
+
+  heatMapNeedleStrokeProperty: new ProfileColorProperty( projectileDataLab, 'heatMapNeedleStroke', {
+    default: '#111111'
+  } ),
+
+  speedToolConnectorStrokeProperty: new ProfileColorProperty( projectileDataLab, 'speedToolConnectorStroke', {
     default: '#363F82'
   } ),
 
-  histogramDataFillColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramDataFill', {
+  histogramDataFillProperty: new ProfileColorProperty( projectileDataLab, 'histogramDataFill', {
     default: '#D22D32'
   } ),
 
-  histogramDataStrokeColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramDataStroke', {
+  histogramDataStrokeProperty: new ProfileColorProperty( projectileDataLab, 'histogramDataStroke', {
     default: '#EE8B5E'
   } ),
 
@@ -206,15 +184,15 @@ const PDLColors = {
     default: '#000000'
   } ),
 
-  intervalToolSphereColorProperty: new ProfileColorProperty( projectileDataLab, 'intervalToolSphere', {
+  intervalToolSphereFillProperty: new ProfileColorProperty( projectileDataLab, 'intervalToolSphereFill', {
     default: '#ffc537'
   } ),
 
-  intervalToolLineColorProperty: new ProfileColorProperty( projectileDataLab, 'intervalToolLine', {
+  intervalToolLineStrokeProperty: new ProfileColorProperty( projectileDataLab, 'intervalToolLineStroke', {
     default: '#8f8f8f'
   } ),
 
-  histogramIntervalToolFillColorProperty: new ProfileColorProperty( projectileDataLab, 'histogramIntervalToolFill', {
+  histogramIntervalToolFillProperty: new ProfileColorProperty( projectileDataLab, 'histogramIntervalToolFill', {
     default: new Color( 'yellow' ).withAlpha( 0.3 )
   } )
 };

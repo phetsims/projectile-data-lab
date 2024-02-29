@@ -123,7 +123,7 @@ export default class LauncherNode extends Node {
 
     mysteryLauncher.link( mysteryLauncher => {
       this.updateMysteryLauncher( mysteryLauncher.launcherNumber, options.isIcon );
-      labelPanel.fill = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher.launcherNumber - 1 ].labelPanel;
+      labelPanel.fill = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher.launcherNumber - 1 ].labelPanelFillProperty;
     } );
 
     fieldProperty && fieldProperty.link( () => {
@@ -207,10 +207,10 @@ export default class LauncherNode extends Node {
   }
 
   private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
-    const barrelColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].barrel;
+    const barrelColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].barrelFillProperty;
     const barrelDarkColorProperty = this.getCachedDarkerColorProperty( barrelColorProperty );
 
-    const nozzleColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].nozzle;
+    const nozzleColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncherNumber - 1 ].nozzleFillProperty;
 
     const barrelBaseRadius = 0.5 * BARREL_BASE_WIDTH;
     const barrelBaseX = -BARREL_LENGTH_BEFORE_ORIGIN + barrelBaseRadius;
@@ -237,7 +237,7 @@ export default class LauncherNode extends Node {
     } );
 
     const barrelBorder = new Path( barrelShape, {
-      stroke: PDLColors.launcherStrokeColorProperty
+      stroke: PDLColors.launcherStrokeProperty
     } );
 
     const launcherEndRectWidth = 1.2 * BARREL_NOZZLE_WIDTH;
@@ -249,7 +249,7 @@ export default class LauncherNode extends Node {
       launcherEndRectLength,
       launcherEndRectWidth, {
         fill: nozzleColorProperty,
-        stroke: PDLColors.launcherStrokeColorProperty,
+        stroke: PDLColors.launcherStrokeProperty,
         lineWidth: 1,
         cornerRadius: 0.1 * launcherEndRectLength
       }
@@ -284,10 +284,10 @@ export default class LauncherNode extends Node {
 
   private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
     const frameBackground = new Path( this.guideRailInnerShape(), {
-      fill: PDLColors.launcherFrameBackgroundColorProperty
+      fill: PDLColors.launcherBackFillProperty
     } );
 
-    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frame;
+    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frameFillProperty;
     const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
     const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
     const frameFillDarkerColorProperty = this.getCachedDarkerColorProperty( frameFillDarkColorProperty );
@@ -296,12 +296,12 @@ export default class LauncherNode extends Node {
 
     const frameBarTop = new Rectangle( 0, -FRAME_BAR_WIDTH, GUIDE_RAIL_OUTER_RADIUS, FRAME_BAR_WIDTH, {
       fill: frameFillColorProperty,
-      stroke: PDLColors.launcherStrokeColorProperty
+      stroke: PDLColors.launcherStrokeProperty
     } );
 
     const frameBarBottom = new Rectangle( 0, 0, GUIDE_RAIL_OUTER_RADIUS, FRAME_BAR_WIDTH, {
       fill: frameFillColorProperty,
-      stroke: PDLColors.launcherStrokeColorProperty
+      stroke: PDLColors.launcherStrokeProperty
     } );
 
     frameBarTop.rotateAround( Vector2.ZERO, GUIDE_RAIL_MAX_ANGLE );
@@ -325,7 +325,7 @@ export default class LauncherNode extends Node {
 
     const supportBar = new Path( supportBarShape, {
       fill: supportBarFillGradient,
-      stroke: PDLColors.launcherStrokeColorProperty
+      stroke: PDLColors.launcherStrokeProperty
     } );
 
     return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
@@ -333,7 +333,7 @@ export default class LauncherNode extends Node {
 
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
-    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frame;
+    const fillColorProperty = PDLColors.mysteryLauncherFillColorProperties[ mysteryLauncher - 1 ].frameFillProperty;
     const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
     const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
 
@@ -348,7 +348,7 @@ export default class LauncherNode extends Node {
 
     const guideRail = new Path( guideRailShape, {
       fill: guideRailFillGradient,
-      stroke: PDLColors.launcherStrokeColorProperty
+      stroke: PDLColors.launcherStrokeProperty
     } );
 
     return [ guideRail ];

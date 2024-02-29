@@ -44,12 +44,12 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     } );
 
     const launcherNumberText = new Text( launcherNumberStringProperty, {
-      fill: PDLColors.fieldSignTextColorProperty,
+      fill: PDLColors.fieldSignTextFillProperty,
       font: PDLConstants.SAMPLING_FIELD_SIGN_FONT
     } );
 
     const sampleSizeText = new Text( sampleSizeStringProperty, {
-      fill: PDLColors.fieldSignTextColorProperty,
+      fill: PDLColors.fieldSignTextFillProperty,
       font: PDLConstants.SAMPLING_FIELD_SIGN_FONT
     } );
 

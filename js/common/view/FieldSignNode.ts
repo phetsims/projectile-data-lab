@@ -89,12 +89,12 @@ export default class FieldSignNode extends VBox {
       const signPostEllipseHeight = 3;
 
       const signPostRect = new Rectangle( 0, -0, signPostWidth, signPostHeight, {
-        fill: PDLColors.fieldSignPostColorProperty
+        fill: PDLColors.fieldSignPostFillProperty
       } );
 
       const signPostBase = new Path( new Shape().ellipse( new Vector2( 0.5 * signPostWidth, signPostHeight ),
         0.5 * signPostWidth, 0.5 * signPostEllipseHeight, 0 ), {
-        fill: PDLColors.fieldSignPostColorProperty
+        fill: PDLColors.fieldSignPostFillProperty
       } );
 
       return new Node( {

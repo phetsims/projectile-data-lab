@@ -170,8 +170,8 @@ export default class HeatMapToolNode extends Node {
       this.tickMarks.push( ...minorTickMarks );
     }
 
-    this.bodyBackNode = new Path( options.bodyShape, { fill: PDLColors.heatMapBodyFillColorProperty } );
-    this.bodyFrontNode = new Path( options.bodyShape, { stroke: PDLColors.heatMapBodyStrokeColorProperty, lineWidth: 1 } );
+    this.bodyBackNode = new Path( options.bodyShape, { fill: PDLColors.heatMapDisplayFillProperty } );
+    this.bodyFrontNode = new Path( options.bodyShape, { stroke: PDLColors.heatMapDisplayStrokeProperty, lineWidth: 1 } );
 
     this.needleNode = this.createNeedleNode( options.needleShape );
 
@@ -254,7 +254,7 @@ export default class HeatMapToolNode extends Node {
     for ( let i = 0; i < numHeatNodes; i++ ) {
       const heatNode = new Path( heatNodeShape, {
         opacity: 0,
-        fill: PDLColors.heatMapColorProperty
+        fill: PDLColors.heatNodeFillProperty
       } );
 
       const deltaAngle = ( 0.5 + i ) * heatNodeArcLength;
@@ -298,7 +298,7 @@ export default class HeatMapToolNode extends Node {
       const angle = Utils.linear( minLabeledValue, maxLabeledValue, labelMinAngle, labelMaxAngle, i );
       const tickMarkAngle = Utils.toRadians( -angle );
       const outerMajorTickMark = new Path( new Shape().moveTo( outerRadius - majorTickMarkLength, 0 ).lineTo( outerRadius, 0 ), {
-        stroke: PDLColors.heatMapBodyStrokeColorProperty,
+        stroke: PDLColors.heatMapDisplayStrokeProperty,
         lineWidth: 1
       } );
       outerMajorTickMark.rotateAround( Vector2.ZERO, tickMarkAngle );
@@ -306,7 +306,7 @@ export default class HeatMapToolNode extends Node {
 
       if ( isWithInnerTickMarks ) {
         const innerMajorTickMark = new Path( new Shape().moveTo( innerRadius, 0 ).lineTo( innerRadius + majorTickMarkLength, 0 ), {
-          stroke: PDLColors.heatMapBodyStrokeColorProperty,
+          stroke: PDLColors.heatMapDisplayStrokeProperty,
           lineWidth: 1
         } );
         innerMajorTickMark.rotateAround( Vector2.ZERO, tickMarkAngle );
@@ -326,7 +326,7 @@ export default class HeatMapToolNode extends Node {
       const angle = Utils.linear( minValue, maxValue, minAngle, maxAngle, i );
       const tickMarkAngle = Utils.toRadians( -angle );
       const minorTickMark = new Path( new Shape().moveTo( outerRadius - minorTickMarkLength, 0 ).lineTo( outerRadius, 0 ), {
-        stroke: PDLColors.heatMapBodyStrokeColorProperty,
+        stroke: PDLColors.heatMapDisplayStrokeProperty,
         lineWidth: 1
       } );
       minorTickMark.rotateAround( Vector2.ZERO, tickMarkAngle );
@@ -339,8 +339,8 @@ export default class HeatMapToolNode extends Node {
   // createNeedleNode creates the needle node for the heat map tool
   private createNeedleNode( needleShape: Shape ): Node {
     const needleNode = new Path( needleShape, {
-      fill: PDLColors.heatMapNeedleFillColorProperty,
-      stroke: PDLColors.heatMapNeedleStrokeColorProperty,
+      fill: PDLColors.heatMapNeedleFillProperty,
+      stroke: PDLColors.heatMapNeedleStrokeProperty,
       lineWidth: 1,
       x: 0,
       y: 0

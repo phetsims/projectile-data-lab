@@ -59,8 +59,8 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       horizontalAxisLabelText,
       histogram,
       comboBoxParent,
-      PDLColors.histogramDataFillColorProperty,
-      PDLColors.histogramDataStrokeColorProperty,
+      PDLColors.histogramDataFillProperty,
+      PDLColors.histogramDataStrokeProperty,
       options );
 
     const noDataLabel = new PDLText( ProjectileDataLabStrings.noDataStringProperty, {} );
@@ -137,7 +137,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
     this.chartNode.addChild( valuesChartOverlay );
 
     const intervalToolHighlight = new Rectangle( 0, 0, 0, 0, {
-      fill: PDLColors.histogramIntervalToolFillColorProperty,
+      fill: PDLColors.histogramIntervalToolFillProperty,
       visibleProperty: intervalToolVisibleProperty
     } );
     this.chartClipLayer.addChild( intervalToolHighlight );

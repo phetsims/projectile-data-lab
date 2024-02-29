@@ -191,8 +191,8 @@ export default class AngleToolNode extends HeatMapToolNode {
   private drawBodyNodes( bodyShape: Shape ): void {
     this.displayNode.removeChild( this.bodyBackNode );
     this.displayNode.removeChild( this.bodyFrontNode );
-    this.bodyBackNode = new Path( bodyShape, { fill: PDLColors.heatMapBodyFillColorProperty } );
-    this.bodyFrontNode = new Path( bodyShape, { stroke: PDLColors.heatMapBodyStrokeColorProperty, lineWidth: 1 } );
+    this.bodyBackNode = new Path( bodyShape, { fill: PDLColors.heatMapDisplayFillProperty } );
+    this.bodyFrontNode = new Path( bodyShape, { stroke: PDLColors.heatMapDisplayStrokeProperty, lineWidth: 1 } );
     this.displayNode.addChild( this.bodyBackNode );
     this.displayNode.addChild( this.bodyFrontNode );
     this.bodyBackNode.moveToBack();

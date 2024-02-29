@@ -47,7 +47,7 @@ export default class FieldOverlayNode extends Node {
     } );
 
     const dashedLine = new Path( dashedLineTransformed, {
-      fill: PDLColors.fieldBorderColorProperty
+      fill: PDLColors.fieldBorderFillProperty
     } );
 
     // Create the numbered distance labels
@@ -83,7 +83,7 @@ export default class FieldOverlayNode extends Node {
     if ( providedOptions.isLeftSide ) {
       childContainer.addChild( new Circle( PDLConstants.FIELD_CENTER_LINE_WIDTH, {
         x: originX,
-        fill: PDLColors.fieldBorderColorProperty
+        fill: PDLColors.fieldBorderFillProperty
       } ) );
     }
 

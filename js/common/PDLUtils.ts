@@ -25,15 +25,15 @@ export default class PDLUtils {
   }
 
   public static colorForFieldIndex( index: number ): Color {
-    return PDLColors.fieldFill1ColorProperty.value.blend(
-      PDLColors.fieldFill2ColorProperty.value, index / ( VSMFieldIdentifierValues.length - 1 ) );
+    return PDLColors.fieldFillLightProperty.value.blend(
+      PDLColors.fieldFillDarkProperty.value, index / ( VSMFieldIdentifierValues.length - 1 ) );
   }
 
   public static colorForSampleSize( sampleSize: number ): Color {
     const index = SAMPLE_SIZES.indexOf( sampleSize );
 
-    return PDLColors.fieldFill1ColorProperty.value.blend(
-      PDLColors.fieldFill2ColorProperty.value, index / ( SAMPLE_SIZES.length - 1 ) );
+    return PDLColors.fieldFillLightProperty.value.blend(
+      PDLColors.fieldFillDarkProperty.value, index / ( SAMPLE_SIZES.length - 1 ) );
   }
 }
 projectileDataLab.register( 'PDLUtils', PDLUtils );

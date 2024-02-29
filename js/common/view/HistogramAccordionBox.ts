@@ -32,8 +32,8 @@ export default class HistogramAccordionBox extends AccordionBox {
     const margin = 8;
 
     const options = optionize<HistogramAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
-      fill: PDLColors.panelColorProperty,
-      stroke: PDLColors.panelStrokeColorProperty,
+      fill: PDLColors.panelFillProperty,
+      stroke: PDLColors.panelStrokeProperty,
       titleAlignX: 'left',
       titleXSpacing: margin,
       buttonXMargin: margin,

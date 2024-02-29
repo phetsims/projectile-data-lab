@@ -130,7 +130,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
     this.connectingWire = new Node();
     this.connectingWire.addChild( new Path( connectingWireShape, {
-      stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
+      stroke: PDLColors.speedToolConnectorStrokeProperty, lineWidth: 4
     } ) );
 
     this.addChild( launcherCircle );
@@ -156,7 +156,7 @@ export default class SpeedToolNode extends HeatMapToolNode {
 
     if ( this.connectingWire ) {
       this.connectingWire.children = [ new Path( connectingWireShape, {
-        stroke: PDLColors.speedToolConnectorColorProperty, lineWidth: 4
+        stroke: PDLColors.speedToolConnectorStrokeProperty, lineWidth: 4
       } ) ];
     }
 

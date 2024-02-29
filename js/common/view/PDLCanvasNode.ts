@@ -65,10 +65,10 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     } );
 
     // When any of the path colors change, repaint
-    PDLColors.pathStrokeAirborneColorProperty.link( myBoundListener );
-    PDLColors.pathStrokeLandedInitialColorProperty.link( myBoundListener );
-    PDLColors.pathStrokeLandedFinalColorProperty.link( myBoundListener );
-    PDLColors.pathStrokeHighlightedColorProperty.link( myBoundListener );
+    PDLColors.pathAirborneStrokeProperty.link( myBoundListener );
+    PDLColors.pathLandedInitialStrokeProperty.link( myBoundListener );
+    PDLColors.pathLandedFinalStrokeProperty.link( myBoundListener );
+    PDLColors.pathHighlightedStrokeProperty.link( myBoundListener );
 
     // When the path visibility changes or the selected sample changes, repaint
     isPathsVisibleProperty.link( myBoundListener );

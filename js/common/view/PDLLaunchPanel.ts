@@ -33,7 +33,7 @@ export class PDLLaunchPanel extends PDLPanel {
     children.forEach( ( child, index ) => {
       childrenWithSeparators.push( child );
       if ( index < children.length - 1 ) {
-        childrenWithSeparators.push( new HSeparator( { stroke: PDLColors.panelStrokeColorProperty } ) );
+        childrenWithSeparators.push( new HSeparator( { stroke: PDLColors.panelStrokeProperty } ) );
       }
     } );
 

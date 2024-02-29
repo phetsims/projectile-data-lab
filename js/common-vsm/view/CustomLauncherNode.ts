@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrel, frame and a stand.
+ * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrelFillProperty, frame and a stand.
  * It also contains a symbol that represents the type of launcher. The symbol is a spring for the spring launcher, a pressure
  * gauge for the pressure launcher, and an explosion for the explosion launcher.
  *
@@ -86,8 +86,8 @@ export default class CustomLauncherNode extends LauncherNode {
     const launchAngleLimiter = new Rectangle( -BARREL_LENGTH_BEFORE_ORIGIN - LAUNCH_ANGLE_LIMITER_LENGTH, -0.5 * LAUNCH_ANGLE_LIMITER_WIDTH,
       LAUNCH_ANGLE_LIMITER_LENGTH, LAUNCH_ANGLE_LIMITER_WIDTH, {
         visibleProperty: isLauncherCustomProperty,
-        fill: PDLColors.mysteryLauncherFillColorProperties[ 6 ].frame,
-        stroke: PDLColors.launcherStrokeColorProperty,
+        fill: PDLColors.mysteryLauncherFillColorProperties[ 6 ].frameFillProperty,
+        stroke: PDLColors.launcherStrokeProperty,
         cornerRadius: 2
       } );
     this.launcherBarrel.addChild( launchAngleLimiter );
