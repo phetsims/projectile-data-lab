@@ -70,7 +70,7 @@ export default class ProjectileSound {
 
       if ( isLanding ) {
         // Choose a random playback rate for the landing sound
-        pianoLandSoundClip.setPlaybackRate( dotRandom.nextDoubleBetween( 1, 1.2 ) );
+        pianoLandSoundClip.setPlaybackRate( dotRandom.nextDoubleBetween( 0.9, 1.2 ) );
         pianoLandSoundClip.play();
       }
     }

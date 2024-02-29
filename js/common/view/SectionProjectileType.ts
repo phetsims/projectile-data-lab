@@ -24,18 +24,8 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import projectileTypeCannonball_mp3 from '../../../sounds/projectileTypeCannonball_mp3.js';
 import projectileTypePumpkin_mp3 from '../../../sounds/projectileTypePumpkin_mp3.js';
 import projectileTypePiano_mp3 from '../../../sounds/projectileTypePiano_mp3.js';
-import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
-const cannonballSoundClip = new SoundClip( projectileTypeCannonball_mp3, {
-  initialOutputLevel: 0.2,
-  additionalAudioNodes: [
-    new BiquadFilterNode( phetAudioContext, {
-      type: 'lowpass',
-      Q: 1,
-      frequency: 800
-    } )
-  ]
-} );
+const cannonballSoundClip = new SoundClip( projectileTypeCannonball_mp3, { initialOutputLevel: 0.2 } );
 const pumpkinSoundClip = new SoundClip( projectileTypePumpkin_mp3, { initialOutputLevel: 0.2 } );
 const pianoSoundClip = new SoundClip( projectileTypePiano_mp3, { initialOutputLevel: 0.2 } );
 
