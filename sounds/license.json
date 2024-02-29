@@ -39,7 +39,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "launcherMechanismButtonPressure1.mp3": {
+  "launcherTypeSpring.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -47,7 +47,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "launcherMechanismButtonExplosion.mp3": {
+  "launcherTypePressure.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -55,7 +55,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "launcherMechanismButtonSpring.mp3": {
+  "launcherTypeExplosion.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -119,6 +119,30 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Matthew Blackman"
   },
+  "projectileTypeCannonball.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
+  "projectileTypePumpkin.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
+  "projectileTypePiano.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
   "pdlToggleButtonA.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
@@ -136,6 +160,38 @@
     "notes": "created by Ashton Morris"
   },
   "stopwatchTick.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
+  "sampleSize2.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
+  "sampleSize5.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
+  "sampleSize15.mp3": {
+    "text": [
+      "Copyright 2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Ashton Morris"
+  },
+  "sampleSize40.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],

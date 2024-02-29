@@ -21,13 +21,23 @@ import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js'
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import cannonballLand_mp3 from '../../../sounds/cannonballLand_mp3.js';
-import pumpkinLand_mp3 from '../../../sounds/pumpkinLand_mp3.js';
-import pianoLand_mp3 from '../../../sounds/pianoLand_mp3.js';
+import projectileTypeCannonball_mp3 from '../../../sounds/projectileTypeCannonball_mp3.js';
+import projectileTypePumpkin_mp3 from '../../../sounds/projectileTypePumpkin_mp3.js';
+import projectileTypePiano_mp3 from '../../../sounds/projectileTypePiano_mp3.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
-const cannonballSoundClip = new SoundClip( cannonballLand_mp3, { initialOutputLevel: 0.1 } );
-const pumpkinSoundClip = new SoundClip( pumpkinLand_mp3, { initialOutputLevel: 0.1 } );
-const pianoSoundClip = new SoundClip( pianoLand_mp3, { initialOutputLevel: 0.1 } );
+const cannonballSoundClip = new SoundClip( projectileTypeCannonball_mp3, {
+  initialOutputLevel: 0.2,
+  additionalAudioNodes: [
+    new BiquadFilterNode( phetAudioContext, {
+      type: 'lowpass',
+      Q: 1,
+      frequency: 800
+    } )
+  ]
+} );
+const pumpkinSoundClip = new SoundClip( projectileTypePumpkin_mp3, { initialOutputLevel: 0.2 } );
+const pianoSoundClip = new SoundClip( projectileTypePiano_mp3, { initialOutputLevel: 0.2 } );
 
 soundManager.addSoundGenerator( cannonballSoundClip );
 soundManager.addSoundGenerator( pumpkinSoundClip );
