@@ -39,7 +39,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "launcherMechanismButtonPressure1.mp3": {
+  "launcherTypeSpring.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -47,7 +47,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "launcherMechanismButtonExplosion.mp3": {
+  "launcherTypePressure.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -55,7 +55,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "launcherMechanismButtonSpring.mp3": {
+  "launcherTypeExplosion.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
