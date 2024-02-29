@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * BinStrategy is a string literal union enumeration that describes the user preference to view the histogram bins
+ * BinStrategy is a string literal union enumeration that describes the user preference to size the histogram bins
  * by width or by total number of bins.
  *
  * @author Sam Reid (PhET Interactive Simulations)
