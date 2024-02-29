@@ -77,11 +77,11 @@ const PDLColors = {
     default: '#f7f7f7'
   } ),
 
-  skyTopProperty: new ProfileColorProperty( projectileDataLab, 'skyTop', {
+  skyTopColorStopProperty: new ProfileColorProperty( projectileDataLab, 'skyTopColorStop', {
     default: '#42a4ff'
   } ),
 
-  skyBottomProperty: new ProfileColorProperty( projectileDataLab, 'skyBottom', {
+  skyBottomColorStopProperty: new ProfileColorProperty( projectileDataLab, 'skyBottomColorStop', {
     default: '#a9c2ff'
   } ),
 
@@ -101,11 +101,11 @@ const PDLColors = {
     default: '#de4e4d'
   } ),
 
-  fieldFillLightProperty: new ProfileColorProperty( projectileDataLab, 'fieldFillLight', {
+  fieldLightFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldLightFill', {
     default: '#38bb70'
   } ),
 
-  fieldFillDarkProperty: new ProfileColorProperty( projectileDataLab, 'fieldFillDark', {
+  fieldDarkFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldDarkFill', {
     default: '#098548'
   } ),
 

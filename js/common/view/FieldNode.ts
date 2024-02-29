@@ -49,7 +49,7 @@ export default class FieldNode extends Node {
     } );
 
     const fieldBackground = new Path( transformedShape, {
-      fill: PDLColors.fieldFillLightProperty
+      fill: PDLColors.fieldLightFillProperty
     } );
 
     const defaultOptions = { isBottomHalf: false, children: [ fieldBackground ] };
