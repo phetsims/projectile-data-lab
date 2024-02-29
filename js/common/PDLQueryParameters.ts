@@ -10,6 +10,7 @@
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import projectileDataLab from '../projectileDataLab.js';
 import { BinStrategyValues } from './BinStrategy.js';
+import { LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import PDLConstants from './PDLConstants.js';
 
 const SCHEMA_MAP = {
@@ -53,6 +54,13 @@ const SCHEMA_MAP = {
     type: 'string' as const,
     validValues: BinStrategyValues,
     defaultValue: 'binWidth',
+    public: true
+  },
+
+  launchSoundStrategy: {
+    type: 'string' as const,
+    validValues: LaunchSoundStrategyValues,
+    defaultValue: 'speed',
     public: true
   },
 

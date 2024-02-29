@@ -17,6 +17,8 @@ import MeasuresScreen from './measures/MeasuresScreen.js';
 import SamplingScreen from './sampling/SamplingScreen.js';
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import SimulationPreferencesContentNode from './common/view/SimulationPreferencesContentNode.js';
+import AudioPreferencesContentNode from './common/view/AudioPreferencesContentNode.js';
+import { Node } from '../../scenery/js/imports.js';
 
 // Launch the sim. Beware that scenery Image nodes created outside simLauncher.launch() will have zero bounds
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
@@ -28,6 +30,18 @@ simLauncher.launch( () => {
     simulationOptions: {
       customPreferences: [ {
         createContent: tandem => new SimulationPreferencesContentNode( tandem.createTandem( 'simPreferences' ) )
+      } ]
+    },
+    audioOptions: {
+      customPreferences: [
+        {
+
+          // Due to the layout considerations in the Preferences Dialog, it has 2 columns. Our entry for the left column
+          // is blank
+          createContent: () => new Node()
+        },
+        {
+        createContent: tandem => new AudioPreferencesContentNode( tandem.createTandem( 'audioPreferences' ) )
       } ]
     }
   } );

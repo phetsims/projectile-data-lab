@@ -39,7 +39,9 @@ type StringsType = {
   'valuesStringProperty': LocalizedStringProperty;
   'sampleSizeNStringProperty': LocalizedStringProperty;
   'pathsStringProperty': LocalizedStringProperty;
+  'speedStringProperty': LocalizedStringProperty;
   'launchSpeedStringProperty': LocalizedStringProperty;
+  'angleStringProperty': LocalizedStringProperty;
   'launchAngleStringProperty': LocalizedStringProperty;
   'measuringTapeStringProperty': LocalizedStringProperty;
   'stopwatchStringProperty': LocalizedStringProperty;
@@ -64,6 +66,9 @@ type StringsType = {
   'totalBinsStringProperty': LocalizedStringProperty;
   'histogramBinsStringProperty': LocalizedStringProperty;
   'histogramBinsPreferenceDescriptionStringProperty': LocalizedStringProperty;
+  'launchSoundStringProperty': LocalizedStringProperty;
+  'noneStringProperty': LocalizedStringProperty;
+  'launchSoundPreferenceDescriptionStringProperty': LocalizedStringProperty;
   'percentPatternStringProperty': LocalizedStringProperty;
   'sampleSizeNPatternStringProperty': LocalizedStringProperty;
   'numberOfSamplesPatternStringProperty': LocalizedStringProperty;
