@@ -68,8 +68,11 @@ export default class CustomLauncherNode extends LauncherNode {
 
     const isLauncherCustomProperty = DerivedProperty.valueEqualsConstant( mysteryOrCustomProperty, 'custom' );
 
-    const pressureNeedleIcon = new Image( pressureNeedle_png, { x: -13.5, y: -40 } );
-    const pressureNeedleNode = new Node( { children: [ pressureNeedleIcon ] } );
+    const pressureNeedleNode = new Node( {
+      children: [
+        new Image( pressureNeedle_png, { x: -13.5, y: -40 } )
+      ], rotation: -Math.PI / 2
+    } );
 
     const launcherTypeIconContainer = new Node( {
       x: -0.7 * BARREL_LENGTH_BEFORE_ORIGIN,
@@ -158,8 +161,8 @@ export default class CustomLauncherNode extends LauncherNode {
       pressureNeedleNode.visible = launcherType === PRESSURE;
     } );
 
-    latestLaunchSpeedProperty.link( launchSpeed => {
-      const maxAngle = 80;
+    latestLaunchSpeedProperty.lazyLink( launchSpeed => {
+      const maxAngle = 120;
       const meanSpeed = launcherMechanismProperty.value.speedMeanProperty.value;
       const maxSpeed = 30;
       const needleDeltaRotation = maxAngle * ( launchSpeed - meanSpeed ) / ( maxSpeed - meanSpeed );
