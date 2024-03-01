@@ -254,13 +254,24 @@ export default abstract class Field extends PhetioObject {
    * @returns The newly created Projectile object.
    */
   protected createProjectile( sampleNumber: number, playLaunchSound: boolean ): Projectile {
-    let angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
-    let launchAngle = this.meanAngleProperty.value + angleDeviation;
+    const chooseRandomizedLaunchAngle = () => {
+      const angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
+      return this.meanAngleProperty.value + angleDeviation;
+    };
 
-    // Do not allow angles greater than 90 degrees, or negative angles unless the launcher is raised,
-    while ( launchAngle >= 90 || ( launchAngle <= 0 && this.launcherConfigurationProperty.value !== 'angle0Raised' ) ) {
-      angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
-      launchAngle = this.meanAngleProperty.value + angleDeviation;
+    let launchAngle = chooseRandomizedLaunchAngle();
+
+    // If the launcher is raised, we allow negative angles, and the probability of an angle above 90 degrees is negligible.
+    if ( this.launcherConfigurationProperty.value !== 'angle0Raised' ) {
+
+      // Do not allow more than 100 iterations to avoid an infinite loop if something changes in the future.
+      let iterationCount = 0;
+
+      // Do not allow angles greater than 90 degrees or negative angles
+      while ( iterationCount < 100 && ( launchAngle <= 0 || launchAngle >= 90 ) ) {
+        launchAngle = chooseRandomizedLaunchAngle();
+        iterationCount++;
+      }
     }
 
     const speedMultiplier = PDLPreferences.projectileTypeAffectsSpeedProperty.value ? this.projectileTypeProperty.value.speedMultiplierProperty.value : 1;
