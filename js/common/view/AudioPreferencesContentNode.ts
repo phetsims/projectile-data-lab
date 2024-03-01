@@ -13,7 +13,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLText from './PDLText.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { PDLPanel } from './PDLPanel.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPreferences from '../PDLPreferences.js';
 import { LaunchSoundStrategy } from '../LaunchSoundStrategy.js';
@@ -24,7 +23,7 @@ export default class AudioPreferencesContentNode extends Node {
 
     const launchSoundStrategyControlTandem = tandem.createTandem( 'launchSoundStrategyControl' );
 
-    const launchSoundStrategyRadioButtonGroup = new PDLPanel( new VerticalAquaRadioButtonGroup<LaunchSoundStrategy>( PDLPreferences.launchSoundStrategyProperty, [ {
+    const launchSoundStrategyRadioButtonGroup = new VerticalAquaRadioButtonGroup<LaunchSoundStrategy>( PDLPreferences.launchSoundStrategyProperty, [ {
       createNode: () => new PDLText( ProjectileDataLabStrings.speedStringProperty, { maxWidth: 200 } ),
       value: 'speed',
       tandemName: 'speedRadioButton'
@@ -39,7 +38,7 @@ export default class AudioPreferencesContentNode extends Node {
     } ], {
       tandem: launchSoundStrategyControlTandem.createTandem( 'radioButtonGroup' ),
       isDisposable: false
-    } ) );
+    } );
 
     const launchSoundStrategyControl = new PreferencesControl( {
       labelNode: new PDLText( ProjectileDataLabStrings.launchSoundStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),

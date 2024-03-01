@@ -57,6 +57,25 @@ const SCHEMA_MAP = {
     public: true
   },
 
+  /**
+   * The user can choose whether to show the standard error on the histogram 'Values' panel.
+   *
+   * This is connected to a PhET-iO instrumented Property and can be controlled via the Preferences dialog.
+   * The design for this feature is described in https://github.com/phetsims/projectile-data-lab/issues/74
+   */
+  showStandardError: {
+    type: 'boolean' as const,
+    defaultValue: false,
+    public: true
+  },
+
+  /**
+   * The strategy for playing a sound when a projectile is launched. The pitch of the sound can be based on the
+   * launch speed, the launch angle, or no sound can be played.
+   *
+   * This is connected to a PhET-iO instrumented Property and can be controlled via the Preferences dialog.
+   * The design for this feature is described in https://github.com/phetsims/projectile-data-lab/issues/205
+   */
   launchSoundStrategy: {
     type: 'string' as const,
     validValues: LaunchSoundStrategyValues,

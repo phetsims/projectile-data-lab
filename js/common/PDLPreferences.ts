@@ -37,6 +37,12 @@ const PDLPreferences = {
     phetioDocumentation: 'Indicates whether the histogram bins are sized based on the bin width or the number of bins.'
   } ),
 
+  showStandardErrorProperty: new BooleanProperty( PDLQueryParameters.showStandardError, {
+    tandem: Tandem.PREFERENCES.createTandem( 'showStandardErrorProperty' ),
+    phetioFeatured: true,
+    phetioDocumentation: 'When true, the standard error is displayed in the histogram values display on the Measures screen.'
+  } ),
+
   // phet-types.d.ts does not support inferring string union types for string query parameters, so we need to cast
   launchSoundStrategyProperty: new StringUnionProperty<LaunchSoundStrategy>( PDLQueryParameters.launchSoundStrategy as LaunchSoundStrategy, {
     validValues: LaunchSoundStrategyValues,

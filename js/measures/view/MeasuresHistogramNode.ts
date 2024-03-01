@@ -29,6 +29,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Histogram from '../../common/model/Histogram.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import PDLPreferences from '../../common/PDLPreferences.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresHistogramNodeOptions = SelfOptions & WithRequired<HistogramNodeOptions, 'tandem'>;
@@ -72,8 +73,15 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
 
     const isStandardDeviationNonNullProperty = new DerivedProperty( [ standardDeviationProperty ], standardDeviation => standardDeviation !== null );
 
+    // Create a pattern string property that uses meanXBarEqualsValueMPatternStringProperty if PDLPreferences.showStandardErrorProperty is true, otherwise use meanEqualsValueMPatternStringProperty
+    const meanPatternStringProperty = DerivedProperty.deriveAny( [
+        PDLPreferences.showStandardErrorProperty, ProjectileDataLabStrings.meanXBarEqualsValueMPatternStringProperty, ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty ],
+      () => {
+        return PDLPreferences.showStandardErrorProperty.value ? ProjectileDataLabStrings.meanXBarEqualsValueMPatternStringProperty.value : ProjectileDataLabStrings.meanEqualsValueMPatternStringProperty.value;
+      } );
+
     const dataLabels = [
-      new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanXBarEqualsValueMPatternStringProperty,
+      new PDLText( new PatternStringProperty( meanPatternStringProperty,
         { value: roundedStringProperty( meanProperty ) } ), {
         font: PDLConstants.HISTOGRAM_PANEL_FONT
       } ),
@@ -85,7 +93,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardErrorOfXBarEqualsValueMPatternStringProperty,
         { value: roundedStringProperty( standardErrorProperty ) } ), {
         font: PDLConstants.HISTOGRAM_PANEL_FONT,
-        visibleProperty: isStandardDeviationNonNullProperty
+        visibleProperty: DerivedProperty.and( [ isStandardDeviationNonNullProperty, PDLPreferences.showStandardErrorProperty ] )
       } )
     ];
 
@@ -94,6 +102,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       // Prevent from overlapping with the majority of the data in ?stringTest=long
       maxWidth: 250,
       align: 'left',
+      spacing: 2.5,
 
       // Children are specified in a link() below
       children: []

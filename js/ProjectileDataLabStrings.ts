@@ -66,6 +66,8 @@ type StringsType = {
   'totalBinsStringProperty': LocalizedStringProperty;
   'histogramBinsStringProperty': LocalizedStringProperty;
   'histogramBinsPreferenceDescriptionStringProperty': LocalizedStringProperty;
+  'showStandardErrorStringProperty': LocalizedStringProperty;
+  'showStandardErrorPreferenceDescriptionStringProperty': LocalizedStringProperty;
   'launchSoundStringProperty': LocalizedStringProperty;
   'noneStringProperty': LocalizedStringProperty;
   'launchSoundPreferenceDescriptionStringProperty': LocalizedStringProperty;
