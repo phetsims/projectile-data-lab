@@ -17,20 +17,20 @@ import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js'
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 /**
- * The SectionLauncherConfiguration shows the launcher configuration radio buttons.
+ * The LauncherConfigurationSection shows the launcher configuration radio buttons.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 type SelfOptions = EmptySelfOptions;
-type SectionLauncherConfigurationOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type LauncherConfigurationSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
 const IMAGE_MAX_WIDTH = 30;
 
-export default class SectionLauncherConfiguration extends PDLPanelSection {
+export default class LauncherConfigurationSection extends PDLPanelSection {
 
-  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, providedOptions: SectionLauncherConfigurationOptions ) {
+  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>, providedOptions: LauncherConfigurationSectionOptions ) {
     const launcherConfigurationRadioButtonGroup = new PDLRectangularRadioButtonGroup( launcherConfigurationProperty, [ {
       value: 'angle30' as const,
       tandemName: 'angleThirtyRadioButton',
@@ -75,4 +75,4 @@ export default class SectionLauncherConfiguration extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'SectionLauncherConfiguration', SectionLauncherConfiguration );
+projectileDataLab.register( 'LauncherConfigurationSection', LauncherConfigurationSection );

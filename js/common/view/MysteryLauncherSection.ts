@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The SectionMysteryLauncher shows the mystery launcher radio buttons.
+ * The MysteryLauncherSection shows the mystery launcher radio buttons.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -17,13 +17,13 @@ import MysteryLauncherRadioButtonGroupWrapper from './MysteryLauncherRadioButton
 import Launcher from '../model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
-type SectionMysteryLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type MysteryLauncherSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
-export default class SectionMysteryLauncher extends PDLPanelSection {
+export default class MysteryLauncherSection extends PDLPanelSection {
 
-  public constructor( mysteryLauncherProperty: PhetioProperty<Launcher>, providedOptions: SectionMysteryLauncherOptions ) {
+  public constructor( mysteryLauncherProperty: PhetioProperty<Launcher>, providedOptions: MysteryLauncherSectionOptions ) {
     super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, providedOptions ), providedOptions );
   }
 }
 
-projectileDataLab.register( 'SectionMysteryLauncher', SectionMysteryLauncher );
+projectileDataLab.register( 'MysteryLauncherSection', MysteryLauncherSection );

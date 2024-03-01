@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The SourcesLaunchPanel extends VSMLaunchPanel and adds the SectionCustomLauncher which allows the user to select
+ * The SourcesLaunchPanel extends VSMLaunchPanel and adds the CustomLauncherSection which allows the user to select
  * between the custom and mystery launchers.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -14,7 +14,7 @@ import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import SectionCustomLauncher from '../../common-sm/view/SectionCustomLauncher.js';
+import CustomLauncherSection from '../../common-sm/view/CustomLauncherSection.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -28,7 +28,7 @@ export default class SourcesLaunchPanel extends VSMLaunchPanel {
                       angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: SourcesLaunchPanelOptions ) {
 
-    const customLauncherSection = new SectionCustomLauncher( customLauncherMechanismProperty,
+    const customLauncherSection = new CustomLauncherSection( customLauncherMechanismProperty,
       angleStabilizerProperty, {
         tandem: providedOptions.tandem.createTandem( 'customLauncherSection' )
       } );

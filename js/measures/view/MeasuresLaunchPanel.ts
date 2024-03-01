@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The MeasuresLaunchPanel extends VSMLaunchPanel and adds the SectionAnyLauncher which allows the user to select
+ * The MeasuresLaunchPanel extends VSMLaunchPanel and adds the MysteryOrCustomLauncherSection which allows the user to select
  * between the custom and mystery launchers.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -14,7 +14,7 @@ import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import SectionAnyLauncher from './SectionAnyLauncher.js';
+import MysteryOrCustomLauncherSection from './MysteryOrCustomLauncherSection.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import Launcher from '../../common/model/Launcher.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
@@ -32,7 +32,7 @@ export default class MeasuresLaunchPanel extends VSMLaunchPanel {
                       angleStabilizerProperty: PhetioProperty<number>,
                       providedOptions: MeasuresLaunchPanelOptions ) {
 
-    const launcherSection = new SectionAnyLauncher( mysteryOrCustomProperty, mysteryLauncherProperty,
+    const launcherSection = new MysteryOrCustomLauncherSection( mysteryOrCustomProperty, mysteryLauncherProperty,
       customLauncherMechanismProperty, angleStabilizerProperty, {
         tandem: providedOptions.tandem.createTandem( 'launcherSection' )
       } );

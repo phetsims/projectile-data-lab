@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The SectionSampleSize shows the sample size radio buttons.
+ * The SampleSizeSection shows the sample size radio buttons.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -33,11 +33,11 @@ soundManager.addSoundGenerator( sampleSize15SoundClip );
 soundManager.addSoundGenerator( sampleSize40SoundClip );
 
 type SelfOptions = EmptySelfOptions;
-type SectionSampleSizeOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type SampleSizeSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
-export default class SectionSampleSize extends PDLPanelSection {
+export default class SampleSizeSection extends PDLPanelSection {
 
-  public constructor( sampleSizeProperty: Property<number>, providedOptions: SectionSampleSizeOptions ) {
+  public constructor( sampleSizeProperty: Property<number>, providedOptions: SampleSizeSectionOptions ) {
 
     const buttonSoundClips = new Map( [
       [ 2, sampleSize2SoundClip ],
@@ -76,4 +76,4 @@ export default class SectionSampleSize extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'SectionSampleSize', SectionSampleSize );
+projectileDataLab.register( 'SampleSizeSection', SampleSizeSection );

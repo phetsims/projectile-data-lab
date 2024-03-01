@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The SectionAnyLauncher allows the user to select between the custom and mystery launchers.
+ * The MysteryOrCustomLauncherSection allows the user to select between the mystery and custom launchers.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -26,13 +26,13 @@ import Launcher from '../../common/model/Launcher.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
 
 type SelfOptions = EmptySelfOptions;
-type SectionAnyLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type MysteryOrCustomLauncherSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
-export default class SectionAnyLauncher extends PDLPanelSection {
+export default class MysteryOrCustomLauncherSection extends PDLPanelSection {
 
   public constructor( mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>, mysteryLauncherProperty: PhetioProperty<Launcher>,
                       customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStabilizerProperty: PhetioProperty<number>,
-                      providedOptions: SectionAnyLauncherOptions ) {
+                      providedOptions: MysteryOrCustomLauncherSectionOptions ) {
 
     const radioButtonItems: AquaRadioButtonGroupItem<MysteryOrCustom>[] = [ {
       createNode: () => new PDLText( ProjectileDataLabStrings.mysteryLauncherStringProperty, {
@@ -109,4 +109,4 @@ export default class SectionAnyLauncher extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'SectionAnyLauncher', SectionAnyLauncher );
+projectileDataLab.register( 'MysteryOrCustomLauncherSection', MysteryOrCustomLauncherSection );

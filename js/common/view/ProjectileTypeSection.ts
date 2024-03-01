@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The SectionProjectileType shows the projectile type radio buttons.
+ * The ProjectileTypeSection shows the projectile type radio buttons.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -34,11 +34,11 @@ soundManager.addSoundGenerator( pumpkinSoundClip );
 soundManager.addSoundGenerator( pianoSoundClip );
 
 type SelfOptions = EmptySelfOptions;
-type SectionProjectileTypeOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type ProjectileTypeSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
-export default class SectionProjectileType extends PDLPanelSection {
+export default class ProjectileTypeSection extends PDLPanelSection {
 
-  public constructor( projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: SectionProjectileTypeOptions ) {
+  public constructor( projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: ProjectileTypeSectionOptions ) {
 
     const projectileTypeRadioButtonGroup = new PDLRectangularRadioButtonGroup( projectileTypeProperty, [ {
       value: CANNONBALL,
@@ -80,4 +80,4 @@ export default class SectionProjectileType extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'SectionProjectileType', SectionProjectileType );
+projectileDataLab.register( 'ProjectileTypeSection', ProjectileTypeSection );

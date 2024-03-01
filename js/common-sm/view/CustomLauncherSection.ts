@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * This SectionCustomLauncher is a panel section allows the user to customize a launcher.
+ * This CustomLauncherSection is a panel section allows the user to customize a launcher.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -19,14 +19,14 @@ import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
 
 type SelfOptions = EmptySelfOptions;
-type SectionCustomLauncherOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type CustomLauncherSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
 
-export default class SectionCustomLauncher extends PDLPanelSection {
+export default class CustomLauncherSection extends PDLPanelSection {
 
   public constructor( customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>,
-                      angleStabilizerProperty: PhetioProperty<number>, providedOptions: SectionCustomLauncherOptions ) {
+                      angleStabilizerProperty: PhetioProperty<number>, providedOptions: CustomLauncherSectionOptions ) {
 
-    const options = optionize<SectionCustomLauncherOptions, SelfOptions, PDLPanelSectionOptions>()( {
+    const options = optionize<CustomLauncherSectionOptions, SelfOptions, PDLPanelSectionOptions>()( {
       stretch: true
     }, providedOptions );
 
@@ -48,4 +48,4 @@ export default class SectionCustomLauncher extends PDLPanelSection {
   }
 }
 
-projectileDataLab.register( 'SectionCustomLauncher', SectionCustomLauncher );
+projectileDataLab.register( 'CustomLauncherSection', CustomLauncherSection );

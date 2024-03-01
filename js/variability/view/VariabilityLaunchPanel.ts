@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The VariabilityLaunchPanel extends VSMLaunchPanel and adds the SectionMysteryLauncher which allows the user to select
+ * The VariabilityLaunchPanel extends VSMLaunchPanel and adds the MysteryLauncherSection which allows the user to select
  * between the mystery launchers.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -13,7 +13,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import SectionMysteryLauncher from '../../common/view/SectionMysteryLauncher.js';
+import MysteryLauncherSection from '../../common/view/MysteryLauncherSection.js';
 import Launcher from '../../common/model/Launcher.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
 
@@ -28,7 +28,7 @@ export default class VariabilityLaunchPanel extends VSMLaunchPanel {
     mysteryLauncherProperty: PhetioProperty<Launcher>,
     providedOptions: VariabilityLaunchPanelOptions ) {
 
-    const mysteryLauncherSection = new SectionMysteryLauncher( mysteryLauncherProperty, {
+    const mysteryLauncherSection = new MysteryLauncherSection( mysteryLauncherProperty, {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherSection' )
     } );
 
