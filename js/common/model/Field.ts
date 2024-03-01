@@ -254,13 +254,26 @@ export default abstract class Field extends PhetioObject {
    * @returns The newly created Projectile object.
    */
   protected createProjectile( sampleNumber: number, playLaunchSound: boolean ): Projectile {
-    const angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
-    const launchAngle = this.meanAngleProperty.value + angleDeviation;
+    let angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
+    let launchAngle = this.meanAngleProperty.value + angleDeviation;
+
+    // Do not allow negative angles, unless the launcher configuration is angle0Raised
+    while ( launchAngle <= 0 && this.launcherConfigurationProperty.value !== 'angle0Raised' ) {
+      angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
+      launchAngle = this.meanAngleProperty.value + angleDeviation;
+    }
 
     const speedMultiplier = PDLPreferences.projectileTypeAffectsSpeedProperty.value ? this.projectileTypeProperty.value.speedMultiplierProperty.value : 1;
 
     const meanLaunchSpeed = speedMultiplier * this.meanSpeedProperty.value;
-    const launchSpeed = meanLaunchSpeed + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
+
+    let launchSpeed = meanLaunchSpeed + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
+
+    // Do not allow negative speeds
+    while ( launchSpeed <= 0 ) {
+      launchSpeed = meanLaunchSpeed + dotRandom.nextGaussian() * this.standardDeviationSpeedProperty.value;
+    }
+
     const landedImageIndex = dotRandom.nextInt( 3 );
 
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
