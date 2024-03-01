@@ -201,14 +201,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       field.phaseProperty.value = 'showingCompleteSampleWithMean';
       field.isContinuousLaunchingProperty.value = true;
 
-      while ( field.numberOfCompletedSamplesProperty.value < PDLQueryParameters.maxSamples ) {
-
-        // Create all projectiles for this sample immediately and go to next one
-        field.selectedSampleNumberProperty.value++;
-
+      for ( let i = 1; i <= PDLQueryParameters.maxSamples; i++ ) {
+        field.selectedSampleNumberProperty.value = i;
         field.finishCurrentSample();
-
       }
+
       field.updateComputedProperties();
       field.projectilesChangedEmitter.emit();
     }
