@@ -343,9 +343,8 @@ export default class SamplingField extends Field {
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
 
         // TODO: See https://github.com/phetsims/projectile-data-lab/issues/189
-        if ( this.sampleMeanProperty.value !== null ) {
-          MeanTone.playMean( this.sampleMeanProperty.value );
-        }
+        assert && assert( this.sampleMeanProperty.value !== null, 'sampleMeanProperty should not be null in showingCompleteSampleWithoutMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize );
+        MeanTone.playMean( this.sampleMeanProperty.value! );
       }
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
@@ -363,9 +362,8 @@ export default class SamplingField extends Field {
         // Manually restart the phase timer, since the phase will not change when showing sequential continuous samples
         this.phaseStartTimeProperty.value = this.timeProperty.value;
 
-        if ( typeof this.sampleMeanProperty.value === 'number' ) {
-          MeanTone.playMean( this.sampleMeanProperty.value );
-        }
+        assert && assert( typeof this.sampleMeanProperty.value === 'number', 'sampleMeanProperty should be a number in showingCompleteSampleWithMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize );
+        MeanTone.playMean( this.sampleMeanProperty.value! );
       }
     }
   }
