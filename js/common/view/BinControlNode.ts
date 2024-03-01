@@ -44,7 +44,7 @@ export default class BinControlNode extends HBox {
             createNode: () => new PDLText( new PatternStringProperty( ProjectileDataLabStrings.binWidthMPatternStringProperty, {
               binWidth: binWidth
             } ), {
-              maxWidth: 120
+              maxWidth: 70
             } ),
             tandemName: `binWidth${binWidthName}Item`
           };
@@ -63,7 +63,7 @@ export default class BinControlNode extends HBox {
           return {
             value: totalBins,
             createNode: () => new PDLText( Utils.toFixed( totalBins, 0 ), {
-              maxWidth: 120
+              maxWidth: 70
             } ),
             tandemName: `totalBins${totalBins}Item`
           };
@@ -84,14 +84,10 @@ export default class BinControlNode extends HBox {
         // strategies
         new ToggleNode( PDLPreferences.binStrategyProperty, [ {
           value: 'binWidth',
-          createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, {
-            maxWidth: 120
-          } )
+          createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, { maxWidth: 90 } )
         }, {
           value: 'totalBins',
-          createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, {
-            maxWidth: 120
-          } )
+          createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, { maxWidth: 90 } )
         } ], {
           alignChildren: ToggleNode.RIGHT,
           layoutOptions: {
