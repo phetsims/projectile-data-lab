@@ -9,7 +9,9 @@ from the graphical representation (view).
 
 The first three screens are called Variability, Sources and Measurement. These screens are very similar to each other
 and hence in several places in the code are handled together under the term "VSM", short for Variability, Sources and
-Measurement. The Sampling screen is more about firing a complete sample at once, rather than individual projectiles.
+Measurement. There is additional code that only pertains to the Sources and Measurements screens--this combination is
+abbreviated as "SM" in the code. The Sampling screen is more about firing a complete sample at once, rather than 
+individual projectiles.
 
 ### Scenes
 
