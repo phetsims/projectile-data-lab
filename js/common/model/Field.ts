@@ -257,8 +257,8 @@ export default abstract class Field extends PhetioObject {
     let angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
     let launchAngle = this.meanAngleProperty.value + angleDeviation;
 
-    // Do not allow negative angles, unless the launcher configuration is angle0Raised
-    while ( launchAngle <= 0 && this.launcherConfigurationProperty.value !== 'angle0Raised' ) {
+    // Do not allow angles greater than 90 degrees, or negative angles unless the launcher is raised,
+    while ( launchAngle >= 90 || ( launchAngle <= 0 && this.launcherConfigurationProperty.value !== 'angle0Raised' ) ) {
       angleDeviation = dotRandom.nextGaussian() * this.standardDeviationAngleProperty.value;
       launchAngle = this.meanAngleProperty.value + angleDeviation;
     }
