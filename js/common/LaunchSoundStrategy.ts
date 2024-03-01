@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2024, University of Colorado Boulder
 
 /**
  * LaunchSoundStrategy is a string literal union enumeration that describes the user preference to play the launch sound
