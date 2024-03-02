@@ -25,9 +25,12 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
-import PDLConstants from '../../common/PDLConstants.js';
 
-const DISTANCE_BETWEEN_MINOR_TICKS = 1 / ( PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.getLength() );
+// The distance between minor tick marks on the slider. The total range is 0 to 1, so there are 4 minor ticks.
+const DISTANCE_BETWEEN_MINOR_TICKS = 0.25;
+
+// This is the snap increment for the slider, which is half the distance between minor ticks
+const SLIDER_SNAP_INCREMENT = DISTANCE_BETWEEN_MINOR_TICKS / 2;
 
 const filter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -66,6 +69,7 @@ export default class AngleStabilizerSection extends VBox {
     const playbackRateMapper = ( value: number ) => Utils.linear( 0, 1, 1, 1.4, value );
 
     const slider = new HSlider( angleStabilizerProperty, new Range( 0, 1 ), {
+      constrainValue: ( value: number ) => Utils.roundSymmetric( value / SLIDER_SNAP_INCREMENT ) * SLIDER_SNAP_INCREMENT,
       layoutOptions: {
         stretch: true
       },
@@ -88,7 +92,9 @@ export default class AngleStabilizerSection extends VBox {
         middleMovingDownSoundPlayer: angleStabilizerSoundClip,
         middleMovingUpPlaybackRateMapper: playbackRateMapper,
         middleMovingDownPlaybackRateMapper: playbackRateMapper,
-        interThresholdDelta: DISTANCE_BETWEEN_MINOR_TICKS,
+
+        // The threshold delta is set to half the distance between minor ticks, so that the sound is played more frequently
+        interThresholdDelta: 0.5 * DISTANCE_BETWEEN_MINOR_TICKS,
         minSoundPlayer: angleStabilizerMinSoundClip,
         maxSoundPlayer: angleStabilizerMaxSoundClip
       } )

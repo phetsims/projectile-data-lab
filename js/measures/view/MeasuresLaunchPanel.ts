@@ -37,7 +37,6 @@ export default class MeasuresLaunchPanel extends VSMLaunchPanel {
         tandem: providedOptions.tandem.createTandem( 'launcherSection' )
       } );
 
-
     super( [ launcherSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
   }
 }

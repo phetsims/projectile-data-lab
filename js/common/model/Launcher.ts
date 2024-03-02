@@ -25,8 +25,6 @@ import Range from '../../../../dot/js/Range.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
-const MAX_STANDARD_DEVIATION_ANGLE = 8; // degrees
-
 type SelfOptions = EmptySelfOptions;
 type LauncherOptions = SelfOptions & PhetioObjectOptions;
 
@@ -97,22 +95,22 @@ export default class Launcher extends PhetioObject {
 
 const mysteryLaunchersTandem = Tandem.GLOBAL_MODEL.createTandem( 'mysteryLaunchers' );
 export const MYSTERY_LAUNCHERS = [
-  new Launcher( 'mystery', SPRING, 1, 1, {
+  new Launcher( 'mystery', SPRING, 1.5, 1, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher1' )
   } ),
-  new Launcher( 'mystery', SPRING, MAX_STANDARD_DEVIATION_ANGLE, 2, {
+  new Launcher( 'mystery', PRESSURE, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 2, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher2' )
   } ),
   new Launcher( 'mystery', EXPLOSION, 0, 3, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher3' )
   } ),
-  new Launcher( 'mystery', PRESSURE, 2, 4, {
+  new Launcher( 'mystery', SPRING, 3, 4, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher4' )
   } ),
-  new Launcher( 'mystery', PRESSURE, 4, 5, {
+  new Launcher( 'mystery', PRESSURE, 0, 5, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher5' )
   } ),
-  new Launcher( 'mystery', EXPLOSION, MAX_STANDARD_DEVIATION_ANGLE, 6, {
+  new Launcher( 'mystery', EXPLOSION, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 6, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher6' )
   } )
 ];

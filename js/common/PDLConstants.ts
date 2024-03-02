@@ -15,7 +15,7 @@ const maxFieldDistance = 100;
 const fieldWidth = 850;
 const pixelsToDistance = fieldWidth / maxFieldDistance;
 
-const maxAngleStandardDeviation = 8; // degrees
+const maxAngleStandardDeviation = 6; // degrees
 
 const PDLConstants = {
 
@@ -93,7 +93,7 @@ const PDLConstants = {
   // Allow the top content to go above the dev bounds, but not too far
   ABOVE_DEV_BOUNDS_TOP: -200,
 
-  CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE: 2,
+  CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE: maxAngleStandardDeviation / 2,
 
   VERTICAL_CHECKBOX_GROUP_CHECKBOX_WIDTH: 14
 } as const;
