@@ -60,3 +60,6 @@ projectileDataLab.register( 'LauncherMechanism', LauncherMechanism );
 export const SPRING = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'spring' ), 23, 0.5 );
 export const PRESSURE = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'pressure' ), 24, 0.2 );
 export const EXPLOSION = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'explosion' ), 25, 1.2 );
+export const CUSTOM_MECHANISM_1 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism1' ), 24, 0.5 );
+export const CUSTOM_MECHANISM_2 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism2' ), 24, 0.5 );
+export const CUSTOM_MECHANISM_3 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism3' ), 24, 0.5 );

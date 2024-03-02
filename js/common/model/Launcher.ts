@@ -9,7 +9,7 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
+import LauncherMechanism, { CUSTOM_MECHANISM_1, CUSTOM_MECHANISM_2, CUSTOM_MECHANISM_3, EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { MysteryOrCustom } from './MysteryOrCustom.js';
@@ -64,7 +64,7 @@ export default class Launcher extends PhetioObject {
       tandem: options.tandem.createTandem( 'launcherMechanismProperty' ),
       phetioFeatured: true,
       phetioValueType: LauncherMechanism.LauncherMechanismIO,
-      validValues: [ SPRING, PRESSURE, EXPLOSION ]
+      validValues: [ SPRING, PRESSURE, EXPLOSION, CUSTOM_MECHANISM_1, CUSTOM_MECHANISM_2, CUSTOM_MECHANISM_3 ]
     } );
 
     const initialAngleStabilizer = Utils.linear( PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 1, 0, standardDeviationAngle );
