@@ -162,7 +162,9 @@ export default class CustomLauncherNode extends LauncherNode {
     } );
 
     latestLaunchSpeedProperty.lazyLink( launchSpeed => {
-      if ( launcherMechanismProperty.value === PRESSURE ) {
+
+      // Do not update the pressure needle when latestLaunchSpeedProperty is reset or if the mechanism is not pressure.
+      if ( launchSpeed > 0 && launcherMechanismProperty.value === PRESSURE ) {
 
         // Give the needle a rotation independent of the speed standard deviation, to prevent the needle from rotating too much.
         const maxNeedleAngle = 40 / PRESSURE.speedStandardDeviationProperty.value;
