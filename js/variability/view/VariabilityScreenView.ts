@@ -7,12 +7,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
-import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
+import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
@@ -25,14 +24,14 @@ import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
+type VariabilityScreenViewOptions = SelfOptions & VSMScreenViewOptions;
 
 export default class VariabilityScreenView extends VSMScreenView<VSMField> {
 
   protected readonly launcherNode: LauncherNode;
 
-  public constructor( model: VariabilityModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
-    const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
+  public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
+    const options = optionize<VariabilityScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {}, providedOptions );
 
     const launchPanel = new VariabilityLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, model.launcherProperty, {
       tandem: options.tandem.createTandem( 'launchPanel' )

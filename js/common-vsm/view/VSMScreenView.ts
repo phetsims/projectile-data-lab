@@ -39,7 +39,7 @@ import FieldSignNode from '../../common/view/FieldSignNode.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 
 type SelfOptions = EmptySelfOptions;
-type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
+export type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;

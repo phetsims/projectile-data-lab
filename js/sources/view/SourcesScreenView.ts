@@ -7,12 +7,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import SourcesModel from '../model/SourcesModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import SourcesLaunchPanel from './SourcesLaunchPanel.js';
-import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
+import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import Property from '../../../../axon/js/Property.js';
@@ -26,15 +25,14 @@ import SMField from '../../common-sm/model/SMField.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 
 type SelfOptions = EmptySelfOptions;
-type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
+type SourcesScreenViewOptions = SelfOptions & VSMScreenViewOptions;
 
 export default class SourcesScreenView extends VSMScreenView<SMField> {
 
   protected readonly launcherNode: CustomLauncherNode;
 
-  public constructor( model: SourcesModel,
-                      providedOptions: ProjectileDataLabScreenViewOptions ) {
-    const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
+  public constructor( model: SourcesModel, providedOptions: SourcesScreenViewOptions ) {
+    const options = optionize<SourcesScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {}, providedOptions );
 
     const launchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
       model.customLauncherMechanismProperty, model.angleStabilizerProperty, {

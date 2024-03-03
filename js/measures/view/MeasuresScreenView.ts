@@ -6,11 +6,10 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VSMScreenView from '../../common-vsm/view/VSMScreenView.js';
+import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
 import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
 import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
@@ -25,14 +24,14 @@ import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAcco
 
 type SelfOptions = EmptySelfOptions;
 
-type ProjectileDataLabScreenViewOptions = SelfOptions & ScreenViewOptions;
+type MeasuresScreenViewOptions = SelfOptions & VSMScreenViewOptions;
 
 export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
   protected readonly launcherNode: CustomLauncherNode;
 
-  public constructor( model: MeasuresModel, providedOptions: ProjectileDataLabScreenViewOptions ) {
-    const options = optionize<ProjectileDataLabScreenViewOptions, SelfOptions, ScreenViewOptions>()( {}, providedOptions );
+  public constructor( model: MeasuresModel, providedOptions: MeasuresScreenViewOptions ) {
+    const options = optionize<MeasuresScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {}, providedOptions );
 
     const launchPanel = new MeasuresLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
       model.mysteryOrCustomProperty, model.mysteryLauncherProperty, model.customLauncherMechanismProperty, model.angleStabilizerProperty, {
