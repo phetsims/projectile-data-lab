@@ -9,12 +9,12 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Image, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { Image, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS } from '../../common/view/LauncherNode.js';
+import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS, LauncherNodeOptions } from '../../common/view/LauncherNode.js';
 import spring_png from '../../../images/spring_png.js';
 import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
 import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
@@ -33,7 +33,7 @@ import Field from '../../common/model/Field.js';
 import Launcher from '../../common/model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
-type CustomLauncherNodeOptions = SelfOptions & NodeOptions;
+type CustomLauncherNodeOptions = SelfOptions & LauncherNodeOptions;
 
 // This is how much of the outer guide rail is cut off to make room to show the angle stabilizers.
 const GUIDE_RAIL_OUTER_CUTOFF = 13;
@@ -57,7 +57,7 @@ export default class CustomLauncherNode extends LauncherNode {
                       standardDeviationAngleProperty: TProperty<number>,
                       latestLaunchSpeedProperty: TProperty<number>,
                       fieldProperty: TReadOnlyProperty<Field> | null,
-                      providedOptions: CustomLauncherNodeOptions ) {
+                      providedOptions?: CustomLauncherNodeOptions ) {
 
     super( modelViewTransform, launcherAngleProperty, launcherHeightProperty, mysteryLauncherProperty, fieldProperty, providedOptions );
 

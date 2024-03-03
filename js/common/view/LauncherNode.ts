@@ -34,7 +34,7 @@ import launcherPattern6_svg from '../../../images/launcherPattern6_svg.js';
 type SelfOptions = {
   isIcon?: boolean;
 };
-type LauncherNodeOptions = SelfOptions & NodeOptions;
+export type LauncherNodeOptions = SelfOptions & NodeOptions;
 
 export const BARREL_LENGTH_BEFORE_ORIGIN = 85;
 const BARREL_LENGTH_AFTER_ORIGIN = 15;
