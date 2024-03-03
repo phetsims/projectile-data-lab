@@ -126,7 +126,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launcherConfigurationProperty,
+      derive: field => field.launcherConfigurationProperty,
 
       // The DynamicProperty is instrumented if and only if the field launcherConfigurationProperty is instrumented.
       tandem: this.fieldProperty.value.launcherConfigurationProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ) : Tandem.OPT_OUT,
@@ -143,7 +143,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.projectileTypeProperty,
+      derive: field => field.projectileTypeProperty,
 
       // The DynamicProperty is instrumented if and only if the field projectileTypeProperty is instrumented.
       tandem: this.fieldProperty.value.projectileTypeProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'projectileTypeProperty' ) : Tandem.OPT_OUT,
@@ -160,17 +160,17 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.meanLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.meanAngleProperty
+      derive: field => field.meanAngleProperty
     } );
 
     this.launcherHeightProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launchHeightProperty
+      derive: field => field.launchHeightProperty
     } );
 
     this.isContinuousLaunchingProperty = new DynamicProperty<boolean, boolean, T>( this.fieldProperty, {
       bidirectional: true, // So that launching the last projectile can automatically pause continuous mode in the selected field.
-      derive: t => t.isContinuousLaunchingProperty
+      derive: field => field.isContinuousLaunchingProperty
     } );
 
     this.isPathsVisibleProperty = new BooleanProperty( providedOptions.isPathsVisible, {

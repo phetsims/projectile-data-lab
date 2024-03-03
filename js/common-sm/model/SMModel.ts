@@ -27,7 +27,7 @@ export default class SMModel<T extends SMField> extends VSMModel<T> {
 
     this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.customLauncherMechanismProperty,
+      derive: field => field.customLauncherMechanismProperty,
       tandem: providedOptions.tandem.createTandem( 'customLauncherMechanismProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the mechanism of the custom launcher.',

@@ -92,7 +92,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     // In the VSM screens, the launcher can be chosen independently in each Field
     this.launcherProperty = new DynamicProperty<Launcher, Launcher, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.launcherProperty,
+      derive: field => field.launcherProperty,
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the selected launcher within the selected field.',
       tandem: this.fieldProperty.value.launcherProperty.isPhetioInstrumented() ? options.tandem.createTandem( 'launcherProperty' ) : Tandem.OPT_OUT,
@@ -104,17 +104,17 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.latestLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.latestLaunchAngleProperty
+      derive: field => field.latestLaunchAngleProperty
     } );
 
     this.latestLaunchSpeedProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.latestLaunchSpeedProperty
+      derive: field => field.latestLaunchSpeedProperty
     } );
 
     this.angleStabilizerProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.angleStabilizerProperty,
+      derive: field => field.angleStabilizerProperty,
       tandem: options.isStandardDeviationAnglePropertyPhetioInstrumented ? options.tandem.createTandem( 'angleStabilizerProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
       phetioDocumentation: 'The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.',
@@ -124,7 +124,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     } );
 
     this.standardDeviationAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
-      derive: t => t.standardDeviationAngleProperty,
+      derive: field => field.standardDeviationAngleProperty,
       tandem: options.isStandardDeviationAnglePropertyPhetioInstrumented ? options.tandem.createTandem( 'standardDeviationAngleProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the standard deviation of the angle of launch.',
@@ -135,7 +135,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     this.selectedProjectileNumberProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.selectedProjectileNumberProperty,
+      derive: field => field.selectedProjectileNumberProperty,
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the selected projectile by number (1-indexed)',
       tandem: options.tandem.createTandem( 'selectedProjectileNumberProperty' ),
@@ -145,15 +145,15 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     } );
 
     this.selectedProjectileProperty = new DynamicProperty<Projectile | null, Projectile | null, T>( this.fieldProperty, {
-      derive: t => t.selectedProjectileProperty
+      derive: field => field.selectedProjectileProperty
     } );
 
     this.totalProjectileCountProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
-      derive: t => t.totalProjectileCountProperty
+      derive: field => field.totalProjectileCountProperty
     } );
 
     this.numberOfLandedProjectilesProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
-      derive: t => t.numberOfLandedProjectilesProperty,
+      derive: field => field.numberOfLandedProjectilesProperty,
       phetioFeatured: true,
       phetioDocumentation: 'This Property represents the number of projectiles that have landed.',
       tandem: options.tandem.createTandem( 'numberOfLandedProjectilesProperty' ),

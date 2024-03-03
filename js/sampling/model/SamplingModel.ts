@@ -108,11 +108,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     } );
 
     this.numberOfStartedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
-      derive: t => t.numberOfStartedSamplesProperty
+      derive: field => field.numberOfStartedSamplesProperty
     } );
 
     this.numberOfCompletedSamplesProperty = new DynamicProperty<number, number, SamplingField>( this.fieldProperty, {
-      derive: t => t.numberOfCompletedSamplesProperty,
+      derive: field => field.numberOfCompletedSamplesProperty,
       tandem: options.tandem.createTandem( 'numberOfCompletedSamplesProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'The number of samples that have been completed.',
@@ -125,7 +125,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
       // The up/down carousel card changes the selected sample, so this is bidirectional
       bidirectional: true,
-      derive: t => t.selectedSampleNumberProperty,
+      derive: field => field.selectedSampleNumberProperty,
       tandem: options.tandem.createTandem( 'selectedSampleNumberProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'The index of the currently selected sample.',
@@ -135,11 +135,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
     } );
 
     this.phaseProperty = new DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>( this.fieldProperty, {
-      derive: t => t.phaseProperty
+      derive: field => field.phaseProperty
     } );
 
     this.sampleMeanProperty = new DynamicProperty<number | null, number | null, SamplingField>( this.fieldProperty, {
-      derive: t => t.sampleMeanProperty
+      derive: field => field.sampleMeanProperty
     } );
 
     // When the user selects "continuous", if there were projectiles in the air, place them on the ground and show the mean

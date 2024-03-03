@@ -185,21 +185,21 @@ export default abstract class Field extends PhetioObject {
 
     this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
-      derive: t => t.meanLaunchSpeedProperty
+      derive: launcher => launcher.meanLaunchSpeedProperty
     } );
 
     this.standardDeviationSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
-      derive: t => t.standardDeviationSpeedProperty
+      derive: launcher => launcher.standardDeviationSpeedProperty
     } );
 
     this.angleStabilizerProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
-      derive: t => t.angleStabilizerProperty
+      derive: launcher => launcher.angleStabilizerProperty
     } );
 
     this.standardDeviationAngleProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
-      derive: t => t.standardDeviationAngleProperty
+      derive: launcher => launcher.standardDeviationAngleProperty
     } );
 
     this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {

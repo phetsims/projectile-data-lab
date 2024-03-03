@@ -92,7 +92,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
 
     this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, MeasuresField>( this.fieldProperty, {
       bidirectional: true,
-      derive: t => t.mysteryOrCustomProperty
+      derive: field => field.mysteryOrCustomProperty
     } );
 
     this.mysteryLauncherProperty = new DynamicProperty<Launcher, Launcher, MeasuresField>( this.fieldProperty, {
@@ -101,7 +101,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
     } );
 
     this.meanDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.meanDistanceProperty,
+      derive: field => field.meanDistanceProperty,
       phetioFeatured: true,
       tandem: options.tandem.createTandem( 'meanDistanceProperty' ),
       phetioDocumentation: 'The mean distance of the landed projectiles, or null if no projectiles have landed.',
@@ -111,7 +111,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
     } );
 
     this.standardDeviationDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.standardDeviationDistanceProperty,
+      derive: field => field.standardDeviationDistanceProperty,
       phetioFeatured: true,
       tandem: options.tandem.createTandem( 'standardDeviationDistanceProperty' ),
       phetioDocumentation: 'The standard deviation of the distance of the landed projectiles, or null if no projectiles have landed.',
@@ -121,7 +121,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
     } );
 
     this.standardErrorDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
-      derive: t => t.standardErrorDistanceProperty,
+      derive: field => field.standardErrorDistanceProperty,
       phetioFeatured: true,
       tandem: options.tandem.createTandem( 'standardErrorDistanceProperty' ),
       phetioDocumentation: 'The standard error of the mean distance of landed projectiles, or null if no projectiles have landed.',

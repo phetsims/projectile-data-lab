@@ -27,7 +27,7 @@ export default class SMField extends VSMField {
 
     this.customLauncherMechanismProperty = new DynamicProperty<LauncherMechanism, LauncherMechanism, Launcher>( this.launcherProperty, {
       bidirectional: true,
-      derive: t => t.launcherMechanismProperty
+      derive: launcher => launcher.launcherMechanismProperty
     } );
   }
 
