@@ -28,7 +28,6 @@ import StaticToolPanel from './StaticToolPanel.js';
 import InteractiveToolPanel from './InteractiveToolPanel.js';
 import VSMLaunchPanel from './VSMLaunchPanel.js';
 import FieldRadioButtonGroup from './FieldRadioButtonGroup.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
@@ -39,7 +38,7 @@ import FieldSignNode from '../../common/view/FieldSignNode.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMScreenViewOptions = SelfOptions & WithRequired<PDLScreenViewOptions, 'tandem'>;
+export type VSMScreenViewOptions = SelfOptions & PDLScreenViewOptions;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
   protected readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;
