@@ -37,7 +37,7 @@ export default class HistogramRepresentationIconNode extends Node {
     );
     const data = [ { x: 0 }, { x: 0 }, { x: 1 }, { x: 1 }, { x: 1 }, { x: 2 } ];
     histogramPainter.setHistogramData( data, data[ 1 ] );
-    const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ], {} );
+    const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ] );
 
     this.addChild( chartCanvasNode );
 

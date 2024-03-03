@@ -341,7 +341,7 @@ export default class HistogramNode extends Node {
     }, {
       value: true,
       createNode: () => new Path( stopSolidShape, soundIconNodeOptions )
-    } ], {} );
+    } ] );
 
     const toggleHistogramSoundButton = new RectangularPushButton( {
       content: histogramSoundIconToggleNode,

@@ -64,7 +64,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
       PDLColors.histogramDataStrokeProperty,
       options );
 
-    const noDataLabel = new PDLText( ProjectileDataLabStrings.noDataStringProperty, {} );
+    const noDataLabel = new PDLText( ProjectileDataLabStrings.noDataStringProperty );
 
     const roundedStringProperty = ( nullableNumberProperty: PhetioProperty<number | null> ) =>
       new DerivedProperty( [ nullableNumberProperty ], nullableNumber => {

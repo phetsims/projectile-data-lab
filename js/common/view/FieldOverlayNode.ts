@@ -9,7 +9,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Node, NodeOptions, Path, Circle, Text } from '../../../../scenery/js/imports.js';
+import { Circle, Node, NodeOptions, Path, Text } from '../../../../scenery/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
@@ -17,17 +17,20 @@ import PDLColors from '../PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import PDLUtils from '../PDLUtils.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = {
-  isLeftSide?: boolean;
+  isLeftSide: boolean;
 };
-type FieldOverlayNodeOptions = SelfOptions & NodeOptions;
+type FieldOverlayNodeOptions = SelfOptions & StrictOmit<NodeOptions, 'children'>;
 
 export default class FieldOverlayNode extends Node {
-  public constructor( modelViewTransform: ModelViewTransform2, providedOptions: FieldOverlayNodeOptions ) {
+  public constructor( modelViewTransform: ModelViewTransform2, providedOptions?: FieldOverlayNodeOptions ) {
+
+    const options = optionize<FieldOverlayNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
     const numTotalDashes = 30;
-    const numDashesToDraw = providedOptions.isLeftSide ? 1 : numTotalDashes;
+    const numDashesToDraw = options.isLeftSide ? 1 : numTotalDashes;
 
     // Subtract 1 to make the dashed part of the right edge line up with the right side of the field
     const dashLength = modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE ) / ( 2 * numTotalDashes - 1 );
@@ -80,17 +83,14 @@ export default class FieldOverlayNode extends Node {
     const childContainer = new Node( { children: [ dashedLine, ...distanceLabels ] } );
 
     // If this is the left side overlay in front of the launcher, add the origin circle
-    if ( providedOptions.isLeftSide ) {
+    if ( options.isLeftSide ) {
       childContainer.addChild( new Circle( PDLConstants.FIELD_CENTER_LINE_WIDTH, {
         x: originX,
         fill: PDLColors.fieldBorderFillProperty
       } ) );
     }
 
-    const options = optionize<FieldOverlayNodeOptions, SelfOptions, NodeOptions>()( {
-      children: [ childContainer ],
-      isLeftSide: false
-    }, providedOptions );
+    options.children = [ childContainer ];
 
     super( options );
   }

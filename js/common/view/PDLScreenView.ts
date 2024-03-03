@@ -151,7 +151,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       x: fieldX,
       y: fieldY
     } );
-    const fieldOverlayBack = new FieldOverlayNode( this.modelViewTransform, {} );
+    const fieldOverlayBack = new FieldOverlayNode( this.modelViewTransform, { isLeftSide: false } );
     const fieldOverlayFront = new FieldOverlayNode( this.modelViewTransform, { isLeftSide: true } );
     fieldOverlayBack.x = fieldX;
     fieldOverlayBack.y = fieldY;
