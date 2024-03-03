@@ -16,7 +16,6 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import piano_png from '../../../images/piano_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
@@ -34,7 +33,7 @@ soundManager.addSoundGenerator( pumpkinSoundClip );
 soundManager.addSoundGenerator( pianoSoundClip );
 
 type SelfOptions = EmptySelfOptions;
-type ProjectileTypeSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type ProjectileTypeSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
 export default class ProjectileTypeSection extends PDLPanelSection {
 

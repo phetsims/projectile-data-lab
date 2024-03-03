@@ -13,7 +13,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLText from '../../common/view/PDLText.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
@@ -33,7 +32,7 @@ soundManager.addSoundGenerator( sampleSize15SoundClip );
 soundManager.addSoundGenerator( sampleSize40SoundClip );
 
 type SelfOptions = EmptySelfOptions;
-type SampleSizeSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type SampleSizeSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
 export default class SampleSizeSection extends PDLPanelSection {
 

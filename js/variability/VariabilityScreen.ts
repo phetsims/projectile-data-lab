@@ -17,13 +17,13 @@ import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type ProjectileDataLabScreenOptions = SelfOptions & ScreenOptions;
+type VariabilityScreenOptions = SelfOptions & ScreenOptions;
 
 export default class VariabilityScreen extends Screen<VariabilityModel, VariabilityScreenView> {
 
-  public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
+  public constructor( providedOptions: VariabilityScreenOptions ) {
 
-    const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
+    const options = optionize<VariabilityScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.variabilityStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createVariabilityScreenIcon(),
       createKeyboardHelpNode: () => new PDLKeyboardHelpNode()

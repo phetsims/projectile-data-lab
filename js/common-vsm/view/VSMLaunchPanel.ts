@@ -7,20 +7,18 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import LauncherConfigurationSection from '../../common/view/LauncherConfigurationSection.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
 import ProjectileTypeSection from '../../common/view/ProjectileTypeSection.js';
-import { PDLLaunchPanel } from '../../common/view/PDLLaunchPanel.js';
+import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { Node } from '../../../../scenery/js/imports.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
 
 type SelfOptions = EmptySelfOptions;
-export type VSMLaunchPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
+export type VSMLaunchPanelOptions = SelfOptions & PDLLaunchPanelOptions;
 
 export default class VSMLaunchPanel extends PDLLaunchPanel {
 

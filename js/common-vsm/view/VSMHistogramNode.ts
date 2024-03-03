@@ -11,15 +11,15 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Histogram from '../../common/model/Histogram.js';
-import { ColorProperty, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import { ColorProperty, Node } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import HistogramNode from '../../common/view/HistogramNode.js';
+import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type VSMHistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
+type VSMHistogramNodeOptions = SelfOptions & WithRequired<HistogramNodeOptions, 'tandem'>;
 
 export default class VSMHistogramNode extends HistogramNode {
 

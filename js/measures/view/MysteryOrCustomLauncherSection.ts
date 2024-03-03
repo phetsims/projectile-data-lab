@@ -19,14 +19,13 @@ import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection
 import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import MysteryLauncherRadioButtonGroupWrapper from '../../common/view/MysteryLauncherRadioButtonGroupWrapper.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import Launcher from '../../common/model/Launcher.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
 
 type SelfOptions = EmptySelfOptions;
-type MysteryOrCustomLauncherSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
+type MysteryOrCustomLauncherSectionOptions = SelfOptions & PDLPanelSectionOptions;
 
 export default class MysteryOrCustomLauncherSection extends PDLPanelSection {
 

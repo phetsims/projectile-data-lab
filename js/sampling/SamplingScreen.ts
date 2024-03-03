@@ -17,13 +17,13 @@ import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type ProjectileDataLabScreenOptions = SelfOptions & ScreenOptions;
+type SamplingScreenOptions = SelfOptions & ScreenOptions;
 
 export default class SamplingScreen extends Screen<SamplingModel, SamplingScreenView> {
 
-  public constructor( providedOptions: ProjectileDataLabScreenOptions ) {
+  public constructor( providedOptions: SamplingScreenOptions ) {
 
-    const options = optionize<ProjectileDataLabScreenOptions, SelfOptions, ScreenOptions>()( {
+    const options = optionize<SamplingScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.samplingStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createSamplingScreenIcon(),
       createKeyboardHelpNode: () => new PDLKeyboardHelpNode( { hasSelectAFieldShortcut: false } )

@@ -27,6 +27,10 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+
+type SelfOptions = EmptySelfOptions;
+type SampleSizeThumbnailNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class SampleSizeThumbnailNode extends Node {
 
@@ -42,7 +46,7 @@ export default class SampleSizeThumbnailNode extends Node {
                       blockFillProperty: TReadOnlyProperty<Color>,
                       blockStrokeProperty: TReadOnlyProperty<Color>,
                       zoomLevelProperty: NumberProperty,
-                      providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
+                      providedOptions: SampleSizeThumbnailNodeOptions ) {
     super( providedOptions );
 
     this.chartTransform = new ChartTransform( {

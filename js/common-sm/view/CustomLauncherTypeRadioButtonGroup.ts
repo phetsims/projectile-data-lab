@@ -8,10 +8,9 @@
  */
 
 import { Image } from '../../../../scenery/js/imports.js';
-import { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import spring_png from '../../../images/spring_png.js';
 import pressureWithNeedle_png from '../../../images/pressureWithNeedle_png.js';
@@ -22,11 +21,11 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import launcherTypeSpring_mp3 from '../../../sounds/launcherTypeSpring_mp3.js';
 import launcherTypePressure_mp3 from '../../../sounds/launcherTypePressure_mp3.js';
 import launcherTypeExplosion_mp3 from '../../../sounds/launcherTypeExplosion_mp3.js';
-import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
+import PDLRectangularRadioButtonGroup, { PDLRectangularRadioButtonGroupOptions } from '../../common/view/PDLRectangularRadioButtonGroup.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 
 type SelfOptions = EmptySelfOptions;
-type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
+type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & PDLRectangularRadioButtonGroupOptions;
 
 const springSound = new SoundClip( launcherTypeSpring_mp3, { initialOutputLevel: 0.5 } );
 soundManager.addSoundGenerator( springSound, { categoryName: 'user-interface' } );

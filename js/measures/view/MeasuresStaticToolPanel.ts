@@ -8,7 +8,6 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import StaticToolPanel, { ICON_WIDTH, StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
-import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -27,7 +26,7 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
                       isMeanVisibleProperty: Property<boolean>,
                       isStandardDeviationVisibleProperty: Property<boolean>,
                       isValuesVisibleProperty: Property<boolean>,
-                      providedOptions: PDLPanelOptions ) {
+                      providedOptions: MeasuresStaticToolPanelOptions ) {
 
     class DataMeasuresIconNode extends Node {
       public constructor( showMean: boolean, showStandardDeviation: boolean ) {
@@ -54,7 +53,7 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
       }
     }
 
-    const options = optionize<PDLPanelOptions, SelfOptions, MeasuresStaticToolPanelOptions>()( {
+    const options = optionize<MeasuresStaticToolPanelOptions, SelfOptions, StaticToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
         {
           property: isMeanVisibleProperty,

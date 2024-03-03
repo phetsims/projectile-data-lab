@@ -7,17 +7,17 @@
  */
 
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
-import { Color, NodeOptions } from '../../../../scenery/js/imports.js';
+import { Color } from '../../../../scenery/js/imports.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import CanvasPainter from '../../../../bamboo/js/CanvasPainter.js';
+import CanvasPainter, { CanvasPainterOptions } from '../../../../bamboo/js/CanvasPainter.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import HistogramData from '../../common/model/HistogramData.js';
 import Histogram from '../model/Histogram.js';
 
 type SelfOptions = EmptySelfOptions;
-export type BarPlotOptions = SelfOptions & NodeOptions;
+export type BarPlotOptions = SelfOptions & CanvasPainterOptions;
 
 // The radius of the dot labelling the highlighted block in the 'blocks' representation
 const DOT_RADIUS = 2.4;

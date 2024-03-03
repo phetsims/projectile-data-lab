@@ -21,11 +21,12 @@ import SpeedToolNode from './SpeedToolNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
 };
-export type StaticToolPanelOptions = SelfOptions & PDLPanelOptions;
+export type StaticToolPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
 export const ICON_WIDTH = 19;
 

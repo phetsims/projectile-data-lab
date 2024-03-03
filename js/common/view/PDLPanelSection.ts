@@ -15,15 +15,16 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLText from './PDLText.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import PDLConstants from '../PDLConstants.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
   titleFont?: PhetFont;
 };
-export type PDLPanelSectionOptions = SelfOptions & VBoxOptions;
+export type PDLPanelSectionOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
 
 export default class PDLPanelSection extends VBox {
 
-  public constructor( titleString: TReadOnlyProperty<string> | null, content: Node, providedOptions?: PDLPanelSectionOptions ) {
+  protected constructor( titleString: TReadOnlyProperty<string> | null, content: Node, providedOptions?: PDLPanelSectionOptions ) {
 
     const children: Node[] = [];
 

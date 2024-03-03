@@ -9,7 +9,7 @@
 
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Color, Node, createGatedVisibleProperty } from '../../../../scenery/js/imports.js';
+import { Color, createGatedVisibleProperty, Node } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import optionize from '../../../../phet-core/js/optionize.js';
@@ -26,11 +26,12 @@ import PDLStopwatchNode from './PDLStopwatchNode.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
 };
-export type InteractiveToolPanelOptions = SelfOptions & PDLPanelOptions;
+export type InteractiveToolPanelOptions = SelfOptions & WithRequired<PDLPanelOptions, 'tandem'>;
 
 export default class InteractiveToolPanel extends PDLPanel {
 

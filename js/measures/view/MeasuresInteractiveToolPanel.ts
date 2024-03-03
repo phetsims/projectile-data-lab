@@ -8,7 +8,6 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { PDLPanelOptions } from '../../common/view/PDLPanel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
@@ -30,7 +29,7 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
     isMeasuringTapeVisibleProperty: BooleanProperty,
     isStopwatchVisibleProperty: PhetioProperty<boolean>,
     isIntervalToolVisibleProperty: BooleanProperty,
-    providedOptions: PDLPanelOptions ) {
+    providedOptions: MeasuresInteractiveToolPanelOptions ) {
 
     class IntervalToolIcon extends Node {
       public constructor() {
@@ -54,7 +53,7 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
       }
     }
 
-    const options = optionize<PDLPanelOptions, SelfOptions, MeasuresInteractiveToolPanelOptions>()( {
+    const options = optionize<MeasuresInteractiveToolPanelOptions, SelfOptions, InteractiveToolPanelOptions>()( {
       additionalVerticalCheckboxGroupItems: [
         {
           property: isIntervalToolVisibleProperty,
