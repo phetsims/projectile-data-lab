@@ -24,7 +24,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import gear_png from '../../../images/gear_png.js';
+import gear_svg from '../../../images/gear_svg.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import LauncherMechanism, { PRESSURE, SPRING } from '../model/LauncherMechanism.js';
@@ -107,14 +107,14 @@ export default class CustomLauncherNode extends LauncherNode {
     this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value,
       ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngleProperty.value ) );
 
-    const gearImageScale = 0.2;
+    const gearImageScale = 0.075;
     const gearAngleInset = Utils.toRadians( 6 );
     const gearTopAngle = GUIDE_RAIL_MAX_ANGLE - gearAngleInset;
     const gearBottomAngle = GUIDE_RAIL_MIN_ANGLE + gearAngleInset;
     const gearToOriginDistance = GUIDE_RAIL_OUTER_RADIUS - 1.5 * GUIDE_RAIL_OUTER_CUTOFF;
 
-    const gearTop = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
-    const gearBottom = new Image( gear_png, { centerX: 0, centerY: 0, scale: gearImageScale } );
+    const gearTop = new Image( gear_svg, { centerX: 0, centerY: 0, scale: gearImageScale } );
+    const gearBottom = new Image( gear_svg, { centerX: 0, centerY: 0, scale: gearImageScale } );
 
     const gearTopContainer = new Node( {
       visibleProperty: isLauncherCustomProperty,
