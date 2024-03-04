@@ -31,7 +31,9 @@ import ProjectileType from './ProjectileType.js';
 
 export default class Projectile {
 
-  //REVIEW document - not obvious why we need to know what screen a Projectile belongs to
+  // PhET-iO Clients need a way to distinguish between different screens that a Projectile can be launched on, so the
+  // ScreenIdentifier is tracked as an intrinsic part of the Projectile model, rather than something that must be
+  // tracked extrinsically.
   public screenIdentifier: ScreenIdentifier;
 
   public fieldIdentifier: string;
