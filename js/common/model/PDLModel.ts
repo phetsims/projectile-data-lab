@@ -63,7 +63,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly singleOrContinuousProperty: Property<SingleOrContinuous>;
 
   // Setting for whether the user wants to see the paths of the projectiles
-  public readonly isPathsVisibleProperty: BooleanProperty;
+  public readonly isPathsVisibleProperty: BooleanProperty; //REVIEW should be Property<boolean>
 
   // Abstract Property that indicates the selected Launcher
   public readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;

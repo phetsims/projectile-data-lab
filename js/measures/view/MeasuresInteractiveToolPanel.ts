@@ -26,9 +26,9 @@ type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOpt
 
 export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
   public constructor(
-    isMeasuringTapeVisibleProperty: BooleanProperty,
+    isMeasuringTapeVisibleProperty: BooleanProperty, //REVIEW should be Property<boolean>
     isStopwatchVisibleProperty: PhetioProperty<boolean>,
-    isIntervalToolVisibleProperty: BooleanProperty,
+    isIntervalToolVisibleProperty: BooleanProperty, //REVIEW should be Property<boolean>
     providedOptions: MeasuresInteractiveToolPanelOptions ) {
 
     class IntervalToolIcon extends Node {

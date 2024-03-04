@@ -42,6 +42,8 @@ export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLMo
 
 export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
+  //REVIEW Declarations of BooleanProperty should be Property<boolean>
+
   // Static tool visibility
   public readonly isLaunchAngleVisibleProperty: BooleanProperty;
   public readonly isLaunchSpeedVisibleProperty: BooleanProperty;

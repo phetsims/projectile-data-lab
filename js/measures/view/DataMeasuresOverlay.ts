@@ -52,6 +52,7 @@ export default class DataMeasuresOverlay extends Node {
   public constructor( modelViewTransform: ModelViewTransform2 | ChartTransform,
                       meanDistanceProperty: PhetioProperty<number | null>,
                       standardDeviationDistanceProperty: PhetioProperty<number | null>,
+                      //REVIEW next 3 params of type BooleanProperty should be TReadOnlyProperty<boolean>
                       isMeanDisplayedProperty: BooleanProperty,
                       isStandardDeviationDisplayedProperty: BooleanProperty,
                       isValuesDisplayedProperty: BooleanProperty,

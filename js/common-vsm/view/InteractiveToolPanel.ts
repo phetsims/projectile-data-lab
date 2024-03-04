@@ -36,7 +36,7 @@ export type InteractiveToolPanelOptions = SelfOptions & WithRequired<PDLPanelOpt
 export default class InteractiveToolPanel extends PDLPanel {
 
   public constructor(
-    isMeasuringTapeVisibleProperty: BooleanProperty,
+    isMeasuringTapeVisibleProperty: BooleanProperty, //REVIEW should be Property<boolean>
     isStopwatchVisibleProperty: PhetioProperty<boolean>,
     providedOptions: InteractiveToolPanelOptions ) {
 

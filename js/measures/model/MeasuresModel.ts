@@ -44,6 +44,8 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
   // Whether the launcher is custom or mystery
   public readonly mysteryOrCustomProperty: DynamicProperty<MysteryOrCustom, MysteryOrCustom, MeasuresField>;
 
+  //REVIEW Declarations of BooleanProperty should be Property<boolean>
+
   // Whether the mean is visible on the field and histogram
   public readonly isMeanVisibleProperty: BooleanProperty;
 

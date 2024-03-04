@@ -21,7 +21,7 @@ export default class PDLEventTimer {
   private readonly period: number;
 
   // Whether the timer is running
-  private readonly isRunningProperty: BooleanProperty;
+  private readonly isRunningProperty: BooleanProperty; //REVIEW should be Property<boolean>
 
   // Remaining time until the next event, in seconds
   private readonly timeRemainingProperty: NumberProperty;

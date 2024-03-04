@@ -86,7 +86,7 @@ export default abstract class Field extends PhetioObject {
   public readonly launchHeightProperty: TReadOnlyProperty<number>;
 
   // True if the continuous mode is set to launching or false if not launching
-  public readonly isContinuousLaunchingProperty: BooleanProperty;
+  public readonly isContinuousLaunchingProperty: BooleanProperty; //REVIEW should be Property<boolean>
 
   // An array of projectiles that are currently in the air. Note: No projectile should be in the airborneProjectiles and landedProjectiles array simultaneously.
   public readonly airborneProjectiles: Projectile[] = [];
