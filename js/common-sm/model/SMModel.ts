@@ -13,13 +13,14 @@ import projectileDataLab from '../../projectileDataLab.js';
 import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
 import SMField from './SMField.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { PhetioProperty } from '../../../../axon/js/imports.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SMModelOptions = SelfOptions & VSMModelOptions<SMField>;
 
 export default class SMModel<T extends SMField> extends VSMModel<T> {
 
-  public readonly customLauncherMechanismProperty: DynamicProperty<LauncherMechanism, LauncherMechanism, T>;
+  public readonly customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>;
 
   public constructor( fields: T[], providedOptions: SMModelOptions ) {
 
