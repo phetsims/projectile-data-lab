@@ -62,8 +62,11 @@ export default abstract class Field extends PhetioObject {
   // Specifies the type of projectile being used.
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // These values are DynamicProperties that are determined by the Launcher, see implementation-notes.md
+
   // Specifies the average speed of launched projectiles
-  public readonly meanSpeedProperty: DynamicProperty<number, number, Launcher>;
+  private readonly meanSpeedProperty: TReadOnlyProperty<number>;
 
   // Specifies the speed standard deviation for launched projectiles.
   public readonly standardDeviationSpeedProperty: DynamicProperty<number, number, Launcher>;
@@ -73,6 +76,8 @@ export default abstract class Field extends PhetioObject {
 
   // Indicates the current value for the angle stabilizer.
   public readonly angleStabilizerProperty: DynamicProperty<number, number, Launcher>;
+
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.
   public readonly meanAngleProperty: TReadOnlyProperty<number>;
@@ -184,7 +189,7 @@ export default abstract class Field extends PhetioObject {
       configuration => MEAN_LAUNCH_ANGLES[ configuration ] );
 
     this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
-      bidirectional: true,
+      // bidirectional: true,
       derive: launcher => launcher.meanLaunchSpeedProperty
     } );
 
