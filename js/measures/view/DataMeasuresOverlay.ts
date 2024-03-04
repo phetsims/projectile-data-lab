@@ -114,6 +114,8 @@ export default class DataMeasuresOverlay extends Node {
     } );
 
     const sideLineHeight = providedOptions.context === 'field' ? 0.78 * totalHeight : totalHeight;
+
+    //REVIEW leftLine and rightLine are duplicate code, including all options
     const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
       visibleProperty: isSDIndicatorVisibleProperty,
       stroke: 'black',
@@ -169,6 +171,7 @@ export default class DataMeasuresOverlay extends Node {
       isNonNullProperty( standardDeviationDistanceProperty )
     ] );
 
+    //REVIEW sdLeftLabel and sdRightLabel are duplicate code, including all options
     const sdLeftLabel = new PDLText( sdPatternStringProperty, {
       visibleProperty: isSDValuesVisibleProperty,
       font: PDLConstants.PRIMARY_FONT,
