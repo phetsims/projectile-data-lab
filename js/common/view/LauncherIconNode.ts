@@ -30,7 +30,7 @@ export default class LauncherIconNode extends Node {
   private launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
   private launchAngleProperty = new NumberProperty( 30 );
   private launchHeightProperty = new NumberProperty( 0 );
-  private mysteryOrCustomProperty = new Property<MysteryOrCustom>( 'mystery' );
+  private mysteryOrCustomProperty = new Property<MysteryOrCustom>( 'mystery' ); //REVIEW should be StringUnionProperty<MysteryOrCustom>
   private mysteryLauncherProperty = new Property( MYSTERY_LAUNCHERS[ 0 ] );
   private launcherMechanismProperty = new Property<LauncherMechanism>( SPRING );
   private standardDeviationAngleProperty = new Property( 0 );

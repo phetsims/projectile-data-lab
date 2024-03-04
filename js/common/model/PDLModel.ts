@@ -116,6 +116,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.histogram = new Histogram( () => this.shouldPlayMeanTone(), () => this.playMeanTone(), { tandem: providedOptions.tandem.createTandem( 'histogram' ) } );
 
+    //REVIEW should be StringUnionProperty<SingleOrContinuous>
     this.singleOrContinuousProperty = new Property<SingleOrContinuous>( 'single', {
       validValues: SingleOrContinuousValues,
       tandem: providedOptions.tandem.createTandem( 'singleOrContinuousProperty' ),

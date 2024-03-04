@@ -185,12 +185,14 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
     const measuringTapeTandem = providedOptions.tandem.createTandem( 'measuringTape' );
 
+    //README Why is this not Vector2Property?
     this.measuringTapeBasePositionProperty = new Property<Vector2>( new Vector2( 0, 0 ), {
       tandem: measuringTapeTandem.createTandem( 'basePositionProperty' ),
       phetioValueType: Vector2.Vector2IO,
       phetioReadOnly: true
     } );
 
+    //README Why is this not Vector2Property?
     this.measuringTapeTipPositionProperty = new Property<Vector2>( new Vector2( 50, 0 ), {
       tandem: measuringTapeTandem.createTandem( 'tipPositionProperty' ),
       phetioValueType: Vector2.Vector2IO,

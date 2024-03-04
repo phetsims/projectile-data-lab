@@ -42,7 +42,7 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
         model.launcherConfigurationProperty,
         model.meanLaunchAngleProperty,
         model.launcherHeightProperty,
-        new Property( 'custom' ),
+        new Property( 'custom' ), //REVIEW should be new StringUnionProperty<MysteryOrCustom>( 'custom' )
         new Property( launcher ),
         model.customLauncherMechanismProperty,
         model.standardDeviationAngleProperty,

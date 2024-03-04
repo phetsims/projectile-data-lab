@@ -173,6 +173,8 @@ export default abstract class Field extends PhetioObject {
     } : { validValues: [ 'angle45' ] } as const;
 
     const initialAngle = options.isLauncherConfigurationPhetioInstrumented ? 'angle30' : 'angle45';
+
+    //REVIEW should be StringUnionProperty<LauncherConfiguration>
     this.launcherConfigurationProperty = new Property<LauncherConfiguration>( initialAngle, launcherConfigurationOptions );
 
     const projectileTypeOptions = options.isProjectileTypePhetioInstrumented ? {
@@ -183,6 +185,7 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: ProjectileType.ProjectileTypeIO
     } : { validValues: [ CANNONBALL ] } as const;
 
+    //REVIEW should be StringUnionProperty<ProjectileType>
     this.projectileTypeProperty = new Property<ProjectileType>( CANNONBALL, projectileTypeOptions );
 
     this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],

@@ -59,6 +59,7 @@ export default class Launcher extends PhetioObject {
 
     super( options );
 
+    //REVIEW should be StringUnionProperty<LauncherMechanism>
     this.launcherMechanismProperty = new Property( launcherMechanism, {
       tandem: options.tandem.createTandem( 'launcherMechanismProperty' ),
       phetioFeatured: true,
