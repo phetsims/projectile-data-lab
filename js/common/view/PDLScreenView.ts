@@ -45,8 +45,9 @@ export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions,
 export default abstract class PDLScreenView<T extends Field> extends ScreenView {
 
   protected readonly modelViewTransform;
-  protected readonly canvasBounds: Bounds2;
+  protected readonly canvasBounds: Bounds2;//REVIEW document - what canvas?
 
+  //REVIEW launcherLayer is no longer needed. Now that PDLScreenView creates launcherNode, you just put launcherNode in the correct rendering order.
   protected readonly launcherLayer = new Node();
   protected readonly behindProjectilesLayer = new Node();
   protected readonly projectileLayer = new Node();

@@ -1,5 +1,6 @@
 // Copyright 2024, University of Colorado Boulder
 
+//REVIEW This doc looks seems sort of incorrect, looks like it was copied from LauncherNode and sort of changed.
 /**
  * The LauncherIconNode is the visual representation of the projectile launcher used in the UI of Projectile Data Lab.
  *
@@ -25,7 +26,7 @@ type LauncherIconNodeOptions = SelfOptions & NodeOptions;
 
 export default class LauncherIconNode extends Node {
 
-  // Create adapters for that will reflect the values for the selected launcher.
+  // Create adapters that will reflect the values for the selected launcher.
   private launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
   private launchAngleProperty = new NumberProperty( 30 );
   private launchHeightProperty = new NumberProperty( 0 );

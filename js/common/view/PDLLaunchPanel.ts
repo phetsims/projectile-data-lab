@@ -1,5 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+//REVIEW Incorrect doc, copy-pasted from PDLPanel.
 /**
  * The PDLPanel defines the default look and feel for panels in the Projectile Data Lab.
  *

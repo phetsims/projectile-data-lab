@@ -1,5 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+//REVIEW MysteryLauncherControl might be a better name for this.
+//REVIEW Not clear how you achieved a grid layout, which is presumably the reason for this 'wrapper', elaborate with comments.
 /**
  * MysteryLauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
  * mystery launchers. A wrapper is needed to help the layout wrap.

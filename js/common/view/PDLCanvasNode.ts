@@ -77,6 +77,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     this.modelViewTransform = modelViewTransform;
   }
 
+  //REVIEW document
   protected drawOutlierGraphicsForLandedProjectiles( landedProjectiles: Projectile[], context: CanvasRenderingContext2D ): void {
 
     // Force field graphics for landed outliers
@@ -92,6 +93,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     } );
   }
 
+  //REVIEW document
   protected drawPathForProjectile( context: CanvasRenderingContext2D, projectile: Projectile ): void {
     context.beginPath();
     let pathStarted = false;
@@ -117,6 +119,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     context.stroke();
   }
 
+  //REVIEW document
   protected drawProjectile( context: CanvasRenderingContext2D, projectile: Projectile, isLanded: boolean, isSelected: boolean ): void {
 
     const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );

@@ -11,6 +11,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import { BooleanProperty } from '../../../axon/js/imports.js';
 
+//REVIEW Constants should be uppercase.
 const maxFieldDistance = 100;
 const fieldWidth = 850;
 const pixelsToDistance = fieldWidth / maxFieldDistance;

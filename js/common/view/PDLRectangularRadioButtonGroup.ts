@@ -1,8 +1,8 @@
 // Copyright 2024, University of Colorado Boulder
 
 /**
- * PDLRectangularRadioButtonGroup is a RectangularRadioButtonGroup with a default look that is used in the majority of radio buttons
- * within Projectile Data Lab.
+ * PDLRectangularRadioButtonGroup is a RectangularRadioButtonGroup with a default look that is used in the majority of
+ * radio buttons within Projectile Data Lab.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

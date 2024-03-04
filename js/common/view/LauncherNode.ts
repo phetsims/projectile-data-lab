@@ -199,6 +199,7 @@ export default class LauncherNode extends Node {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
+  //REVIEW Unnecessary method. No members are accessed, could be moved outside class definition.
   private getCachedDarkerColorProperty( colorProperty: TReadOnlyProperty<Color> ): TReadOnlyProperty<Color> {
     if ( !darkerColorCacheMap.has( colorProperty ) ) {
       darkerColorCacheMap.set( colorProperty, new DerivedProperty( [ colorProperty ], color => color.darkerColor( 0.8 ) ) );
@@ -206,6 +207,7 @@ export default class LauncherNode extends Node {
     return darkerColorCacheMap.get( colorProperty )!;
   }
 
+  //REVIEW document
   private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
     const barrelColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncherNumber - 1 ].barrelFillProperty;
     const barrelDarkColorProperty = this.getCachedDarkerColorProperty( barrelColorProperty );
@@ -282,6 +284,7 @@ export default class LauncherNode extends Node {
     return [ barrel, ...( patternImage ? [ patternImage ] : [] ), barrelBorder, ...( isIcon ? [] : [ this.labelNode ] ), launcherEndRect ];
   }
 
+  //REVIEW document
   private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
     const frameBackground = new Path( this.guideRailInnerShape(), {
       fill: PDLColors.launcherBackFillProperty
@@ -331,6 +334,7 @@ export default class LauncherNode extends Node {
     return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
   }
 
+  //REVIEW document
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
     const fillColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncher - 1 ].frameFillProperty;
@@ -354,11 +358,13 @@ export default class LauncherNode extends Node {
     return [ guideRail ];
   }
 
+  //REVIEW Unnecessary method. No members are accessed, could be moved outside class definition.
   private guideRailInnerShape(): Shape {
     return new Shape().arc( 0, 0, GUIDE_RAIL_INNER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
       .lineTo( 0, 0 ).close();
   }
 
+  //REVIEW Unnecessary method. No members are accessed, could be moved outside class definition.
   private guideRailOuterShape( outerRadiusCutoff = 0 ): Shape {
     return new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS - outerRadiusCutoff, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
       .lineTo( 0, 0 ).close();

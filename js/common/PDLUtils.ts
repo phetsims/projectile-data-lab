@@ -15,6 +15,8 @@ import { VSMFieldIdentifierValues } from '../common-vsm/model/VSMFieldIdentifier
 import { SAMPLE_SIZES } from '../sampling/model/SamplingModel.js';
 
 export default class PDLUtils {
+
+  //REVIEW document
   public static transformField( point: Vector2 ): Vector2 {
     const pointY = point.y + PDLConstants.FIELD_SCALING_FACTOR_VERTICAL * Math.abs( point.y );
     const horizontalDistanceFactor = point.x / ( 0.5 * PDLConstants.FIELD_WIDTH );
@@ -24,11 +26,13 @@ export default class PDLUtils {
       pointY );
   }
 
+  //REVIEW document
   public static colorForFieldIndex( index: number ): Color {
     return PDLColors.fieldLightFillProperty.value.blend(
       PDLColors.fieldDarkFillProperty.value, index / ( VSMFieldIdentifierValues.length - 1 ) );
   }
 
+  //REVIEW document
   public static colorForSampleSize( sampleSize: number ): Color {
     const index = SAMPLE_SIZES.indexOf( sampleSize );
 
