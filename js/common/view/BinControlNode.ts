@@ -82,6 +82,8 @@ export default class BinControlNode extends HBox {
 
         // Use a separate ToggleNode for each one, so they don't change position on the screen when changing between
         // strategies
+
+        // The label: 'Bin width' or 'Total bins'
         new ToggleNode( PDLPreferences.binStrategyProperty, [ {
           value: 'binWidth',
           createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, { maxWidth: 90 } )
@@ -94,6 +96,8 @@ export default class BinControlNode extends HBox {
             rightMargin: margin
           }
         } ),
+
+        // The combo box
         new ToggleNode( PDLPreferences.binStrategyProperty, [ {
           value: 'binWidth',
           createNode: () => new BinWidthComboBox()
