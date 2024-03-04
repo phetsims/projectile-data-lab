@@ -29,6 +29,7 @@ export default class FieldOverlayNode extends Node {
 
     const options = optionize<FieldOverlayNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
+    //REVIEW move outside of class definition, const NUMBER_OF_TOTAL_DASHES = 30;
     const numTotalDashes = 30;
     const numDashesToDraw = options.isLeftSide ? 1 : numTotalDashes;
 

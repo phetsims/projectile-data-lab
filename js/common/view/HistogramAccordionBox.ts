@@ -29,6 +29,7 @@ export default class HistogramAccordionBox extends AccordionBox {
   public constructor( content: Node,
                       providedOptions: HistogramAccordionBoxOptions ) {
 
+    //REVIEW move outside class definition, const MARGIN = 8;
     const margin = 8;
 
     const options = optionize<HistogramAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {

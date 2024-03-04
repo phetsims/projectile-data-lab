@@ -29,9 +29,12 @@ type FieldNodeOptions = SelfOptions & NodeOptions;
 
 export default class FieldNode extends Node {
 
+  //REVIEW Unnecessary class field. fieldLines is private and unused outside the constructor.
   // The field lines are vertical lines spaced evenly along the field, according to the bin width.
   private fieldLines: Node[];
 
+  //REVIEW Unnecessary class field. fieldBorder is private and unused outside the constructor.
+  //REVIEW Is this doc incomplete? I found fieldBorder vs fieldBackground to be confusing, especially both are filled.
   // The field
   private readonly fieldBorder: Node;
 
@@ -135,6 +138,8 @@ export default class FieldNode extends Node {
     this.setClipArea( maskShape );
   }
 
+  //REVIEW Document
+  //REVIEW This function does not access any members (no use of 'this'), so can be moved outside the class definition.
   private fieldLinesForBinWidth( binWidth: number ): Node[] {
     const totalFieldLines = PDLConstants.MAX_FIELD_DISTANCE / binWidth - 1;
     const deltaX = binWidth * PDLConstants.FIELD_WIDTH / PDLConstants.MAX_FIELD_DISTANCE;
