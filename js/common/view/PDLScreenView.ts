@@ -10,7 +10,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { HBox, ManualConstraint, Node, createGatedVisibleProperty } from '../../../../scenery/js/imports.js';
+import { createGatedVisibleProperty, HBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
@@ -34,11 +34,12 @@ import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import LaunchButton from './LaunchButton.js';
 import FieldSignNode from './FieldSignNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { DerivedProperty } from '../../../../axon/js/imports.js';
 import PDLPreferences from '../PDLPreferences.js';
 
-type SelfOptions = EmptySelfOptions;
+type SelfOptions = {
+  createLauncherNode: ( modelViewTransform: ModelViewTransform2 ) => LauncherNode;
+};
 export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions, 'tandem'>;
 
 export default abstract class PDLScreenView<T extends Field> extends ScreenView {
@@ -50,7 +51,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected readonly behindProjectilesLayer = new Node();
   protected readonly projectileLayer = new Node();
 
-  protected abstract readonly launcherNode: LauncherNode;
+  protected readonly launcherNode: LauncherNode;
 
   protected abstract readonly launchPanel: PDLLaunchPanel;
   protected abstract readonly accordionBox: HistogramAccordionBox;
@@ -230,6 +231,9 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( this.singleOrContinuousRadioButtonGroup );
     this.addChild( this.noAirResistanceText );
     this.addChild( this.eraseResetContainer );
+
+    this.launcherNode = options.createLauncherNode( this.modelViewTransform );
+    this.launcherLayer.addChild( this.launcherNode );
   }
 
   /**

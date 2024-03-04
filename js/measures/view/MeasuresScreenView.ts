@@ -21,17 +21,30 @@ import MeasuresHistogramNode from './MeasuresHistogramNode.js';
 import IntervalToolNode from './IntervalToolNode.js';
 import { Node } from '../../../../scenery/js/imports.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type MeasuresScreenViewOptions = SelfOptions & VSMScreenViewOptions;
+type MeasuresScreenViewOptions = SelfOptions & StrictOmit<VSMScreenViewOptions, 'createLauncherNode'>;
 
 export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
 
-  protected readonly launcherNode: CustomLauncherNode;
-
   public constructor( model: MeasuresModel, providedOptions: MeasuresScreenViewOptions ) {
-    const options = optionize<MeasuresScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {}, providedOptions );
+    const options = optionize<MeasuresScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {
+      createLauncherNode: modelViewTransform => new CustomLauncherNode(
+        modelViewTransform,
+        model.launcherConfigurationProperty,
+        model.meanLaunchAngleProperty,
+        model.launcherHeightProperty,
+        model.mysteryOrCustomProperty,
+        model.mysteryLauncherProperty,
+        model.customLauncherMechanismProperty,
+        model.standardDeviationAngleProperty,
+        model.latestLaunchSpeedProperty,
+        model.fieldProperty,
+        {}
+      )
+    }, providedOptions );
 
     const launchPanel = new MeasuresLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
       model.mysteryOrCustomProperty, model.mysteryLauncherProperty, model.customLauncherMechanismProperty, model.angleStabilizerProperty, {
@@ -74,22 +87,6 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
       } );
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
-
-    this.launcherNode = new CustomLauncherNode(
-      this.modelViewTransform,
-      model.launcherConfigurationProperty,
-      model.meanLaunchAngleProperty,
-      model.launcherHeightProperty,
-      model.mysteryOrCustomProperty,
-      model.mysteryLauncherProperty,
-      model.customLauncherMechanismProperty,
-      model.standardDeviationAngleProperty,
-      model.latestLaunchSpeedProperty,
-      model.fieldProperty,
-      {}
-    );
-
-    this.launcherLayer.addChild( this.launcherNode );
 
     const intervalToolNode = new IntervalToolNode( model.intervalTool, this.modelViewTransform, {
       isIcon: false,

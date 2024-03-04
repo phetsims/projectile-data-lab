@@ -23,16 +23,34 @@ import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import SMField from '../../common-sm/model/SMField.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
-type SourcesScreenViewOptions = SelfOptions & VSMScreenViewOptions;
+type SourcesScreenViewOptions = SelfOptions & StrictOmit<VSMScreenViewOptions, 'createLauncherNode'>;
 
 export default class SourcesScreenView extends VSMScreenView<SMField> {
 
-  protected readonly launcherNode: CustomLauncherNode;
-
   public constructor( model: SourcesModel, providedOptions: SourcesScreenViewOptions ) {
-    const options = optionize<SourcesScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {}, providedOptions );
+
+    const launcher = model.launcherProperty.value;
+    assert && assert( launcher.mysteryOrCustom === 'custom', 'The launcher should be custom' );
+
+    const options = optionize<SourcesScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {
+
+      createLauncherNode: modelViewTransform => new CustomLauncherNode(
+        modelViewTransform,
+        model.launcherConfigurationProperty,
+        model.meanLaunchAngleProperty,
+        model.launcherHeightProperty,
+        new Property( 'custom' ),
+        new Property( launcher ),
+        model.customLauncherMechanismProperty,
+        model.standardDeviationAngleProperty,
+        model.latestLaunchSpeedProperty,
+        model.fieldProperty,
+        {}
+      )
+    }, providedOptions );
 
     const launchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
       model.customLauncherMechanismProperty, model.angleStabilizerProperty, {
@@ -62,25 +80,6 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
       } );
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
-
-    const launcher = model.launcherProperty.value;
-    assert && assert( launcher.mysteryOrCustom === 'custom', 'The launcher should be custom' );
-
-    this.launcherNode = new CustomLauncherNode(
-      this.modelViewTransform,
-      model.launcherConfigurationProperty,
-      model.meanLaunchAngleProperty,
-      model.launcherHeightProperty,
-      new Property( 'custom' ),
-      new Property( launcher ),
-      model.customLauncherMechanismProperty,
-      model.standardDeviationAngleProperty,
-      model.latestLaunchSpeedProperty,
-      model.fieldProperty,
-      {}
-    );
-
-    this.launcherLayer.addChild( this.launcherNode );
   }
 }
 
