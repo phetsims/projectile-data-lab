@@ -41,8 +41,7 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
         model.customLauncherMechanismProperty,
         model.standardDeviationAngleProperty,
         model.latestLaunchSpeedProperty,
-        model.fieldProperty,
-        {}
+        model.fieldProperty
       )
     }, providedOptions );
 
