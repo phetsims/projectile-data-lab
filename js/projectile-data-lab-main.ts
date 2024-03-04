@@ -41,7 +41,7 @@ simLauncher.launch( () => {
           createContent: () => new Node()
         },
         {
-        createContent: tandem => new AudioPreferencesContentNode( tandem.createTandem( 'audioPreferences' ) )
+        createContent: tandem => new AudioPreferencesContentNode( tandem )
       } ]
     }
   } );
