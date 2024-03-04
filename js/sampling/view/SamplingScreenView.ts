@@ -16,7 +16,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import SamplingAccordionBox from './SamplingAccordionBox.js';
 import SamplingField from '../model/SamplingField.js';
 import SampleSelectorNode from './SampleSelectorNode.js';
-import LauncherNode from '../../common/view/LauncherNode.js';
 import SamplingCanvasNode from './SamplingCanvasNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
@@ -29,20 +28,30 @@ import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import LauncherNode from '../../common/view/LauncherNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingScreenViewOptions = SelfOptions & PDLScreenViewOptions;
+type SamplingScreenViewOptions = SelfOptions & StrictOmit<PDLScreenViewOptions, 'createLauncherNode'>;
 
 export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
   protected readonly fieldSignNode: FieldSignNode;
-  protected readonly launcherNode: LauncherNode;
   protected readonly launchPanel: SamplingLaunchPanel;
   protected readonly accordionBox: SamplingAccordionBox;
 
   public constructor( model: SamplingModel, providedOptions: SamplingScreenViewOptions ) {
-    const options = optionize<SamplingScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {}, providedOptions );
+    const options = optionize<SamplingScreenViewOptions, SelfOptions, PDLScreenViewOptions>()( {
+
+      createLauncherNode: modelViewTransform => new LauncherNode(
+        modelViewTransform,
+        model.meanLaunchAngleProperty,
+        model.launcherHeightProperty,
+        model.launcherProperty,
+        model.fieldProperty
+      )
+    }, providedOptions );
 
     const launchButtonEnabledProperty = new DerivedProperty( [ model.phaseProperty, model.numberOfStartedSamplesProperty, model.singleOrContinuousProperty ],
       ( phase, startedSamples, singleOrContinuous ) => {
@@ -102,16 +111,6 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
         meanReadoutNode.centerBottom = meanIndicatorNode.centerTop.plusXY( 0, -2 );
       }
     } );
-
-    this.launcherNode = new LauncherNode(
-      this.modelViewTransform,
-      model.meanLaunchAngleProperty,
-      model.launcherHeightProperty,
-      model.launcherProperty,
-      model.fieldProperty
-    );
-
-    this.launcherLayer.addChild( this.launcherNode );
 
     this.launchPanel = new SamplingLaunchPanel( model.launcherProperty, model.sampleSizeProperty, {
       tandem: options.tandem.createTandem( 'launchPanel' )

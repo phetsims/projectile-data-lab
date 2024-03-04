@@ -21,17 +21,25 @@ import { Node } from '../../../../scenery/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type VariabilityScreenViewOptions = SelfOptions & VSMScreenViewOptions;
+type VariabilityScreenViewOptions = SelfOptions & StrictOmit<VSMScreenViewOptions, 'createLauncherNode'>;
 
 export default class VariabilityScreenView extends VSMScreenView<VSMField> {
 
-  protected readonly launcherNode: LauncherNode;
-
   public constructor( model: VariabilityModel, providedOptions: VariabilityScreenViewOptions ) {
-    const options = optionize<VariabilityScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {}, providedOptions );
+    const options = optionize<VariabilityScreenViewOptions, SelfOptions, VSMScreenViewOptions>()( {
+
+      createLauncherNode: modelViewTransform => new LauncherNode(
+        modelViewTransform,
+        model.meanLaunchAngleProperty,
+        model.launcherHeightProperty,
+        model.launcherProperty,
+        model.fieldProperty
+      )
+    }, providedOptions );
 
     const launchPanel = new VariabilityLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, model.launcherProperty, {
       tandem: options.tandem.createTandem( 'launchPanel' )
@@ -60,16 +68,6 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
       } );
 
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
-
-    this.launcherNode = new LauncherNode(
-      this.modelViewTransform,
-      model.meanLaunchAngleProperty,
-      model.launcherHeightProperty,
-      model.launcherProperty,
-      model.fieldProperty
-    );
-
-    this.launcherLayer.addChild( this.launcherNode );
   }
 }
 projectileDataLab.register( 'VariabilityScreenView', VariabilityScreenView );
