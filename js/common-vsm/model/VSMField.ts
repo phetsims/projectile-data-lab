@@ -203,7 +203,6 @@ export default class VSMField extends Field {
   public override reset(): void {
     super.reset();
 
-    this.angleStabilizerProperty.reset();
     this.continuousLaunchTimer.reset();
   }
 

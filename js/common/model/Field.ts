@@ -235,6 +235,7 @@ export default abstract class Field extends PhetioObject {
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
 
+    this.angleStabilizerProperty.reset();
     this.launcherProperty.reset();
 
     this.clearProjectiles();
