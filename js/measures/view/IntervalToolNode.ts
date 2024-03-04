@@ -148,6 +148,7 @@ export default class IntervalToolNode extends Node {
 
     this.addChild( this.centerLineNode );
 
+    //REVIEW Utils.toFixed... duplicated in 2 places here.
     const intervalProperty = new Property( Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 ) );
     intervalTool.changedEmitter.addListener( () => {
       intervalProperty.value = Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 );
