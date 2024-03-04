@@ -122,6 +122,7 @@ export default class HistogramSonifier {
 
     this.timeRemainingInCurrentBin = this.getSoundDelayForCurrentBin();
 
+    //REVIEW duplicated twice herein
     this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingBinPhase', highlightedBin: this.sortedBins[ this.currentBinIndex ] };
   }
 
