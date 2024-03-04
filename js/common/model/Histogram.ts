@@ -144,7 +144,6 @@ export default class Histogram {
     this.selectedBinWidthProperty.reset();
     this.selectedTotalBinsProperty.reset();
   }
-
 }
 
 projectileDataLab.register( 'Histogram', Histogram );

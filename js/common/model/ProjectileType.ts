@@ -36,7 +36,7 @@ export default class ProjectileType extends PhetioObject {
     } );
   }
 
-  public static ProjectileTypeIO = new IOType( 'ProjectileTypeIO', {
+  public static ProjectileTypeIO = new IOType<ProjectileType>( 'ProjectileTypeIO', {
     valueType: ProjectileType,
     documentation: 'The type of object being launched.',
     supertype: ReferenceIO( IOType.ObjectIO ),

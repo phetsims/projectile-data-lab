@@ -104,13 +104,13 @@ export default abstract class Field extends PhetioObject {
   public readonly projectilesClearedEmitter: Emitter;
 
   // Property for the selected sample number.
-  public readonly abstract selectedSampleNumberProperty: NumberProperty;
+  protected readonly abstract selectedSampleNumberProperty: NumberProperty;
 
   // Are there any landed projectiles in the field? This is used for the data indicator on the field selector panel.
   public readonly isContainingDataProperty = new BooleanProperty( false );
 
   // Unique identifier for the Field
-  public readonly abstract identifier: string;
+  protected readonly abstract identifier: string;
 
   protected constructor(
     //
@@ -229,7 +229,7 @@ export default abstract class Field extends PhetioObject {
     } );
   }
 
-  public getTotalProjectileCount(): number {
+  protected getTotalProjectileCount(): number {
     return this.airborneProjectiles.length + this.landedProjectiles.length;
   }
 
@@ -356,14 +356,14 @@ export default abstract class Field extends PhetioObject {
     }
   }
 
-  public toStateObject(): object {
+  private toStateObject(): object {
     return {
       airborneProjectiles: this.airborneProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) ),
       landedProjectiles: this.landedProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
     };
   }
 
-  public static FieldIO = new IOType( 'FieldIO', {
+  public static FieldIO = new IOType<Field>( 'FieldIO', {
     valueType: Field,
     documentation: 'A field in the Projectile Data Lab. This contains the state for the projectiles, separated into airborne and landed projectiles.',
     defaultDeserializationMethod: 'applyState',
