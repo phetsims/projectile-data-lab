@@ -23,36 +23,43 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PDLPreferences from '../PDLPreferences.js';
 
-//REVIEW document and create 'type ZoomLevel'
-export const ZOOM_LEVELS = [ {
+// ZoomLevel describes the characteristics of how the HistogramNode and the SampleSizeThumbnailNode look at a given zoom
+// level.
+type ZoomLevel = {
+
+  // The height of the histogram, i.e., the number of blocks that can be displayed in one column
+  maxCount: number;
+
+  // The minor spacing between the grid lines, or null if there are no minor grid lines
+  minorSpacing: number | null;
+
+  // The number of grid lines to display in the thumbnail
+  numberOfThumbnailGridLines: number;
+};
+
+export const ZOOM_LEVELS: ZoomLevel[] = [ {
   maxCount: 500,
   minorSpacing: 10,
-
   numberOfThumbnailGridLines: 15
 }, {
   maxCount: 200,
   minorSpacing: 8,
-
   numberOfThumbnailGridLines: 13
 }, {
   maxCount: 100,
   minorSpacing: 5,
-
   numberOfThumbnailGridLines: 11
 }, {
   maxCount: 75,
   minorSpacing: 5,
-
   numberOfThumbnailGridLines: 9
 }, {
   maxCount: 50,
   minorSpacing: 5,
-
   numberOfThumbnailGridLines: 7
 }, {
   maxCount: 25,
   minorSpacing: null,
-
   numberOfThumbnailGridLines: 5
 } ];
 
