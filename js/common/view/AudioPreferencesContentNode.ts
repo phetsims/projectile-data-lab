@@ -1,7 +1,7 @@
 // Copyright 2024, University of Colorado Boulder
 
 /**
- * AudioPreferencesContentNode displays controls that affect the audio behavior and sonification of the simulation.
+ * AudioPreferencesContentNode displays sim-specific controls that affect the audio behavior and sonification of the simulation.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
