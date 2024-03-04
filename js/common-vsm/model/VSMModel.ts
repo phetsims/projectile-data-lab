@@ -1,5 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+//REVIEW Incomplete doc. What does this class add?
 /**
  * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models.
  *
@@ -67,6 +68,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
   public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
 
+  //REVIEW constructor should be protected
   public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
 
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {

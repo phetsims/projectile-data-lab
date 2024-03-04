@@ -1,5 +1,6 @@
 // Copyright 2024, University of Colorado Boulder
 
+//REVIEW Incomplete doc. What does this class add?
 /**
  * The SMField adds functionality common between the Fields in the Sources and Measures screens.
  *

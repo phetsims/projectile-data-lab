@@ -1,5 +1,6 @@
 // Copyright 2024, University of Colorado Boulder
 
+//REVIEW Incomplete doc. What does this class add?
 /**
  * The SMModel adds functionality common between the Models in the Sources and Measures screens.
  *
@@ -22,6 +23,7 @@ export default class SMModel<T extends SMField> extends VSMModel<T> {
 
   public readonly customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>;
 
+  //REVIEW constructor should be protected
   public constructor( fields: T[], providedOptions: SMModelOptions ) {
 
     super( fields, providedOptions );

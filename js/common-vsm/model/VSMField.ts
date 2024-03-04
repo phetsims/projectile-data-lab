@@ -1,5 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+//REVIEW Incomplete doc. What does this class add?
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models.
  *
@@ -203,6 +204,7 @@ export default class VSMField extends Field {
   public override reset(): void {
     super.reset();
 
+    this.angleStabilizerProperty.reset();
     this.continuousLaunchTimer.reset();
   }
 
