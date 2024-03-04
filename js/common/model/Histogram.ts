@@ -23,6 +23,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PDLPreferences from '../PDLPreferences.js';
 
+//REVIEW document and create 'type ZoomLevel'
 export const ZOOM_LEVELS = [ {
   maxCount: 500,
   minorSpacing: 10,

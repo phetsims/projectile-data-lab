@@ -38,6 +38,7 @@ export const playbackRateForPosition = ( x: number ): number => {
   return Utils.linear( 0, 100, 0.2, 3.5, x );
 };
 
+//REVIEW Lots of if-then-else logic and duplicated code here. Should soundClip be an attribute of ProjectileType?
 export default class ProjectileSound {
 
   public static play( projectileType: ProjectileType, x: number, isLanding: boolean ): void {

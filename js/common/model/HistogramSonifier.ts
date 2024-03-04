@@ -32,6 +32,7 @@ const MEAN_HIGHLIGHT_DURATION = 0.4;
 
 export default class HistogramSonifier {
 
+  //REVIEW document
   public readonly histogramSonifierPhaseProperty = new Property<HistogramSonifierPhase>( { phaseName: 'idlePhase' } );
 
   // The sorted data from the left to the rightmost bin

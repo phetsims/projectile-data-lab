@@ -31,6 +31,7 @@ import ProjectileType from './ProjectileType.js';
 
 export default class Projectile {
 
+  //REVIEW document - not obvious why we need to know what screen a Projectile belongs to
   public screenIdentifier: ScreenIdentifier;
 
   public fieldIdentifier: string;
