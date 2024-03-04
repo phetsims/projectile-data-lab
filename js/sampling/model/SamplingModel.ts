@@ -270,8 +270,11 @@ model.phase = ${this.phaseProperty.value}` );
    */
   public override reset(): void {
     super.reset();
+
+    // After the parent type changes the field, it sets the sampleSizeProperty and launcher associated with that field.
+    // Therefore, we must reset these last, so they will determine the field correctly.
     this.sampleSizeProperty.reset();
-    this.fieldProperty.value.reset();
+    this.launcherProperty.reset();
   }
 }
 
