@@ -175,7 +175,15 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Matthew Blackman"
   },
-  "spring.png": {
+  "spring.svg": {
+    "text": [
+      "Copyright 2002-2024 University of Colorado Boulder"
+    ],
+    "projectURL": "https://phet.colorado.edu",
+    "license": "contact phethelp@colorado.edu",
+    "notes": "created by Matthew Blackman"
+  },
+  "springIcon.svg": {
     "text": [
       "Copyright 2002-2024 University of Colorado Boulder"
     ],
@@ -207,7 +215,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Matthew Blackman"
   },
-  "explosion.png": {
+  "explosion.svg": {
     "text": [
       "Copyright 2002-2024 University of Colorado Boulder"
     ],

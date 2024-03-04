@@ -12,9 +12,9 @@ import { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/Rect
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import spring_png from '../../../images/spring_png.js';
+import springIcon_svg from '../../../images/springIcon_svg.js';
 import pressureWithNeedle_png from '../../../images/pressureWithNeedle_png.js';
-import explosion_png from '../../../images/explosion_png.js';
+import explosion_svg from '../../../images/explosion_svg.js';
 import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
@@ -52,7 +52,7 @@ export default class CustomLauncherTypeRadioButtonGroup extends PDLRectangularRa
       {
         value: SPRING,
         tandemName: 'springRadioButton',
-        createNode: () => new Image( spring_png, { scale: 0.14 } ),
+        createNode: () => new Image( springIcon_svg, { scale: 0.14 } ),
         options: {
           soundPlayer: springSound
         }
@@ -66,7 +66,7 @@ export default class CustomLauncherTypeRadioButtonGroup extends PDLRectangularRa
       }, {
         value: EXPLOSION,
         tandemName: 'explosionRadioButton',
-        createNode: () => new Image( explosion_png, { scale: -0.18 } ),
+        createNode: () => new Image( explosion_svg, { scale: 0.15 } ),
         options: {
           soundPlayer: explosionSound
         }

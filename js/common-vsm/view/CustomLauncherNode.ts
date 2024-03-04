@@ -15,10 +15,10 @@ import projectileDataLab from '../../projectileDataLab.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS, LauncherNodeOptions } from '../../common/view/LauncherNode.js';
-import spring_png from '../../../images/spring_png.js';
+import spring_svg from '../../../images/spring_svg.js';
 import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
 import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
-import explosion_png from '../../../images/explosion_png.js';
+import explosion_svg from '../../../images/explosion_svg.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
@@ -27,7 +27,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import gear_png from '../../../images/gear_png.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../model/LauncherMechanism.js';
+import LauncherMechanism, { PRESSURE, SPRING } from '../model/LauncherMechanism.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Launcher from '../../common/model/Launcher.js';
@@ -75,11 +75,11 @@ export default class CustomLauncherNode extends LauncherNode {
     } );
 
     const launcherTypeIconContainer = new Node( {
-      x: -0.7 * BARREL_LENGTH_BEFORE_ORIGIN,
+      x: -0.71 * BARREL_LENGTH_BEFORE_ORIGIN,
       y: 0,
       children: [ launcherTypeIcon, pressureNeedleNode ],
       visibleProperty: isLauncherCustomProperty,
-      scale: 0.2,
+      scale: 0.18,
       rotation: Math.PI / 2
     } );
 
@@ -154,7 +154,7 @@ export default class CustomLauncherNode extends LauncherNode {
 
     launcherMechanismProperty.link( launcherType => {
       launcherTypeIcon.image = CustomLauncherNode.getImageKeyForCustomLauncherMechanism( launcherType );
-      launcherTypeIcon.rotation = launcherType === PRESSURE ? -Math.PI / 2 : launcherType === EXPLOSION ? Math.PI / 2 : 0;
+      launcherTypeIcon.rotation = launcherType === SPRING ? 0 : -Math.PI / 2;
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
 
@@ -205,9 +205,9 @@ export default class CustomLauncherNode extends LauncherNode {
   }
 
   private static getImageKeyForCustomLauncherMechanism( customLauncherType: LauncherMechanism ): HTMLImageElement {
-    return customLauncherType === SPRING ? spring_png :
+    return customLauncherType === SPRING ? spring_svg :
            customLauncherType === PRESSURE ? pressureWithoutNeedle_png :
-           explosion_png;
+           explosion_svg;
   }
 }
 

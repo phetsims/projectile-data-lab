@@ -14,7 +14,7 @@ import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
 import { Circle, HBox, Image, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import cannonball_png from '../../../images/cannonball_png.js';
-import spring_png from '../../../images/spring_png.js';
+import springIcon_svg from '../../../images/springIcon_svg.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
@@ -64,7 +64,7 @@ const PDLScreenIconFactory = {
    */
   createSourcesScreenIcon(): ScreenIcon {
 
-    const springNode = new Image( spring_png );
+    const springNode = new Image( springIcon_svg );
 
     return new ScreenIcon( new HBox( { children: [ springNode ], yMargin: 20 } ), {
       fill: PDLColors.screenIconFillProperty
