@@ -48,7 +48,7 @@ export default class LauncherMechanism extends PhetioObject {
     } );
   }
 
-  public static LauncherMechanismIO = new IOType( 'LauncherMechanismIO', {
+  public static LauncherMechanismIO = new IOType<LauncherMechanism>( 'LauncherMechanismIO', {
     valueType: LauncherMechanism,
     documentation: 'Mechanism used to launch the projectile',
     supertype: ReferenceIO( IOType.ObjectIO ),

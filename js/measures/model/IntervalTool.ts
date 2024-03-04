@@ -128,7 +128,7 @@ export default class IntervalTool extends PhetioObject {
     }
   }
 
-  private static IntervalToolIO = new IOType( 'IntervalToolIO', {
+  private static IntervalToolIO = new IOType<IntervalTool>( 'IntervalToolIO', {
     valueType: IntervalTool,
     stateSchema: {
       edge1: NumberIO,

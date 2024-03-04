@@ -221,6 +221,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.fieldProperty.reset();
 
     this.isPathsVisibleProperty.reset();
+    this.histogram.reset();
   }
 
   public clearCurrentField(): void {
