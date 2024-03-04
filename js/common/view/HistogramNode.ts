@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * Shows the Histogram in the Projectile Data Lab simulation.
+ * HistogramNode is the base class for displaying a Histogram in the Projectile Data Lab simulation.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
@@ -66,15 +66,15 @@ export default class HistogramNode extends Node {
   protected readonly chartClipLayer: Node;
   protected readonly chartBackground: ChartRectangle;
 
-  public constructor( fieldProperty: TReadOnlyProperty<Field>,
-                      fields: Field[],
-                      horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      histogram: Histogram,
-                      histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
-                      comboBoxParent: Node,
-                      blockFillProperty: ColorProperty,
-                      blockStrokeProperty: ColorProperty,
-                      providedOptions: HistogramNodeOptions ) {
+  protected constructor( fieldProperty: TReadOnlyProperty<Field>,
+                         fields: Field[],
+                         horizontalAxisLabelText: TReadOnlyProperty<string>,
+                         histogram: Histogram,
+                         histogramSoundEnabledProperty: TReadOnlyProperty<boolean>,
+                         comboBoxParent: Node,
+                         blockFillProperty: ColorProperty,
+                         blockStrokeProperty: ColorProperty,
+                         providedOptions: HistogramNodeOptions ) {
     super();
 
     const options = optionize<HistogramNodeOptions, SelfOptions, NodeOptions>()( {
