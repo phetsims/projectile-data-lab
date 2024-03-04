@@ -32,7 +32,7 @@ export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptio
 const MIN_SPEED = 0;
 
 // The max speed is the maximum value that the tool can display.
-const MAX_SPEED = 30;
+const MAX_SPEED = 35;
 
 // The body radius is the radius of the display panel, which the is background of the heat map display.
 const BODY_RADIUS = 60;
