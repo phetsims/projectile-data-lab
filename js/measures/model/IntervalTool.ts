@@ -19,6 +19,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Property from '../../../../axon/js/Property.js';
 
+//REVIEW Vague names, constants should be uppercase, group all constants together.
 const max = 100;
 const min = 0;
 
@@ -30,6 +31,7 @@ const DEFAULT_EDGE_2 = 60;
 
 export default class IntervalTool extends PhetioObject {
 
+  //REVIEW document fields
   private _edge1: number;
   private _edge2: number;
   public readonly changedEmitter = new Emitter();
@@ -48,6 +50,7 @@ export default class IntervalTool extends PhetioObject {
     this._edge1 = DEFAULT_EDGE_1;
     this._edge2 = DEFAULT_EDGE_2;
 
+    //REVIEW Why is this not a NumberProperty?
     this.dataFractionProperty = new Property<number>( 0, {
       tandem: options.tandem.createTandem( 'dataFractionProperty' ),
       phetioFeatured: true,

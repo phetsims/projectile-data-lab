@@ -81,6 +81,7 @@ export default class VSMField extends Field {
     super( launchers, launcherProperty, PDLUtils.colorForFieldIndex( VSMFieldIdentifierValues.indexOf( identifier ) ), options );
     this.continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES, options.tandem.createTandem( 'continuousLaunchTimer' ) );
 
+    //REVIEW Why is this not a NumberProperty?
     this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
       phetioReadOnly: true,
@@ -90,6 +91,7 @@ export default class VSMField extends Field {
       phetioFeatured: true
     } );
 
+    //REVIEW Why is this not a NumberProperty?
     this.latestLaunchSpeedProperty = new Property<number>( 0, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
       phetioReadOnly: true,

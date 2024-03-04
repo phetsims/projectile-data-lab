@@ -28,6 +28,8 @@ export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isL
 
 export default class MeasuresField extends SMField {
 
+  //REVIEW For all Property<number | null>, what is the semantics of null?
+
   // This Property represents the average distance (horizontal displacement) of landed projectiles.
   public readonly meanDistanceProperty: Property<number | null>;
 

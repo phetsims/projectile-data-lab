@@ -93,6 +93,7 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       samplingLaunchModeProperty.value = launchMode;
     } );
 
+    //REVIEW Why is this not a NumberProperty?
     this.sampleSizeProperty = new Property<number>( 2, {
       validValues: SAMPLE_SIZES,
       tandem: options.tandem.createTandem( 'sampleSizeProperty' ),

@@ -93,6 +93,8 @@ export default class Histogram {
     shouldPlayMeanTone: () => boolean, // See the method declaration in PDLModel.ts
     playMeanTone: () => void,  // See the method declaration in PDLModel.ts
     providedOptions: HistogramOptions ) {
+
+    //REVIEW Why is this not a NumberProperty?
     this.selectedBinWidthProperty = new Property<number>( 1, {
       validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
@@ -101,6 +103,7 @@ export default class Histogram {
       phetioValueType: NumberIO
     } );
 
+    //REVIEW Why is this not a NumberProperty?
     this.selectedTotalBinsProperty = new Property<number>( 10, {
       validValues: [ 10, 20, 50, 100, 200 ],
       tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
