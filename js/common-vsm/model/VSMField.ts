@@ -60,9 +60,9 @@ export default class VSMField extends Field {
   public readonly numberOfLandedProjectilesProperty: NumberProperty;
   public readonly totalProjectileCountProperty: NumberProperty;
 
-  public override selectedSampleNumberProperty = new NumberProperty( 1 );
+  protected override selectedSampleNumberProperty = new NumberProperty( 1 );
 
-  public constructor( launchers: readonly Launcher[], public readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
+  public constructor( launchers: readonly Launcher[], protected readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
 
     const options = optionize<VSMFieldOptions, SelfOptions, FieldOptions>()( {
       isLauncherConfigurationPhetioInstrumented: true,
@@ -163,7 +163,7 @@ export default class VSMField extends Field {
     } );
   }
 
-  public updateProjectileCounts(): void {
+  private updateProjectileCounts(): void {
     this.numberOfLandedProjectilesProperty.value = this.landedProjectiles.length;
     this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
   }

@@ -41,7 +41,7 @@ const MEAN_DELAY_FAST = 1.5;
 const CONTINUOUS_MODE_PERIOD = 0.4;
 
 export default class SamplingField extends Field {
-  public override identifier: string;
+  protected override identifier: string;
 
   // A sample is "started" when the first projectile is launched for that sample.
   public readonly numberOfStartedSamplesProperty: NumberProperty;
@@ -257,7 +257,7 @@ export default class SamplingField extends Field {
     return samples;
   }
 
-  public createLandedProjectile( sampleNumber: number ): void {
+  private createLandedProjectile( sampleNumber: number ): void {
     const projectile = this.createProjectile( sampleNumber, false );
     projectile.setLanded();
 

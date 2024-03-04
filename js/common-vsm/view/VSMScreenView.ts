@@ -41,17 +41,17 @@ type SelfOptions = EmptySelfOptions;
 export type VSMScreenViewOptions = SelfOptions & PDLScreenViewOptions;
 
 export default abstract class VSMScreenView<T extends VSMField> extends PDLScreenView<T> {
-  protected readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;
+  private readonly fieldRadioButtonGroup: FieldRadioButtonGroup<T>;
   protected readonly accordionBox: HistogramAccordionBox;
   protected readonly fieldSignNode: FieldSignNode;
   protected readonly toolsLayer: Node = new Node();
-  protected readonly projectileSelectorNode: ProjectileSelectorNode;
-  protected readonly topRightUIContainer: VBox;
-  protected readonly measuringTapeNode: MeasuringTapeNode;
-  protected readonly stopwatchNode: StopwatchNode;
+  private readonly projectileSelectorNode: ProjectileSelectorNode;
+  private readonly topRightUIContainer: VBox;
+  private readonly measuringTapeNode: MeasuringTapeNode;
+  private readonly stopwatchNode: StopwatchNode;
 
   protected constructor( model: VSMModel<T>,
-                         public readonly launchPanel: VSMLaunchPanel,
+                         protected readonly launchPanel: VSMLaunchPanel,
                          staticToolPanel: StaticToolPanel,
                          interactiveToolPanel: InteractiveToolPanel,
                          // Closure that creates the HistogramNode. We need to access 'this' to be the combo box parent
@@ -283,7 +283,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.setVSMPDOMOrder( staticToolPanel, interactiveToolPanel );
   }
 
-  public override reset(): void {
+  protected override reset(): void {
     super.reset();
 
     this.accordionBox.reset();

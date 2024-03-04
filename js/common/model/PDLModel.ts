@@ -66,7 +66,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly isPathsVisibleProperty: BooleanProperty; //REVIEW should be Property<boolean>
 
   // Abstract Property that indicates the selected Launcher
-  public readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;
+  protected readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;
 
   /***
    * The following DynamicProperties are computed based on the current Field. Please see the documentation at the declarations
@@ -190,7 +190,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
    * When the HistogramSonifier is playing a sound, this method is called to determine whether the mean tone should be played at the end.
    * This is played only on the Measures screen.
    */
-  public shouldPlayMeanTone(): boolean {
+  protected shouldPlayMeanTone(): boolean {
     return false;
   }
 
@@ -198,7 +198,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
    * When the HistogramSonifier is playing a sound, this method is called to play the mean tone at the end. This is played only on the Measures screen.
    * This method is called only when shouldPlayMeanTone() returns true.
    */
-  public playMeanTone(): void {
+  protected playMeanTone(): void {
     //nothing to do here, see documentation above
   }
 

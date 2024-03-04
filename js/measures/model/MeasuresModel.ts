@@ -179,11 +179,11 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
     this.intervalTool.changedEmitter.addListener( updateIntervalToolDataPercentage );
   }
 
-  public override shouldPlayMeanTone(): boolean {
+  protected override shouldPlayMeanTone(): boolean {
     return this.isMeanVisibleProperty.value && this.meanDistanceProperty.value !== null;
   }
 
-  public override playMeanTone(): void {
+  protected override playMeanTone(): void {
     assert && assert( this.shouldPlayMeanTone(), 'shouldPlayMeanTone should be true before calling playMeanTone' );
     MeanTone.playMean( this.meanDistanceProperty.value! );
   }

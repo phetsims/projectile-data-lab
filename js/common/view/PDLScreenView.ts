@@ -48,7 +48,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected readonly canvasBounds: Bounds2;//REVIEW document - what canvas?
 
   //REVIEW launcherLayer is no longer needed. Now that PDLScreenView creates launcherNode, you just put launcherNode in the correct rendering order.
-  protected readonly launcherLayer = new Node();
+  private readonly launcherLayer = new Node();
   protected readonly behindProjectilesLayer = new Node();
   protected readonly projectileLayer = new Node();
 
@@ -58,7 +58,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   protected abstract readonly accordionBox: HistogramAccordionBox;
   protected abstract readonly fieldSignNode: FieldSignNode;
 
-  protected readonly bottomUIContainer: HBox;
+  private readonly bottomUIContainer: HBox;
 
   protected readonly launchButton: RectangularPushButton;
   protected readonly singleOrContinuousRadioButtonGroup: VerticalAquaRadioButtonGroup<SingleOrContinuous>;
@@ -246,7 +246,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     } );
   }
 
-  public positionFieldSignNode(): void {
+  protected positionFieldSignNode(): void {
     ManualConstraint.create( this, [ this.fieldSignNode ], fieldSignNodeProxy => {
 
       // The feet of the field sign should roughly be halfway between the dotted line and the back of the field. So this
@@ -261,7 +261,7 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
   /**
    * Resets the view.
    */
-  public reset(): void {
+  protected reset(): void {
     this.accordionBox.reset();
   }
 }

@@ -34,9 +34,9 @@ export default class Projectile {
   // PhET-iO Clients need a way to distinguish between different screens that a Projectile can be launched on, so the
   // ScreenIdentifier is tracked as an intrinsic part of the Projectile model, rather than something that must be
   // tracked extrinsically.
-  public screenIdentifier: ScreenIdentifier;
+  private screenIdentifier: ScreenIdentifier;
 
-  public fieldIdentifier: string;
+  private fieldIdentifier: string;
 
   public launcherConfiguration: LauncherConfiguration;
 
@@ -181,7 +181,7 @@ export default class Projectile {
            - 0.5 * PDLConstants.FREEFALL_ACCELERATION * timeAirborne * timeAirborne;
   }
 
-  public static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
+  private static getHorizontalRange( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
     const launchAngleRadians = Utils.toRadians( launchAngle );
@@ -191,7 +191,7 @@ export default class Projectile {
     return ( v0 * cosTheta / g ) * ( v0 * sinTheta + Math.sqrt( v0 * v0 * sinTheta * sinTheta + 2 * g * launchHeight ) );
   }
 
-  public static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
+  private static getTotalFlightTime( launchSpeed: number, launchAngle: number, launchHeight: number ): number {
     const g = PDLConstants.FREEFALL_ACCELERATION;
     const v0 = launchSpeed;
     const sinTheta = Math.sin( Utils.toRadians( launchAngle ) );
