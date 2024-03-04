@@ -1,5 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+//REVIEW Used only in Sources screen. Why is this in common-sm/?
 /**
  * This CustomLauncherSection is a panel section allows the user to customize a launcher.
  *

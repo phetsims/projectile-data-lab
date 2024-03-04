@@ -22,6 +22,8 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 type SelfOptions = {
   isIcon?: boolean;
 };
+
+//REVIEW So complicated! So much simpler: SelfOptions & NodeTranslationOptions & PickOptional<HeatMapToolNodeOptions, 'visibleProperty'>
 export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
   'displayOffset' | 'readoutPatternStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
   | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'

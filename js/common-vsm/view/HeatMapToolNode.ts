@@ -107,6 +107,9 @@ type SelfOptions = {
 export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
 export default class HeatMapToolNode extends Node {
+
+  //REVIEW Lots of fields here that could use documentation.
+
   private readonly minValue: number;
   private readonly maxValue: number;
   private readonly binWidth: number;
@@ -264,7 +267,7 @@ export default class HeatMapToolNode extends Node {
       heatNodes.push( heatNode );
 
       // Initialize the number of values in each bin to 0
-      this.numValuesInBin.push( 0 );
+      this.numValuesInBin.push( 0 ); //REVIEW This is a side effect that is not obvious. Are you sure you want to do this here? Maybe do this after calling createHeatNodes.
     }
 
     return heatNodes;

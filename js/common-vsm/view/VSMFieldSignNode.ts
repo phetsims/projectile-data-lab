@@ -1,5 +1,6 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+//REVIEW Incomplete doc. What does this class add to FieldSignNode?
 /**
  * The VSMFieldSignNode shows the field number and the number of projectiles that have landed in that field.
  *

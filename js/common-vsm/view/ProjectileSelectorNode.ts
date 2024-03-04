@@ -87,6 +87,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       landedImageIndex?: number;
     };
 
+    //REVIEW Does each instance need its own depictions, or can these be shared via 'const DEPICTIONS' outside the class definition?
     const depictions: Depiction[] = [
       { type: CANNONBALL, isFlippedHorizontally: false },
       { type: CANNONBALL, isFlippedHorizontally: true },
@@ -100,6 +101,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 2 }
     ];
 
+    //REVIEW My first thought was 'Does this need to be stateful?' If not, document why not.
     const depictionProperty = new Property<Depiction>( depictions[ 0 ] );
 
     const createNode = ( depiction: Depiction ) => {
