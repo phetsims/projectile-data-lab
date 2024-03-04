@@ -34,6 +34,7 @@ type SampleSizeThumbnailNodeOptions = SelfOptions & WithRequired<NodeOptions, 't
 
 export default class SampleSizeThumbnailNode extends Node {
 
+  //REVIEW Why are these protected? I don't see any subclasses of SampleSizeThumbnailNode. Are these unnecessary fields?
   protected readonly chartNode: Node;
   protected readonly chartTransform: ChartTransform;
   protected readonly chartClipLayer: Node;

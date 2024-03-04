@@ -25,6 +25,8 @@ type SelfOptions = EmptySelfOptions;
 type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;
 
 export default class SamplingFieldSignNode extends FieldSignNode {
+
+  //REVIEW param fields is unused. Can it be deleted?
   public constructor( fields: Field[],
                       fieldProperty: TReadOnlyProperty<Field>,
                       launcherProperty: TReadOnlyProperty<Launcher>,

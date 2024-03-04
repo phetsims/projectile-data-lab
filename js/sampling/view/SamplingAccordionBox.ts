@@ -31,6 +31,8 @@ export type VSMAccordionBoxOptions =
   SelfOptions & WithRequired<HistogramAccordionBoxOptions, 'tandem'>;
 
 export default class SamplingAccordionBox extends HistogramAccordionBox {
+
+  //REVIEW document
   public readonly bottomThumbnailNode: SampleSizeThumbnailNode;
 
   public constructor(
