@@ -213,7 +213,9 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       timeSpeeds: model.timeSpeedValues,
       buttonGroupXSpacing: 18,
       speedRadioButtonGroupOptions: {
-        maxWidth: 80
+        labelOptions: {
+          maxWidth: 75
+        }
       },
       layoutOptions: {
         topMargin: PDLConstants.TIME_CONTROL_MARGIN_TOP
