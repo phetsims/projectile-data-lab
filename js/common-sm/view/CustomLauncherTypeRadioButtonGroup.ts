@@ -30,15 +30,16 @@ type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & PDLRectangularRad
 const springSound = new SoundClip( launcherTypeSpring_mp3, { initialOutputLevel: 0.5 } );
 soundManager.addSoundGenerator( springSound, { categoryName: 'user-interface' } );
 
-const pressureSound = new SoundClip( launcherTypePressure_mp3 );
+const pressureSound = new SoundClip( launcherTypePressure_mp3, { initialOutputLevel: 0.4 } );
 soundManager.addSoundGenerator( pressureSound, { categoryName: 'user-interface' } );
 
 const explosionSound = new SoundClip( launcherTypeExplosion_mp3, {
+  initialOutputLevel: 0.3,
   additionalAudioNodes: [
     new BiquadFilterNode( phetAudioContext, {
       type: 'lowpass',
       Q: 1,
-      frequency: 100
+      frequency: 200
     } )
   ]
 } );
