@@ -5,10 +5,11 @@
  * dragged by either handle and also by the main readout (to translate). It can also be dragged via keyboard.
  *
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import { DragListener, DragListenerOptions, KeyboardDragListener, KeyboardDragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
+import { DragListener, DragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
@@ -34,6 +35,9 @@ import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -105,15 +109,49 @@ export default class IntervalToolNode extends Node {
     this.addChild( edge1Line );
     this.addChild( edge2Line );
 
-    const sphereOptions = {
-      mainColor: PDLColors.intervalToolSphereFillProperty,
-      focusable: true,
-      tagName: 'div',
-      translation: Vector2.ZERO
-    };
+    // TODO: Move these into IntervalTool - see https://github.com/phetsims/projectile-data-lab/issues/208
+    const edge1XProperty = new NumberProperty( intervalTool.edge1 );
+    const edge2XProperty = new NumberProperty( intervalTool.edge2 );
+    const centerXProperty = new NumberProperty( intervalTool.center, {
+      reentrant: true
+    } );
 
-    const edge1Sphere = new ShadedSphereNode( 20, sphereOptions );
-    const edge2Sphere = new ShadedSphereNode( 20, sphereOptions );
+
+    // TODO: Move these into IntervalTool - see https://github.com/phetsims/projectile-data-lab/issues/208
+    edge1XProperty.link( edge1 => {
+      intervalTool.edge1 = edge1;
+    } );
+
+    edge2XProperty.link( edge2X => {
+      intervalTool.edge2 = edge2X;
+    } );
+
+    centerXProperty.link( centerX => {
+      intervalTool.center = centerX;
+    } );
+
+    // This is a downstream Property (only updated in the update function) that is used for sonification only.
+    const centerXSonifiedProperty = new NumberProperty( intervalTool.center );
+
+    class DraggableShadedSphereNode extends AccessibleSlider( Node, 0 ) {
+      public constructor( options: AccessibleSliderOptions ) {
+        super( options );
+
+        this.addChild( new ShadedSphereNode( 20, {
+          mainColor: PDLColors.intervalToolSphereFillProperty,
+          translation: Vector2.ZERO
+        } ) );
+      }
+    }
+
+    const edge1Sphere = new DraggableShadedSphereNode( {
+      valueProperty: edge1XProperty,
+      enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
+    } );
+    const edge2Sphere = new DraggableShadedSphereNode( {
+      valueProperty: edge2XProperty,
+      enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
+    } );
 
     const height = 71;
     edge1Sphere.touchArea = edge1Sphere.localBounds.dilatedY( height ).shiftY( height );
@@ -189,49 +227,37 @@ export default class IntervalToolNode extends Node {
       percentReadout.touchArea = percentReadout.localBounds.dilatedXY( TEXT_PANEL_BOUNDS_DILATION, TEXT_PANEL_BOUNDS_DILATION );
     } );
 
-    const readoutVBox = new VBox( {
-      focusable: true,
-      tagName: 'div',
-      children: [ intervalReadout, percentReadout ],
-      spacing: 4
+    class ReadoutVBox extends AccessibleSlider( Node, 0 ) {
+      public constructor( options: AccessibleSliderOptions ) {
+        super( options );
+        this.addChild( new VBox( {
+          children: [ intervalReadout, percentReadout ],
+          spacing: 4
+        } ) );
+      }
+    }
+
+    // TODO: Do we want to use something like this to guard against bad values being passed in to IntervalTool set center? - see https://github.com/phetsims/projectile-data-lab/issues/208
+    // Update the range of allowed positions for the center when the edges of the interval tool are changed.
+    // const centerRangeProperty = new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) );
+    //
+    // intervalTool.changedEmitter.addListener( () => {
+    //   const width = Math.abs( intervalTool.edge2 - intervalTool.edge1 );
+    //   const min = Math.min( intervalTool.edge1, intervalTool.edge2 );
+    //   const max = Math.max( intervalTool.edge1, intervalTool.edge2 );
+    //
+    //   // The center of the interval tool must be in a location that keeps the edges within the bounds of the field
+    //   const leftEdge = Math.max( 0, min + width / 2 );
+    //   const rightEdge = Math.min( PDLConstants.MAX_FIELD_DISTANCE, max - width / 2 );
+    //
+    //   centerRangeProperty.value = new Range( leftEdge, rightEdge );
+    // } );
+
+    const readoutVBox = new ReadoutVBox( {
+      valueProperty: centerXProperty,
+      enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
     } );
     this.addChild( readoutVBox );
-
-    /**
-     * Here, we create adapters to work with the 2D DragListeners (even though we really only need the horizontal values).
-     */
-    const centerProperty = {
-      get value(): Vector2 {
-        return new Vector2( intervalTool.center, 0 );
-      },
-      set value( v: Vector2 ) {
-        intervalTool.center = v.x;
-      }
-    };
-
-    const edge1Property = {
-      get value(): Vector2 {
-        return new Vector2( intervalTool.edge1, 0 );
-      },
-      set value( v: Vector2 ) {
-        intervalTool.edge1 = v.x;
-      }
-    };
-
-    const edge2Property = {
-      get value(): Vector2 {
-        return new Vector2( intervalTool.edge2, 0 );
-      },
-      set value( v: Vector2 ) {
-        intervalTool.edge2 = v.x;
-      }
-    };
-
-    // These are a downstream Properties (only updated in the update function) that is used for sonification only. Please see the documentation
-    // in IntervalTool.ts about atomicity.
-    const edge1XProperty = new NumberProperty( intervalTool.edge1 );
-    const edge2XProperty = new NumberProperty( intervalTool.edge2 );
-    const centerXProperty = new NumberProperty( intervalTool.center );
 
     const update = () => {
       const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1 );
@@ -262,9 +288,15 @@ export default class IntervalToolNode extends Node {
       readoutVBox.top = ARROW_Y - intervalReadout.height / 2;
 
       // Update the downstream Properties which are only used for sonification.
+      // Only update the Property values once everything is fully in-sync.
+      // TODO: This update should be moved to IntervalTool model - see https://github.com/phetsims/projectile-data-lab/issues/208
       edge1XProperty.value = intervalTool.edge1;
       edge2XProperty.value = intervalTool.edge2;
       centerXProperty.value = intervalTool.center;
+
+      // Update the downstream Property which is only used for sonification.
+      // TODO: Should this update also be moved to IntervalTool model? - see https://github.com/phetsims/projectile-data-lab/issues/208
+      centerXSonifiedProperty.value = intervalTool.center;
     };
 
     intervalTool.dataFractionProperty.link( update );
@@ -286,8 +318,10 @@ export default class IntervalToolNode extends Node {
       transform: modelViewTransform
     };
 
-    const dragListenerOptions = {
-      useInputListenerCursor: true
+    const dragListenerOptions: DragListenerOptions<DragListener> = {
+      useInputListenerCursor: true,
+      dragBoundsProperty: new Property<Bounds2 | null>( new Bounds2( 0, 0, PDLConstants.MAX_FIELD_DISTANCE, 0 ) ),
+      allowTouchSnag: true
     };
 
     const translateDragListenerOptions = {
@@ -300,19 +334,34 @@ export default class IntervalToolNode extends Node {
       transform: modelViewTransform
     };
 
+    // The drag listener requires a Vector2 instead of a number, so we need to create a DynamicProperty to convert between the two
+    const createDynamicAdapterProperty = ( property: NumberProperty, isReentrant: boolean ) => {
+      return new DynamicProperty( new Property( property ), {
+        bidirectional: true,
+        map: function( value: number ) { return new Vector2( value, 0 );},
+        inverseMap: function( value: Vector2 ) { return value.x; },
+        reentrant: isReentrant
+      } );
+    };
+
     readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       applyOffset: true,
       useParentOffset: true,
-      positionProperty: centerProperty,
+      positionProperty: createDynamicAdapterProperty( centerXProperty, true ),
       tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
     }, translateDragListenerOptions, dragListenerOptions ) ) );
 
     edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: edge1Property,
+      positionProperty: createDynamicAdapterProperty( edge1XProperty, false ),
       tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
       drag: moveToFront( edge1Sphere )
     }, listenerOptions, dragListenerOptions ) ) );
 
+    edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
+      positionProperty: createDynamicAdapterProperty( edge2XProperty, false ),
+      tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
+      drag: moveToFront( edge2Sphere )
+    }, listenerOptions, dragListenerOptions ) ) );
 
     // Play a ratcheting sound as either edge is dragged. The sound is played when passing thresholds on the field,
     // but the sound played is a function of the width of the interval.
@@ -328,12 +377,12 @@ export default class IntervalToolNode extends Node {
       maxSoundPlayer: nullSoundPlayer
     } );
 
-    const createEdgeSonificationListener = ( otherEdgeProperty: { value: Vector2 } ) => {
+    const createEdgeSonificationListener = ( otherEdgeProperty: { value: number } ) => {
       return ( newValue: number, oldValue: number ) => {
 
         if ( !this.isCenterDraggingProperty.value ) {
-          const newWidth = otherEdgeProperty.value.x - newValue;
-          const oldWidth = otherEdgeProperty.value.x - oldValue;
+          const newWidth = otherEdgeProperty.value - newValue;
+          const oldWidth = otherEdgeProperty.value - oldValue;
 
           edgeValueChangeSoundPlayer.playSoundIfThresholdReached( Math.abs( newWidth ), Math.abs( oldWidth ) );
         }
@@ -348,8 +397,8 @@ export default class IntervalToolNode extends Node {
       };
     };
 
-    edge1XProperty.lazyLink( createEdgeSonificationListener( edge2Property ) );
-    edge2XProperty.lazyLink( createEdgeSonificationListener( edge1Property ) );
+    edge1XProperty.lazyLink( createEdgeSonificationListener( edge2XProperty ) );
+    edge2XProperty.lazyLink( createEdgeSonificationListener( edge1XProperty ) );
 
     // Play a sound when the interval tool is being translated, and its center crosses a threshold value.
     // The sound played is a function of the horizontal position of the center position.
@@ -365,39 +414,11 @@ export default class IntervalToolNode extends Node {
       maxSoundPlayer: nullSoundPlayer
     } );
 
-    centerXProperty.lazyLink( ( newValue: number, oldValue: number ) => {
+    centerXSonifiedProperty.lazyLink( ( newValue: number, oldValue: number ) => {
       if ( this.isCenterDraggingProperty.value ) {
         centerValueChangeSoundPlayer.playSoundIfThresholdReached( newValue, oldValue );
       }
     } );
-
-    edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: edge2Property,
-      tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
-      drag: moveToFront( edge2Sphere )
-    }, listenerOptions, dragListenerOptions ) ) );
-
-    const keyboardDragListenerOptions = {
-      dragSpeed: 300, // drag speed, in view coordinates per second
-      shiftDragSpeed: 20 // slower drag speed
-    };
-
-    readoutVBox.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
-      positionProperty: centerProperty,
-      tandem: providedOptions.tandem.createTandem( 'centerKeyboardDragListener' )
-    }, translateDragListenerOptions, keyboardDragListenerOptions ) ) );
-
-    edge1Sphere.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
-      positionProperty: edge1Property,
-      tandem: providedOptions.tandem.createTandem( 'edge1KeyboardDragListener' ),
-      drag: moveToFront( edge1Sphere )
-    }, listenerOptions, keyboardDragListenerOptions ) ) );
-
-    edge2Sphere.addInputListener( new KeyboardDragListener( combineOptions<KeyboardDragListenerOptions>( {
-      positionProperty: edge2Property,
-      tandem: providedOptions.tandem.createTandem( 'edge2KeyboardDragListener' ),
-      drag: moveToFront( edge2Sphere )
-    }, listenerOptions, keyboardDragListenerOptions ) ) );
 
     this.pdomOrder = [
       edge1Sphere,
