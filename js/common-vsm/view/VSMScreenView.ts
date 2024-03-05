@@ -159,9 +159,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     this.stopwatchNode = new PDLStopwatchNode( model.stopwatch, () => model.launchProjectile(), {
       tandem: stopwatchNodeTandem,
       dragBoundsProperty: dragBoundsProperty,
-      launchButtonEnabledProperty: new DerivedProperty( [ model.totalProjectileCountProperty ], totalProjectileCount => {
-        return totalProjectileCount < PDLQueryParameters.maxProjectilesVSMField;
-      } )
+      launchButtonEnabledProperty: launchButtonEnabledProperty
     } );
 
     const isLauncherRaisedProperty = new DerivedProperty( [ model.launcherHeightProperty ], height => height > 0 );
