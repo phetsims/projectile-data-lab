@@ -47,13 +47,16 @@ const minMaxFilter = new BiquadFilterNode( phetAudioContext, {
 } );
 
 const angleStabilizerSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  initialOutputLevel: 0.3,
   additionalAudioNodes: [ filter ]
 } );
 const angleStabilizerMinSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  initialOutputLevel: 0.3,
   additionalAudioNodes: [ minMaxFilter ],
   initialPlaybackRate: 0.8
 } );
 const angleStabilizerMaxSoundClip = new SoundClip( angleStabilizerClick_mp3, {
+  initialOutputLevel: 0.3,
   additionalAudioNodes: [ minMaxFilter ],
   initialPlaybackRate: 1.6
 } );
