@@ -63,11 +63,11 @@ soundManager.addSoundGenerator( angleStabilizerMinSoundClip, { categoryName: 'us
 soundManager.addSoundGenerator( angleStabilizerMaxSoundClip, { categoryName: 'user-interface' } );
 
 type SelfOptions = EmptySelfOptions;
-type AngleStandardDeviationNumberControlOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
+type AngleStabilizerSectionOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
 
 export default class AngleStabilizerSection extends VBox {
 
-  public constructor( angleStabilizerProperty: PhetioProperty<number>, providedOptions: AngleStandardDeviationNumberControlOptions ) {
+  public constructor( angleStabilizerProperty: PhetioProperty<number>, providedOptions: AngleStabilizerSectionOptions ) {
     const playbackRateMapper = ( value: number ) => Utils.linear( 0, 1, 1, 1.4, value );
 
     const slider = new HSlider( angleStabilizerProperty, new Range( 0, 1 ), {
@@ -115,7 +115,7 @@ export default class AngleStabilizerSection extends VBox {
     for ( let i = DISTANCE_BETWEEN_MINOR_TICKS; i < 1 - MACHINE_EPSILON; i += DISTANCE_BETWEEN_MINOR_TICKS ) {
       slider.addMinorTick( i );
     }
-    const options = optionize<AngleStandardDeviationNumberControlOptions, SelfOptions, VBoxOptions>()( {
+    const options = optionize<AngleStabilizerSectionOptions, SelfOptions, VBoxOptions>()( {
       phetioFeatured: true,
       topMargin: 4,
       visiblePropertyOptions: {
