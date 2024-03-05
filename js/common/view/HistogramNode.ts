@@ -34,8 +34,8 @@ import HistogramRepresentationIconNode from './HistogramRepresentationIconNode.j
 import BinControlNode from './BinControlNode.js';
 import TickMarkSet from '../../../../bamboo/js/TickMarkSet.js';
 import Histogram, { ZOOM_LEVELS } from '../model/Histogram.js';
-import pdlToggleButtonA_mp3 from '../../../sounds/pdlToggleButtonA_mp3.js';
-import pdlToggleButtonB_mp3 from '../../../sounds/pdlToggleButtonB_mp3.js';
+import toggleSwitchLeft_mp3 from '../../../sounds/toggleSwitchLeft_mp3.js';
+import toggleSwitchRight_mp3 from '../../../sounds/toggleSwitchRight_mp3.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import bullhornSolidShape from '../../../../sherpa/js/fontawesome-5/bullhornSolidShape.js';
@@ -50,10 +50,10 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
-const pdlToggleButtonASoundClip = new SoundClip( pdlToggleButtonA_mp3 );
-soundManager.addSoundGenerator( pdlToggleButtonASoundClip );
+const toggleSwitchLeftSoundClip = new SoundClip( toggleSwitchLeft_mp3 );
+soundManager.addSoundGenerator( toggleSwitchLeftSoundClip );
 
-const pdlToggleButtonBSoundClip = new SoundClip( pdlToggleButtonB_mp3 );
+const pdlToggleButtonBSoundClip = new SoundClip( toggleSwitchRight_mp3 );
 soundManager.addSoundGenerator( pdlToggleButtonBSoundClip );
 
 
@@ -321,7 +321,7 @@ export default class HistogramNode extends Node {
         toggleSwitchOptions: {
           maxWidth: 32,
           switchToLeftSoundPlayer: pdlToggleButtonBSoundClip,
-          switchToRightSoundPlayer: pdlToggleButtonASoundClip
+          switchToRightSoundPlayer: toggleSwitchLeftSoundClip
         },
         rightTop: this.chartNode.rightBottom.plusXY( -12, CHART_UI_MARGIN )
       } );
