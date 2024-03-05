@@ -143,7 +143,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "pdlToggleButtonA.mp3": {
+  "toggleSwitchLeft.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
@@ -151,7 +151,7 @@
     "license": "contact phethelp@colorado.edu",
     "notes": "created by Ashton Morris"
   },
-  "pdlToggleButtonB.mp3": {
+  "toggleSwitchRight.mp3": {
     "text": [
       "Copyright 2024 University of Colorado Boulder"
     ],
