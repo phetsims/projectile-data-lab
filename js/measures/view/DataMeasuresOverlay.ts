@@ -28,9 +28,9 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
-import { TReadOnlyProperty } from '../../../../axon/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
 import { HistogramSonifierPhase } from '../../common/model/HistogramSonifier.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 type SelfOptions = {
   context: 'histogram' | 'field' | 'icon';

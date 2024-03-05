@@ -16,7 +16,7 @@ import pianoLand_mp3 from '../../../sounds/pianoLand_mp3.js';
 import cannonballTone_mp3 from '../../../sounds/cannonballTone_mp3.js';
 import pumpkinTone_mp3 from '../../../sounds/pumpkinTone_mp3.js';
 import pianoTone_mp3 from '../../../sounds/pianoTone_mp3.js';
-import { dotRandom } from '../../../../dot/js/imports.js';
+import dotRandom from '../../../../dot/js/dotRandom.js';
 
 const cannonballToneSoundClip = new SoundClip( cannonballTone_mp3, { initialOutputLevel: 0.1 } );
 const pumpkinToneSoundClip = new SoundClip( pumpkinTone_mp3, { initialOutputLevel: 0.1 } );

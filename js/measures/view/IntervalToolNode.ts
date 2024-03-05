@@ -26,13 +26,14 @@ import PDLColors from '../../common/PDLColors.js';
 import Property from '../../../../axon/js/Property.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import { BooleanProperty, NumberProperty } from '../../../../axon/js/imports.js';
 import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
 import Range from '../../../../dot/js/Range.js';
 import intervalTool_wav from '../../../sounds/intervalTool_wav.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',

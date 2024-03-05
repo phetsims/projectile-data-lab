@@ -23,7 +23,7 @@ import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSo
 import TProperty from '../../../../axon/js/TProperty.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
-import { platform } from '../../../../phet-core/js/imports.js';
+import platform from '../../../../phet-core/js/platform.js';
 
 type SelfOptions = {
   playSound: ( selectedItem: number ) => void;

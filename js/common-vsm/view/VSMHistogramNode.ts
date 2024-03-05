@@ -15,7 +15,7 @@ import { ColorProperty, Node } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
-import { DerivedProperty } from '../../../../axon/js/imports.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 

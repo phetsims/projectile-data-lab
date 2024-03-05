@@ -10,10 +10,10 @@
 import Tandem from '../../../tandem/js/Tandem.js';
 import StringUnionProperty from '../../../axon/js/StringUnionProperty.js';
 import { BinStrategy, BinStrategyValues } from './BinStrategy.js';
-import { BooleanProperty } from '../../../axon/js/imports.js';
 import PDLQueryParameters from './PDLQueryParameters.js';
 import projectileDataLab from '../projectileDataLab.js';
 import { LaunchSoundStrategy, LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 
 const PDLPreferences = {
 

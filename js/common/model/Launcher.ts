@@ -22,8 +22,8 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import PDLConstants from '../PDLConstants.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Range from '../../../../dot/js/Range.js';
-import { DerivedProperty } from '../../../../axon/js/imports.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type LauncherOptions = SelfOptions & PhetioObjectOptions;

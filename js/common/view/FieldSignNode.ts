@@ -14,8 +14,8 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import SelectorNode from './SelectorNode.js';
 import Field from '../model/Field.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { EmptySelfOptions, optionize } from '../../../../phet-core/js/imports.js';
 import PDLColors from '../PDLColors.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldSignNodeOptions = SelfOptions & VBoxOptions;

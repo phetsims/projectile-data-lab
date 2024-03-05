@@ -23,9 +23,9 @@ import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import Launcher from '../../common/model/Launcher.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { Multilink } from '../../../../axon/js/imports.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import Histogram from '../../common/model/Histogram.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 export default class SamplingHistogramNode extends HistogramNode {
   public constructor( launcherProperty: TReadOnlyProperty<Launcher>,

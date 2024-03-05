@@ -14,7 +14,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
 import SMField from './SMField.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { PhetioProperty } from '../../../../axon/js/imports.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SMModelOptions = SelfOptions & VSMModelOptions<SMField>;

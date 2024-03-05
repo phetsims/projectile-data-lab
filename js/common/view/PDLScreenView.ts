@@ -34,8 +34,8 @@ import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
 import LaunchButton from './LaunchButton.js';
 import FieldSignNode from './FieldSignNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import { DerivedProperty } from '../../../../axon/js/imports.js';
 import PDLPreferences from '../PDLPreferences.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   createLauncherNode: ( modelViewTransform: ModelViewTransform2 ) => LauncherNode;

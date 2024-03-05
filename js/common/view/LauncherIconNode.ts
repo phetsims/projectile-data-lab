@@ -12,7 +12,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { NumberProperty, Property } from '../../../../axon/js/imports.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../model/LauncherConfiguration.js';
 import { MysteryOrCustom } from '../model/MysteryOrCustom.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
@@ -20,6 +19,8 @@ import LauncherMechanism, { SPRING } from '../../common-vsm/model/LauncherMechan
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PDLConstants from '../PDLConstants.js';
+import Property from '../../../../axon/js/Property.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type LauncherIconNodeOptions = SelfOptions & NodeOptions;

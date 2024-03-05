@@ -24,9 +24,9 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import { DerivedProperty } from '../../../../axon/js/imports.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];

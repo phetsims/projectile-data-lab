@@ -38,14 +38,14 @@ import pdlToggleButtonA_mp3 from '../../../sounds/pdlToggleButtonA_mp3.js';
 import pdlToggleButtonB_mp3 from '../../../sounds/pdlToggleButtonB_mp3.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import { RectangularPushButton } from '../../../../sun/js/imports.js';
 import bullhornSolidShape from '../../../../sherpa/js/fontawesome-5/bullhornSolidShape.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
 import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
-import { DerivedProperty } from '../../../../axon/js/imports.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;

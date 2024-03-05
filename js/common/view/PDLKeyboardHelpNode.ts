@@ -19,7 +19,7 @@ import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
-import { optionize } from '../../../../phet-core/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 
 type SelfOptions = {
 

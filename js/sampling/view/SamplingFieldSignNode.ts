@@ -13,12 +13,11 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { Text, VBox } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLColors from '../../common/PDLColors.js';
 import Launcher from '../../common/model/Launcher.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import SampleSelectorNode from './SampleSelectorNode.js';
-import { optionize } from '../../../../phet-core/js/imports.js';
 import Field from '../../common/model/Field.js';
 
 type SelfOptions = EmptySelfOptions;

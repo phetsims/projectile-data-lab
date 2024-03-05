@@ -16,7 +16,8 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLText from '../../common/view/PDLText.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
-import { DerivedProperty, TReadOnlyProperty } from '../../../../axon/js/imports.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 type SelfOptions = {
   launchButtonEnabledProperty: TReadOnlyProperty<boolean>;

@@ -9,7 +9,7 @@
 import Range from '../../../dot/js/Range.js';
 import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import { BooleanProperty } from '../../../axon/js/imports.js';
+import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 
 //REVIEW Constants should be uppercase.
 const maxFieldDistance = 100;
