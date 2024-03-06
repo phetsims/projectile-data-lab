@@ -13,7 +13,7 @@ import MeasuresModel from './model/MeasuresModel.js';
 import MeasuresScreenView from './view/MeasuresScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
-import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
+import MeasuresKeyboardHelpNode from './view/MeasuresKeyboardHelpNode.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +26,7 @@ export default class MeasuresScreen extends Screen<MeasuresModel, MeasuresScreen
     const options = optionize<MeasuresScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.measuresStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createMeasuresScreenIcon(),
-      createKeyboardHelpNode: () => new PDLKeyboardHelpNode()
+      createKeyboardHelpNode: () => new MeasuresKeyboardHelpNode()
     }, providedOptions );
 
     super(

@@ -31,7 +31,7 @@ type PDLKeyboardHelpNodeOptions = SelfOptions;
 
 export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
-  public constructor( providedOptions?: PDLKeyboardHelpNodeOptions ) {
+  public constructor( additionalLeftColumnContent: KeyboardHelpSection[] = [], providedOptions?: PDLKeyboardHelpNodeOptions ) {
 
     const options = optionize<PDLKeyboardHelpNodeOptions, SelfOptions, TwoColumnKeyboardHelpContentOptions>()( {
 
@@ -41,7 +41,8 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
     const leftColumn = [
       new MoveDraggableItemsKeyboardHelpSection(),
-      new KeyboardShortcutsHelpSection( options.hasSelectAFieldShortcut )
+      new KeyboardShortcutsHelpSection( options.hasSelectAFieldShortcut ),
+      ...additionalLeftColumnContent
     ];
 
     const rightColumn = [
