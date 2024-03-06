@@ -12,7 +12,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -94,22 +93,18 @@ export default class Histogram {
     playMeanTone: () => void,  // See the method declaration in PDLModel.ts
     providedOptions: HistogramOptions ) {
 
-    //REVIEW Why is this not a NumberProperty?
-    this.selectedBinWidthProperty = new Property<number>( 1, {
+    this.selectedBinWidthProperty = new NumberProperty( 1, {
       validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This Property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".',
-      phetioValueType: NumberIO
+      phetioDocumentation: 'This Property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".'
     } );
 
-    //REVIEW Why is this not a NumberProperty?
-    this.selectedTotalBinsProperty = new Property<number>( 10, {
+    this.selectedTotalBinsProperty = new NumberProperty( 10, {
       validValues: [ 10, 20, 50, 100, 200 ],
       tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This Property configures the total number of bins in the histogram. It is used when the bin strategy is "total bins".',
-      phetioValueType: NumberIO
+      phetioDocumentation: 'This Property configures the total number of bins in the histogram. It is used when the bin strategy is "total bins".'
     } );
 
     const maxZoomLevel = ZOOM_LEVELS.length - 1;

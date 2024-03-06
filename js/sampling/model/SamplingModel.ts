@@ -229,7 +229,9 @@ model.phase = ${this.phaseProperty.value}` );
       }
 
       else if ( this.singleOrContinuousProperty.value === 'continuous' ) {
-        field.isContinuousLaunchingProperty.toggle();
+
+        // Toggle the isContinuousLaunchingProperty
+        field.isContinuousLaunchingProperty.value = !field.isContinuousLaunchingProperty.value;
 
         if ( phaseProperty.value === 'idle' ) {
           assert && assert( this.selectedSampleNumberProperty.value === 1, 'selectedSampleNumberProperty should be 1 when in idle phase.' );

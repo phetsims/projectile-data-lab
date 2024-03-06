@@ -37,6 +37,7 @@ import launch_mp3 from '../../../sounds/launch_mp3.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 import { Color } from '../../../../scenery/js/imports.js';
 import PDLPreferences from '../PDLPreferences.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( launchSoundClip );
@@ -86,7 +87,7 @@ export default abstract class Field extends PhetioObject {
   public readonly launchHeightProperty: TReadOnlyProperty<number>;
 
   // True if the continuous mode is set to launching or false if not launching
-  public readonly isContinuousLaunchingProperty: BooleanProperty; //REVIEW should be Property<boolean>
+  public readonly isContinuousLaunchingProperty: Property<boolean>;
 
   // An array of projectiles that are currently in the air. Note: No projectile should be in the airborneProjectiles and landedProjectiles array simultaneously.
   public readonly airborneProjectiles: Projectile[] = [];
@@ -174,8 +175,7 @@ export default abstract class Field extends PhetioObject {
 
     const initialAngle = options.isLauncherConfigurationPhetioInstrumented ? 'angle30' : 'angle45';
 
-    //REVIEW should be StringUnionProperty<LauncherConfiguration>
-    this.launcherConfigurationProperty = new Property<LauncherConfiguration>( initialAngle, launcherConfigurationOptions );
+    this.launcherConfigurationProperty = new StringUnionProperty<LauncherConfiguration>( initialAngle, launcherConfigurationOptions );
 
     const projectileTypeOptions = options.isProjectileTypePhetioInstrumented ? {
       validValues: [ CANNONBALL, PUMPKIN, PIANO ],

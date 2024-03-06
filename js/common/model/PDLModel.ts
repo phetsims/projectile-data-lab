@@ -25,6 +25,7 @@ import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import Launcher from './Launcher.js';
 import Histogram from './Histogram.js';
 import ProjectileType from './ProjectileType.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 // See the documentation at the PDLModel class attributes for more information on these options.
 type SelfOptions<T extends Field> = {
@@ -63,7 +64,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly singleOrContinuousProperty: Property<SingleOrContinuous>;
 
   // Setting for whether the user wants to see the paths of the projectiles
-  public readonly isPathsVisibleProperty: BooleanProperty; //REVIEW should be Property<boolean>
+  public readonly isPathsVisibleProperty: Property<boolean>;
 
   // Abstract Property that indicates the selected Launcher
   protected readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;
@@ -116,13 +117,11 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
     this.histogram = new Histogram( () => this.shouldPlayMeanTone(), () => this.playMeanTone(), { tandem: providedOptions.tandem.createTandem( 'histogram' ) } );
 
-    //REVIEW should be StringUnionProperty<SingleOrContinuous>
-    this.singleOrContinuousProperty = new Property<SingleOrContinuous>( 'single', {
+    this.singleOrContinuousProperty = new StringUnionProperty<SingleOrContinuous>( 'single', {
       validValues: SingleOrContinuousValues,
       tandem: providedOptions.tandem.createTandem( 'singleOrContinuousProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This Property indicates whether the launcher is in single or continuous launch mode.',
-      phetioValueType: StringUnionIO( SingleOrContinuousValues )
+      phetioDocumentation: 'This Property indicates whether the launcher is in single or continuous launch mode.'
     } );
 
     this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
