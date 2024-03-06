@@ -31,6 +31,8 @@ import stopwatchTick_mp3 from '../../../sounds/stopwatchTick_mp3.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 const tickSound = new SoundClip( stopwatchTick_mp3, { initialOutputLevel: 1 } );
 soundManager.addSoundGenerator( tickSound );
@@ -56,19 +58,25 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly measuringTapeBasePositionProperty;
   public readonly measuringTapeTipPositionProperty;
 
-  public readonly latestLaunchAngleProperty: DynamicProperty<number, number, T>;
-  public readonly latestLaunchSpeedProperty: DynamicProperty<number, number, T>;
+  ////////////////////////////////////////////////////////////////////////////////////////
+  // These DynamicProperties select based on the selected VSMField
+
+  public readonly latestLaunchAngleProperty: TReadOnlyProperty<number>;
+  public readonly latestLaunchSpeedProperty: TReadOnlyProperty<number>;
 
   // The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.
-  public readonly angleStabilizerProperty: DynamicProperty<number, number, T>;
-  public readonly standardDeviationAngleProperty: DynamicProperty<number, number, T>;
+  public readonly angleStabilizerProperty: PhetioProperty<number>;
+  public readonly standardDeviationAngleProperty: TReadOnlyProperty<number>;
 
-  public readonly selectedProjectileNumberProperty: DynamicProperty<number, number, T>;
-  public readonly selectedProjectileProperty: DynamicProperty<Projectile | null, Projectile | null, T>;
-  public readonly numberOfLandedProjectilesProperty: DynamicProperty<number, number, T>;
-  public readonly totalProjectileCountProperty: DynamicProperty<number, number, T>;
+  public readonly selectedProjectileNumberProperty: PhetioProperty<number>;
+  public readonly selectedProjectileProperty: TReadOnlyProperty<Projectile | null>;
+  public readonly numberOfLandedProjectilesProperty: TReadOnlyProperty<number>;
+  public readonly totalProjectileCountProperty: TReadOnlyProperty<number>;
 
-  public readonly launcherProperty: DynamicProperty<Launcher, Launcher, T>;
+  public readonly launcherProperty: PhetioProperty<Launcher>;
+
+  // End of DynamicProperties
+  ////////////////////////////////////////////////////////////////////////////////////////
 
   //REVIEW constructor should be protected
   public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {

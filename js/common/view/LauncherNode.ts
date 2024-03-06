@@ -77,7 +77,7 @@ export default class LauncherNode extends Node {
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
                       private readonly meanLaunchAngleProperty: TProperty<number>,
                       launcherHeightProperty: TProperty<number>,
-                      mysteryLauncher: TProperty<Launcher>,
+                      mysteryLauncher: TReadOnlyProperty<Launcher>,
                       fieldProperty: TReadOnlyProperty<Field> | null,
                       providedOptions?: LauncherNodeOptions ) {
 

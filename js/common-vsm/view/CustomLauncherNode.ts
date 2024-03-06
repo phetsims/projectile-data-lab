@@ -54,8 +54,8 @@ export default class CustomLauncherNode extends LauncherNode {
                       mysteryOrCustomProperty: TProperty<MysteryOrCustom>,
                       mysteryLauncherProperty: TProperty<Launcher>,
                       launcherMechanismProperty: TProperty<LauncherMechanism>,
-                      standardDeviationAngleProperty: TProperty<number>,
-                      latestLaunchSpeedProperty: TProperty<number>,
+                      standardDeviationAngleProperty: TReadOnlyProperty<number>,
+                      latestLaunchSpeedProperty: TReadOnlyProperty<number>,
                       fieldProperty: TReadOnlyProperty<Field> | null,
                       providedOptions?: CustomLauncherNodeOptions ) {
 
