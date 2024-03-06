@@ -7,6 +7,7 @@
  * numerous problems and was difficult to maintain.
  *
  * @author Sam Reid (PhET Interactive Simulations)
+ * @author Matt Blackman (PhET Interactive Simulations)
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
@@ -21,10 +22,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import Range from '../../../../dot/js/Range.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 
-//REVIEW Vague names, constants should be uppercase, group all constants together.
-const max = 100;
-const min = 0;
-
 type SelfOptions = EmptySelfOptions;
 type IntervalToolOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
@@ -34,8 +31,8 @@ const DEFAULT_EDGE_2 = 60;
 export default class IntervalTool extends PhetioObject {
 
   // Edge 1 and edge 2 are the positions of the left and right edges of the interval tool, in no particular order.
-  private _edge1: number;
-  private _edge2: number;
+  private _edge1 = DEFAULT_EDGE_1;
+  private _edge2 = DEFAULT_EDGE_2;
 
   // Emits when the interval tool changes
   public readonly changedEmitter = new Emitter();
@@ -45,12 +42,13 @@ export default class IntervalTool extends PhetioObject {
 
   // The x-position of the edges of the interval tool. These are maintained internally for atomicity, but we allow
   // them to be set via the Property interface.
-  public readonly edge1XProperty: Property<number>;
-  public readonly edge2XProperty: Property<number>;
+  public readonly edge1Property: Property<number>;
+  public readonly edge2Property: Property<number>;
 
-  // This value may go out of the bounds of the field while dragging. This is preferable to updating and maintaining
-  // an allowed range that changes based on the width of the tool.
-  public readonly centerXProperty: Property<number>;
+  // This Property can be used to read and write the center of the interval tool. It is necessary for wiring up to the
+  // DragListener that translates the entire IntervalTool. This value may go out of the bounds of the field while dragging.
+  // This is preferable to updating and maintaining an allowed range that changes based on the width of the tool.
+  public readonly centerProperty: Property<number>;
 
   public constructor( providedOptions: IntervalToolOptions ) {
 
@@ -61,39 +59,38 @@ export default class IntervalTool extends PhetioObject {
     }, providedOptions );
 
     super( options );
-    this._edge1 = DEFAULT_EDGE_1;
-    this._edge2 = DEFAULT_EDGE_2;
 
-    this.edge1XProperty = new NumberProperty( this._edge1, {
+    this.edge1Property = new NumberProperty( this._edge1, {
       range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
-      tandem: providedOptions.tandem.createTandem( 'edge1XProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'edge1Property' ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       }
     } );
 
-    this.edge2XProperty = new NumberProperty( this._edge2, {
+    this.edge2Property = new NumberProperty( this._edge2, {
       range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
-      tandem: providedOptions.tandem.createTandem( 'edge2XProperty' ),
+      tandem: providedOptions.tandem.createTandem( 'edge2Property' ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       }
     } );
 
-    this.centerXProperty = new NumberProperty( this.center, {
+    // This one is not PhET-iO instrumented, to avoid bounds and circularity issues. Clients should use edge1Property and edge2Property.
+    this.centerProperty = new NumberProperty( this.center, {
       reentrant: true
     } );
 
-    this.edge1XProperty.link( edge1 => {
+    this.edge1Property.link( edge1 => {
       this.edge1 = edge1;
     } );
 
-    this.edge2XProperty.link( edge2X => {
-      this.edge2 = edge2X;
+    this.edge2Property.link( edge2 => {
+      this.edge2 = edge2;
     } );
 
-    this.centerXProperty.link( centerX => {
-      this.center = centerX;
+    this.centerProperty.link( center => {
+      this.center = center;
     } );
 
     this.dataFractionProperty = new NumberProperty( 0, {
@@ -114,7 +111,7 @@ export default class IntervalTool extends PhetioObject {
   }
 
   public set edge1( value: number ) {
-    const clamped = Utils.clamp( value, min, max );
+    const clamped = Utils.clamp( value, 0, PDLConstants.MAX_FIELD_DISTANCE );
     if ( clamped !== this.edge1 ) {
       this._edge1 = clamped;
       this.notifyChanged();
@@ -126,7 +123,7 @@ export default class IntervalTool extends PhetioObject {
   }
 
   public set edge2( value: number ) {
-    const clamped = Utils.clamp( value, min, max );
+    const clamped = Utils.clamp( value, 0, PDLConstants.MAX_FIELD_DISTANCE );
     if ( clamped !== this._edge2 ) {
       this._edge2 = clamped;
       this.notifyChanged();
@@ -147,6 +144,9 @@ export default class IntervalTool extends PhetioObject {
       const separation = this._edge2 - this._edge1;
       this._edge1 += delta;
       this._edge2 += delta;
+
+      const min = 0;
+      const max = PDLConstants.MAX_FIELD_DISTANCE;
 
       if ( this.edge1 > max ) {
         this._edge1 = max;
@@ -177,9 +177,9 @@ export default class IntervalTool extends PhetioObject {
 
     // Update the downstream Properties which are only used for sonification.
     // Only update the Property values once everything is fully in-sync.
-    this.edge1XProperty.value = this._edge1;
-    this.edge2XProperty.value = this._edge2;
-    this.centerXProperty.value = this.center;
+    this.edge1Property.value = this._edge1;
+    this.edge2Property.value = this._edge2;
+    this.centerProperty.value = this.center;
 
     this.changedEmitter.emit();
   }

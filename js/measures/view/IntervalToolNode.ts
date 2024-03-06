@@ -125,11 +125,11 @@ export default class IntervalToolNode extends Node {
     }
 
     const edge1Sphere = new DraggableShadedSphereNode( {
-      valueProperty: intervalTool.edge1XProperty,
+      valueProperty: intervalTool.edge1Property,
       enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
     } );
     const edge2Sphere = new DraggableShadedSphereNode( {
-      valueProperty: intervalTool.edge2XProperty,
+      valueProperty: intervalTool.edge2Property,
       enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
     } );
 
@@ -218,7 +218,7 @@ export default class IntervalToolNode extends Node {
     }
 
     const readoutVBox = new ReadoutVBox( {
-      valueProperty: intervalTool.centerXProperty,
+      valueProperty: intervalTool.centerProperty,
       enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
     } );
     this.addChild( readoutVBox );
@@ -303,18 +303,18 @@ export default class IntervalToolNode extends Node {
     readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       applyOffset: true,
       useParentOffset: true,
-      positionProperty: createDynamicAdapterProperty( intervalTool.centerXProperty, true ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.centerProperty, true ),
       tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
     }, translateDragListenerOptions, dragListenerOptions ) ) );
 
     edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: createDynamicAdapterProperty( intervalTool.edge1XProperty, false ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.edge1Property, false ),
       tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
       drag: moveToFront( edge1Sphere )
     }, listenerOptions, dragListenerOptions ) ) );
 
     edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: createDynamicAdapterProperty( intervalTool.edge2XProperty, false ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.edge2Property, false ),
       tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
       drag: moveToFront( edge2Sphere )
     }, listenerOptions, dragListenerOptions ) ) );
@@ -353,8 +353,8 @@ export default class IntervalToolNode extends Node {
       };
     };
 
-    intervalTool.edge1XProperty.lazyLink( createEdgeSonificationListener( intervalTool.edge2XProperty ) );
-    intervalTool.edge2XProperty.lazyLink( createEdgeSonificationListener( intervalTool.edge1XProperty ) );
+    intervalTool.edge1Property.lazyLink( createEdgeSonificationListener( intervalTool.edge2Property ) );
+    intervalTool.edge2Property.lazyLink( createEdgeSonificationListener( intervalTool.edge1Property ) );
 
     // Play a sound when the interval tool is being translated, and its center crosses a threshold value.
     // The sound played is a function of the horizontal position of the center position.
