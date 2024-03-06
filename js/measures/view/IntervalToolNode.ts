@@ -109,28 +109,8 @@ export default class IntervalToolNode extends Node {
     this.addChild( edge1Line );
     this.addChild( edge2Line );
 
-    // TODO: Move these into IntervalTool - see https://github.com/phetsims/projectile-data-lab/issues/208
-    const edge1XProperty = new NumberProperty( intervalTool.edge1 );
-    const edge2XProperty = new NumberProperty( intervalTool.edge2 );
-    const centerXProperty = new NumberProperty( intervalTool.center, {
-      reentrant: true
-    } );
-
-
-    // TODO: Move these into IntervalTool - see https://github.com/phetsims/projectile-data-lab/issues/208
-    edge1XProperty.link( edge1 => {
-      intervalTool.edge1 = edge1;
-    } );
-
-    edge2XProperty.link( edge2X => {
-      intervalTool.edge2 = edge2X;
-    } );
-
-    centerXProperty.link( centerX => {
-      intervalTool.center = centerX;
-    } );
-
     // This is a downstream Property (only updated in the update function) that is used for sonification only.
+    // IntervalTool.centerXProperty may go out of range, so we use this Property to clamp the value.
     const centerXSonifiedProperty = new NumberProperty( intervalTool.center );
 
     class DraggableShadedSphereNode extends AccessibleSlider( Node, 0 ) {
@@ -145,11 +125,11 @@ export default class IntervalToolNode extends Node {
     }
 
     const edge1Sphere = new DraggableShadedSphereNode( {
-      valueProperty: edge1XProperty,
+      valueProperty: intervalTool.edge1XProperty,
       enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
     } );
     const edge2Sphere = new DraggableShadedSphereNode( {
-      valueProperty: edge2XProperty,
+      valueProperty: intervalTool.edge2XProperty,
       enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
     } );
 
@@ -237,24 +217,8 @@ export default class IntervalToolNode extends Node {
       }
     }
 
-    // TODO: Do we want to use something like this to guard against bad values being passed in to IntervalTool set center? - see https://github.com/phetsims/projectile-data-lab/issues/208
-    // Update the range of allowed positions for the center when the edges of the interval tool are changed.
-    // const centerRangeProperty = new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) );
-    //
-    // intervalTool.changedEmitter.addListener( () => {
-    //   const width = Math.abs( intervalTool.edge2 - intervalTool.edge1 );
-    //   const min = Math.min( intervalTool.edge1, intervalTool.edge2 );
-    //   const max = Math.max( intervalTool.edge1, intervalTool.edge2 );
-    //
-    //   // The center of the interval tool must be in a location that keeps the edges within the bounds of the field
-    //   const leftEdge = Math.max( 0, min + width / 2 );
-    //   const rightEdge = Math.min( PDLConstants.MAX_FIELD_DISTANCE, max - width / 2 );
-    //
-    //   centerRangeProperty.value = new Range( leftEdge, rightEdge );
-    // } );
-
     const readoutVBox = new ReadoutVBox( {
-      valueProperty: centerXProperty,
+      valueProperty: intervalTool.centerXProperty,
       enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
     } );
     this.addChild( readoutVBox );
@@ -287,15 +251,7 @@ export default class IntervalToolNode extends Node {
       readoutVBox.centerX = ( viewEdge1X + viewEdge2X ) / 2;
       readoutVBox.top = ARROW_Y - intervalReadout.height / 2;
 
-      // Update the downstream Properties which are only used for sonification.
-      // Only update the Property values once everything is fully in-sync.
-      // TODO: This update should be moved to IntervalTool model - see https://github.com/phetsims/projectile-data-lab/issues/208
-      edge1XProperty.value = intervalTool.edge1;
-      edge2XProperty.value = intervalTool.edge2;
-      centerXProperty.value = intervalTool.center;
-
       // Update the downstream Property which is only used for sonification.
-      // TODO: Should this update also be moved to IntervalTool model? - see https://github.com/phetsims/projectile-data-lab/issues/208
       centerXSonifiedProperty.value = intervalTool.center;
     };
 
@@ -335,7 +291,7 @@ export default class IntervalToolNode extends Node {
     };
 
     // The drag listener requires a Vector2 instead of a number, so we need to create a DynamicProperty to convert between the two
-    const createDynamicAdapterProperty = ( property: NumberProperty, isReentrant: boolean ) => {
+    const createDynamicAdapterProperty = ( property: Property<number>, isReentrant: boolean ) => {
       return new DynamicProperty( new Property( property ), {
         bidirectional: true,
         map: function( value: number ) { return new Vector2( value, 0 );},
@@ -347,18 +303,18 @@ export default class IntervalToolNode extends Node {
     readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       applyOffset: true,
       useParentOffset: true,
-      positionProperty: createDynamicAdapterProperty( centerXProperty, true ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.centerXProperty, true ),
       tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
     }, translateDragListenerOptions, dragListenerOptions ) ) );
 
     edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: createDynamicAdapterProperty( edge1XProperty, false ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.edge1XProperty, false ),
       tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
       drag: moveToFront( edge1Sphere )
     }, listenerOptions, dragListenerOptions ) ) );
 
     edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: createDynamicAdapterProperty( edge2XProperty, false ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.edge2XProperty, false ),
       tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
       drag: moveToFront( edge2Sphere )
     }, listenerOptions, dragListenerOptions ) ) );
@@ -397,8 +353,8 @@ export default class IntervalToolNode extends Node {
       };
     };
 
-    edge1XProperty.lazyLink( createEdgeSonificationListener( edge2XProperty ) );
-    edge2XProperty.lazyLink( createEdgeSonificationListener( edge1XProperty ) );
+    intervalTool.edge1XProperty.lazyLink( createEdgeSonificationListener( intervalTool.edge2XProperty ) );
+    intervalTool.edge2XProperty.lazyLink( createEdgeSonificationListener( intervalTool.edge1XProperty ) );
 
     // Play a sound when the interval tool is being translated, and its center crosses a threshold value.
     // The sound played is a function of the horizontal position of the center position.

@@ -18,6 +18,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Property from '../../../../axon/js/Property.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 //REVIEW Vague names, constants should be uppercase, group all constants together.
 const max = 100;
@@ -31,11 +32,24 @@ const DEFAULT_EDGE_2 = 60;
 
 export default class IntervalTool extends PhetioObject {
 
-  //REVIEW document fields
+  // Edge 1 and edge 2 are the positions of the left and right edges of the interval tool, in no particular order.
   private _edge1: number;
   private _edge2: number;
+
+  // Emits when the interval tool changes
   public readonly changedEmitter = new Emitter();
+
+  // The fraction of data within the interval tool
   public readonly dataFractionProperty: Property<number>;
+
+  // The x-position of the edges of the interval tool. These are maintained internally for atomicity, but we allow
+  // them to be set via the Property interface.
+  public readonly edge1XProperty: Property<number>;
+  public readonly edge2XProperty: Property<number>;
+
+  // This value may go out of the bounds of the field while dragging. This is preferable to updating and maintaining
+  // an allowed range that changes based on the width of the tool.
+  public readonly centerXProperty: Property<number>;
 
   public constructor( providedOptions: IntervalToolOptions ) {
 
@@ -50,12 +64,27 @@ export default class IntervalTool extends PhetioObject {
     this._edge1 = DEFAULT_EDGE_1;
     this._edge2 = DEFAULT_EDGE_2;
 
-    //REVIEW Why is this not a NumberProperty?
-    this.dataFractionProperty = new Property<number>( 0, {
+    // TODO: Can these be PhET-IO instrumented? - see https://github.com/phetsims/projectile-data-lab/issues/208
+    this.edge1XProperty = new NumberProperty( this._edge1 );
+    this.edge2XProperty = new NumberProperty( this._edge2 );
+    this.centerXProperty = new NumberProperty( this.center, { reentrant: true } );
+
+    this.edge1XProperty.link( edge1 => {
+      this.edge1 = edge1;
+    } );
+
+    this.edge2XProperty.link( edge2X => {
+      this.edge2 = edge2X;
+    } );
+
+    this.centerXProperty.link( centerX => {
+      this.center = centerX;
+    } );
+
+    this.dataFractionProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'dataFractionProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'The fraction of data within the interval tool',
-      phetioValueType: NumberIO,
       phetioReadOnly: true
     } );
 
@@ -66,14 +95,14 @@ export default class IntervalTool extends PhetioObject {
     this._edge1 = DEFAULT_EDGE_1;
     this._edge2 = DEFAULT_EDGE_2;
 
-    this.changedEmitter.emit();
+    this.notifyChanged();
   }
 
   public set edge1( value: number ) {
     const clamped = Utils.clamp( value, min, max );
     if ( clamped !== this.edge1 ) {
       this._edge1 = clamped;
-      this.changedEmitter.emit();
+      this.notifyChanged();
     }
   }
 
@@ -85,7 +114,7 @@ export default class IntervalTool extends PhetioObject {
     const clamped = Utils.clamp( value, min, max );
     if ( clamped !== this._edge2 ) {
       this._edge2 = clamped;
-      this.changedEmitter.emit();
+      this.notifyChanged();
     }
   }
 
@@ -124,8 +153,20 @@ export default class IntervalTool extends PhetioObject {
         this._edge1 = min - separation;
       }
 
-      this.changedEmitter.emit();
+      this.notifyChanged();
     }
+  }
+
+  // When the edges or center of the interval tool change, notify the listeners
+  private notifyChanged(): void {
+
+    // Update the downstream Properties which are only used for sonification.
+    // Only update the Property values once everything is fully in-sync.
+    this.edge1XProperty.value = this._edge1;
+    this.edge2XProperty.value = this._edge2;
+    this.centerXProperty.value = this.center;
+
+    this.changedEmitter.emit();
   }
 
   private static IntervalToolIO = new IOType<IntervalTool>( 'IntervalToolIO', {
