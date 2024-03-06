@@ -15,10 +15,11 @@ import Utils from '../../../../dot/js/Utils.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import Range from '../../../../dot/js/Range.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 //REVIEW Vague names, constants should be uppercase, group all constants together.
 const max = 100;
@@ -54,20 +55,34 @@ export default class IntervalTool extends PhetioObject {
   public constructor( providedOptions: IntervalToolOptions ) {
 
     const options = optionize<IntervalToolOptions, SelfOptions, PhetioObjectOptions>()( {
-      phetioType: IntervalTool.IntervalToolIO,
-      phetioDocumentation: 'The interval tool indicates the percent of data within a selected horizontal range. To find ' +
-                           'the position of each edge, please query the state of this PhET-iO Element.',
-      phetioFeatured: true
+      phetioDocumentation: 'The interval tool indicates the percent of data within a selected horizontal range.',
+      phetioFeatured: true,
+      phetioState: false
     }, providedOptions );
 
     super( options );
     this._edge1 = DEFAULT_EDGE_1;
     this._edge2 = DEFAULT_EDGE_2;
 
-    // TODO: Can these be PhET-IO instrumented? - see https://github.com/phetsims/projectile-data-lab/issues/208
-    this.edge1XProperty = new NumberProperty( this._edge1 );
-    this.edge2XProperty = new NumberProperty( this._edge2 );
-    this.centerXProperty = new NumberProperty( this.center, { reentrant: true } );
+    this.edge1XProperty = new NumberProperty( this._edge1, {
+      range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
+      tandem: providedOptions.tandem.createTandem( 'edge1XProperty' ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      }
+    } );
+
+    this.edge2XProperty = new NumberProperty( this._edge2, {
+      range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
+      tandem: providedOptions.tandem.createTandem( 'edge2XProperty' ),
+      rangePropertyOptions: {
+        tandem: Tandem.OPT_OUT
+      }
+    } );
+
+    this.centerXProperty = new NumberProperty( this.center, {
+      reentrant: true
+    } );
 
     this.edge1XProperty.link( edge1 => {
       this.edge1 = edge1;
@@ -168,22 +183,6 @@ export default class IntervalTool extends PhetioObject {
 
     this.changedEmitter.emit();
   }
-
-  private static IntervalToolIO = new IOType<IntervalTool>( 'IntervalToolIO', {
-    valueType: IntervalTool,
-    stateSchema: {
-      edge1: NumberIO,
-      edge2: NumberIO
-    },
-    applyState: ( intervalTool: IntervalTool, stateObject: IntervalToolStateObject ) => {
-      intervalTool.edge1 = stateObject.edge1;
-      intervalTool.edge2 = stateObject.edge2;
-    }
-  } );
 }
 
-type IntervalToolStateObject = {
-  edge1: number;
-  edge2: number;
-};
 projectileDataLab.register( 'IntervalTool', IntervalTool );
