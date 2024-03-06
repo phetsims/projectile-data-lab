@@ -26,10 +26,10 @@ const sampleSize5SoundClip = new SoundClip( sampleSize5_mp3, { initialOutputLeve
 const sampleSize15SoundClip = new SoundClip( sampleSize15_mp3, { initialOutputLevel: 0.2 } );
 const sampleSize40SoundClip = new SoundClip( sampleSize40_mp3, { initialOutputLevel: 0.2 } );
 
-soundManager.addSoundGenerator( sampleSize2SoundClip );
-soundManager.addSoundGenerator( sampleSize5SoundClip );
-soundManager.addSoundGenerator( sampleSize15SoundClip );
-soundManager.addSoundGenerator( sampleSize40SoundClip );
+soundManager.addSoundGenerator( sampleSize2SoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( sampleSize5SoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( sampleSize15SoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( sampleSize40SoundClip, { categoryName: 'user-interface' } );
 
 type SelfOptions = EmptySelfOptions;
 type SampleSizeSectionOptions = SelfOptions & PDLPanelSectionOptions;

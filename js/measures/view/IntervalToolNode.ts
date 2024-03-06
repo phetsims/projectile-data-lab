@@ -68,10 +68,10 @@ const maxSoundClip = new SoundClip( intervalTool_wav, {
   initialOutputLevel: 0.3
 } );
 
-soundManager.addSoundGenerator( edgeSoundClip, { categoryName: 'user-interface' } );
-soundManager.addSoundGenerator( centerSoundClip, { categoryName: 'user-interface' } );
-soundManager.addSoundGenerator( minSoundClip, { categoryName: 'user-interface' } );
-soundManager.addSoundGenerator( maxSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( edgeSoundClip );
+soundManager.addSoundGenerator( centerSoundClip );
+soundManager.addSoundGenerator( minSoundClip );
+soundManager.addSoundGenerator( maxSoundClip );
 
 type SelfOptions = {
   isIcon: boolean;

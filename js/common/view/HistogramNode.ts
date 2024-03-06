@@ -51,10 +51,10 @@ type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 const toggleSwitchLeftSoundClip = new SoundClip( toggleSwitchLeft_mp3 );
-soundManager.addSoundGenerator( toggleSwitchLeftSoundClip );
+soundManager.addSoundGenerator( toggleSwitchLeftSoundClip, { categoryName: 'user-interface' } );
 
-const pdlToggleButtonBSoundClip = new SoundClip( toggleSwitchRight_mp3 );
-soundManager.addSoundGenerator( pdlToggleButtonBSoundClip );
+const toggleSwitchRightSoundClip = new SoundClip( toggleSwitchRight_mp3 );
+soundManager.addSoundGenerator( toggleSwitchRightSoundClip, { categoryName: 'user-interface' } );
 
 
 const CHART_UI_MARGIN = 10;
@@ -320,8 +320,8 @@ export default class HistogramNode extends Node {
         spacing: 8,
         toggleSwitchOptions: {
           maxWidth: 32,
-          switchToLeftSoundPlayer: pdlToggleButtonBSoundClip,
-          switchToRightSoundPlayer: toggleSwitchLeftSoundClip
+          switchToLeftSoundPlayer: toggleSwitchLeftSoundClip,
+          switchToRightSoundPlayer: toggleSwitchRightSoundClip
         },
         rightTop: this.chartNode.rightBottom.plusXY( -12, CHART_UI_MARGIN )
       } );

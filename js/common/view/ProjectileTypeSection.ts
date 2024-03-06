@@ -28,9 +28,9 @@ const cannonballSoundClip = new SoundClip( projectileTypeCannonball_mp3, { initi
 const pumpkinSoundClip = new SoundClip( projectileTypePumpkin_mp3, { initialOutputLevel: 0.2 } );
 const pianoSoundClip = new SoundClip( projectileTypePiano_mp3, { initialOutputLevel: 0.2 } );
 
-soundManager.addSoundGenerator( cannonballSoundClip );
-soundManager.addSoundGenerator( pumpkinSoundClip );
-soundManager.addSoundGenerator( pianoSoundClip );
+soundManager.addSoundGenerator( cannonballSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( pumpkinSoundClip, { categoryName: 'user-interface' } );
+soundManager.addSoundGenerator( pianoSoundClip, { categoryName: 'user-interface' } );
 
 type SelfOptions = EmptySelfOptions;
 type ProjectileTypeSectionOptions = SelfOptions & PDLPanelSectionOptions;
