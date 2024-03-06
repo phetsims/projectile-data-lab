@@ -13,22 +13,19 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { Path, Node } from '../../../../scenery/js/imports.js';
+import { Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLColors from '../../common/PDLColors.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 type SelfOptions = {
   isIcon?: boolean;
 };
 
-export type AngleToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'readoutPatternStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
-  | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
-  | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'majorTickMarkLength' | 'valueReadoutY'>;
+export type AngleToolNodeOptions = SelfOptions & NodeTranslationOptions & PickOptional<HeatMapToolNodeOptions, 'visibleProperty'>;
 
 // This is the inner radius of the tool body and heat nodes.
 const INNER_BODY_RADIUS = 58;

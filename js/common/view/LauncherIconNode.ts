@@ -13,7 +13,7 @@ import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../model/LauncherConfiguration.js';
-import { MysteryOrCustom } from '../model/MysteryOrCustom.js';
+import { MysteryOrCustom, MysteryOrCustomValues } from '../model/MysteryOrCustom.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import LauncherMechanism, { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
@@ -21,6 +21,7 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import PDLConstants from '../PDLConstants.js';
 import Property from '../../../../axon/js/Property.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type LauncherIconNodeOptions = SelfOptions & NodeOptions;
@@ -31,7 +32,9 @@ export default class LauncherIconNode extends Node {
   private launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
   private launchAngleProperty = new NumberProperty( 30 );
   private launchHeightProperty = new NumberProperty( 0 );
-  private mysteryOrCustomProperty = new Property<MysteryOrCustom>( 'mystery' ); //REVIEW should be StringUnionProperty<MysteryOrCustom>
+  private mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
+    validValues: MysteryOrCustomValues
+  } );
   private mysteryLauncherProperty = new Property( MYSTERY_LAUNCHERS[ 0 ] );
   private launcherMechanismProperty = new Property<LauncherMechanism>( SPRING );
   private standardDeviationAngleProperty = new Property( 0 );

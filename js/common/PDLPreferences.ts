@@ -30,7 +30,7 @@ const PDLPreferences = {
   } ),
 
   // phet-types.d.ts does not support inferring string union types for string query parameters, so we need to cast
-  binStrategyProperty: new StringUnionProperty<BinStrategy>( PDLQueryParameters.binStrategy as BinStrategy, {
+  binStrategyProperty: new StringUnionProperty( PDLQueryParameters.binStrategy as BinStrategy, {
     validValues: BinStrategyValues,
     tandem: Tandem.PREFERENCES.createTandem( 'binStrategyProperty' ),
     phetioFeatured: true,
@@ -44,7 +44,7 @@ const PDLPreferences = {
   } ),
 
   // phet-types.d.ts does not support inferring string union types for string query parameters, so we need to cast
-  launchSoundStrategyProperty: new StringUnionProperty<LaunchSoundStrategy>( PDLQueryParameters.launchSoundStrategy as LaunchSoundStrategy, {
+  launchSoundStrategyProperty: new StringUnionProperty( PDLQueryParameters.launchSoundStrategy as LaunchSoundStrategy, {
     validValues: LaunchSoundStrategyValues,
     tandem: Tandem.PREFERENCES.createTandem( 'launchSoundStrategyProperty' ),
     phetioFeatured: true,

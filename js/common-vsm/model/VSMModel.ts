@@ -78,8 +78,7 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   // End of DynamicProperties
   ////////////////////////////////////////////////////////////////////////////////////////
 
-  //REVIEW constructor should be protected
-  public constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
+  protected constructor( fields: T[], providedOptions: VSMModelOptions<T> ) {
 
     const options = optionize<VSMModelOptions<T>, SelfOptions, PDLModelOptions<T>>()( {
       timeSpeedValues: [ TimeSpeed.NORMAL, TimeSpeed.FAST ],

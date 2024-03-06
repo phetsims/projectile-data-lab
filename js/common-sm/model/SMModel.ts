@@ -23,8 +23,7 @@ export default class SMModel<T extends SMField> extends VSMModel<T> {
 
   public readonly customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>;
 
-  //REVIEW constructor should be protected
-  public constructor( fields: T[], providedOptions: SMModelOptions ) {
+  protected constructor( fields: T[], providedOptions: SMModelOptions ) {
 
     super( fields, providedOptions );
 

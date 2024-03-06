@@ -123,7 +123,7 @@ export default class HistogramSonifier {
 
     this.timeRemainingInCurrentBin = this.getSoundDelayForCurrentBin();
 
-    //REVIEW duplicated twice herein
+    // Start the sonification with the first bin. NOTE: This line is duplicated with a line below that traverses to the next bin.
     this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingBinPhase', highlightedBin: this.sortedBins[ this.currentBinIndex ] };
   }
 
@@ -164,6 +164,8 @@ export default class HistogramSonifier {
             }
           }
           else {
+
+            // Continue sonification with the newly selected bin. NOTE: This line is duplicated with a line above that starts the sonification.
             this.histogramSonifierPhaseProperty.value = { phaseName: 'highlightingBinPhase', highlightedBin: this.sortedBins[ this.currentBinIndex ] };
           }
         }

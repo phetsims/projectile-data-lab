@@ -24,6 +24,7 @@ import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAcco
 import SMField from '../../common-sm/model/SMField.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type SourcesScreenViewOptions = SelfOptions & StrictOmit<VSMScreenViewOptions, 'createLauncherNode'>;
@@ -42,7 +43,7 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
         model.launcherConfigurationProperty,
         model.meanLaunchAngleProperty,
         model.launcherHeightProperty,
-        new Property( 'custom' ), //REVIEW should be new StringUnionProperty<MysteryOrCustom>( 'custom' )
+        new StringUnionProperty( 'custom', { validValues: [ 'custom' ] } ),
         new Property( launcher ),
         model.customLauncherMechanismProperty,
         model.standardDeviationAngleProperty,

@@ -11,10 +11,9 @@ import projectileDataLab from '../projectileDataLab.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 
-//REVIEW Constants should be uppercase.
-const maxFieldDistance = 100;
-const fieldWidth = 850;
-const pixelsToDistance = fieldWidth / maxFieldDistance;
+const MAX_FIELD_DISTANCE = 100;
+const FIELD_WIDTH = 850;
+const PIXELS_TO_DISTANCE = FIELD_WIDTH / MAX_FIELD_DISTANCE;
 
 const maxAngleStandardDeviation = 6; // degrees
 
@@ -34,7 +33,7 @@ const PDLConstants = {
   ANGLE_STANDARD_DEVIATION_RANGE: new Range( 0, maxAngleStandardDeviation ),
 
   // In field units
-  MAX_FIELD_DISTANCE: maxFieldDistance,
+  MAX_FIELD_DISTANCE: MAX_FIELD_DISTANCE,
   RAISED_LAUNCHER_HEIGHT: 12,
   FREEFALL_ACCELERATION: 9.81,
   FIELD_LABEL_INCREMENT: 10,
@@ -43,7 +42,7 @@ const PDLConstants = {
   FIELD_CENTER_OFFSET_X: 44,
   FIELD_CENTER_Y: 510,
   FIELD_HEIGHT: 35,
-  FIELD_WIDTH: fieldWidth,
+  FIELD_WIDTH: FIELD_WIDTH,
   FIELD_BORDER_LINE_WIDTH: 2,
   FIELD_CENTER_LINE_WIDTH: 2,
   FIELD_LINE_WIDTH: 1.5,
@@ -68,7 +67,7 @@ const PDLConstants = {
   // 1 means the entire field is shown below the center line.
   FIELD_SCALING_FACTOR_VERTICAL: 0.2,
 
-  PIXELS_TO_DISTANCE: pixelsToDistance,
+  PIXELS_TO_DISTANCE: PIXELS_TO_DISTANCE,
 
   // The factor multiple for time speed in 'Fast' mode
   TIME_SPEED_FAST: 6,

@@ -17,63 +17,53 @@ import cannonballTone_mp3 from '../../../sounds/cannonballTone_mp3.js';
 import pumpkinTone_mp3 from '../../../sounds/pumpkinTone_mp3.js';
 import pianoTone_mp3 from '../../../sounds/pianoTone_mp3.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
+import Range from '../../../../dot/js/Range.js';
 
-const cannonballToneSoundClip = new SoundClip( cannonballTone_mp3, { initialOutputLevel: 0.1 } );
-const pumpkinToneSoundClip = new SoundClip( pumpkinTone_mp3, { initialOutputLevel: 0.1 } );
-const pianoToneSoundClip = new SoundClip( pianoTone_mp3, { initialOutputLevel: 0.1 } );
+// Convert projectileSoundsConfig to a Map
+const projectileSoundsConfig = new Map( [
+  [ CANNONBALL, {
+    toneSoundClip: new SoundClip( cannonballTone_mp3, { initialOutputLevel: 0.1 } ),
+    landSoundClip: new SoundClip( cannonballLand_mp3, { initialOutputLevel: 0.06 } ),
+    rateRange: new Range( 0.8, 1.2 )
+  } ],
+  [ PUMPKIN, {
+    toneSoundClip: new SoundClip( pumpkinTone_mp3, { initialOutputLevel: 0.1 } ),
+    landSoundClip: new SoundClip( pumpkinLand_mp3, { initialOutputLevel: 0.1 } ),
+    rateRange: new Range( 0.8, 1.3 )
+  } ],
+  [ PIANO, {
+    toneSoundClip: new SoundClip( pianoTone_mp3, { initialOutputLevel: 0.1 } ),
+    landSoundClip: new SoundClip( pianoLand_mp3, { initialOutputLevel: 0.02 } ),
+    rateRange: new Range( 0.9, 1.2 )
+  } ]
+] );
 
-const cannonballLandSoundClip = new SoundClip( cannonballLand_mp3, { initialOutputLevel: 0.06 } );
-const pumpkinLandSoundClip = new SoundClip( pumpkinLand_mp3, { initialOutputLevel: 0.1 } );
-const pianoLandSoundClip = new SoundClip( pianoLand_mp3, { initialOutputLevel: 0.02 } );
-
-soundManager.addSoundGenerator( cannonballToneSoundClip );
-soundManager.addSoundGenerator( pumpkinToneSoundClip );
-soundManager.addSoundGenerator( pianoToneSoundClip );
-
-soundManager.addSoundGenerator( cannonballLandSoundClip );
-soundManager.addSoundGenerator( pumpkinLandSoundClip );
-soundManager.addSoundGenerator( pianoLandSoundClip );
+// Add sound clips to sound manager
+projectileSoundsConfig.forEach( config => {
+  soundManager.addSoundGenerator( config.toneSoundClip );
+  soundManager.addSoundGenerator( config.landSoundClip );
+} );
 
 export const playbackRateForPosition = ( x: number ): number => {
   return Utils.linear( 0, 100, 0.2, 3.5, x );
 };
 
-//REVIEW Lots of if-then-else logic and duplicated code here. Should soundClip be an attribute of ProjectileType?
 export default class ProjectileSound {
 
   public static play( projectileType: ProjectileType, x: number, isLanding: boolean ): void {
 
+    const config = projectileSoundsConfig.get( projectileType )!;
+
+    assert && assert( config, `Projectile type configuration not found for ${projectileType.phetioID}` );
+
     const playbackRate = playbackRateForPosition( x );
 
-    if ( projectileType === CANNONBALL ) {
-      cannonballToneSoundClip.setPlaybackRate( playbackRate );
-      cannonballToneSoundClip.play();
+    config.toneSoundClip.setPlaybackRate( playbackRate );
+    config.toneSoundClip.play();
 
-      if ( isLanding ) {
-        // Choose a random playback rate for the landing sound
-        cannonballLandSoundClip.setPlaybackRate( dotRandom.nextDoubleBetween( 0.8, 1.2 ) );
-        cannonballLandSoundClip.play();
-      }
-    }
-    else if ( projectileType === PUMPKIN ) {
-      pumpkinToneSoundClip.setPlaybackRate( playbackRate );
-      pumpkinToneSoundClip.play();
-
-      if ( isLanding ) {
-        // Choose a random playback rate for the landing sound
-        pumpkinLandSoundClip.setPlaybackRate( dotRandom.nextDoubleBetween( 0.8, 1.3 ) );
-        pumpkinLandSoundClip.play();
-      }
-    }
-    else if ( projectileType === PIANO ) {
-      pianoToneSoundClip.setPlaybackRate( playbackRate );
-      pianoToneSoundClip.play();
-
-      if ( isLanding ) {
-        // Choose a random playback rate for the landing sound
-        pianoLandSoundClip.setPlaybackRate( dotRandom.nextDoubleBetween( 0.9, 1.2 ) );
-        pianoLandSoundClip.play();
-      }
+    if ( isLanding ) {
+      config.landSoundClip.setPlaybackRate( dotRandom.nextDoubleBetween( config.rateRange.min, config.rateRange.max ) );
+      config.landSoundClip.play();
     }
   }
 }

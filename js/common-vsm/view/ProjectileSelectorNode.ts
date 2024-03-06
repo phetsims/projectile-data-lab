@@ -43,6 +43,25 @@ const PUMPKIN_LANDED_IMAGES = [ pumpkin1LandedSelected_png, pumpkin2LandedSelect
 type SelfOptions = EmptySelfOptions;
 type ProjectileSelectorNodeOptions = SelfOptions & StrictOmit<SelectorNodeOptions, 'playSound'>;
 
+type Depiction = {
+  type: ProjectileType;
+  isFlippedHorizontally: boolean;
+  landedImageIndex?: number;
+};
+
+const depictions: Depiction[] = [
+  { type: CANNONBALL, isFlippedHorizontally: false },
+  { type: CANNONBALL, isFlippedHorizontally: true },
+  { type: PIANO, isFlippedHorizontally: false },
+  { type: PIANO, isFlippedHorizontally: true },
+  { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 0 },
+  { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 0 },
+  { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 1 },
+  { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 1 },
+  { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 2 },
+  { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 2 }
+];
+
 export default class ProjectileSelectorNode extends SelectorNode {
 
   public constructor(
@@ -81,27 +100,9 @@ export default class ProjectileSelectorNode extends SelectorNode {
         valueComparisonStrategy: 'equalsFunction'
       } );
 
-    type Depiction = {
-      type: ProjectileType;
-      isFlippedHorizontally: boolean;
-      landedImageIndex?: number;
-    };
-
-    //REVIEW Does each instance need its own depictions, or can these be shared via 'const DEPICTIONS' outside the class definition?
-    const depictions: Depiction[] = [
-      { type: CANNONBALL, isFlippedHorizontally: false },
-      { type: CANNONBALL, isFlippedHorizontally: true },
-      { type: PIANO, isFlippedHorizontally: false },
-      { type: PIANO, isFlippedHorizontally: true },
-      { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 0 },
-      { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 0 },
-      { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 1 },
-      { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 1 },
-      { type: PUMPKIN, isFlippedHorizontally: false, landedImageIndex: 2 },
-      { type: PUMPKIN, isFlippedHorizontally: true, landedImageIndex: 2 }
-    ];
-
-    //REVIEW My first thought was 'Does this need to be stateful?' If not, document why not.
+    // This is an intermediate "plumbing" Property used to wire up to the ToggleNode. It does not need to be PhET-iO instrumented
+    // because the value is derived from the selectedProjectileProperty (which is PhET-iO instrumented), and set in the
+    // Multilink. (It is somewhat akin to a DerivedProperty in this way).
     const depictionProperty = new Property<Depiction>( depictions[ 0 ] );
 
     const createNode = ( depiction: Depiction ) => {

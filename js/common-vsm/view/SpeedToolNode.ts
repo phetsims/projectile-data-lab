@@ -12,23 +12,18 @@ import projectileDataLab from '../../projectileDataLab.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Utils from '../../../../dot/js/Utils.js';
-import { Circle, Path, Node } from '../../../../scenery/js/imports.js';
+import { Circle, Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 
 type SelfOptions = {
   isIcon?: boolean;
 };
 
-//REVIEW So complicated! So much simpler: SelfOptions & NodeTranslationOptions & PickOptional<HeatMapToolNodeOptions, 'visibleProperty'>
-export type SpeedToolNodeOptions = SelfOptions & StrictOmit<HeatMapToolNodeOptions,
-  'displayOffset' | 'readoutPatternStringProperty' | 'bodyShape' | 'needleShape' | 'binWidth' | 'minValue'
-  | 'maxValue' | 'minLabeledValue' | 'maxLabeledValue' | 'labeledValueIncrement' | 'labelDistanceFromCenter' | 'labelMinAngle'
-  | 'labelMaxAngle' | 'innerHeatNodeRadius' | 'outerHeatNodeRadius' | 'minAngle' | 'maxAngle' | 'minorTickMarkIncrement' | 'valueReadoutY'
-  | 'majorTickMarkLength' | 'minorTickMarkLength'>;
+export type SpeedToolNodeOptions = SelfOptions & NodeTranslationOptions & PickOptional<HeatMapToolNodeOptions, 'visibleProperty'>;
 
 // The min speed is the minimum value that the tool can display.
 const MIN_SPEED = 0;
