@@ -18,8 +18,18 @@ individual projectiles.
 This simulation has a notion of scenes where each scene contains its own state data. The scenes in this simulation are
 called `Field`s. The models that contain `Field[]` also provide `DynamicProperty` to present the value of the selected
 Field. Note the VSM screens have an independently selectable `Field` whereas on the Sampling screen, the `SamplingField`
-is determined by the selection of mystery launcher and sample size. Also be aware there is a
-doubly-nested `DynamicProperty` in the VSM screens, like this: Model --> Field --> Launcher.
+is determined by the selection of mystery launcher and sample size.
+
+### DynamicProperty Instances
+
+The simulation is implemented with DynamicProperty, which allows values to switch based on another selected Property.
+For instance:
+- The PDLModel has DynamicProperty instances for the selected Field.
+- The Field has DynamicProperty instances for the selected Launcher.
+- The Launcher has DynamicProperty instances for its selected LauncherMechanism.
+- There are more in the screen-specific subclasses.
+
+Please search for `DynamicProperty` in the code to see how it is used.
 
 ### Enumeration patterns
 
