@@ -28,6 +28,8 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -39,11 +41,17 @@ export default class SamplingModel extends PDLModel<SamplingField> {
 
   public readonly sampleSizeProperty: Property<number>;
 
-  public readonly phaseProperty: DynamicProperty<SamplingPhase, SamplingPhase, SamplingField>;
-  public readonly numberOfStartedSamplesProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly numberOfCompletedSamplesProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly selectedSampleNumberProperty: DynamicProperty<number, number, SamplingField>;
-  public readonly sampleMeanProperty: DynamicProperty<number | null, number | null, SamplingField>;
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // These values are DynamicProperties that are determined by the SamplingField, see SamplingField.ts and implementation-notes.md
+
+  public readonly phaseProperty: TReadOnlyProperty<SamplingPhase>;
+  public readonly numberOfStartedSamplesProperty: TReadOnlyProperty<number>;
+  public readonly numberOfCompletedSamplesProperty: TReadOnlyProperty<number>;
+  public readonly selectedSampleNumberProperty: PhetioProperty<number>;
+  public readonly sampleMeanProperty: TReadOnlyProperty<number | null>;
+
+  // End of DynamicProperties
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public readonly launcherProperty: Property<Launcher>;
 

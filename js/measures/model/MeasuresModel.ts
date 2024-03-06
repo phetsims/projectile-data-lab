@@ -24,6 +24,8 @@ import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -32,17 +34,25 @@ type MeasuresModelOptions = SelfOptions & StrictOmit<Parent, 'isStandardDeviatio
 
 export default class MeasuresModel extends SMModel<MeasuresField> {
 
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // These values are DynamicProperties that are determined by the MeasuresField, see MeasuresField.ts and implementation-notes.md
+
   // The mean distance of the landed projectiles
-  public readonly meanDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly meanDistanceProperty: TReadOnlyProperty<number | null>;
 
   // The standard deviation of the distance of the landed projectiles
-  public readonly standardDeviationDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly standardDeviationDistanceProperty: TReadOnlyProperty<number | null>;
 
   // The standard error of the mean distance of landed projectiles
-  public readonly standardErrorDistanceProperty: DynamicProperty<number | null, number | null, MeasuresField>;
+  public readonly standardErrorDistanceProperty: TReadOnlyProperty<number | null>;
 
   // Whether the launcher is custom or mystery
-  public readonly mysteryOrCustomProperty: DynamicProperty<MysteryOrCustom, MysteryOrCustom, MeasuresField>;
+  public readonly mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>;
+
+  public readonly mysteryLauncherProperty: PhetioProperty<Launcher>;
+
+  // End of DynamicProperties
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   //REVIEW Declarations of BooleanProperty should be Property<boolean>
 
@@ -60,8 +70,6 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
 
   // The interval tool
   public readonly intervalTool: IntervalTool;
-
-  public readonly mysteryLauncherProperty: DynamicProperty<Launcher, Launcher, MeasuresField>;
 
   public constructor( providedOptions: MeasuresModelOptions ) {
 

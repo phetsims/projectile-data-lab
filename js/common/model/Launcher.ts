@@ -39,7 +39,9 @@ export default class Launcher extends PhetioObject {
   // The standard deviation of the launch angle.
   public readonly standardDeviationAngleProperty: TReadOnlyProperty<number>;
 
+  // The mean launch speed is determined by the LauncherMechanism
   public readonly meanLaunchSpeedProperty: DynamicProperty<number, number, LauncherMechanism>;
+
   public readonly standardDeviationSpeedProperty: TReadOnlyProperty<number>;
 
   //REVIEW Is the doc for param launcherNumber correct here? For PDLColors.mysteryLauncherColorProfiles, custom is not index 0.

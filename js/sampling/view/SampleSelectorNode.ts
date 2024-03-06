@@ -11,7 +11,6 @@ import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import SamplingField from '../model/SamplingField.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -22,11 +21,11 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
 import Range from '../../../../dot/js/Range.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import { SamplingPhase } from '../model/SamplingPhase.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type SampleSelectorPanelOptions = SelfOptions & StrictOmit<SelectorNodeOptions, 'playSound'>;
@@ -37,7 +36,7 @@ export default class SampleSelectorNode extends SelectorNode {
 
   public constructor(
     samplingFieldProperty: TReadOnlyProperty<SamplingField>,
-    selectedSampleNumberProperty: TProperty<number> & PhetioObject,
+    selectedSampleNumberProperty: PhetioProperty<number>,
     numberOfStartedSamplesProperty: TReadOnlyProperty<number>,
     numberOfCompletedSamplesProperty: TReadOnlyProperty<number>,
     sampleMeanProperty: TReadOnlyProperty<number | null>,

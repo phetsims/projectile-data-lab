@@ -12,7 +12,6 @@
 import optionize from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Multilink from '../../../../axon/js/Multilink.js';
@@ -50,8 +49,8 @@ const TEXT_MAX_WIDTH = 80;
 
 export default class DataMeasuresOverlay extends Node {
   public constructor( modelViewTransform: ModelViewTransform2 | ChartTransform,
-                      meanDistanceProperty: PhetioProperty<number | null>,
-                      standardDeviationDistanceProperty: PhetioProperty<number | null>,
+                      meanDistanceProperty: TReadOnlyProperty<number | null>,
+                      standardDeviationDistanceProperty: TReadOnlyProperty<number | null>,
                       //REVIEW next 3 params of type BooleanProperty should be TReadOnlyProperty<boolean>
                       isMeanDisplayedProperty: BooleanProperty,
                       isStandardDeviationDisplayedProperty: BooleanProperty,
@@ -62,10 +61,10 @@ export default class DataMeasuresOverlay extends Node {
 
     const origin = modelViewTransform.modelToViewPosition( Vector2.ZERO );
 
-    const isNonNullProperty = ( nullableProperty: PhetioProperty<number | null> ) =>
+    const isNonNullProperty = ( nullableProperty: TReadOnlyProperty<number | null> ) =>
       new DerivedProperty( [ nullableProperty ], nullable => nullable !== null );
 
-    const isGreaterThanProperty = ( property: PhetioProperty<number | null>, value: number ) =>
+    const isGreaterThanProperty = ( property: TReadOnlyProperty<number | null>, value: number ) =>
       new DerivedProperty( [ property ], propertyValue => propertyValue !== null && propertyValue > value );
 
     const isMeanIndicatorVisibleProperty = DerivedProperty.and( [
@@ -142,7 +141,7 @@ export default class DataMeasuresOverlay extends Node {
     const leftArrow = new ArrowNode( 0, arrowY, 1e-6, arrowY, arrowOptions );
     const rightArrow = new ArrowNode( 0, arrowY, 1e-6, arrowY, arrowOptions );
 
-    const roundedStringProperty = ( nullableNumberProperty: PhetioProperty<number | null> ) =>
+    const roundedStringProperty = ( nullableNumberProperty: TReadOnlyProperty<number | null> ) =>
       new DerivedProperty( [ nullableNumberProperty ], nullableNumber => {
         return nullableNumber === null ? '' : Utils.toFixed( nullableNumber, 2 );
       } );

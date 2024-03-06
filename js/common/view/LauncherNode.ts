@@ -11,7 +11,6 @@ import { Circle, Color, Image, LinearGradient, Node, NodeOptions, Path, RadialGr
 import optionize from '../../../../phet-core/js/optionize.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
-import TProperty from '../../../../axon/js/TProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import { Shape } from '../../../../kite/js/imports.js';
@@ -75,8 +74,8 @@ export default class LauncherNode extends Node {
   protected readonly labelNode: Node;
 
   public constructor( private readonly modelViewTransform: ModelViewTransform2,
-                      private readonly meanLaunchAngleProperty: TProperty<number>,
-                      launcherHeightProperty: TProperty<number>,
+                      private readonly meanLaunchAngleProperty: TReadOnlyProperty<number>,
+                      launcherHeightProperty: TReadOnlyProperty<number>,
                       mysteryLauncher: TReadOnlyProperty<Launcher>,
                       fieldProperty: TReadOnlyProperty<Field> | null,
                       providedOptions?: LauncherNodeOptions ) {

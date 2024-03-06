@@ -26,6 +26,8 @@ import Launcher from './Launcher.js';
 import Histogram from './Histogram.js';
 import ProjectileType from './ProjectileType.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import TProperty from '../../../../axon/js/TProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 // See the documentation at the PDLModel class attributes for more information on these options.
 type SelfOptions<T extends Field> = {
@@ -69,19 +71,20 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   // Abstract Property that indicates the selected Launcher
   protected readonly abstract launcherProperty: TReadOnlyProperty<Launcher>;
 
-  /***
-   * The following DynamicProperties are computed based on the current Field. Please see the documentation at the declarations
-   * within Field.ts for more information.
-   */
-  public readonly launcherConfigurationProperty: DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>;
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+  // These values are DynamicProperties that are determined by the Field, see Field.ts and implementation-notes.md
+  public readonly launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>;
 
-  public readonly projectileTypeProperty: DynamicProperty<ProjectileType, ProjectileType, T>;
+  public readonly projectileTypeProperty: PhetioProperty<ProjectileType>;
 
-  public readonly meanLaunchAngleProperty: DynamicProperty<number, number, T>;
+  public readonly meanLaunchAngleProperty: TReadOnlyProperty<number>;
 
-  public readonly launcherHeightProperty: DynamicProperty<number, number, T>;
+  public readonly launcherHeightProperty: TReadOnlyProperty<number>;
 
-  public readonly isContinuousLaunchingProperty: DynamicProperty<boolean, boolean, T>;
+  public readonly isContinuousLaunchingProperty: TProperty<boolean>;
+
+  // End of DynamicProperties
+  //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   protected constructor( providedOptions: PDLModelOptions<T> ) {
 

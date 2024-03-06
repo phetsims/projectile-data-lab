@@ -14,7 +14,6 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import { ManualConstraint, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import IntervalTool from '../model/IntervalTool.js';
@@ -46,9 +45,9 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
                       isMeanVisibleProperty: BooleanProperty,
                       isStandardDeviationVisibleProperty: BooleanProperty,
                       isValuesVisibleProperty: BooleanProperty,
-                      meanProperty: PhetioProperty<number | null>,
-                      standardDeviationProperty: PhetioProperty<number | null>,
-                      standardErrorProperty: PhetioProperty<number | null>,
+                      meanDistanceProperty: TReadOnlyProperty<number | null>,
+                      standardDeviationProperty: TReadOnlyProperty<number | null>,
+                      standardErrorProperty: TReadOnlyProperty<number | null>,
                       intervalTool: IntervalTool,
                       intervalToolVisibleProperty: TReadOnlyProperty<boolean>,
                       comboBoxParent: Node,
@@ -67,7 +66,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
 
     const noDataLabel = new PDLText( ProjectileDataLabStrings.noDataStringProperty );
 
-    const roundedStringProperty = ( nullableNumberProperty: PhetioProperty<number | null> ) =>
+    const roundedStringProperty = ( nullableNumberProperty: TReadOnlyProperty<number | null> ) =>
       new DerivedProperty( [ nullableNumberProperty ], nullableNumber => {
         return nullableNumber === null ? '' : Utils.toFixed( nullableNumber, 2 );
       } );
@@ -83,7 +82,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
 
     const dataLabels = [
       new PDLText( new PatternStringProperty( meanPatternStringProperty,
-        { value: roundedStringProperty( meanProperty ) } ), {
+        { value: roundedStringProperty( meanDistanceProperty ) } ), {
         font: PDLConstants.HISTOGRAM_PANEL_FONT
       } ),
       new PDLText( new PatternStringProperty( ProjectileDataLabStrings.standardDeviationEqualsValueMPatternStringProperty,
@@ -128,7 +127,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
 
     const dataMeasuresChartOverlay = new DataMeasuresOverlay(
       this.chartTransform,
-      meanProperty,
+      meanDistanceProperty,
       standardDeviationProperty,
       isMeanVisibleProperty,
       isStandardDeviationVisibleProperty,
@@ -162,7 +161,7 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
     updateIntervalToolHighlight();
     intervalTool.changedEmitter.addListener( updateIntervalToolHighlight );
 
-    meanProperty.link( mean => {
+    meanDistanceProperty.link( mean => {
       textVBox.setChildren( mean === null ? [ noDataLabel ] : dataLabels );
     } );
 

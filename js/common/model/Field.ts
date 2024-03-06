@@ -64,7 +64,7 @@ export default abstract class Field extends PhetioObject {
   public readonly projectileTypeProperty: Property<ProjectileType>;
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-  // These values are DynamicProperties that are determined by the Launcher, see implementation-notes.md
+  // These values are DynamicProperties that are determined by the Launcher, see Launcher.ts and implementation-notes.md
 
   // Specifies the average speed of launched projectiles
   private readonly meanSpeedProperty: TReadOnlyProperty<number>;
@@ -78,6 +78,7 @@ export default abstract class Field extends PhetioObject {
   // Indicates the current value for the angle stabilizer.
   public readonly angleStabilizerProperty: DynamicProperty<number, number, Launcher>;
 
+  // End of DynamicProperties
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   // Launcher angle average is the configured number of degrees between the launcher and the horizontal axis.

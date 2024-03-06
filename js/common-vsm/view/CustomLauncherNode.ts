@@ -48,10 +48,10 @@ export default class CustomLauncherNode extends LauncherNode {
   private readonly angleStabilizersContainer = new Node();
 
   public constructor( modelViewTransform: ModelViewTransform2,
-                      launcherConfigurationProperty: TProperty<LauncherConfiguration>,
-                      launcherAngleProperty: TProperty<number>,
-                      launcherHeightProperty: TProperty<number>,
-                      mysteryOrCustomProperty: TProperty<MysteryOrCustom>,
+                      launcherConfigurationProperty: TReadOnlyProperty<LauncherConfiguration>,
+                      launcherAngleProperty: TReadOnlyProperty<number>,
+                      launcherHeightProperty: TReadOnlyProperty<number>,
+                      mysteryOrCustomProperty: TReadOnlyProperty<MysteryOrCustom>,
                       mysteryLauncherProperty: TProperty<Launcher>,
                       launcherMechanismProperty: TProperty<LauncherMechanism>,
                       standardDeviationAngleProperty: TReadOnlyProperty<number>,
