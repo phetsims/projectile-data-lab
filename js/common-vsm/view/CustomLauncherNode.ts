@@ -167,11 +167,10 @@ export default class CustomLauncherNode extends LauncherNode {
       if ( launchSpeed > 0 && launcherMechanismProperty.value === PRESSURE ) {
 
         // Give the needle a rotation independent of the speed standard deviation, to prevent the needle from rotating too much.
-        const maxNeedleAngle = 30 / PRESSURE.speedStandardDeviationProperty.value;
-        const maxSpeed = 30;
+        const needleDeltaAnglePerSD = 5; // degrees
         const meanSpeed = launcherMechanismProperty.value.speedMeanProperty.value;
-        const needleDeltaRotation = maxNeedleAngle * ( launchSpeed - meanSpeed ) / ( maxSpeed - meanSpeed );
-        pressureNeedleNode.rotation = Utils.toRadians( needleDeltaRotation ) - Math.PI / 2;
+        const needleDeltaAngle = ( launchSpeed - meanSpeed ) / launcherMechanismProperty.value.speedStandardDeviationProperty.value * needleDeltaAnglePerSD;
+        pressureNeedleNode.rotation = Utils.toRadians( needleDeltaAngle ) - Math.PI / 2;
       }
     } );
   }
