@@ -364,6 +364,13 @@ export default abstract class Field extends PhetioObject {
     };
   }
 
+  /**
+   * For serialization, it uses value-based serialization by calling toStateObject on the Projectiles, and treating them
+   * as data values. For deserialization, it loads the projectiles and sets them to the field via applyState.
+   *
+   * In this simulation, the data and statistical measures are computed solely based on the landedProjectiles, so the
+   * serialization separates the projectiles into the airborne vs landed projectiles.
+   */
   public static FieldIO = new IOType<Field>( 'FieldIO', {
     valueType: Field,
     documentation: 'A field in the Projectile Data Lab. This contains the state for the projectiles, separated into airborne and landed projectiles.',

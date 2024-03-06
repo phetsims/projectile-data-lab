@@ -128,6 +128,11 @@ export default class Projectile {
     this.y = 0;
   }
 
+  /**
+   * Individual Projectile instances are not PhET-iO Instrumented. Instead, the Field that contains the Projectiles
+   * calls ProjectileIO.toStateObject to serialize the Projectile instances using value-based serialization (and vice-
+   * versa for fromStateObject).
+   */
   public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
     valueType: Projectile,
     stateSchema: {
