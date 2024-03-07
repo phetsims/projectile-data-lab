@@ -27,7 +27,7 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import gear_svg from '../../../images/gear_svg.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import LauncherMechanism, { PRESSURE, SPRING } from '../model/LauncherMechanism.js';
+import LauncherMechanism from '../model/LauncherMechanism.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../../common/model/Field.js';
 import Launcher from '../../common/model/Launcher.js';
@@ -154,17 +154,17 @@ export default class CustomLauncherNode extends LauncherNode {
 
     launcherMechanismProperty.link( launcherType => {
       launcherTypeIcon.image = CustomLauncherNode.getImageKeyForCustomLauncherMechanism( launcherType );
-      launcherTypeIcon.rotation = launcherType === SPRING ? 0 : -Math.PI / 2;
+      launcherTypeIcon.rotation = launcherType === LauncherMechanism.SPRING ? 0 : -Math.PI / 2;
       launcherTypeIcon.centerX = 0;
       launcherTypeIcon.centerY = 0;
 
-      pressureNeedleNode.visible = launcherType === PRESSURE;
+      pressureNeedleNode.visible = launcherType === LauncherMechanism.PRESSURE;
     } );
 
     latestLaunchSpeedProperty.lazyLink( launchSpeed => {
 
       // Do not update the pressure needle when latestLaunchSpeedProperty is reset or if the mechanism is not pressure.
-      if ( launchSpeed > 0 && launcherMechanismProperty.value === PRESSURE ) {
+      if ( launchSpeed > 0 && launcherMechanismProperty.value === LauncherMechanism.PRESSURE ) {
 
         // Give the needle a rotation independent of the speed standard deviation, to prevent the needle from rotating too much.
         const needleDeltaAnglePerSD = 5; // degrees
@@ -204,8 +204,8 @@ export default class CustomLauncherNode extends LauncherNode {
   }
 
   private static getImageKeyForCustomLauncherMechanism( customLauncherType: LauncherMechanism ): HTMLImageElement {
-    return customLauncherType === SPRING ? spring_svg :
-           customLauncherType === PRESSURE ? pressureWithoutNeedle_png :
+    return customLauncherType === LauncherMechanism.SPRING ? spring_svg :
+           customLauncherType === LauncherMechanism.PRESSURE ? pressureWithoutNeedle_png :
            explosion_svg;
   }
 }

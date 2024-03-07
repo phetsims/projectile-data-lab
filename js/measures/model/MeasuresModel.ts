@@ -17,7 +17,6 @@ import IntervalTool from './IntervalTool.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
-import { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
@@ -27,6 +26,7 @@ import { MeanTone } from '../../common/model/MeanTone.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -84,7 +84,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
 
       const customLauncher = new Launcher(
         'custom',
-        SPRING,
+        LauncherMechanism.SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         lastMysteryLauncherNumber + 1, {
           tandem: fieldTandem.createTandem( 'customLauncher' ),

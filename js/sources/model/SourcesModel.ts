@@ -14,9 +14,9 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import Launcher from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
 import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
 import SMField from '../../common-sm/model/SMField.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -37,7 +37,7 @@ export default class SourcesModel extends SMModel<SMField> {
 
       const customLauncher = new Launcher(
         'custom',
-        SPRING,
+        LauncherMechanism.SPRING,
         PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
         1, {
           tandem: fieldTandem.createTandem( 'customLauncher' ),

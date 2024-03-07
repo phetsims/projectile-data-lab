@@ -15,7 +15,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import springIcon_svg from '../../../images/springIcon_svg.js';
 import pressureWithNeedle_png from '../../../images/pressureWithNeedle_png.js';
 import explosion_svg from '../../../images/explosion_svg.js';
-import LauncherMechanism, { EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import launcherTypeSpring_mp3 from '../../../sounds/launcherTypeSpring_mp3.js';
@@ -51,21 +51,21 @@ export default class CustomLauncherTypeRadioButtonGroup extends PDLRectangularRa
 
     const items: RectangularRadioButtonGroupItem<LauncherMechanism>[] = [
       {
-        value: SPRING,
+        value: LauncherMechanism.SPRING,
         tandemName: 'springRadioButton',
         createNode: () => new Image( springIcon_svg, { scale: 0.14 } ),
         options: {
           soundPlayer: springSound
         }
       }, {
-        value: PRESSURE,
+        value: LauncherMechanism.PRESSURE,
         tandemName: 'pressureRadioButton',
         createNode: () => new Image( pressureWithNeedle_png, { scale: 0.18 } ),
         options: {
           soundPlayer: pressureSound
         }
       }, {
-        value: EXPLOSION,
+        value: LauncherMechanism.EXPLOSION,
         tandemName: 'explosionRadioButton',
         createNode: () => new Image( explosion_svg, { scale: 0.15 } ),
         options: {

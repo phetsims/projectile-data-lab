@@ -9,7 +9,7 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import LauncherMechanism, { CUSTOM_MECHANISM_1, CUSTOM_MECHANISM_2, CUSTOM_MECHANISM_3, EXPLOSION, PRESSURE, SPRING } from '../../common-vsm/model/LauncherMechanism.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { MysteryOrCustom } from './MysteryOrCustom.js';
@@ -64,7 +64,7 @@ export default class Launcher extends PhetioObject {
       tandem: options.tandem.createTandem( 'launcherMechanismProperty' ),
       phetioFeatured: true,
       phetioValueType: LauncherMechanism.LauncherMechanismIO,
-      validValues: [ SPRING, PRESSURE, EXPLOSION, CUSTOM_MECHANISM_1, CUSTOM_MECHANISM_2, CUSTOM_MECHANISM_3 ]
+      validValues: [ LauncherMechanism.SPRING, LauncherMechanism.PRESSURE, LauncherMechanism.EXPLOSION, LauncherMechanism.CUSTOM_MECHANISM_1, LauncherMechanism.CUSTOM_MECHANISM_2, LauncherMechanism.CUSTOM_MECHANISM_3 ]
     } );
 
     const initialAngleStabilizer = Utils.linear( PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 1, 0, standardDeviationAngle );
@@ -97,22 +97,22 @@ export default class Launcher extends PhetioObject {
 
 const mysteryLaunchersTandem = Tandem.GLOBAL_MODEL.createTandem( 'mysteryLaunchers' );
 export const MYSTERY_LAUNCHERS = [
-  new Launcher( 'mystery', SPRING, 3, 1, {
+  new Launcher( 'mystery', LauncherMechanism.SPRING, 3, 1, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher1' )
   } ),
-  new Launcher( 'mystery', PRESSURE, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 2, {
+  new Launcher( 'mystery', LauncherMechanism.PRESSURE, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 2, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher2' )
   } ),
-  new Launcher( 'mystery', EXPLOSION, 0, 3, {
+  new Launcher( 'mystery', LauncherMechanism.EXPLOSION, 0, 3, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher3' )
   } ),
-  new Launcher( 'mystery', SPRING, 1.5, 4, {
+  new Launcher( 'mystery', LauncherMechanism.SPRING, 1.5, 4, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher4' )
   } ),
-  new Launcher( 'mystery', PRESSURE, 0, 5, {
+  new Launcher( 'mystery', LauncherMechanism.PRESSURE, 0, 5, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher5' )
   } ),
-  new Launcher( 'mystery', EXPLOSION, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 6, {
+  new Launcher( 'mystery', LauncherMechanism.EXPLOSION, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 6, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher6' )
   } )
 ];

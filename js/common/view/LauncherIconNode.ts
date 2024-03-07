@@ -14,7 +14,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../model/LauncherConfiguration.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../model/MysteryOrCustom.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
-import LauncherMechanism, { SPRING } from '../../common-vsm/model/LauncherMechanism.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import PDLConstants from '../PDLConstants.js';
@@ -35,7 +35,7 @@ export default class LauncherIconNode extends Node {
     validValues: MysteryOrCustomValues
   } );
   private mysteryLauncherProperty = new Property( MYSTERY_LAUNCHERS[ 0 ] );
-  private launcherMechanismProperty = new Property<LauncherMechanism>( SPRING );
+  private launcherMechanismProperty = new Property<LauncherMechanism>( LauncherMechanism.SPRING );
   private standardDeviationAngleProperty = new Property( 0 );
   private latestLaunchSpeedProperty = new Property( 0 );
 

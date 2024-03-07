@@ -19,7 +19,7 @@ export default class LauncherMechanism extends PhetioObject {
   public readonly speedMeanProperty: NumberProperty;
   public readonly speedStandardDeviationProperty: NumberProperty;
 
-  public constructor( tandem: Tandem, speedMean: number, speedStandardDeviation: number ) {
+  private constructor( tandem: Tandem, speedMean: number, speedStandardDeviation: number ) {
 
     super( {
       tandem: tandem,
@@ -58,13 +58,12 @@ export default class LauncherMechanism extends PhetioObject {
     documentation: 'Mechanism used to launch the projectile',
     supertype: ReferenceIO( IOType.ObjectIO )
   } );
+
+  public static readonly SPRING = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'spring' ), 23, 0.5 );
+  public static readonly PRESSURE = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'pressure' ), 24, 0.2 );
+  public static readonly EXPLOSION = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'explosion' ), 25, 1.2 );
+  public static readonly CUSTOM_MECHANISM_1 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism1' ), 24, 0.5 );
+  public static readonly CUSTOM_MECHANISM_2 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism2' ), 24, 0.5 );
+  public static readonly CUSTOM_MECHANISM_3 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism3' ), 24, 0.5 );
 }
 projectileDataLab.register( 'LauncherMechanism', LauncherMechanism );
-
-//REVIEW Use the correct pattern for static instances. Constructor should be private and these should all be 'public static readonly' fields of customLauncherMechanismProperty.
-export const SPRING = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'spring' ), 23, 0.5 );
-export const PRESSURE = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'pressure' ), 24, 0.2 );
-export const EXPLOSION = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'explosion' ), 25, 1.2 );
-export const CUSTOM_MECHANISM_1 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism1' ), 24, 0.5 );
-export const CUSTOM_MECHANISM_2 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism2' ), 24, 0.5 );
-export const CUSTOM_MECHANISM_3 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism3' ), 24, 0.5 );
