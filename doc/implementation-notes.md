@@ -13,6 +13,20 @@ Measurement. There is additional code that only pertains to the Sources and Meas
 abbreviated as "SM" in the code. The Sampling screen is more about firing a complete sample at once, rather than 
 individual projectiles.
 
+Please note due to the similarity of the VSM screens, the code is often shared between them. This is accomplished via a
+new folder structure like so:
+
+```
+common/
+  model/
+  view/
+common-vsm/
+  model/
+  view/
+```
+
+Please see where this was discussed in https://github.com/phetsims/projectile-data-lab/issues/197
+
 ### Scenes
 
 This simulation has a notion of scenes where each scene contains its own state data. The scenes in this simulation are
