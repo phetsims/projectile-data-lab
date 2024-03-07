@@ -304,15 +304,22 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       this.launchButton,
       this.singleOrContinuousRadioButtonGroup,
 
+      // Play area tools
+      this.stopwatchNode,
+      this.measuringTapeNode,
+
+      // Field sign
+      this.fieldSignNode,
+
       // Histogram
       this.accordionBox,
 
       // Field management
       this.fieldRadioButtonGroup,
 
-      // Play area tools
-      this.measuringTapeNode,
-      this.stopwatchNode,
+      // Erase
+      this.eraserButton,
+
       ...( intervalToolNode ? [ intervalToolNode ] : [] )
     ];
 
@@ -323,9 +330,6 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       interactiveToolPanel,
 
       this.timeControlNode,
-
-      // Erase
-      this.eraserButton,
 
       // Reset all
       this.resetAllButton

@@ -374,11 +374,10 @@ export default class HistogramNode extends Node {
     } );
 
     this.pdomOrder = [
+      toggleHistogramSoundButton,
       zoomButtonGroup,
       binControlNode,
-      barBlockSwitch,
-      toggleHistogramSoundButton,
-      this.chartNode
+      barBlockSwitch
     ];
   }
 }
