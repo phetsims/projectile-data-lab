@@ -28,15 +28,16 @@ export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isL
 
 export default class MeasuresField extends SMField {
 
-  //REVIEW For all Property<number | null>, what is the semantics of null?
-
   // This Property represents the average distance (horizontal displacement) of landed projectiles.
+  // If it is null, it means there is not enough data to compute the value.
   public readonly meanDistanceProperty: Property<number | null>;
 
   // This Property represents the standard deviation of the distance (horizontal displacement) of landed projectiles.
+  // If it is null, it means there is not enough data to compute the value.
   public readonly standardDeviationDistanceProperty: Property<number | null>;
 
   // This Property represents the standard error of the mean distance (horizontal displacement) of landed projectiles.
+  // If it is null, it means there is not enough data to compute the value.
   public readonly standardErrorDistanceProperty: Property<number | null>;
 
   // This Property represents whether the launcher is custom or mystery.

@@ -1,9 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-//REVIEW Not clear how you achieved a grid layout, which is presumably the reason for this 'wrapper', elaborate with comments.
 /**
- * MysteryLauncherControl is a control that shows the radio buttons that choose between the different
- * mystery launchers. A wrapper is needed to help the layout wrap.
+ * MysteryLauncherControl is a control that shows the radio buttons that choose between the different mystery launchers.
+ * A wrapper is needed to help the layout wrap.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
@@ -97,7 +96,11 @@ export default class MysteryLauncherControl extends Node {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherRadioButtonGroup' ),
       phetioFeatured: true,
       orientation: 'horizontal',
+
+      // The width of the radio button group is manually-tuned to fit the mystery launcher icons in a 3x2 grid.
+      // This ensures that the radio buttons will appear in two rows.
       preferredWidth: 159,
+
       lineSpacing: 4,
       wrap: true,
       phetioVisiblePropertyInstrumented: false, // As the only UI control in the panel, the visibility is controlled by the parent panel
