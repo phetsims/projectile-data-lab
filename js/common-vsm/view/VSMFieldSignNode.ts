@@ -1,8 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-//REVIEW Incomplete doc. What does this class add to FieldSignNode?
 /**
- * The VSMFieldSignNode shows the field number and the number of projectiles that have landed in that field.
+ * The VSMFieldSignNode shows the field number and the projectile selector node for VSM screens. It has its own layout
+ * for the heading and the contents of the field sign.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  */

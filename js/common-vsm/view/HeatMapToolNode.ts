@@ -108,28 +108,49 @@ export type HeatMapToolNodeOptions = SelfOptions & NodeOptions;
 
 export default class HeatMapToolNode extends Node {
 
-  //REVIEW Lots of fields here that could use documentation.
-
+  // minValue is the minimum value that the heat map tool can display.
   private readonly minValue: number;
+
+  // maxValue is the maximum value that the heat map tool can display.
   private readonly maxValue: number;
+
+  // binWidth is the width of each bin in the heat map, used to separate the data into bins.
   private readonly binWidth: number;
+
+  // numValuesInBin is an array that stores the number of values in each bin.
   private readonly numValuesInBin: number[] = [];
 
+  // heatNodes is an array of heat nodes, each with anopacity that represents the amount of data in the bin.
   protected readonly heatNodes: Path[] = [];
+
+  // tickMarks is an array of major and minor tick marks.
   protected readonly tickMarks: Path[] = [];
+
+  // labels is an array of numerical labels for the major increments on the heat map tool.
   protected readonly labels: Text[] = [];
 
   // The display node contains all the graphical elements of the heat map tool, excluding any connector graphics
   protected displayNode: Node;
 
+  // bodyBackNode is the background of the heat map tool's display panel. It contains components that are behind the heat nodes.
   protected bodyBackNode: Path;
+
+  // bodyFrontNode is the foreground of the heat map tool's display panel. It contains components that are in front of the heat nodes.
   protected bodyFrontNode: Path;
+
+  // needleNode is the needle that points to the latest value on the heat map tool.
   protected readonly needleNode: Node;
 
+  // valueReadoutNode is the node that contains the value readout, which displays the latest value.
   protected readonly valueReadoutNode: Node;
+
+  // valueReadout is the text that displays the latest value.
   private readonly valueReadout: Text;
 
+  // minAngle is the minimum angle used to set the angular positioning of the heat nodes, in degrees.
   private readonly minAngle: number;
+
+  // maxAngle is the maximum angle used to set the angular positioning of the heat nodes, in degrees.
   private readonly maxAngle: number;
 
   // The latest value Property is used to update the heat map tool's needle rotation.

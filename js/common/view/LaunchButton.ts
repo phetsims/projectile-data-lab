@@ -1,8 +1,9 @@
 // Copyright 2024, University of Colorado Boulder
 
-//REVIEW This class feels under-documented. There's a lot going on here with how this button changes based on Properties.
 /**
- * Launch button for the projectile data lab.
+ * The launch button for Projectile Data Lab. This is used to launch projectiles, activate/deactivate continuous launching,
+ * and auto-generate data. It has an interchangeable icon that changes based on the current mode, and also handles
+ * sonification and keyboard input.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */

@@ -77,7 +77,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     this.modelViewTransform = modelViewTransform;
   }
 
-  //REVIEW document
+  // This method checks to see if landed projectiles are off the field, and if so, draws a 'force field' graphic behind them.
   protected drawOutlierGraphicsForLandedProjectiles( landedProjectiles: Projectile[], context: CanvasRenderingContext2D ): void {
 
     // Force field graphics for landed outliers
@@ -93,7 +93,7 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     } );
   }
 
-  //REVIEW document
+  // This method draws the path for a projectile, which is a parabolic curve from the launch point to the projectile's current position.
   protected drawPathForProjectile( context: CanvasRenderingContext2D, projectile: Projectile ): void {
     context.beginPath();
     let pathStarted = false;
@@ -119,7 +119,8 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     context.stroke();
   }
 
-  //REVIEW document
+  // This method draws the projectile, which is a pumpkin, piano, or cannonball, depending on the projectile type.
+  // It also draws a different image if the projectile is landed, and if it is selected.
   protected drawProjectile( context: CanvasRenderingContext2D, projectile: Projectile, isLanded: boolean, isSelected: boolean ): void {
 
     const viewPoint = this.modelViewTransform.modelToViewXY( projectile.x, projectile.y );

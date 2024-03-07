@@ -218,7 +218,8 @@ export default class LauncherNode extends Node {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
-  //REVIEW document
+  // This function is used to create the barrel graphics for the launcher. The barrel is made up of a base and a nozzle.
+  // The base is a composite shape of a circle and a rectangle, and the nozzle is a rectangle.
   private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
     const barrelColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncherNumber - 1 ].barrelFillProperty;
     const barrelDarkColorProperty = getCachedDarkerColorProperty( barrelColorProperty );
@@ -295,7 +296,8 @@ export default class LauncherNode extends Node {
     return [ barrel, ...( patternImage ? [ patternImage ] : [] ), barrelBorder, ...( isIcon ? [] : [ this.labelNode ] ), launcherEndRect ];
   }
 
-  //REVIEW document
+  // This function is used to create the back graphics for the launcher.
+  // The front graphics are made up of the guide rail and the support bar.
   private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
     const frameBackground = new Path( guideRailInnerShape(), {
       fill: PDLColors.launcherBackFillProperty

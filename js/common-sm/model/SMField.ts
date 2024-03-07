@@ -1,8 +1,8 @@
 // Copyright 2024, University of Colorado Boulder
 
-//REVIEW Incomplete doc. What does this class add?
 /**
- * The SMField adds functionality common between the Fields in the Sources and Measures screens.
+ * The SMField adds functionality common between the Fields in the Sources and Measures screens by adding support for
+ * properties that can be only set on the custom launcher.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)
