@@ -85,6 +85,8 @@ export default class AngleStabilizerSection extends VBox {
       thumbTouchAreaXDilation: 6,
       thumbTouchAreaYDilation: 4, // smaller to prevent overlap with above number spinner buttons
       phetioVisiblePropertyInstrumented: false,
+      keyboardStep: 2 * SLIDER_SNAP_INCREMENT,
+      shiftKeyboardStep: SLIDER_SNAP_INCREMENT,
 
       // This is a lot like the defaults in ValueChangeSoundPlayer with the following differences:
       // 1. The pitch goes down as you go to the right
