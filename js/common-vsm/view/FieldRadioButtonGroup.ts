@@ -80,14 +80,21 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     this.addInputListener( new KeyboardListener( {
-      keys: [ '1', '2', '3', '4', '5', '6' ] as const,
+      keys: [ 'alt+1', 'alt+2', 'alt+3', 'alt+4', 'alt+5', 'alt+6' ] as const,
+      global: true,
       callback: ( event, keysPressed ) => {
-        const key = parseInt( keysPressed, 10 );
+        const key = parseInt( keysPressed.substring( keysPressed.indexOf( '+' ) + 1 ), 10 );
         fieldProperty.value = fields[ key - 1 ];
 
         // Move focus to the radio button that was selected. Without this line, focus would incorrectly remain
-        // on the previous button.
-        this.getButtonForValue( fieldProperty.value ).focus();
+        // on the previous button. Only do this if a radio button already had focus, otherwise it would steal focus
+        for ( let i = 0; i < fieldRadioButtons.length; i++ ) {
+          const button = this.getButtonForValue( fieldRadioButtons[ i ].value );
+          if ( button.focused ) {
+            this.getButtonForValue( fieldProperty.value ).focus();
+            break;
+          }
+        }
       }
     } ) );
   }
