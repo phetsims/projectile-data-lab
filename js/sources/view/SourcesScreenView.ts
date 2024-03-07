@@ -21,7 +21,7 @@ import { Node } from '../../../../scenery/js/imports.js';
 
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
-import SMField from '../../common-sm/model/SMField.js';
+import SMField from '../../common-vsm/model/SMField.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';

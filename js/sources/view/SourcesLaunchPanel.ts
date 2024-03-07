@@ -14,7 +14,7 @@ import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import CustomLauncherSection from '../../common-sm/view/CustomLauncherSection.js';
+import CustomLauncherSection from '../../common-vsm/view/CustomLauncherSection.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
 
 type SelfOptions = EmptySelfOptions;

@@ -14,8 +14,8 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import Launcher from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
-import SMField from '../../common-sm/model/SMField.js';
+import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
+import SMField from '../../common-vsm/model/SMField.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 
 type SelfOptions = EmptySelfOptions;

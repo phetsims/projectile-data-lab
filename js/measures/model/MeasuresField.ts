@@ -21,7 +21,7 @@ import IOType from '../../../../tandem/js/types/IOType.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import SMField, { SMFieldOptions } from '../../common-sm/model/SMField.js';
+import SMField, { SMFieldOptions } from '../../common-vsm/model/SMField.js';
 
 type SelfOptions = EmptySelfOptions;
 export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isLauncherPropertyPhetioReadOnly'>;

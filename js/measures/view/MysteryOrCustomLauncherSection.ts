@@ -22,7 +22,7 @@ import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioBu
 import MysteryLauncherControl from '../../common/view/MysteryLauncherControl.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import Launcher from '../../common/model/Launcher.js';
-import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
+import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 
 type SelfOptions = EmptySelfOptions;
 type MysteryOrCustomLauncherSectionOptions = SelfOptions & PDLPanelSectionOptions;

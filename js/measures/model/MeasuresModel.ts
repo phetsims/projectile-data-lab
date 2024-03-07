@@ -19,7 +19,7 @@ import PDLConstants from '../../common/PDLConstants.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import SMModel, { SMModelOptions } from '../../common-sm/model/SMModel.js';
+import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { MeanTone } from '../../common/model/MeanTone.js';

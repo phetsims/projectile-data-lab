@@ -14,7 +14,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
+import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
 
