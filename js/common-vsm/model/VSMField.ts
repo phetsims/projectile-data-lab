@@ -190,7 +190,6 @@ export default class VSMField extends Field {
 
     projectile.setLanded();
 
-    // TODO: Can we performance optimize by setting directly in the landedProjectiles? See https://github.com/phetsims/projectile-data-lab/issues/192
     this.projectileLandedEmitter.emit( projectile );
   }
 
