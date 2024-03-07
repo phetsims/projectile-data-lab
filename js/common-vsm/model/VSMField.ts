@@ -1,8 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-//REVIEW Incomplete doc. What does this class add?
 /**
- * The VSMField is an extension of the Field class that adds fields for the VSM models.
+ * The VSMField is an extension of the Field class that adds fields for the VSM models. It contains the model properties
+ * and methods to support the launcher, continuous launch timing, speed tool, angle tool, and projectile selector on the associated field.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -20,7 +20,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLEventTimer from '../../common/model/PDLEventTimer.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
@@ -81,22 +80,18 @@ export default class VSMField extends Field {
     super( launchers, launcherProperty, PDLUtils.colorForFieldIndex( VSMFieldIdentifierValues.indexOf( identifier ) ), options );
     this.continuousLaunchTimer = new PDLEventTimer( PDLConstants.MINIMUM_TIME_BETWEEN_LAUNCHES, options.tandem.createTandem( 'continuousLaunchTimer' ) );
 
-    //REVIEW Why is this not a NumberProperty?
-    this.latestLaunchAngleProperty = new Property<number>( this.meanAngleProperty.value, {
+    this.latestLaunchAngleProperty = new NumberProperty( this.meanAngleProperty.value, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchAngleProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This Property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
                            + ' When the launcher configuration or angle stabilizer changes, this Property is set to the configured launch angle.',
-      phetioValueType: NumberIO,
       phetioFeatured: true
     } );
 
-    //REVIEW Why is this not a NumberProperty?
-    this.latestLaunchSpeedProperty = new Property<number>( 0, {
+    this.latestLaunchSpeedProperty = new NumberProperty( 0, {
       tandem: providedOptions.tandem.createTandem( 'latestLaunchSpeedProperty' ),
       phetioReadOnly: true,
       phetioDocumentation: 'This Property is the latest launch speed, in meters per second. When a projectile is launched, this is set to the launch speed.',
-      phetioValueType: NumberIO,
       phetioFeatured: true
     } );
 

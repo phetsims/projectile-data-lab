@@ -150,6 +150,14 @@ export default class HeatMapToolNode extends Node {
     this.maxValue = options.maxValue;
     this.binWidth = options.binWidth;
 
+    // Calculate the number of heat nodes based on min, max and the bin width
+    const numHeatNodes = Math.floor( ( this.maxValue - this.minValue ) / this.binWidth );
+
+    // Initialize the number of values in each bin to 0
+    for ( let i = 0; i < numHeatNodes; i++ ) {
+      this.numValuesInBin.push( 0 );
+    }
+
     this.displayNode = new Node( { x: options.displayOffset.x, y: options.displayOffset.y } );
     this.addChild( this.displayNode );
 
@@ -157,16 +165,20 @@ export default class HeatMapToolNode extends Node {
     const totalBins = ( options.maxValue - options.minValue ) / options.binWidth;
     const heatNodeArcLength = totalDeltaAngle / totalBins;
 
-    this.heatNodes = options.isIcon ? [] : this.createHeatNodes( -options.minAngle, heatNodeArcLength, options.innerHeatNodeRadius,
-      options.outerHeatNodeRadius, options.isClockwise );
+    // Create the initially transparent heat nodes
+    this.heatNodes = options.isIcon ? [] : this.createHeatNodes( numHeatNodes, -options.minAngle, heatNodeArcLength,
+      options.innerHeatNodeRadius, options.outerHeatNodeRadius, options.isClockwise );
 
+    // Create the major tick mark labels
     this.labels = this.createLabels( options.minLabeledValue, options.maxLabeledValue, options.labeledValueIncrement,
       options.labelDistanceFromCenter, options.labelMinAngle, options.labelMaxAngle );
 
+    // Create the major tick marks
     this.tickMarks = this.createMajorTickMarks( options.minLabeledValue, options.maxLabeledValue,
       options.labeledValueIncrement, options.labelMinAngle, options.labelMaxAngle, options.majorTickMarkLength,
       options.isWithInnerTickMarks, options.innerHeatNodeRadius, options.outerHeatNodeRadius );
 
+    // If minor tick marks are enabled, create them
     if ( options.isWithMinorTickMarks ) {
       const minorTickMarks = this.createMinorTickMarks( options.minValue, options.maxValue, options.minAngle,
         options.maxAngle, options.minorTickMarkIncrement, options.minorTickMarkLength, options.outerHeatNodeRadius );
@@ -243,7 +255,7 @@ export default class HeatMapToolNode extends Node {
   }
 
   // createHeatNodes creates the heat nodes that represent the heat map tool's data
-  private createHeatNodes( minAngle: number, heatNodeArcLength: number, innerRadius: number, outerRadius: number, isClockwise: boolean ): Path[] {
+  private createHeatNodes( numHeatNodes: number, minAngle: number, heatNodeArcLength: number, innerRadius: number, outerRadius: number, isClockwise: boolean ): Path[] {
     const heatNodes = [];
 
     const outerCircle = new Shape().arc( 0, 0, outerRadius, Utils.toRadians( -heatNodeArcLength / 2 ),
@@ -251,8 +263,6 @@ export default class HeatMapToolNode extends Node {
     const innerCircle = new Shape().arc( 0, 0, innerRadius, Utils.toRadians( -heatNodeArcLength / 2 ),
       Utils.toRadians( heatNodeArcLength / 2 ) ).lineTo( 0, 0 );
     const heatNodeShape = outerCircle.shapeDifference( innerCircle ).close();
-
-    const numHeatNodes = Math.floor( ( this.maxValue - this.minValue ) / this.binWidth );
 
     for ( let i = 0; i < numHeatNodes; i++ ) {
       const heatNode = new Path( heatNodeShape, {
@@ -265,9 +275,6 @@ export default class HeatMapToolNode extends Node {
 
       heatNode.rotateAround( Vector2.ZERO, Utils.toRadians( heatNodeAngle ) );
       heatNodes.push( heatNode );
-
-      // Initialize the number of values in each bin to 0
-      this.numValuesInBin.push( 0 ); //REVIEW This is a side effect that is not obvious. Are you sure you want to do this here? Maybe do this after calling createHeatNodes.
     }
 
     return heatNodes;

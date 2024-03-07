@@ -167,10 +167,13 @@ export default class IntervalToolNode extends Node {
 
     this.addChild( this.centerLineNode );
 
-    //REVIEW Utils.toFixed... duplicated in 2 places here.
-    const intervalProperty = new Property( Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 ) );
+    const getIntervalString = () => {
+      return Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 );
+    };
+
+    const intervalProperty = new Property( getIntervalString() );
     intervalTool.changedEmitter.addListener( () => {
-      intervalProperty.value = Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 );
+      intervalProperty.value = getIntervalString();
     } );
 
     // Pattern for the interval readout, not instrumented and hence does not support studio autoselect.

@@ -25,21 +25,20 @@ export type HistogramAccordionBoxOptions =
 
 export const histogramAccordionBoxTandemName = 'histogramAccordionBox';
 
+const MARGIN = 8;
+
 export default class HistogramAccordionBox extends AccordionBox {
   public constructor( content: Node,
                       providedOptions: HistogramAccordionBoxOptions ) {
-
-    //REVIEW move outside class definition, const MARGIN = 8;
-    const margin = 8;
 
     const options = optionize<HistogramAccordionBoxOptions, SelfOptions, AccordionBoxOptions>()( {
       fill: PDLColors.panelFillProperty,
       stroke: PDLColors.panelStrokeProperty,
       titleAlignX: 'left',
-      titleXSpacing: margin,
-      buttonXMargin: margin,
-      buttonYMargin: margin,
-      contentYMargin: margin,
+      titleXSpacing: MARGIN,
+      buttonXMargin: MARGIN,
+      buttonYMargin: MARGIN,
+      contentYMargin: MARGIN,
       contentYSpacing: 0,
       cornerRadius: 5,
       titleNode: new PDLText( ProjectileDataLabStrings.histogramStringProperty, {

@@ -44,10 +44,9 @@ export default class Launcher extends PhetioObject {
 
   public readonly standardDeviationSpeedProperty: TReadOnlyProperty<number>;
 
-  //REVIEW Is the doc for param launcherNumber correct here? For PDLColors.mysteryLauncherColorProfiles, custom is not index 0.
   public constructor( public readonly mysteryOrCustom: MysteryOrCustom, launcherMechanism: LauncherMechanism, standardDeviationAngle: number,
                       // 1-6 for the mystery launchers.
-                      // 0 for custom
+                      // 7 for custom
                       public readonly launcherNumber: number, providedOptions: LauncherOptions ) {
 
     if ( assert && mysteryOrCustom === 'custom' ) {
@@ -61,7 +60,6 @@ export default class Launcher extends PhetioObject {
 
     super( options );
 
-    //REVIEW should be StringUnionProperty<LauncherMechanism>
     this.launcherMechanismProperty = new Property( launcherMechanism, {
       tandem: options.tandem.createTandem( 'launcherMechanismProperty' ),
       phetioFeatured: true,

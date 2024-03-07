@@ -13,7 +13,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import MysteryLauncherRadioButtonGroupWrapper from './MysteryLauncherRadioButtonGroupWrapper.js';
+import MysteryLauncherControl from './MysteryLauncherControl.js';
 import Launcher from '../model/Launcher.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -22,7 +22,7 @@ type MysteryLauncherSectionOptions = SelfOptions & WithRequired<PDLPanelSectionO
 export default class MysteryLauncherSection extends PDLPanelSection {
 
   public constructor( mysteryLauncherProperty: PhetioProperty<Launcher>, providedOptions: MysteryLauncherSectionOptions ) {
-    super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, providedOptions ), providedOptions );
+    super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherControl( mysteryLauncherProperty, providedOptions ), providedOptions );
   }
 }
 

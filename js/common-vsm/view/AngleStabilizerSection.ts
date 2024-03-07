@@ -1,11 +1,9 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-//REVIEW Doc says 'A specific NumberControl' but I see no use of NumberControl herein.
-//REVIEW Used only in Sources screen, why is this in common-vsm/?
 /**
- * A specific NumberControl for this sim that changes the angle standard deviation for the launcher. Note that in the UI
- * it is named "Angle Stabilizer" to convey the mechanism, but throughout the code the actual value that is being set
- * is the standard deviation.
+ * A specific UI component for this sim that changes the angle standard deviation for the launcher. Note that in the UI
+ * it is named 'Angle Stabilizer' to convey the mechanism, but throughout the code the actual value that is being set
+ * is the angle standard deviation.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

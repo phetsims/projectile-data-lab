@@ -45,10 +45,11 @@ export type PDLScreenViewOptions = SelfOptions & WithRequired<ScreenViewOptions,
 export default abstract class PDLScreenView<T extends Field> extends ScreenView {
 
   protected readonly modelViewTransform;
-  protected readonly canvasBounds: Bounds2;//REVIEW document - what canvas?
 
-  //REVIEW launcherLayer is no longer needed. Now that PDLScreenView creates launcherNode, you just put launcherNode in the correct rendering order.
-  private readonly launcherLayer = new Node();
+  // These are the bounds of the canvas that the projectile paths are drawn on. It is larger than the layout bounds so that
+  // the projectile paths are not clipped if they go beyond the field, and the screen is wider than dev bounds.
+  protected readonly canvasBounds: Bounds2;
+
   protected readonly behindProjectilesLayer = new Node();
   protected readonly projectileLayer = new Node();
 
@@ -82,6 +83,8 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
 
     this.modelViewTransform = ModelViewTransform2.createSinglePointScaleInvertedYMapping(
       new Vector2( 0, 0 ), new Vector2( originX, fieldY ), PDLConstants.PIXELS_TO_DISTANCE );
+
+    this.launcherNode = options.createLauncherNode( this.modelViewTransform );
 
     // Expand the canvas bounds so that the projectile paths are not clipped if they go beyond the field
     const canvasMarginRight = this.modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE / 2 );
@@ -228,16 +231,13 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.addChild( fieldOverlayBack );
     this.addChild( this.behindProjectilesLayer );
     this.addChild( this.projectileLayer );
-    this.addChild( this.launcherLayer );
+    this.addChild( this.launcherNode );
     this.addChild( fieldFront );
     this.addChild( fieldOverlayFront );
     this.addChild( this.launchButton );
     this.addChild( this.singleOrContinuousRadioButtonGroup );
     this.addChild( this.noAirResistanceText );
     this.addChild( this.eraseResetContainer );
-
-    this.launcherNode = options.createLauncherNode( this.modelViewTransform );
-    this.launcherLayer.addChild( this.launcherNode );
   }
 
   /**

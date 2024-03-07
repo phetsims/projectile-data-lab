@@ -26,6 +26,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -54,19 +55,17 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
   // End of DynamicProperties
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-  //REVIEW Declarations of BooleanProperty should be Property<boolean>
-
   // Whether the mean is visible on the field and histogram
-  public readonly isMeanVisibleProperty: BooleanProperty;
+  public readonly isMeanVisibleProperty: Property<boolean>;
 
   // Whether the standard deviation is visible on the field and histogram
-  public readonly isStandardDeviationVisibleProperty: BooleanProperty;
+  public readonly isStandardDeviationVisibleProperty: Property<boolean>;
 
   // Whether the values are visible on the field and histogram
-  public readonly isValuesVisibleProperty: BooleanProperty;
+  public readonly isValuesVisibleProperty: Property<boolean>;
 
   // Whether the interval tool is visible on the field and histogram
-  public readonly isIntervalToolVisibleProperty: BooleanProperty;
+  public readonly isIntervalToolVisibleProperty: Property<boolean>;
 
   // The interval tool
   public readonly intervalTool: IntervalTool;

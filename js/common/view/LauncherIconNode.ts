@@ -1,8 +1,7 @@
 // Copyright 2024, University of Colorado Boulder
 
-//REVIEW This doc looks seems sort of incorrect, looks like it was copied from LauncherNode and sort of changed.
 /**
- * The LauncherIconNode is the visual representation of the projectile launcher used in the UI of Projectile Data Lab.
+ * The LauncherIconNode is the iconic representation of the projectile launcher used in the Projectile Selector component.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)

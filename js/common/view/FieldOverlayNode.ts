@@ -24,17 +24,18 @@ type SelfOptions = {
 };
 type FieldOverlayNodeOptions = SelfOptions & StrictOmit<NodeOptions, 'children'>;
 
+// The number of dashes to draw horizontally down the center of the field
+const NUMBER_OF_TOTAL_DASHES = 30;
+
 export default class FieldOverlayNode extends Node {
   public constructor( modelViewTransform: ModelViewTransform2, providedOptions?: FieldOverlayNodeOptions ) {
 
     const options = optionize<FieldOverlayNodeOptions, SelfOptions, NodeOptions>()( {}, providedOptions );
 
-    //REVIEW move outside of class definition, const NUMBER_OF_TOTAL_DASHES = 30;
-    const numTotalDashes = 30;
-    const numDashesToDraw = options.isLeftSide ? 1 : numTotalDashes;
+    const numDashesToDraw = options.isLeftSide ? 1 : NUMBER_OF_TOTAL_DASHES;
 
     // Subtract 1 to make the dashed part of the right edge line up with the right side of the field
-    const dashLength = modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE ) / ( 2 * numTotalDashes - 1 );
+    const dashLength = modelViewTransform.modelToViewDeltaX( PDLConstants.MAX_FIELD_DISTANCE ) / ( 2 * NUMBER_OF_TOTAL_DASHES - 1 );
 
     // The dashed line extends horizontally along the width of the field.
     const dashedLineShape = new Shape();

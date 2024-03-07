@@ -186,7 +186,6 @@ export default abstract class Field extends PhetioObject {
       phetioValueType: ProjectileType.ProjectileTypeIO
     } : { validValues: [ CANNONBALL ] } as const;
 
-    //REVIEW should be StringUnionProperty<ProjectileType>
     this.projectileTypeProperty = new Property<ProjectileType>( CANNONBALL, projectileTypeOptions );
 
     this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],

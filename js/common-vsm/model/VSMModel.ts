@@ -1,8 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-//REVIEW Incomplete doc. What does this class add?
 /**
- * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models.
+ * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models. It contains the model
+ * properties and methods to support the launcher, speed tool, angle tool, measuring tape, stopwatch, and projectile selector.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
@@ -44,14 +44,12 @@ export type VSMModelOptions<T extends VSMField> = SelfOptions & StrictOmit<PDLMo
 
 export default class VSMModel<T extends VSMField> extends PDLModel<T> {
 
-  //REVIEW Declarations of BooleanProperty should be Property<boolean>
-
   // Static tool visibility
-  public readonly isLaunchAngleVisibleProperty: BooleanProperty;
-  public readonly isLaunchSpeedVisibleProperty: BooleanProperty;
+  public readonly isLaunchAngleVisibleProperty: Property<boolean>;
+  public readonly isLaunchSpeedVisibleProperty: Property<boolean>;
 
   // Interactive tool visibility
-  public readonly isMeasuringTapeVisibleProperty: BooleanProperty;
+  public readonly isMeasuringTapeVisibleProperty: Property<boolean>;
 
   public readonly stopwatch: Stopwatch;
 

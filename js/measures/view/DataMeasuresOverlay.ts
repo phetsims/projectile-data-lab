@@ -18,7 +18,6 @@ import Multilink from '../../../../axon/js/Multilink.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -51,10 +50,9 @@ export default class DataMeasuresOverlay extends Node {
   public constructor( modelViewTransform: ModelViewTransform2 | ChartTransform,
                       meanDistanceProperty: TReadOnlyProperty<number | null>,
                       standardDeviationDistanceProperty: TReadOnlyProperty<number | null>,
-                      //REVIEW next 3 params of type BooleanProperty should be TReadOnlyProperty<boolean>
-                      isMeanDisplayedProperty: BooleanProperty,
-                      isStandardDeviationDisplayedProperty: BooleanProperty,
-                      isValuesDisplayedProperty: BooleanProperty,
+                      isMeanDisplayedProperty: TReadOnlyProperty<boolean>,
+                      isStandardDeviationDisplayedProperty: TReadOnlyProperty<boolean>,
+                      isValuesDisplayedProperty: TReadOnlyProperty<boolean>,
                       totalHeight: number,
                       histogramSonifierPhaseProperty: TReadOnlyProperty<HistogramSonifierPhase> | null,
                       providedOptions: DataMeasuresFieldOverlayOptions ) {
@@ -114,17 +112,17 @@ export default class DataMeasuresOverlay extends Node {
 
     const sideLineHeight = providedOptions.context === 'field' ? 0.78 * totalHeight : totalHeight;
 
-    //REVIEW leftLine and rightLine are duplicate code, including all options
-    const leftLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
-      visibleProperty: isSDIndicatorVisibleProperty,
-      stroke: 'black',
-      lineWidth: SIDE_LINE_WIDTH
-    } );
-    const rightLine = new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
-      visibleProperty: isSDIndicatorVisibleProperty,
-      stroke: 'black',
-      lineWidth: SIDE_LINE_WIDTH
-    } );
+    // Create a vertical line for the standard deviation visual representation
+    const createVerticalLine = ( ) => {
+      return new Path( new Shape().moveTo( 0, origin.y ).lineTo( 0, origin.y - sideLineHeight ), {
+        visibleProperty: isSDIndicatorVisibleProperty,
+        stroke: 'black',
+        lineWidth: SIDE_LINE_WIDTH
+      } );
+    };
+
+    const leftLine = createVerticalLine();
+    const rightLine = createVerticalLine();
 
     const arrowOptions: ArrowNodeOptions = {
       visibleProperty: isSDArrowsVisibleProperty,
@@ -170,20 +168,17 @@ export default class DataMeasuresOverlay extends Node {
       isNonNullProperty( standardDeviationDistanceProperty )
     ] );
 
-    //REVIEW sdLeftLabel and sdRightLabel are duplicate code, including all options
-    const sdLeftLabel = new PDLText( sdPatternStringProperty, {
-      visibleProperty: isSDValuesVisibleProperty,
-      font: PDLConstants.PRIMARY_FONT,
-      bottom: origin.y - sideLineHeight,
-      maxWidth: TEXT_MAX_WIDTH
-    } );
+    const createSDLabel = () => {
+      return new PDLText( sdPatternStringProperty, {
+        visibleProperty: isSDValuesVisibleProperty,
+        font: PDLConstants.PRIMARY_FONT,
+        bottom: origin.y - sideLineHeight,
+        maxWidth: TEXT_MAX_WIDTH
+      } );
+    };
 
-    const sdRightLabel = new PDLText( sdPatternStringProperty, {
-      visibleProperty: isSDValuesVisibleProperty,
-      font: PDLConstants.PRIMARY_FONT,
-      bottom: origin.y - sideLineHeight,
-      maxWidth: TEXT_MAX_WIDTH
-    } );
+    const sdLeftLabel = createSDLabel();
+    const sdRightLabel = createSDLabel();
 
     Multilink.multilink( [ IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY, meanDistanceProperty, standardDeviationDistanceProperty, sdPatternStringProperty, meanLabelPanel.boundsProperty ],
       ( isCurrentlyAutoGeneratingData, meanDistance, standardDeviationDistance ) => {

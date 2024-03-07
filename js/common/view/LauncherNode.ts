@@ -62,6 +62,26 @@ const SUPPORT_BAR_HEIGHT = 200;
 // Cache the darker color properties to avoid creating new ones for each launcher, to avoid a memory leak, see https://github.com/phetsims/projectile-data-lab/issues/24
 const darkerColorCacheMap = new Map<TReadOnlyProperty<Color>, TReadOnlyProperty<Color>>();
 
+// This function is used to create a darker color property to be used in the launcher barrel and frame graphics.
+const getCachedDarkerColorProperty = ( colorProperty: TReadOnlyProperty<Color> ) => {
+  if ( !darkerColorCacheMap.has( colorProperty ) ) {
+    darkerColorCacheMap.set( colorProperty, new DerivedProperty( [ colorProperty ], color => color.darkerColor( 0.8 ) ) );
+  }
+  return darkerColorCacheMap.get( colorProperty )!;
+};
+
+// This function is used to create the inner shape of the launcher guide rail.
+const guideRailInnerShape = () => {
+  return new Shape().arc( 0, 0, GUIDE_RAIL_INNER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
+    .lineTo( 0, 0 ).close();
+};
+
+// This function is used to create the outer shape of the launcher guide rail.
+const guideRailOuterShape = ( outerRadiusCutoff = 0 ) => {
+  return new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS - outerRadiusCutoff, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
+    .lineTo( 0, 0 ).close();
+};
+
 export default class LauncherNode extends Node {
 
   protected readonly launcherBarrel: Node;
@@ -198,18 +218,10 @@ export default class LauncherNode extends Node {
     this.y = this.modelViewTransform.modelToViewY( height );
   }
 
-  //REVIEW Unnecessary method. No members are accessed, could be moved outside class definition.
-  private getCachedDarkerColorProperty( colorProperty: TReadOnlyProperty<Color> ): TReadOnlyProperty<Color> {
-    if ( !darkerColorCacheMap.has( colorProperty ) ) {
-      darkerColorCacheMap.set( colorProperty, new DerivedProperty( [ colorProperty ], color => color.darkerColor( 0.8 ) ) );
-    }
-    return darkerColorCacheMap.get( colorProperty )!;
-  }
-
   //REVIEW document
   private launcherBarrelGraphicsForType( mysteryLauncherNumber: number, isIcon: boolean ): Node[] {
     const barrelColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncherNumber - 1 ].barrelFillProperty;
-    const barrelDarkColorProperty = this.getCachedDarkerColorProperty( barrelColorProperty );
+    const barrelDarkColorProperty = getCachedDarkerColorProperty( barrelColorProperty );
 
     const nozzleColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncherNumber - 1 ].nozzleFillProperty;
 
@@ -285,14 +297,14 @@ export default class LauncherNode extends Node {
 
   //REVIEW document
   private launcherFrameBackGraphicsForType( mysteryLauncher: number, isIcon: boolean ): Node[] {
-    const frameBackground = new Path( this.guideRailInnerShape(), {
+    const frameBackground = new Path( guideRailInnerShape(), {
       fill: PDLColors.launcherBackFillProperty
     } );
 
     const fillColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncher - 1 ].frameFillProperty;
-    const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
-    const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
-    const frameFillDarkerColorProperty = this.getCachedDarkerColorProperty( frameFillDarkColorProperty );
+    const frameFillColorProperty = getCachedDarkerColorProperty( fillColorProperty );
+    const frameFillDarkColorProperty = getCachedDarkerColorProperty( frameFillColorProperty );
+    const frameFillDarkerColorProperty = getCachedDarkerColorProperty( frameFillDarkColorProperty );
 
     const FRAME_BAR_WIDTH = 4;
 
@@ -323,7 +335,7 @@ export default class LauncherNode extends Node {
       0.5 * ( GUIDE_RAIL_INNER_RADIUS + GUIDE_RAIL_OUTER_RADIUS ),
       SUPPORT_BAR_WIDTH,
       supportBarHeight );
-    const supportBarShape = supportBarRect.shapeDifference( this.guideRailOuterShape() );
+    const supportBarShape = supportBarRect.shapeDifference( guideRailOuterShape() );
 
     const supportBar = new Path( supportBarShape, {
       fill: supportBarFillGradient,
@@ -333,15 +345,14 @@ export default class LauncherNode extends Node {
     return [ supportBar, frameBackground, frameBarTop, frameBarBottom ];
   }
 
-  //REVIEW document
+  // This function is used to create the guide rail graphics - a circular arc with inner and outer radii.
   protected launcherFrameFrontGraphicsForType( mysteryLauncher: number, outerRadiusCutoff = 0 ): Node[] {
 
     const fillColorProperty = PDLColors.mysteryLauncherColorProfiles[ mysteryLauncher - 1 ].frameFillProperty;
-    const frameFillColorProperty = this.getCachedDarkerColorProperty( fillColorProperty );
-    const frameFillDarkColorProperty = this.getCachedDarkerColorProperty( frameFillColorProperty );
+    const frameFillColorProperty = getCachedDarkerColorProperty( fillColorProperty );
+    const frameFillDarkColorProperty = getCachedDarkerColorProperty( frameFillColorProperty );
 
-    const guideRailOuterShape = this.guideRailOuterShape( outerRadiusCutoff );
-    const guideRailShape = guideRailOuterShape.shapeDifference( this.guideRailInnerShape() );
+    const guideRailShape = guideRailOuterShape( outerRadiusCutoff ).shapeDifference( guideRailInnerShape() );
 
     const guideRailFillGradient = new RadialGradient( 0, 0, GUIDE_RAIL_INNER_RADIUS, 0, 0, GUIDE_RAIL_OUTER_RADIUS );
     guideRailFillGradient.addColorStop( 0, frameFillDarkColorProperty );
@@ -355,18 +366,6 @@ export default class LauncherNode extends Node {
     } );
 
     return [ guideRail ];
-  }
-
-  //REVIEW Unnecessary method. No members are accessed, could be moved outside class definition.
-  private guideRailInnerShape(): Shape {
-    return new Shape().arc( 0, 0, GUIDE_RAIL_INNER_RADIUS, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
-      .lineTo( 0, 0 ).close();
-  }
-
-  //REVIEW Unnecessary method. No members are accessed, could be moved outside class definition.
-  private guideRailOuterShape( outerRadiusCutoff = 0 ): Shape {
-    return new Shape().arc( 0, 0, GUIDE_RAIL_OUTER_RADIUS - outerRadiusCutoff, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_MAX_ANGLE )
-      .lineTo( 0, 0 ).close();
   }
 }
 

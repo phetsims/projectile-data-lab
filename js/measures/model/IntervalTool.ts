@@ -25,8 +25,8 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 type SelfOptions = EmptySelfOptions;
 type IntervalToolOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
 
-const DEFAULT_EDGE_1 = 40;
-const DEFAULT_EDGE_2 = 60;
+export const DEFAULT_EDGE_1 = 40;
+export const DEFAULT_EDGE_2 = 60;
 
 export default class IntervalTool extends PhetioObject {
 

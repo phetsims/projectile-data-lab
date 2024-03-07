@@ -41,10 +41,9 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
                       numberOfLandedProjectilesProperty: TReadOnlyProperty<number>,
                       histogram: Histogram,
                       horizontalAxisLabelText: TReadOnlyProperty<string>,
-                      //REVIEW next 3 params of type BooleanProperty should be TReadOnlyProperty<boolean>
-                      isMeanVisibleProperty: BooleanProperty,
-                      isStandardDeviationVisibleProperty: BooleanProperty,
-                      isValuesVisibleProperty: BooleanProperty,
+                      isMeanVisibleProperty: TReadOnlyProperty<boolean>,
+                      isStandardDeviationVisibleProperty: TReadOnlyProperty<boolean>,
+                      isValuesVisibleProperty: TReadOnlyProperty<boolean>,
                       meanDistanceProperty: TReadOnlyProperty<number | null>,
                       standardDeviationProperty: TReadOnlyProperty<number | null>,
                       standardErrorProperty: TReadOnlyProperty<number | null>,

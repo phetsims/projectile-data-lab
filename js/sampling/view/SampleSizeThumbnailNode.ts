@@ -33,12 +33,6 @@ type SelfOptions = EmptySelfOptions;
 type SampleSizeThumbnailNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
 export default class SampleSizeThumbnailNode extends Node {
-
-  //REVIEW Why are these protected? I don't see any subclasses of SampleSizeThumbnailNode. Are these unnecessary fields?
-  private readonly chartNode: Node;
-  private readonly chartTransform: ChartTransform;
-  private readonly chartClipLayer: Node;
-
   public constructor( thumbnailSampleSize: number,
                       fieldProperty: TReadOnlyProperty<SamplingField>,
                       fields: SamplingField[],
@@ -50,7 +44,7 @@ export default class SampleSizeThumbnailNode extends Node {
                       providedOptions: SampleSizeThumbnailNodeOptions ) {
     super( providedOptions );
 
-    this.chartTransform = new ChartTransform( {
+    const chartTransform = new ChartTransform( {
       viewWidth: 160,
       viewHeight: 51,
       modelXRange: new Range( 0, 100 ),
@@ -77,24 +71,24 @@ export default class SampleSizeThumbnailNode extends Node {
 
       const range = new Range( thumbnailMean - THUMBNAIL_DOMAIN / 2, thumbnailMean + THUMBNAIL_DOMAIN / 2 );
 
-      this.chartTransform.setModelXRange( range );
+      chartTransform.setModelXRange( range );
     } );
 
-    const chartBackground = new ChartRectangle( this.chartTransform, {
+    const chartBackground = new ChartRectangle( chartTransform, {
       fill: 'white',
       stroke: 'black'
     } );
 
     // A stroke that has the same lineWidth as the selected stroke, but is transparent, in order that the chart spacing
     // remains the same and the charts don't move when the selection changes
-    const chartSpacingRectangle = new ChartRectangle( this.chartTransform, {
+    const chartSpacingRectangle = new ChartRectangle( chartTransform, {
       fill: null,
       stroke: new Color( 0, 0, 0 ).withAlpha( 0 ),
       lineWidth: 2
     } );
 
     // Show the frame in front, so it overlaps the bottom of the bars
-    const chartFrame = new ChartRectangle( this.chartTransform, {
+    const chartFrame = new ChartRectangle( chartTransform, {
       fill: null
     } );
 
@@ -104,23 +98,22 @@ export default class SampleSizeThumbnailNode extends Node {
     } );
 
     const histogramPainter = new HistogramCanvasPainter(
-      null, this.chartTransform, binWidthProperty, histogramRepresentationProperty,
+      null, chartTransform, binWidthProperty, histogramRepresentationProperty,
       blockFillProperty, blockStrokeProperty );
 
     // Changes based on the zoom level
-    const verticalGridLines = new GridLineSet( this.chartTransform, Orientation.VERTICAL, 10, {
+    const verticalGridLines = new GridLineSet( chartTransform, Orientation.VERTICAL, 10, {
       stroke: 'lightGray',
       lineWidth: 0.8
     } );
 
     // Changes based on the bin width
-    const horizontalGridLines = new GridLineSet( this.chartTransform, Orientation.HORIZONTAL, 1, {
+    const horizontalGridLines = new GridLineSet( chartTransform, Orientation.HORIZONTAL, 1, {
       stroke: 'lightGray',
       lineWidth: 0.8
     } );
 
-    this.chartClipLayer = new Node();
-    const chartCanvasNode = new ChartCanvasNode( this.chartTransform, [ histogramPainter ] );
+    const chartCanvasNode = new ChartCanvasNode( chartTransform, [ histogramPainter ] );
     const chartClip = new Node( {
       clipArea: chartBackground.getShape(),
       children: [
@@ -129,14 +122,12 @@ export default class SampleSizeThumbnailNode extends Node {
         verticalGridLines,
         horizontalGridLines,
 
-        this.chartClipLayer,
-
         // Some data
         chartCanvasNode
       ]
     } );
 
-    this.chartNode = new Node( {
+    const chartNode = new Node( {
       children: [
 
         // Background
@@ -159,7 +150,7 @@ export default class SampleSizeThumbnailNode extends Node {
       chartCanvasNode.update();
     } );
 
-    this.chartTransform.changedEmitter.addListener( () => chartCanvasNode.update() );
+    chartTransform.changedEmitter.addListener( () => chartCanvasNode.update() );
     histogramRepresentationProperty.link( () => chartCanvasNode.update() );
 
     const labelText = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.nEqualsSampleSizePatternStringProperty, {
@@ -167,8 +158,8 @@ export default class SampleSizeThumbnailNode extends Node {
     } ), {
       maxWidth: 80
     } );
-    this.children = [ this.chartNode, labelText ];
-    labelText.leftTop = this.chartNode.leftTop.plusXY( 4, 1 );
+    this.children = [ chartNode, labelText ];
+    labelText.leftTop = chartNode.leftTop.plusXY( 4, 1 );
 
     // Recompute and draw the entire histogram from scratch (not incrementally)
     const updateHistogram = () => {
@@ -207,7 +198,7 @@ export default class SampleSizeThumbnailNode extends Node {
     binWidthProperty.link( () => updateHistogram() );
     zoomLevelProperty.link( () => {
       const maxCount = ZOOM_LEVELS[ zoomLevelProperty.value ].maxCount;
-      this.chartTransform.setModelYRange( new Range( 0, maxCount ) );
+      chartTransform.setModelYRange( new Range( 0, maxCount ) );
       const thumbnailSpacing = ZOOM_LEVELS[ zoomLevelProperty.value ].maxCount / ZOOM_LEVELS[ zoomLevelProperty.value ].numberOfThumbnailGridLines;
 
       if ( thumbnailSpacing !== null ) {

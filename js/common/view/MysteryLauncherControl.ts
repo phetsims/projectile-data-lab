@@ -1,9 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-//REVIEW MysteryLauncherControl might be a better name for this.
 //REVIEW Not clear how you achieved a grid layout, which is presumably the reason for this 'wrapper', elaborate with comments.
 /**
- * MysteryLauncherRadioButtonGroupWrapper is a control that shows the radio buttons that choose between the different
+ * MysteryLauncherControl is a control that shows the radio buttons that choose between the different
  * mystery launchers. A wrapper is needed to help the layout wrap.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -22,7 +21,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 
 const LAUNCHER_BUTTON_CORNER_RADIUS = 2;
 
-export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
+export default class MysteryLauncherControl extends Node {
   public constructor( launcherProperty: PhetioProperty<Launcher>, providedOptions: WithRequired<NodeOptions, 'tandem'> ) {
 
     const mysteryLauncherRadioButtonGroupItems = MYSTERY_LAUNCHERS.map( mysteryLauncher => {
@@ -134,4 +133,4 @@ export default class MysteryLauncherRadioButtonGroupWrapper extends Node {
   }
 }
 
-projectileDataLab.register( 'MysteryLauncherRadioButtonGroupWrapper', MysteryLauncherRadioButtonGroupWrapper );
+projectileDataLab.register( 'MysteryLauncherControl', MysteryLauncherControl );

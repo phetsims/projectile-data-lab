@@ -30,6 +30,7 @@ import { MeanTone } from '../../common/model/MeanTone.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -101,13 +102,11 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       samplingLaunchModeProperty.value = launchMode;
     } );
 
-    //REVIEW Why is this not a NumberProperty?
-    this.sampleSizeProperty = new Property<number>( 2, {
+    this.sampleSizeProperty = new NumberProperty( 2, {
       validValues: SAMPLE_SIZES,
       tandem: options.tandem.createTandem( 'sampleSizeProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This Property configures the number of projectiles in a sample.',
-      phetioValueType: NumberIO
+      phetioDocumentation: 'This Property configures the number of projectiles in a sample.'
     } );
 
     // In the SamplingModel, the field acts like a derived Property based on the selected launcher and sample size

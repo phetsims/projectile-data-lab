@@ -1,8 +1,8 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-//REVIEW Incorrect doc, copy-pasted from PDLPanel.
 /**
- * The PDLPanel defines the default look and feel for panels in the Projectile Data Lab.
+ * The PDLLaunchPanel contains the UI for setting up the experiment. It contains controls for the launcher,
+ * as well as the launch configuration and projectile type on VSM screens, and sample size on the Sampling screen.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)

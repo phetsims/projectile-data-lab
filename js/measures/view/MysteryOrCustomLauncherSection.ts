@@ -19,7 +19,7 @@ import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection
 import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import MysteryLauncherRadioButtonGroupWrapper from '../../common/view/MysteryLauncherRadioButtonGroupWrapper.js';
+import MysteryLauncherControl from '../../common/view/MysteryLauncherControl.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import Launcher from '../../common/model/Launcher.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-sm/view/CustomLauncherTypeRadioButtonGroup.js';
@@ -59,7 +59,7 @@ export default class MysteryOrCustomLauncherSection extends PDLPanelSection {
       }
     } );
 
-    const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherRadioButtonGroupWrapper( mysteryLauncherProperty, {
+    const mysteryLauncherRadioButtonGroupWrapper = new MysteryLauncherControl( mysteryLauncherProperty, {
 
       // Note there is a "Wrapper" level in order to handle the line break for the mystery radio buttons. Hence, the wrapper
       // creates the RadioButtonGroup. The correct tandem is specified at that point.

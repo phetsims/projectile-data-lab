@@ -32,9 +32,6 @@ export type VSMAccordionBoxOptions =
 
 export default class SamplingAccordionBox extends HistogramAccordionBox {
 
-  //REVIEW document
-  public readonly bottomThumbnailNode: SampleSizeThumbnailNode;
-
   public constructor(
     histogram: Histogram,
     launcherProperty: TReadOnlyProperty<Launcher>,
@@ -62,39 +59,38 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
         tandem: providedOptions.tandem.createTandem( 'histogramNode' )
       } );
 
-    const thumbnailContainerNode = providedOptions.tandem.createTandem( 'thumbnailContainerNode' );
-    const bottomThumbnailNode = new SampleSizeThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
-      PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-        tandem: thumbnailContainerNode.createTandem( 'sample40ThumbnailNode' ),
-        visiblePropertyOptions: { phetioFeatured: true }
-      } );
+    const thumbnailContainerTandem = providedOptions.tandem.createTandem( 'thumbnailContainer' );
 
-    const thumbnailNodeVBox = new VBox( {
+    const thumbnailContainer = new VBox( {
 
       // Top align with the top border of the chart. This margin compensates for the amount the vertical axis label
       // exceeds the top of the chart
       topMargin: 7,
 
       spacing: -2,
-      tandem: thumbnailContainerNode,
+      tandem: thumbnailContainerTandem,
       visiblePropertyOptions: { phetioFeatured: true },
       children: [
         new SampleSizeThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
           PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-            tandem: thumbnailContainerNode.createTandem( 'sampleSize2ThumbnailNode' ),
+            tandem: thumbnailContainerTandem.createTandem( 'sampleSize2ThumbnailNode' ),
             visiblePropertyOptions: { phetioFeatured: true }
           } ),
         new SampleSizeThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
           PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-            tandem: thumbnailContainerNode.createTandem( 'sampleSize5ThumbnailNode' ),
+            tandem: thumbnailContainerTandem.createTandem( 'sampleSize5ThumbnailNode' ),
             visiblePropertyOptions: { phetioFeatured: true }
           } ),
         new SampleSizeThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
           PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
-            tandem: thumbnailContainerNode.createTandem( 'sampleSize15ThumbnailNode' ),
+            tandem: thumbnailContainerTandem.createTandem( 'sampleSize15ThumbnailNode' ),
             visiblePropertyOptions: { phetioFeatured: true }
           } ),
-        bottomThumbnailNode
+        new SampleSizeThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+          PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
+            tandem: thumbnailContainerTandem.createTandem( 'sample40ThumbnailNode' ),
+            visiblePropertyOptions: { phetioFeatured: true }
+          } )
       ]
     } );
     super( new HBox( {
@@ -102,11 +98,9 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       align: 'top',
       children: [
         histogramNode,
-        thumbnailNodeVBox
+        thumbnailContainer
       ]
     } ), providedOptions );
-
-    this.bottomThumbnailNode = bottomThumbnailNode;
   }
 }
 

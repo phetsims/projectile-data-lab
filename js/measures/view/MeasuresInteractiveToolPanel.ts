@@ -20,15 +20,16 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
+import Property from '../../../../axon/js/Property.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOptions;
 
 export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
   public constructor(
-    isMeasuringTapeVisibleProperty: BooleanProperty, //REVIEW should be Property<boolean>
+    isMeasuringTapeVisibleProperty: Property<boolean>,
     isStopwatchVisibleProperty: PhetioProperty<boolean>,
-    isIntervalToolVisibleProperty: BooleanProperty, //REVIEW should be Property<boolean>
+    isIntervalToolVisibleProperty: Property<boolean>,
     providedOptions: MeasuresInteractiveToolPanelOptions ) {
 
     class IntervalToolIcon extends Node {

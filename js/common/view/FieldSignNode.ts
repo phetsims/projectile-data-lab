@@ -23,7 +23,7 @@ export type FieldSignNodeOptions = SelfOptions & VBoxOptions;
 export default class FieldSignNode extends VBox {
   public constructor(
     fieldProperty: TReadOnlyProperty<Field>,
-    private readonly headingText: Node, //REVIEW headingText does not need to be a class member, it's unused outside the constructor and flagged by WebStorm.
+    headingText: Node,
     selectorNode: SelectorNode,
     signPostHeight: number,
     providedOptions: FieldSignNodeOptions ) {

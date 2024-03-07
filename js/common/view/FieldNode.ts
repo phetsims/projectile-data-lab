@@ -27,17 +27,34 @@ type SelfOptions = {
 };
 type FieldNodeOptions = SelfOptions & NodeOptions;
 
+// This function creates the vertical field lines that show the bins, based on the bin width.
+const createFieldLinesForBinWidth = ( binWidth: number ) => {
+  const totalFieldLines = PDLConstants.MAX_FIELD_DISTANCE / binWidth - 1;
+  const deltaX = binWidth * PDLConstants.FIELD_WIDTH / PDLConstants.MAX_FIELD_DISTANCE;
+  const lineHeight = PDLConstants.FIELD_HEIGHT;
+  const fieldLines: Node[] = [];
+
+  for ( let i = 0; i < totalFieldLines; i++ ) {
+    const x = -0.5 * PDLConstants.FIELD_WIDTH + deltaX * ( i + 1 );
+    const isNumberedLine = ( i + 1 ) * binWidth % PDLConstants.FIELD_LABEL_INCREMENT === 0;
+    const fieldLineFillProperty =
+      isNumberedLine ?
+      PDLColors.fieldBorderFillProperty :
+      PDLColors.fieldLineFillProperty;
+    const strokeWidth = isNumberedLine ? PDLConstants.FIELD_LINE_NUMBERED_WIDTH : PDLConstants.FIELD_LINE_WIDTH;
+    const lineShape = new Shape().rect( x - 0.5 * strokeWidth, -0.5 * lineHeight, strokeWidth, lineHeight );
+    const transformedLineShape = lineShape.nonlinearTransformed( {
+      pointMap: PDLUtils.transformField
+    } );
+    const fieldLine = new Path( transformedLineShape, {
+      fill: fieldLineFillProperty
+    } );
+    fieldLines.push( fieldLine );
+  }
+  return fieldLines;
+};
+
 export default class FieldNode extends Node {
-
-  //REVIEW Unnecessary class field. fieldLines is private and unused outside the constructor.
-  // The field lines are vertical lines spaced evenly along the field, according to the bin width.
-  private fieldLines: Node[];
-
-  //REVIEW Unnecessary class field. fieldBorder is private and unused outside the constructor.
-  //REVIEW Is this doc incomplete? I found fieldBorder vs fieldBackground to be confusing, especially both are filled.
-  // The field
-  private readonly fieldBorder: Node;
-
   public constructor( fieldProperty: TReadOnlyProperty<Field>, binWidthProperty: TReadOnlyProperty<number>, providedOptions: FieldNodeOptions ) {
 
     const fieldBounds = new Bounds2(
@@ -58,8 +75,6 @@ export default class FieldNode extends Node {
     const defaultOptions = { isBottomHalf: false, children: [ fieldBackground ] };
     const options = optionize<FieldNodeOptions, SelfOptions, NodeOptions>()( defaultOptions, providedOptions );
     super( options );
-
-    this.fieldLines = [];
 
     const fieldBorderShape = new Shape();
 
@@ -98,24 +113,33 @@ export default class FieldNode extends Node {
     const transformedFieldBorderShape = fieldBorderShape.nonlinearTransformed( {
       pointMap: PDLUtils.transformField
     } );
-    this.fieldBorder = new Path( transformedFieldBorderShape, {
+
+    // The field border is the white border around the edges of the field. It is made up of four transformed and filled rectangles.
+    const fieldBorder = new Path( transformedFieldBorderShape, {
       fill: PDLColors.fieldBorderFillProperty
     } );
-    this.addChild( this.fieldBorder );
+
+    this.addChild( fieldBorder );
 
     fieldProperty.link( field => fieldBackground.setFill( field.color ) );
 
+    // The field lines are vertical lines spaced evenly along the field, according to the bin width.
+    const fieldLines: Node[] = [];
+
     // If the bin width changes, remove the old field lines and create new ones.
     binWidthProperty.link( binWidth => {
-      this.fieldLines.forEach( fieldLine => {
+      fieldLines.forEach( fieldLine => {
         this.removeChild( fieldLine );
       } );
-      this.fieldLines = [];
-      this.fieldLinesForBinWidth( binWidth ).forEach( fieldLine => {
-        this.fieldLines.push( fieldLine );
+
+      fieldLines.length = 0;
+
+      createFieldLinesForBinWidth( binWidth ).forEach( fieldLine => {
+        fieldLines.push( fieldLine );
         this.addChild( fieldLine );
       } );
-      this.fieldBorder.moveToFront();
+
+      fieldBorder.moveToFront();
     } );
 
     const ellipse = new Shape().ellipse( new Vector2( -0.5 * PDLConstants.FIELD_WIDTH, 0 ), 35, 8, 0 );
@@ -136,34 +160,6 @@ export default class FieldNode extends Node {
     } );
     const maskShape = rectBoundsTransformed.shapeDifference( ellipse );
     this.setClipArea( maskShape );
-  }
-
-  //REVIEW Document
-  //REVIEW This function does not access any members (no use of 'this'), so can be moved outside the class definition.
-  private fieldLinesForBinWidth( binWidth: number ): Node[] {
-    const totalFieldLines = PDLConstants.MAX_FIELD_DISTANCE / binWidth - 1;
-    const deltaX = binWidth * PDLConstants.FIELD_WIDTH / PDLConstants.MAX_FIELD_DISTANCE;
-    const lineHeight = PDLConstants.FIELD_HEIGHT;
-    const fieldLines: Node[] = [];
-
-    for ( let i = 0; i < totalFieldLines; i++ ) {
-      const x = -0.5 * PDLConstants.FIELD_WIDTH + deltaX * ( i + 1 );
-      const isNumberedLine = ( i + 1 ) * binWidth % PDLConstants.FIELD_LABEL_INCREMENT === 0;
-      const fieldLineFillProperty =
-        isNumberedLine ?
-        PDLColors.fieldBorderFillProperty :
-        PDLColors.fieldLineFillProperty;
-      const strokeWidth = isNumberedLine ? PDLConstants.FIELD_LINE_NUMBERED_WIDTH : PDLConstants.FIELD_LINE_WIDTH;
-      const lineShape = new Shape().rect( x - 0.5 * strokeWidth, -0.5 * lineHeight, strokeWidth, lineHeight );
-      const transformedLineShape = lineShape.nonlinearTransformed( {
-        pointMap: PDLUtils.transformField
-      } );
-      const fieldLine = new Path( transformedLineShape, {
-        fill: fieldLineFillProperty
-      } );
-      fieldLines.push( fieldLine );
-    }
-    return fieldLines;
   }
 }
 projectileDataLab.register( 'FieldNode', FieldNode );
