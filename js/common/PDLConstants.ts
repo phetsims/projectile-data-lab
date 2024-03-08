@@ -15,6 +15,7 @@ const MAX_FIELD_DISTANCE = 100;
 const FIELD_WIDTH = 850;
 const PIXELS_TO_DISTANCE = FIELD_WIDTH / MAX_FIELD_DISTANCE;
 
+const minAngleStandardDeviation = 0.1; // degrees
 const maxAngleStandardDeviation = 6; // degrees
 
 const PDLConstants = {
@@ -30,7 +31,7 @@ const PDLConstants = {
 
   MINIMUM_TIME_BETWEEN_LAUNCHES: 0.7, // seconds
 
-  ANGLE_STANDARD_DEVIATION_RANGE: new Range( 0, maxAngleStandardDeviation ),
+  ANGLE_STANDARD_DEVIATION_RANGE: new Range( minAngleStandardDeviation, maxAngleStandardDeviation ),
 
   // In field units
   MAX_FIELD_DISTANCE: MAX_FIELD_DISTANCE,

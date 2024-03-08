@@ -103,13 +103,13 @@ export const MYSTERY_LAUNCHERS = [
   new Launcher( 'mystery', LauncherMechanism.PRESSURE, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 2, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher2' )
   } ),
-  new Launcher( 'mystery', LauncherMechanism.EXPLOSION, 0, 3, {
+  new Launcher( 'mystery', LauncherMechanism.EXPLOSION, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, 3, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher3' )
   } ),
   new Launcher( 'mystery', LauncherMechanism.SPRING, 1.5, 4, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher4' )
   } ),
-  new Launcher( 'mystery', LauncherMechanism.PRESSURE, 0, 5, {
+  new Launcher( 'mystery', LauncherMechanism.PRESSURE, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, 5, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher5' )
   } ),
   new Launcher( 'mystery', LauncherMechanism.EXPLOSION, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 6, {
