@@ -10,7 +10,7 @@ from the graphical representation (view).
 The first three screens are called Variability, Sources and Measurement. These screens are very similar to each other
 and hence in several places in the code are handled together under the term "VSM", short for Variability, Sources and
 Measurement. There is additional code that only pertains to the Sources and Measurements screens--this combination is
-abbreviated as "SM" in the code. The Sampling screen is more about firing a complete sample at once, rather than 
+abbreviated as "SM" in the code. The Sampling screen is more about firing a complete sample at once, rather than
 individual projectiles.
 
 Please note due to the similarity of the VSM screens, the code is often shared between them. This is accomplished via a
@@ -38,6 +38,7 @@ is determined by the selection of mystery launcher and sample size.
 
 The simulation is implemented with DynamicProperty, which allows values to switch based on another selected Property.
 For instance:
+
 - The PDLModel has DynamicProperty instances for the selected Field.
 - The Field has DynamicProperty instances for the selected Launcher.
 - The Launcher has DynamicProperty instances for its selected LauncherMechanism.
@@ -52,7 +53,15 @@ example.
 
 ### Disposal
 
-Everything in the simulation is statically allocated, exists for the lifetime of the simulation, and there is no need for disposal.
+Everything in the simulation is statically allocated, exists for the lifetime of the simulation, and there is no need
+for disposal. Rather than marking `isDisposable: false` in many files or calling `Disposable.assertNotDisposable`,
+instead we prevent the usage of the term `dispose` with a linter rule specified in the package.json.
+
+```json
+"additional-bad-text": ["error", {"forbiddenTextObjects": ["dispose"] }]
+```
+
+If this code is moved to common code, then this approach for disposal will need to be re-evaluated.
 
 ### Strings
 
@@ -60,7 +69,7 @@ The string keys are designed as a camel-cased version of the English translation
 
 ```json
 "binWidthMPattern": {
-  "value": "{{binWidth}} m"
+"value": "{{binWidth}} m"
 }
 ```
 
@@ -75,7 +84,8 @@ files, and to have a usage site like `new MeasuringTapeIconNode()`.
 
 ### Sonfication (sound)
 
-Sonification is implemented in the model, since it is often triggered directly by model events, rather than through a listener abstraction.
+Sonification is implemented in the model, since it is often triggered directly by model events, rather than through a
+listener abstraction.
 
 ### PhET-iO
 
