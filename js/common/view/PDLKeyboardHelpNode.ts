@@ -41,8 +41,8 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
     }, providedOptions );
 
     const leftColumn = [
+      new FromAnywhereInSimHelpSection( options.hasSelectAFieldShortcut ),
       new MoveDraggableItemsKeyboardHelpSection(),
-      new KeyboardShortcutsHelpSection( options.hasSelectAFieldShortcut ),
       ...additionalLeftColumnContent
     ];
 
@@ -58,7 +58,7 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 /**
  * The section labeled 'Keyboard Shortcuts'.
  */
-class KeyboardShortcutsHelpSection extends KeyboardHelpSection {
+class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
 
   public constructor( hasSelectAFieldShortcut: boolean ) {
 
