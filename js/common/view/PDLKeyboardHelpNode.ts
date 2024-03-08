@@ -74,7 +74,7 @@ class KeyboardShortcutsHelpSection extends KeyboardHelpSection {
         ProjectileDataLabStrings.selectAFieldStringProperty ) );
     }
 
-    super( ProjectileDataLabStrings.keyboardShortcutsStringProperty, rows, {
+    super( ProjectileDataLabStrings.fromAnywhereInSimStringProperty, rows, {
       textMaxWidth: 250,
       isDisposable: false
     } );

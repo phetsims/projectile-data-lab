@@ -182,8 +182,8 @@
   "numberOfSamplesPattern": {
     "value": "Number of samples: {{numberOfSamples}}"
   },
-  "keyboardShortcuts": {
-    "value": "Keyboard Shortcuts"
+  "fromAnywhereInSim": {
+    "value": "From Anywhere in Sim"
   },
   "selectAField": {
     "value": "Select a field"

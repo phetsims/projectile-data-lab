@@ -74,7 +74,7 @@ type StringsType = {
   'percentPatternStringProperty': LocalizedStringProperty;
   'sampleSizeNPatternStringProperty': LocalizedStringProperty;
   'numberOfSamplesPatternStringProperty': LocalizedStringProperty;
-  'keyboardShortcutsStringProperty': LocalizedStringProperty;
+  'fromAnywhereInSimStringProperty': LocalizedStringProperty;
   'selectAFieldStringProperty': LocalizedStringProperty;
   'creatingStringProperty': LocalizedStringProperty;
   'pressTheLaunchButtonStringProperty': LocalizedStringProperty;
