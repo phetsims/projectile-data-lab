@@ -26,7 +26,7 @@ export default class SourcesScreen extends Screen<SourcesModel, SourcesScreenVie
     const options = optionize<SourcesScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.sourcesStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createSourcesScreenIcon(),
-      createKeyboardHelpNode: () => new PDLKeyboardHelpNode()
+      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( true )
     }, providedOptions );
 
     super(

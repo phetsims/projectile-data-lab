@@ -20,6 +20,7 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
 
 type SelfOptions = {
 
@@ -31,7 +32,7 @@ type PDLKeyboardHelpNodeOptions = SelfOptions;
 
 export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
 
-  public constructor( additionalLeftColumnContent: KeyboardHelpSection[] = [], providedOptions?: PDLKeyboardHelpNodeOptions ) {
+  public constructor( showSliderHelp: boolean, additionalLeftColumnContent: KeyboardHelpSection[] = [], providedOptions?: PDLKeyboardHelpNodeOptions ) {
 
     const options = optionize<PDLKeyboardHelpNodeOptions, SelfOptions, TwoColumnKeyboardHelpContentOptions>()( {
 
@@ -46,7 +47,8 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
     ];
 
     const rightColumn = [
-      new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } )
+      new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } ),
+      ...( showSliderHelp ? [ new SliderControlsKeyboardHelpSection() ] : [] )
     ];
 
     super( leftColumn, rightColumn );
