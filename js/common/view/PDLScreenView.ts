@@ -10,11 +10,10 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { createGatedVisibleProperty, HBox, ManualConstraint, Node } from '../../../../scenery/js/imports.js';
+import { createGatedVisibleProperty, HBox, LinearGradient, ManualConstraint, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../PDLConstants.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
-import GradientBackgroundNode from '../../../../scenery-phet/js/GradientBackgroundNode.js';
 import FieldNode from './FieldNode.js';
 import PDLModel from '../model/PDLModel.js';
 import FieldOverlayNode from './FieldOverlayNode.js';
@@ -91,20 +90,15 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.canvasBounds = ScreenView.DEFAULT_LAYOUT_BOUNDS.dilatedX( canvasMarginRight / 2 )
       .shiftedX( canvasMarginRight / 2 );
 
-    const background = new GradientBackgroundNode(
-      0,
-      0,
-      1,
-      1,
-      PDLColors.skyTopColorStopProperty,
-      PDLColors.skyBottomColorStopProperty,
-      0,
-      1
-    );
+    const background = new Rectangle( 0, 0, 1, 1 );
 
     this.visibleBoundsProperty.link( visibleBounds => {
-      background.translation = visibleBounds.leftTop;
-      background.setScaleMagnitude( visibleBounds.width, visibleBounds.height );
+      background.setRect( visibleBounds.left, visibleBounds.top, visibleBounds.width, visibleBounds.height );
+
+      const gradient = new LinearGradient( visibleBounds.centerX, visibleBounds.top, visibleBounds.centerX, visibleBounds.bottom );
+      gradient.addColorStop( 0, PDLColors.skyTopColorStopProperty );
+      gradient.addColorStop( 1, PDLColors.skyBottomColorStopProperty );
+      background.fill = gradient;
     } );
 
     this.bottomUIContainer = new HBox( {
