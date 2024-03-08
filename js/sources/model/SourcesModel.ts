@@ -38,7 +38,7 @@ export default class SourcesModel extends SMModel<SMField> {
       const customLauncher = new Launcher(
         'custom',
         LauncherMechanism.SPRING,
-        PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
+        PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.getCenter(),
         1, {
           tandem: fieldTandem.createTandem( 'customLauncher' ),
           phetioFeatured: true

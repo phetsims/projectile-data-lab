@@ -97,7 +97,7 @@ export default class Launcher extends PhetioObject {
 
 const mysteryLaunchersTandem = Tandem.GLOBAL_MODEL.createTandem( 'mysteryLaunchers' );
 export const MYSTERY_LAUNCHERS = [
-  new Launcher( 'mystery', LauncherMechanism.SPRING, 3, 1, {
+  new Launcher( 'mystery', LauncherMechanism.SPRING, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.getCenter(), 1, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher1' )
   } ),
   new Launcher( 'mystery', LauncherMechanism.PRESSURE, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 2, {
@@ -106,7 +106,7 @@ export const MYSTERY_LAUNCHERS = [
   new Launcher( 'mystery', LauncherMechanism.EXPLOSION, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, 3, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher3' )
   } ),
-  new Launcher( 'mystery', LauncherMechanism.SPRING, 1.5, 4, {
+  new Launcher( 'mystery', LauncherMechanism.SPRING, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min + PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.getLength() / 4, 4, {
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher4' )
   } ),
   new Launcher( 'mystery', LauncherMechanism.PRESSURE, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, 5, {

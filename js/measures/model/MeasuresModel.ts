@@ -85,7 +85,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
       const customLauncher = new Launcher(
         'custom',
         LauncherMechanism.SPRING,
-        PDLConstants.CUSTOM_LAUNCHER_DEFAULT_STANDARD_DEVIATION_ANGLE,
+        PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.getCenter(),
         lastMysteryLauncherNumber + 1, {
           tandem: fieldTandem.createTandem( 'customLauncher' ),
           phetioFeatured: true
