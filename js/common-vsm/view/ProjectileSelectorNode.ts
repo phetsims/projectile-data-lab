@@ -121,7 +121,10 @@ export default class ProjectileSelectorNode extends SelectorNode {
     const projectileToggleNode = new ToggleNode( depictionProperty, depictions.map( depiction => ( {
         createNode: () => createNode( depiction ),
         value: depiction
-      } ) )
+      } ) ), {
+        // Ensure that the visible content is centered independently of the other content in the ToggleNode
+        unselectedChildrenSceneGraphStrategy: 'excluded'
+      }
     );
 
     const launcherIconNode = new LauncherIconNode( {

@@ -97,13 +97,17 @@ export default class SampleSelectorNode extends SelectorNode {
       } );
 
     const sampleMeanToggleNode = new ToggleNode<boolean, Node>( DerivedProperty.or( [ isUnfinishedSampleSelectedProperty, isUnstartedSampleSelectedProperty ] ), [
-      {
-        value: true,
-        createNode: () => creatingText
-      }, {
-        value: false,
-        createNode: () => meanContainer
-      } ]
+        {
+          value: true,
+          createNode: () => creatingText
+        }, {
+          value: false,
+          createNode: () => meanContainer
+        } ], {
+
+        // Ensure that the visible content is centered independently of the other content in the ToggleNode
+        unselectedChildrenSceneGraphStrategy: 'excluded'
+      }
     );
 
     const sampleData: VBox = new VBox( {
@@ -113,13 +117,17 @@ export default class SampleSelectorNode extends SelectorNode {
     } );
 
     const sampleDataToggleNode = new ToggleNode<boolean, Node>( isDataAvailableProperty, [
-      {
-        value: true,
-        createNode: () => sampleData
-      }, {
-        value: false,
-        createNode: () => new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SELECTOR_FONT, maxWidth: MAX_TEXT_WIDTH } )
-      } ]
+        {
+          value: true,
+          createNode: () => sampleData
+        }, {
+          value: false,
+          createNode: () => new PDLText( ProjectileDataLabStrings.noDataStringProperty, { font: PDLConstants.SELECTOR_FONT, maxWidth: MAX_TEXT_WIDTH } )
+        } ], {
+
+        // Ensure that the visible content is centered independently of the other content in the ToggleNode
+        unselectedChildrenSceneGraphStrategy: 'excluded'
+      }
     );
 
     const sampleDataContainer = new VBox( {
