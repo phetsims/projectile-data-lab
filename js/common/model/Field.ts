@@ -172,11 +172,9 @@ export default abstract class Field extends PhetioObject {
       phetioFeatured: true,
       phetioDocumentation: 'This Property configures the height and mean launch angle of the launcher.',
       phetioValueType: StringUnionIO( LauncherConfigurationValues )
-    } : { validValues: [ 'angle45' ] } as const;
+    } : { validValues: [ 'angle30' ] } as const;
 
-    const initialAngle = options.isLauncherConfigurationPhetioInstrumented ? 'angle30' : 'angle45';
-
-    this.launcherConfigurationProperty = new StringUnionProperty<LauncherConfiguration>( initialAngle, launcherConfigurationOptions );
+    this.launcherConfigurationProperty = new StringUnionProperty<LauncherConfiguration>( 'angle30', launcherConfigurationOptions );
 
     const projectileTypeOptions = options.isProjectileTypePhetioInstrumented ? {
       validValues: [ CANNONBALL, PUMPKIN, PIANO ],
