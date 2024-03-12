@@ -58,15 +58,15 @@ export default class SampleSizeThumbnailNode extends Node {
       const index = field.launcherProperty.value.launcherNumber;
 
       // The width of the range of the thumbnail histogram
-      const THUMBNAIL_DOMAIN = 30;
+      const THUMBNAIL_DOMAIN = 40;
 
       const thumbnailMean =
-        index === 1 ? 54 :
-        index === 2 ? 58 :
-        index === 3 ? 64 :
-        index === 4 ? 54 :
-        index === 5 ? 59 :
-        index === 6 ? 62 :
+        index === 1 ? 45 :
+        index === 2 ? 48 :
+        index === 3 ? 55 :
+        index === 4 ? 45 :
+        index === 5 ? 50 :
+        index === 6 ? 55 :
         50;
 
       const range = new Range( thumbnailMean - THUMBNAIL_DOMAIN / 2, thumbnailMean + THUMBNAIL_DOMAIN / 2 );
