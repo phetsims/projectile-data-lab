@@ -64,7 +64,7 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
 
     // Press the launch button: [Opt][L]
     const rows = [
-      KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(), LetterKeyNode.l() ], ProjectileDataLabStrings.pressTheLaunchButtonStringProperty )
+      KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(), LetterKeyNode.l() ], ProjectileDataLabStrings.launchOrStopProjectilesStringProperty )
     ];
 
     // Select a field: [Opt][1]-[6]
