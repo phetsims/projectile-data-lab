@@ -168,7 +168,7 @@ export default class VSMField extends Field {
       return;
     }
 
-    const projectile = this.createProjectile( 0, true );
+    const projectile = this.createProjectile( 1, true );
     this.airborneProjectiles.push( projectile );
 
     this.latestLaunchAngleProperty.value = projectile.launchAngle;
@@ -179,7 +179,7 @@ export default class VSMField extends Field {
 
   public createLandedProjectile(): void {
 
-    const projectile = this.createProjectile( 0, false );
+    const projectile = this.createProjectile( 1, false );
 
     this.airborneProjectiles.push( projectile );
 

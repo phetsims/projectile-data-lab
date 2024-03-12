@@ -91,6 +91,9 @@ export default class Projectile {
     launchSpeed: number,
     launchHeight: number
   ) {
+
+    assert && assert( sampleNumber >= 1, `Invalid sampleNumber: ${sampleNumber}` );
+
     this.screenIdentifier = screenIdentifier;
     this.fieldIdentifier = fieldIdentifier;
     this.sampleNumber = sampleNumber;
