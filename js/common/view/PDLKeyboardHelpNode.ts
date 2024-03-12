@@ -25,7 +25,7 @@ import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keybo
 type SelfOptions = {
 
   // Whether to include the keyboard shortcut labeled 'Select a field', which is not relevant in the 'Sampling' screen.
-  hasGoToField1Through6Shortcut?: boolean;
+  hasShowField1Through6Shortcut?: boolean;
 };
 
 type PDLKeyboardHelpNodeOptions = SelfOptions;
@@ -37,11 +37,11 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
     const options = optionize<PDLKeyboardHelpNodeOptions, SelfOptions, TwoColumnKeyboardHelpContentOptions>()( {
 
       // SelfOptions
-      hasGoToField1Through6Shortcut: true
+      hasShowField1Through6Shortcut: true
     }, providedOptions );
 
     const leftColumn = [
-      new FromAnywhereInSimHelpSection( options.hasGoToField1Through6Shortcut ),
+      new FromAnywhereInSimHelpSection( options.hasShowField1Through6Shortcut ),
       new MoveDraggableItemsKeyboardHelpSection(),
       ...additionalLeftColumnContent
     ];
@@ -60,7 +60,7 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
  */
 class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
 
-  public constructor( hasGoToField1Through6Shortcut: boolean ) {
+  public constructor( hasShowField1Through6Shortcut: boolean ) {
 
     // Press the launch button: [Opt][L]
     const rows = [
@@ -68,10 +68,10 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
     ];
 
     // Go to field: [Opt][1]-[6]
-    if ( hasGoToField1Through6Shortcut ) {
+    if ( hasShowField1Through6Shortcut ) {
       rows.push( KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(),
           KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 1 ), new NumberKeyNode( 6 ) ) ],
-        ProjectileDataLabStrings.goToField1Through6StringProperty ) );
+        ProjectileDataLabStrings.showField1Through6StringProperty ) );
     }
 
     super( ProjectileDataLabStrings.fromAnywhereInSimStringProperty, rows, {

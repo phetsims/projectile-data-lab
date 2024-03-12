@@ -26,7 +26,7 @@ export default class SamplingScreen extends Screen<SamplingModel, SamplingScreen
     const options = optionize<SamplingScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.samplingStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createSamplingScreenIcon(),
-      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false, [], { hasGoToField1Through6Shortcut: false } )
+      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false, [], { hasShowField1Through6Shortcut: false } )
     }, providedOptions );
 
     super(
