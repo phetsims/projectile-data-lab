@@ -25,7 +25,7 @@ import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keybo
 type SelfOptions = {
 
   // Whether to include the keyboard shortcut labeled 'Select a field', which is not relevant in the 'Sampling' screen.
-  hasSelectAFieldShortcut?: boolean;
+  hasGoToField1Through6Shortcut?: boolean;
 };
 
 type PDLKeyboardHelpNodeOptions = SelfOptions;
@@ -37,11 +37,11 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
     const options = optionize<PDLKeyboardHelpNodeOptions, SelfOptions, TwoColumnKeyboardHelpContentOptions>()( {
 
       // SelfOptions
-      hasSelectAFieldShortcut: true
+      hasGoToField1Through6Shortcut: true
     }, providedOptions );
 
     const leftColumn = [
-      new FromAnywhereInSimHelpSection( options.hasSelectAFieldShortcut ),
+      new FromAnywhereInSimHelpSection( options.hasGoToField1Through6Shortcut ),
       new MoveDraggableItemsKeyboardHelpSection(),
       ...additionalLeftColumnContent
     ];
@@ -60,18 +60,18 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
  */
 class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
 
-  public constructor( hasSelectAFieldShortcut: boolean ) {
+  public constructor( hasGoToField1Through6Shortcut: boolean ) {
 
     // Press the launch button: [Opt][L]
     const rows = [
       KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(), LetterKeyNode.l() ], ProjectileDataLabStrings.launchOrStopProjectilesStringProperty )
     ];
 
-    // Select a field: [Opt][1]-[6]
-    if ( hasSelectAFieldShortcut ) {
+    // Go to field: [Opt][1]-[6]
+    if ( hasGoToField1Through6Shortcut ) {
       rows.push( KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(),
           KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 1 ), new NumberKeyNode( 6 ) ) ],
-        ProjectileDataLabStrings.selectAFieldStringProperty ) );
+        ProjectileDataLabStrings.goToField1Through6StringProperty ) );
     }
 
     super( ProjectileDataLabStrings.fromAnywhereInSimStringProperty, rows, {
