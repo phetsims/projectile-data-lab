@@ -259,11 +259,15 @@ export default class SamplingField extends Field {
 
   private createLandedProjectile( sampleNumber: number ): void {
     const projectile = this.createProjectile( sampleNumber, false );
-    projectile.setLanded();
-
-    this.landedProjectiles.push( projectile );
-    this.projectilesChangedEmitter.emit();
     this.projectileCreatedEmitter.emit( projectile );
+
+    // Add the projectile to the airborne array, so that the Field moves it to the
+    // landed array when the projectileLandedEmitter is fired.
+    this.airborneProjectiles.push( projectile );
+    projectile.setLanded();
+    this.projectileLandedEmitter.emit( projectile );
+
+    this.projectilesChangedEmitter.emit();
   }
 
   // If the user fires a new sample while a prior sample was in progress, finish up the prior sample.
