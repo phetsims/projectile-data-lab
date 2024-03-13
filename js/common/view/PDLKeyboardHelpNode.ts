@@ -71,7 +71,7 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
     if ( hasShowField1Through6Shortcut ) {
       rows.push( KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(),
           KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 1 ), new NumberKeyNode( 6 ) ) ],
-        ProjectileDataLabStrings.showField1Through6StringProperty ) );
+        ProjectileDataLabStrings.goToFieldStringProperty ) );
     }
 
     super( ProjectileDataLabStrings.fromAnywhereInSimStringProperty, rows, {
