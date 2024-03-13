@@ -105,11 +105,11 @@ export default class AngleStabilizerSection extends VBox {
         maxSoundPlayer: angleStabilizerMaxSoundClip
       } )
     } );
-    slider.addMajorTick( 0, new PDLText( ProjectileDataLabStrings.wideStringProperty, {
+    slider.addMajorTick( 0, new PDLText( ProjectileDataLabStrings.minStringProperty, {
       fontSize: 10,
       maxWidth: 60
     } ) );
-    slider.addMajorTick( 1, new PDLText( ProjectileDataLabStrings.narrowStringProperty, {
+    slider.addMajorTick( 1, new PDLText( ProjectileDataLabStrings.maxStringProperty, {
       fontSize: 10,
       maxWidth: 60
     } ) );
@@ -132,7 +132,7 @@ export default class AngleStabilizerSection extends VBox {
         minContentWidth: 150
       },
       children: [
-        new PDLText( ProjectileDataLabStrings.angleStabilizerStringProperty, {
+        new PDLText( ProjectileDataLabStrings.angleStabilityStringProperty, {
           maxWidth: 150
         } ),
         slider
