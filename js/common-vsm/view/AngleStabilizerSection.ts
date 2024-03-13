@@ -74,6 +74,7 @@ export default class AngleStabilizerSection extends VBox {
     const slider = new HSlider( angleStabilizerProperty, new Range( 0, 1 ), {
       constrainValue: ( value: number ) => Utils.roundSymmetric( value / SLIDER_SNAP_INCREMENT ) * SLIDER_SNAP_INCREMENT,
       layoutOptions: {
+        topMargin: 1,
         stretch: true
       },
       tandem: providedOptions.tandem.createTandem( 'slider' ),
@@ -121,7 +122,7 @@ export default class AngleStabilizerSection extends VBox {
     }
     const options = optionize<AngleStabilizerSectionOptions, SelfOptions, VBoxOptions>()( {
       phetioFeatured: true,
-      topMargin: 4,
+      topMargin: 5,
       visiblePropertyOptions: {
         phetioFeatured: true
       },
