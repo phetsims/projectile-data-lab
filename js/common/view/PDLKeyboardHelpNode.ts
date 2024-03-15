@@ -47,8 +47,8 @@ export default class PDLKeyboardHelpNode extends TwoColumnKeyboardHelpContent {
     ];
 
     const rightColumn = [
-      new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } ),
-      ...( showSliderHelp ? [ new SliderControlsKeyboardHelpSection() ] : [] )
+      ...( showSliderHelp ? [ new SliderControlsKeyboardHelpSection() ] : [] ),
+      new BasicActionsKeyboardHelpSection( { withCheckboxContent: true } )
     ];
 
     super( leftColumn, rightColumn );
