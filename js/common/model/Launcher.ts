@@ -33,8 +33,8 @@ export default class Launcher extends PhetioObject {
   // The launcher mechanism (spring, pressure, explosion) determines the mean and standard deviation of the launch speed.
   public readonly launcherMechanismProperty: Property<LauncherMechanism>;
 
-  // The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.
-  public readonly angleStabilizerProperty: Property<number>;
+  // The angleStabilityProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.
+  public readonly angleStabilityProperty: Property<number>;
 
   // The standard deviation of the launch angle.
   public readonly standardDeviationAngleProperty: TReadOnlyProperty<number>;
@@ -68,17 +68,17 @@ export default class Launcher extends PhetioObject {
     } );
 
     const initialAngleStabilizer = Utils.linear( PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, 1, 0, standardDeviationAngle );
-    this.angleStabilizerProperty = new NumberProperty( initialAngleStabilizer, {
-      phetioDocumentation: 'The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.',
-      tandem: options.tandem.createTandem( 'angleStabilizerProperty' ),
+    this.angleStabilityProperty = new NumberProperty( initialAngleStabilizer, {
+      phetioDocumentation: 'The angleStabilityProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.',
+      tandem: options.tandem.createTandem( 'angleStabilityProperty' ),
       phetioFeatured: true,
       range: new Range( 0, 1 ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       }
     } );
-    this.standardDeviationAngleProperty = new DerivedProperty( [ this.angleStabilizerProperty ], angleStabilizer => {
-      return Utils.linear( 1, 0, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, angleStabilizer );
+    this.standardDeviationAngleProperty = new DerivedProperty( [ this.angleStabilityProperty ], angleStability => {
+      return Utils.linear( 1, 0, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, angleStability );
     }, {
       tandem: options.tandem.createTandem( 'standardDeviationAngleProperty' ),
       phetioFeatured: true,

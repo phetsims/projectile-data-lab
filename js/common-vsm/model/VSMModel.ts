@@ -62,8 +62,8 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
   public readonly latestLaunchAngleProperty: TReadOnlyProperty<number>;
   public readonly latestLaunchSpeedProperty: TReadOnlyProperty<number>;
 
-  // The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.
-  public readonly angleStabilizerProperty: PhetioProperty<number>;
+  // The angleStabilityProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.
+  public readonly angleStabilityProperty: PhetioProperty<number>;
   public readonly standardDeviationAngleProperty: TReadOnlyProperty<number>;
 
   public readonly selectedProjectileNumberProperty: PhetioProperty<number>;
@@ -121,12 +121,12 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
       derive: field => field.latestLaunchSpeedProperty
     } );
 
-    this.angleStabilizerProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+    this.angleStabilityProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: field => field.angleStabilizerProperty,
-      tandem: options.isStandardDeviationAnglePropertyPhetioInstrumented ? options.tandem.createTandem( 'angleStabilizerProperty' ) : Tandem.OPT_OUT,
+      derive: field => field.angleStabilityProperty,
+      tandem: options.isStandardDeviationAnglePropertyPhetioInstrumented ? options.tandem.createTandem( 'angleStabilityProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
-      phetioDocumentation: 'The angleStabilizerProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.',
+      phetioDocumentation: 'The angleStabilityProperty represents the amount of angle stabilization applied to the launcher. The value is between 0 and 1, where 0 means minimum stabilization and 1 means maximum stabilization.',
       phetioValueType: NumberIO,
       phetioReadOnly: true,
       phetioState: false

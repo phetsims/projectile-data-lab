@@ -15,7 +15,7 @@ import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPa
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
+import AngleStabilitySection from '../../common-vsm/view/AngleStabilitySection.js';
 import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
@@ -30,7 +30,7 @@ type MysteryOrCustomLauncherSectionOptions = SelfOptions & PDLPanelSectionOption
 export default class MysteryOrCustomLauncherSection extends PDLPanelSection {
 
   public constructor( mysteryOrCustomProperty: PhetioProperty<MysteryOrCustom>, mysteryLauncherProperty: PhetioProperty<Launcher>,
-                      customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStabilizerProperty: PhetioProperty<number>,
+                      customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>, angleStabilityProperty: PhetioProperty<number>,
                       providedOptions: MysteryOrCustomLauncherSectionOptions ) {
 
     const radioButtonItems: AquaRadioButtonGroupItem<MysteryOrCustom>[] = [ {
@@ -72,13 +72,13 @@ export default class MysteryOrCustomLauncherSection extends PDLPanelSection {
       phetioFeatured: true
     } );
 
-    const angleStabilizerSection = new AngleStabilizerSection( angleStabilizerProperty, {
-        tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' )
+    const angleStabilitySection = new AngleStabilitySection( angleStabilityProperty, {
+        tandem: providedOptions.tandem.createTandem( 'angleStabilitySection' )
       }
     );
 
     const customLauncherControls = new VBox( {
-      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ],
+      children: [ customLauncherTypeRadioButtonGroup, angleStabilitySection ],
       spacing: 4
     } );
 

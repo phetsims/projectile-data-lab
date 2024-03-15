@@ -16,7 +16,7 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import AngleStabilizerSection from '../../common-vsm/view/AngleStabilizerSection.js';
+import AngleStabilitySection from './AngleStabilitySection.js';
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
@@ -24,7 +24,7 @@ type CustomLauncherSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOp
 export default class CustomLauncherSection extends PDLPanelSection {
 
   public constructor( customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>,
-                      angleStabilizerProperty: PhetioProperty<number>, providedOptions: CustomLauncherSectionOptions ) {
+                      angleStabilityProperty: PhetioProperty<number>, providedOptions: CustomLauncherSectionOptions ) {
 
     const options = optionize<CustomLauncherSectionOptions, SelfOptions, PDLPanelSectionOptions>()( {
       stretch: true
@@ -36,12 +36,12 @@ export default class CustomLauncherSection extends PDLPanelSection {
     } );
 
     // Note that the Angle Stabilizer controls the standard deviation of the launch angle.
-    const angleStabilizerSection = new AngleStabilizerSection( angleStabilizerProperty, {
-      tandem: providedOptions.tandem.createTandem( 'angleStabilizerSection' )
+    const angleStabilitySection = new AngleStabilitySection( angleStabilityProperty, {
+      tandem: providedOptions.tandem.createTandem( 'angleStabilitySection' )
     } );
 
     const contentContainer = new VBox( {
-      children: [ customLauncherTypeRadioButtonGroup, angleStabilizerSection ]
+      children: [ customLauncherTypeRadioButtonGroup, angleStabilitySection ]
     } );
 
     super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, options );

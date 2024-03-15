@@ -76,7 +76,7 @@ export default abstract class Field extends PhetioObject {
   public readonly standardDeviationAngleProperty: TReadOnlyProperty<number>;
 
   // Indicates the current value for the angle stabilizer.
-  public readonly angleStabilizerProperty: DynamicProperty<number, number, Launcher>;
+  public readonly angleStabilityProperty: DynamicProperty<number, number, Launcher>;
 
   // End of DynamicProperties
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -199,9 +199,9 @@ export default abstract class Field extends PhetioObject {
       derive: launcher => launcher.standardDeviationSpeedProperty
     } );
 
-    this.angleStabilizerProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
+    this.angleStabilityProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       bidirectional: true,
-      derive: launcher => launcher.angleStabilizerProperty
+      derive: launcher => launcher.angleStabilityProperty
     } );
 
     this.standardDeviationAngleProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
@@ -241,7 +241,7 @@ export default abstract class Field extends PhetioObject {
     this.launcherConfigurationProperty.reset();
     this.projectileTypeProperty.reset();
 
-    this.angleStabilizerProperty.reset();
+    this.angleStabilityProperty.reset();
     this.launcherProperty.reset();
 
     this.clearProjectiles();

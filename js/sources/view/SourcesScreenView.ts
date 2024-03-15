@@ -53,7 +53,7 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
     }, providedOptions );
 
     const launchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
-      model.customLauncherMechanismProperty, model.angleStabilizerProperty, {
+      model.customLauncherMechanismProperty, model.angleStabilityProperty, {
         tandem: options.tandem.createTandem( 'launchPanel' )
       } );
 

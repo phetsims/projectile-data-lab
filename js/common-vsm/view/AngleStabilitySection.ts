@@ -2,7 +2,7 @@
 
 /**
  * A specific UI component for this sim that changes the angle standard deviation for the launcher. Note that in the UI
- * it is named 'Angle Stabilizer' to convey the mechanism, but throughout the code the actual value that is being set
+ * it is named 'Angle Stability' to convey the behavior, but throughout the code the actual value that is being set
  * is the angle standard deviation.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
@@ -64,14 +64,14 @@ soundManager.addSoundGenerator( angleStabilizerMinSoundClip, { categoryName: 'us
 soundManager.addSoundGenerator( angleStabilizerMaxSoundClip, { categoryName: 'user-interface' } );
 
 type SelfOptions = EmptySelfOptions;
-type AngleStabilizerSectionOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
+type AngleStabilitySectionOptions = SelfOptions & WithRequired<VBoxOptions, 'tandem'>;
 
-export default class AngleStabilizerSection extends VBox {
+export default class AngleStabilitySection extends VBox {
 
-  public constructor( angleStabilizerProperty: PhetioProperty<number>, providedOptions: AngleStabilizerSectionOptions ) {
+  public constructor( angleStabilityProperty: PhetioProperty<number>, providedOptions: AngleStabilitySectionOptions ) {
     const playbackRateMapper = ( value: number ) => Utils.linear( 0, 1, 1, 1.4, value );
 
-    const slider = new HSlider( angleStabilizerProperty, new Range( 0, 1 ), {
+    const slider = new HSlider( angleStabilityProperty, new Range( 0, 1 ), {
       constrainValue: ( value: number ) => Utils.roundSymmetric( value / SLIDER_SNAP_INCREMENT ) * SLIDER_SNAP_INCREMENT,
       layoutOptions: {
         topMargin: 1,
@@ -120,7 +120,7 @@ export default class AngleStabilizerSection extends VBox {
     for ( let i = DISTANCE_BETWEEN_MINOR_TICKS; i < 1 - MACHINE_EPSILON; i += DISTANCE_BETWEEN_MINOR_TICKS ) {
       slider.addMinorTick( i );
     }
-    const options = optionize<AngleStabilizerSectionOptions, SelfOptions, VBoxOptions>()( {
+    const options = optionize<AngleStabilitySectionOptions, SelfOptions, VBoxOptions>()( {
       phetioFeatured: true,
       topMargin: 5,
       visiblePropertyOptions: {
@@ -143,4 +143,4 @@ export default class AngleStabilizerSection extends VBox {
   }
 }
 
-projectileDataLab.register( 'AngleStabilizerSection', AngleStabilizerSection );
+projectileDataLab.register( 'AngleStabilitySection', AngleStabilitySection );
