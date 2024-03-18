@@ -137,6 +137,7 @@ export default class Histogram {
 
   public reset(): void {
     this.zoomProperty.reset();
+    this.representationProperty.reset();
     this.selectedBinWidthProperty.reset();
     this.selectedTotalBinsProperty.reset();
   }
