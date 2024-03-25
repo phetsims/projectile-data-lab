@@ -118,15 +118,15 @@ export default class ProjectileSelectorNode extends SelectorNode {
       const tallestIconWidth = Math.max( ...PUMPKIN_LANDED_IMAGES.map( image => image.height ) );
 
       // For pumpkins, normalize their dimensions so the layout doesn't jump around, see https://github.com/phetsims/projectile-data-lab/issues/259
-      const extras: Node[] = [];
+      const layoutNodes: Node[] = [];
       if ( depiction.type === PUMPKIN ) {
         const pumpkinBox = new Rectangle( 0, 0, widestIconWidth, tallestIconWidth, { fill: null, stroke: null, scale: 0.18 } );
-        extras.push( pumpkinBox );
+        layoutNodes.push( pumpkinBox );
         iconImage.centerBottom = pumpkinBox.centerBottom;
       }
 
       return new Node( {
-        children: [ ...extras, iconImage ],
+        children: [ ...layoutNodes, iconImage ],
         matrix: Matrix3.scale( depiction.isFlippedHorizontally ? -1 : 1, 1 )
       } );
     };
