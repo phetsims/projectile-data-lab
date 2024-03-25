@@ -52,8 +52,6 @@ export default class InteractiveToolPanel extends PDLPanel {
           isIcon: true,
           tandem: Tandem.OPT_OUT,
           launchButtonEnabledProperty: new BooleanProperty( true )
-        } ).rasterized( {
-          resolution: 1.25
         } );
         super( {
           children: [ stopwatchNode ],
