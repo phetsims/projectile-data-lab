@@ -97,7 +97,8 @@ export default class Histogram {
       validValues: [ 0.5, 1, 2, 5, 10 ],
       tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
       phetioFeatured: true,
-      phetioDocumentation: 'This Property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".'
+      phetioDocumentation: 'This Property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".',
+      units: 'm'
     } );
 
     this.selectedTotalBinsProperty = new NumberProperty( 10, {

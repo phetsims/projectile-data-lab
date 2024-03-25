@@ -151,13 +151,15 @@ export default class SamplingField extends Field {
     this.timeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'timeProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'The total elapsed time of running the model, so we can update the current phase and/or move to the next phase. For PhET-iO internal use only for managing state save and load.'
+      phetioDocumentation: 'The total elapsed time of running the model, so we can update the current phase and/or move to the next phase. For PhET-iO internal use only for managing state save and load.',
+      units: 's'
     } );
 
     this.phaseStartTimeProperty = new NumberProperty( 0, {
       tandem: options.tandem.createTandem( 'phaseStartTimeProperty' ),
       phetioReadOnly: true,
-      phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.'
+      phetioDocumentation: 'Mark the time when a phase began, so we can track how long we have been in the phase. For PhET-iO internal use only for managing state save and load.',
+      units: 's'
     } );
 
     const phaseChanged = () => {

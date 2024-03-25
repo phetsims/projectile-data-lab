@@ -213,7 +213,8 @@ export default abstract class Field extends PhetioObject {
     }, {
       tandem: providedOptions.isLaunchHeightPhetioInstrumented ? providedOptions.tandem.createTandem( 'launchHeightProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'This Property is the initial height of launched projectiles in meters.',
-      phetioValueType: NumberIO
+      phetioValueType: NumberIO,
+      units: 'm'
     } );
 
     this.isContinuousLaunchingProperty = new BooleanProperty( false, {

@@ -82,7 +82,8 @@ export default class Launcher extends PhetioObject {
     }, {
       tandem: options.tandem.createTandem( 'standardDeviationAngleProperty' ),
       phetioFeatured: true,
-      phetioValueType: NumberIO
+      phetioValueType: NumberIO,
+      units: '\u00B0'
     } );
 
     this.meanLaunchSpeedProperty = new DynamicProperty<number, number, LauncherMechanism>( this.launcherMechanismProperty, {
