@@ -110,7 +110,8 @@ export default class ProjectileSelectorNode extends SelectorNode {
                        depiction.type === PIANO ? pianoLandedSelected_png :
                        cannonball_png;
 
-      const imageScale = depiction.type === PUMPKIN ? 0.18 : depiction.type === PIANO ? 0.14 : 0.2;
+      const PUMPKIN_SCALE = 0.18;
+      const imageScale = depiction.type === PUMPKIN ? PUMPKIN_SCALE : depiction.type === PIANO ? 0.14 : 0.2;
 
       const iconImage = new Image( imagePNG, { scale: imageScale } );
 
@@ -120,7 +121,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
       // For pumpkins, normalize their dimensions so the layout doesn't jump around, see https://github.com/phetsims/projectile-data-lab/issues/259
       const layoutNodes: Node[] = [];
       if ( depiction.type === PUMPKIN ) {
-        const pumpkinBox = new Rectangle( 0, 0, widestIconWidth, tallestIconWidth, { fill: null, stroke: null, scale: 0.18 } );
+        const pumpkinBox = new Rectangle( 0, 0, widestIconWidth, tallestIconWidth, { fill: null, stroke: null, scale: PUMPKIN_SCALE } );
         layoutNodes.push( pumpkinBox );
         iconImage.centerBottom = pumpkinBox.centerBottom;
       }
