@@ -58,7 +58,8 @@ export default class InteractiveToolPanel extends PDLPanel {
         super( {
           children: [ stopwatchNode ],
           pickable: false,
-          maxWidth: ICON_WIDTH
+          maxWidth: ICON_WIDTH,
+          maxHeight: 16
         } );
       }
     }
