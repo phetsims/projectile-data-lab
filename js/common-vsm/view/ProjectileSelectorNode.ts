@@ -12,7 +12,7 @@
 import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { HBox, Image, Node, VBox } from '../../../../scenery/js/imports.js';
+import { HBox, Image, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
@@ -112,8 +112,21 @@ export default class ProjectileSelectorNode extends SelectorNode {
 
       const imageScale = depiction.type === PUMPKIN ? 0.18 : depiction.type === PIANO ? 0.14 : 0.2;
 
+      const iconImage = new Image( imagePNG, { scale: imageScale } );
+
+      const widestIconWidth = Math.max( ...PUMPKIN_LANDED_IMAGES.map( image => image.width ) );
+      const tallestIconWidth = Math.max( ...PUMPKIN_LANDED_IMAGES.map( image => image.height ) );
+
+      // For pumpkins, normalize their dimensions so the layout doesn't jump around, see https://github.com/phetsims/projectile-data-lab/issues/259
+      const extras: Node[] = [];
+      if ( depiction.type === PUMPKIN ) {
+        const pumpkinBox = new Rectangle( 0, 0, widestIconWidth, tallestIconWidth, { fill: null, stroke: null, scale: 0.18 } );
+        extras.push( pumpkinBox );
+        iconImage.centerBottom = pumpkinBox.centerBottom;
+      }
+
       return new Node( {
-        children: [ new Image( imagePNG, { scale: imageScale } ) ],
+        children: [ ...extras, iconImage ],
         matrix: Matrix3.scale( depiction.isFlippedHorizontally ? -1 : 1, 1 )
       } );
     };
