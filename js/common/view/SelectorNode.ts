@@ -86,7 +86,10 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
           options.playSound( numberProperty.value );
           this.focus();
         },
-        content: new Path( angleRightSolidShape, { fill: 'white', scale: 0.05 } )
+        content: new Path( angleRightSolidShape, { fill: 'white', scale: 0.05 } ),
+
+        // Individual buttons are non-focusable. This works around a bug on Safari where the focus ring could move to an individual button, see https://github.com/phetsims/projectile-data-lab/issues/255
+        focusable: false
       }, arrowButtonOptions )
     );
 
@@ -99,7 +102,10 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
           options.playSound( numberProperty.value );
           this.focus();
         },
-        content: new Path( angleLeftSolidShape, { fill: 'white', scale: 0.05 } )
+        content: new Path( angleLeftSolidShape, { fill: 'white', scale: 0.05 } ),
+
+        // Individual buttons are non-focusable. This works around a bug on Safari where the focus ring could move to an individual button, see https://github.com/phetsims/projectile-data-lab/issues/255
+        focusable: false
       }, arrowButtonOptions )
     );
 
