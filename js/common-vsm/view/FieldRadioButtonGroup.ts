@@ -94,7 +94,7 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     this.addInputListener( new KeyboardListener( {
-      keys: [ 'alt+1', 'alt+2', 'alt+3', 'alt+4', 'alt+5', 'alt+6' ] as const,
+      keys: [ 'j+1', 'j+2', 'j+3', 'j+4', 'j+5', 'j+6' ] as const,
       global: true,
       callback: ( event, keysPressed ) => {
         const key = parseInt( keysPressed.substring( keysPressed.indexOf( '+' ) + 1 ), 10 );
