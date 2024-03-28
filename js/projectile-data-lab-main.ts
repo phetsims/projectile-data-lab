@@ -64,7 +64,8 @@ simLauncher.launch( () => {
       soundDesign: 'Ashton Morris',
       thanks: 'Bill Finzer, Gayle Geschwind, Heather Lewandowski'
     },
-    preferencesModel: preferencesModel
+    preferencesModel: preferencesModel,
+    phetioDesigned: true
   } );
   sim.start();
 } );
