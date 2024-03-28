@@ -36,7 +36,8 @@
     "phet-io": {
       "wrappers": [
         "phet-io-sim-specific/repos/projectile-data-lab/wrappers/codap"
-      ]
+      ],
+      "compareDesignedAPIChanges": true
     }
   },
   "eslintConfig": {
