@@ -68,6 +68,9 @@ export default class AudioPreferencesContentNode extends PreferencesPanelContent
       phetioFeatured: true,
       visiblePropertyOptions: {
         phetioFeatured: true
+      },
+      layoutOptions: {
+        yMargin: 8
       }
     } );
 
