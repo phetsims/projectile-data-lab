@@ -306,8 +306,8 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       this.singleOrContinuousRadioButtonGroup,
 
       // Play area tools
-      this.stopwatchNode,
       this.measuringTapeNode,
+      this.stopwatchNode,
 
       // Field sign
       this.fieldSignNode,
