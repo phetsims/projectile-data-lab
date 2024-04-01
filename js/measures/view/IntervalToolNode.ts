@@ -111,7 +111,7 @@ export default class IntervalToolNode extends Node {
 
     // This is a downstream Property (only updated in the update function) that is used for sonification only.
     // IntervalTool.centerXProperty may go out of range, so we use this Property to clamp the value.
-    const centerXSonifiedProperty = new NumberProperty( intervalTool.center );
+    const centerXSonifiedProperty = new NumberProperty( intervalTool.centerProperty.value );
 
     class DraggableShadedSphereNode extends AccessibleSlider( Node, 0 ) {
       public constructor( options: AccessibleSliderOptions ) {
@@ -168,11 +168,14 @@ export default class IntervalToolNode extends Node {
     this.addChild( this.centerLineNode );
 
     const getIntervalString = () => {
-      return Utils.toFixed( Math.abs( intervalTool.edge2 - intervalTool.edge1 ), 1 );
+      return Utils.toFixed( Math.abs( intervalTool.edge2Property.value - intervalTool.edge1Property.value ), 1 );
     };
 
     const intervalProperty = new Property( getIntervalString() );
-    intervalTool.changedEmitter.addListener( () => {
+    intervalTool.edge1Property.link( () => {
+      intervalProperty.value = getIntervalString();
+    } );
+    intervalTool.edge2Property.link( () => {
       intervalProperty.value = getIntervalString();
     } );
 
@@ -227,8 +230,8 @@ export default class IntervalToolNode extends Node {
     this.addChild( readoutVBox );
 
     const update = () => {
-      const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1 );
-      const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2 );
+      const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1Property.value );
+      const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2Property.value );
 
       const SPHERE_Y = modelViewTransform.modelToViewY( 18 );
       const ARROW_Y = modelViewTransform.modelToViewY( 14.5 );
@@ -255,11 +258,13 @@ export default class IntervalToolNode extends Node {
       readoutVBox.top = ARROW_Y - intervalReadout.height / 2;
 
       // Update the downstream Property which is only used for sonification.
-      centerXSonifiedProperty.value = intervalTool.center;
+      centerXSonifiedProperty.value = ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2;
     };
 
     intervalTool.dataFractionProperty.link( update );
-    intervalTool.changedEmitter.addListener( update );
+    intervalTool.edge1Property.link( update );
+    intervalTool.edge2Property.link( update );
+
     update();
     percentPatternProperty.link( update );
     intervalReadoutStringProperty.link( update );

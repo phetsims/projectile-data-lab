@@ -151,14 +151,15 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
     this.chartClipLayer.addChild( intervalToolHighlight );
     intervalToolHighlight.moveToBack();
     const updateIntervalToolHighlight = () => {
-      const x1 = this.chartTransform.modelToViewX( intervalTool.edge1 );
-      const x2 = this.chartTransform.modelToViewX( intervalTool.edge2 );
+      const x1 = this.chartTransform.modelToViewX( intervalTool.edge1Property.value );
+      const x2 = this.chartTransform.modelToViewX( intervalTool.edge2Property.value );
       const min = Math.min( x1, x2 );
       const max = Math.max( x1, x2 );
       intervalToolHighlight.setRect( min, 0, max - min, this.chartTransform.viewHeight );
     };
     updateIntervalToolHighlight();
-    intervalTool.changedEmitter.addListener( updateIntervalToolHighlight );
+    intervalTool.edge1Property.link( updateIntervalToolHighlight );
+    intervalTool.edge2Property.link( updateIntervalToolHighlight );
 
     meanDistanceProperty.link( mean => {
       textVBox.setChildren( mean === null ? [ noDataLabel ] : dataLabels );

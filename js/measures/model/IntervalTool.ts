@@ -11,8 +11,6 @@
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import Emitter from '../../../../axon/js/Emitter.js';
-import Utils from '../../../../dot/js/Utils.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -29,13 +27,6 @@ export const DEFAULT_EDGE_1 = 40;
 export const DEFAULT_EDGE_2 = 60;
 
 export default class IntervalTool extends PhetioObject {
-
-  // Edge 1 and edge 2 are the positions of the left and right edges of the interval tool, in no particular order.
-  private _edge1 = DEFAULT_EDGE_1;
-  private _edge2 = DEFAULT_EDGE_2;
-
-  // Emits when the interval tool changes
-  public readonly changedEmitter = new Emitter();
 
   // The fraction of data within the interval tool
   public readonly dataFractionProperty: Property<number>;
@@ -60,7 +51,7 @@ export default class IntervalTool extends PhetioObject {
 
     super( options );
 
-    this.edge1Property = new NumberProperty( this._edge1, {
+    this.edge1Property = new NumberProperty( DEFAULT_EDGE_1, {
       range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       tandem: providedOptions.tandem.createTandem( 'edge1Property' ),
       units: 'm',
@@ -69,7 +60,7 @@ export default class IntervalTool extends PhetioObject {
       }
     } );
 
-    this.edge2Property = new NumberProperty( this._edge2, {
+    this.edge2Property = new NumberProperty( DEFAULT_EDGE_2, {
       range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       tandem: providedOptions.tandem.createTandem( 'edge2Property' ),
       units: 'm',
@@ -79,20 +70,48 @@ export default class IntervalTool extends PhetioObject {
     } );
 
     // This one is not PhET-iO instrumented, to avoid bounds and circularity issues. Clients should use edge1Property and edge2Property.
-    this.centerProperty = new NumberProperty( this.center, {
-      reentrant: true
-    } );
+    // This is a transient Property used to get drag events when dragging the center. It just passes through to the
+    // edges. The view is centered by averaging the edges.
+    // This Property is for input only, for use in the drag listener. Do not try to read the value, instead average the edges.
+    // This works because DragListener only sets value and does not read values for this property (do not use _useParentOffset
+    // in the node that drags based on this Property.)
+    this.centerProperty = new NumberProperty( ( DEFAULT_EDGE_1 + DEFAULT_EDGE_2 ) / 2 );
 
-    this.edge1Property.link( edge1 => {
-      this.edge1 = edge1;
-    } );
+    this.centerProperty.lazyLink( ( center, oldCenter ) => {
 
-    this.edge2Property.link( edge2 => {
-      this.edge2 = edge2;
-    } );
+      const delta = center - oldCenter;
 
-    this.centerProperty.link( center => {
-      this.center = center;
+      let edge1 = this.edge1Property.value;
+      let edge2 = this.edge2Property.value;
+      const separation = edge2 - edge1;
+      edge1 += delta;
+      edge2 += delta;
+
+      const min = 0;
+      const max = PDLConstants.MAX_FIELD_DISTANCE;
+
+      if ( edge1 > max ) {
+        edge1 = max;
+        edge2 = max + separation;
+      }
+
+      if ( edge2 > max ) {
+        edge2 = max;
+        edge1 = max - separation;
+      }
+
+      if ( edge1 < min ) {
+        edge1 = min;
+        edge2 = min + separation;
+      }
+
+      if ( edge2 < min ) {
+        edge2 = min;
+        edge1 = min - separation;
+      }
+
+      this.edge1Property.value = edge1;
+      this.edge2Property.value = edge2;
     } );
 
     this.dataFractionProperty = new NumberProperty( 0, {
@@ -101,89 +120,12 @@ export default class IntervalTool extends PhetioObject {
       phetioDocumentation: 'The fraction of data within the interval tool',
       phetioReadOnly: true
     } );
-
-    this.changedEmitter = new Emitter();
   }
 
   public reset(): void {
-    this._edge1 = DEFAULT_EDGE_1;
-    this._edge2 = DEFAULT_EDGE_2;
-
-    this.notifyChanged();
-  }
-
-  public set edge1( value: number ) {
-    const clamped = Utils.clamp( value, 0, PDLConstants.MAX_FIELD_DISTANCE );
-    if ( clamped !== this.edge1 ) {
-      this._edge1 = clamped;
-      this.notifyChanged();
-    }
-  }
-
-  public get edge1(): number {
-    return this._edge1;
-  }
-
-  public set edge2( value: number ) {
-    const clamped = Utils.clamp( value, 0, PDLConstants.MAX_FIELD_DISTANCE );
-    if ( clamped !== this._edge2 ) {
-      this._edge2 = clamped;
-      this.notifyChanged();
-    }
-  }
-
-  public get edge2(): number {
-    return this._edge2;
-  }
-
-  public get center(): number {
-    return ( this._edge1 + this._edge2 ) / 2;
-  }
-
-  public set center( value: number ) {
-    if ( value !== this.center ) {
-      const delta = value - this.center;
-      const separation = this._edge2 - this._edge1;
-      this._edge1 += delta;
-      this._edge2 += delta;
-
-      const min = 0;
-      const max = PDLConstants.MAX_FIELD_DISTANCE;
-
-      if ( this.edge1 > max ) {
-        this._edge1 = max;
-        this._edge2 = max + separation;
-      }
-
-      if ( this._edge2 > max ) {
-        this._edge2 = max;
-        this._edge1 = max - separation;
-      }
-
-      if ( this.edge1 < min ) {
-        this._edge1 = min;
-        this._edge2 = min + separation;
-      }
-
-      if ( this._edge2 < min ) {
-        this._edge2 = min;
-        this._edge1 = min - separation;
-      }
-
-      this.notifyChanged();
-    }
-  }
-
-  // When the edges or center of the interval tool change, notify the listeners
-  private notifyChanged(): void {
-
-    // Update the downstream Properties which are only used for sonification.
-    // Only update the Property values once everything is fully in-sync.
-    this.edge1Property.value = this._edge1;
-    this.edge2Property.value = this._edge2;
-    this.centerProperty.value = this.center;
-
-    this.changedEmitter.emit();
+    this.edge1Property.reset();
+    this.edge2Property.reset();
+    this.centerProperty.reset();
   }
 }
 
