@@ -108,10 +108,7 @@ export default class VSMField extends Field {
       phetioDocumentation: 'This Property is the number of the selected projectile, in order of landing. This number is 1-indexed, and 0 means no projectile is selected.'
     } );
 
-    // The selected projectile depends on the index as well as the landed projectiles themselves, so we must update it
-    // when setting PhET-iO state to change the landedProjectiles. This guarantees that the selected projectile is always
-    // a member of the data set
-    this.selectedProjectileProperty = new DerivedProperty( [ this.selectedProjectileNumberProperty, this.landedProjectilesChangedProperty ],
+    this.selectedProjectileProperty = new DerivedProperty( [ this.selectedProjectileNumberProperty ],
       highlightedProjectileNumber => {
         return this.landedProjectiles[ highlightedProjectileNumber - 1 ] || null;
       } );

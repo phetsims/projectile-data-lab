@@ -25,7 +25,7 @@ const DOT_RADIUS = 2.4;
 export default class HistogramCanvasPainter extends CanvasPainter {
 
   private data: HistogramData[] = [];
-  private selectedData: HistogramData | null = null;
+  private selectedIndex: number | null = null;
 
   public constructor( private histogram: Histogram | null,
                       private readonly chartTransform: ChartTransform,
@@ -41,9 +41,9 @@ export default class HistogramCanvasPainter extends CanvasPainter {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  public setHistogramData( data: HistogramData[], selectedData: HistogramData | null ): void {
+  public setHistogramData( data: HistogramData[], selectedNumber: number ): void {
     this.data = data;
-    this.selectedData = selectedData;
+    this.selectedIndex = selectedNumber >= 1 ? selectedNumber - 1 : null;
   }
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
@@ -83,7 +83,7 @@ export default class HistogramCanvasPainter extends CanvasPainter {
 
     for ( let i = 0; i < this.data.length; i++ ) {
       const projectile = this.data[ i ];
-      const isHighlighted = this.selectedData === projectile;
+      const isHighlighted = i === this.selectedIndex;
 
       // Calculate the bin for this value by its lower bound
       const bin = Math.floor( projectile.x / binWidth ) * binWidth;

@@ -234,13 +234,13 @@ export default class HistogramNode extends Node {
 
         const field = fieldProperty.value;
         if ( field instanceof VSMField ) {
-          histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileProperty.value );
+          histogramPainter.setHistogramData( fieldProperty.value.landedProjectiles, field.selectedProjectileNumberProperty.value );
           histogram.histogramSonifier.setHistogramData( fieldProperty.value.landedProjectiles, cancelSonification );
         }
         else if ( field instanceof SamplingField ) {
           const samples = field.getHistogramData();
           const selectedSampleNumber = field.selectedSampleNumberProperty.value;
-          histogramPainter.setHistogramData( samples, samples[ selectedSampleNumber - 1 ] );
+          histogramPainter.setHistogramData( samples, selectedSampleNumber );
 
           histogram.histogramSonifier.setHistogramData( samples, cancelSonification );
         }
