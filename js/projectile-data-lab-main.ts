@@ -62,7 +62,7 @@ simLauncher.launch( () => {
       qualityAssurance: 'Nancy Salpepi, Kathryn Woessner',
       graphicArts: 'Mariah Hermsmeyer',
       soundDesign: 'Ashton Morris',
-      thanks: 'Bill Finzer, Gayle Geschwind, Heather Lewandowski'
+      thanks: 'Bill Finzer, Gayle Geschwind, Heather Lewandowski, Joey Liu'
     },
     preferencesModel: preferencesModel,
     phetioDesigned: true
