@@ -49,6 +49,12 @@ const PDLPreferences = {
     tandem: Tandem.PREFERENCES.createTandem( 'launchSoundStrategyProperty' ),
     phetioFeatured: true,
     phetioDocumentation: 'Indicates whether the launch sound is based on the initial speed or initial angle of the projectile, or if there is none.'
+  } ),
+
+  playLandingSoundProperty: new BooleanProperty( PDLQueryParameters.playLandingSound, {
+    tandem: Tandem.PREFERENCES.createTandem( 'playLandingSoundProperty' ),
+    phetioFeatured: true,
+    phetioDocumentation: 'When true, a sound is played when the projectile lands.'
   } )
 };
 

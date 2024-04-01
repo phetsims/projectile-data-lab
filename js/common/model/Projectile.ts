@@ -28,6 +28,7 @@ import Launcher from './Launcher.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
 import ProjectileSound from './ProjectileSound.js';
 import ProjectileType from './ProjectileType.js';
+import PDLPreferences from '../PDLPreferences.js';
 
 export default class Projectile {
 
@@ -121,7 +122,10 @@ export default class Projectile {
     if ( this.y <= 0 ) {
       this.setLanded();
       field.projectileLandedEmitter.emit( this );
-      ProjectileSound.play( this.type, this.x, true );
+
+      if ( PDLPreferences.playLandingSoundProperty.value ) {
+        ProjectileSound.play( this.type, this.x, true );
+      }
     }
   }
 

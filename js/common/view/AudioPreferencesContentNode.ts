@@ -6,7 +6,7 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { Node, RichText } from '../../../../scenery/js/imports.js';
+import { RichText } from '../../../../scenery/js/imports.js';
 import PreferencesControl from '../../../../joist/js/preferences/PreferencesControl.js';
 import PreferencesDialogConstants from '../../../../joist/js/preferences/PreferencesDialogConstants.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -16,8 +16,11 @@ import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPreferences from '../PDLPreferences.js';
 import { LaunchSoundStrategy } from '../LaunchSoundStrategy.js';
+import ToggleSwitch, { ToggleSwitchOptions } from '../../../../sun/js/ToggleSwitch.js';
+import { combineOptions } from '../../../../phet-core/js/optionize.js';
+import PreferencesPanelContentNode from '../../../../joist/js/preferences/PreferencesPanelContentNode.js';
 
-export default class AudioPreferencesContentNode extends Node {
+export default class AudioPreferencesContentNode extends PreferencesPanelContentNode {
 
   public constructor( tandem: Tandem ) {
 
@@ -51,9 +54,29 @@ export default class AudioPreferencesContentNode extends Node {
       }
     } );
 
+    const playLandingSoundControlTandem = tandem.createTandem( 'playLandingSoundControl' );
+
+    const toggleSwitch = new ToggleSwitch( PDLPreferences.playLandingSoundProperty, false, true, combineOptions<ToggleSwitchOptions>( {
+      tandem: playLandingSoundControlTandem.createTandem( 'toggleSwitch' )
+    }, PreferencesDialogConstants.TOGGLE_SWITCH_OPTIONS ) );
+
+    const playLandingSoundControl = new PreferencesControl( {
+      labelNode: new PDLText( ProjectileDataLabStrings.playLandingSoundStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+      descriptionNode: new RichText( ProjectileDataLabStrings.playLandingSoundPreferenceDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+      controlNode: toggleSwitch,
+      tandem: playLandingSoundControlTandem,
+      phetioFeatured: true,
+      visiblePropertyOptions: {
+        phetioFeatured: true
+      }
+    } );
+
     super( {
-      children: [
-        launchSoundStrategyControl
+      fill: null,
+      xMargin: 0,
+      content: [
+        launchSoundStrategyControl,
+        playLandingSoundControl
       ]
     } );
   }

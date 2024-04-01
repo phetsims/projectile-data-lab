@@ -71,6 +71,8 @@ type StringsType = {
   'launchSoundStringProperty': LocalizedStringProperty;
   'noneStringProperty': LocalizedStringProperty;
   'launchSoundPreferenceDescriptionStringProperty': LocalizedStringProperty;
+  'playLandingSoundStringProperty': LocalizedStringProperty;
+  'playLandingSoundPreferenceDescriptionStringProperty': LocalizedStringProperty;
   'percentPatternStringProperty': LocalizedStringProperty;
   'sampleSizeNPatternStringProperty': LocalizedStringProperty;
   'numberOfSamplesPatternStringProperty': LocalizedStringProperty;

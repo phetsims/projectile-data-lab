@@ -83,6 +83,18 @@ const SCHEMA_MAP = {
     public: true
   },
 
+  /**
+   * Whether a sound is played when a projectile lands.
+   *
+   * This is connected to a PhET-iO instrumented Property and can be controlled via the Preferences dialog.
+   * The design for this feature is described in https://github.com/phetsims/projectile-data-lab/issues/238
+   */
+  playLandingSound: {
+    type: 'boolean' as const,
+    defaultValue: true,
+    public: true
+  },
+
   // The maximum number of Projectiles per field for the VSM screens, to streamline testing and development.
   maxProjectilesVSMField: {
     type: 'number' as const,
