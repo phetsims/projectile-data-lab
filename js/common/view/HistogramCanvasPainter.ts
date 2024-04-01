@@ -41,9 +41,14 @@ export default class HistogramCanvasPainter extends CanvasPainter {
    * Sets the dataSet and redraws the plot. If instead the dataSet array is mutated, it is the client's responsibility
    * to call `update` or make sure `update` is called elsewhere (say, if the chart scrolls in that frame).
    */
-  public setHistogramData( data: HistogramData[], selectedNumber: number ): void {
+  public setHistogramData( data: HistogramData[], selectedNumber: number | null ): void {
     this.data = data;
-    this.selectedIndex = selectedNumber >= 1 ? selectedNumber - 1 : null;
+    if ( selectedNumber === null ) {
+      this.selectedIndex = null;
+    }
+    else {
+      this.selectedIndex = selectedNumber >= 1 ? selectedNumber - 1 : null;
+    }
   }
 
   public paintCanvas( context: CanvasRenderingContext2D ): void {
