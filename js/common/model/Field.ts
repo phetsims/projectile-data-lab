@@ -114,6 +114,10 @@ export default abstract class Field extends PhetioObject {
   // Unique identifier for the Field
   protected readonly abstract identifier: string;
 
+  // Workaround to make sure the selected projectile instance changes when the landedProjectiles are set via phet-io,
+  // see https://github.com/phetsims/projectile-data-lab/issues/268
+  protected readonly landedProjectilesChangedProperty = new NumberProperty( 0 );
+
   protected constructor(
     //
     // The launchers available to be used on this Field
@@ -390,6 +394,8 @@ export default abstract class Field extends PhetioObject {
       stateObject.landedProjectiles.forEach( ( projectileStateObject: ProjectileStateObject ) => {
         field.landedProjectiles.push( Projectile.ProjectileIO.fromStateObject( projectileStateObject ) );
       } );
+
+      field.landedProjectilesChangedProperty.value++;
     }
   } );
 }
