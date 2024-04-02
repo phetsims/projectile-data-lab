@@ -167,7 +167,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
 
     // Compute the percent of data within the interval tool, only considering the landedProjectiles.
     const updateIntervalToolDataPercentage = () => {
-      const min = Math.min( this.intervalTool.edge1Property.value, this.intervalTool.edge1Property.value );
+      const min = Math.min( this.intervalTool.edge1Property.value, this.intervalTool.edge2Property.value );
       const max = Math.max( this.intervalTool.edge1Property.value, this.intervalTool.edge2Property.value );
       const field = this.fieldProperty.value;
       const count = field.landedProjectiles.filter( projectile => {
