@@ -36,11 +36,6 @@ export default class IntervalTool extends PhetioObject {
   public readonly edge1Property: Property<number>;
   public readonly edge2Property: Property<number>;
 
-  // This Property can be used to read and write the center of the interval tool. It is necessary for wiring up to the
-  // DragListener that translates the entire IntervalTool. This value may go out of the bounds of the field while dragging.
-  // This is preferable to updating and maintaining an allowed range that changes based on the width of the tool.
-  public readonly centerProperty: Property<number>;
-
   public constructor( providedOptions: IntervalToolOptions ) {
 
     const options = optionize<IntervalToolOptions, SelfOptions, PhetioObjectOptions>()( {
@@ -57,7 +52,8 @@ export default class IntervalTool extends PhetioObject {
       units: 'm',
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
-      }
+      },
+      // reentrant: true
     } );
 
     this.edge2Property = new NumberProperty( DEFAULT_EDGE_2, {
@@ -66,47 +62,8 @@ export default class IntervalTool extends PhetioObject {
       units: 'm',
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
-      }
-    } );
-
-    // This one is not PhET-iO instrumented, to avoid bounds and circularity issues. Clients should use edge1Property and edge2Property.
-    // This is a transient Property used to get drag events when dragging the center. It just passes through to the
-    // edges. The view is centered by averaging the edges.
-    // This Property is for input only, for use in the drag listener. Do not try to read the value, instead average the edges.
-    // This works because DragListener only sets value and does not read values for this property (do not use _useParentOffset
-    // in the node that drags based on this Property.)
-    this.centerProperty = new NumberProperty( ( DEFAULT_EDGE_1 + DEFAULT_EDGE_2 ) / 2 );
-
-    this.centerProperty.lazyLink( ( center, oldCenter ) => {
-
-      let delta = center - oldCenter;
-
-      let edge1 = this.edge1Property.value;
-      let edge2 = this.edge2Property.value;
-
-      if ( delta > 0 ) {
-
-        const max = Math.max( edge1, edge2 );
-        if ( max + delta > PDLConstants.MAX_FIELD_DISTANCE ) {
-          delta = PDLConstants.MAX_FIELD_DISTANCE - max;
-        }
-      }
-      else if ( delta < 0 ) {
-
-        const min = Math.min( edge1, edge2 );
-        if ( min + delta < 0 ) {
-          delta = -min;
-        }
-      }
-      else {
-        // nothing to do
-      }
-
-      edge1 += delta;
-      edge2 += delta;
-
-      this.edge1Property.value = edge1;
-      this.edge2Property.value = edge2;
+      },
+      // reentrant: true
     } );
 
     this.dataFractionProperty = new NumberProperty( 0, {
@@ -120,7 +77,6 @@ export default class IntervalTool extends PhetioObject {
   public reset(): void {
     this.edge1Property.reset();
     this.edge2Property.reset();
-    this.centerProperty.reset();
   }
 }
 

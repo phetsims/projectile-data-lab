@@ -40,6 +40,7 @@ import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import isResettingAllProperty from '../../common/model/isResettingAllProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -127,9 +128,9 @@ export default class IntervalToolNode extends Node {
     this.addChild( edge1Line );
     this.addChild( edge2Line );
 
-    // This is a downstream Property (only updated in the update function) that is used for sonification and the center position label..
+    // This is a downstream Property (only updated in the update function) that is used for sonification and the center position label.
     // IntervalTool.centerXProperty may go out of range, so we use this Property to clamp the value.
-    const boundedCenterXProperty = new NumberProperty( intervalTool.centerProperty.value );
+    const centerPositionSonificationProperty = new NumberProperty( ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2 );
 
     class DraggableShadedSphereNode extends AccessibleSlider( Node, 0 ) {
       public constructor( options: AccessibleSliderOptions ) {
@@ -206,7 +207,7 @@ export default class IntervalToolNode extends Node {
     } );
 
     this.centerLineLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
-      mean: roundedValueProperty( boundedCenterXProperty )
+      mean: roundedValueProperty( centerPositionSonificationProperty )
     } ), {
       font: PDLConstants.INTERVAL_TOOL_FONT,
       maxWidth: 100,
@@ -273,9 +274,39 @@ export default class IntervalToolNode extends Node {
       }
     }
 
+    // This is where the UI wants to put the center.
+    const desiredCenterLocationProperty = new Property( new Vector2( 50, 0 ), {
+      valueComparisonStrategy: 'equalsFunction'
+    } );
+
+    // The drag listener requires a Vector2 instead of a number, so we need to create a DynamicProperty to convert between the two
+    const createDynamicAdapterProperty = ( property: Property<number> ) => {
+      return new DynamicProperty( new Property( property ), {
+        bidirectional: true,
+        map: function( value: number ) { return new Vector2( value, 0 );},
+        inverseMap: function( value: Vector2 ) { return value.x; }
+      } );
+    };
+
+    // Vector2 => number
+    const createAlternateDynamicProperty = ( property: Property<Vector2> ) => {
+      return new DynamicProperty( new Property( property ), {
+        bidirectional: true,
+        map: function( value: Vector2 ) { return value.x; },
+        inverseMap: function( value: number ) { return new Vector2( value, 0 ); }
+      } );
+    };
+
+    const separation = Math.abs( intervalTool.edge1Property.value - intervalTool.edge2Property.value );
+    const centerDragBoundsProperty = new Property( new Bounds2( separation / 2, -1000, PDLConstants.MAX_FIELD_DISTANCE - separation / 2, 1000 ) );
+
+    const centerDragBounds1DProperty = new DerivedProperty( [ centerDragBoundsProperty ], bounds => new Range( bounds.minX, bounds.maxX ) );
+
     const readoutVBox = new ReadoutVBox( {
-      valueProperty: intervalTool.centerProperty,
-      enabledRangeProperty: new Property( new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ) )
+      valueProperty: createAlternateDynamicProperty( desiredCenterLocationProperty ),
+      enabledRangeProperty: centerDragBounds1DProperty,
+      startDrag: () => { this.isCenterDraggingProperty.value = true; },
+      endDrag: () => { this.isCenterDraggingProperty.value = false; }
     } );
     this.addChild( readoutVBox );
 
@@ -317,7 +348,7 @@ export default class IntervalToolNode extends Node {
       readoutVBox.top = ARROW_Y - intervalReadout.height / 2;
 
       // Update the downstream Property which is only used for sonification.
-      boundedCenterXProperty.value = ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2;
+      centerPositionSonificationProperty.value = ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2;
     };
 
     intervalTool.dataFractionProperty.link( update );
@@ -343,64 +374,86 @@ export default class IntervalToolNode extends Node {
     };
 
     const edge1DragListenerOptions = {
-      start: () => {
-        this.isEdge1DraggingProperty.value = true;
-      },
-      end: () => {
-        this.isEdge1DraggingProperty.value = false;
-      },
+      start: () => { this.isEdge1DraggingProperty.value = true; },
+      end: () => { this.isEdge1DraggingProperty.value = false; },
       transform: modelViewTransform
     };
 
     const edge2DragListenerOptions = {
-      start: () => {
-        this.isEdge2DraggingProperty.value = true;
-      },
-      end: () => {
-        this.isEdge2DraggingProperty.value = false;
-      },
+      start: () => { this.isEdge2DraggingProperty.value = true; },
+      end: () => { this.isEdge2DraggingProperty.value = false; },
       transform: modelViewTransform
     };
 
     const centerDragListenerOptions = {
-      start: () => {
-        this.isCenterDraggingProperty.value = true;
-      },
-      end: () => {
-        this.isCenterDraggingProperty.value = false;
-      },
+      start: () => {this.isCenterDraggingProperty.value = true;},
+      end: () => { this.isCenterDraggingProperty.value = false;},
       transform: modelViewTransform
     };
 
-    // The drag listener requires a Vector2 instead of a number, so we need to create a DynamicProperty to convert between the two
-    const createDynamicAdapterProperty = ( property: Property<number>, isReentrant: boolean ) => {
-      return new DynamicProperty( new Property( property ), {
-        bidirectional: true,
-        map: function( value: number ) { return new Vector2( value, 0 );},
-        inverseMap: function( value: Vector2 ) { return value.x; },
-        reentrant: isReentrant
-      } );
-    };
-
     edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: createDynamicAdapterProperty( intervalTool.edge1Property, false ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.edge1Property ),
       tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
       drag: moveToFront( edge1Sphere )
     }, edge1DragListenerOptions, dragListenerOptions ) ) );
 
     edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      positionProperty: createDynamicAdapterProperty( intervalTool.edge2Property, false ),
+      positionProperty: createDynamicAdapterProperty( intervalTool.edge2Property ),
       tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
       drag: moveToFront( edge2Sphere )
     }, edge2DragListenerOptions, dragListenerOptions ) ) );
 
+    desiredCenterLocationProperty.lazyLink( ( value: Vector2, oldValue: Vector2 ) => {
+      if ( this.isCenterDraggingProperty.value ) {
+        let delta = value.x - oldValue.x;
+
+        const max = Math.max( intervalTool.edge1Property.value, intervalTool.edge2Property.value );
+        const min = Math.min( intervalTool.edge1Property.value, intervalTool.edge2Property.value );
+
+        if ( max + delta > PDLConstants.MAX_FIELD_DISTANCE ) {
+          delta = PDLConstants.MAX_FIELD_DISTANCE - max;
+        }
+        if ( min + delta < 0 ) {
+          delta = -min;
+        }
+
+        intervalTool.edge1Property.setDeferred( true );
+        intervalTool.edge2Property.setDeferred( true );
+
+        intervalTool.edge1Property.value += delta;
+        intervalTool.edge2Property.value += delta;
+
+        const a = intervalTool.edge1Property.setDeferred( false );
+        const b = intervalTool.edge2Property.setDeferred( false );
+
+        a && a();
+        b && b();
+      }
+    } );
+
+    Multilink.multilink( [ this.isEdge1DraggingProperty, this.isEdge2DraggingProperty ], ( isEdge1Dragging, isEdge2Dragging ) => {
+      if ( !isEdge1Dragging || !isEdge2Dragging ) {
+        desiredCenterLocationProperty.value = new Vector2( ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2, 0 );
+      }
+    } );
+
+    Multilink.multilink( [ intervalTool.edge1Property, intervalTool.edge2Property, this.isCenterDraggingProperty, this.isEdge1DraggingProperty, this.isEdge2DraggingProperty ], () => {
+      if ( ( this.isEdge1DraggingProperty.value || this.isEdge2DraggingProperty.value ) && !this.isCenterDraggingProperty.value ) {
+        desiredCenterLocationProperty.value = new Vector2( ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2, 0 );
+
+        const separation = Math.abs( intervalTool.edge1Property.value - intervalTool.edge2Property.value );
+        centerDragBoundsProperty.value = new Bounds2( separation / 2, -1000, PDLConstants.MAX_FIELD_DISTANCE - separation / 2, 1000 );
+      }
+    } );
+
     readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       applyOffset: true,
       useParentOffset: true,
-      positionProperty: createDynamicAdapterProperty( intervalTool.centerProperty, true ),
+      positionProperty: desiredCenterLocationProperty,
       tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
     }, centerDragListenerOptions, {
-      useInputListenerCursor: true
+      useInputListenerCursor: true,
+      dragBoundsProperty: centerDragBoundsProperty
     } ) ) );
 
     // Play a ratcheting sound as either edge is dragged. The sound is played when passing thresholds on the field,
@@ -457,7 +510,7 @@ export default class IntervalToolNode extends Node {
       maxSoundPlayer: nullSoundPlayer
     } );
 
-    boundedCenterXProperty.lazyLink( ( newValue: number, oldValue: number ) => {
+    centerPositionSonificationProperty.lazyLink( ( newValue: number, oldValue: number ) => {
       if ( this.isCenterDraggingProperty.value && !isResettingAllProperty.value ) {
         centerValueChangeSoundPlayer.playSoundIfThresholdReached( newValue, oldValue );
       }
