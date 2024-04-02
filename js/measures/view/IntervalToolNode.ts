@@ -86,8 +86,23 @@ export default class IntervalToolNode extends Node {
   // The horizontal arrow indicates the width of the interval
   private readonly arrowNode: ArrowNode;
 
+  // The edge 1 label is only visible while the interval tool is being stretched via the edge1 handle
+  private readonly edge1Label: PDLText;
+
+  // The edge 2 label is only visible while the interval tool is being stretched via the edge2 handle
+  private readonly edge2Label: PDLText;
+
+  // The center line label is only visible while the interval tool is being translated via the center readout
+  private readonly centerLineLabel: PDLText;
+
   // The center line is only visible while the interval tool is being translationally dragged (via keyboard or mouse)
   private readonly centerLineNode: Line;
+
+  // This Property represents whether the user is dragging via the edge1 handle, which stretches the interval.
+  private readonly isEdge1DraggingProperty = new BooleanProperty( false );
+
+  // This Property represents whether the user is dragging via the edge2 handle, which stretches the interval.
+  private readonly isEdge2DraggingProperty = new BooleanProperty( false );
 
   // This Property represents whether the user is dragging via the center readout, which translates the entire interval.
   private readonly isCenterDraggingProperty = new BooleanProperty( false );
@@ -110,9 +125,9 @@ export default class IntervalToolNode extends Node {
     this.addChild( edge1Line );
     this.addChild( edge2Line );
 
-    // This is a downstream Property (only updated in the update function) that is used for sonification only.
+    // This is a downstream Property (only updated in the update function) that is used for sonification and the center position label..
     // IntervalTool.centerXProperty may go out of range, so we use this Property to clamp the value.
-    const centerXSonifiedProperty = new NumberProperty( intervalTool.centerProperty.value );
+    const boundedCenterXProperty = new NumberProperty( intervalTool.centerProperty.value );
 
     class DraggableShadedSphereNode extends AccessibleSlider( Node, 0 ) {
       public constructor( options: AccessibleSliderOptions ) {
@@ -167,6 +182,38 @@ export default class IntervalToolNode extends Node {
     } );
 
     this.addChild( this.centerLineNode );
+
+    const roundedValueProperty = ( numberProperty: Property<number> ) => new DerivedProperty( [ numberProperty ], number => {
+      return Utils.toFixed( number, 1 );
+    } );
+
+    this.edge1Label = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
+      mean: roundedValueProperty( intervalTool.edge1Property )
+    } ), {
+      font: PDLConstants.INTERVAL_TOOL_FONT,
+      maxWidth: 100,
+      visibleProperty: this.isEdge1DraggingProperty
+    } );
+
+    this.edge2Label = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
+      mean: roundedValueProperty( intervalTool.edge2Property )
+    } ), {
+      font: PDLConstants.INTERVAL_TOOL_FONT,
+      maxWidth: 100,
+      visibleProperty: this.isEdge2DraggingProperty
+    } );
+
+    this.centerLineLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
+      mean: roundedValueProperty( boundedCenterXProperty )
+    } ), {
+      font: PDLConstants.INTERVAL_TOOL_FONT,
+      maxWidth: 100,
+      visibleProperty: this.isCenterDraggingProperty
+    } );
+
+    this.addChild( this.edge1Label );
+    this.addChild( this.edge2Label );
+    this.addChild( this.centerLineLabel );
 
     const getIntervalString = () => {
       return Utils.toFixed( Math.abs( intervalTool.edge2Property.value - intervalTool.edge1Property.value ), 1 );
@@ -235,6 +282,8 @@ export default class IntervalToolNode extends Node {
       const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2Property.value );
 
       const SPHERE_Y = modelViewTransform.modelToViewY( 18 );
+      const EDGE_LABEL_Y = modelViewTransform.modelToViewY( 19.5 );
+      const CENTER_LABEL_Y = modelViewTransform.modelToViewY( 18.3 );
       const ARROW_Y = modelViewTransform.modelToViewY( 14.5 );
 
       // The icon has shorter legs
@@ -246,7 +295,15 @@ export default class IntervalToolNode extends Node {
       edge1Line.setLine( viewEdge1X, SPHERE_Y, viewEdge1X, y0 );
       edge2Line.setLine( viewEdge2X, SPHERE_Y, viewEdge2X, y0 );
 
+      this.edge1Label.centerX = viewEdge1X;
+      this.edge2Label.centerX = viewEdge2X;
+
+      this.edge1Label.bottom = EDGE_LABEL_Y;
+      this.edge2Label.bottom = EDGE_LABEL_Y;
+      this.centerLineLabel.bottom = CENTER_LABEL_Y;
+
       const centerX = ( viewEdge1X + viewEdge2X ) / 2;
+      this.centerLineLabel.centerX = centerX;
       this.centerLineNode.setLine( centerX, SPHERE_Y, centerX, y0 );
 
       // Note if the edge1 and edge2 are the same, the arrow will have the empty bounds
@@ -259,7 +316,7 @@ export default class IntervalToolNode extends Node {
       readoutVBox.top = ARROW_Y - intervalReadout.height / 2;
 
       // Update the downstream Property which is only used for sonification.
-      centerXSonifiedProperty.value = ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2;
+      boundedCenterXProperty.value = ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2;
     };
 
     intervalTool.dataFractionProperty.link( update );
@@ -279,17 +336,33 @@ export default class IntervalToolNode extends Node {
       };
     };
 
-    const listenerOptions = {
-      transform: modelViewTransform
-    };
-
     const dragListenerOptions: DragListenerOptions<DragListener> = {
       useInputListenerCursor: true,
       dragBoundsProperty: new Property<Bounds2 | null>( new Bounds2( 0, 0, PDLConstants.MAX_FIELD_DISTANCE, 0 ) ),
       allowTouchSnag: true
     };
 
-    const translateDragListenerOptions = {
+    const edge1DragListenerOptions = {
+      start: () => {
+        this.isEdge1DraggingProperty.value = true;
+      },
+      end: () => {
+        this.isEdge1DraggingProperty.value = false;
+      },
+      transform: modelViewTransform
+    };
+
+    const edge2DragListenerOptions = {
+      start: () => {
+        this.isEdge2DraggingProperty.value = true;
+      },
+      end: () => {
+        this.isEdge2DraggingProperty.value = false;
+      },
+      transform: modelViewTransform
+    };
+
+    const centerDragListenerOptions = {
       start: () => {
         this.isCenterDraggingProperty.value = true;
       },
@@ -309,24 +382,24 @@ export default class IntervalToolNode extends Node {
       } );
     };
 
-    readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
-      applyOffset: true,
-      useParentOffset: true,
-      positionProperty: createDynamicAdapterProperty( intervalTool.centerProperty, true ),
-      tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
-    }, translateDragListenerOptions, dragListenerOptions ) ) );
-
     edge1Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       positionProperty: createDynamicAdapterProperty( intervalTool.edge1Property, false ),
       tandem: providedOptions.tandem.createTandem( 'edge1DragListener' ),
       drag: moveToFront( edge1Sphere )
-    }, listenerOptions, dragListenerOptions ) ) );
+    }, edge1DragListenerOptions, dragListenerOptions ) ) );
 
     edge2Sphere.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       positionProperty: createDynamicAdapterProperty( intervalTool.edge2Property, false ),
       tandem: providedOptions.tandem.createTandem( 'edge2DragListener' ),
       drag: moveToFront( edge2Sphere )
-    }, listenerOptions, dragListenerOptions ) ) );
+    }, edge2DragListenerOptions, dragListenerOptions ) ) );
+
+    readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
+      applyOffset: true,
+      useParentOffset: true,
+      positionProperty: createDynamicAdapterProperty( intervalTool.centerProperty, true ),
+      tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
+    }, centerDragListenerOptions, dragListenerOptions ) ) );
 
     // Play a ratcheting sound as either edge is dragged. The sound is played when passing thresholds on the field,
     // but the sound played is a function of the width of the interval.
@@ -379,7 +452,7 @@ export default class IntervalToolNode extends Node {
       maxSoundPlayer: nullSoundPlayer
     } );
 
-    centerXSonifiedProperty.lazyLink( ( newValue: number, oldValue: number ) => {
+    boundedCenterXProperty.lazyLink( ( newValue: number, oldValue: number ) => {
       if ( this.isCenterDraggingProperty.value ) {
         centerValueChangeSoundPlayer.playSoundIfThresholdReached( newValue, oldValue );
       }
