@@ -38,6 +38,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -91,7 +92,7 @@ export default class IntervalToolNode extends Node {
   // This Property represents whether the user is dragging via the center readout, which translates the entire interval.
   private readonly isCenterDraggingProperty = new BooleanProperty( false );
 
-  public constructor( intervalTool: IntervalTool, modelViewTransform: ModelViewTransform2, providedOptions: IntervalToolNodeOptions ) {
+  public constructor( intervalTool: IntervalTool, isIntervalToolVisibleProperty: TReadOnlyProperty<boolean>, modelViewTransform: ModelViewTransform2, providedOptions: IntervalToolNodeOptions ) {
 
     const options = optionize<IntervalToolNodeOptions, SelfOptions, NodeOptions>()( {
       phetioFeatured: true,
@@ -391,6 +392,12 @@ export default class IntervalToolNode extends Node {
     ];
 
     this.addLinkedElement( intervalTool );
+
+    isIntervalToolVisibleProperty.link( visible => {
+      if ( !visible ) {
+        this.interruptSubtreeInput();
+      }
+    } );
   }
 }
 

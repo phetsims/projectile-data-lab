@@ -41,7 +41,7 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
         const intervalTool = new IntervalTool( {
           tandem: Tandem.OPT_OUT
         } );
-        const intervalToolNode = new IntervalToolNode( intervalTool, transform, {
+        const intervalToolNode = new IntervalToolNode( intervalTool, new BooleanProperty( true ), transform, {
           isIcon: true,
           visibleProperty: new BooleanProperty( true ),
           tandem: Tandem.OPT_OUT
