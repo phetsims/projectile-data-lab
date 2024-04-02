@@ -438,7 +438,8 @@ export default class IntervalToolNode extends Node {
     } );
 
     Multilink.multilink( [ intervalTool.edge1Property, intervalTool.edge2Property, this.isCenterDraggingProperty, this.isEdge1DraggingProperty, this.isEdge2DraggingProperty ], () => {
-      if ( ( this.isEdge1DraggingProperty.value || this.isEdge2DraggingProperty.value ) && !this.isCenterDraggingProperty.value ) {
+      const isDraggingEdgeOnly = ( this.isEdge1DraggingProperty.value || this.isEdge2DraggingProperty.value ) && !this.isCenterDraggingProperty.value;
+      if ( isDraggingEdgeOnly || isResettingAllProperty.value ) {
         desiredCenterLocationProperty.value = new Vector2( ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2, 0 );
 
         const separation = Math.abs( intervalTool.edge1Property.value - intervalTool.edge2Property.value );
