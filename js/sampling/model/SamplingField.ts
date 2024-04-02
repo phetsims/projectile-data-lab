@@ -279,10 +279,14 @@ export default class SamplingField extends Field {
   }
 
   private finishSample( sampleNumber: number ): void {
+
+    // Create remaining projectiles for the sample
     let changed = false;
-    while ( this.getProjectilesInSample( sampleNumber ).length < this.sampleSize ) {
+    let n = this.getProjectilesInSample( sampleNumber ).length;
+    while ( n < this.sampleSize ) {
       changed = true;
       this.createLandedProjectile( sampleNumber );
+      n++;
     }
 
     // Anything in the air should end up on the ground.
