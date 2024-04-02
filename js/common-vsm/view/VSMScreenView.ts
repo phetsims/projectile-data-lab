@@ -36,6 +36,7 @@ import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMScreenViewOptions = SelfOptions & PDLScreenViewOptions;
@@ -204,19 +205,23 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       } );
     } );
 
-    // When the field changes, restore the entire state of the heat maps.
-    model.fieldProperty.link( field => {
+    const syncHeatMapToolNodes = () => {
 
       // Sets to initial conditions (remains at initial conditions if there are no projectiles)
       speedToolNode.clear();
       angleToolNode.clear();
 
-      const projectiles = field.getAllProjectiles();
+      const projectiles = model.fieldProperty.value.getAllProjectiles();
       projectiles.forEach( projectile => {
         speedToolNode.updateHeatMapWithData( projectile.launchSpeed );
         angleToolNode.updateHeatMapWithData( projectile.launchAngle );
       } );
-    } );
+    };
+
+    // When the field changes, restore the entire state of the heat maps.
+    model.fieldProperty.link( syncHeatMapToolNodes );
+
+    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( syncHeatMapToolNodes );
 
     model.launcherHeightProperty.link( launcherHeight => {
       const launcherY = this.modelViewTransform.modelToViewY( launcherHeight );
