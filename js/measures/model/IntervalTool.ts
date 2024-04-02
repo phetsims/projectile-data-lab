@@ -52,8 +52,7 @@ export default class IntervalTool extends PhetioObject {
       units: 'm',
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
-      },
-      // reentrant: true
+      }
     } );
 
     this.edge2Property = new NumberProperty( DEFAULT_EDGE_2, {
@@ -62,8 +61,7 @@ export default class IntervalTool extends PhetioObject {
       units: 'm',
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
-      },
-      // reentrant: true
+      }
     } );
 
     this.dataFractionProperty = new NumberProperty( 0, {
