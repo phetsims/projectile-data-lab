@@ -80,6 +80,7 @@ type SelfOptions = {
 };
 export type IntervalToolNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
+const SPHERE_RADIUS = 9;
 const TEXT_PANEL_BOUNDS_DILATION = 5;
 
 export default class IntervalToolNode extends Node {
@@ -134,7 +135,7 @@ export default class IntervalToolNode extends Node {
       public constructor( options: AccessibleSliderOptions ) {
         super( options );
 
-        this.addChild( new ShadedSphereNode( 20, {
+        this.addChild( new ShadedSphereNode( 2 * SPHERE_RADIUS, {
           mainColor: PDLColors.intervalToolSphereFillProperty,
           translation: Vector2.ZERO
         } ) );
@@ -282,10 +283,9 @@ export default class IntervalToolNode extends Node {
       const viewEdge1X = modelViewTransform.modelToViewX( intervalTool.edge1Property.value );
       const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2Property.value );
 
-      const SPHERE_Y = modelViewTransform.modelToViewY( 18 );
-      const EDGE_LABEL_Y = modelViewTransform.modelToViewY( 19.5 );
-      const CENTER_LABEL_Y = modelViewTransform.modelToViewY( 18.3 );
-      const ARROW_Y = modelViewTransform.modelToViewY( 14.5 );
+      const SPHERE_Y = modelViewTransform.modelToViewY( 17.2 );
+      const LABEL_Y = modelViewTransform.modelToViewY( 18.5 );
+      const ARROW_Y = modelViewTransform.modelToViewY( 14.25 );
 
       // The icon has shorter legs
       const y0 = modelViewTransform.modelToViewY( options.isIcon ? 5 : 0 );
@@ -299,13 +299,13 @@ export default class IntervalToolNode extends Node {
       this.edge1Label.centerX = viewEdge1X;
       this.edge2Label.centerX = viewEdge2X;
 
-      this.edge1Label.bottom = EDGE_LABEL_Y;
-      this.edge2Label.bottom = EDGE_LABEL_Y;
-      this.centerLineLabel.bottom = CENTER_LABEL_Y;
+      this.edge1Label.bottom = LABEL_Y;
+      this.edge2Label.bottom = LABEL_Y;
+      this.centerLineLabel.bottom = LABEL_Y;
 
       const centerX = ( viewEdge1X + viewEdge2X ) / 2;
       this.centerLineLabel.centerX = centerX;
-      this.centerLineNode.setLine( centerX, SPHERE_Y, centerX, y0 );
+      this.centerLineNode.setLine( centerX, SPHERE_Y - SPHERE_RADIUS, centerX, y0 );
 
       // Note if the edge1 and edge2 are the same, the arrow will have the empty bounds
       this.arrowNode.setTailAndTip( viewEdge1X, ARROW_Y, viewEdge2X, ARROW_Y );
