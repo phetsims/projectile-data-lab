@@ -39,6 +39,7 @@ import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/ac
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import isResettingAllProperty from '../../common/model/isResettingAllProperty.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -417,6 +418,9 @@ export default class IntervalToolNode extends Node {
 
     const createEdgeSonificationListener = ( otherEdgeProperty: { value: number } ) => {
       return ( newValue: number, oldValue: number ) => {
+        if ( isResettingAllProperty.value ) {
+          return;
+        }
 
         if ( !this.isCenterDraggingProperty.value ) {
           const newWidth = otherEdgeProperty.value - newValue;
@@ -453,7 +457,7 @@ export default class IntervalToolNode extends Node {
     } );
 
     boundedCenterXProperty.lazyLink( ( newValue: number, oldValue: number ) => {
-      if ( this.isCenterDraggingProperty.value ) {
+      if ( this.isCenterDraggingProperty.value && !isResettingAllProperty.value ) {
         centerValueChangeSoundPlayer.playSoundIfThresholdReached( newValue, oldValue );
       }
     } );

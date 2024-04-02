@@ -35,6 +35,7 @@ import FieldSignNode from './FieldSignNode.js';
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import PDLPreferences from '../PDLPreferences.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import isResettingAllProperty from '../model/isResettingAllProperty.js';
 
 type SelfOptions = {
   createLauncherNode: ( modelViewTransform: ModelViewTransform2 ) => LauncherNode;
@@ -123,9 +124,13 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.resetAllButton = new ResetAllButton( {
       tandem: options.tandem.createTandem( 'resetAllButton' ),
       listener: () => {
+        isResettingAllProperty.value = true;
+
         this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
         this.reset();
+
+        isResettingAllProperty.value = false;
       },
       phetioFeatured: true
     } );
