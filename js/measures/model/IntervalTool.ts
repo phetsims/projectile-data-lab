@@ -79,36 +79,31 @@ export default class IntervalTool extends PhetioObject {
 
     this.centerProperty.lazyLink( ( center, oldCenter ) => {
 
-      const delta = center - oldCenter;
+      let delta = center - oldCenter;
 
       let edge1 = this.edge1Property.value;
       let edge2 = this.edge2Property.value;
-      const separation = edge2 - edge1;
+
+      if ( delta > 0 ) {
+
+        const max = Math.max( edge1, edge2 );
+        if ( max + delta > PDLConstants.MAX_FIELD_DISTANCE ) {
+          delta = PDLConstants.MAX_FIELD_DISTANCE - max;
+        }
+      }
+      else if ( delta < 0 ) {
+
+        const min = Math.min( edge1, edge2 );
+        if ( min + delta < 0 ) {
+          delta = -min;
+        }
+      }
+      else {
+        // nothing to do
+      }
+
       edge1 += delta;
       edge2 += delta;
-
-      const min = 0;
-      const max = PDLConstants.MAX_FIELD_DISTANCE;
-
-      if ( edge1 > max ) {
-        edge1 = max;
-        edge2 = max + separation;
-      }
-
-      if ( edge2 > max ) {
-        edge2 = max;
-        edge1 = max - separation;
-      }
-
-      if ( edge1 < min ) {
-        edge1 = min;
-        edge2 = min + separation;
-      }
-
-      if ( edge2 < min ) {
-        edge2 = min;
-        edge1 = min - separation;
-      }
 
       this.edge1Property.value = edge1;
       this.edge2Property.value = edge2;

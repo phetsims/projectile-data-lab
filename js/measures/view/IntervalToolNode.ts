@@ -339,8 +339,7 @@ export default class IntervalToolNode extends Node {
 
     const dragListenerOptions: DragListenerOptions<DragListener> = {
       useInputListenerCursor: true,
-      dragBoundsProperty: new Property<Bounds2 | null>( new Bounds2( 0, 0, PDLConstants.MAX_FIELD_DISTANCE, 0 ) ),
-      allowTouchSnag: true
+      dragBoundsProperty: new Property<Bounds2 | null>( new Bounds2( 0, 0, PDLConstants.MAX_FIELD_DISTANCE, 0 ) )
     };
 
     const edge1DragListenerOptions = {
@@ -400,7 +399,9 @@ export default class IntervalToolNode extends Node {
       useParentOffset: true,
       positionProperty: createDynamicAdapterProperty( intervalTool.centerProperty, true ),
       tandem: providedOptions.tandem.createTandem( 'centerDragListener' )
-    }, centerDragListenerOptions, dragListenerOptions ) ) );
+    }, centerDragListenerOptions, {
+      useInputListenerCursor: true
+    } ) ) );
 
     // Play a ratcheting sound as either edge is dragged. The sound is played when passing thresholds on the field,
     // but the sound played is a function of the width of the interval.
