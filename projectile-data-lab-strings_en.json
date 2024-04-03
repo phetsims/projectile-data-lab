@@ -226,5 +226,8 @@
   },
   "keyboardHelpDialog.measuresScreen.startOfNumberLine": {
     "value": "Start of the Field"
+  },
+  "keyboardHelpDialog.histogramBinControls": {
+    "value": "Histogram Bin Controls"
   }
 }

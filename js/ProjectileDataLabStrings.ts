@@ -91,7 +91,8 @@ type StringsType = {
       'moveStringProperty': LocalizedStringProperty;
       'endOfNumberLineStringProperty': LocalizedStringProperty;
       'startOfNumberLineStringProperty': LocalizedStringProperty;
-    }
+    };
+    'histogramBinControlsStringProperty': LocalizedStringProperty;
   }
 };
 

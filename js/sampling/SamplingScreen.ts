@@ -14,6 +14,7 @@ import SamplingScreenView from './view/SamplingScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
 import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
+import ComboBoxKeyboardHelpSection from '../../../scenery-phet/js/keyboard/help/ComboBoxKeyboardHelpSection.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +27,9 @@ export default class SamplingScreen extends Screen<SamplingModel, SamplingScreen
     const options = optionize<SamplingScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.samplingStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createSamplingScreenIcon(),
-      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false, [], { hasShowField1Through6Shortcut: false } )
+      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false, [ new ComboBoxKeyboardHelpSection( {
+        headingString: ProjectileDataLabStrings.keyboardHelpDialog.histogramBinControlsStringProperty
+      } ) ], { hasShowField1Through6Shortcut: false } )
     }, providedOptions );
 
     super(

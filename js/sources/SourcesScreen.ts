@@ -14,6 +14,7 @@ import SourcesScreenView from './view/SourcesScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
 import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
+import ComboBoxKeyboardHelpSection from '../../../scenery-phet/js/keyboard/help/ComboBoxKeyboardHelpSection.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +27,9 @@ export default class SourcesScreen extends Screen<SourcesModel, SourcesScreenVie
     const options = optionize<SourcesScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.sourcesStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createSourcesScreenIcon(),
-      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( true )
+      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( true,[ new ComboBoxKeyboardHelpSection( {
+        headingString: ProjectileDataLabStrings.keyboardHelpDialog.histogramBinControlsStringProperty
+      } ) ] )
     }, providedOptions );
 
     super(

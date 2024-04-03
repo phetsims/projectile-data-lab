@@ -14,6 +14,7 @@ import VariabilityScreenView from './view/VariabilityScreenView.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
 import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
+import ComboBoxKeyboardHelpSection from '../../../scenery-phet/js/keyboard/help/ComboBoxKeyboardHelpSection.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -26,7 +27,9 @@ export default class VariabilityScreen extends Screen<VariabilityModel, Variabil
     const options = optionize<VariabilityScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.variabilityStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createVariabilityScreenIcon(),
-      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false )
+      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false, [ new ComboBoxKeyboardHelpSection( {
+        headingString: ProjectileDataLabStrings.keyboardHelpDialog.histogramBinControlsStringProperty
+      } ) ] )
     }, providedOptions );
 
     super(
