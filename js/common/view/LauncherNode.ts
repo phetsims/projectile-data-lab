@@ -29,6 +29,7 @@ import launcherPattern3_svg from '../../../images/launcherPattern3_svg.js';
 import launcherPattern4_svg from '../../../images/launcherPattern4_svg.js';
 import launcherPattern5_svg from '../../../images/launcherPattern5_svg.js';
 import launcherPattern6_svg from '../../../images/launcherPattern6_svg.js';
+import platform from '../../../../phet-core/js/platform.js';
 
 type SelfOptions = {
   isIcon?: boolean;
@@ -282,6 +283,15 @@ export default class LauncherNode extends Node {
     let patternImage = null;
     if ( svgPattern ) {
       patternImage = new Image( svgPattern );
+
+      // Don't let Safari embed SVG image patterns in SVG in this case.
+      // Workaround for https://github.com/phetsims/projectile-data-lab/issues/271
+      if ( platform.safari ) {
+        patternImage = patternImage.rasterized( {
+          useCanvas: true,
+          resolution: 4
+        } );
+      }
 
       assert && assert( Number.isFinite( patternImage.width ) && Number.isFinite( patternImage.height ),
         'patternImage width and height must be finite, current values are: ' + patternImage.width + ', ' +
