@@ -177,17 +177,20 @@ export default class IntervalToolNode extends Node {
 
     this.addChild( this.arrowNode );
 
-    // The correct geometry for the center line will be set in update()
-    this.centerLineNode = new Line( 0, 0, 0, 0, {
-      stroke: 'black',
-      lineWidth: 1,
-      visibleProperty: this.isCenterDraggingProperty
-    } );
-
-    this.addChild( this.centerLineNode );
-
     const roundedValueProperty = ( numberProperty: Property<number> ) => new DerivedProperty( [ numberProperty ], number => {
       return Utils.toFixed( number, 1 );
+    } );
+
+    const edge1HasFocusProperty = new BooleanProperty( edge1Sphere.focused );
+    edge1Sphere.addInputListener( {
+      focus: () => { edge1HasFocusProperty.value = true; },
+      blur: () => { edge1HasFocusProperty.value = false; }
+    } );
+
+    const edge2HasFocusProperty = new BooleanProperty( edge2Sphere.focused );
+    edge2Sphere.addInputListener( {
+      focus: () => { edge2HasFocusProperty.value = true; },
+      blur: () => { edge2HasFocusProperty.value = false; }
     } );
 
     this.edge1Label = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
@@ -195,7 +198,7 @@ export default class IntervalToolNode extends Node {
     } ), {
       font: PDLConstants.INTERVAL_TOOL_FONT,
       maxWidth: 100,
-      visibleProperty: this.isEdge1DraggingProperty
+      visibleProperty: DerivedProperty.or( [ this.isEdge1DraggingProperty, edge1HasFocusProperty ] )
     } );
 
     this.edge2Label = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
@@ -203,20 +206,11 @@ export default class IntervalToolNode extends Node {
     } ), {
       font: PDLConstants.INTERVAL_TOOL_FONT,
       maxWidth: 100,
-      visibleProperty: this.isEdge2DraggingProperty
-    } );
-
-    this.centerLineLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
-      mean: roundedValueProperty( centerPositionSonificationProperty )
-    } ), {
-      font: PDLConstants.INTERVAL_TOOL_FONT,
-      maxWidth: 100,
-      visibleProperty: this.isCenterDraggingProperty
+      visibleProperty: DerivedProperty.or( [ this.isEdge2DraggingProperty, edge2HasFocusProperty ] )
     } );
 
     this.addChild( this.edge1Label );
     this.addChild( this.edge2Label );
-    this.addChild( this.centerLineLabel );
 
     const getIntervalString = () => {
       return Utils.toFixed( Math.abs( intervalTool.edge2Property.value - intervalTool.edge1Property.value ), 1 );
@@ -308,6 +302,31 @@ export default class IntervalToolNode extends Node {
       startDrag: () => { this.isCenterDraggingProperty.value = true; },
       endDrag: () => { this.isCenterDraggingProperty.value = false; }
     } );
+
+    const centerHasFocusProperty = new BooleanProperty( readoutVBox.focused );
+    readoutVBox.addInputListener( {
+      focus: () => { centerHasFocusProperty.value = true; },
+      blur: () => { centerHasFocusProperty.value = false; }
+    } );
+
+    // The correct geometry for the center line will be set in update()
+    this.centerLineNode = new Line( 0, 0, 0, 0, {
+      stroke: 'black',
+      lineWidth: 1,
+      visibleProperty: DerivedProperty.or( [ this.isCenterDraggingProperty, centerHasFocusProperty ] )
+    } );
+
+    this.addChild( this.centerLineNode );
+
+    this.centerLineLabel = new PDLText( new PatternStringProperty( ProjectileDataLabStrings.meanMPatternStringProperty, {
+      mean: roundedValueProperty( centerPositionSonificationProperty )
+    } ), {
+      font: PDLConstants.INTERVAL_TOOL_FONT,
+      maxWidth: 100,
+      visibleProperty: DerivedProperty.or( [ this.isCenterDraggingProperty, centerHasFocusProperty ] )
+    } );
+
+    this.addChild( this.centerLineLabel );
     this.addChild( readoutVBox );
 
     const update = () => {
@@ -315,7 +334,7 @@ export default class IntervalToolNode extends Node {
       const viewEdge2X = modelViewTransform.modelToViewX( intervalTool.edge2Property.value );
 
       const SPHERE_Y = modelViewTransform.modelToViewY( 17.2 );
-      const LABEL_Y = modelViewTransform.modelToViewY( 18.5 );
+      const LABEL_Y = modelViewTransform.modelToViewY( 18.7 );
       const ARROW_Y = modelViewTransform.modelToViewY( 14.25 );
 
       // The icon has shorter legs
