@@ -431,21 +431,26 @@ export default class IntervalToolNode extends Node {
       }
     } );
 
+    // When the user stops dragging either edge, synchronize the center with the midpoint of the edges.
+    // We do not subscribe to intervalTool.edge1Property or intervalTool.edge2Property because we only want to update the desiredCenterLocationProperty when the user stops dragging.
     Multilink.multilink( [ this.isEdge1DraggingProperty, this.isEdge2DraggingProperty ], ( isEdge1Dragging, isEdge2Dragging ) => {
       if ( !isEdge1Dragging || !isEdge2Dragging ) {
         desiredCenterLocationProperty.value = new Vector2( ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2, 0 );
       }
     } );
 
-    Multilink.multilink( [ intervalTool.edge1Property, intervalTool.edge2Property, this.isCenterDraggingProperty, this.isEdge1DraggingProperty, this.isEdge2DraggingProperty ], () => {
-      const isDraggingEdgeOnly = ( this.isEdge1DraggingProperty.value || this.isEdge2DraggingProperty.value ) && !this.isCenterDraggingProperty.value;
-      if ( isDraggingEdgeOnly || isResettingAllProperty.value ) {
-        desiredCenterLocationProperty.value = new Vector2( ( intervalTool.edge1Property.value + intervalTool.edge2Property.value ) / 2, 0 );
+    // When dragging an edge or resetting, update the drag bounds of the center so that it can't go out of bounds with the new separation.
+    Multilink.multilink( [ intervalTool.edge1Property, intervalTool.edge2Property, this.isCenterDraggingProperty,
+        this.isEdge1DraggingProperty, this.isEdge2DraggingProperty, isResettingAllProperty ],
+      ( edge1, edge2, isCenterDragging, isEdge1Dragging, isEdge2Dragging, isResettingAll ) => {
+        const isDraggingEdgeOnly = ( isEdge1Dragging || isEdge2Dragging ) && !isCenterDragging;
+        if ( isDraggingEdgeOnly || isResettingAll ) {
+          desiredCenterLocationProperty.value = new Vector2( ( edge1 + edge2 ) / 2, 0 );
 
-        const separation = Math.abs( intervalTool.edge1Property.value - intervalTool.edge2Property.value );
-        centerDragBoundsProperty.value = new Bounds2( separation / 2, -1000, PDLConstants.MAX_FIELD_DISTANCE - separation / 2, 1000 );
-      }
-    } );
+          const separation = Math.abs( edge1 - edge2 );
+          centerDragBoundsProperty.value = new Bounds2( separation / 2, -1000, PDLConstants.MAX_FIELD_DISTANCE - separation / 2, 1000 );
+        }
+      } );
 
     readoutVBox.addInputListener( new DragListener( combineOptions<DragListenerOptions<PressedDragListener>>( {
       applyOffset: true,
