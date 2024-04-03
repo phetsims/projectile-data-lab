@@ -420,14 +420,41 @@ export default class IntervalToolNode extends Node {
         intervalTool.edge1Property.setDeferred( true );
         intervalTool.edge2Property.setDeferred( true );
 
-        intervalTool.edge1Property.value += delta;
-        intervalTool.edge2Property.value += delta;
+        // If the interval tool handles move within this distance of the edge of the field, put them on the edge.
+        // This may cause a negligible change in the interval tool width, but it is necessary to ensure that the
+        // handles play a 'min' or 'max' sound when they reach the edge of the field. Note that there is already some
+        // imprecision in the interval tool width (even when not at the edges of the field) due to floating point arithmetic.
+        const EDGE_SOUND_THRESHOLD = 1e-10;
+
+        const desiredEdge1Position = intervalTool.edge1Property.value + delta;
+        const desiredEdge2Position = intervalTool.edge2Property.value + delta;
+
+        if ( desiredEdge1Position <= EDGE_SOUND_THRESHOLD ) {
+          intervalTool.edge1Property.value = 0;
+        }
+        else if ( desiredEdge1Position >= PDLConstants.MAX_FIELD_DISTANCE - EDGE_SOUND_THRESHOLD ) {
+          intervalTool.edge1Property.value = PDLConstants.MAX_FIELD_DISTANCE;
+        }
+        else {
+          intervalTool.edge1Property.value = desiredEdge1Position;
+        }
+
+        if ( desiredEdge2Position <= EDGE_SOUND_THRESHOLD ) {
+          intervalTool.edge2Property.value = 0;
+        }
+        else if ( desiredEdge2Position >= PDLConstants.MAX_FIELD_DISTANCE - EDGE_SOUND_THRESHOLD ) {
+          intervalTool.edge2Property.value = PDLConstants.MAX_FIELD_DISTANCE;
+        }
+        else {
+          intervalTool.edge2Property.value = desiredEdge2Position;
+        }
 
         const a = intervalTool.edge1Property.setDeferred( false );
         const b = intervalTool.edge2Property.setDeferred( false );
 
         a && a();
         b && b();
+
       }
     } );
 
