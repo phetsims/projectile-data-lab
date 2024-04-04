@@ -159,7 +159,6 @@ export default class LauncherNode extends Node {
     }
   }
 
-  // TODO: Check this for memory leaks - see https://github.com/phetsims/projectile-data-lab/issues/24
   public playLaunchAnimation( angle: number ): void {
 
     this.launcherBarrel.setRotation( Utils.toRadians( -angle ) );
