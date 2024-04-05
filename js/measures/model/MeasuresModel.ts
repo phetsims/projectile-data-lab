@@ -193,7 +193,7 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
 
   protected override playMeanTone(): void {
     assert && assert( this.shouldPlayMeanTone(), 'shouldPlayMeanTone should be true before calling playMeanTone' );
-    MeanTone.playMean( this.meanDistanceProperty.value!, 0.5 );
+    MeanTone.playMean( this.meanDistanceProperty.value!, 1 );
   }
 
   public override reset(): void {
