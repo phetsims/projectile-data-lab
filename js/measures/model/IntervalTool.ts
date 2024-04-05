@@ -49,6 +49,7 @@ export default class IntervalTool extends PhetioObject {
     this.edge1Property = new NumberProperty( DEFAULT_EDGE_1, {
       range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       tandem: providedOptions.tandem.createTandem( 'edge1Property' ),
+      phetioFeatured: true,
       units: 'm',
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
@@ -58,6 +59,7 @@ export default class IntervalTool extends PhetioObject {
     this.edge2Property = new NumberProperty( DEFAULT_EDGE_2, {
       range: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       tandem: providedOptions.tandem.createTandem( 'edge2Property' ),
+      phetioFeatured: true,
       units: 'm',
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
