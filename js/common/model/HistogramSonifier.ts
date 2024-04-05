@@ -16,7 +16,7 @@ import histogramTone_mp3 from '../../../sounds/histogramTone_mp3.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 
-const binSoundClip = new SoundClip( histogramTone_mp3, { initialOutputLevel: 0.8 } );
+const binSoundClip = new SoundClip( histogramTone_mp3, { initialOutputLevel: 0.7 } );
 soundManager.addSoundGenerator( binSoundClip );
 
 // The histogram sonifier phase is used to keep track of the current state of the sonification, which can be

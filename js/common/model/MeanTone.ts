@@ -13,13 +13,14 @@ import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import meanTone_wav from '../../../sounds/meanTone_wav.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 
-const meanSoundClip = new SoundClip( meanTone_wav, { initialOutputLevel: 0.25 } );
+const meanSoundClip = new SoundClip( meanTone_wav );
 
 soundManager.addSoundGenerator( meanSoundClip );
 
 export class MeanTone {
-  public static playMean( value: number ): void {
+  public static playMean( value: number, outputLevel = 0.25 ): void {
     const playbackRate = playbackRateForPosition( value );
+    meanSoundClip.setOutputLevel( outputLevel );
     meanSoundClip.setPlaybackRate( playbackRate );
     meanSoundClip.play();
   }
