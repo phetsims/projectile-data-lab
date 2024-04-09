@@ -56,7 +56,7 @@ const centerFilter = new BiquadFilterNode( phetAudioContext, {
 
 const edgeSoundClip = new SoundClip( intervalTool_wav, {
   additionalAudioNodes: [ edgeFilter ],
-  initialOutputLevel: 0.6
+  initialOutputLevel: 0.4
 } );
 const centerSoundClip = new SoundClip( intervalTool_wav, {
   additionalAudioNodes: [ centerFilter ],
@@ -64,11 +64,11 @@ const centerSoundClip = new SoundClip( intervalTool_wav, {
 } );
 const minSoundClip = new SoundClip( intervalTool_wav, {
   initialPlaybackRate: 0.8,
-  initialOutputLevel: 0.3
+  initialOutputLevel: 0.2
 } );
 const maxSoundClip = new SoundClip( intervalTool_wav, {
   initialPlaybackRate: 2.5,
-  initialOutputLevel: 0.3
+  initialOutputLevel: 0.2
 } );
 
 soundManager.addSoundGenerator( edgeSoundClip );

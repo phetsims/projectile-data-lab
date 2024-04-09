@@ -50,10 +50,10 @@ import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushBut
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
 
-const toggleSwitchLeftSoundClip = new SoundClip( toggleSwitchLeft_mp3 );
+const toggleSwitchLeftSoundClip = new SoundClip( toggleSwitchLeft_mp3, { initialOutputLevel: 0.6 } );
 soundManager.addSoundGenerator( toggleSwitchLeftSoundClip, { categoryName: 'user-interface' } );
 
-const toggleSwitchRightSoundClip = new SoundClip( toggleSwitchRight_mp3 );
+const toggleSwitchRightSoundClip = new SoundClip( toggleSwitchRight_mp3, { initialOutputLevel: 0.6 } );
 soundManager.addSoundGenerator( toggleSwitchRightSoundClip, { categoryName: 'user-interface' } );
 
 

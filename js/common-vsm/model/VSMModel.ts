@@ -34,7 +34,7 @@ import PDLPreferences from '../../common/PDLPreferences.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
-const tickSound = new SoundClip( stopwatchTick_mp3, { initialOutputLevel: 1 } );
+const tickSound = new SoundClip( stopwatchTick_mp3, { initialOutputLevel: 0.3 } );
 soundManager.addSoundGenerator( tickSound );
 
 type SelfOptions = {
