@@ -29,7 +29,7 @@ simLauncher.launch( () => {
   const preferencesModel = new PreferencesModel( {
     simulationOptions: {
       customPreferences: [ {
-        createContent: tandem => new SimulationPreferencesContentNode( tandem.createTandem( 'simPreferences' ) )
+        createContent: tandem => new SimulationPreferencesContentNode( tandem )
       } ]
     },
     audioOptions: {
@@ -41,7 +41,7 @@ simLauncher.launch( () => {
           createContent: () => new Node()
         },
         {
-          createContent: tandem => new AudioPreferencesContentNode( tandem.createTandem( 'audioPreferences' ) )
+          createContent: tandem => new AudioPreferencesContentNode( tandem )
         } ]
     }
   } );
