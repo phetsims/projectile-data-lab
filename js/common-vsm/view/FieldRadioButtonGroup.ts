@@ -16,6 +16,7 @@ import PDLText from '../../common/view/PDLText.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Circle, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
+import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 type SelfOptions = EmptySelfOptions;
 type FieldRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
@@ -80,6 +81,9 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
 
     const handleKeypress = ( fieldNumber: number ) => {
       fieldProperty.value = fields[ fieldNumber - 1 ];
+
+      // Play the sound associated with the selected field
+      multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( fieldNumber - 1 ).play();
 
       // Move focus to the radio button that was selected. Without this line, focus would incorrectly remain
       // on the previous button. Only do this if a radio button already had focus, otherwise it would steal focus
