@@ -7,7 +7,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Color, Node, NodeOptions, Path, SceneryConstants } from '../../../../scenery/js/imports.js';
+import { Color, KeyboardListener, Node, NodeOptions, Path, SceneryConstants } from '../../../../scenery/js/imports.js';
 import AccessibleNumberSpinner, { AccessibleNumberSpinnerOptions } from '../../../../sun/js/accessibility/AccessibleNumberSpinner.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
@@ -100,6 +100,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
         listener: () => {
           numberProperty.set( numberProperty.value - 1 );
           options.playSound( numberProperty.value );
+          console.log( 'decrementButton' );
           this.focus();
         },
         content: new Path( angleLeftSolidShape, { fill: 'white', scale: 0.05 } ),
@@ -157,6 +158,28 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
     // support for binder documentation, stripped out in builds and only runs when ?binder is specified
     assert && phet.chipper.queryParameters.binder && InstanceRegistry.registerDataURL( 'sun', 'SelectorNode', this );
+
+    let priorValue: number | null = null;
+
+    assert && assert( this.startInput === _.noop, 'start input should be a no-op before we change it' );
+    this.startInput = event => {
+
+      // When input begins, record what the value was before it changes so that when we process a home/end event,
+      // we do not play duplicate sounds if it was already at the home/end
+      priorValue = numberProperty.value;
+    };
+
+    // Add sound effects for pressing the home/end keys. Note this callback is called after the number property was updated.
+    // Do not use this.onInput since this would double some of the sounds when the buttons are interacted with in a certain way.
+    this.addInputListener( new KeyboardListener( {
+      keys: [ 'home', 'end' ] as const,
+      callback: () => {
+        console.log( 'home/end' );
+        if ( numberProperty.value !== priorValue ) {
+          options.playSound( numberProperty.value );
+        }
+      }
+    } ) );
   }
 }
 
