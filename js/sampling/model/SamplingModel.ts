@@ -254,6 +254,9 @@ model.phase = ${this.phaseProperty.value}` );
         else {
           if ( field.isContinuousLaunchingProperty.value ) {
 
+            // When resuming continuous sampling, make sure that the most recent sample is shown
+            this.selectedSampleNumberProperty.value = field.numberOfCompletedSamplesProperty.value;
+
             // If the simulation is paused, unpause it.
             this.isPlayingProperty.value = true;
           }
