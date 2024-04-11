@@ -173,7 +173,6 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     this.addInputListener( new KeyboardListener( {
       keys: [ 'home', 'end' ] as const,
       callback: () => {
-        console.log( 'home/end' );
         if ( numberProperty.value !== priorValue ) {
           options.playSound( numberProperty.value );
         }
