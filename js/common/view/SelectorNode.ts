@@ -99,8 +99,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
         tandem: options.tandem.createTandem( 'decrementButton' ),
         listener: () => {
           numberProperty.set( numberProperty.value - 1 );
-          options.playSound( numberProperty.value );
-          console.log( 'decrementButton' );
+          options.playSound( numberProperty.value )
           this.focus();
         },
         content: new Path( angleLeftSolidShape, { fill: 'white', scale: 0.05 } ),
