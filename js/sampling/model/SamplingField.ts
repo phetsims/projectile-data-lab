@@ -75,6 +75,10 @@ export default class SamplingField extends Field {
 
   public readonly selectedSampleNumberProperty: NumberProperty;
 
+  // When pressing the eraser button, if the isContinuousLaunchingProperty is true, the field will automatically restart
+  // on the next time step. See https://github.com/phetsims/projectile-data-lab/issues/289
+  private _shouldResumeAfterClear = false;
+
   public constructor( launcher: Launcher,
                       public readonly sampleSize: number,
                       private readonly launchModeProperty: Property<SingleOrContinuous>,
@@ -316,7 +320,25 @@ export default class SamplingField extends Field {
 
     if ( this.phaseProperty.value === 'idle' ) {
 
-      // Nothing to do, waiting for user to press the launch button
+      // At the time the clear button was pressed, was the system in continuous mode and running?
+      if ( this._shouldResumeAfterClear ) {
+
+        // Is the system *still* in a mode where we want to resume generating data after clear?
+        if ( this.shouldResumeAfterClear() ) {
+
+          // NOTE: Duplication alert. This is similar to the code in showingCompleteSampleWithMean
+          this.finishCurrentSample();
+          this.phaseProperty.value = 'showingCompleteSampleWithMean';
+          this.updateComputedProperties();
+          this.phaseStartTimeProperty.value = this.timeProperty.value;
+          this.projectilesChangedEmitter.emit();
+
+          assert && assert( typeof this.sampleMeanProperty.value === 'number', 'sampleMeanProperty should be a number in showingCompleteSampleWithMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize );
+          MeanTone.playMean( this.sampleMeanProperty.value! );
+        }
+
+        this._shouldResumeAfterClear = false;
+      }
     }
     else if ( this.phaseProperty.value === 'showingAirborneProjectiles' ) { // Only for single mode
 
@@ -376,20 +398,34 @@ export default class SamplingField extends Field {
         // Manually restart the phase timer, since the phase will not change when showing sequential continuous samples
         this.phaseStartTimeProperty.value = this.timeProperty.value;
 
+        this.projectilesChangedEmitter.emit();
+
         assert && assert( typeof this.sampleMeanProperty.value === 'number', 'sampleMeanProperty should be a number in showingCompleteSampleWithMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize );
         MeanTone.playMean( this.sampleMeanProperty.value! );
       }
     }
   }
 
+  private shouldResumeAfterClear(): boolean {
+    return this.phaseProperty.value === 'showingCompleteSampleWithMean' &&
+           this.isContinuousLaunchingProperty.value &&
+           this.launchModeProperty.value === 'continuous';
+  }
+
   // When the eraser button is pressed, clear the selected Field's projectiles.
   public override clearProjectiles(): void {
     super.clearProjectiles();
+
+    this._shouldResumeAfterClear = this.shouldResumeAfterClear();
 
     this.phaseProperty.reset();
     this.timeProperty.reset();
     this.phaseStartTimeProperty.reset();
     this.selectedSampleNumberProperty.reset();
+
+    if ( !this._shouldResumeAfterClear ) {
+      this.isContinuousLaunchingProperty.reset();
+    }
 
     this.updateComputedProperties();
   }
@@ -397,6 +433,8 @@ export default class SamplingField extends Field {
   public override reset(): void {
     super.reset();
     this.launchModeProperty.reset();
+
+    this._shouldResumeAfterClear = false;
   }
 }
 
