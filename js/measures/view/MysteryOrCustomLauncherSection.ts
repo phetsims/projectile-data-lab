@@ -38,7 +38,7 @@ export default class MysteryOrCustomLauncherSection extends PDLPanelSection {
         maxWidth: 120
       } ),
       value: 'mystery',
-      tandemName: 'standardLauncherRadioButton'
+      tandemName: 'mysteryLauncherRadioButton'
     }, {
       createNode: () => new PDLText( ProjectileDataLabStrings.customLauncherStringProperty, {
         maxWidth: 120
