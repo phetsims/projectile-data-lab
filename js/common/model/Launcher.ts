@@ -77,6 +77,7 @@ export default class Launcher extends PhetioObject {
         tandem: Tandem.OPT_OUT
       }
     } );
+
     this.standardDeviationAngleProperty = new DerivedProperty( [ this.angleStabilityProperty ], angleStability => {
       return Utils.roundToInterval( Utils.linear( 1, 0, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.min, PDLConstants.ANGLE_STANDARD_DEVIATION_RANGE.max, angleStability ), 1e-6 );
     }, {
@@ -93,6 +94,11 @@ export default class Launcher extends PhetioObject {
     this.standardDeviationSpeedProperty = new DynamicProperty<number, number, LauncherMechanism>( this.launcherMechanismProperty, {
       derive: launcherMechanism => launcherMechanism.speedStandardDeviationProperty
     } );
+  }
+
+  public reset(): void {
+    this.launcherMechanismProperty.reset();
+    this.angleStabilityProperty.reset();
   }
 }
 

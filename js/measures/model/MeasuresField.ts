@@ -133,6 +133,9 @@ export default class MeasuresField extends SMField {
   public override reset(): void {
     super.reset();
 
+    //Reset all launchers
+    this.launchers.forEach( launcher => launcher.reset() );
+
     this.mysteryOrCustomProperty.reset();
     this.mysteryLauncherProperty.reset();
   }
