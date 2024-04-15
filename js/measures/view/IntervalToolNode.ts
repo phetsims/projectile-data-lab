@@ -39,8 +39,8 @@ import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/ac
 import Bounds2 from '../../../../dot/js/Bounds2.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import isResettingAllProperty from '../../common/model/isResettingAllProperty.js';
 import Multilink from '../../../../axon/js/Multilink.js';
+import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -487,7 +487,7 @@ export default class IntervalToolNode extends Node {
 
     // When dragging an edge or resetting, update the drag bounds of the center so that it can't go out of bounds with the new separation.
     Multilink.multilink( [ intervalTool.edge1Property, intervalTool.edge2Property, this.isCenterDraggingProperty,
-        this.isEdge1DraggingProperty, this.isEdge2DraggingProperty, isResettingAllProperty ],
+        this.isEdge1DraggingProperty, this.isEdge2DraggingProperty, ResetAllButton.isResettingAllProperty ],
       ( edge1, edge2, isCenterDragging, isEdge1Dragging, isEdge2Dragging, isResettingAll ) => {
         const isDraggingEdgeOnly = ( isEdge1Dragging || isEdge2Dragging ) && !isCenterDragging;
         if ( isDraggingEdgeOnly || isResettingAll ) {
@@ -524,7 +524,7 @@ export default class IntervalToolNode extends Node {
 
     const createEdgeSonificationListener = ( otherEdgeProperty: { value: number } ) => {
       return ( newValue: number, oldValue: number ) => {
-        if ( isResettingAllProperty.value ) {
+        if ( ResetAllButton.isResettingAllProperty.value ) {
           return;
         }
 
@@ -563,7 +563,7 @@ export default class IntervalToolNode extends Node {
     } );
 
     centerPositionSonificationProperty.lazyLink( ( newValue: number, oldValue: number ) => {
-      if ( this.isCenterDraggingProperty.value && !isResettingAllProperty.value ) {
+      if ( this.isCenterDraggingProperty.value && !ResetAllButton.isResettingAllProperty.value ) {
         centerValueChangeSoundPlayer.playSoundIfThresholdReached( newValue, oldValue );
       }
     } );
