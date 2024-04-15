@@ -224,7 +224,7 @@ export default class HeatMapToolNode extends Node {
       centerX: 0,
       centerY: 0,
       font: PDLConstants.PRIMARY_FONT,
-      maxWidth: 60
+      maxWidth: 50
     } );
 
     // Create a background rectangle for the value readout
