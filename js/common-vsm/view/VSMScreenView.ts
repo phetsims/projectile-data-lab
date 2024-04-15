@@ -134,7 +134,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
       textBackgroundCornerRadius: 5,
       textBackgroundXMargin: 3,
       textBackgroundYMargin: 2,
-      textPosition: new Vector2( 0, 32 ),
+      textPosition: new Vector2( 0, -50 ),
       significantFigures: 1,
       textFont: PDLConstants.MEASURING_TAPE_FONT,
       tandem: options.tandem.createTandem( 'measuringTapeNode' ),
