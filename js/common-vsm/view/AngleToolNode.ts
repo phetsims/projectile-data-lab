@@ -179,7 +179,7 @@ export default class AngleToolNode extends HeatMapToolNode {
       } );
 
       // Position the value readout based on whether the tool is raised or not.
-      this.valueReadoutNode.x = isRaised ? 0.45 * INNER_BODY_RADIUS : 0.5 * INNER_BODY_RADIUS;
+      this.valueReadoutNode.x = isRaised ? 0.25 * INNER_BODY_RADIUS : 0.5 * INNER_BODY_RADIUS;
       this.valueReadoutNode.y = isRaised ? VALUE_READOUT_Y_RAISED : VALUE_READOUT_Y_GROUND;
     } );
   }
