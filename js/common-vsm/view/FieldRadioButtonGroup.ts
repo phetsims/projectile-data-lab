@@ -80,18 +80,24 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
     super( fieldProperty, fieldRadioButtons, options );
 
     const handleKeypress = ( fieldNumber: number ) => {
-      fieldProperty.value = fields[ fieldNumber - 1 ];
 
-      // Play the sound associated with the selected field
-      multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( fieldNumber - 1 ).play();
+      const proposedField = fields[ fieldNumber - 1 ];
+      const button = this.getButtonForValue( proposedField );
+      if ( button.enabledProperty.value && button.visibleProperty.value ) {
 
-      // Move focus to the radio button that was selected. Without this line, focus would incorrectly remain
-      // on the previous button. Only do this if a radio button already had focus, otherwise it would steal focus
-      for ( let i = 0; i < fieldRadioButtons.length; i++ ) {
-        const button = this.getButtonForValue( fieldRadioButtons[ i ].value );
-        if ( button.focused ) {
-          this.getButtonForValue( fieldProperty.value ).focus();
-          break;
+        fieldProperty.value = fields[ fieldNumber - 1 ];
+
+        // Play the sound associated with the selected field
+        multiSelectionSoundPlayerFactory.getSelectionSoundPlayer( fieldNumber - 1 ).play();
+
+        // Move focus to the radio button that was selected. Without this line, focus would incorrectly remain
+        // on the previous button. Only do this if a radio button already had focus, otherwise it would steal focus
+        for ( let i = 0; i < fieldRadioButtons.length; i++ ) {
+          const button = this.getButtonForValue( fieldRadioButtons[ i ].value );
+          if ( button.focused ) {
+            this.getButtonForValue( fieldProperty.value ).focus();
+            break;
+          }
         }
       }
     };
