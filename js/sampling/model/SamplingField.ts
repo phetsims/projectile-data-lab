@@ -324,7 +324,7 @@ export default class SamplingField extends Field {
       if ( this._shouldResumeAfterClear ) {
 
         // Is the system *still* in a mode where we want to resume generating data after clear?
-        if ( this.shouldResumeAfterClear() ) {
+        if ( this.isContinuousLaunchingProperty.value && this.launchModeProperty.value === 'continuous' ) {
 
           // NOTE: Duplication alert. This is similar to the code in showingCompleteSampleWithMean
           this.finishCurrentSample();
@@ -406,17 +406,13 @@ export default class SamplingField extends Field {
     }
   }
 
-  private shouldResumeAfterClear(): boolean {
-    return this.phaseProperty.value === 'showingCompleteSampleWithMean' &&
-           this.isContinuousLaunchingProperty.value &&
-           this.launchModeProperty.value === 'continuous';
-  }
-
   // When the eraser button is pressed, clear the selected Field's projectiles.
   public override clearProjectiles(): void {
     super.clearProjectiles();
 
-    this._shouldResumeAfterClear = this.shouldResumeAfterClear();
+    this._shouldResumeAfterClear = this.phaseProperty.value === 'showingCompleteSampleWithMean' &&
+                                   this.isContinuousLaunchingProperty.value &&
+                                   this.launchModeProperty.value === 'continuous';
 
     this.phaseProperty.reset();
     this.timeProperty.reset();
