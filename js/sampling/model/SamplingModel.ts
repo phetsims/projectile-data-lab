@@ -243,13 +243,16 @@ model.phase = ${this.phaseProperty.value}` );
         if ( phaseProperty.value === 'idle' ) {
           assert && assert( this.selectedSampleNumberProperty.value === 1, 'selectedSampleNumberProperty should be 1 when in idle phase.' );
 
-          // If the simulation is paused, unpause it.
-          this.isPlayingProperty.value = true;
+          if ( field.isContinuousLaunchingProperty.value ) {
 
-          field.finishCurrentSample();
-          phaseProperty.value = 'showingCompleteSampleWithMean';
+            // If the simulation is paused, unpause it.
+            this.isPlayingProperty.value = true;
 
-          MeanTone.playMean( this.sampleMeanProperty.value! );
+            field.finishCurrentSample();
+            phaseProperty.value = 'showingCompleteSampleWithMean';
+
+            MeanTone.playMean( this.sampleMeanProperty.value! );
+          }
         }
         else {
           if ( field.isContinuousLaunchingProperty.value ) {
