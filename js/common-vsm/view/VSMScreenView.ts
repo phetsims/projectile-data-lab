@@ -279,6 +279,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     } );
 
     // Position the 'No air resistance' text
+    // NOTE: This is duplicated in VSMScreenView and SamplingScreenView, so if you change it here, make sure to change it there too
     ManualConstraint.create( this, [ this.noAirResistanceText, this.launchPanel ], ( noAirResistanceTextProxy, launchPanelProxy ) => {
       noAirResistanceTextProxy.centerX = launchPanelProxy.centerX;
       noAirResistanceTextProxy.top = launchPanelProxy.bottom + 6;
