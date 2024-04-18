@@ -295,6 +295,17 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     }
   }
 
+  /**
+   * If the field is cleared, reset stopwatch since the timed projectile will be removed.
+   * See https://github.com/phetsims/projectile-data-lab/issues/297
+   */
+  public override clearCurrentField() : void {
+    super.clearCurrentField();
+
+    this.stopwatch.isRunningProperty.value = false;
+    this.stopwatch.timeProperty.value = 0;
+  }
+
   public override reset(): void {
     super.reset();
 
