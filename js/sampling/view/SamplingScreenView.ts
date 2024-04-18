@@ -214,9 +214,10 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       } );
 
     // Position the 'No air resistance' text
-    ManualConstraint.create( this, [ this.launchPanel ], launchPanelProxy => {
-      this.noAirResistanceText.centerX = launchPanelProxy.centerX;
-      this.noAirResistanceText.top = launchPanelProxy.bottom + 6;
+    // NOTE: This is duplicated in VSMScreenView and SamplingScreenView, so if you change it here, make sure to change it there too
+    ManualConstraint.create( this, [ this.noAirResistanceText, this.launchPanel ], ( noAirResistanceTextProxy, launchPanelProxy ) => {
+      noAirResistanceTextProxy.centerX = launchPanelProxy.centerX;
+      noAirResistanceTextProxy.top = launchPanelProxy.bottom + 6;
     } );
 
     this.pdomPlayAreaNode.pdomOrder = [
