@@ -23,7 +23,7 @@ type StringsType = {
   'stopStringProperty': LocalizedStringProperty;
   'continuousStringProperty': LocalizedStringProperty;
   'noAirResistanceStringProperty': LocalizedStringProperty;
-  'configurationStringProperty': LocalizedStringProperty;
+  'orientationStringProperty': LocalizedStringProperty;
   'projectileStringProperty': LocalizedStringProperty;
   'launcherNumberPatternStringProperty': LocalizedStringProperty;
   'angleStabilityStringProperty': LocalizedStringProperty;

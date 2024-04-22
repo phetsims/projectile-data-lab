@@ -22,7 +22,7 @@ import Field from './Field.js';
 import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
+import { LauncherOrientation, LauncherOrientationValues } from './LauncherOrientation.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import Launcher from './Launcher.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
@@ -39,7 +39,7 @@ export default class Projectile {
 
   private fieldIdentifier: string;
 
-  public launcherConfiguration: LauncherConfiguration;
+  public launcherOrientation: LauncherOrientation;
 
   public launcherStandardDeviationAngle: number;
   public launcherMechanism: LauncherMechanism;
@@ -78,7 +78,7 @@ export default class Projectile {
     screenIdentifier: ScreenIdentifier,
     fieldIdentifier: string,
     sampleNumber: number,
-    launcherConfiguration: LauncherConfiguration,
+    launcherOrientation: LauncherOrientation,
     launcher: Launcher,
     launcherMechanism: LauncherMechanism,
     launcherStandardDeviationAngle: number,
@@ -98,7 +98,7 @@ export default class Projectile {
     this.screenIdentifier = screenIdentifier;
     this.fieldIdentifier = fieldIdentifier;
     this.sampleNumber = sampleNumber;
-    this.launcherConfiguration = launcherConfiguration;
+    this.launcherOrientation = launcherOrientation;
     this.launcher = launcher;
     this.launcherStandardDeviationAngle = launcherStandardDeviationAngle;
     this.launcherMechanism = launcherMechanism;
@@ -146,7 +146,7 @@ export default class Projectile {
       screenIdentifier: StringUnionIO( ScreenIdentifierValues ),
       fieldIdentifier: StringIO,
       sampleNumber: NumberIO,
-      launcherConfiguration: StringUnionIO( LauncherConfigurationValues ),
+      launcherOrientation: StringUnionIO( LauncherOrientationValues ),
       launcher: ReferenceIO( IOType.ObjectIO ),
       launcherMechanism: LauncherMechanism.LauncherMechanismIO,
       launcherStandardDeviationAngle: NumberIO,
@@ -165,7 +165,7 @@ export default class Projectile {
         stateObject.screenIdentifier,
         stateObject.fieldIdentifier,
         stateObject.sampleNumber,
-        stateObject.launcherConfiguration,
+        stateObject.launcherOrientation,
         ReferenceIO( IOType.ObjectIO ).fromStateObject( stateObject.launcher ) as Launcher,
         LauncherMechanism.LauncherMechanismIO.fromStateObject( stateObject.launcherMechanism ),
         stateObject.launcherStandardDeviationAngle,
@@ -215,7 +215,7 @@ export type ProjectileStateObject = {
   screenIdentifier: ScreenIdentifier;
   fieldIdentifier: string;
   sampleNumber: number;
-  launcherConfiguration: LauncherConfiguration;
+  launcherOrientation: LauncherOrientation;
   launcher: ReferenceIOState;
   launcherMechanism: LauncherMechanism;
   launcherStandardDeviationAngle: number;

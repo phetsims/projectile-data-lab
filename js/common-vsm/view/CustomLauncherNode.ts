@@ -21,7 +21,7 @@ import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
 import explosion_svg from '../../../images/explosion_svg.js';
 import PDLColors from '../../common/PDLColors.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherConfiguration.js';
+import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherOrientation.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import gear_svg from '../../../images/gear_svg.js';
@@ -48,7 +48,7 @@ export default class CustomLauncherNode extends LauncherNode {
   private readonly angleStabilizersContainer = new Node();
 
   public constructor( modelViewTransform: ModelViewTransform2,
-                      launcherConfigurationProperty: TReadOnlyProperty<LauncherConfiguration>,
+                      launcherOrientationProperty: TReadOnlyProperty<LauncherOrientation>,
                       launcherAngleProperty: TReadOnlyProperty<number>,
                       launcherHeightProperty: TReadOnlyProperty<number>,
                       mysteryOrCustomProperty: TReadOnlyProperty<MysteryOrCustom>,
@@ -104,7 +104,7 @@ export default class CustomLauncherNode extends LauncherNode {
 
     this.addChild( this.angleStabilizersContainer );
     this.angleStabilizersContainer.moveToBack();
-    this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherConfigurationProperty.value,
+    this.angleStabilizersContainer.addChild( this.getAngleStabilizers( launcherOrientationProperty.value,
       ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngleProperty.value ) );
 
     const gearImageScale = 0.075;
@@ -132,13 +132,13 @@ export default class CustomLauncherNode extends LauncherNode {
     this.addChild( gearTopContainer );
     this.addChild( gearBottomContainer );
 
-    Multilink.multilink( [ launcherConfigurationProperty, standardDeviationAngleProperty ],
-      ( launcherConfiguration, standardDeviationAngle ) => {
-        const launcherAngle = MEAN_LAUNCH_ANGLES[ launcherConfiguration ];
+    Multilink.multilink( [ launcherOrientationProperty, standardDeviationAngleProperty ],
+      ( launcherOrientation, standardDeviationAngle ) => {
+        const launcherAngle = MEAN_LAUNCH_ANGLES[ launcherOrientation ];
         const rotationFactor = 0.4;
         gearTopContainer.rotation = rotationFactor * ( launcherAngle + standardDeviationAngle );
         gearBottomContainer.rotation = rotationFactor * ( launcherAngle - standardDeviationAngle );
-        this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherConfiguration,
+        this.angleStabilizersContainer.children = [ this.getAngleStabilizers( launcherOrientation,
           ANGLE_STABILIZER_NUM_STANDARD_DEVIATIONS * standardDeviationAngle ) ];
       } );
 
@@ -175,10 +175,10 @@ export default class CustomLauncherNode extends LauncherNode {
     } );
   }
 
-  private getAngleStabilizers( launcherConfiguration: LauncherConfiguration, separationWidth: number ): Node {
+  private getAngleStabilizers( launcherOrientation: LauncherOrientation, separationWidth: number ): Node {
 
     // Subtract the angle of the launcher from 180 to get the central angle of the angle stabilizer.
-    const centralAngle = Utils.toRadians( 180 - MEAN_LAUNCH_ANGLES[ launcherConfiguration ] );
+    const centralAngle = Utils.toRadians( 180 - MEAN_LAUNCH_ANGLES[ launcherOrientation ] );
 
     // The minimum gap is angle of an arc length LAUNCH_ANGLE_LIMITER_WIDTH at radius GUIDE_RAIL_OUTER_RADIUS
     const minimumStabilizerGap = LAUNCH_ANGLE_LIMITER_WIDTH / GUIDE_RAIL_OUTER_RADIUS;

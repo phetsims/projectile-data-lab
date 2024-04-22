@@ -1,16 +1,16 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The VSMLaunchPanel presents a UI so the user can choose the launcher configuration and projectile type.
+ * The VSMLaunchPanel presents a UI so the user can choose the launcher orientation and projectile type.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
 import projectileDataLab from '../../projectileDataLab.js';
-import LauncherConfigurationSection from '../../common/view/LauncherConfigurationSection.js';
+import LauncherOrientationSection from '../../common/view/LauncherOrientationSection.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
+import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import ProjectileTypeSection from '../../common/view/ProjectileTypeSection.js';
 import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
@@ -22,18 +22,18 @@ export type VSMLaunchPanelOptions = SelfOptions & PDLLaunchPanelOptions;
 
 export default class VSMLaunchPanel extends PDLLaunchPanel {
 
-  public constructor( content: Node[], configurationProperty: PhetioProperty<LauncherConfiguration>,
+  public constructor( content: Node[], orientationProperty: PhetioProperty<LauncherOrientation>,
                       projectileTypeProperty: PhetioProperty<ProjectileType>, providedOptions: VSMLaunchPanelOptions ) {
 
-    const launcherConfigurationSection = new LauncherConfigurationSection( configurationProperty, {
-      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationSection' )
+    const launcherOrientationSection = new LauncherOrientationSection( orientationProperty, {
+      tandem: providedOptions.tandem.createTandem( 'launcherOrientationSection' )
     } );
 
     const projectileTypeSection = new ProjectileTypeSection( projectileTypeProperty, {
       tandem: providedOptions.tandem.createTandem( 'projectileTypeSection' )
     } );
 
-    super( [ launcherConfigurationSection, projectileTypeSection, ...content ], providedOptions );
+    super( [ launcherOrientationSection, projectileTypeSection, ...content ], providedOptions );
   }
 }
 projectileDataLab.register( 'VSMLaunchPanel', VSMLaunchPanel );

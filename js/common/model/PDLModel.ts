@@ -17,7 +17,7 @@ import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import Field from './Field.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { LauncherConfiguration, LauncherConfigurationValues } from './LauncherConfiguration.js';
+import { LauncherOrientation, LauncherOrientationValues } from './LauncherOrientation.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { SingleOrContinuous, SingleOrContinuousValues } from './SingleOrContinuous.js';
@@ -76,7 +76,7 @@ export default abstract class PDLModel<T extends Field> implements TModel {
 
   //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
   // These values are DynamicProperties that are determined by the Field, see Field.ts and implementation-notes.md
-  public readonly launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>;
+  public readonly launcherOrientationProperty: PhetioProperty<LauncherOrientation>;
 
   public readonly projectileTypeProperty: PhetioProperty<ProjectileType>;
 
@@ -133,21 +133,21 @@ export default abstract class PDLModel<T extends Field> implements TModel {
       phetioDocumentation: 'This Property indicates whether the launcher is in single or continuous launch mode.'
     } );
 
-    this.launcherConfigurationProperty = new DynamicProperty<LauncherConfiguration, LauncherConfiguration, T>( this.fieldProperty, {
+    this.launcherOrientationProperty = new DynamicProperty<LauncherOrientation, LauncherOrientation, T>( this.fieldProperty, {
       bidirectional: true,
-      derive: field => field.launcherConfigurationProperty,
+      derive: field => field.launcherOrientationProperty,
 
-      // The DynamicProperty is instrumented if and only if the field launcherConfigurationProperty is instrumented.
-      tandem: this.fieldProperty.value.launcherConfigurationProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ) : Tandem.OPT_OUT,
+      // The DynamicProperty is instrumented if and only if the field launcherOrientationProperty is instrumented.
+      tandem: this.fieldProperty.value.launcherOrientationProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'launcherOrientationProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
-      phetioDocumentation: 'This Property indicates the current launcher configuration.',
-      phetioValueType: StringUnionIO( LauncherConfigurationValues ),
+      phetioDocumentation: 'This Property indicates the current launcher orientation.',
+      phetioValueType: StringUnionIO( LauncherOrientationValues ),
       phetioReadOnly: true,
       phetioState: false,
 
-      // Take whatever valid values were specified for the field launcherConfigurationProperty. In the sampling screen,
+      // Take whatever valid values were specified for the field launcherOrientationProperty. In the sampling screen,
       // it is constrained to angle45
-      validValues: this.fieldProperty.value.launcherConfigurationProperty.validValues
+      validValues: this.fieldProperty.value.launcherOrientationProperty.validValues
     } );
 
     this.projectileTypeProperty = new DynamicProperty<ProjectileType, ProjectileType, T>( this.fieldProperty, {

@@ -35,7 +35,7 @@ type SelfOptions = {
   // of the mysteryOrCustomProperty and mysteryLauncherProperty.
   isLauncherPropertyPhetioReadOnly: boolean;
 };
-export type VSMFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
+export type VSMFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherOrientationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
 
 export default class VSMField extends Field {
 
@@ -64,7 +64,7 @@ export default class VSMField extends Field {
   public constructor( launchers: readonly Launcher[], protected readonly identifier: VSMFieldIdentifier, providedOptions: VSMFieldOptions ) {
 
     const options = optionize<VSMFieldOptions, SelfOptions, FieldOptions>()( {
-      isLauncherConfigurationPhetioInstrumented: true,
+      isLauncherOrientationPhetioInstrumented: true,
       isProjectileTypePhetioInstrumented: true,
       isLaunchHeightPhetioInstrumented: true
     }, providedOptions );
@@ -85,7 +85,7 @@ export default class VSMField extends Field {
       phetioReadOnly: true,
       units: '\u00B0',
       phetioDocumentation: 'This Property is the current angle of the launcher, in degrees. When a projectile is launched, this property is set to the launch angle.'
-                           + ' When the launcher configuration or angle stabilizer changes, this Property is set to the configured launch angle.',
+                           + ' When the launcher orientation or angle stabilizer changes, this Property is set to the configured launch angle.',
       phetioFeatured: true
     } );
 
@@ -149,7 +149,7 @@ export default class VSMField extends Field {
       this.projectilesChangedEmitter.emit();
     } );
 
-    // If the launch configuration is changed, re-center the launcher.
+    // If the launcher orientation is changed, re-center the launcher.
     this.meanAngleProperty.lazyLink( configuredLaunchAngle => {
       this.latestLaunchAngleProperty.value = configuredLaunchAngle;
     } );

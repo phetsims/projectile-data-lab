@@ -2,7 +2,7 @@
 
 /**
  * The PDLLaunchPanel contains the UI for setting up the experiment. It contains controls for the launcher,
- * as well as the launch configuration and projectile type on VSM screens, and sample size on the Sampling screen.
+ * as well as the launcher orientation and projectile type on VSM screens, and sample size on the Sampling screen.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)

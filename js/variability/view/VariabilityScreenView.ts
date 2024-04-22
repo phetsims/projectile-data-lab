@@ -41,7 +41,7 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
       )
     }, providedOptions );
 
-    const launchPanel = new VariabilityLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty, model.launcherProperty, {
+    const launchPanel = new VariabilityLaunchPanel( model.launcherOrientationProperty, model.projectileTypeProperty, model.launcherProperty, {
       tandem: options.tandem.createTandem( 'launchPanel' )
     } );
 

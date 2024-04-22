@@ -10,7 +10,7 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
+import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import MysteryLauncherSection from '../../common/view/MysteryLauncherSection.js';
@@ -23,7 +23,7 @@ type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 export default class VariabilityLaunchPanel extends VSMLaunchPanel {
 
   public constructor(
-    launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
+    launcherOrientationProperty: PhetioProperty<LauncherOrientation>,
     projectileTypeProperty: PhetioProperty<ProjectileType>,
     mysteryLauncherProperty: PhetioProperty<Launcher>,
     providedOptions: VariabilityLaunchPanelOptions ) {
@@ -32,7 +32,7 @@ export default class VariabilityLaunchPanel extends VSMLaunchPanel {
       tandem: providedOptions.tandem.createTandem( 'mysteryLauncherSection' )
     } );
 
-    super( [ mysteryLauncherSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+    super( [ mysteryLauncherSection ], launcherOrientationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'VariabilityLaunchPanel', VariabilityLaunchPanel );

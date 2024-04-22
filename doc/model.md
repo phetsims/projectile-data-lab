@@ -27,17 +27,17 @@ randomness and variability play crucial roles in physical phenomena.
 ## Statistical Model
 
 The simulation employs normal distributions to determine the launch speed and launch angle of each projectile. These values
-are generated from independent distributions, each with mean and standard deviation that depend on the launcher configuration,
-launcher type and/or the projectile type. See the [Configuration](#configuration), [Launchers](#launchers), 
+are generated from independent distributions, each with mean and standard deviation that depend on the launcher orientation,
+launcher type and/or the projectile type. See the [Orientation](#orientation), [Launchers](#launchers), 
 and [Projectiles](#projectiles) sections for more details.
 
 By incorporating statistical analyses such as calculating the mean (average distance of projectiles), standard
 deviation (variation in distances), and sampling (examining different "samples" of projectile launches), the simulation
 bridges the gap between theoretical physics and applied statistics.
 
-## Configuration
+## Orientation
 
-The launcher configuration determines the initial height and the mean launch angle of launched projectiles. It can take
+The launcher orientation determines the initial height and the mean launch angle of launched projectiles. It can take
 on the following values:
 * **Ground level - 30 degrees**: The projectiles have an initial height of 0 meters, and a mean launch angle of 30 degrees.
 * **Ground level - 45 degrees**: The projectiles have an initial height of 0 meters, and a mean launch angle of 45 degrees.

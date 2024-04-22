@@ -31,7 +31,7 @@ import PDLUtils from '../../common/PDLUtils.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 
 type SelfOptions = EmptySelfOptions;
-export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherConfigurationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
+export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherOrientationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
 
 // This is the delay between the last projectile landing and the mean symbol appearing, in 'Single sample' mode.
 const MEAN_DELAY_NORMAL = 0.5;
@@ -84,7 +84,7 @@ export default class SamplingField extends Field {
                       private readonly launchModeProperty: Property<SingleOrContinuous>,
                       providedOptions: SamplingFieldOptions ) {
     const options = optionize<SamplingFieldOptions, SelfOptions, FieldOptions>()( {
-      isLauncherConfigurationPhetioInstrumented: false,
+      isLauncherOrientationPhetioInstrumented: false,
       isProjectileTypePhetioInstrumented: false,
       isLaunchHeightPhetioInstrumented: false
     }, providedOptions );

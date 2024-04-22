@@ -48,7 +48,7 @@ Please search for `DynamicProperty` in the code to see how it is used.
 
 ### Enumeration patterns
 
-For simulation-specific enumerations, we use the string literal union pattern. See LauncherConfiguration.ts for an
+For simulation-specific enumerations, we use the string literal union pattern. See LauncherOrientation.ts for an
 example.
 
 ### Disposal
