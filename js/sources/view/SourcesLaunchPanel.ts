@@ -10,7 +10,7 @@
 
 import projectileDataLab from '../../projectileDataLab.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherConfiguration } from '../../common/model/LauncherConfiguration.js';
+import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
@@ -22,7 +22,7 @@ type SourcesLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
 
 export default class SourcesLaunchPanel extends VSMLaunchPanel {
 
-  public constructor( launcherConfigurationProperty: PhetioProperty<LauncherConfiguration>,
+  public constructor( launcherOrientationProperty: PhetioProperty<LauncherOrientation>,
                       projectileTypeProperty: PhetioProperty<ProjectileType>,
                       customLauncherMechanismProperty: PhetioProperty<LauncherMechanism>,
                       angleStabilityProperty: PhetioProperty<number>,
@@ -33,7 +33,7 @@ export default class SourcesLaunchPanel extends VSMLaunchPanel {
         tandem: providedOptions.tandem.createTandem( 'customLauncherSection' )
       } );
 
-    super( [ customLauncherSection ], launcherConfigurationProperty, projectileTypeProperty, providedOptions );
+    super( [ customLauncherSection ], launcherOrientationProperty, projectileTypeProperty, providedOptions );
   }
 }
 projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );

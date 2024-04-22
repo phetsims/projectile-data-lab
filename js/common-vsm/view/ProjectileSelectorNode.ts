@@ -168,7 +168,7 @@ export default class ProjectileSelectorNode extends SelectorNode {
           depictionProperty.value = lookup!;
 
           launcherIconNode.updateIcon(
-            selectedProjectile.launcherConfiguration,
+            selectedProjectile.launcherOrientation,
             selectedProjectile.launcher.mysteryOrCustom,
             selectedProjectile.launcher,
             selectedProjectile.launcherMechanism,

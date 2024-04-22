@@ -40,7 +40,7 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
 
       createLauncherNode: modelViewTransform => new CustomLauncherNode(
         modelViewTransform,
-        model.launcherConfigurationProperty,
+        model.launcherOrientationProperty,
         model.meanLaunchAngleProperty,
         model.launcherHeightProperty,
         new StringUnionProperty( 'custom', { validValues: [ 'custom' ] } ),
@@ -52,7 +52,7 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
       )
     }, providedOptions );
 
-    const launchPanel = new SourcesLaunchPanel( model.launcherConfigurationProperty, model.projectileTypeProperty,
+    const launchPanel = new SourcesLaunchPanel( model.launcherOrientationProperty, model.projectileTypeProperty,
       model.customLauncherMechanismProperty, model.angleStabilityProperty, {
         tandem: options.tandem.createTandem( 'launchPanel' )
       } );

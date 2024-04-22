@@ -11,7 +11,7 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { LauncherConfiguration, MEAN_LAUNCH_ANGLES } from '../model/LauncherConfiguration.js';
+import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../model/LauncherOrientation.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../model/MysteryOrCustom.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
@@ -28,7 +28,7 @@ type LauncherIconNodeOptions = SelfOptions & NodeOptions;
 export default class LauncherIconNode extends Node {
 
   // Create adapters that will reflect the values for the selected launcher.
-  private launcherConfigurationProperty = new Property<LauncherConfiguration>( 'angle30' );
+  private launcherOrientationProperty = new Property<LauncherOrientation>( 'angle30' );
   private launchAngleProperty = new NumberProperty( 30 );
   private launchHeightProperty = new NumberProperty( 0 );
   private mysteryOrCustomProperty = new StringUnionProperty<MysteryOrCustom>( 'mystery', {
@@ -45,7 +45,7 @@ export default class LauncherIconNode extends Node {
 
     const launcherNode = new CustomLauncherNode(
       ModelViewTransform2.createIdentity(),
-      this.launcherConfigurationProperty,
+      this.launcherOrientationProperty,
       this.launchAngleProperty,
       this.launchHeightProperty,
       this.mysteryOrCustomProperty,
@@ -60,15 +60,15 @@ export default class LauncherIconNode extends Node {
     this.addChild( launcherNode );
   }
 
-  public updateIcon( launcherConfiguration: LauncherConfiguration,
+  public updateIcon( launcherOrientation: LauncherOrientation,
                      mysteryOrCustom: MysteryOrCustom,
                      mysteryLauncher: Launcher,
                      launcherMechanism: LauncherMechanism,
                      standardDeviationAngle: number ): void {
 
-    this.launcherConfigurationProperty.value = launcherConfiguration;
-    this.launchAngleProperty.value = MEAN_LAUNCH_ANGLES[ launcherConfiguration ];
-    this.launchHeightProperty.value = launcherConfiguration === 'angle0Raised' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
+    this.launcherOrientationProperty.value = launcherOrientation;
+    this.launchAngleProperty.value = MEAN_LAUNCH_ANGLES[ launcherOrientation ];
+    this.launchHeightProperty.value = launcherOrientation === 'angle0Raised' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     this.mysteryOrCustomProperty.value = mysteryOrCustom;
 
     if ( mysteryOrCustom === 'mystery' ) {
@@ -82,7 +82,7 @@ export default class LauncherIconNode extends Node {
     // Clear the clip area, so we can get an unclipped measurement of the localBounds.height
     this.clipArea = null;
 
-    const height = this.localBounds.height * ( launcherConfiguration === 'angle0Raised' ? 0.6 : 0.5 );
+    const height = this.localBounds.height * ( launcherOrientation === 'angle0Raised' ? 0.6 : 0.5 );
 
     // The launcher has a long pedestal that gets clipped off.
     this.clipArea = Shape.rect(

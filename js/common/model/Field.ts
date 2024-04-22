@@ -1,7 +1,7 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
 /**
- * The Field is the area where projectiles are launched and land. Each Field manages its own configuration, sequencing,
+ * The Field is the area where projectiles are launched and land. Each Field manages its own orientation, sequencing,
  * and projectiles.
  *
  * @author Sam Reid (PhET Interactive Simulations)
@@ -14,7 +14,7 @@ import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioO
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Property from '../../../../axon/js/Property.js';
-import { LauncherConfiguration, LauncherConfigurationValues, MEAN_LAUNCH_ANGLES } from './LauncherConfiguration.js';
+import { LauncherOrientation, LauncherOrientationValues, MEAN_LAUNCH_ANGLES } from './LauncherOrientation.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PDLConstants from '../PDLConstants.js';
@@ -44,8 +44,8 @@ soundManager.addSoundGenerator( launchSoundClip );
 
 type SelfOptions = {
 
-  // Only instrument the launcher configuration Property in VSM screens.
-  isLauncherConfigurationPhetioInstrumented: boolean;
+  // Only instrument the launcher orientation Property in VSM screens.
+  isLauncherOrientationPhetioInstrumented: boolean;
 
   // Only instrument the projectile type Property in VSM screens.
   isProjectileTypePhetioInstrumented: boolean;
@@ -57,8 +57,8 @@ export type FieldOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tand
 
 export default abstract class Field extends PhetioObject {
 
-  // Indicates which LauncherConfiguration is currently in effect. Please see LauncherConfiguration for more details.
-  public readonly launcherConfigurationProperty: Property<LauncherConfiguration>;
+  // Indicates which LauncherOrientation is currently in effect. Please see LauncherOrientation for more details.
+  public readonly launcherOrientationProperty: Property<LauncherOrientation>;
 
   // Specifies the type of projectile being used.
   public readonly projectileTypeProperty: Property<ProjectileType>;
@@ -166,15 +166,15 @@ export default abstract class Field extends PhetioObject {
 
     this.projectilesClearedEmitter.addListener( updateIsContainingDataProperty );
 
-    const launcherConfigurationOptions = options.isLauncherConfigurationPhetioInstrumented ? {
-      validValues: LauncherConfigurationValues,
-      tandem: providedOptions.tandem.createTandem( 'launcherConfigurationProperty' ),
+    const launcherOrientationOptions = options.isLauncherOrientationPhetioInstrumented ? {
+      validValues: LauncherOrientationValues,
+      tandem: providedOptions.tandem.createTandem( 'launcherOrientationProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This Property configures the height and mean launch angle of the launcher.',
-      phetioValueType: StringUnionIO( LauncherConfigurationValues )
+      phetioValueType: StringUnionIO( LauncherOrientationValues )
     } : { validValues: [ 'angle30' ] } as const;
 
-    this.launcherConfigurationProperty = new StringUnionProperty<LauncherConfiguration>( 'angle30', launcherConfigurationOptions );
+    this.launcherOrientationProperty = new StringUnionProperty<LauncherOrientation>( 'angle30', launcherOrientationOptions );
 
     const projectileTypeOptions = options.isProjectileTypePhetioInstrumented ? {
       validValues: [ CANNONBALL, PUMPKIN, PIANO ],
@@ -186,8 +186,8 @@ export default abstract class Field extends PhetioObject {
 
     this.projectileTypeProperty = new Property<ProjectileType>( CANNONBALL, projectileTypeOptions );
 
-    this.meanAngleProperty = new DerivedProperty( [ this.launcherConfigurationProperty ],
-      configuration => MEAN_LAUNCH_ANGLES[ configuration ] );
+    this.meanAngleProperty = new DerivedProperty( [ this.launcherOrientationProperty ],
+      orientation => MEAN_LAUNCH_ANGLES[ orientation ] );
 
     this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
       // bidirectional: true,
@@ -208,8 +208,8 @@ export default abstract class Field extends PhetioObject {
       derive: launcher => launcher.standardDeviationAngleProperty
     } );
 
-    this.launchHeightProperty = new DerivedProperty( [ this.launcherConfigurationProperty ], configuration => {
-      return configuration === 'angle0Raised' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
+    this.launchHeightProperty = new DerivedProperty( [ this.launcherOrientationProperty ], orientation => {
+      return orientation === 'angle0Raised' ? PDLConstants.RAISED_LAUNCHER_HEIGHT : 0;
     }, {
       tandem: providedOptions.isLaunchHeightPhetioInstrumented ? providedOptions.tandem.createTandem( 'launchHeightProperty' ) : Tandem.OPT_OUT,
       phetioDocumentation: 'This Property is the initial height of launched projectiles in meters.',
@@ -239,7 +239,7 @@ export default abstract class Field extends PhetioObject {
   public reset(): void {
     this.isContinuousLaunchingProperty.reset();
 
-    this.launcherConfigurationProperty.reset();
+    this.launcherOrientationProperty.reset();
     this.projectileTypeProperty.reset();
 
     this.angleStabilityProperty.reset();
@@ -274,7 +274,7 @@ export default abstract class Field extends PhetioObject {
     let launchAngle = chooseRandomizedLaunchAngle();
 
     // If the launcher is raised, we allow negative angles, and the probability of an angle above 90 degrees is negligible.
-    if ( this.launcherConfigurationProperty.value !== 'angle0Raised' ) {
+    if ( this.launcherOrientationProperty.value !== 'angle0Raised' ) {
 
       // Do not allow more than 100 iterations to avoid an infinite loop if something changes in the future.
       let iterationCount = 0;
@@ -325,7 +325,7 @@ export default abstract class Field extends PhetioObject {
       screenTandemName,
       this.identifier,
       sampleNumber,
-      this.launcherConfigurationProperty.value,
+      this.launcherOrientationProperty.value,
       launcher,
       launcher.launcherMechanismProperty.value,
       this.standardDeviationAngleProperty.value,
