@@ -34,7 +34,7 @@ import NumberProperty from '../../../../axon/js/NumberProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 
-type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'isFieldPropertyPhetioReadonly' | 'fieldPropertyPhetioDocumentation' | 'isPathVisibilityPhetioInstrumented'>;
+type SamplingModelOptions = SelfOptions & StrictOmit<PDLModelOptions<SamplingField>, 'timeSpeedValues' | 'fields' | 'isPathsVisible' | 'isFieldPropertyPhetioReadonly' | 'fieldPropertyPhetioDocumentation' | 'isPathVisibilityPhetioInstrumented' | 'isStandardDeviationAnglePropertyPhetioInstrumented'>;
 
 export const SAMPLE_SIZES = [ 2, 5, 15, 40 ];
 
@@ -85,7 +85,8 @@ export default class SamplingModel extends PDLModel<SamplingField> {
       isPathVisibilityPhetioInstrumented: false,
       isFieldPropertyPhetioReadonly: true,
       fieldPropertyPhetioDocumentation: 'This Property represents the field that is currently selected. '
-                                        + 'On the Sampling screen, each combination of launcher and sample size has its own field.'
+                                        + 'On the Sampling screen, each combination of launcher and sample size has its own field.',
+      isStandardDeviationAnglePropertyPhetioInstrumented: false
     }, providedOptions );
 
     super( options );

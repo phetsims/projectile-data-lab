@@ -28,6 +28,8 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import PDLConstants from '../../common/PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 type SampleSizeThumbnailNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
@@ -36,6 +38,9 @@ export default class SampleSizeThumbnailNode extends Node {
   public constructor( thumbnailSampleSize: number,
                       fieldProperty: TReadOnlyProperty<SamplingField>,
                       fields: SamplingField[],
+                      meanLaunchSpeedProperty: TReadOnlyProperty<number>,
+                      standardDeviationSpeedProperty: TReadOnlyProperty<number>,
+                      standardDeviationAngleProperty: TReadOnlyProperty<number>,
                       binWidthProperty: TReadOnlyProperty<number>,
                       histogramRepresentationProperty: TReadOnlyProperty<HistogramRepresentation>,
                       blockFillProperty: TReadOnlyProperty<Color>,
@@ -53,33 +58,30 @@ export default class SampleSizeThumbnailNode extends Node {
 
     // Horizontally zoom in on the thumbnails, centering on the average output for the mystery launcher
     // Each launcher has a different average output, so we need to adjust the range for the thumbnail histogram based on the mystery launcher
-    fieldProperty.link( field => {
 
-      const index = field.launcherProperty.value.launcherNumber;
+    Multilink.multilink( [ binWidthProperty, meanLaunchSpeedProperty, standardDeviationSpeedProperty, standardDeviationAngleProperty ],
+      ( binWidth, meanLaunchSpeed, standardDeviationSpeed, standardDeviationAngle ) => {
 
-      // The width of the range of the thumbnail histogram
-      const thumbnailDomain =
-        index === 1 ? 20 :
-        index === 2 ? 40 :
-        index === 3 ? 30 :
-        index === 4 ? 19 :
-        index === 5 ? 20 :
-        index === 6 ? 50 :
-        40;
+        const meanRange = Math.pow( meanLaunchSpeed, 2 ) / PDLConstants.FREEFALL_ACCELERATION * Math.sin( 2 * 30 * Math.PI / 180 );
 
-      const thumbnailMean =
-        index === 1 ? 46 :
-        index === 2 ? 50 :
-        index === 3 ? 55 :
-        index === 4 ? 46 :
-        index === 5 ? 51 :
-        index === 6 ? 55 :
-        50;
+        const standardDeviationRange = SampleSizeThumbnailNode.calculateRangeStdDev(
+          meanLaunchSpeed,
+          standardDeviationSpeed,
+          30,
+          standardDeviationAngle
+        );
 
-      const range = new Range( thumbnailMean - thumbnailDomain / 2, thumbnailMean + thumbnailDomain / 2 );
+        // To ensure the data fits in the thumbnail within a healthy margin, we multiply the standard deviation by this amount
+        // to set the domain of the axis.
+        const SCALE_STANDARD_DEVIATION = 3;
 
-      chartTransform.setModelXRange( range );
-    } );
+        // Show at least one bin on either side so the bars don't go offscreen too much. This is most helpful when the bins
+        // are very large.
+        const addedPadding = binWidth;
+        const range = new Range( meanRange - SCALE_STANDARD_DEVIATION * standardDeviationRange - addedPadding, meanRange + SCALE_STANDARD_DEVIATION * standardDeviationRange + addedPadding );
+
+        chartTransform.setModelXRange( range );
+      } );
 
     const chartBackground = new ChartRectangle( chartTransform, {
       fill: 'white',
@@ -218,6 +220,49 @@ export default class SampleSizeThumbnailNode extends Node {
       updateHistogram();
     } );
   }
+
+  /**
+   * Calculates the standard deviation of the projectile's range based on the propagation of errors from the launch
+   * speed and angle, both of which are assumed to follow Gaussian distributions. The function takes into account the
+   * mean and standard deviation of both the launch speed and angle, converts angles from degrees to radians, computes
+   * partial derivatives of the range equation with respect to both speed and angle at their mean values, and then
+   * calculates the contribution of each variable to the total variance of the projectile's range.
+   *
+   * @param meanSpeed - The mean speed of the projectile (in meters per second).
+   * @param stdDevSpeed - The standard deviation of the speed (in meters per second).
+   * @param meanAngle - The mean launch angle of the projectile (in degrees).
+   * @param stdDevAngle - The standard deviation of the launch angle (in degrees).
+   * @returns The estimated standard deviation of the range of the projectile, accounting for
+   *                   uncertainties in both speed and angle.
+   *
+   * Mathematical details:
+   * - Range equation used: R = (v^2 / g) * sin(2 * theta)
+   * - Propagation of error formula: sqrt((∂R/∂v * σ_v)² + (∂R/∂θ * σ_θ)²)
+   * - Partial derivatives:
+   *   ∂R/∂v = (2 * v / g) * sin(2 * theta)
+   *   ∂R/∂θ = (2 * v² / g) * cos(2 * theta), where θ is in radians
+   */
+  private static calculateRangeStdDev( meanSpeed: number, stdDevSpeed: number, meanAngle: number, stdDevAngle: number ): number {
+    const radiansMeanAngle = meanAngle * Math.PI / 180; // convert mean angle from degrees to radians
+    const radiansStdDevAngle = stdDevAngle * Math.PI / 180; // convert standard deviation angle from degrees to radians
+
+    // Partial derivatives evaluated at mean values
+    const partialV = ( 2 * meanSpeed / PDLConstants.FREEFALL_ACCELERATION ) * Math.sin( 2 * radiansMeanAngle );
+    const partialTheta = ( 2 * meanSpeed ** 2 / PDLConstants.FREEFALL_ACCELERATION ) * Math.cos( 2 * radiansMeanAngle );
+
+    // Variance components
+    const varV = partialV ** 2 * stdDevSpeed ** 2;
+    const varTheta = partialTheta ** 2 * radiansStdDevAngle ** 2;
+
+    // Total variance of the range
+    const totalVariance = varV + varTheta;
+
+    // Standard deviation of the range
+    const rangeStdDev = Math.sqrt( totalVariance );
+
+    return rangeStdDev;
+  }
 }
+
 
 projectileDataLab.register( 'SampleSizeThumbnailNode', SampleSizeThumbnailNode );

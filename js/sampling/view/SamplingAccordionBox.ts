@@ -39,6 +39,11 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
     numberOfSamplesProperty: TReadOnlyProperty<number>,
     fieldProperty: TReadOnlyProperty<SamplingField>,
     fields: SamplingField[],
+
+    meanLaunchSpeedProperty: TReadOnlyProperty<number>,
+    standardDeviationSpeedProperty: TReadOnlyProperty<number>,
+    standardDeviationAngleProperty: TReadOnlyProperty<number>,
+
     zoomProperty: NumberProperty,
     binWidthProperty: TReadOnlyProperty<number>,
     comboBoxParent: Node,
@@ -71,22 +76,38 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
       tandem: thumbnailContainerTandem,
       visiblePropertyOptions: { phetioFeatured: true },
       children: [
-        new SampleSizeThumbnailNode( 2, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+        new SampleSizeThumbnailNode( 2, fieldProperty, fields,
+          meanLaunchSpeedProperty,
+          standardDeviationSpeedProperty,
+          standardDeviationAngleProperty,
+          binWidthProperty, histogramRepresentationProperty,
           PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
             tandem: thumbnailContainerTandem.createTandem( 'sampleSize2ThumbnailNode' ),
             visiblePropertyOptions: { phetioFeatured: true }
           } ),
-        new SampleSizeThumbnailNode( 5, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+        new SampleSizeThumbnailNode( 5, fieldProperty, fields,
+          meanLaunchSpeedProperty,
+          standardDeviationSpeedProperty,
+          standardDeviationAngleProperty,
+          binWidthProperty, histogramRepresentationProperty,
           PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
             tandem: thumbnailContainerTandem.createTandem( 'sampleSize5ThumbnailNode' ),
             visiblePropertyOptions: { phetioFeatured: true }
           } ),
-        new SampleSizeThumbnailNode( 15, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+        new SampleSizeThumbnailNode( 15, fieldProperty, fields,
+          meanLaunchSpeedProperty,
+          standardDeviationSpeedProperty,
+          standardDeviationAngleProperty,
+          binWidthProperty, histogramRepresentationProperty,
           PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
             tandem: thumbnailContainerTandem.createTandem( 'sampleSize15ThumbnailNode' ),
             visiblePropertyOptions: { phetioFeatured: true }
           } ),
-        new SampleSizeThumbnailNode( 40, fieldProperty, fields, binWidthProperty, histogramRepresentationProperty,
+        new SampleSizeThumbnailNode( 40, fieldProperty, fields,
+          meanLaunchSpeedProperty,
+          standardDeviationSpeedProperty,
+          standardDeviationAngleProperty,
+          binWidthProperty, histogramRepresentationProperty,
           PDLColors.meanMarkerFillProperty, PDLColors.meanMarkerStrokeProperty, zoomProperty, {
             tandem: thumbnailContainerTandem.createTandem( 'sample40ThumbnailNode' ),
             visiblePropertyOptions: { phetioFeatured: true }
