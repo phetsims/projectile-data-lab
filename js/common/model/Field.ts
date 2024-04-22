@@ -67,10 +67,10 @@ export default abstract class Field extends PhetioObject {
   // These values are DynamicProperties that are determined by the Launcher, see Launcher.ts and implementation-notes.md
 
   // Specifies the average speed of launched projectiles
-  private readonly meanSpeedProperty: TReadOnlyProperty<number>;
+  public readonly meanSpeedProperty: TReadOnlyProperty<number>;
 
   // Specifies the speed standard deviation for launched projectiles.
-  private readonly standardDeviationSpeedProperty: TReadOnlyProperty<number>;
+  public readonly standardDeviationSpeedProperty: TReadOnlyProperty<number>;
 
   // Indicates the current value for the standard deviation of the angle of launch.
   public readonly standardDeviationAngleProperty: TReadOnlyProperty<number>;

@@ -161,6 +161,11 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
       model.numberOfCompletedSamplesProperty,
       model.fieldProperty,
       model.fields,
+
+      model.meanLaunchSpeedProperty,
+      model.standardDeviationSpeedProperty,
+      model.standardDeviationAngleProperty,
+
       model.histogram.zoomProperty,
       model.histogram.binWidthProperty,
       this,

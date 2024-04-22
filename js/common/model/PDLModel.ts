@@ -28,6 +28,7 @@ import ProjectileType from './ProjectileType.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 
 // See the documentation at the PDLModel class attributes for more information on these options.
 type SelfOptions<T extends Field> = {
@@ -39,6 +40,8 @@ type SelfOptions<T extends Field> = {
   isPathVisibilityPhetioInstrumented: boolean;
   isFieldPropertyPhetioReadonly: boolean;
   fieldPropertyPhetioDocumentation: string;
+
+  isStandardDeviationAnglePropertyPhetioInstrumented: boolean;
 };
 export type PDLModelOptions<T extends Field> = SelfOptions<T> & { tandem: Tandem };
 
@@ -78,6 +81,9 @@ export default abstract class PDLModel<T extends Field> implements TModel {
   public readonly projectileTypeProperty: PhetioProperty<ProjectileType>;
 
   public readonly meanLaunchAngleProperty: TReadOnlyProperty<number>;
+  public readonly meanLaunchSpeedProperty: TReadOnlyProperty<number>;
+  public readonly standardDeviationSpeedProperty: TReadOnlyProperty<number>;
+  public readonly standardDeviationAngleProperty: TReadOnlyProperty<number>;
 
   public readonly launcherHeightProperty: TReadOnlyProperty<number>;
 
@@ -164,6 +170,24 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.meanLaunchAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
       bidirectional: true,
       derive: field => field.meanAngleProperty
+    } );
+
+    this.meanLaunchSpeedProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+      derive: field => field.meanSpeedProperty
+    } );
+
+    this.standardDeviationSpeedProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+      derive: field => field.standardDeviationSpeedProperty
+    } );
+
+    this.standardDeviationAngleProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
+      derive: field => field.standardDeviationAngleProperty,
+      tandem: providedOptions.isStandardDeviationAnglePropertyPhetioInstrumented ? providedOptions.tandem.createTandem( 'standardDeviationAngleProperty' ) : Tandem.OPT_OUT,
+      phetioFeatured: true,
+      phetioDocumentation: 'This Property represents the standard deviation of the angle of launch.',
+      phetioValueType: NumberIO,
+      phetioReadOnly: true,
+      phetioState: false
     } );
 
     this.launcherHeightProperty = new DynamicProperty<number, number, T>( this.fieldProperty, {
