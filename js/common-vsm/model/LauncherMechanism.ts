@@ -14,6 +14,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import packageJSON from '../../../../joist/js/packageJSON.js';
 
 export default class LauncherMechanism extends PhetioObject {
   public readonly speedMeanProperty: NumberProperty;
@@ -27,13 +28,17 @@ export default class LauncherMechanism extends PhetioObject {
       phetioState: false
     } );
 
+    // In the Projectile Sampling Distributions sim, the minimum speed mean is higher than in PDL. This ensures that
+    // the data falls within the horizontal range of the histogram, which is reduced in that sim.
+    const minSpeedMean = packageJSON.name === 'projectile-sampling-distributions' ? 20 : 15;
+
     this.speedMeanProperty = new NumberProperty( speedMean, {
       tandem: tandem.createTandem( 'speedMeanProperty' ),
       phetioFeatured: true,
       units: 'm/s',
 
       // The speed tool is designed to show values up to 30 m/s.
-      range: new Range( 15, 25 ),
+      range: new Range( minSpeedMean, 25 ),
       rangePropertyOptions: {
         tandem: Tandem.OPT_OUT
       }
