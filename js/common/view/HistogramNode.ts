@@ -46,6 +46,7 @@ import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
+import packageJSON from '../../../../joist/js/packageJSON.js';
 
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
@@ -86,7 +87,11 @@ export default class HistogramNode extends Node {
       // Tuned to make the spacing between the right panel and the histogram match that of the left
       viewWidth: 561,
       viewHeight: 165,
-      modelXRange: new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
+
+      // In Projectile Data Lab, use the full span of the field for the histogram x-axis.
+      // In Projectile Sampling Distributions, use a smaller range to make the histogram more readable.
+      // See https://github.com/phetsims/projectile-data-lab/issues/304
+      modelXRange: packageJSON.name === 'projectile-sampling-distributions' ? new Range( 20, 80 ) : new Range( 0, PDLConstants.MAX_FIELD_DISTANCE ),
       modelYRange: new Range( 0, 25 )
     } );
 
