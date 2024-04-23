@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.0-rc.1 Tue Apr 09 2024 12:37:59 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# projectile-data-lab 1.0.0-rc.1 Tue Apr 23 2024 12:54:34 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "347e7eeac1424adb6023fb06a619d6ea01a0620f",
     "branch": "HEAD"
@@ -45,8 +45,8 @@
     "branch": "HEAD"
   },
   "phet-io-sim-specific": {
-    "sha": "a1a27d6e46517229c52acbeee1a67710d9055f71",
-    "branch": "HEAD"
+    "sha": "e6257527911d5bf0eed36c34ca066bf844437693",
+    "branch": "projectile-data-lab-1.0"
   },
   "phet-io-wrappers": {
     "sha": "8145e67bc5a97d9432a8d87acda23604c49a4e40",
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "cca111186664ddd8cff2efbd87948ddf13e9dfc9",
+    "sha": "aa3593359392ce4e006d0f094350aec7d2dfe4b8",
     "branch": "1.0"
   },
   "query-string-machine": {
@@ -69,12 +69,12 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "c68ad0f0364b159760aac238a782d029698eaf13",
-    "branch": "HEAD"
+    "sha": "f5992b0fa6a9a906ee0feb140e8212ea02580a97",
+    "branch": "projectile-data-lab-1.0"
   },
   "scenery-phet": {
-    "sha": "3b4a6b9fa3bf5d392c785ba3112c2c0b69f97f42",
-    "branch": "HEAD"
+    "sha": "5662cb3aa006ecc3b4a4baa90a0882a75cce1e24",
+    "branch": "projectile-data-lab-1.0"
   },
   "sherpa": {
     "sha": "ddbebc40fd0137f82235ca6ba079dd473bd5b2e6",
