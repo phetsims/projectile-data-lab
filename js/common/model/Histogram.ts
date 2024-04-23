@@ -21,6 +21,7 @@ import HistogramSonifier from './HistogramSonifier.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PDLPreferences from '../PDLPreferences.js';
+import packageJSON from '../../../../joist/js/packageJSON.js';
 
 // ZoomLevel describes the characteristics of how the HistogramNode and the SampleSizeThumbnailNode look at a given zoom
 // level.
@@ -36,31 +37,61 @@ type ZoomLevel = {
   numberOfThumbnailGridLines: number;
 };
 
-export const ZOOM_LEVELS: ZoomLevel[] = [ {
-  maxCount: 500,
-  minorSpacing: 10,
-  numberOfThumbnailGridLines: 15
-}, {
-  maxCount: 200,
-  minorSpacing: 8,
-  numberOfThumbnailGridLines: 13
-}, {
-  maxCount: 100,
-  minorSpacing: 5,
-  numberOfThumbnailGridLines: 11
-}, {
-  maxCount: 75,
-  minorSpacing: 5,
-  numberOfThumbnailGridLines: 9
-}, {
-  maxCount: 50,
-  minorSpacing: 5,
-  numberOfThumbnailGridLines: 7
-}, {
-  maxCount: 25,
-  minorSpacing: null,
-  numberOfThumbnailGridLines: 5
-} ];
+// On the Projectile Sampling Distributions sim, the zoom levels are different from the Projectile Data Lab sim.
+export const ZOOM_LEVELS: ZoomLevel[] = packageJSON.name === 'projectile-sampling-distributions' ?
+  [ {
+    maxCount: 250,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 17
+  }, {
+    maxCount: 200,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 15
+  }, {
+    maxCount: 150,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 13
+  }, {
+    maxCount: 100,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 11
+  }, {
+    maxCount: 75,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 9
+  }, {
+    maxCount: 50,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 7
+  }, {
+    maxCount: 25,
+    minorSpacing: null,
+    numberOfThumbnailGridLines: 5
+  } ] : [ {
+    maxCount: 500,
+    minorSpacing: 10,
+    numberOfThumbnailGridLines: 15
+  }, {
+    maxCount: 200,
+    minorSpacing: 8,
+    numberOfThumbnailGridLines: 13
+  }, {
+    maxCount: 100,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 11
+  }, {
+    maxCount: 75,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 9
+  }, {
+    maxCount: 50,
+    minorSpacing: 5,
+    numberOfThumbnailGridLines: 7
+  }, {
+    maxCount: 25,
+    minorSpacing: null,
+    numberOfThumbnailGridLines: 5
+  } ];
 
 type SelfOptions = EmptySelfOptions;
 type HistogramOptions = SelfOptions & PickRequired<PhetioObjectOptions, 'tandem'>;
