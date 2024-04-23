@@ -23,7 +23,7 @@ export default class MeasuresKeyboardHelpNode extends PDLKeyboardHelpNode {
       minimumStringProperty: ProjectileDataLabStrings.keyboardHelpDialog.measuresScreen.startOfNumberLineStringProperty
     } );
 
-    super( true, [ intervalToolSection ], {} );
+    super( true, true, [ intervalToolSection ], {} );
   }
 }
 
