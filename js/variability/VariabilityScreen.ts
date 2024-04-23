@@ -27,7 +27,7 @@ export default class VariabilityScreen extends Screen<VariabilityModel, Variabil
     const options = optionize<VariabilityScreenOptions, SelfOptions, ScreenOptions>()( {
       name: ProjectileDataLabStrings.screen.variabilityStringProperty,
       homeScreenIcon: PDLScreenIconFactory.createVariabilityScreenIcon(),
-      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false, [ new ComboBoxKeyboardHelpSection( {
+      createKeyboardHelpNode: () => new PDLKeyboardHelpNode( false, true, [ new ComboBoxKeyboardHelpSection( {
         headingString: ProjectileDataLabStrings.keyboardHelpDialog.histogramBinControlsStringProperty
       } ) ] )
     }, providedOptions );
