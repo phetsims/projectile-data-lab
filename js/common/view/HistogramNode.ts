@@ -368,9 +368,9 @@ export default class HistogramNode extends Node {
       horizontalAxisLabelProxy.top = chartNodeProxy.bottom + CHART_UI_MARGIN;
     } );
 
-    ManualConstraint.create( this, [ this.chartNode, this.chartBackground, verticalAxisLabel ], ( chartNodeProxy, chartBackgroundProxy ) => {
-      verticalAxisLabel.right = chartNodeProxy.left - CHART_UI_MARGIN;
-      verticalAxisLabel.centerY = chartBackgroundProxy.centerY;
+    ManualConstraint.create( this, [ this.chartBackground, verticalAxisLabel, zoomButtonGroup ], ( chartBackgroundProxy, verticalAxisLabelProxy, zoomButtonGroupProxy ) => {
+      verticalAxisLabelProxy.centerX = zoomButtonGroupProxy.centerX;
+      verticalAxisLabelProxy.centerY = chartBackgroundProxy.centerY;
     } );
 
     ManualConstraint.create( this, [ this.chartBackground, toggleHistogramSoundButton ], ( chartBackgroundProxy, playHistogramSoundButtonProxy ) => {
