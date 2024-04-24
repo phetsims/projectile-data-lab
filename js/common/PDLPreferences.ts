@@ -14,6 +14,7 @@ import PDLQueryParameters from './PDLQueryParameters.js';
 import projectileDataLab from '../projectileDataLab.js';
 import { LaunchSoundStrategy, LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import packageJSON from '../../../joist/js/packageJSON.js';
 
 const PDLPreferences = {
 
@@ -32,7 +33,7 @@ const PDLPreferences = {
   // phet-types.d.ts does not support inferring string union types for string query parameters, so we need to cast
   binStrategyProperty: new StringUnionProperty( PDLQueryParameters.binStrategy as BinStrategy, {
     validValues: BinStrategyValues,
-    tandem: Tandem.PREFERENCES.createTandem( 'binStrategyProperty' ),
+    tandem: packageJSON.name === 'projectile-data-lab' ? Tandem.PREFERENCES.createTandem( 'binStrategyProperty' ) : Tandem.OPT_OUT,
     phetioFeatured: true,
     phetioDocumentation: 'Indicates whether the histogram bins are sized based on the bin width or the number of bins.'
   } ),
