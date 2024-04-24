@@ -7,4 +7,10 @@
  */
 export const ScreenIdentifierValues = [ 'variability', 'sources', 'measures', 'sampling' ] as const;
 
+export const screenIdentifierForScreenTandemName = ( screenTandemName: string ): ScreenIdentifier => {
+  const screenTandemNameTrimmed: ScreenIdentifier = screenTandemName.replace( 'Screen', '' ) as ScreenIdentifier;
+  assert && assert( ScreenIdentifierValues.includes( screenTandemNameTrimmed ), `Invalid screenTandemName: ${screenTandemName}` );
+  return screenTandemNameTrimmed;
+};
+
 export type ScreenIdentifier = typeof ScreenIdentifierValues[number];

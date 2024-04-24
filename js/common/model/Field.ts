@@ -38,6 +38,7 @@ import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js'
 import { Color } from '../../../../scenery/js/imports.js';
 import PDLPreferences from '../PDLPreferences.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import { screenIdentifierForScreenTandemName } from './ScreenIdentifier.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( launchSoundClip );
@@ -304,6 +305,7 @@ export default abstract class Field extends PhetioObject {
 
     const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
     const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
+    const screenIdentifier = screenIdentifierForScreenTandemName( screenTandemName );
 
     const launcher = this.launcherProperty.value;
 
@@ -322,7 +324,7 @@ export default abstract class Field extends PhetioObject {
     }
 
     return new Projectile(
-      screenTandemName,
+      screenIdentifier,
       this.identifier,
       sampleNumber,
       this.launcherOrientationProperty.value,
