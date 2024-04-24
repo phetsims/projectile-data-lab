@@ -96,20 +96,20 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
       } );
 
       content.push( showStandardErrorControl );
+
+      const binStrategyControl = new PreferencesControl( {
+        labelNode: new PDLText( ProjectileDataLabStrings.histogramBinsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
+        descriptionNode: new RichText( ProjectileDataLabStrings.histogramBinsPreferenceDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
+        controlNode: binTypeRadioButtonGroup,
+        tandem: binStrategyControlTandem,
+        phetioFeatured: true,
+        visiblePropertyOptions: {
+          phetioFeatured: true
+        }
+      } );
+
+      content.push( binStrategyControl );
     }
-
-    const binStrategyControl = new PreferencesControl( {
-      labelNode: new PDLText( ProjectileDataLabStrings.histogramBinsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
-      descriptionNode: new RichText( ProjectileDataLabStrings.histogramBinsPreferenceDescriptionStringProperty, PreferencesDialogConstants.CONTROL_DESCRIPTION_OPTIONS ),
-      controlNode: binTypeRadioButtonGroup,
-      tandem: binStrategyControlTandem,
-      phetioFeatured: true,
-      visiblePropertyOptions: {
-        phetioFeatured: true
-      }
-    } );
-
-    content.push( binStrategyControl );
 
     super( {
       fill: null,

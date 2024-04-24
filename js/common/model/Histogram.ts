@@ -22,6 +22,7 @@ import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import PDLPreferences from '../PDLPreferences.js';
 import packageJSON from '../../../../joist/js/packageJSON.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 
 // ZoomLevel describes the characteristics of how the HistogramNode and the SampleSizeThumbnailNode look at a given zoom
 // level.
@@ -124,8 +125,11 @@ export default class Histogram {
     playMeanTone: () => void,  // See the method declaration in PDLModel.ts
     providedOptions: HistogramOptions ) {
 
-    this.selectedBinWidthProperty = new NumberProperty( 1, {
-      validValues: [ 0.5, 1, 2, 5, 10 ],
+    this.selectedBinWidthProperty = new NumberProperty( packageJSON.name === 'projectile-sampling-distributions' ? 0.5 : 1, {
+      validValues: [ 0.5, 1, 2, 5,
+
+        ...( packageJSON.name === 'projectile-data-lab' ? [ 10 ] : [] )
+      ],
       tandem: providedOptions.tandem.createTandem( 'selectedBinWidthProperty' ),
       phetioFeatured: true,
       phetioDocumentation: 'This Property configures the bin width of the field and histogram. It is used when the bin strategy is "bin width".',
@@ -134,7 +138,7 @@ export default class Histogram {
 
     this.selectedTotalBinsProperty = new NumberProperty( 10, {
       validValues: [ 10, 20, 50, 100, 200 ],
-      tandem: providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ),
+      tandem: packageJSON.name === 'projectile-data-lab' ? providedOptions.tandem.createTandem( 'selectedTotalBinsProperty' ) : Tandem.OPT_OUT,
       phetioFeatured: true,
       phetioDocumentation: 'This Property configures the total number of bins in the histogram. It is used when the bin strategy is "total bins".'
     } );
