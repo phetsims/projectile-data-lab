@@ -103,19 +103,18 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
     };
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
-    this.addInputListener( new KeyboardListener( {
+    KeyboardListener.createGlobal( this, {
       keys: [ 'f+1', 'f+2', 'f+3', 'f+4', 'f+5', 'f+6' ] as const,
-      global: true,
-      callback: ( event, keysPressed ) => {
+      fire: ( event, keysPressed ) => {
         const key = parseInt( keysPressed.substring( keysPressed.indexOf( '+' ) + 1 ), 10 );
         handleKeypress( key );
       }
-    } ) );
+    } );
 
     // a listener that selects the radio button when the radio button group has focus
     this.addInputListener( new KeyboardListener( {
       keys: [ '1', '2', '3', '4', '5', '6' ] as const,
-      callback: ( event, keysPressed ) => {
+      fire: ( event, keysPressed ) => {
         const key = parseInt( keysPressed, 10 );
         handleKeypress( key );
       }

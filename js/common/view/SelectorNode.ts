@@ -172,7 +172,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     // Do not use this.onInput since this would double some of the sounds when the buttons are interacted with in a certain way.
     this.addInputListener( new KeyboardListener( {
       keys: [ 'home', 'end' ] as const,
-      callback: () => {
+      fire: () => {
         if ( numberProperty.value !== priorValue ) {
           options.playSound( numberProperty.value );
         }

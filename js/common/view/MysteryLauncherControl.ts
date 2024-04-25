@@ -115,7 +115,7 @@ export default class MysteryLauncherControl extends Node {
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     mysteryLauncherRadioButtonGroup.addInputListener( new KeyboardListener( {
       keys: [ '1', '2', '3', '4', '5', '6' ] as const,
-      callback: ( event, keysPressed ) => {
+      fire: ( event, keysPressed ) => {
         const key = parseInt( keysPressed, 10 );
 
         const launcher = MYSTERY_LAUNCHERS.find( launcher => launcher.launcherNumber === key )!;
