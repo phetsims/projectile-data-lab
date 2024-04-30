@@ -47,6 +47,7 @@ import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.j
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import packageJSON from '../../../../joist/js/packageJSON.js';
+import audioManager from '../../../../joist/js/audioManager.js';
 
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
@@ -351,7 +352,7 @@ export default class HistogramNode extends Node {
     const toggleHistogramSoundButton = new RectangularPushButton( {
       content: histogramSoundIconToggleNode,
       soundPlayer: nullSoundPlayer,
-      enabledProperty: histogramSoundEnabledProperty,
+      enabledProperty: DerivedProperty.and( [ histogramSoundEnabledProperty, audioManager.audioEnabledProperty ] ),
       size: new Dimension2( 34, 34 ),
       xMargin: 5,
       yMargin: 5,
