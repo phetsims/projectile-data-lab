@@ -21,11 +21,11 @@ import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileT
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import projectileTypeCannonball_mp3 from '../../../sounds/projectileTypeCannonball_mp3.js';
-import projectileTypePumpkin_mp3 from '../../../sounds/projectileTypePumpkin_mp3.js';
 import projectileTypePiano_mp3 from '../../../sounds/projectileTypePiano_mp3.js';
+import hollowThud_mp3 from '../../../../tambo/sounds/hollowThud_mp3.js';
 
 const cannonballSoundClip = new SoundClip( projectileTypeCannonball_mp3, { initialOutputLevel: 0.2 } );
-const pumpkinSoundClip = new SoundClip( projectileTypePumpkin_mp3, { initialOutputLevel: 0.2 } );
+const pumpkinSoundClip = new SoundClip( hollowThud_mp3, { initialOutputLevel: 0.2 } );
 const pianoSoundClip = new SoundClip( projectileTypePiano_mp3, { initialOutputLevel: 0.2 } );
 
 soundManager.addSoundGenerator( cannonballSoundClip, { categoryName: 'user-interface' } );
