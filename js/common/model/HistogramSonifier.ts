@@ -15,6 +15,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import histogramTone_mp3 from '../../../sounds/histogramTone_mp3.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import audioManager from '../../../../joist/js/audioManager.js';
 
 const binSoundClip = new SoundClip( histogramTone_mp3, { initialOutputLevel: 0.7 } );
 soundManager.addSoundGenerator( binSoundClip );
@@ -68,6 +69,13 @@ export default class HistogramSonifier {
         binSoundClip.play();
       }
     } );
+
+    // If the audio is disabled, stop the histogram sonification
+    audioManager.audioEnabledProperty.lazyLink( audioEnabled => {
+      if ( !audioEnabled ) {
+        this.stopSonification();
+      }
+    } );
   }
 
   // Set the histogram data, which is used to determine the sonification
@@ -97,7 +105,7 @@ export default class HistogramSonifier {
 
     // If the data changes, stop playing the sound
     if ( cancelSonification ) {
-      this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
+      this.stopSonification();
     }
   }
 
@@ -106,8 +114,12 @@ export default class HistogramSonifier {
       this.startHistogramSoundSequence();
     }
     else {
-      this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
+      this.stopSonification();
     }
+  }
+
+  private stopSonification(): void {
+    this.histogramSonifierPhaseProperty.value = { phaseName: 'idlePhase' };
   }
 
   // Initiate the sequence of sounds for the histogram bins
