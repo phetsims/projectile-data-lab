@@ -423,7 +423,10 @@ export default class IntervalToolNode extends Node {
     }, edge2DragListenerOptions, dragListenerOptions ) ) );
 
     desiredCenterLocationProperty.lazyLink( ( value: Vector2, oldValue: Vector2 ) => {
-      if ( this.isCenterDraggingProperty.value ) {
+
+      // During a drag, update the edge positions based on the center drag. During a reset all, this would cause an
+      // infinite loop, and the edges are reset elsewhere, so this can be avoided during reset all.
+      if ( this.isCenterDraggingProperty.value && !ResetAllButton.isResettingAllProperty.value ) {
         let delta = value.x - oldValue.x;
 
         const max = Math.max( intervalTool.edge1Property.value, intervalTool.edge2Property.value );
