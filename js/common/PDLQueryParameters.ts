@@ -50,7 +50,7 @@ const SCHEMA_MAP = {
    * This is connected to a PhET-iO instrumented Property and can be controlled via the Preferences dialog.
    * The design for this feature is described in https://docs.google.com/document/d/1I5duB_wwUMS4FhsZWjQYNGkjTjrVh6EfvUL6BrjBgJU/edit#heading=h.n822sfez56x8
    */
-  binStrategy: {
+  histogramBins: {
     type: 'string' as const,
     validValues: BinStrategyValues,
     defaultValue: 'binWidth',
@@ -76,7 +76,7 @@ const SCHEMA_MAP = {
    * This is connected to a PhET-iO instrumented Property and can be controlled via the Preferences dialog.
    * The design for this feature is described in https://github.com/phetsims/projectile-data-lab/issues/205
    */
-  launchSoundStrategy: {
+  launchSound: {
     type: 'string' as const,
     validValues: LaunchSoundStrategyValues,
     defaultValue: 'speed',
