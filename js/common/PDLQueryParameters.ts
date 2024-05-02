@@ -12,6 +12,7 @@ import projectileDataLab from '../projectileDataLab.js';
 import { BinStrategyValues } from './BinStrategy.js';
 import { LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import PDLConstants from './PDLConstants.js';
+import packageJSON from '../../../joist/js/packageJSON.js';
 
 const SCHEMA_MAP = {
 
@@ -52,7 +53,11 @@ const SCHEMA_MAP = {
    */
   histogramBins: {
     type: 'string' as const,
-    validValues: BinStrategyValues,
+
+    // If a user were to copy the histogramBins query parameter from PDL and paste it into PSD, the number of bins would
+    // be inaccurate. To prevent this, the validValues are restricted to 'binWidth' for PSD. This line ensures that if
+    // a user tried to do this, we will intentionally alert the user that this is not allowed in PSD.
+    validValues: packageJSON.name === 'projectile-data-lab' ? BinStrategyValues : [ 'binWidth' ],
     defaultValue: 'binWidth',
     public: true
   },
