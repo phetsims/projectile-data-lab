@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.0-rc.3 Thu May 02 2024 15:14:33 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# projectile-data-lab 1.0.0-rc.4 Thu May 02 2024 15:18:31 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "347e7eeac1424adb6023fb06a619d6ea01a0620f",
     "branch": "HEAD"
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "2046736d5bce074d2e6b5a852c28296cae66dea2",
+    "sha": "5c31b50557af453a2ac4c79ab607e4b465324840",
     "branch": "1.0"
   },
   "query-string-machine": {
