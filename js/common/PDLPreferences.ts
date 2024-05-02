@@ -31,7 +31,7 @@ const PDLPreferences = {
   } ),
 
   // phet-types.d.ts does not support inferring string union types for string query parameters, so we need to cast
-  binStrategyProperty: new StringUnionProperty( PDLQueryParameters.binStrategy as BinStrategy, {
+  binStrategyProperty: new StringUnionProperty( PDLQueryParameters.histogramBins as BinStrategy, {
     validValues: BinStrategyValues,
     tandem: packageJSON.name === 'projectile-data-lab' ? Tandem.PREFERENCES.createTandem( 'binStrategyProperty' ) : Tandem.OPT_OUT,
     phetioFeatured: true,
@@ -45,7 +45,7 @@ const PDLPreferences = {
   } ),
 
   // phet-types.d.ts does not support inferring string union types for string query parameters, so we need to cast
-  launchSoundStrategyProperty: new StringUnionProperty( PDLQueryParameters.launchSoundStrategy as LaunchSoundStrategy, {
+  launchSoundStrategyProperty: new StringUnionProperty( PDLQueryParameters.launchSound as LaunchSoundStrategy, {
     validValues: LaunchSoundStrategyValues,
     tandem: Tandem.PREFERENCES.createTandem( 'launchSoundStrategyProperty' ),
     phetioFeatured: true,
