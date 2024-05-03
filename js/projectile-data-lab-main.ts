@@ -59,7 +59,7 @@ simLauncher.launch( () => {
       softwareDevelopment: 'Matthew Blackman, Sam Reid',
       team: 'Cathy Carter, Ariel Paul, Kathy Perkins, Amy Rouinfar',
       contributors: 'Kelly Findley',
-      qualityAssurance: 'Nancy Salpepi, Kathryn Woessner',
+      qualityAssurance: 'Kathryn Woessner, Nancy Salpepi, Jaron Droder, Clifford Hardin, Luisa Vargas',
       graphicArts: 'Mariah Hermsmeyer',
       soundDesign: 'Ashton Morris',
       thanks: 'Bill Finzer, Gayle Geschwind, Heather Lewandowski, Joey Liu'
