@@ -38,7 +38,8 @@
         "phet-io-sim-specific/repos/projectile-data-lab/wrappers/codap"
       ],
       "compareDesignedAPIChanges": true
-    }
+    },
+    "published": true
   },
   "eslintConfig": {
     "extends": "../chipper/eslint/sim_eslintrc.js",
