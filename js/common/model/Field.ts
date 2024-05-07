@@ -357,7 +357,7 @@ export default abstract class Field extends PhetioObject {
     }
   }
 
-  private toStateObject(): object {
+  private toStateObject(): FieldStateObject {
     return {
       airborneProjectiles: this.airborneProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) ),
       landedProjectiles: this.landedProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
@@ -380,7 +380,7 @@ export default abstract class Field extends PhetioObject {
       landedProjectiles: ArrayIO( Projectile.ProjectileIO )
     },
     toStateObject: field => field.toStateObject(),
-    applyState: ( field: Field, stateObject ) => {
+    applyState: ( field: Field, stateObject: FieldStateObject ) => {
 
       field.airborneProjectiles.length = 0;
       field.landedProjectiles.length = 0;
@@ -395,5 +395,10 @@ export default abstract class Field extends PhetioObject {
     }
   } );
 }
+
+type FieldStateObject = {
+  airborneProjectiles: ProjectileStateObject[];
+  landedProjectiles: ProjectileStateObject[];
+};
 
 projectileDataLab.register( 'Field', Field );
