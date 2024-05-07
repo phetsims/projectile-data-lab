@@ -6,7 +6,8 @@
  * note that Projectile itself does not extend PhetioObject, but rather is serialized in Field.ts. We chose a flat
  * data structure for the Projectile model to keep the PhET-iO usages sites simpler. Note that many Projectile instances
  * are created during a simulation runtime and performance is important. Note that disposal is not necessary because
- * the instances are not long-lived, and do not add listeners to the outside object graph.
+ * the instances are not long-lived, and do not add listeners to the outside object graph. This uses data type
+ * serialization.
  *
  * @author Matthew Blackman (PhET Interactive Simulations)
  * @author Sam Reid (PhET Interactive Simulations)
