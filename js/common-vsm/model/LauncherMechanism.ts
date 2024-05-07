@@ -60,7 +60,7 @@ export default class LauncherMechanism extends PhetioObject {
    * at startup and exist for the lifetime of the simulation, it implements 'Reference type serialization', as described in the
    * Serialization section of https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    */
-  public static LauncherMechanismIO = new IOType<LauncherMechanism>( 'LauncherMechanismIO', {
+  public static readonly LauncherMechanismIO = new IOType<LauncherMechanism>( 'LauncherMechanismIO', {
     valueType: LauncherMechanism,
     documentation: 'Mechanism used to launch the projectile',
     supertype: ReferenceIO( IOType.ObjectIO )

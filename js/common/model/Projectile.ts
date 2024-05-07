@@ -140,7 +140,7 @@ export default class Projectile {
    * calls ProjectileIO.toStateObject to serialize the Projectile instances using value-based serialization (and vice-
    * versa for fromStateObject).
    */
-  public static ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
+  public static readonly ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
     valueType: Projectile,
     stateSchema: {
       screenIdentifier: StringUnionIO( ScreenIdentifierValues ),

@@ -371,7 +371,7 @@ export default abstract class Field extends PhetioObject {
    * In this simulation, the data and statistical measures are computed solely based on the landedProjectiles, so the
    * serialization separates the projectiles into the airborne vs landed projectiles.
    */
-  public static FieldIO = new IOType<Field>( 'FieldIO', {
+  public static readonly FieldIO = new IOType<Field>( 'FieldIO', {
     valueType: Field,
     documentation: 'A field in the Projectile Data Lab. This contains the state for the projectiles, separated into airborne and landed projectiles.',
     defaultDeserializationMethod: 'applyState',

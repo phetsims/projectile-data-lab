@@ -41,7 +41,7 @@ export default class ProjectileType extends PhetioObject {
    * at startup and exist for the lifetime of the simulation, it implements 'Reference type serialization', as described in the
    * Serialization section of https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    */
-  public static ProjectileTypeIO = new IOType<ProjectileType>( 'ProjectileTypeIO', {
+  public static readonly ProjectileTypeIO = new IOType<ProjectileType>( 'ProjectileTypeIO', {
     valueType: ProjectileType,
     documentation: 'The type of object being launched.',
     supertype: ReferenceIO( IOType.ObjectIO )
