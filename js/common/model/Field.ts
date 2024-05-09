@@ -365,8 +365,13 @@ export default abstract class Field extends PhetioObject {
   }
 
   /**
-   * For serialization, it uses value-based serialization by calling toStateObject on the Projectiles, and treating them
-   * as data values. For deserialization, it loads the projectiles and sets them to the field via applyState.
+   * For serialization, the FieldIO uses reference type serialization. That is, each Field exists for the life of the
+   * simulation, and when we save the state of the simulation, we save the current state of the Field.
+   *
+   * The Field serves as a composite container of ParticleIO instances. They are divided into airborneProjectiles and
+   * landedProjectiles, each an array of ProjectileIO. The Projectiles are serialized using data-type serialization.
+   * For deserialization, the Projectiles are deserialized (again, using data-type serialization) and applied to the
+   * Field in its applyState method.
    *
    * In this simulation, the data and statistical measures are computed solely based on the landedProjectiles, so the
    * serialization separates the projectiles into the airborne vs landed projectiles.

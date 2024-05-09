@@ -138,8 +138,11 @@ export default class Projectile {
 
   /**
    * Individual Projectile instances are not PhET-iO Instrumented. Instead, the Field that contains the Projectiles
-   * calls ProjectileIO.toStateObject to serialize the Projectile instances using value-based serialization (and vice-
-   * versa for fromStateObject).
+   * calls ProjectileIO.toStateObject to serialize the Projectile instances. FieldIO uses reference type serialization
+   * as a composite of the Projectiles, which use data type serialization.
+   *
+   * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
+   * for more information on the different serialization types.
    */
   public static readonly ProjectileIO = new IOType<Projectile, ProjectileStateObject>( 'ProjectileIO', {
     valueType: Projectile,
