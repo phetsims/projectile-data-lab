@@ -187,7 +187,7 @@ export default class SampleSizeThumbnailNode extends Node {
       }
     };
 
-    isSettingPhetioStateProperty.addListener( updateHistogram );
+    isSettingPhetioStateProperty.lazyLink( updateHistogram );
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
     fields.forEach( field => {

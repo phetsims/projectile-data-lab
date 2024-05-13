@@ -258,7 +258,7 @@ export default class HistogramNode extends Node {
       }
     };
 
-    isSettingPhetioStateProperty.addListener( () => updateHistogram( true ) );
+    isSettingPhetioStateProperty.lazyLink( () => updateHistogram( true ) );
 
     // Similar to code in VSMScreenView that updates the angle tool node and speed tool node when the data changes.
     fields.forEach( field => {
