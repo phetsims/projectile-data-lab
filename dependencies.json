@@ -53,7 +53,7 @@
     "branch": "HEAD"
   },
   "phetcommon": {
-    "sha": "0b0a0c48efc035e95b1d20fb0a8052598fe2fa7a",
+    "sha": "e72d7e90d986e5585b636db3fc1bb6f152854895",
     "branch": "HEAD"
   },
   "phetmarks": {
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "fde0e9f43e5b96b895de7c54595b5fba66e500d5",
+    "sha": "e6981571e1b9010030bc9e6c30a877c6e07cefd3",
     "branch": "1.0"
   },
   "query-string-machine": {
