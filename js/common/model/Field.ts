@@ -19,7 +19,6 @@ import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import PDLConstants from '../PDLConstants.js';
 import Projectile, { ProjectileStateObject } from './Projectile.js';
-import ArrayIO from '../../../../tandem/js/types/ArrayIO.js';
 import Emitter from '../../../../axon/js/Emitter.js';
 import dotRandom from '../../../../dot/js/dotRandom.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
@@ -39,6 +38,7 @@ import { Color } from '../../../../scenery/js/imports.js';
 import PDLPreferences from '../PDLPreferences.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import { screenIdentifierForScreenTandemName } from './ScreenIdentifier.js';
+import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( launchSoundClip );
@@ -382,24 +382,9 @@ export default abstract class Field extends PhetioObject {
   public static readonly FieldIO = new IOType<Field>( 'FieldIO', {
     valueType: Field,
     documentation: 'A field in the Projectile Data Lab. This contains the state for the projectiles, separated into airborne and landed projectiles.',
-    defaultDeserializationMethod: 'applyState',
     stateSchema: {
-      airborneProjectiles: ArrayIO( Projectile.ProjectileIO ),
-      landedProjectiles: ArrayIO( Projectile.ProjectileIO )
-    },
-    toStateObject: field => field.toStateObject(),
-    applyState: ( field: Field, stateObject: FieldStateObject ) => {
-
-      field.airborneProjectiles.length = 0;
-      field.landedProjectiles.length = 0;
-
-      stateObject.airborneProjectiles.forEach( ( projectileStateObject: ProjectileStateObject ) => {
-        field.airborneProjectiles.push( Projectile.ProjectileIO.fromStateObject( projectileStateObject ) );
-      } );
-
-      stateObject.landedProjectiles.forEach( ( projectileStateObject: ProjectileStateObject ) => {
-        field.landedProjectiles.push( Projectile.ProjectileIO.fromStateObject( projectileStateObject ) );
-      } );
+      airborneProjectiles: ReferenceArrayIO( Projectile.ProjectileIO ),
+      landedProjectiles: ReferenceArrayIO( Projectile.ProjectileIO )
     }
   } );
 }
