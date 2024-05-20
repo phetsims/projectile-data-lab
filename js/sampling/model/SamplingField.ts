@@ -179,6 +179,10 @@ export default class SamplingField extends Field {
 
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
       this.updateComputedProperties();
+
+      if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) {
+        assert && assert( this.sampleMeanProperty.value !== null, 'sampleMeanProperty should not be null in showingCompleteSampleWithoutMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize );
+      }
     } );
 
     this.numberOfStartedSamplesProperty.link( numberOfStartedSamples => {
@@ -374,8 +378,9 @@ export default class SamplingField extends Field {
       if ( timeInMode > delayForShowingMean ) {
         this.phaseProperty.value = 'showingCompleteSampleWithMean';
 
-        assert && assert( this.sampleMeanProperty.value !== null, 'sampleMeanProperty should not be null in showingCompleteSampleWithoutMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize );
-        MeanTone.playMean( this.sampleMeanProperty.value! );
+        if ( this.sampleMeanProperty.value !== null ) {
+          MeanTone.playMean( this.sampleMeanProperty.value );
+        }
       }
     }
     else if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
