@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.1.0-dev.2 Mon Jun 03 2024 16:40:49 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# projectile-data-lab 1.1.0-dev.3 Fri Jun 14 2024 11:59:39 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "2abb8a3116463c20d4e32551bc6da2de33601bf2",
     "branch": "main"
@@ -45,7 +45,7 @@
     "branch": "main"
   },
   "phet-io-sim-specific": {
-    "sha": "d8abb69446a270b0fed887c262fcf16a3d48901a",
+    "sha": "757a447b81b53313a290cd2fb786ead32ad0d89c",
     "branch": "main"
   },
   "phet-io-wrappers": {
@@ -61,7 +61,7 @@
     "branch": "main"
   },
   "projectile-data-lab": {
-    "sha": "6eaa41d2d6402abb9be32e5177d7edfa66792db1",
+    "sha": "64e6b6cdf353fb001fcc9d08d465e47a637e2f36",
     "branch": "main"
   },
   "query-string-machine": {
@@ -69,15 +69,15 @@
     "branch": "main"
   },
   "scenery": {
-    "sha": "48414041a91c6dfd8e0190aa08c052166f182218",
+    "sha": "3eb2060544a7b03a4f1c78336a51990f6709a2a6",
     "branch": "main"
   },
   "scenery-phet": {
-    "sha": "055c35ef8dd899923fd2978d0011a49d86d3c9c9",
+    "sha": "565a7c21b14626ff3286731ee6acb156a2cc817d",
     "branch": "main"
   },
   "sherpa": {
-    "sha": "00cdf856cd7aeab2ab6a846052187e5b4a148f13",
+    "sha": "9ab1b758dcaa01e6bc0fd08656267428ab19dcf9",
     "branch": "main"
   },
   "studio": {
