@@ -387,7 +387,7 @@ export default class IntervalToolNode extends Node {
       };
     };
 
-    const dragListenerOptions: DragListenerOptions<DragListener> = {
+    const dragListenerOptions: DragListenerOptions = {
       useInputListenerCursor: true,
       dragBoundsProperty: new Property<Bounds2 | null>( new Bounds2( 0, 0, PDLConstants.MAX_FIELD_DISTANCE, 0 ) )
     };
