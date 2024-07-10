@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "f3d06641398bdc62c8af4259f3d1ca0cabca4eb1",
+    "sha": "21e4f27ac4abb0a019436d3144ed7076cc2a4df8",
     "branch": "1.0"
   },
   "query-string-machine": {
@@ -69,7 +69,7 @@
     "branch": "HEAD"
   },
   "scenery": {
-    "sha": "fded9c166371eb4a28feda4e558cab8810fb53fc",
+    "sha": "78862e383205064e5047087723cfba159b1f6910",
     "branch": "HEAD"
   },
   "scenery-phet": {
