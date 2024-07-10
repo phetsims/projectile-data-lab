@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.3-rc.1 Wed Jul 10 2024 00:39:24 GMT-0600 (Mountain Daylight Time)",
+  "comment": "# projectile-data-lab 1.0.3-rc.2 Wed Jul 10 2024 16:09:23 GMT-0600 (Mountain Daylight Time)",
   "assert": {
     "sha": "347e7eeac1424adb6023fb06a619d6ea01a0620f",
     "branch": "HEAD"
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "21e4f27ac4abb0a019436d3144ed7076cc2a4df8",
+    "sha": "6d77b7be1900b04c36bd6e720999a8ad7c65a009",
     "branch": "1.0"
   },
   "query-string-machine": {
