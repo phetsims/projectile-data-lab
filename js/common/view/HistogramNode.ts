@@ -41,7 +41,7 @@ import soundManager from '../../../../tambo/js/soundManager.js';
 import bullhornSolidShape from '../../../../sherpa/js/fontawesome-5/bullhornSolidShape.js';
 import Dimension2 from '../../../../dot/js/Dimension2.js';
 import PhetColorScheme from '../../../../scenery-phet/js/PhetColorScheme.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import stopSolidShape from '../../../../sherpa/js/fontawesome-5/stopSolidShape.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';

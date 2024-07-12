@@ -22,7 +22,7 @@ import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRight
 import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
 import TProperty from '../../../../axon/js/TProperty.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import nullSoundPlayer from '../../../../tambo/js/shared-sound-players/nullSoundPlayer.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import platform from '../../../../phet-core/js/platform.js';
 
 type SelfOptions = {
