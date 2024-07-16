@@ -170,6 +170,7 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
     // Add sound effects for pressing the home/end keys. Note this callback is called after the number property was updated.
     // Do not use this.onInput since this would double some of the sounds when the buttons are interacted with in a certain way.
+    // TODO: This may be moved to common code in https://github.com/phetsims/sun/issues/886
     this.addInputListener( new KeyboardListener( {
       keys: [ 'home', 'end' ] as const,
       fire: () => {
