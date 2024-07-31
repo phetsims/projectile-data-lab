@@ -14,13 +14,14 @@ import projectileDataLab from '../../projectileDataLab.js';
 import MoveDraggableItemsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/MoveDraggableItemsKeyboardHelpSection.js';
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
-import TextKeyNode from '../../../../scenery-phet/js/keyboard/TextKeyNode.js';
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
+import FieldRadioButtonGroup from '../../common-vsm/view/FieldRadioButtonGroup.js';
+import LaunchButton from './LaunchButton.js';
 
 type SelfOptions = {
 
@@ -64,14 +65,16 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
 
     // Press the launch button: [Opt][L]
     const rows = [
-      KeyboardHelpSectionRow.createKeysRow( [ TextKeyNode.altOrOption(), LetterKeyNode.l() ], ProjectileDataLabStrings.launchOrStopProjectilesStringProperty )
+      KeyboardHelpSectionRow.fromHotkeyData( LaunchButton.LAUNCH_HOTKEY_DATA )
     ];
 
     // Go to field: [F][1]-[6]
     if ( hasShowField1Through6Shortcut ) {
-      rows.push( KeyboardHelpSectionRow.createKeysRow( [ new TextKeyNode( 'F' ),
-          KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 1 ), new NumberKeyNode( 6 ) ) ],
-        ProjectileDataLabStrings.goToFieldStringProperty ) );
+      rows.push( KeyboardHelpSectionRow.fromHotkeyData( FieldRadioButtonGroup.GLOBAL_FIELD_SELECT_HOTKEY_DATA, {
+
+        // A unique icon because we provide a simplified annotation for all of the number keys you can press
+        icon: KeyboardHelpIconFactory.iconPlusIcon( new LetterKeyNode( 'F' ), KeyboardHelpIconFactory.iconToIcon( new NumberKeyNode( 1 ), new NumberKeyNode( 6 ) ) )
+      } ) );
     }
 
     super( ProjectileDataLabStrings.fromAnywhereInSimStringProperty, rows, {

@@ -14,9 +14,10 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PDLText from '../../common/view/PDLText.js';
 import PDLColors from '../../common/PDLColors.js';
-import { Circle, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, KeyboardListener, Rectangle, HotkeyData } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = EmptySelfOptions;
 type FieldRadioButtonGroupOptions = SelfOptions & RectangularRadioButtonGroupOptions;
@@ -104,7 +105,7 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     KeyboardListener.createGlobal( this, {
-      keys: [ 'f+1', 'f+2', 'f+3', 'f+4', 'f+5', 'f+6' ] as const,
+      keyStringProperties: FieldRadioButtonGroup.GLOBAL_FIELD_SELECT_HOTKEY_DATA.keyStringProperties,
       fire: ( event, keysPressed ) => {
         const key = parseInt( keysPressed.substring( keysPressed.indexOf( '+' ) + 1 ), 10 );
         handleKeypress( key );
@@ -113,13 +114,32 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
 
     // a listener that selects the radio button when the radio button group has focus
     this.addInputListener( new KeyboardListener( {
-      keys: [ '1', '2', '3', '4', '5', '6' ] as const,
+      keyStringProperties: FieldRadioButtonGroup.FIELD_SELECT_HOTKEY_DATA.keyStringProperties,
       fire: ( event, keysPressed ) => {
         const key = parseInt( keysPressed, 10 );
         handleKeypress( key );
       }
     } ) );
   }
+
+  public static readonly GLOBAL_FIELD_SELECT_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [
+      new Property( 'f+1' ), new Property( 'f+2' ), new Property( 'f+3' ),
+      new Property( 'f+4' ), new Property( 'f+5' ), new Property( 'f+6' )
+    ],
+    repoName: projectileDataLab.name,
+    keyboardHelpDialogLabelStringProperty: ProjectileDataLabStrings.goToFieldStringProperty,
+    global: true
+  } );
+
+  public static readonly FIELD_SELECT_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [
+      new Property( '1' ), new Property( '2' ), new Property( '3' ),
+      new Property( '4' ), new Property( '5' ), new Property( '6' )
+    ],
+    repoName: projectileDataLab.name,
+    binderName: 'Go to field'
+  } );
 }
 
 projectileDataLab.register( 'FieldRadioButtonGroup', FieldRadioButtonGroup );

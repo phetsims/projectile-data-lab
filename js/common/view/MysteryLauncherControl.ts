@@ -7,7 +7,7 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import { HotkeyData, KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLText from './PDLText.js';
@@ -17,6 +17,7 @@ import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Property from '../../../../axon/js/Property.js';
 
 const LAUNCHER_BUTTON_CORNER_RADIUS = 2;
 
@@ -114,7 +115,7 @@ export default class MysteryLauncherControl extends Node {
 
     // a listener that selects a field based on the keystroke, regardless of where focus is in the document
     mysteryLauncherRadioButtonGroup.addInputListener( new KeyboardListener( {
-      keys: [ '1', '2', '3', '4', '5', '6' ] as const,
+      keyStringProperties: MysteryLauncherControl.SELECT_LAUNCHER_HOTKEY_DATA.keyStringProperties,
       fire: ( event, keysPressed ) => {
         const key = parseInt( keysPressed, 10 );
 
@@ -134,6 +135,15 @@ export default class MysteryLauncherControl extends Node {
       }
     } );
   }
+
+  public static readonly SELECT_LAUNCHER_HOTKEY_DATA = new HotkeyData( {
+    keyStringProperties: [
+      new Property( '1' ), new Property( '2' ), new Property( '3' ),
+      new Property( '4' ), new Property( '5' ), new Property( '6' )
+    ],
+    repoName: projectileDataLab.name,
+    binderName: 'Select Launcher'
+  } );
 }
 
 projectileDataLab.register( 'MysteryLauncherControl', MysteryLauncherControl );
