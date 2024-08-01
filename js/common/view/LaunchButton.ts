@@ -109,7 +109,8 @@ export default class LaunchButton extends RectangularPushButton {
   public static readonly LAUNCH_HOTKEY_DATA = new HotkeyData( {
     keyStringProperties: [ new Property( 'alt+l' ) ],
     keyboardHelpDialogLabelStringProperty: ProjectileDataLabStrings.launchOrStopProjectilesStringProperty,
-    repoName: projectileDataLab.name
+    repoName: projectileDataLab.name,
+    global: true
   } );
 }
 
