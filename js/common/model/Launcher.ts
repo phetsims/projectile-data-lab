@@ -88,10 +88,12 @@ export default class Launcher extends PhetioObject {
     } );
 
     this.meanLaunchSpeedProperty = new DynamicProperty<number, number, LauncherMechanism>( this.launcherMechanismProperty, {
+      bidirectional: true,
       derive: launcherMechanism => launcherMechanism.speedMeanProperty
     } );
 
     this.standardDeviationSpeedProperty = new DynamicProperty<number, number, LauncherMechanism>( this.launcherMechanismProperty, {
+      bidirectional: true,
       derive: launcherMechanism => launcherMechanism.speedStandardDeviationProperty
     } );
   }

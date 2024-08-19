@@ -191,7 +191,7 @@ export default abstract class Field extends PhetioObject {
       orientation => MEAN_LAUNCH_ANGLES[ orientation ] );
 
     this.meanSpeedProperty = new DynamicProperty<number, number, Launcher>( this.launcherProperty, {
-      // bidirectional: true,
+      bidirectional: true,
       derive: launcher => launcher.meanLaunchSpeedProperty
     } );
 
