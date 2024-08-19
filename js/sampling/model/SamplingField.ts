@@ -75,6 +75,9 @@ export default class SamplingField extends Field {
 
   public readonly selectedSampleNumberProperty: NumberProperty;
 
+  // The history buffer keeps track of the last 10 phases, so we can show the user what has happened.
+  private historyBuffer: string[] = [];
+
   // When pressing the eraser button, if the isContinuousLaunchingProperty is true, the field will automatically restart
   // on the next time step. See https://github.com/phetsims/projectile-data-lab/issues/289
   private _shouldResumeAfterClear = false;
@@ -167,6 +170,10 @@ export default class SamplingField extends Field {
     } );
 
     const phaseChanged = () => {
+
+      // Update the history buffer with the new phase
+      this.updateHistoryBuffer( this.phaseProperty.value );
+
       this.phaseStartTimeProperty.value = this.timeProperty.value;
       this.updateComputedProperties();
     };
@@ -181,7 +188,7 @@ export default class SamplingField extends Field {
       this.updateComputedProperties();
 
       if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) {
-        assert && assert( this.sampleMeanProperty.value !== null, 'sampleMeanProperty should not be null in showingCompleteSampleWithoutMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize );
+        assert && assert( this.sampleMeanProperty.value !== null, 'sampleMeanProperty should not be null in showingCompleteSampleWithoutMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize + '. Phase history buffer: ' + this.historyBuffer.join( ' -> ' ) );
       }
     } );
 
@@ -312,6 +319,16 @@ export default class SamplingField extends Field {
         this.updateComputedProperties();
         this.projectilesChangedEmitter.emit();
       }
+    }
+  }
+
+  private updateHistoryBuffer( phase: string ): void {
+    // Add the new phase to the end of the buffer
+    this.historyBuffer.push( phase );
+
+    // If the buffer exceeds 10 elements, remove the oldest one
+    if ( this.historyBuffer.length > 10 ) {
+      this.historyBuffer.shift();
     }
   }
 
