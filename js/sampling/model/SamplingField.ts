@@ -76,6 +76,7 @@ export default class SamplingField extends Field {
   public readonly selectedSampleNumberProperty: NumberProperty;
 
   // The history buffer keeps track of the last 10 phases, so we can show the user what has happened.
+  // This is only used when assertions are turned on.
   private historyBuffer: string[] = [];
 
   // When pressing the eraser button, if the isContinuousLaunchingProperty is true, the field will automatically restart
@@ -172,7 +173,7 @@ export default class SamplingField extends Field {
     const phaseChanged = () => {
 
       // Update the history buffer with the new phase
-      this.updateHistoryBuffer( this.phaseProperty.value );
+     assert && this.updateHistoryBuffer( this.phaseProperty.value );
 
       this.phaseStartTimeProperty.value = this.timeProperty.value;
       this.updateComputedProperties();
@@ -187,8 +188,10 @@ export default class SamplingField extends Field {
     Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
       this.updateComputedProperties();
 
-      if ( this.phaseProperty.value === 'showingCompleteSampleWithoutMean' ) {
-        assert && assert( this.sampleMeanProperty.value !== null, 'sampleMeanProperty should not be null in showingCompleteSampleWithoutMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize + '. Phase history buffer: ' + this.historyBuffer.join( ' -> ' ) );
+      // If we are showing a complete sample with mean, the mean must be non-null to be used in the histogram and playing the meanTone.
+      // When showingCompleteSampleWithoutMean, the sampleMeanProperty is null to delay the histogram from immediately updating.
+      if ( this.phaseProperty.value === 'showingCompleteSampleWithMean' ) {
+        assert && assert( this.sampleMeanProperty.value !== null, 'sampleMeanProperty should not be null in showingCompleteSampleWithMean phase. Projectiles in selected sample: ' + this.getProjectilesInSelectedSample().length + '. Sample size: ' + this.sampleSize + '. Phase history buffer: ' + this.historyBuffer.join( ' -> ' ) );
       }
     } );
 
