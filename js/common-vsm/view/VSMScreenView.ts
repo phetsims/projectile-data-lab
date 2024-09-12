@@ -36,7 +36,7 @@ import StopwatchNode from '../../../../scenery-phet/js/StopwatchNode.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import FieldSignNode from '../../common/view/FieldSignNode.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
+import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMScreenViewOptions = SelfOptions & PDLScreenViewOptions;
@@ -222,7 +222,7 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     // When the field changes, restore the entire state of the heat maps.
     model.fieldProperty.link( syncHeatMapToolNodes );
 
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( syncHeatMapToolNodes );
+    phetioStateSetEmitter.addListener( syncHeatMapToolNodes );
 
     model.launcherHeightProperty.link( launcherHeight => {
       const launcherY = this.modelViewTransform.modelToViewY( launcherHeight );

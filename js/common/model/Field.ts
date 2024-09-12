@@ -39,6 +39,7 @@ import PDLPreferences from '../PDLPreferences.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import { screenIdentifierForScreenTandemName } from './ScreenIdentifier.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
+import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 
 const launchSoundClip = new SoundClip( launch_mp3, { initialOutputLevel: 0.2 } );
 soundManager.addSoundGenerator( launchSoundClip );
@@ -161,7 +162,7 @@ export default abstract class Field extends PhetioObject {
     } );
 
     // Update after phet-io state set
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( updateIsContainingDataProperty );
+    phetioStateSetEmitter.addListener( updateIsContainingDataProperty );
 
     this.projectilesClearedEmitter = new Emitter();
 

@@ -29,6 +29,7 @@ import { MeanTone } from '../../common/model/MeanTone.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
 import PDLUtils from '../../common/PDLUtils.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherOrientationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;
@@ -185,7 +186,7 @@ export default class SamplingField extends Field {
       this.updateComputedProperties();
     } );
 
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+    phetioStateSetEmitter.addListener( () => {
       this.updateComputedProperties();
 
       // If we are showing a complete sample with mean, the mean must be non-null to be used in the histogram and playing the meanTone.

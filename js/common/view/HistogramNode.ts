@@ -23,7 +23,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import SamplingField from '../../sampling/model/SamplingField.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import PDLText from './PDLText.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -48,6 +47,7 @@ import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import packageJSON from '../../../../joist/js/packageJSON.js';
 import audioManager from '../../../../joist/js/audioManager.js';
+import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 
 type SelfOptions = EmptySelfOptions;
 export type HistogramNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
@@ -282,7 +282,7 @@ export default class HistogramNode extends Node {
       }
     } );
 
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+    phetioStateSetEmitter.addListener( () => {
       updateHistogram( true );
     } );
 

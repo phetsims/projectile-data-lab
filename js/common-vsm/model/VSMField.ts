@@ -28,6 +28,7 @@ import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import Range from '../../../../dot/js/Range.js';
 import PDLUtils from '../../common/PDLUtils.js';
+import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 
 type SelfOptions = {
 
@@ -140,7 +141,7 @@ export default class VSMField extends Field {
       this.totalProjectileCountProperty.value = this.getTotalProjectileCount();
     } );
 
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+    phetioStateSetEmitter.addListener( () => {
       this.updateProjectileCounts();
     } );
 

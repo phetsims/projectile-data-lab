@@ -21,7 +21,6 @@ import Orientation from '../../../../phet-core/js/Orientation.js';
 import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import SamplingField from '../model/SamplingField.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLText from '../../common/view/PDLText.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
@@ -30,6 +29,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Multilink from '../../../../axon/js/Multilink.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 
 type SelfOptions = EmptySelfOptions;
 type SampleSizeThumbnailNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;
@@ -198,7 +198,7 @@ export default class SampleSizeThumbnailNode extends Node {
       field.phaseProperty.link( () => updateHistogram() );
     } );
 
-    Tandem.PHET_IO_ENABLED && phet.phetio.phetioEngine.phetioStateEngine.stateSetEmitter.addListener( () => {
+    phetioStateSetEmitter.addListener( () => {
       updateHistogram();
     } );
 
