@@ -66,6 +66,11 @@
               ]
             }
           ]
+        },
+        "parserOptions": {
+          "project": [
+            "../projectile-data-lab/tsconfig.json"
+          ]
         }
       }
     ]
