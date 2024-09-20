@@ -69,7 +69,7 @@
         },
         "parserOptions": {
           "project": [
-            "../projectile-data-lab/tsconfig.json"
+            "../chipper/tsconfig/eslint-all/tsconfig.json"
           ]
         }
       }
