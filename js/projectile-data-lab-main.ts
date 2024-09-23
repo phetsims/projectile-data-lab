@@ -6,19 +6,19 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
+import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
+import { Node } from '../../scenery/js/imports.js';
 import Tandem from '../../tandem/js/Tandem.js';
+import AudioPreferencesContentNode from './common/view/AudioPreferencesContentNode.js';
+import SimulationPreferencesContentNode from './common/view/SimulationPreferencesContentNode.js';
+import MeasuresScreen from './measures/MeasuresScreen.js';
 import ProjectileDataLabStrings from './ProjectileDataLabStrings.js';
 import './common/PDLQueryParameters.js';
-import VariabilityScreen from './variability/VariabilityScreen.js';
-import SourcesScreen from './sources/SourcesScreen.js';
-import MeasuresScreen from './measures/MeasuresScreen.js';
 import SamplingScreen from './sampling/SamplingScreen.js';
-import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
-import SimulationPreferencesContentNode from './common/view/SimulationPreferencesContentNode.js';
-import AudioPreferencesContentNode from './common/view/AudioPreferencesContentNode.js';
-import { Node } from '../../scenery/js/imports.js';
+import SourcesScreen from './sources/SourcesScreen.js';
+import VariabilityScreen from './variability/VariabilityScreen.js';
 
 // Launch the sim. Beware that scenery Image nodes created outside simLauncher.launch() will have zero bounds
 // until the images are fully loaded. See https://github.com/phetsims/coulombs-law/issues/70#issuecomment-429037461
