@@ -58,7 +58,7 @@ for disposal. Rather than marking `isDisposable: false` in many files or calling
 instead we prevent the usage of the term `dispose` with a linter rule specified in the package.json.
 
 ```json
-"additional-bad-text": ["error", {"forbiddenTextObjects": ["dispose"] }]
+"phet/additional-bad-text": ["error", {"forbiddenTextObjects": ["dispose"] }]
 ```
 
 If this code is moved to common code, then this approach for disposal will need to be re-evaluated.
