@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.4 Wed Jul 17 2024 17:06:53 GMT-0400 (Eastern Daylight Time)",
+  "comment": "# projectile-data-lab 1.0.4 Mon Oct 21 2024 11:24:45 GMT-0400 (Eastern Daylight Time)",
   "assert": {
     "sha": "347e7eeac1424adb6023fb06a619d6ea01a0620f",
     "branch": "HEAD"
@@ -45,8 +45,8 @@
     "branch": "HEAD"
   },
   "phet-io-sim-specific": {
-    "sha": "11d003d6a2282dc83fd21d8da3e4692fe10d305b",
-    "branch": "HEAD"
+    "sha": "4c5638750d0785de5cc83d35dddbd9d6d2302376",
+    "branch": "projectile-data-lab-1.0"
   },
   "phet-io-wrappers": {
     "sha": "8145e67bc5a97d9432a8d87acda23604c49a4e40",
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "f739d33ad23275e8efb049302523307ab13c0c81",
+    "sha": "8b46c9d4acc943550279d64a11c7e2321a44ff03",
     "branch": "1.0"
   },
   "query-string-machine": {
