@@ -6,36 +6,38 @@
  * @author Sam Reid (PhET Interactive Simulations)
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
+
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import { GatedVisibleProperty } from '../../../../axon/js/GatedBooleanProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenView, { ScreenViewOptions } from '../../../../joist/js/ScreenView.js';
-import projectileDataLab from '../../projectileDataLab.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
-import { GatedVisibleProperty, HBox, LinearGradient, ManualConstraint, Node, Rectangle } from '../../../../scenery/js/imports.js';
-import PDLConstants from '../PDLConstants.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLColors from '../PDLColors.js';
-import FieldNode from './FieldNode.js';
-import PDLModel from '../model/PDLModel.js';
-import FieldOverlayNode from './FieldOverlayNode.js';
+import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
+import { HBox, LinearGradient, ManualConstraint, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import PDLText from './PDLText.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Field from '../model/Field.js';
+import PDLModel from '../model/PDLModel.js';
+import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
+import PDLColors from '../PDLColors.js';
+import PDLConstants from '../PDLConstants.js';
+import PDLPreferences from '../PDLPreferences.js';
+import FieldNode from './FieldNode.js';
+import FieldOverlayNode from './FieldOverlayNode.js';
+import FieldSignNode from './FieldSignNode.js';
+import HistogramAccordionBox from './HistogramAccordionBox.js';
+import LaunchButton from './LaunchButton.js';
 import LauncherNode from './LauncherNode.js';
 import { PDLLaunchPanel } from './PDLLaunchPanel.js';
-import HistogramAccordionBox from './HistogramAccordionBox.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
-import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import LaunchButton from './LaunchButton.js';
-import FieldSignNode from './FieldSignNode.js';
-import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
-import PDLPreferences from '../PDLPreferences.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
+import PDLText from './PDLText.js';
 
 type SelfOptions = {
   createLauncherNode: ( modelViewTransform: ModelViewTransform2 ) => LauncherNode;

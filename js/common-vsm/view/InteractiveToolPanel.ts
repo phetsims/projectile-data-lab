@@ -7,26 +7,27 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { Color, GatedVisibleProperty, Node } from '../../../../scenery/js/imports.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { ICON_WIDTH } from './StaticToolPanel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import { GatedVisibleProperty } from '../../../../axon/js/GatedBooleanProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
-import PDLStopwatchNode from './PDLStopwatchNode.js';
-import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import PDLPreferences from '../../common/PDLPreferences.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
+import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
+import { Color, Node } from '../../../../scenery/js/imports.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import PDLPreferences from '../../common/PDLPreferences.js';
+import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
+import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import PDLStopwatchNode from './PDLStopwatchNode.js';
+import { ICON_WIDTH } from './StaticToolPanel.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];
