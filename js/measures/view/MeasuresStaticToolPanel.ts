@@ -6,16 +6,16 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import StaticToolPanel, { ICON_WIDTH, StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import Property from '../../../../axon/js/Property.js';
-import DataMeasuresOverlay from './DataMeasuresOverlay.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import StaticToolPanel, { ICON_WIDTH, StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresStaticToolPanelOptions = SelfOptions & StaticToolPanelOptions;

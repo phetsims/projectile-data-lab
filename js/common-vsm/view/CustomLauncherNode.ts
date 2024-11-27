@@ -9,28 +9,28 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Image, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import TProperty from '../../../../axon/js/TProperty.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS, LauncherNodeOptions } from '../../common/view/LauncherNode.js';
-import spring_svg from '../../../images/spring_svg.js';
-import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
-import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
-import explosion_svg from '../../../images/explosion_svg.js';
-import PDLColors from '../../common/PDLColors.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherOrientation.js';
-import Utils from '../../../../dot/js/Utils.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import gear_svg from '../../../images/gear_svg.js';
-import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import LauncherMechanism from '../model/LauncherMechanism.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import TProperty from '../../../../axon/js/TProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Image, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import explosion_svg from '../../../images/explosion_svg.js';
+import gear_svg from '../../../images/gear_svg.js';
+import pressureNeedle_png from '../../../images/pressureNeedle_png.js';
+import pressureWithoutNeedle_png from '../../../images/pressureWithoutNeedle_png.js';
+import spring_svg from '../../../images/spring_svg.js';
 import Field from '../../common/model/Field.js';
 import Launcher from '../../common/model/Launcher.js';
+import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../../common/model/LauncherOrientation.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
+import PDLColors from '../../common/PDLColors.js';
+import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS, LauncherNodeOptions } from '../../common/view/LauncherNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import LauncherMechanism from '../model/LauncherMechanism.js';
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherNodeOptions = SelfOptions & LauncherNodeOptions;

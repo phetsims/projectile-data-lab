@@ -7,11 +7,11 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import { Shape } from '../../../../kite/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Path, PathOptions } from '../../../../scenery/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { Shape } from '../../../../kite/js/imports.js';
 import PDLColors from '../../common/PDLColors.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeanIndicatorNodeOptions = SelfOptions & PathOptions;

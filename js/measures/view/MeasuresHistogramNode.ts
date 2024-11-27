@@ -7,28 +7,28 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
-import Field from '../../common/model/Field.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import { ManualConstraint, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
-import IntervalTool from '../model/IntervalTool.js';
-import PDLColors from '../../common/PDLColors.js';
-import MeasuresField from '../model/MeasuresField.js';
-import PDLText from '../../common/view/PDLText.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { PDLPanel } from '../../common/view/PDLPanel.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import Histogram from '../../common/model/Histogram.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { ManualConstraint, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
 import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import Field from '../../common/model/Field.js';
+import Histogram from '../../common/model/Histogram.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants from '../../common/PDLConstants.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
+import { PDLPanel } from '../../common/view/PDLPanel.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import IntervalTool from '../model/IntervalTool.js';
+import MeasuresField from '../model/MeasuresField.js';
+import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresHistogramNodeOptions = SelfOptions & WithRequired<HistogramNodeOptions, 'tandem'>;

@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Property from '../../../../axon/js/Property.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import SampleSizeSection from './SampleSizeSection.js';
-import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import MysteryLauncherSection from '../../common/view/MysteryLauncherSection.js';
+import Property from '../../../../axon/js/Property.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import Launcher from '../../common/model/Launcher.js';
+import MysteryLauncherSection from '../../common/view/MysteryLauncherSection.js';
+import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import SampleSizeSection from './SampleSizeSection.js';
 
 type SelfOptions = EmptySelfOptions;
 type SamplingLaunchPanelOptions = SelfOptions & PDLLaunchPanelOptions;

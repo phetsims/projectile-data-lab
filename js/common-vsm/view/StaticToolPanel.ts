@@ -7,21 +7,21 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { CanvasNode, CanvasNodeOptions, Node } from '../../../../scenery/js/imports.js';
-import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Bounds2 from '../../../../dot/js/Bounds2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { CanvasNode, CanvasNodeOptions, Node } from '../../../../scenery/js/imports.js';
+import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import PDLColors from '../../common/PDLColors.js';
-import AngleToolNode from './AngleToolNode.js';
-import SpeedToolNode from './SpeedToolNode.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import AngleToolNode from './AngleToolNode.js';
+import SpeedToolNode from './SpeedToolNode.js';
 
 type SelfOptions = {
   additionalVerticalCheckboxGroupItems?: VerticalCheckboxGroupItem[];

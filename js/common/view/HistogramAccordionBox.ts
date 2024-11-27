@@ -8,13 +8,13 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import PDLColors from '../PDLColors.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import PDLColors from '../PDLColors.js';
 import PDLText from './PDLText.js';
 
 type SelfOptions = EmptySelfOptions;

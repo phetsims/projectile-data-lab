@@ -6,10 +6,10 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import Range from '../../../dot/js/Range.js';
-import projectileDataLab from '../projectileDataLab.js';
-import PhetFont from '../../../scenery-phet/js/PhetFont.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import Range from '../../../dot/js/Range.js';
+import PhetFont from '../../../scenery-phet/js/PhetFont.js';
+import projectileDataLab from '../projectileDataLab.js';
 
 const MAX_FIELD_DISTANCE = 100;
 const FIELD_WIDTH = 850;

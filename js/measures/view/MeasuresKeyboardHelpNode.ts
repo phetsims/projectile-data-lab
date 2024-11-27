@@ -6,9 +6,9 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
 import PDLKeyboardHelpNode from '../../common/view/PDLKeyboardHelpNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 export default class MeasuresKeyboardHelpNode extends PDLKeyboardHelpNode {

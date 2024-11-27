@@ -6,30 +6,30 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import SamplingModel from '../model/SamplingModel.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
-import SamplingLaunchPanel from './SamplingLaunchPanel.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { ManualConstraint } from '../../../../scenery/js/imports.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import SamplingAccordionBox from './SamplingAccordionBox.js';
-import SamplingField from '../model/SamplingField.js';
-import SampleSelectorNode from './SampleSelectorNode.js';
-import SamplingCanvasNode from './SamplingCanvasNode.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Utils from '../../../../dot/js/Utils.js';
-import PDLText from '../../common/view/PDLText.js';
-import SamplingFieldSignNode from './SamplingFieldSignNode.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
-import FieldSignNode from '../../common/view/FieldSignNode.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import FieldSignNode from '../../common/view/FieldSignNode.js';
+import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
+import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import SamplingField from '../model/SamplingField.js';
+import SamplingModel from '../model/SamplingModel.js';
+import SampleSelectorNode from './SampleSelectorNode.js';
+import SamplingAccordionBox from './SamplingAccordionBox.js';
+import SamplingCanvasNode from './SamplingCanvasNode.js';
+import SamplingFieldSignNode from './SamplingFieldSignNode.js';
+import SamplingLaunchPanel from './SamplingLaunchPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 

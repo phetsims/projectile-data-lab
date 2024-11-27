@@ -11,19 +11,19 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
-import { ManualConstraint, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import PDLColors from '../../common/PDLColors.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import LocalizedStringProperty from '../../../../chipper/js/LocalizedStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import { ManualConstraint, Node, NodeOptions, Path, Rectangle, Text } from '../../../../scenery/js/imports.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = {
 

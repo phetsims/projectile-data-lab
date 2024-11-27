@@ -7,12 +7,12 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
+import packageJSON from '../../../joist/js/packageJSON.js';
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import projectileDataLab from '../projectileDataLab.js';
 import { BinStrategyValues } from './BinStrategy.js';
 import { LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import PDLConstants from './PDLConstants.js';
-import packageJSON from '../../../joist/js/packageJSON.js';
 
 const SCHEMA_MAP = {
 

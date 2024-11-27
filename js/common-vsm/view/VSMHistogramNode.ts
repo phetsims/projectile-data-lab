@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { ColorProperty, Node } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
 import Histogram from '../../common/model/Histogram.js';
-import { ColorProperty, Node } from '../../../../scenery/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 

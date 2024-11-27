@@ -9,12 +9,12 @@
  */
 
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import Launcher from '../../common/model/Launcher.js';
-import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import VSMField, { VSMFieldOptions } from '../../common-vsm/model/VSMField.js';
+import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import Launcher from '../../common/model/Launcher.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SMFieldOptions = SelfOptions & VSMFieldOptions;

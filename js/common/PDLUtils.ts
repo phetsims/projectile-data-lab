@@ -6,13 +6,13 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../projectileDataLab.js';
 import Vector2 from '../../../dot/js/Vector2.js';
-import PDLConstants from './PDLConstants.js';
 import { Color } from '../../../scenery/js/imports.js';
-import PDLColors from './PDLColors.js';
 import { VSMFieldIdentifierValues } from '../common-vsm/model/VSMFieldIdentifier.js';
+import projectileDataLab from '../projectileDataLab.js';
 import { SAMPLE_SIZES } from '../sampling/model/SamplingModel.js';
+import PDLColors from './PDLColors.js';
+import PDLConstants from './PDLConstants.js';
 
 export default class PDLUtils {
 

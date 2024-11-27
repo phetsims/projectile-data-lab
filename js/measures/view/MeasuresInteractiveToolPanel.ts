@@ -7,20 +7,20 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node } from '../../../../scenery/js/imports.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import InteractiveToolPanel, { InteractiveToolPanelOptions } from '../../common-vsm/view/InteractiveToolPanel.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import IntervalToolNode from './IntervalToolNode.js';
-import IntervalTool from '../model/IntervalTool.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import Property from '../../../../axon/js/Property.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import InteractiveToolPanel, { InteractiveToolPanelOptions } from '../../common-vsm/view/InteractiveToolPanel.js';
+import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import IntervalTool from '../model/IntervalTool.js';
+import IntervalToolNode from './IntervalToolNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type MeasuresInteractiveToolPanelOptions = SelfOptions & InteractiveToolPanelOptions;

@@ -7,12 +7,12 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Range from '../../../../dot/js/Range.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 export default class ProjectileType extends PhetioObject {
   public readonly speedMultiplierProperty: NumberProperty;

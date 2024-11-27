@@ -8,13 +8,13 @@
 
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
+import ComboBoxKeyboardHelpSection from '../../../scenery-phet/js/keyboard/help/ComboBoxKeyboardHelpSection.js';
+import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
+import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
 import projectileDataLab from '../projectileDataLab.js';
+import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import SourcesModel from './model/SourcesModel.js';
 import SourcesScreenView from './view/SourcesScreenView.js';
-import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
-import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
-import PDLKeyboardHelpNode from '../common/view/PDLKeyboardHelpNode.js';
-import ComboBoxKeyboardHelpSection from '../../../scenery-phet/js/keyboard/help/ComboBoxKeyboardHelpSection.js';
 
 type SelfOptions = EmptySelfOptions;
 

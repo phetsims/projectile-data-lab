@@ -9,26 +9,26 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
-import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import { Shape } from '../../../../kite/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
-import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
-import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
-import Utils from '../../../../dot/js/Utils.js';
-import PDLText from '../../common/view/PDLText.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
-import { PDLPanel } from '../../common/view/PDLPanel.js';
-import PDLColors from '../../common/PDLColors.js';
-import { HistogramSonifierPhase } from '../../common/model/HistogramSonifier.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import ArrowNode, { ArrowNodeOptions } from '../../../../scenery-phet/js/ArrowNode.js';
+import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import { HistogramSonifierPhase } from '../../common/model/HistogramSonifier.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
+import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
+import { PDLPanel } from '../../common/view/PDLPanel.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = {
   context: 'histogram' | 'field' | 'icon';

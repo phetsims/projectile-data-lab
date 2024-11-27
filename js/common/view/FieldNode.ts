@@ -8,17 +8,17 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import PDLConstants from '../PDLConstants.js';
-import PDLColors from '../PDLColors.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import PDLUtils from '../PDLUtils.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Field from '../model/Field.js';
+import PDLColors from '../PDLColors.js';
+import PDLConstants from '../PDLConstants.js';
+import PDLUtils from '../PDLUtils.js';
 
 type SelfOptions = {
 

@@ -6,22 +6,22 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import MeasuresModel from '../model/MeasuresModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import { Node } from '../../../../scenery/js/imports.js';
+import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
-import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
+import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import MeasuresField from '../model/MeasuresField.js';
+import MeasuresModel from '../model/MeasuresModel.js';
+import DataMeasuresOverlay from './DataMeasuresOverlay.js';
+import IntervalToolNode from './IntervalToolNode.js';
+import MeasuresHistogramNode from './MeasuresHistogramNode.js';
 import MeasuresInteractiveToolPanel from './MeasuresInteractiveToolPanel.js';
 import MeasuresLaunchPanel from './MeasuresLaunchPanel.js';
-import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
-import MeasuresField from '../model/MeasuresField.js';
-import DataMeasuresOverlay from './DataMeasuresOverlay.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import MeasuresHistogramNode from './MeasuresHistogramNode.js';
-import IntervalToolNode from './IntervalToolNode.js';
-import { Node } from '../../../../scenery/js/imports.js';
-import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import MeasuresStaticToolPanel from './MeasuresStaticToolPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 

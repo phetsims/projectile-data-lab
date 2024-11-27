@@ -13,19 +13,19 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { Node, RichText } from '../../../../scenery/js/imports.js';
+import packageJSON from '../../../../joist/js/packageJSON.js';
 import PreferencesControl from '../../../../joist/js/preferences/PreferencesControl.js';
 import PreferencesDialogConstants from '../../../../joist/js/preferences/PreferencesDialogConstants.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import PreferencesPanelContentNode from '../../../../joist/js/preferences/PreferencesPanelContentNode.js';
-import { BinStrategy } from '../BinStrategy.js';
-import PDLText from './PDLText.js';
+import { Node, RichText } from '../../../../scenery/js/imports.js';
+import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import { BinStrategy } from '../BinStrategy.js';
 import PDLPreferences from '../PDLPreferences.js';
-import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
-import packageJSON from '../../../../joist/js/packageJSON.js';
+import PDLText from './PDLText.js';
 
 export default class SimulationPreferencesContentNode extends PreferencesPanelContentNode {
 

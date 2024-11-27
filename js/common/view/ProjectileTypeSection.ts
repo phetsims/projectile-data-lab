@@ -7,22 +7,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import hollowThud_mp3 from '../../../../tambo/sounds/hollowThud_mp3.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import piano_png from '../../../images/piano_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
-import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
-import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
 import projectileTypeCannonball_mp3 from '../../../sounds/projectileTypeCannonball_mp3.js';
 import projectileTypePiano_mp3 from '../../../sounds/projectileTypePiano_mp3.js';
-import hollowThud_mp3 from '../../../../tambo/sounds/hollowThud_mp3.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
+import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
+import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
 
 const cannonballSoundClip = new SoundClip( projectileTypeCannonball_mp3, { initialOutputLevel: 0.2 } );
 const pumpkinSoundClip = new SoundClip( hollowThud_mp3, { initialOutputLevel: 0.2 } );

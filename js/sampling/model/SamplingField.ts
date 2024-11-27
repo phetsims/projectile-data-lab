@@ -9,27 +9,27 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Field, { FieldOptions } from '../../common/model/Field.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import Projectile from '../../common/model/Projectile.js';
-import HistogramData from '../../common/model/HistogramData.js';
-import Property from '../../../../axon/js/Property.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Emitter from '../../../../axon/js/Emitter.js';
-import { SingleOrContinuous } from '../../common/model/SingleOrContinuous.js';
-import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Launcher from '../../common/model/Launcher.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import Range from '../../../../dot/js/Range.js';
-import { MeanTone } from '../../common/model/MeanTone.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
-import PDLUtils from '../../common/PDLUtils.js';
-import PDLPreferences from '../../common/PDLPreferences.js';
 import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import Field, { FieldOptions } from '../../common/model/Field.js';
+import HistogramData from '../../common/model/HistogramData.js';
+import Launcher from '../../common/model/Launcher.js';
+import { MeanTone } from '../../common/model/MeanTone.js';
+import Projectile from '../../common/model/Projectile.js';
+import { SingleOrContinuous } from '../../common/model/SingleOrContinuous.js';
+import PDLPreferences from '../../common/PDLPreferences.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import PDLUtils from '../../common/PDLUtils.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
 
 type SelfOptions = EmptySelfOptions;
 export type SamplingFieldOptions = SelfOptions & StrictOmit<FieldOptions, 'isLauncherOrientationPhetioInstrumented' | 'isProjectileTypePhetioInstrumented' | 'isLaunchHeightPhetioInstrumented'>;

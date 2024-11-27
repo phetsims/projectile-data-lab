@@ -10,11 +10,11 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 export default class PDLEventTimer {
 

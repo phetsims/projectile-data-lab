@@ -8,14 +8,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { Node, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PDLText from './PDLText.js';
-import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
-import PDLConstants from '../PDLConstants.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
+import { Node, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import PDLConstants from '../PDLConstants.js';
+import PDLText from './PDLText.js';
 
 type SelfOptions = {
   titleFont?: PhetFont;

@@ -8,13 +8,13 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import VSMField from '../model/VSMField.js';
-import PDLCanvasNode, { PDLCanvasNodeOptions } from '../../common/view/PDLCanvasNode.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import PDLColors from '../../common/PDLColors.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Projectile from '../../common/model/Projectile.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLCanvasNode, { PDLCanvasNodeOptions } from '../../common/view/PDLCanvasNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import VSMField from '../model/VSMField.js';
 
 type SelfOptions = EmptySelfOptions;
 type VSMCanvasNodeOptions = SelfOptions & PDLCanvasNodeOptions;

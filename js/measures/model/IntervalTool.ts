@@ -10,15 +10,15 @@
  * @author Matt Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import Property from '../../../../axon/js/Property.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import Range from '../../../../dot/js/Range.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type IntervalToolOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;

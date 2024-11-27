@@ -7,21 +7,21 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import VariabilityModel from '../model/VariabilityModel.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
-import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
-import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
-import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
-import LauncherNode from '../../common/view/LauncherNode.js';
-import VSMField from '../../common-vsm/model/VSMField.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import VSMField from '../../common-vsm/model/VSMField.js';
+import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
+import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
+import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
-import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import LauncherNode from '../../common/view/LauncherNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import VariabilityModel from '../model/VariabilityModel.js';
+import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 

@@ -7,22 +7,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Image } from '../../../../scenery/js/imports.js';
-import { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import springIcon_svg from '../../../images/springIcon_svg.js';
-import pressureWithNeedle_png from '../../../images/pressureWithNeedle_png.js';
-import explosion_svg from '../../../images/explosion_svg.js';
-import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import launcherTypeSpring_mp3 from '../../../sounds/launcherTypeSpring_mp3.js';
-import launcherTypePressure_mp3 from '../../../sounds/launcherTypePressure_mp3.js';
+import explosion_svg from '../../../images/explosion_svg.js';
+import pressureWithNeedle_png from '../../../images/pressureWithNeedle_png.js';
+import springIcon_svg from '../../../images/springIcon_svg.js';
 import launcherTypeExplosion_mp3 from '../../../sounds/launcherTypeExplosion_mp3.js';
+import launcherTypePressure_mp3 from '../../../sounds/launcherTypePressure_mp3.js';
+import launcherTypeSpring_mp3 from '../../../sounds/launcherTypeSpring_mp3.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import PDLRectangularRadioButtonGroup, { PDLRectangularRadioButtonGroupOptions } from '../../common/view/PDLRectangularRadioButtonGroup.js';
-import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & PDLRectangularRadioButtonGroupOptions;

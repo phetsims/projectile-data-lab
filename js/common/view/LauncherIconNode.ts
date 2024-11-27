@@ -7,20 +7,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import { Shape } from '../../../../kite/js/imports.js';
-import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../model/LauncherOrientation.js';
-import { MysteryOrCustom, MysteryOrCustomValues } from '../model/MysteryOrCustom.js';
-import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Node, NodeOptions } from '../../../../scenery/js/imports.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
+import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../model/LauncherOrientation.js';
+import { MysteryOrCustom, MysteryOrCustomValues } from '../model/MysteryOrCustom.js';
 import PDLConstants from '../PDLConstants.js';
-import Property from '../../../../axon/js/Property.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 
 type SelfOptions = EmptySelfOptions;
 type LauncherIconNodeOptions = SelfOptions & NodeOptions;

@@ -7,25 +7,25 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import SamplingField from '../model/SamplingField.js';
-import Utils from '../../../../dot/js/Utils.js';
-import PDLText from '../../common/view/PDLText.js';
-import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
-import Range from '../../../../dot/js/Range.js';
-import { SamplingPhase } from '../model/SamplingPhase.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { MeanTone } from '../../common/model/MeanTone.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import { MeanTone } from '../../common/model/MeanTone.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
+import PDLText from '../../common/view/PDLText.js';
+import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import SamplingField from '../model/SamplingField.js';
+import { SamplingPhase } from '../model/SamplingPhase.js';
 
 type SelfOptions = EmptySelfOptions;
 type SampleSelectorPanelOptions = SelfOptions & StrictOmit<SelectorNodeOptions, 'playSound'>;

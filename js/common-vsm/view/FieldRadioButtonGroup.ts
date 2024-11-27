@@ -8,15 +8,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLText from '../../common/view/PDLText.js';
-import PDLColors from '../../common/PDLColors.js';
-import { Circle, KeyboardListener, Rectangle, HotkeyData } from '../../../../scenery/js/imports.js';
-import Field from '../../common/model/Field.js';
+import { Circle, HotkeyData, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
+import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
+import Field from '../../common/model/Field.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = EmptySelfOptions;

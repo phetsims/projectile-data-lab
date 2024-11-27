@@ -7,24 +7,24 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import SourcesModel from '../model/SourcesModel.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import SourcesLaunchPanel from './SourcesLaunchPanel.js';
-import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
-import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
-import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import Property from '../../../../axon/js/Property.js';
-import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import SMField from '../../common-vsm/model/SMField.js';
+import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
+import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
+import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';
+import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
+import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
 
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
-import SMField from '../../common-vsm/model/SMField.js';
-import VSMHistogramNode from '../../common-vsm/view/VSMHistogramNode.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import SourcesModel from '../model/SourcesModel.js';
+import SourcesLaunchPanel from './SourcesLaunchPanel.js';
 
 type SelfOptions = EmptySelfOptions;
 type SourcesScreenViewOptions = SelfOptions & StrictOmit<VSMScreenViewOptions, 'createLauncherNode'>;

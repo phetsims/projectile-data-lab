@@ -7,25 +7,25 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Field from '../../common/model/Field.js';
-import Property from '../../../../axon/js/Property.js';
-import { HBox, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
-import { PDLPanel } from '../../common/view/PDLPanel.js';
-import PDLText from '../../common/view/PDLText.js';
-import SamplingField from '../model/SamplingField.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { HBox, ManualConstraint, Node, VBox } from '../../../../scenery/js/imports.js';
+import Field from '../../common/model/Field.js';
+import Histogram from '../../common/model/Histogram.js';
+import Launcher from '../../common/model/Launcher.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import Launcher from '../../common/model/Launcher.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import Histogram from '../../common/model/Histogram.js';
-import Multilink from '../../../../axon/js/Multilink.js';
+import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
+import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
+import { PDLPanel } from '../../common/view/PDLPanel.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import SamplingField from '../model/SamplingField.js';
 
 export default class SamplingHistogramNode extends HistogramNode {
   public constructor( launcherProperty: TReadOnlyProperty<Launcher>,

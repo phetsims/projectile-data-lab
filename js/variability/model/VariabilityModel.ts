@@ -7,14 +7,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & StrictOmit<WithRequired<VSMModelOptions<VSMField>, 'tandem'>, 'isStandardDeviationAnglePropertyPhetioInstrumented'>;

@@ -8,12 +8,12 @@
 
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
-import projectileDataLab from '../projectileDataLab.js';
-import MeasuresModel from './model/MeasuresModel.js';
-import MeasuresScreenView from './view/MeasuresScreenView.js';
-import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
+import projectileDataLab from '../projectileDataLab.js';
+import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
+import MeasuresModel from './model/MeasuresModel.js';
 import MeasuresKeyboardHelpNode from './view/MeasuresKeyboardHelpNode.js';
+import MeasuresScreenView from './view/MeasuresScreenView.js';
 
 type SelfOptions = EmptySelfOptions;
 

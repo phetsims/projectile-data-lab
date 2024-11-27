@@ -6,19 +6,19 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSignNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { Text, VBox } from '../../../../scenery/js/imports.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLColors from '../../common/PDLColors.js';
-import Launcher from '../../common/model/Launcher.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import SampleSelectorNode from './SampleSelectorNode.js';
+import { Text, VBox } from '../../../../scenery/js/imports.js';
 import Field from '../../common/model/Field.js';
+import Launcher from '../../common/model/Launcher.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSignNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import SampleSelectorNode from './SampleSelectorNode.js';
 
 type SelfOptions = EmptySelfOptions;
 type SamplingFieldSignNodeOptions = SelfOptions & FieldSignNodeOptions;

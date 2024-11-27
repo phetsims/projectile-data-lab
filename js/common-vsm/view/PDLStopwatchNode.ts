@@ -7,19 +7,19 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import StopwatchNode, { StopwatchNodeOptions } from '../../../../scenery-phet/js/StopwatchNode.js';
-import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import PDLText from '../../common/view/PDLText.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DerivedStringProperty from '../../../../axon/js/DerivedStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
+import StopwatchNode, { StopwatchNodeOptions } from '../../../../scenery-phet/js/StopwatchNode.js';
+import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = {
   launchButtonEnabledProperty: TReadOnlyProperty<boolean>;

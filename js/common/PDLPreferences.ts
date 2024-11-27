@@ -7,14 +7,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Tandem from '../../../tandem/js/Tandem.js';
-import StringUnionProperty from '../../../axon/js/StringUnionProperty.js';
-import { BinStrategy, BinStrategyValues } from './BinStrategy.js';
-import PDLQueryParameters from './PDLQueryParameters.js';
-import projectileDataLab from '../projectileDataLab.js';
-import { LaunchSoundStrategy, LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
+import StringUnionProperty from '../../../axon/js/StringUnionProperty.js';
 import packageJSON from '../../../joist/js/packageJSON.js';
+import Tandem from '../../../tandem/js/Tandem.js';
+import projectileDataLab from '../projectileDataLab.js';
+import { BinStrategy, BinStrategyValues } from './BinStrategy.js';
+import { LaunchSoundStrategy, LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
+import PDLQueryParameters from './PDLQueryParameters.js';
 
 const PDLPreferences = {
 

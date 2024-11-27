@@ -7,9 +7,9 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import { Shape } from '../../../../kite/js/imports.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node, NodeOptions, Path } from '../../../../scenery/js/imports.js';
-import { Shape } from '../../../../kite/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;

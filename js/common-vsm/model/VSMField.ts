@@ -8,27 +8,27 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
-import Field, { FieldOptions } from '../../common/model/Field.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import Projectile from '../../common/model/Projectile.js';
-import Emitter from '../../../../axon/js/Emitter.js';
-import Property from '../../../../axon/js/Property.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import { VSMFieldIdentifier, VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
-import PDLConstants from '../../common/PDLConstants.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import Emitter from '../../../../axon/js/Emitter.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PDLEventTimer from '../../common/model/PDLEventTimer.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Launcher from '../../common/model/Launcher.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
 import Range from '../../../../dot/js/Range.js';
-import PDLUtils from '../../common/PDLUtils.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import Field, { FieldOptions } from '../../common/model/Field.js';
+import Launcher from '../../common/model/Launcher.js';
+import PDLEventTimer from '../../common/model/PDLEventTimer.js';
+import Projectile from '../../common/model/Projectile.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import PDLUtils from '../../common/PDLUtils.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import { VSMFieldIdentifier, VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
 
 type SelfOptions = {
 

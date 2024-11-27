@@ -9,14 +9,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import PDLColors from '../PDLColors.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import ScreenIcon from '../../../../joist/js/ScreenIcon.js';
+import { Shape } from '../../../../kite/js/imports.js';
 import { Circle, HBox, Image, Node, Path, Rectangle } from '../../../../scenery/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import springIcon_svg from '../../../images/springIcon_svg.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import PDLColors from '../PDLColors.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 
 const PDLScreenIconFactory = {

@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { HBox, ManualConstraint, Node, Path, Rectangle, VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import SelectorNode from './SelectorNode.js';
 import Field from '../model/Field.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PDLColors from '../PDLColors.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import SelectorNode from './SelectorNode.js';
 
 type SelfOptions = EmptySelfOptions;
 export type FieldSignNodeOptions = SelfOptions & VBoxOptions;

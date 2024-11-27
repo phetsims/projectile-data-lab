@@ -7,31 +7,31 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { CanvasNode, CanvasNodeOptions } from '../../../../scenery/js/imports.js';
-import Field from '../model/Field.js';
 import Property from '../../../../axon/js/Property.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import PDLColors from '../PDLColors.js';
-import Projectile from '../model/Projectile.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { CanvasNode, CanvasNodeOptions } from '../../../../scenery/js/imports.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import cannonballLanded_png from '../../../images/cannonballLanded_png.js';
 import cannonballLandedSelected_png from '../../../images/cannonballLandedSelected_png.js';
-import pumpkin_png from '../../../images/pumpkin_png.js';
-import pumpkin1Landed_png from '../../../images/pumpkin1Landed_png.js';
-import pumpkin2Landed_png from '../../../images/pumpkin2Landed_png.js';
-import pumpkin3Landed_png from '../../../images/pumpkin3Landed_png.js';
-import pumpkin1LandedSelected_png from '../../../images/pumpkin1LandedSelected_png.js';
-import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_png.js';
-import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
+import forceField_png from '../../../images/forceField_png.js';
 import piano_png from '../../../images/piano_png.js';
 import pianoLanded_png from '../../../images/pianoLanded_png.js';
 import pianoLandedSelected_png from '../../../images/pianoLandedSelected_png.js';
-import forceField_png from '../../../images/forceField_png.js';
-import PDLConstants from '../PDLConstants.js';
+import pumpkin1Landed_png from '../../../images/pumpkin1Landed_png.js';
+import pumpkin1LandedSelected_png from '../../../images/pumpkin1LandedSelected_png.js';
+import pumpkin2Landed_png from '../../../images/pumpkin2Landed_png.js';
+import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_png.js';
+import pumpkin3Landed_png from '../../../images/pumpkin3Landed_png.js';
+import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
+import pumpkin_png from '../../../images/pumpkin_png.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import Field from '../model/Field.js';
+import Projectile from '../model/Projectile.js';
 import { PIANO, PUMPKIN } from '../model/ProjectileType.js';
+import PDLColors from '../PDLColors.js';
+import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLCanvasNodeOptions = SelfOptions & CanvasNodeOptions;

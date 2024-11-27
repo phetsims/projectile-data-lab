@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { VBox } from '../../../../scenery/js/imports.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
+import { VBox } from '../../../../scenery/js/imports.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
+import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import AngleStabilitySection from './AngleStabilitySection.js';
 
 type SelfOptions = EmptySelfOptions;

@@ -7,23 +7,23 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Color, KeyboardListener, Node, NodeOptions, Path, SceneryConstants } from '../../../../scenery/js/imports.js';
-import AccessibleNumberSpinner, { AccessibleNumberSpinnerOptions } from '../../../../sun/js/accessibility/AccessibleNumberSpinner.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import InstanceRegistry from '../../../../phet-core/js/documentation/InstanceRegistry.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import Range from '../../../../dot/js/Range.js';
-import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
-import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
-import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
-import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Range from '../../../../dot/js/Range.js';
+import InstanceRegistry from '../../../../phet-core/js/documentation/InstanceRegistry.js';
+import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import platform from '../../../../phet-core/js/platform.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import { Color, KeyboardListener, Node, NodeOptions, Path, SceneryConstants } from '../../../../scenery/js/imports.js';
+import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
+import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
+import AccessibleNumberSpinner, { AccessibleNumberSpinnerOptions } from '../../../../sun/js/accessibility/AccessibleNumberSpinner.js';
+import { FlatAppearanceStrategy } from '../../../../sun/js/buttons/ButtonNode.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = {
   playSound: ( selectedItem: number ) => void;

@@ -7,19 +7,19 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
 import Property from '../../../../axon/js/Property.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLText from '../../common/view/PDLText.js';
-import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
-import sampleSize2_mp3 from '../../../sounds/sampleSize2_mp3.js';
-import sampleSize5_mp3 from '../../../sounds/sampleSize5_mp3.js';
 import sampleSize15_mp3 from '../../../sounds/sampleSize15_mp3.js';
+import sampleSize2_mp3 from '../../../sounds/sampleSize2_mp3.js';
 import sampleSize40_mp3 from '../../../sounds/sampleSize40_mp3.js';
+import sampleSize5_mp3 from '../../../sounds/sampleSize5_mp3.js';
+import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
+import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 const sampleSize2SoundClip = new SoundClip( sampleSize2_mp3, { initialOutputLevel: 0.2 } );
 const sampleSize5SoundClip = new SoundClip( sampleSize5_mp3, { initialOutputLevel: 0.2 } );

@@ -8,14 +8,14 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
-import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherSection from '../../common-vsm/view/CustomLauncherSection.js';
+import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
+import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type SourcesLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;

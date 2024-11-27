@@ -8,13 +8,13 @@
  */
 
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
 import Range from '../../../../dot/js/Range.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
 import packageJSON from '../../../../joist/js/packageJSON.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 export default class LauncherMechanism extends PhetioObject {
   public readonly speedMeanProperty: NumberProperty;

@@ -9,28 +9,28 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import SamplingField from './SamplingField.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { SingleOrContinuous, SingleOrContinuousValues } from '../../common/model/SingleOrContinuous.js';
-import { SamplingPhase } from './SamplingPhase.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
+import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
+import { SingleOrContinuous, SingleOrContinuousValues } from '../../common/model/SingleOrContinuous.js';
+import PDLConstants from '../../common/PDLConstants.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import SamplingField from './SamplingField.js';
+import { SamplingPhase } from './SamplingPhase.js';
 
 type SelfOptions = EmptySelfOptions;
 

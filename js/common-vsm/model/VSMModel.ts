@@ -1,5 +1,29 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+
+import stopwatchTick_mp3 from '../../../sounds/stopwatchTick_mp3.js';
+import Launcher from '../../common/model/Launcher.js';
+import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
+import Projectile from '../../common/model/Projectile.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import PDLPreferences from '../../common/PDLPreferences.js';
+import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 /**
  * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models. It contains the model
  * properties and methods to support the launcher, speed tool, angle tool, measuring tape, stopwatch, and projectile selector.
@@ -8,31 +32,7 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 import projectileDataLab from '../../projectileDataLab.js';
-import PDLModel, { PDLModelOptions } from '../../common/model/PDLModel.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import Property from '../../../../axon/js/Property.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
 import VSMField from './VSMField.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import Projectile from '../../common/model/Projectile.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import Launcher from '../../common/model/Launcher.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-
-import stopwatchTick_mp3 from '../../../sounds/stopwatchTick_mp3.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import PDLPreferences from '../../common/PDLPreferences.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 
 const tickSound = new SoundClip( stopwatchTick_mp3, { initialOutputLevel: 0.3 } );
 soundManager.addSoundGenerator( tickSound );

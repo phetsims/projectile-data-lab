@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import LauncherOrientationSection from '../../common/view/LauncherOrientationSection.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
-import ProjectileTypeSection from '../../common/view/ProjectileTypeSection.js';
-import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import { Node } from '../../../../scenery/js/imports.js';
+import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
+import LauncherOrientationSection from '../../common/view/LauncherOrientationSection.js';
+import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
+import ProjectileTypeSection from '../../common/view/ProjectileTypeSection.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMLaunchPanelOptions = SelfOptions & PDLLaunchPanelOptions;

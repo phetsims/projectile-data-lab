@@ -6,15 +6,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import HistogramCanvasPainter from './HistogramCanvasPainter.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import Range from '../../../../dot/js/Range.js';
-import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
 import { ColorProperty, Node } from '../../../../scenery/js/imports.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import projectileDataLab from '../../projectileDataLab.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
-import Property from '../../../../axon/js/Property.js';
+import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 
 export default class HistogramRepresentationIconNode extends Node {
   public constructor( blockFillProperty: ColorProperty, blockStrokeProperty: ColorProperty, histogramRepresentation: HistogramRepresentation ) {

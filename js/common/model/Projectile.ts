@@ -13,23 +13,23 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
+import Utils from '../../../../dot/js/Utils.js';
+import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
-import PDLConstants from '../PDLConstants.js';
-import Utils from '../../../../dot/js/Utils.js';
-import Field from './Field.js';
-import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
-import StringIO from '../../../../tandem/js/types/StringIO.js';
-import BooleanIO from '../../../../tandem/js/types/BooleanIO.js';
-import { LauncherOrientation, LauncherOrientationValues } from './LauncherOrientation.js';
-import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import Launcher from './Launcher.js';
 import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/ReferenceIO.js';
+import StringIO from '../../../../tandem/js/types/StringIO.js';
+import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import PDLConstants from '../PDLConstants.js';
+import PDLPreferences from '../PDLPreferences.js';
+import Field from './Field.js';
+import Launcher from './Launcher.js';
+import { LauncherOrientation, LauncherOrientationValues } from './LauncherOrientation.js';
 import ProjectileSound from './ProjectileSound.js';
 import ProjectileType from './ProjectileType.js';
-import PDLPreferences from '../PDLPreferences.js';
+import { ScreenIdentifier, ScreenIdentifierValues } from './ScreenIdentifier.js';
 
 export default class Projectile {
 

@@ -9,17 +9,17 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import { Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Utils from '../../../../dot/js/Utils.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import PDLColors from '../../common/PDLColors.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
 import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
+import { Node, NodeTranslationOptions, Path } from '../../../../scenery/js/imports.js';
+import PDLColors from '../../common/PDLColors.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 
 type SelfOptions = {
   isIcon?: boolean;

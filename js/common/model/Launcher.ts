@@ -8,22 +8,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import Property from '../../../../axon/js/Property.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { MysteryOrCustom } from './MysteryOrCustom.js';
-import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import PDLConstants from '../PDLConstants.js';
-import Utils from '../../../../dot/js/Utils.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import PDLConstants from '../PDLConstants.js';
+import { MysteryOrCustom } from './MysteryOrCustom.js';
 
 type SelfOptions = EmptySelfOptions;
 type LauncherOptions = SelfOptions & PhetioObjectOptions;

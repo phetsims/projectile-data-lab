@@ -6,11 +6,11 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import { Node } from '../../../../scenery/js/imports.js';
-import LauncherNode from './LauncherNode.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Property from '../../../../axon/js/Property.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Node } from '../../../../scenery/js/imports.js';
 import Launcher from '../model/Launcher.js';
+import LauncherNode from './LauncherNode.js';
 
 const LAUNCHER_ICON_WIDTH = 35;
 

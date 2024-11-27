@@ -8,25 +8,25 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import { HotkeyData, Image, KeyboardListener, Node, Rectangle } from '../../../../scenery/js/imports.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PDLColors from '../PDLColors.js';
-import Dimension2 from '../../../../dot/js/Dimension2.js';
-import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
-import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
-import launchButtonAutoGenerate_png from '../../../images/launchButtonAutoGenerate_png.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLPreferences from '../PDLPreferences.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import autoGenerateButton_mp3 from '../../../sounds/autoGenerateButton_mp3.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { HotkeyData, Image, KeyboardListener, Node, Rectangle } from '../../../../scenery/js/imports.js';
+import RectangularPushButton, { RectangularPushButtonOptions } from '../../../../sun/js/buttons/RectangularPushButton.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import launchButtonAutoGenerate_png from '../../../images/launchButtonAutoGenerate_png.js';
+import launchButtonContinuous_png from '../../../images/launchButtonContinuous_png.js';
+import launchButtonSingle_png from '../../../images/launchButtonSingle_png.js';
+import autoGenerateButton_mp3 from '../../../sounds/autoGenerateButton_mp3.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import { SingleOrContinuous } from '../model/SingleOrContinuous.js';
+import PDLColors from '../PDLColors.js';
+import PDLPreferences from '../PDLPreferences.js';
 
 type SelfOptions = EmptySelfOptions;
 type LaunchButtonOptions = SelfOptions & RectangularPushButtonOptions;

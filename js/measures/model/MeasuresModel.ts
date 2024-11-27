@@ -7,26 +7,26 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
-import MeasuresField from './MeasuresField.js';
-import IntervalTool from './IntervalTool.js';
-import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
-import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import NullableIO from '../../../../tandem/js/types/NullableIO.js';
-import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { MeanTone } from '../../common/model/MeanTone.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import NullableIO from '../../../../tandem/js/types/NullableIO.js';
+import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
+import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import { MeanTone } from '../../common/model/MeanTone.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import IntervalTool from './IntervalTool.js';
+import MeasuresField from './MeasuresField.js';
 
 type SelfOptions = EmptySelfOptions;
 

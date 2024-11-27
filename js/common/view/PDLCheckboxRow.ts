@@ -7,8 +7,8 @@
  */
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { AlignGroup, HBox, Node } from '../../../../scenery/js/imports.js';
-import PDLText from './PDLText.js';
 import projectileDataLab from '../../projectileDataLab.js';
+import PDLText from './PDLText.js';
 
 // All icons from all screens fit the same footprint, so we can use the same alignGroup for all of them
 const alignGroup = new AlignGroup();

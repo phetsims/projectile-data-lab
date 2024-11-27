@@ -7,22 +7,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { AlignGroup, Node, VBox } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { AlignGroup, Node, VBox } from '../../../../scenery/js/imports.js';
 import { AquaRadioButtonGroupItem } from '../../../../sun/js/AquaRadioButtonGroup.js';
-import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import AngleStabilitySection from '../../common-vsm/view/AngleStabilitySection.js';
-import PDLText from '../../common/view/PDLText.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import MysteryLauncherControl from '../../common/view/MysteryLauncherControl.js';
-import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
-import Launcher from '../../common/model/Launcher.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import AngleStabilitySection from '../../common-vsm/view/AngleStabilitySection.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
+import Launcher from '../../common/model/Launcher.js';
+import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
+import MysteryLauncherControl from '../../common/view/MysteryLauncherControl.js';
+import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = EmptySelfOptions;
 type MysteryOrCustomLauncherSectionOptions = SelfOptions & PDLPanelSectionOptions;

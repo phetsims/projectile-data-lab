@@ -1,23 +1,23 @@
 // Copyright 2024, University of Colorado Boulder
 
+import dotRandom from '../../../../dot/js/dotRandom.js';
+import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import cannonballLand_mp3 from '../../../sounds/cannonballLand_mp3.js';
+import cannonballTone_mp3 from '../../../sounds/cannonballTone_mp3.js';
+import pianoLand_mp3 from '../../../sounds/pianoLand_mp3.js';
+import pianoTone_mp3 from '../../../sounds/pianoTone_mp3.js';
+import pumpkinLand_mp3 from '../../../sounds/pumpkinLand_mp3.js';
+import pumpkinTone_mp3 from '../../../sounds/pumpkinTone_mp3.js';
 /**
  * Play the landing sound at a given x position.
  *
  * @author Sam Reid (PhET Interactive Simulations)
  */
 import projectileDataLab from '../../projectileDataLab.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import Utils from '../../../../dot/js/Utils.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
-import cannonballLand_mp3 from '../../../sounds/cannonballLand_mp3.js';
-import pumpkinLand_mp3 from '../../../sounds/pumpkinLand_mp3.js';
-import pianoLand_mp3 from '../../../sounds/pianoLand_mp3.js';
-import cannonballTone_mp3 from '../../../sounds/cannonballTone_mp3.js';
-import pumpkinTone_mp3 from '../../../sounds/pumpkinTone_mp3.js';
-import pianoTone_mp3 from '../../../sounds/pianoTone_mp3.js';
-import dotRandom from '../../../../dot/js/dotRandom.js';
-import Range from '../../../../dot/js/Range.js';
 
 // Convert projectileSoundsConfig to a Map
 const projectileSoundsConfig = new Map( [

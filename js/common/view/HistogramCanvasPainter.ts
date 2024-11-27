@@ -6,15 +6,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
-import { Color } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import CanvasPainter, { CanvasPainterOptions } from '../../../../bamboo/js/CanvasPainter.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
+import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Color } from '../../../../scenery/js/imports.js';
 import HistogramData from '../../common/model/HistogramData.js';
+import projectileDataLab from '../../projectileDataLab.js';
 import Histogram from '../model/Histogram.js';
+import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 
 type SelfOptions = EmptySelfOptions;
 export type BarPlotOptions = SelfOptions & CanvasPainterOptions;

@@ -8,39 +8,39 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { DragListener, DragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
-import IntervalTool from '../model/IntervalTool.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
-import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import Panel from '../../../../sun/js/Panel.js';
-import PDLText from '../../common/view/PDLText.js';
+import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Bounds2 from '../../../../dot/js/Bounds2.js';
+import Range from '../../../../dot/js/Range.js';
+import Utils from '../../../../dot/js/Utils.js';
+import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import Vector2 from '../../../../dot/js/Vector2.js';
-import Utils from '../../../../dot/js/Utils.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PDLColors from '../../common/PDLColors.js';
-import Property from '../../../../axon/js/Property.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
-import Range from '../../../../dot/js/Range.js';
-import intervalTool_wav from '../../../sounds/intervalTool_wav.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
-import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
-import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
-import Bounds2 from '../../../../dot/js/Bounds2.js';
-import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Multilink from '../../../../axon/js/Multilink.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
+import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
+import { DragListener, DragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
+import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
+import Panel from '../../../../sun/js/Panel.js';
+import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
+import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import intervalTool_wav from '../../../sounds/intervalTool_wav.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import IntervalTool from '../model/IntervalTool.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',

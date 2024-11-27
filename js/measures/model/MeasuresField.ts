@@ -8,20 +8,20 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import Multilink from '../../../../axon/js/Multilink.js';
 import Property from '../../../../axon/js/Property.js';
+import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
-import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
-import Multilink from '../../../../axon/js/Multilink.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import IOType from '../../../../tandem/js/types/IOType.js';
-import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
-import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
-import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import SMField, { SMFieldOptions } from '../../common-vsm/model/SMField.js';
+import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
+import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
+import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isLauncherPropertyPhetioReadOnly'>;

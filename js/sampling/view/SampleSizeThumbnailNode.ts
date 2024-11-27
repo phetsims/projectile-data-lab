@@ -7,29 +7,29 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { Color, Node, NodeOptions } from '../../../../scenery/js/imports.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
-import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Range from '../../../../dot/js/Range.js';
-import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
-import HistogramCanvasPainter from '../../common/view/HistogramCanvasPainter.js';
-import GridLineSet from '../../../../bamboo/js/GridLineSet.js';
-import Orientation from '../../../../phet-core/js/Orientation.js';
-import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
-import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
-import SamplingField from '../model/SamplingField.js';
-import PDLText from '../../common/view/PDLText.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Multilink from '../../../../axon/js/Multilink.js';
-import PDLConstants from '../../common/PDLConstants.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import ChartCanvasNode from '../../../../bamboo/js/ChartCanvasNode.js';
+import ChartRectangle from '../../../../bamboo/js/ChartRectangle.js';
+import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
+import GridLineSet from '../../../../bamboo/js/GridLineSet.js';
+import Range from '../../../../dot/js/Range.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import Orientation from '../../../../phet-core/js/Orientation.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { Color, Node, NodeOptions } from '../../../../scenery/js/imports.js';
+import isSettingPhetioStateProperty from '../../../../tandem/js/isSettingPhetioStateProperty.js';
 import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
+import { ZOOM_LEVELS } from '../../common/model/Histogram.js';
+import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
+import PDLConstants from '../../common/PDLConstants.js';
+import HistogramCanvasPainter from '../../common/view/HistogramCanvasPainter.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import SamplingField from '../model/SamplingField.js';
 
 type SelfOptions = EmptySelfOptions;
 type SampleSizeThumbnailNodeOptions = SelfOptions & WithRequired<NodeOptions, 'tandem'>;

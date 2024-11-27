@@ -7,16 +7,16 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
+import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
+import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import SMField from '../../common-vsm/model/SMField.js';
+import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import Launcher from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
-import SMField from '../../common-vsm/model/SMField.js';
-import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
+import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 

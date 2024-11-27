@@ -8,27 +8,27 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import TModel from '../../../../joist/js/TModel.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import Tandem from '../../../../tandem/js/Tandem.js';
-import Property from '../../../../axon/js/Property.js';
 import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
-import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
-import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
-import Field from './Field.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
-import { LauncherOrientation, LauncherOrientationValues } from './LauncherOrientation.js';
-import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { SingleOrContinuous, SingleOrContinuousValues } from './SingleOrContinuous.js';
-import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
-import Launcher from './Launcher.js';
-import Histogram from './Histogram.js';
-import ProjectileType from './ProjectileType.js';
+import EnumerationProperty from '../../../../axon/js/EnumerationProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import TProperty from '../../../../axon/js/TProperty.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import TModel from '../../../../joist/js/TModel.js';
+import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import Field from './Field.js';
+import Histogram from './Histogram.js';
+import Launcher from './Launcher.js';
+import { LauncherOrientation, LauncherOrientationValues } from './LauncherOrientation.js';
+import ProjectileType from './ProjectileType.js';
+import { SingleOrContinuous, SingleOrContinuousValues } from './SingleOrContinuous.js';
 
 // See the documentation at the PDLModel class attributes for more information on these options.
 type SelfOptions<T extends Field> = {

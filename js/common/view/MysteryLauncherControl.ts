@@ -7,17 +7,17 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { HotkeyData, KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import PDLText from './PDLText.js';
-import { Shape } from '../../../../kite/js/imports.js';
-import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
-import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Property from '../../../../axon/js/Property.js';
+import PDLText from './PDLText.js';
 
 const LAUNCHER_BUTTON_CORNER_RADIUS = 2;
 

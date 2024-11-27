@@ -1,20 +1,20 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
-import projectileDataLab from '../../projectileDataLab.js';
-import { Image } from '../../../../scenery/js/imports.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { LauncherOrientation } from '../model/LauncherOrientation.js';
-import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { Image } from '../../../../scenery/js/imports.js';
+import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 import orientationButton1_svg from '../../../images/orientationButton1_svg.js';
 import orientationButton2_svg from '../../../images/orientationButton2_svg.js';
 import orientationButton3_svg from '../../../images/orientationButton3_svg.js';
 import orientationButton4_svg from '../../../images/orientationButton4_svg.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
+import { LauncherOrientation } from '../model/LauncherOrientation.js';
+import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
-import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 /**
  * The LauncherOrientationSection shows the launcher orientation radio buttons.

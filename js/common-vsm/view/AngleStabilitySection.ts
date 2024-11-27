@@ -9,22 +9,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Dimension2 from '../../../../dot/js/Dimension2.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import PDLText from '../../common/view/PDLText.js';
-import HSlider from '../../../../sun/js/HSlider.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
+import Dimension2 from '../../../../dot/js/Dimension2.js';
 import Range from '../../../../dot/js/Range.js';
 import Utils from '../../../../dot/js/Utils.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { VBox, VBoxOptions } from '../../../../scenery/js/imports.js';
+import HSlider from '../../../../sun/js/HSlider.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueChangeSoundPlayer.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
 import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
+import PDLText from '../../common/view/PDLText.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 // The distance between minor tick marks on the slider. The total range is 0 to 1, so there are 4 minor ticks.
 const DISTANCE_BETWEEN_MINOR_TICKS = 0.25;

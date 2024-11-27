@@ -7,22 +7,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import Property from '../../../../axon/js/Property.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
-import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Range from '../../../../dot/js/Range.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import PDLConstants from '../PDLConstants.js';
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
-import HistogramSonifier from './HistogramSonifier.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Range from '../../../../dot/js/Range.js';
+import packageJSON from '../../../../joist/js/packageJSON.js';
+import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
-import PDLPreferences from '../PDLPreferences.js';
-import packageJSON from '../../../../joist/js/packageJSON.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import PDLConstants from '../PDLConstants.js';
+import PDLPreferences from '../PDLPreferences.js';
+import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
+import HistogramSonifier from './HistogramSonifier.js';
 
 // ZoomLevel describes the characteristics of how the HistogramNode and the SampleSizeThumbnailNode look at a given zoom
 // level.

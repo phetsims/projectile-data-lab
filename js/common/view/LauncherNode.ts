@@ -7,29 +7,29 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import { Circle, Color, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
-import optionize from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import PDLColors from '../PDLColors.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Shape } from '../../../../kite/js/imports.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
+import { Shape } from '../../../../kite/js/imports.js';
+import optionize from '../../../../phet-core/js/optionize.js';
+import platform from '../../../../phet-core/js/platform.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
+import { Circle, Color, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
-import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
 import Easing from '../../../../twixt/js/Easing.js';
-import PDLText from './PDLText.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Field from '../model/Field.js';
-import Launcher from '../model/Launcher.js';
 import launcherPattern1_svg from '../../../images/launcherPattern1_svg.js';
 import launcherPattern2_svg from '../../../images/launcherPattern2_svg.js';
 import launcherPattern3_svg from '../../../images/launcherPattern3_svg.js';
 import launcherPattern4_svg from '../../../images/launcherPattern4_svg.js';
 import launcherPattern5_svg from '../../../images/launcherPattern5_svg.js';
 import launcherPattern6_svg from '../../../images/launcherPattern6_svg.js';
-import platform from '../../../../phet-core/js/platform.js';
+import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import Field from '../model/Field.js';
+import Launcher from '../model/Launcher.js';
+import PDLColors from '../PDLColors.js';
+import PDLText from './PDLText.js';
 
 type SelfOptions = {
   isIcon?: boolean;

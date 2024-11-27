@@ -8,22 +8,22 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
+import NumberProperty from '../../../../axon/js/NumberProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { HBox, Node, VBox } from '../../../../scenery/js/imports.js';
+import Histogram from '../../common/model/Histogram.js';
+import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
+import Launcher from '../../common/model/Launcher.js';
+import PDLColors from '../../common/PDLColors.js';
 import HistogramAccordionBox, { HistogramAccordionBoxOptions } from '../../common/view/HistogramAccordionBox.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Property from '../../../../axon/js/Property.js';
-import { HistogramRepresentation } from '../../common/model/HistogramRepresentation.js';
 import SamplingField from '../model/SamplingField.js';
-import PDLColors from '../../common/PDLColors.js';
 import SampleSizeThumbnailNode from './SampleSizeThumbnailNode.js';
 import SamplingHistogramNode from './SamplingHistogramNode.js';
-import Launcher from '../../common/model/Launcher.js';
-import NumberProperty from '../../../../axon/js/NumberProperty.js';
-import Histogram from '../../common/model/Histogram.js';
 
 type SelfOptions = EmptySelfOptions;
 

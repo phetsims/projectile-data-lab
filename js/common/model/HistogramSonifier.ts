@@ -7,15 +7,15 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import HistogramData from './HistogramData.js';
-import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
-import soundManager from '../../../../tambo/js/soundManager.js';
-import Utils from '../../../../dot/js/Utils.js';
-import histogramTone_mp3 from '../../../sounds/histogramTone_mp3.js';
 import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import Utils from '../../../../dot/js/Utils.js';
 import audioManager from '../../../../joist/js/audioManager.js';
+import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
+import soundManager from '../../../../tambo/js/soundManager.js';
+import histogramTone_mp3 from '../../../sounds/histogramTone_mp3.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import HistogramData from './HistogramData.js';
 
 const binSoundClip = new SoundClip( histogramTone_mp3, { initialOutputLevel: 0.7 } );
 soundManager.addSoundGenerator( binSoundClip );

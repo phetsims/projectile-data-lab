@@ -9,34 +9,34 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 
-import projectileDataLab from '../../projectileDataLab.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import { HBox, Image, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import Projectile from '../../common/model/Projectile.js';
-import cannonball_png from '../../../images/cannonball_png.js';
+import Multilink from '../../../../axon/js/Multilink.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import TProperty from '../../../../axon/js/TProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import Matrix3 from '../../../../dot/js/Matrix3.js';
 import Range from '../../../../dot/js/Range.js';
-import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
-import Multilink from '../../../../axon/js/Multilink.js';
-import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
-import PDLText from '../../common/view/PDLText.js';
-import TProperty from '../../../../axon/js/TProperty.js';
-import Property from '../../../../axon/js/Property.js';
-import PhetioObject from '../../../../tandem/js/PhetioObject.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import Field from '../../common/model/Field.js';
-import ProjectileSound from '../../common/model/ProjectileSound.js';
+import { HBox, Image, Node, Rectangle, VBox } from '../../../../scenery/js/imports.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import PhetioObject from '../../../../tandem/js/PhetioObject.js';
+import cannonball_png from '../../../images/cannonball_png.js';
+import pianoLandedSelected_png from '../../../images/pianoLandedSelected_png.js';
 import pumpkin1LandedSelected_png from '../../../images/pumpkin1LandedSelected_png.js';
 import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_png.js';
 import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
-import pianoLandedSelected_png from '../../../images/pianoLandedSelected_png.js';
+import Field from '../../common/model/Field.js';
+import Projectile from '../../common/model/Projectile.js';
+import ProjectileSound from '../../common/model/ProjectileSound.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../../common/model/ProjectileType.js';
+import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../common/PDLConstants.js';
 import LauncherIconNode from '../../common/view/LauncherIconNode.js';
+import PDLText from '../../common/view/PDLText.js';
+import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1LandedSelected_png, pumpkin2LandedSelected_png, pumpkin3LandedSelected_png ];
 

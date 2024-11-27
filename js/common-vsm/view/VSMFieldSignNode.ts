@@ -7,17 +7,17 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 
+import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import { Text, VBox } from '../../../../scenery/js/imports.js';
+import Field from '../../common/model/Field.js';
+import PDLColors from '../../common/PDLColors.js';
+import PDLConstants from '../../common/PDLConstants.js';
 import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSignNode.js';
 import projectileDataLab from '../../projectileDataLab.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
-import { Text, VBox } from '../../../../scenery/js/imports.js';
-import PDLConstants from '../../common/PDLConstants.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import Field from '../../common/model/Field.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import PDLColors from '../../common/PDLColors.js';
 import ProjectileSelectorNode from './ProjectileSelectorNode.js';
 
 type SelfOptions = EmptySelfOptions;

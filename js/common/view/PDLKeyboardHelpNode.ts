@@ -8,19 +8,19 @@
  * @author Chris Malley (PixelZoom, Inc.)
  */
 
+import optionize from '../../../../phet-core/js/optionize.js';
 import BasicActionsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/BasicActionsKeyboardHelpSection.js';
-import TwoColumnKeyboardHelpContent, { TwoColumnKeyboardHelpContentOptions } from '../../../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import MoveDraggableItemsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/MoveDraggableItemsKeyboardHelpSection.js';
+import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
 import KeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSection.js';
 import KeyboardHelpSectionRow from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpSectionRow.js';
-import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
-import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import KeyboardHelpIconFactory from '../../../../scenery-phet/js/keyboard/help/KeyboardHelpIconFactory.js';
-import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
-import optionize from '../../../../phet-core/js/optionize.js';
+import MoveDraggableItemsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/MoveDraggableItemsKeyboardHelpSection.js';
 import SliderControlsKeyboardHelpSection from '../../../../scenery-phet/js/keyboard/help/SliderControlsKeyboardHelpSection.js';
+import TwoColumnKeyboardHelpContent, { TwoColumnKeyboardHelpContentOptions } from '../../../../scenery-phet/js/keyboard/help/TwoColumnKeyboardHelpContent.js';
+import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
+import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import FieldRadioButtonGroup from '../../common-vsm/view/FieldRadioButtonGroup.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import LaunchButton from './LaunchButton.js';
 
 type SelfOptions = {

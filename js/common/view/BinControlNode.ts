@@ -1,5 +1,13 @@
 // Copyright 2023-2024, University of Colorado Boulder
 
+import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
+import Property from '../../../../axon/js/Property.js';
+import Utils from '../../../../dot/js/Utils.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import { HBox, HBoxOptions, Node } from '../../../../scenery/js/imports.js';
+import ComboBox from '../../../../sun/js/ComboBox.js';
+import ToggleNode from '../../../../sun/js/ToggleNode.js';
 /**
  * BinControlNode toggles between showing the bin width combo box and the total bins combo boxes, based on the user's
  * preference.
@@ -7,17 +15,9 @@
  * @author Sam Reid (PhET Interactive Simulations)
  */
 import projectileDataLab from '../../projectileDataLab.js';
-import { HBox, HBoxOptions, Node } from '../../../../scenery/js/imports.js';
-import ComboBox from '../../../../sun/js/ComboBox.js';
-import PDLText from './PDLText.js';
-import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
-import Utils from '../../../../dot/js/Utils.js';
-import ToggleNode from '../../../../sun/js/ToggleNode.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import Property from '../../../../axon/js/Property.js';
-import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PDLPreferences from '../PDLPreferences.js';
+import PDLText from './PDLText.js';
 
 type SelfOptions = EmptySelfOptions;
 type BinControlNodeOptions = SelfOptions & WithRequired<HBoxOptions, 'tandem'>;

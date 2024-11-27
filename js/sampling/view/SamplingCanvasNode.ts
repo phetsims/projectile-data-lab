@@ -8,16 +8,16 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import PDLCanvasNode, { PDLCanvasNodeOptions } from '../../common/view/PDLCanvasNode.js';
-import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import projectileDataLab from '../../projectileDataLab.js';
-import PDLColors from '../../common/PDLColors.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import SamplingField from '../model/SamplingField.js';
+import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
+import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import cannonballLanded_png from '../../../images/cannonballLanded_png.js';
+import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
+import PDLCanvasNode, { PDLCanvasNodeOptions } from '../../common/view/PDLCanvasNode.js';
+import projectileDataLab from '../../projectileDataLab.js';
+import SamplingField from '../model/SamplingField.js';
 
 type SelfOptions = EmptySelfOptions;
 type SamplingCanvasNodeOptions = SelfOptions & PDLCanvasNodeOptions;
