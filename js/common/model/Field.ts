@@ -37,7 +37,7 @@ import PDLConstants from '../PDLConstants.js';
 import PDLPreferences from '../PDLPreferences.js';
 import Launcher from './Launcher.js';
 import { LauncherOrientation, LauncherOrientationValues, MEAN_LAUNCH_ANGLES } from './LauncherOrientation.js';
-import Projectile, { ProjectileStateObject } from './Projectile.js';
+import Projectile from './Projectile.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 import { screenIdentifierForScreenTandemName } from './ScreenIdentifier.js';
 
@@ -358,13 +358,6 @@ export default abstract class Field extends PhetioObject {
     }
   }
 
-  private toStateObject(): FieldStateObject {
-    return {
-      airborneProjectiles: this.airborneProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) ),
-      landedProjectiles: this.landedProjectiles.map( projectile => Projectile.ProjectileIO.toStateObject( projectile ) )
-    };
-  }
-
   /**
    * For serialization, the FieldIO uses reference type serialization. That is, each Field exists for the life of the
    * simulation, and when we save the state of the simulation, we save the current state of the Field.
@@ -389,10 +382,5 @@ export default abstract class Field extends PhetioObject {
     }
   } );
 }
-
-type FieldStateObject = {
-  airborneProjectiles: ProjectileStateObject[];
-  landedProjectiles: ProjectileStateObject[];
-};
 
 projectileDataLab.register( 'Field', Field );
