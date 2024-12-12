@@ -24,6 +24,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { Color } from '../../../../scenery/js/imports.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
+import PhetioIDUtilsModule from '../../../../tandem/js/PhetioIDUtilsModule.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
@@ -304,8 +305,8 @@ export default abstract class Field extends PhetioObject {
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
     const isFlippedHorizontally = this.projectileTypeProperty.value === CANNONBALL ? false : dotRandom.nextBoolean();
 
-    const screenPhetioID = window.phetio.PhetioIDUtils.getScreenID( this.phetioID );
-    const screenTandemName = window.phetio.PhetioIDUtils.getComponentName( screenPhetioID );
+    const screenPhetioID = PhetioIDUtilsModule.getScreenID( this.phetioID );
+    const screenTandemName = PhetioIDUtilsModule.getComponentName( screenPhetioID );
     const screenIdentifier = screenIdentifierForScreenTandemName( screenTandemName );
 
     const launcher = this.launcherProperty.value;
