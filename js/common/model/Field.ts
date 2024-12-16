@@ -305,7 +305,7 @@ export default abstract class Field extends PhetioObject {
     // If the projectile type is not a cannonball, set isFlippedHorizontally randomly
     const isFlippedHorizontally = this.projectileTypeProperty.value === CANNONBALL ? false : dotRandom.nextBoolean();
 
-    const screenPhetioID = PhetioIDUtils.getScreenID( this.phetioID );
+    const screenPhetioID = PhetioIDUtils.getScreenID( this.phetioID )!;
     const screenTandemName = PhetioIDUtils.getComponentName( screenPhetioID );
     const screenIdentifier = screenIdentifierForScreenTandemName( screenTandemName );
 
