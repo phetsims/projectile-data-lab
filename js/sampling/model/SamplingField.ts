@@ -17,7 +17,7 @@ import Range from '../../../../dot/js/Range.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import TimeSpeed from '../../../../scenery-phet/js/TimeSpeed.js';
-import PhetioIDUtilsModule from '../../../../tandem/js/PhetioIDUtilsModule.js';
+import PhetioIDUtils from '../../../../tandem/js/PhetioIDUtils.js';
 import phetioStateSetEmitter from '../../../../tandem/js/phetioStateSetEmitter.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import Field, { FieldOptions } from '../../common/model/Field.js';
@@ -118,7 +118,7 @@ export default class SamplingField extends Field {
       phetioDocumentation: 'The selected sample being shown on the field.'
     } );
 
-    this.identifier = PhetioIDUtilsModule.getComponentName( this.phetioID );
+    this.identifier = PhetioIDUtils.getComponentName( this.phetioID );
 
     // PhET-iO instrumentation not needed since these are computable from the Projectiles and the phase
     this.numberOfStartedSamplesProperty = new NumberProperty( 0 );
