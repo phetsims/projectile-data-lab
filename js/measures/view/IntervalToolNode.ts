@@ -24,7 +24,6 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
-import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
 import { DragListener, DragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
@@ -41,6 +40,7 @@ import PDLText from '../../common/view/PDLText.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import IntervalTool from '../model/IntervalTool.js';
+import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',
@@ -426,7 +426,7 @@ export default class IntervalToolNode extends Node {
 
       // During a drag, update the edge positions based on the center drag. During a reset all, this would cause an
       // infinite loop, and the edges are reset elsewhere, so this can be avoided during reset all.
-      if ( this.isCenterDraggingProperty.value && !ResetAllButton.isResettingAllProperty.value ) {
+      if ( this.isCenterDraggingProperty.value && !isResettingAllProperty.value ) {
         let delta = value.x - oldValue.x;
 
         const max = Math.max( intervalTool.edge1Property.value, intervalTool.edge2Property.value );
@@ -490,7 +490,7 @@ export default class IntervalToolNode extends Node {
 
     // When dragging an edge or resetting, update the drag bounds of the center so that it can't go out of bounds with the new separation.
     Multilink.multilink( [ intervalTool.edge1Property, intervalTool.edge2Property, this.isCenterDraggingProperty,
-        this.isEdge1DraggingProperty, this.isEdge2DraggingProperty, ResetAllButton.isResettingAllProperty ],
+        this.isEdge1DraggingProperty, this.isEdge2DraggingProperty, isResettingAllProperty ],
       ( edge1, edge2, isCenterDragging, isEdge1Dragging, isEdge2Dragging, isResettingAll ) => {
         const isDraggingEdgeOnly = ( isEdge1Dragging || isEdge2Dragging ) && !isCenterDragging;
         if ( isDraggingEdgeOnly || isResettingAll ) {
@@ -527,7 +527,7 @@ export default class IntervalToolNode extends Node {
 
     const createEdgeSonificationListener = ( otherEdgeProperty: { value: number } ) => {
       return ( newValue: number, oldValue: number ) => {
-        if ( ResetAllButton.isResettingAllProperty.value ) {
+        if ( isResettingAllProperty.value ) {
           return;
         }
 
@@ -566,7 +566,7 @@ export default class IntervalToolNode extends Node {
     } );
 
     centerPositionSonificationProperty.lazyLink( ( newValue: number, oldValue: number ) => {
-      if ( this.isCenterDraggingProperty.value && !ResetAllButton.isResettingAllProperty.value ) {
+      if ( this.isCenterDraggingProperty.value && !isResettingAllProperty.value ) {
         centerValueChangeSoundPlayer.playSoundIfThresholdReached( newValue, oldValue );
       }
     } );
