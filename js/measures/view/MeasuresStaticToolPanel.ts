@@ -58,11 +58,17 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
         {
           property: isMeanVisibleProperty,
           createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.meanStringProperty, new DataMeasuresIconNode( true, false ) ),
-          tandemName: 'meanCheckbox'
+          tandemName: 'meanCheckbox',
+          options: {
+            phetioDisplayOnlyPropertyInstrumented: true
+          }
         }, {
           property: isStandardDeviationVisibleProperty,
           createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.standardDeviationStringProperty, new DataMeasuresIconNode( false, true ) ),
-          tandemName: 'standardDeviationCheckbox'
+          tandemName: 'standardDeviationCheckbox',
+          options: {
+            phetioDisplayOnlyPropertyInstrumented: true
+          }
         }, {
           property: isValuesVisibleProperty,
           createNode: () => new PDLCheckboxRow( ProjectileDataLabStrings.valuesStringProperty, new Node() ),
