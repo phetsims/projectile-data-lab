@@ -38,22 +38,6 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
 
     const content: Node[] = [];
 
-    const binTypeRadioButtonGroup = new VerticalAquaRadioButtonGroup<BinStrategy>( PDLPreferences.binStrategyProperty, [ {
-      createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, { maxWidth: 200 } ),
-      value: 'binWidth',
-      tandemName: 'binWidthRadioButton'
-    }, {
-      createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, { maxWidth: 200 } ),
-      value: 'totalBins',
-      tandemName: 'totalBinsRadioButton'
-    } ], {
-      tandem: binStrategyControlTandem.createTandem( 'radioButtonGroup' ),
-      isDisposable: false,
-
-      // Hide or show the entire row, not just one radio button
-      phetioVisiblePropertyInstrumented: false
-    } );
-
     // In the Projectile Sampling Distributions sim, the projectileTypeAffectsSpeed and showStandardError controls are not shown
     if ( packageJSON.name === 'projectile-data-lab' ) {
 
@@ -96,6 +80,22 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
       } );
 
       content.push( showStandardErrorControl );
+
+      const binTypeRadioButtonGroup = new VerticalAquaRadioButtonGroup<BinStrategy>( PDLPreferences.binStrategyProperty, [ {
+        createNode: () => new PDLText( ProjectileDataLabStrings.binWidthStringProperty, { maxWidth: 200 } ),
+        value: 'binWidth',
+        tandemName: 'binWidthRadioButton'
+      }, {
+        createNode: () => new PDLText( ProjectileDataLabStrings.totalBinsStringProperty, { maxWidth: 200 } ),
+        value: 'totalBins',
+        tandemName: 'totalBinsRadioButton'
+      } ], {
+        tandem: binStrategyControlTandem.createTandem( 'radioButtonGroup' ),
+        isDisposable: false,
+
+        // Hide or show the entire row, not just one radio button
+        phetioVisiblePropertyInstrumented: false
+      } );
 
       const binStrategyControl = new PreferencesControl( {
         labelNode: new PDLText( ProjectileDataLabStrings.histogramBinsStringProperty, PreferencesDialogConstants.CONTROL_LABEL_OPTIONS ),
