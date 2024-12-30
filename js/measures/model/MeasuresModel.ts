@@ -15,8 +15,11 @@ import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
+import IOType from '../../../../tandem/js/types/IOType.js';
 import NullableIO from '../../../../tandem/js/types/NullableIO.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
+import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
+import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
@@ -101,12 +104,18 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
 
     this.mysteryOrCustomProperty = new DynamicProperty<MysteryOrCustom, MysteryOrCustom, MeasuresField>( this.fieldProperty, {
       bidirectional: true,
-      derive: field => field.mysteryOrCustomProperty
+      derive: field => field.mysteryOrCustomProperty,
+      tandem: options.tandem.createTandem( 'mysteryOrCustomProperty' ),
+      phetioFeatured: true,
+      phetioValueType: StringUnionIO( [ 'mystery', 'custom' ] )
     } );
 
     this.mysteryLauncherProperty = new DynamicProperty<Launcher, Launcher, MeasuresField>( this.fieldProperty, {
       bidirectional: true,
-      derive: field => field.mysteryLauncherProperty
+      derive: field => field.mysteryLauncherProperty,
+      tandem: options.tandem.createTandem( 'mysteryLauncherProperty' ),
+      phetioFeatured: true,
+      phetioValueType: ReferenceIO( IOType.ObjectIO )
     } );
 
     this.meanDistanceProperty = new DynamicProperty<number | null, number | null, MeasuresField>( this.fieldProperty, {
