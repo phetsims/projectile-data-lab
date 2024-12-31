@@ -8,6 +8,7 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import { HBox, HBoxOptions, Node } from '../../../../scenery/js/imports.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
+import Tandem from '../../../../tandem/js/Tandem.js';
 /**
  * BinControlNode toggles between showing the bin width combo box and the total bins combo boxes, based on the user's
  * preference.
@@ -27,7 +28,6 @@ export default class BinControlNode extends HBox {
                       selectedBinWidthProperty: Property<number>,
                       selectedTotalBinsProperty: Property<number>,
                       providedOptions: BinControlNodeOptions ) {
-
 
     const margin = 8;
 
@@ -70,7 +70,7 @@ export default class BinControlNode extends HBox {
         } );
         super( selectedTotalBinsProperty, comboBoxItems, comboBoxParent, {
           listPosition: 'below',
-          tandem: providedOptions.tandem.createTandem( 'totalBinsComboBox' ),
+          tandem: selectedTotalBinsProperty.isPhetioInstrumented() ? providedOptions.tandem.createTandem( 'totalBinsComboBox' ) : Tandem.OPT_OUT,
           phetioVisiblePropertyInstrumented: false
         } );
       }
