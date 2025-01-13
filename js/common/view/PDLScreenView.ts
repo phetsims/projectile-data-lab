@@ -201,10 +201,6 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
       tandem: singleOrContinuousRadioButtonGroupTandem,
       phetioFeatured: true,
       radioButtonOptions: {
-
-        // TODO: https://github.com/phetsims/sun/issues/920 Remove these options. Customization by removing individual radio buttons is outside the scope of providing value-added instrumentation.
-        phetioVisiblePropertyInstrumented: false,
-        phetioEnabledPropertyInstrumented: false,
         radius: 8
       }
     } );
