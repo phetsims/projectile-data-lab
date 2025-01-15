@@ -1,5 +1,5 @@
 {
-  "comment": "# projectile-data-lab 1.0.5-rc.1 Wed Jan 15 2025 11:44:44 GMT-0700 (Mountain Standard Time)",
+  "comment": "# projectile-data-lab 1.0.5-rc.2 Wed Jan 15 2025 11:53:08 GMT-0700 (Mountain Standard Time)",
   "assert": {
     "sha": "347e7eeac1424adb6023fb06a619d6ea01a0620f",
     "branch": "HEAD"
@@ -46,7 +46,7 @@
   },
   "phet-io-sim-specific": {
     "sha": "185ff8cf859a49f23545a0b3259fac519d2ec8f0",
-    "branch": "projectile-data-lab-1.0"
+    "branch": "HEAD"
   },
   "phet-io-wrappers": {
     "sha": "8145e67bc5a97d9432a8d87acda23604c49a4e40",
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "93e83975c7f33342f44358cefeae9ce50d0e5ff8",
+    "sha": "a608d54bc3fcc712f51ec21b7691d19a1ba5aefb",
     "branch": "1.0"
   },
   "query-string-machine": {
