@@ -208,7 +208,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
 
     ManualConstraint.create( this, [ this.accordionBox, this.launchPanel ],
       ( accordionBoxProxy, launchPanelProxy ) => {
-        // TODO: Replace isFinite() check with better support for Panel with invisible content, https://github.com/phetsims/phet-io/issues/2003
+        // TODO: Replace isFinite() check with better support for Panel with invisible content, https://github.com/phetsims/projectile-data-lab/issues/363
         if ( launchPanelProxy.bounds.isFinite() ) {
           accordionBoxProxy.left = launchPanelProxy.right + PDLConstants.INTER_PANEL_SPACING;
         }
@@ -224,7 +224,7 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     // Position the 'No air resistance' text
     // NOTE: This is duplicated in VSMScreenView and SamplingScreenView, so if you change it here, make sure to change it there too
     ManualConstraint.create( this, [ this.noAirResistanceText, this.launchPanel ], ( noAirResistanceTextProxy, launchPanelProxy ) => {
-      // TODO: Replace isFinite() check with better support for Panel with invisible content, https://github.com/phetsims/phet-io/issues/2003
+      // TODO: Replace isFinite() check with better support for Panel with invisible content, https://github.com/phetsims/projectile-data-lab/issues/363
       if ( launchPanelProxy.bounds.isFinite() ) {
         noAirResistanceTextProxy.centerX = launchPanelProxy.centerX;
         noAirResistanceTextProxy.top = launchPanelProxy.bottom + 6;
