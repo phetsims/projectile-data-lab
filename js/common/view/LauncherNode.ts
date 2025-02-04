@@ -15,7 +15,7 @@ import { Shape } from '../../../../kite/js/imports.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import platform from '../../../../phet-core/js/platform.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Circle, Color, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, Rectangle } from '../../../../scenery/js/imports.js';
+import { Circle, Color, Image, LinearGradient, Node, NodeOptions, Path, RadialGradient, rasterized, Rectangle } from '../../../../scenery/js/imports.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import launcherPattern1_svg from '../../../images/launcherPattern1_svg.js';
@@ -286,7 +286,7 @@ export default class LauncherNode extends Node {
       // Don't let Safari embed SVG image patterns in SVG in this case.
       // Workaround for https://github.com/phetsims/projectile-data-lab/issues/271
       if ( platform.safari ) {
-        patternImage = patternImage.rasterized( {
+        patternImage = rasterized( patternImage, {
           useCanvas: true,
           resolution: 4
         } );

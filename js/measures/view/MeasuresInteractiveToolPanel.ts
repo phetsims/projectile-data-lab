@@ -13,7 +13,7 @@ import Property from '../../../../axon/js/Property.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Node, rasterized } from '../../../../scenery/js/imports.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import InteractiveToolPanel, { InteractiveToolPanelOptions } from '../../common-vsm/view/InteractiveToolPanel.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
@@ -41,11 +41,11 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
         const intervalTool = new IntervalTool( {
           tandem: Tandem.OPT_OUT
         } );
-        const intervalToolNode = new IntervalToolNode( intervalTool, new BooleanProperty( true ), transform, {
+        const intervalToolNode = rasterized( new IntervalToolNode( intervalTool, new BooleanProperty( true ), transform, {
           isIcon: true,
           visibleProperty: new BooleanProperty( true ),
           tandem: Tandem.OPT_OUT
-        } ).rasterized( { resolution: 2 } );
+        } ), { resolution: 2 } );
         super( {
           children: [ intervalToolNode ],
           pickable: false,

@@ -8,7 +8,7 @@
 
 import Property from '../../../../axon/js/Property.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import { Node, rasterized } from '../../../../scenery/js/imports.js';
 import Launcher from '../model/Launcher.js';
 import LauncherNode from './LauncherNode.js';
 
@@ -17,8 +17,8 @@ const LAUNCHER_ICON_WIDTH = 35;
 export class MysteryLauncherIcon extends Node {
   public constructor( mysteryLauncher: Launcher ) {
 
-    const mysteryLauncherIcon = new LauncherNode( ModelViewTransform2.createIdentity(), new Property( 45 ), new Property( 0 ),
-      new Property( mysteryLauncher ), null, { isIcon: true } ).rasterized( {
+    const mysteryLauncherIcon = rasterized( new LauncherNode( ModelViewTransform2.createIdentity(), new Property( 45 ), new Property( 0 ),
+      new Property( mysteryLauncher ), null, { isIcon: true } ), {
       resolution: 2.22
     } );
     super( {

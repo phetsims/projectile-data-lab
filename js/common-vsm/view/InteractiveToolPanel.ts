@@ -17,7 +17,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import MeasuringTapeNode from '../../../../scenery-phet/js/MeasuringTapeNode.js';
 import Stopwatch from '../../../../scenery-phet/js/Stopwatch.js';
-import { Color, Node } from '../../../../scenery/js/imports.js';
+import { Color, Node, rasterized } from '../../../../scenery/js/imports.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -66,7 +66,7 @@ export default class InteractiveToolPanel extends PDLPanel {
     class MeasuringTapeIconNode extends Node {
       public constructor() {
 
-        const measuringTapeNode = new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
+        const measuringTapeNode = rasterized( new MeasuringTapeNode( new Property( { name: 'm', multiplier: 1 } ), {
           visibleProperty: new BooleanProperty( true ),
           tipPositionProperty: new Property<Vector2>( new Vector2( 14, 0 ) ),
           lineColor: new Color( 0, 0, 0 ),
@@ -74,7 +74,7 @@ export default class InteractiveToolPanel extends PDLPanel {
           tapeLineWidth: 1.8,
           tandem: Tandem.OPT_OUT,
           hasValue: false
-        } ).rasterized( { resolution: 1.25 } );
+        } ), { resolution: 1.25 } );
         super( {
           children: [ measuringTapeNode ],
           pickable: false,
