@@ -9,7 +9,7 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Image } from '../../../../scenery/js/imports.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import hollowThud_mp3 from '../../../../tambo/sounds/hollowThud_mp3.js';

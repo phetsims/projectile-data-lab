@@ -24,8 +24,12 @@ import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import ArrowNode from '../../../../scenery-phet/js/ArrowNode.js';
+import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 import ShadedSphereNode from '../../../../scenery-phet/js/ShadedSphereNode.js';
-import { DragListener, DragListenerOptions, Line, Node, NodeOptions, PressedDragListener, VBox } from '../../../../scenery/js/imports.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import DragListener, { DragListenerOptions, PressedDragListener } from '../../../../scenery/js/listeners/DragListener.js';
+import Line from '../../../../scenery/js/nodes/Line.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import AccessibleSlider, { AccessibleSliderOptions } from '../../../../sun/js/accessibility/AccessibleSlider.js';
 import Panel from '../../../../sun/js/Panel.js';
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
@@ -40,7 +44,6 @@ import PDLText from '../../common/view/PDLText.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import IntervalTool from '../model/IntervalTool.js';
-import isResettingAllProperty from '../../../../scenery-phet/js/isResettingAllProperty.js';
 
 const edgeFilter = new BiquadFilterNode( phetAudioContext, {
   type: 'lowpass',

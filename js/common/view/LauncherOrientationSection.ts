@@ -3,7 +3,7 @@
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { Image } from '../../../../scenery/js/imports.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 
 import orientationButton1_svg from '../../../images/orientationButton1_svg.js';

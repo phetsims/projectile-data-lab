@@ -11,7 +11,7 @@ import Property from '../../../../axon/js/Property.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { CanvasNode, CanvasNodeOptions } from '../../../../scenery/js/imports.js';
+import CanvasNode, { CanvasNodeOptions } from '../../../../scenery/js/nodes/CanvasNode.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import cannonballLanded_png from '../../../images/cannonballLanded_png.js';
 import cannonballLandedSelected_png from '../../../images/cannonballLandedSelected_png.js';

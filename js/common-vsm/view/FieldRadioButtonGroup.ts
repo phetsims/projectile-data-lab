@@ -10,7 +10,10 @@
 
 import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Circle, HotkeyData, KeyboardListener, Rectangle } from '../../../../scenery/js/imports.js';
+import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
+import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
+import Circle from '../../../../scenery/js/nodes/Circle.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import multiSelectionSoundPlayerFactory from '../../../../tambo/js/multiSelectionSoundPlayerFactory.js';
 import Field from '../../common/model/Field.js';

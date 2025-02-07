@@ -8,7 +8,7 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';

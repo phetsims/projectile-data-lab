@@ -9,7 +9,7 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Image } from '../../../../scenery/js/imports.js';
+import Image from '../../../../scenery/js/nodes/Image.js';
 import { RectangularRadioButtonGroupItem } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
 import phetAudioContext from '../../../../tambo/js/phetAudioContext.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';

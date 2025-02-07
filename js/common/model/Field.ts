@@ -21,7 +21,7 @@ import Utils from '../../../../dot/js/Utils.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { Color } from '../../../../scenery/js/imports.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import PhetioIDUtils from '../../../../tandem/js/PhetioIDUtils.js';

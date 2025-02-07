@@ -8,7 +8,8 @@
 
 import Property from '../../../../axon/js/Property.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
-import { Node, rasterized } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import { rasterized } from '../../../../scenery/js/util/rasterized.js';
 import Launcher from '../model/Launcher.js';
 import LauncherNode from './LauncherNode.js';
 

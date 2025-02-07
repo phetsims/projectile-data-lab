@@ -10,9 +10,13 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import { Shape } from '../../../../kite/js/imports.js';
+import Shape from '../../../../kite/js/Shape.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { HotkeyData, KeyboardListener, Node, NodeOptions, Path, Rectangle } from '../../../../scenery/js/imports.js';
+import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
+import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import { MysteryLauncherIcon } from './MysteryLauncherIcon.js';

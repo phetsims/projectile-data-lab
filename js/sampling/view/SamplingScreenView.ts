@@ -11,7 +11,7 @@ import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js'
 import Utils from '../../../../dot/js/Utils.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { ManualConstraint } from '../../../../scenery/js/imports.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';

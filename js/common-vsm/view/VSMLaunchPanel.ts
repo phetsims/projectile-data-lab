@@ -9,7 +9,7 @@
 
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
 import LauncherOrientationSection from '../../common/view/LauncherOrientationSection.js';

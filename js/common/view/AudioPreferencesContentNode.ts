@@ -10,7 +10,7 @@ import PreferencesControl from '../../../../joist/js/preferences/PreferencesCont
 import PreferencesDialogConstants from '../../../../joist/js/preferences/PreferencesDialogConstants.js';
 import PreferencesPanelContentNode from '../../../../joist/js/preferences/PreferencesPanelContentNode.js';
 import { combineOptions } from '../../../../phet-core/js/optionize.js';
-import { RichText } from '../../../../scenery/js/imports.js';
+import RichText from '../../../../scenery/js/nodes/RichText.js';
 import ToggleSwitch, { ToggleSwitchOptions } from '../../../../sun/js/ToggleSwitch.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';

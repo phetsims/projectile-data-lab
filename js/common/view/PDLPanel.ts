@@ -7,7 +7,7 @@
  * @author Matthew Blackman (PhET Interactive Simulations)
  */
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import Panel, { PanelOptions } from '../../../../sun/js/Panel.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';

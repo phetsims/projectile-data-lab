@@ -9,7 +9,7 @@
 import PreferencesModel from '../../joist/js/preferences/PreferencesModel.js';
 import Sim from '../../joist/js/Sim.js';
 import simLauncher from '../../joist/js/simLauncher.js';
-import { Node } from '../../scenery/js/imports.js';
+import Node from '../../scenery/js/nodes/Node.js';
 import Tandem from '../../tandem/js/Tandem.js';
 import AudioPreferencesContentNode from './common/view/AudioPreferencesContentNode.js';
 import SimulationPreferencesContentNode from './common/view/SimulationPreferencesContentNode.js';

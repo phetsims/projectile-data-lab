@@ -11,7 +11,7 @@ import Property from '../../../../axon/js/Property.js';
 import StringUnionProperty from '../../../../axon/js/StringUnionProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import SMField from '../../common-vsm/model/SMField.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';

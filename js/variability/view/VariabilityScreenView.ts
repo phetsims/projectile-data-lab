@@ -9,7 +9,7 @@
 
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Node } from '../../../../scenery/js/imports.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import InteractiveToolPanel from '../../common-vsm/view/InteractiveToolPanel.js';
 import StaticToolPanel from '../../common-vsm/view/StaticToolPanel.js';

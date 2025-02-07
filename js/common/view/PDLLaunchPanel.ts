@@ -9,7 +9,9 @@
  */
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import { HSeparator, Node, VBox } from '../../../../scenery/js/imports.js';
+import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
+import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
 import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
 import PDLConstants from '../PDLConstants.js';

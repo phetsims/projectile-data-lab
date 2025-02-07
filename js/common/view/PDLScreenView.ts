@@ -19,7 +19,11 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import EraserButton from '../../../../scenery-phet/js/buttons/EraserButton.js';
 import ResetAllButton from '../../../../scenery-phet/js/buttons/ResetAllButton.js';
 import TimeControlNode from '../../../../scenery-phet/js/TimeControlNode.js';
-import { HBox, LinearGradient, ManualConstraint, Node, Rectangle } from '../../../../scenery/js/imports.js';
+import ManualConstraint from '../../../../scenery/js/layout/constraints/ManualConstraint.js';
+import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
+import Node from '../../../../scenery/js/nodes/Node.js';
+import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
+import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import projectileDataLab from '../../projectileDataLab.js';

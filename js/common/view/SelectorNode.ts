@@ -14,7 +14,11 @@ import InstanceRegistry from '../../../../phet-core/js/documentation/InstanceReg
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';
 import platform from '../../../../phet-core/js/platform.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
-import { Color, KeyboardListener, Node, NodeOptions, Path, SceneryConstants } from '../../../../scenery/js/imports.js';
+import KeyboardListener from '../../../../scenery/js/listeners/KeyboardListener.js';
+import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
+import Path from '../../../../scenery/js/nodes/Path.js';
+import SceneryConstants from '../../../../scenery/js/SceneryConstants.js';
+import Color from '../../../../scenery/js/util/Color.js';
 import angleLeftSolidShape from '../../../../sherpa/js/fontawesome-5/angleLeftSolidShape.js';
 import angleRightSolidShape from '../../../../sherpa/js/fontawesome-5/angleRightSolidShape.js';
 import AccessibleNumberSpinner, { AccessibleNumberSpinnerOptions } from '../../../../sun/js/accessibility/AccessibleNumberSpinner.js';

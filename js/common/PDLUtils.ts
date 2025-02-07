@@ -7,7 +7,7 @@
  */
 
 import Vector2 from '../../../dot/js/Vector2.js';
-import { Color } from '../../../scenery/js/imports.js';
+import Color from '../../../scenery/js/util/Color.js';
 import { VSMFieldIdentifierValues } from '../common-vsm/model/VSMFieldIdentifier.js';
 import projectileDataLab from '../projectileDataLab.js';
 import { SAMPLE_SIZES } from '../sampling/model/SamplingModel.js';
