@@ -36,6 +36,9 @@
       "wrappers": [
         "phet-io-sim-specific/repos/projectile-data-lab/wrappers/codap"
       ],
+      "publicWrappers": [
+        "codap"
+      ],
       "compareDesignedAPIChanges": true
     }
   },
