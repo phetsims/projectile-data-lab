@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The LauncherFlashNode is the visual representation of the flash that occurs when the launcher is fired.

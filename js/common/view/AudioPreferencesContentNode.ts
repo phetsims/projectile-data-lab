@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * AudioPreferencesContentNode displays sim-specific controls that affect the audio behavior and sonification of the simulation.

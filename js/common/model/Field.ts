@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The Field is the area where projectiles are launched and land. Each Field manages its own orientation, sequencing,

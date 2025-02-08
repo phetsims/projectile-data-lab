@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The HeatMapToolNode is a base class for tool nodes that show a heat map representation of data. It consists of an

@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * The LauncherIconNode is the iconic representation of the projectile launcher used in the Projectile Selector component.

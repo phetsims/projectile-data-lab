@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * SampleSizeThumbnailNode shows a smaller, zoomed-in depiction of the histogram. These are shown to the right of the large

@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * IntervalToolNode displays the IntervalTool, which allows the user to select an interval in the data set. It can be

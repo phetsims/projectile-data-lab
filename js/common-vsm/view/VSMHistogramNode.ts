@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * The VSMHistogramNode creates a histogram node for the VSM screens. It encapsulates the histogram sonification rules.

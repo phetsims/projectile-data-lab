@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The FieldNode is the floating horizontal surface on which projectiles land. Its elements are drawn using a nonlinear

@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * MysteryLauncherControl is a control that shows the radio buttons that choose between the different mystery launchers.

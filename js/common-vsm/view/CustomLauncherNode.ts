@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The CustomLauncherNode is the visual representation of the customizable launcher. It contains a barrelFillProperty, frame and a stand.

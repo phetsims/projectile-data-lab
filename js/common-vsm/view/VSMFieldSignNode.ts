@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The VSMFieldSignNode shows the field number and the projectile selector node for VSM screens. It has its own layout

@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * A specific UI component for this sim that changes the angle standard deviation for the launcher. Note that in the UI

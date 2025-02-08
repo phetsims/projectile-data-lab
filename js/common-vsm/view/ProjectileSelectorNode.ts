@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * Panel that allows the user to select a projectile. This appears in all VSM screens. The selected projectile is displayed

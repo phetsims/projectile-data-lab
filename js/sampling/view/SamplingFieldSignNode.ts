@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The SamplingFieldSignNode shows the launcher number and the number of projectiles that have landed in that field.

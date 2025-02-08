@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The FieldOverlayNode contains the portions of the field that are not drawn using a perspective transform.

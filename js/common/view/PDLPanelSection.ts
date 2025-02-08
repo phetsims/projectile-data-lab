@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * PDLPanelSection is a base class for showing a title and content in a VBox. For the first 3 screens, the content is
