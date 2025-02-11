@@ -23,7 +23,7 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
 import RadialGradient from '../../../../scenery/js/util/RadialGradient.js';
-import { rasterized } from '../../../../scenery/js/util/rasterized.js';
+import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
 import Animation from '../../../../twixt/js/Animation.js';
 import Easing from '../../../../twixt/js/Easing.js';
 import launcherPattern1_svg from '../../../images/launcherPattern1_svg.js';
@@ -294,7 +294,7 @@ export default class LauncherNode extends Node {
       // Don't let Safari embed SVG image patterns in SVG in this case.
       // Workaround for https://github.com/phetsims/projectile-data-lab/issues/271
       if ( platform.safari ) {
-        patternImage = rasterized( patternImage, {
+        patternImage = rasterizeNode( patternImage, {
           useCanvas: true,
           resolution: 4
         } );

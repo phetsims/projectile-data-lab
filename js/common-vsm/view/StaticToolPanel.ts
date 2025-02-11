@@ -14,7 +14,7 @@ import optionize from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import CanvasNode, { CanvasNodeOptions } from '../../../../scenery/js/nodes/CanvasNode.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import { rasterized } from '../../../../scenery/js/util/rasterized.js';
+import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
 import VerticalCheckboxGroup, { VerticalCheckboxGroupItem } from '../../../../sun/js/VerticalCheckboxGroup.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
@@ -84,7 +84,7 @@ export default class StaticToolPanel extends PDLPanel {
     class AngleToolIconNode extends Node {
       public constructor() {
 
-        const angleToolNode = rasterized( new AngleToolNode(
+        const angleToolNode = rasterizeNode( new AngleToolNode(
           new NumberProperty( 45 ),
           new Property( false ), {
             isIcon: true
@@ -102,7 +102,7 @@ export default class StaticToolPanel extends PDLPanel {
     class SpeedToolIconNode extends Node {
       public constructor() {
 
-        const speedToolNode = rasterized( new SpeedToolNode(
+        const speedToolNode = rasterizeNode( new SpeedToolNode(
           new NumberProperty( 15 ),
           new Property( false ), {
             isIcon: true

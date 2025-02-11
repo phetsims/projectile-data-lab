@@ -11,7 +11,7 @@ import Property from '../../../../axon/js/Property.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import { rasterized } from '../../../../scenery/js/util/rasterized.js';
+import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
 import StaticToolPanel, { ICON_WIDTH, StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import projectileDataLab from '../../projectileDataLab.js';
@@ -32,7 +32,7 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
     class DataMeasuresIconNode extends Node {
       public constructor( showMean: boolean, showStandardDeviation: boolean ) {
 
-        const dataMeasuresNode = rasterized( new DataMeasuresOverlay(
+        const dataMeasuresNode = rasterizeNode( new DataMeasuresOverlay(
           new ModelViewTransform2(),
           new Property( 0 ),
           new Property( 20 ),

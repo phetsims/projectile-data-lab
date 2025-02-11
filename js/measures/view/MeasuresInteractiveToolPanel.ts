@@ -14,7 +14,7 @@ import Vector2 from '../../../../dot/js/Vector2.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransform2.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import { rasterized } from '../../../../scenery/js/util/rasterized.js';
+import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import InteractiveToolPanel, { InteractiveToolPanelOptions } from '../../common-vsm/view/InteractiveToolPanel.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
@@ -42,7 +42,7 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
         const intervalTool = new IntervalTool( {
           tandem: Tandem.OPT_OUT
         } );
-        const intervalToolNode = rasterized( new IntervalToolNode( intervalTool, new BooleanProperty( true ), transform, {
+        const intervalToolNode = rasterizeNode( new IntervalToolNode( intervalTool, new BooleanProperty( true ), transform, {
           isIcon: true,
           visibleProperty: new BooleanProperty( true ),
           tandem: Tandem.OPT_OUT
