@@ -13,11 +13,11 @@
     "branch": "HEAD"
   },
   "brand": {
-    "sha": "bc7d44b6d80d8fa0b141de0d8c86e992dc23330f",
+    "sha": "7c51c79cd19ec39f8f6f56115acc9270cac19488",
     "branch": "HEAD"
   },
   "chipper": {
-    "sha": "07de81eaedbecd3c46308d2da320b4683956368e",
+    "sha": "7011bb6996c4b4744a68d66f4ef8aa49bb2fa4e9",
     "branch": "HEAD"
   },
   "dot": {
@@ -25,7 +25,7 @@
     "branch": "HEAD"
   },
   "joist": {
-    "sha": "899f81bc1c275c459d1d7857c6956e9046ad5193",
+    "sha": "50c8c511ee0f707870d012c7c8d73cfe59c3ca6d",
     "branch": "HEAD"
   },
   "kite": {
@@ -49,7 +49,7 @@
     "branch": "HEAD"
   },
   "phet-io-wrappers": {
-    "sha": "f78e59aeb65d3e6f0b31dbda3302f564b5e578c7",
+    "sha": "5f1273698650f122eaeb92a37eee1fd021ee19e4",
     "branch": "HEAD"
   },
   "phetcommon": {
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "6982f8d4dd55f8d143727d0d3c1adb7248efddf2",
+    "sha": "a917fa428c29742d5fc1d52ef4de081fbb9371b6",
     "branch": "1.0"
   },
   "query-string-machine": {
