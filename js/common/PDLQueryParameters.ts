@@ -15,7 +15,7 @@ import { BinStrategyValues } from './BinStrategy.js';
 import { LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import PDLConstants from './PDLConstants.js';
 
-const SCHEMA_MAP = {
+const PDLQueryParameters = QueryStringMachine.getAll( {
 
   /**
    * Whether to auto-generate data for the simulation.
@@ -114,12 +114,7 @@ const SCHEMA_MAP = {
     defaultValue: 200,
     public: false
   }
-};
-
-const PDLQueryParameters = QueryStringMachine.getAll( SCHEMA_MAP );
-
-// The schema map is a read-only part of the public API, in case schema details (e.g. validValues) are needed elsewhere.
-PDLQueryParameters.SCHEMA_MAP = SCHEMA_MAP;
+} );
 
 projectileDataLab.register( 'PDLQueryParameters', PDLQueryParameters );
 
