@@ -10,6 +10,7 @@
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import packageJSON from '../../../../joist/js/packageJSON.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
@@ -60,7 +61,7 @@ export default class LauncherMechanism extends PhetioObject {
    * at startup and exist for the lifetime of the simulation, it implements 'Reference type serialization', as described in the
    * Serialization section of https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    */
-  public static readonly LauncherMechanismIO = new IOType<LauncherMechanism>( 'LauncherMechanismIO', {
+  public static readonly LauncherMechanismIO = new IOType<LauncherMechanism, IntentionalAny>( 'LauncherMechanismIO', {
     valueType: LauncherMechanism,
     documentation: 'Mechanism used to launch the projectile',
     supertype: ReferenceIO( IOType.ObjectIO )

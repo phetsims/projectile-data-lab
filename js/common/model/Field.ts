@@ -20,6 +20,7 @@ import dotRandom from '../../../../dot/js/dotRandom.js';
 import Utils from '../../../../dot/js/Utils.js';
 import arrayRemove from '../../../../phet-core/js/arrayRemove.js';
 import optionize from '../../../../phet-core/js/optionize.js';
+import IntentionalAny from '../../../../phet-core/js/types/IntentionalAny.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
@@ -374,7 +375,7 @@ export default abstract class Field extends PhetioObject {
    * Please see https://github.com/phetsims/phet-io/blob/main/doc/phet-io-instrumentation-technical-guide.md#serialization
    * for more information on the different serialization types.
    */
-  public static readonly FieldIO = new IOType<Field>( 'FieldIO', {
+  public static readonly FieldIO = new IOType<Field, IntentionalAny>( 'FieldIO', {
     valueType: Field,
     documentation: 'A field in the Projectile Data Lab. This contains the state for the projectiles, separated into airborne and landed projectiles.',
     stateSchema: {
