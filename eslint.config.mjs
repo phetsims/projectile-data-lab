@@ -23,7 +23,8 @@ export default [
             'dispose'
           ]
         }
-      ]
+      ],
+      'phet/documentation-before-imports': 'off'
     }
   }
 ];
