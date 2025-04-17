@@ -1,5 +1,12 @@
 // Copyright 2023-2025, University of Colorado Boulder
 
+/**
+ * BinControlNode toggles between showing the bin width combo box and the total bins combo boxes, based on the user's
+ * preference.
+ *
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Utils from '../../../../dot/js/Utils.js';
@@ -10,12 +17,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-/**
- * BinControlNode toggles between showing the bin width combo box and the total bins combo boxes, based on the user's
- * preference.
- *
- * @author Sam Reid (PhET Interactive Simulations)
- */
 import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPreferences from '../PDLPreferences.js';

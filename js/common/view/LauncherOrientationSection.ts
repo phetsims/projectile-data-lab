@@ -1,5 +1,12 @@
 // Copyright 2023-2025, University of Colorado Boulder
 
+/**
+ * The LauncherOrientationSection shows the launcher orientation radio buttons.
+ *
+ * @author Matthew Blackman (PhET Interactive Simulations)
+ * @author Sam Reid (PhET Interactive Simulations)
+ */
+
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
@@ -15,13 +22,6 @@ import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { LauncherOrientation } from '../model/LauncherOrientation.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
 import PDLRectangularRadioButtonGroup from './PDLRectangularRadioButtonGroup.js';
-
-/**
- * The LauncherOrientationSection shows the launcher orientation radio buttons.
- *
- * @author Matthew Blackman (PhET Interactive Simulations)
- * @author Sam Reid (PhET Interactive Simulations)
- */
 
 type SelfOptions = EmptySelfOptions;
 type LauncherOrientationSectionOptions = SelfOptions & WithRequired<PDLPanelSectionOptions, 'tandem'>;
