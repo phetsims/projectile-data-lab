@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The VSMModel is the base class for the Variability, Sources, and Measurement (VSM) models. It contains the model
