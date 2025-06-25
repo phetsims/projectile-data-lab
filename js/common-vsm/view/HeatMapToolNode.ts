@@ -14,7 +14,6 @@
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PatternStringProperty from '../../../../axon/js/PatternStringProperty.js';
 import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
-import LocalizedStringProperty from '../../../../chipper/js/browser/LocalizedStringProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import Vector2 from '../../../../dot/js/Vector2.js';
 import Shape from '../../../../kite/js/Shape.js';
@@ -32,7 +31,7 @@ import projectileDataLab from '../../projectileDataLab.js';
 type SelfOptions = {
 
   // The readout pattern string Property is used to format the value readout.
-  readoutPatternStringProperty: LocalizedStringProperty;
+  readoutPatternStringProperty: TReadOnlyProperty<string>;
 
   // The display offset is used to position the main display node, which may be offset from the origin of the node.
   displayOffset: Vector2;
