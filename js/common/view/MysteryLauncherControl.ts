@@ -9,7 +9,6 @@
 
 import DerivedProperty from '../../../../axon/js/DerivedProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
-import Property from '../../../../axon/js/Property.js';
 import Shape from '../../../../kite/js/Shape.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HotkeyData from '../../../../scenery/js/input/HotkeyData.js';
@@ -141,9 +140,9 @@ export default class MysteryLauncherControl extends Node {
   }
 
   public static readonly SELECT_LAUNCHER_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [
-      new Property( '1' ), new Property( '2' ), new Property( '3' ),
-      new Property( '4' ), new Property( '5' ), new Property( '6' )
+    keys: [
+      '1', '2', '3',
+      '4', '5', '6'
     ],
     repoName: projectileDataLab.name,
     binderName: 'Select Launcher'

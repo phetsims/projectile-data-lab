@@ -126,9 +126,9 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
   }
 
   public static readonly GLOBAL_FIELD_SELECT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [
-      new Property( 'f+1' ), new Property( 'f+2' ), new Property( 'f+3' ),
-      new Property( 'f+4' ), new Property( 'f+5' ), new Property( 'f+6' )
+    keys: [
+      'f+1', 'f+2', 'f+3',
+      'f+4', 'f+5', 'f+6'
     ],
     repoName: projectileDataLab.name,
     keyboardHelpDialogLabelStringProperty: ProjectileDataLabStrings.goToFieldStringProperty,
@@ -136,9 +136,9 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
   } );
 
   public static readonly FIELD_SELECT_HOTKEY_DATA = new HotkeyData( {
-    keyStringProperties: [
-      new Property( '1' ), new Property( '2' ), new Property( '3' ),
-      new Property( '4' ), new Property( '5' ), new Property( '6' )
+    keys: [
+      '1', '2', '3',
+      '4', '5', '6'
     ],
     repoName: projectileDataLab.name,
     binderName: 'Go to field'
