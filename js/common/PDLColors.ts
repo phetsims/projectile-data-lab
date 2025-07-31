@@ -112,7 +112,7 @@ const PDLColors = {
 
   fieldLineFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldLineFill', {
     default: new Color( 0xFFFFFF, 0.5 )
-  } ),
+  }, { disableListenerLimit: true } ),
 
   fieldBorderFillProperty: new ProfileColorProperty( projectileDataLab, 'fieldBorderFill', {
     default: '#FFFFFF'
@@ -160,7 +160,7 @@ const PDLColors = {
 
   heatNodeFillProperty: new ProfileColorProperty( projectileDataLab, 'heatNodeFill', {
     default: '#EE6102'
-  } ),
+  }, { disableListenerLimit: true } ),
 
   heatMapDisplayStrokeProperty: new ProfileColorProperty( projectileDataLab, 'heatMapDisplayStroke', {
     default: '#111111'
