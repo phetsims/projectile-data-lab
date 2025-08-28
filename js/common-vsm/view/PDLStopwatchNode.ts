@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * The PDLStopwatchNode represents the stopwatch node for the Projectile Data Lab. It is like a normal stopwatch node,

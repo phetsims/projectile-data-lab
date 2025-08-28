@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * Launcher is the model for a projectile launcher. It defines the mean launch speed, standard deviation of launch speed,

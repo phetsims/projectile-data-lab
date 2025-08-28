@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2025, University of Colorado Boulder
 
 /**
  * The VSMField is an extension of the Field class that adds fields for the VSM models. It contains the model properties

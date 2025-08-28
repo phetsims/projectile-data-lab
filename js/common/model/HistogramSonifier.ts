@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2025, University of Colorado Boulder
 
 /**
  * The HistogramSonifier class is used to manage the sounds for the histogram in the Projectile Data Lab.
