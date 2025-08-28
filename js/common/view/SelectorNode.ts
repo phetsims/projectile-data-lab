@@ -8,7 +8,7 @@
  */
 
 import TProperty from '../../../../axon/js/TProperty.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Range from '../../../../dot/js/Range.js';
 import InstanceRegistry from '../../../../phet-core/js/documentation/InstanceRegistry.js';
 import optionize, { combineOptions } from '../../../../phet-core/js/optionize.js';

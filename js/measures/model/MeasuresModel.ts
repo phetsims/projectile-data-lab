@@ -11,7 +11,7 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import DynamicProperty from '../../../../axon/js/DynamicProperty.js';
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import Property from '../../../../axon/js/Property.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import StrictOmit from '../../../../phet-core/js/types/StrictOmit.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';

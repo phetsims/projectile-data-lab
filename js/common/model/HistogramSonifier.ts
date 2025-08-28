@@ -8,7 +8,7 @@
  */
 
 import Property from '../../../../axon/js/Property.js';
-import TReadOnlyProperty from '../../../../axon/js/TReadOnlyProperty.js';
+import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import Utils from '../../../../dot/js/Utils.js';
 import audioManager from '../../../../joist/js/audioManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
