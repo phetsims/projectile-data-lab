@@ -130,7 +130,6 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.resetAllButton = new ResetAllButton( {
       tandem: options.tandem.createTandem( 'resetAllButton' ),
       listener: () => {
-        this.interruptSubtreeInput(); // cancel interactions that may be in progress
         model.reset();
         this.reset();
       },
