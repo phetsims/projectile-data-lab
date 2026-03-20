@@ -118,6 +118,6 @@ const PDLQueryParameters = QueryStringMachine.getAll( {
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );
 logGlobal( 'phet.preloads.phetio.queryParameters' );
-logGlobal( 'phet.projectileDataLab.PDLQueryParameters' );
+phet.log && phet.log( `PDLQueryParameters: ${JSON.stringify( PDLQueryParameters, null, 2 )}` );
 
 export default PDLQueryParameters;
