@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * The Sources Screen for Projectile Data Lab.

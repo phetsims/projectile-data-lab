@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2026, University of Colorado Boulder
 
 /**
  * PDLPreferences defines the simulation-specific preferences for Projectile Data Lab. Initial values are taken from

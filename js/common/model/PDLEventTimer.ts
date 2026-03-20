@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * Abstraction for timed-event series that helps with variable frame-rates. Note this has similar functionality to

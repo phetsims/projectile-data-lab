@@ -1,4 +1,4 @@
-// Copyright 2023-2025, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * BinControlNode toggles between showing the bin width combo box and the total bins combo boxes, based on the user's

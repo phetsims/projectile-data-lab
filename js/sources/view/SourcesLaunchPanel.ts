@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * The SourcesLaunchPanel extends VSMLaunchPanel and adds the CustomLauncherSection which allows the user to select

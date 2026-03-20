@@ -1,4 +1,4 @@
-// Copyright 2024, University of Colorado Boulder
+// Copyright 2024-2026, University of Colorado Boulder
 
 /**
  * The SMModel adds functionality common between the models in the Sources and Measures screens by adding support for

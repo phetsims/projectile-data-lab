@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * IntervalTool is a tool that allows the user to select an interval in the data set. The IntervalTool treats its left and

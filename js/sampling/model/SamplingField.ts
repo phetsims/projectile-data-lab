@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * The SamplingField is an extension of the Field class that adds fields for the Sampling model. Note in order to support

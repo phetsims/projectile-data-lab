@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * PDLKeyboardHelpNode is the keyboard help for all screens. The majority of elements are relevant to all screens.

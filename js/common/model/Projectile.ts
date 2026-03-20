@@ -1,4 +1,4 @@
-// Copyright 2023-2024, University of Colorado Boulder
+// Copyright 2023-2026, University of Colorado Boulder
 
 /**
  * Projectile is the model for a projectile in the Projectile Data Lab. It contains information about a projectile's
