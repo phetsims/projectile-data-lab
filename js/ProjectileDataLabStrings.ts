@@ -101,4 +101,6 @@ type StringsType = {
 
 const ProjectileDataLabStrings = getStringModule( 'PROJECTILE_DATA_LAB' ) as StringsType;
 
+projectileDataLab.register( 'ProjectileDataLabStrings', ProjectileDataLabStrings );
+
 export default ProjectileDataLabStrings;
