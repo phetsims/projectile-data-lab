@@ -21,7 +21,6 @@ import { HistogramRepresentation } from '../../common/model/HistogramRepresentat
 import Launcher from '../../common/model/Launcher.js';
 import PDLColors from '../../common/PDLColors.js';
 import HistogramAccordionBox, { HistogramAccordionBoxOptions } from '../../common/view/HistogramAccordionBox.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SamplingField from '../model/SamplingField.js';
 import SampleSizeThumbnailNode from './SampleSizeThumbnailNode.js';
@@ -126,5 +125,3 @@ export default class SamplingAccordionBox extends HistogramAccordionBox {
     } ), providedOptions );
   }
 }
-
-projectileDataLab.register( 'SamplingAccordionBox', SamplingAccordionBox );

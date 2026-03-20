@@ -13,7 +13,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Projectile from '../../common/model/Projectile.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLCanvasNode, { PDLCanvasNodeOptions } from '../../common/view/PDLCanvasNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import VSMField from '../model/VSMField.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -101,5 +100,3 @@ export default class VSMCanvasNode<T extends VSMField> extends PDLCanvasNode<T> 
     }
   }
 }
-
-projectileDataLab.register( 'VSMCanvasNode', VSMCanvasNode );

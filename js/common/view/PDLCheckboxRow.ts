@@ -9,7 +9,6 @@ import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import AlignGroup from '../../../../scenery/js/layout/constraints/AlignGroup.js';
 import HBox from '../../../../scenery/js/layout/nodes/HBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLText from './PDLText.js';
 
 // All icons from all screens fit the same footprint, so we can use the same alignGroup for all of them
@@ -27,5 +26,3 @@ export default class PDLCheckboxRow extends HBox {
     } );
   }
 }
-
-projectileDataLab.register( 'PDLCheckboxRow', PDLCheckboxRow );

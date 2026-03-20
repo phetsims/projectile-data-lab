@@ -14,7 +14,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
 import StaticToolPanel, { ICON_WIDTH, StaticToolPanelOptions } from '../../common-vsm/view/StaticToolPanel.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import DataMeasuresOverlay from './DataMeasuresOverlay.js';
 
@@ -80,5 +79,3 @@ export default class MeasuresStaticToolPanel extends StaticToolPanel {
     super( arePathsVisibleProperty, isLaunchAngleVisibleProperty, isLaunchSpeedVisibleProperty, options );
   }
 }
-
-projectileDataLab.register( 'MeasuresStaticToolPanel', MeasuresStaticToolPanel );

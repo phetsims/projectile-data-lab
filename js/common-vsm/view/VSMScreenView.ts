@@ -26,7 +26,6 @@ import FieldSignNode from '../../common/view/FieldSignNode.js';
 import HistogramAccordionBox, { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import HistogramNode from '../../common/view/HistogramNode.js';
 import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import VSMField from '../model/VSMField.js';
 import VSMModel from '../model/VSMModel.js';
@@ -350,5 +349,3 @@ export default abstract class VSMScreenView<T extends VSMField> extends PDLScree
     ];
   }
 }
-
-projectileDataLab.register( 'VSMScreenView', VSMScreenView );

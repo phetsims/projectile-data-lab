@@ -16,7 +16,6 @@ import cannonballLanded_png from '../../../images/cannonballLanded_png.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLCanvasNode, { PDLCanvasNodeOptions } from '../../common/view/PDLCanvasNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import SamplingField from '../model/SamplingField.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -83,5 +82,3 @@ export default class SamplingCanvasNode extends PDLCanvasNode<SamplingField> {
     }
   }
 }
-
-projectileDataLab.register( 'SamplingCanvasNode', SamplingCanvasNode );

@@ -18,7 +18,6 @@ import PickOptional from '../../../../phet-core/js/types/PickOptional.js';
 import Node, { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import PDLColors from '../../common/PDLColors.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 
@@ -197,5 +196,3 @@ export default class AngleToolNode extends HeatMapToolNode {
     this.needleNode.moveToFront();
   }
 }
-
-projectileDataLab.register( 'AngleToolNode', AngleToolNode );

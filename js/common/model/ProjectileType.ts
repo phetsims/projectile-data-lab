@@ -13,7 +13,6 @@ import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 export default class ProjectileType extends PhetioObject {
   public readonly speedMultiplierProperty: NumberProperty;
@@ -48,8 +47,6 @@ export default class ProjectileType extends PhetioObject {
     supertype: ReferenceIO( IOType.ObjectIO )
   } );
 }
-
-projectileDataLab.register( 'ProjectileType', ProjectileType );
 
 export const CANNONBALL = new ProjectileType( Tandem.GLOBAL_MODEL.createTandem( 'projectileTypes' ).createTandem( 'cannonball' ), 1 );
 export const PUMPKIN = new ProjectileType( Tandem.GLOBAL_MODEL.createTandem( 'projectileTypes' ).createTandem( 'pumpkin' ), 1.1 );

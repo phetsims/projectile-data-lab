@@ -28,7 +28,6 @@ import { SingleOrContinuous, SingleOrContinuousValues } from '../../common/model
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import SamplingField from './SamplingField.js';
 import { SamplingPhase } from './SamplingPhase.js';
 
@@ -294,5 +293,3 @@ model.phase = ${this.phaseProperty.value}` );
     this.launcherProperty.reset();
   }
 }
-
-projectileDataLab.register( 'SamplingModel', SamplingModel );

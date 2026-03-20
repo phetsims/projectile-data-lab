@@ -27,7 +27,6 @@ import Projectile from '../../common/model/Projectile.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import PDLUtils from '../../common/PDLUtils.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import { VSMFieldIdentifier, VSMFieldIdentifierValues } from './VSMFieldIdentifier.js';
 
 type SelfOptions = {
@@ -222,5 +221,3 @@ export default class VSMField extends Field {
     this.latestLaunchSpeedProperty.reset();
   }
 }
-
-projectileDataLab.register( 'VSMField', VSMField );

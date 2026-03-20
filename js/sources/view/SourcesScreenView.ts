@@ -21,7 +21,6 @@ import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMSc
 
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SourcesModel from '../model/SourcesModel.js';
 import SourcesLaunchPanel from './SourcesLaunchPanel.js';
@@ -82,5 +81,3 @@ export default class SourcesScreenView extends VSMScreenView<SMField> {
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
   }
 }
-
-projectileDataLab.register( 'SourcesScreenView', SourcesScreenView );

@@ -17,7 +17,6 @@ import orientationButton1_svg from '../../../images/orientationButton1_svg.js';
 import orientationButton2_svg from '../../../images/orientationButton2_svg.js';
 import orientationButton3_svg from '../../../images/orientationButton3_svg.js';
 import orientationButton4_svg from '../../../images/orientationButton4_svg.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { LauncherOrientation } from '../model/LauncherOrientation.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
@@ -74,5 +73,3 @@ export default class LauncherOrientationSection extends PDLPanelSection {
     super( ProjectileDataLabStrings.orientationStringProperty, launcherOrientationRadioButtonGroup, providedOptions );
   }
 }
-
-projectileDataLab.register( 'LauncherOrientationSection', LauncherOrientationSection );

@@ -144,5 +144,3 @@ export default class FieldRadioButtonGroup<T extends Field> extends RectangularR
     binderName: 'Go to field'
   } );
 }
-
-projectileDataLab.register( 'FieldRadioButtonGroup', FieldRadioButtonGroup );

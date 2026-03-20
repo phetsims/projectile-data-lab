@@ -26,7 +26,6 @@ import pumpkin2LandedSelected_png from '../../../images/pumpkin2LandedSelected_p
 import pumpkin3Landed_png from '../../../images/pumpkin3Landed_png.js';
 import pumpkin3LandedSelected_png from '../../../images/pumpkin3LandedSelected_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import Field from '../model/Field.js';
 import Projectile from '../model/Projectile.js';
 import { PIANO, PUMPKIN } from '../model/ProjectileType.js';
@@ -158,5 +157,3 @@ export default abstract class PDLCanvasNode<T extends Field> extends CanvasNode 
     context.restore();
   }
 }
-
-projectileDataLab.register( 'PDLCanvasNode', PDLCanvasNode );

@@ -27,7 +27,6 @@ import PDLPreferences from '../../common/PDLPreferences.js';
 import { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import IntervalTool from '../model/IntervalTool.js';
 import MeasuresField from '../model/MeasuresField.js';
@@ -174,5 +173,3 @@ export default class MeasuresHistogramNode extends VSMHistogramNode {
     } );
   }
 }
-
-projectileDataLab.register( 'MeasuresHistogramNode', MeasuresHistogramNode );

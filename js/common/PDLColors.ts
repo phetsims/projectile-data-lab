@@ -207,5 +207,4 @@ const PDLColors = {
   } )
 };
 
-projectileDataLab.register( 'PDLColors', PDLColors );
 export default PDLColors;

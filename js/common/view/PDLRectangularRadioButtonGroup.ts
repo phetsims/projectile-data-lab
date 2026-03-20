@@ -11,7 +11,6 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import RectangularRadioButtonGroup, { RectangularRadioButtonGroupItem, RectangularRadioButtonGroupOptions } from '../../../../sun/js/buttons/RectangularRadioButtonGroup.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 export type PDLRectangularRadioButtonGroupOptions = SelfOptions & WithRequired<RectangularRadioButtonGroupOptions, 'tandem'>;
@@ -40,5 +39,3 @@ export default class PDLRectangularRadioButtonGroup<T> extends RectangularRadioB
     super( property, items, options );
   }
 }
-
-projectileDataLab.register( 'PDLRectangularRadioButtonGroup', PDLRectangularRadioButtonGroup );

@@ -21,7 +21,6 @@ import SMField, { SMFieldOptions } from '../../common-vsm/model/SMField.js';
 import { VSMFieldIdentifier } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../../common/model/MysteryOrCustom.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 export type MeasuresFieldOptions = SelfOptions & StrictOmit<SMFieldOptions, 'isLauncherPropertyPhetioReadOnly'>;
@@ -140,5 +139,3 @@ export default class MeasuresField extends SMField {
     this.mysteryLauncherProperty.reset();
   }
 }
-
-projectileDataLab.register( 'MeasuresField', MeasuresField );

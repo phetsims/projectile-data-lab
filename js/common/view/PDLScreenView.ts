@@ -26,7 +26,6 @@ import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import LinearGradient from '../../../../scenery/js/util/LinearGradient.js';
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Field from '../model/Field.js';
 import PDLModel from '../model/PDLModel.js';
@@ -272,5 +271,3 @@ export default abstract class PDLScreenView<T extends Field> extends ScreenView 
     this.accordionBox.reset();
   }
 }
-
-projectileDataLab.register( 'PDLScreenView', PDLScreenView );

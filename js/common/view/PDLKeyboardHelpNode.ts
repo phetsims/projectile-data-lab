@@ -19,7 +19,6 @@ import TwoColumnKeyboardHelpContent, { TwoColumnKeyboardHelpContentOptions } fro
 import LetterKeyNode from '../../../../scenery-phet/js/keyboard/LetterKeyNode.js';
 import NumberKeyNode from '../../../../scenery-phet/js/keyboard/NumberKeyNode.js';
 import FieldRadioButtonGroup from '../../common-vsm/view/FieldRadioButtonGroup.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import LaunchButton from './LaunchButton.js';
 
@@ -83,5 +82,3 @@ class FromAnywhereInSimHelpSection extends KeyboardHelpSection {
     } );
   }
 }
-
-projectileDataLab.register( 'PDLKeyboardHelpNode', PDLKeyboardHelpNode );

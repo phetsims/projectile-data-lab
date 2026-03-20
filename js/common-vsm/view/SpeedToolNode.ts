@@ -17,7 +17,6 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node, { NodeTranslationOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import PDLColors from '../../common/PDLColors.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import HeatMapToolNode, { HeatMapToolNodeOptions } from './HeatMapToolNode.js';
 
@@ -171,5 +170,3 @@ export default class SpeedToolNode extends HeatMapToolNode {
       controlPoint1.x, controlPoint1.y, controlPoint2.x, controlPoint2.y, 0, 0 );
   }
 }
-
-projectileDataLab.register( 'SpeedToolNode', SpeedToolNode );

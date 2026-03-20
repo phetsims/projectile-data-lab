@@ -21,7 +21,6 @@ import ReferenceIO, { ReferenceIOState } from '../../../../tandem/js/types/Refer
 import StringIO from '../../../../tandem/js/types/StringIO.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLPreferences from '../PDLPreferences.js';
 import Field from './Field.js';
@@ -233,5 +232,3 @@ export type ProjectileStateObject = {
   launchSpeed: number;
   launchHeight: number;
 };
-
-projectileDataLab.register( 'Projectile', Projectile );

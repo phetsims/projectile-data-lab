@@ -16,7 +16,6 @@ import Launcher from '../../common/model/Launcher.js';
 import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import MysteryOrCustomLauncherSection from './MysteryOrCustomLauncherSection.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -40,4 +39,3 @@ export default class MeasuresLaunchPanel extends VSMLaunchPanel {
     super( [ launcherSection ], launcherOrientationProperty, projectileTypeProperty, providedOptions );
   }
 }
-projectileDataLab.register( 'MeasuresLaunchPanel', MeasuresLaunchPanel );

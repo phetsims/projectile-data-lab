@@ -8,7 +8,6 @@
 import { TReadOnlyProperty } from '../../../../axon/js/TReadOnlyProperty.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Text, { TextOptions } from '../../../../scenery/js/nodes/Text.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -22,5 +21,3 @@ export default class PDLText extends Text {
     super( text, options );
   }
 }
-
-projectileDataLab.register( 'PDLText', PDLText );

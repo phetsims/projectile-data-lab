@@ -39,7 +39,6 @@ import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../
 import LauncherIconNode from '../../common/view/LauncherIconNode.js';
 import PDLText from '../../common/view/PDLText.js';
 import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 const PUMPKIN_LANDED_IMAGES = [ pumpkin1LandedSelected_png, pumpkin2LandedSelected_png, pumpkin3LandedSelected_png ];
@@ -225,5 +224,3 @@ export default class ProjectileSelectorNode extends SelectorNode {
     super( contentsWithLauncherIcon, selectedProjectileNumberProperty, rangeProperty, options );
   }
 }
-
-projectileDataLab.register( 'ProjectileSelectorNode', ProjectileSelectorNode );

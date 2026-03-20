@@ -23,7 +23,6 @@ import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import MysteryLauncherControl from '../../common/view/MysteryLauncherControl.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -109,5 +108,3 @@ export default class MysteryOrCustomLauncherSection extends PDLPanelSection {
     super( null, contentContainer, providedOptions );
   }
 }
-
-projectileDataLab.register( 'MysteryOrCustomLauncherSection', MysteryOrCustomLauncherSection );

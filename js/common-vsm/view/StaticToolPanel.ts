@@ -20,7 +20,6 @@ import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import AngleToolNode from './AngleToolNode.js';
 import SpeedToolNode from './SpeedToolNode.js';
@@ -142,5 +141,3 @@ export default class StaticToolPanel extends PDLPanel {
     super( checkboxGroup, options );
   }
 }
-
-projectileDataLab.register( 'StaticToolPanel', StaticToolPanel );

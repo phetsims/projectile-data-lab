@@ -11,7 +11,6 @@ import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import StringUnionProperty from '../../../axon/js/StringUnionProperty.js';
 import packageJSON from '../../../joist/js/packageJSON.js';
 import Tandem from '../../../tandem/js/Tandem.js';
-import projectileDataLab from '../projectileDataLab.js';
 import { BinStrategy, BinStrategyValues } from './BinStrategy.js';
 import { LaunchSoundStrategy, LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import PDLQueryParameters from './PDLQueryParameters.js';
@@ -58,7 +57,5 @@ const PDLPreferences = {
     phetioDocumentation: 'When true, a sound is played when the projectile lands.'
   } )
 };
-
-projectileDataLab.register( 'PDLPreferences', PDLPreferences );
 
 export default PDLPreferences;

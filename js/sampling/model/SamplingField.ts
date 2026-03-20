@@ -29,7 +29,6 @@ import { SingleOrContinuous } from '../../common/model/SingleOrContinuous.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
 import PDLUtils from '../../common/PDLUtils.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import { SamplingPhase, SamplingPhaseValues } from './SamplingPhase.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -460,5 +459,3 @@ export default class SamplingField extends Field {
     this._shouldResumeAfterClear = false;
   }
 }
-
-projectileDataLab.register( 'SamplingField', SamplingField );

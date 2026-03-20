@@ -18,7 +18,6 @@ import StopwatchNode, { StopwatchNodeOptions } from '../../../../scenery-phet/js
 import RectangularPushButton from '../../../../sun/js/buttons/RectangularPushButton.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = {
@@ -80,4 +79,3 @@ export default class PDLStopwatchNode extends StopwatchNode {
     super( stopwatch, options );
   }
 }
-projectileDataLab.register( 'PDLStopwatchNode', PDLStopwatchNode );

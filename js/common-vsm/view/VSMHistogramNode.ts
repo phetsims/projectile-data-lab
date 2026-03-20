@@ -16,7 +16,6 @@ import ColorProperty from '../../../../scenery/js/util/ColorProperty.js';
 import Field from '../../common/model/Field.js';
 import Histogram from '../../common/model/Histogram.js';
 import HistogramNode, { HistogramNodeOptions } from '../../common/view/HistogramNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -48,5 +47,3 @@ export default class VSMHistogramNode extends HistogramNode {
       histogramSoundEnabledProperty, comboBoxParent, blockFillProperty, blockStrokeProperty, providedOptions );
   }
 }
-
-projectileDataLab.register( 'VSMHistogramNode', VSMHistogramNode );

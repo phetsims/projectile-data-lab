@@ -26,7 +26,6 @@ import HistogramNode, { HistogramNodeOptions } from '../../common/view/Histogram
 import { MysteryLauncherIcon } from '../../common/view/MysteryLauncherIcon.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SamplingField from '../model/SamplingField.js';
 
@@ -106,5 +105,3 @@ export default class SamplingHistogramNode extends HistogramNode {
     } );
   }
 }
-
-projectileDataLab.register( 'SamplingHistogramNode', SamplingHistogramNode );

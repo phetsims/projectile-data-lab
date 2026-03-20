@@ -9,7 +9,6 @@
 import Screen, { ScreenOptions } from '../../../joist/js/Screen.js';
 import optionize, { EmptySelfOptions } from '../../../phet-core/js/optionize.js';
 import PDLScreenIconFactory from '../common/view/PDLScreenIconFactory.js';
-import projectileDataLab from '../projectileDataLab.js';
 import ProjectileDataLabStrings from '../ProjectileDataLabStrings.js';
 import MeasuresModel from './model/MeasuresModel.js';
 import MeasuresKeyboardHelpNode from './view/MeasuresKeyboardHelpNode.js';
@@ -36,5 +35,3 @@ export default class MeasuresScreen extends Screen<MeasuresModel, MeasuresScreen
     );
   }
 }
-
-projectileDataLab.register( 'MeasuresScreen', MeasuresScreen );

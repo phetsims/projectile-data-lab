@@ -11,7 +11,6 @@ import Shape from '../../../../kite/js/Shape.js';
 import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type LauncherFlashNodeOptions = SelfOptions & NodeOptions;
@@ -45,5 +44,3 @@ export default class LauncherFlashNode extends Node {
     super( options );
   }
 }
-
-projectileDataLab.register( 'LauncherFlashNode', LauncherFlashNode );

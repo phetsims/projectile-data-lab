@@ -22,7 +22,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import Field from './Field.js';
 import Histogram from './Histogram.js';
 import Launcher from './Launcher.js';
@@ -254,4 +253,3 @@ export default abstract class PDLModel<T extends Field> implements TModel {
     this.fieldProperty.value.clearProjectiles();
   }
 }
-projectileDataLab.register( 'PDLModel', PDLModel );

@@ -44,7 +44,6 @@ import toggleSwitchRight_mp3 from '../../../sounds/toggleSwitchRight_mp3.js';
 import VSMField from '../../common-vsm/model/VSMField.js';
 import Field from '../../common/model/Field.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SamplingField from '../../sampling/model/SamplingField.js';
 import Histogram, { ZOOM_LEVELS } from '../model/Histogram.js';
@@ -391,5 +390,3 @@ export default class HistogramNode extends Node {
     ];
   }
 }
-
-projectileDataLab.register( 'HistogramNode', HistogramNode );

@@ -26,7 +26,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
 import { PDLPanel, PDLPanelOptions } from '../../common/view/PDLPanel.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLStopwatchNode from './PDLStopwatchNode.js';
 import { ICON_WIDTH } from './StaticToolPanel.js';
@@ -119,5 +118,3 @@ export default class InteractiveToolPanel extends PDLPanel {
     super( checkboxGroup, options );
   }
 }
-
-projectileDataLab.register( 'InteractiveToolPanel', InteractiveToolPanel );

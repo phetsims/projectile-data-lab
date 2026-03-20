@@ -14,7 +14,6 @@ import audioManager from '../../../../joist/js/audioManager.js';
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import histogramTone_mp3 from '../../../sounds/histogramTone_mp3.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import HistogramData from './HistogramData.js';
 
 const binSoundClip = new SoundClip( histogramTone_mp3, { initialOutputLevel: 0.7 } );
@@ -211,5 +210,3 @@ export default class HistogramSonifier {
     return Math.min( maxSoundDelay, binWidthDelay * numBinsToSonify );
   };
 }
-
-projectileDataLab.register( 'HistogramSonifier', HistogramSonifier );

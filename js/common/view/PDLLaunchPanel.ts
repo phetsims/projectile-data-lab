@@ -12,7 +12,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import HSeparator from '../../../../scenery/js/layout/nodes/HSeparator.js';
 import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
 import PDLConstants from '../PDLConstants.js';
 import { PDLPanel, PDLPanelOptions } from './PDLPanel.js';
@@ -44,5 +43,3 @@ export class PDLLaunchPanel extends PDLPanel {
     super( contentContainer, options );
   }
 }
-
-projectileDataLab.register( 'PDLLaunchPanel', PDLLaunchPanel );

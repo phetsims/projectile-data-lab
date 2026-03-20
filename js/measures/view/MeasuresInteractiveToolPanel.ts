@@ -18,7 +18,6 @@ import { rasterizeNode } from '../../../../scenery/js/util/rasterizeNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import InteractiveToolPanel, { InteractiveToolPanelOptions } from '../../common-vsm/view/InteractiveToolPanel.js';
 import PDLCheckboxRow from '../../common/view/PDLCheckboxRow.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import IntervalTool from '../model/IntervalTool.js';
 import IntervalToolNode from './IntervalToolNode.js';
@@ -68,5 +67,3 @@ export default class MeasuresInteractiveToolPanel extends InteractiveToolPanel {
     super( isMeasuringTapeVisibleProperty, isStopwatchVisibleProperty, options );
   }
 }
-
-projectileDataLab.register( 'MeasuresInteractiveToolPanel', MeasuresInteractiveToolPanel );

@@ -16,7 +16,6 @@ import SMModel, { SMModelOptions } from '../../common-vsm/model/SMModel.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import Launcher from '../../common/model/Launcher.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 
@@ -54,5 +53,3 @@ export default class SourcesModel extends SMModel<SMField> {
     super( fields, options );
   }
 }
-
-projectileDataLab.register( 'SourcesModel', SourcesModel );

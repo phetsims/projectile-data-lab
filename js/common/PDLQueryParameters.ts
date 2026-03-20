@@ -10,7 +10,6 @@
 import packageJSON from '../../../joist/js/packageJSON.js';
 import logGlobal from '../../../phet-core/js/logGlobal.js';
 import { QueryStringMachine } from '../../../query-string-machine/js/QueryStringMachineModule.js';
-import projectileDataLab from '../projectileDataLab.js';
 import { BinStrategyValues } from './BinStrategy.js';
 import { LaunchSoundStrategyValues } from './LaunchSoundStrategy.js';
 import PDLConstants from './PDLConstants.js';
@@ -115,8 +114,6 @@ const PDLQueryParameters = QueryStringMachine.getAll( {
     public: false
   }
 } );
-
-projectileDataLab.register( 'PDLQueryParameters', PDLQueryParameters );
 
 // Log query parameters
 logGlobal( 'phet.chipper.queryParameters' );

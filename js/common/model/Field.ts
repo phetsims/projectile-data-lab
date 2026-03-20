@@ -34,7 +34,6 @@ import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import ReferenceArrayIO from '../../../../tandem/js/types/ReferenceArrayIO.js';
 import StringUnionIO from '../../../../tandem/js/types/StringUnionIO.js';
 import launch_mp3 from '../../../sounds/launch_mp3.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLPreferences from '../PDLPreferences.js';
 import Launcher from './Launcher.js';
@@ -384,5 +383,3 @@ export default abstract class Field extends PhetioObject {
     }
   } );
 }
-
-projectileDataLab.register( 'Field', Field );

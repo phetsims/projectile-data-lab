@@ -18,7 +18,6 @@ import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import PickRequired from '../../../../phet-core/js/types/PickRequired.js';
 import { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLPreferences from '../PDLPreferences.js';
 import { HistogramRepresentation, HistogramRepresentationValues } from './HistogramRepresentation.js';
@@ -178,5 +177,3 @@ export default class Histogram {
     this.selectedTotalBinsProperty.reset();
   }
 }
-
-projectileDataLab.register( 'Histogram', Histogram );

@@ -18,7 +18,6 @@ import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMSc
 import PDLColors from '../../common/PDLColors.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
 import LauncherNode from '../../common/view/LauncherNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import VariabilityModel from '../model/VariabilityModel.js';
 import VariabilityLaunchPanel from './VariabilityLaunchPanel.js';
@@ -70,4 +69,3 @@ export default class VariabilityScreenView extends VSMScreenView<VSMField> {
     super( model, launchPanel, staticToolPanel, interactiveToolPanel, createHistogramNode, options );
   }
 }
-projectileDataLab.register( 'VariabilityScreenView', VariabilityScreenView );

@@ -13,7 +13,6 @@ import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import Range from '../../../../dot/js/Range.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import ColorProperty from '../../../../scenery/js/util/ColorProperty.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 import HistogramCanvasPainter from './HistogramCanvasPainter.js';
 
@@ -47,5 +46,3 @@ export default class HistogramRepresentationIconNode extends Node {
     this.setMouseArea( area );
   }
 }
-
-projectileDataLab.register( 'HistogramRepresentationIconNode', HistogramRepresentationIconNode );

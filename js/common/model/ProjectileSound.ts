@@ -17,7 +17,6 @@ import pianoLand_mp3 from '../../../sounds/pianoLand_mp3.js';
 import pianoTone_mp3 from '../../../sounds/pianoTone_mp3.js';
 import pumpkinLand_mp3 from '../../../sounds/pumpkinLand_mp3.js';
 import pumpkinTone_mp3 from '../../../sounds/pumpkinTone_mp3.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from './ProjectileType.js';
 
 // Convert projectileSoundsConfig to a Map
@@ -68,5 +67,3 @@ export default class ProjectileSound {
     }
   }
 }
-
-projectileDataLab.register( 'ProjectileSound', ProjectileSound );

@@ -41,7 +41,6 @@ import intervalTool_wav from '../../../sounds/intervalTool_wav.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import IntervalTool from '../model/IntervalTool.js';
 
@@ -589,5 +588,3 @@ export default class IntervalToolNode extends Node {
     } );
   }
 }
-
-projectileDataLab.register( 'IntervalToolNode', IntervalToolNode );

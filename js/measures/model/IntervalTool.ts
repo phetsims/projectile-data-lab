@@ -18,7 +18,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PhetioObject, { PhetioObjectOptions } from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type IntervalToolOptions = SelfOptions & WithRequired<PhetioObjectOptions, 'tandem'>;
@@ -79,5 +78,3 @@ export default class IntervalTool extends PhetioObject {
     this.edge2Property.reset();
   }
 }
-
-projectileDataLab.register( 'IntervalTool', IntervalTool );

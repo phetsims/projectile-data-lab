@@ -10,7 +10,6 @@
 import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import Launcher from '../model/Launcher.js';
 import MysteryLauncherControl from './MysteryLauncherControl.js';
@@ -25,5 +24,3 @@ export default class MysteryLauncherSection extends PDLPanelSection {
     super( ProjectileDataLabStrings.mysteryLauncherStringProperty, new MysteryLauncherControl( mysteryLauncherProperty, providedOptions ), providedOptions );
   }
 }
-
-projectileDataLab.register( 'MysteryLauncherSection', MysteryLauncherSection );

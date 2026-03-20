@@ -15,7 +15,6 @@ import ProjectileType from '../../common/model/ProjectileType.js';
 import LauncherOrientationSection from '../../common/view/LauncherOrientationSection.js';
 import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
 import ProjectileTypeSection from '../../common/view/ProjectileTypeSection.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 export type VSMLaunchPanelOptions = SelfOptions & PDLLaunchPanelOptions;
@@ -36,4 +35,3 @@ export default class VSMLaunchPanel extends PDLLaunchPanel {
     super( [ launcherOrientationSection, projectileTypeSection, ...content ], providedOptions );
   }
 }
-projectileDataLab.register( 'VSMLaunchPanel', VSMLaunchPanel );

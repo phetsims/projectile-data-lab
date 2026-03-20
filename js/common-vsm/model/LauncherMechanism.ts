@@ -15,7 +15,6 @@ import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import ReferenceIO from '../../../../tandem/js/types/ReferenceIO.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 export default class LauncherMechanism extends PhetioObject {
   public readonly speedMeanProperty: NumberProperty;
@@ -74,4 +73,3 @@ export default class LauncherMechanism extends PhetioObject {
   public static readonly CUSTOM_MECHANISM_2 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism2' ), 24, 0.5 );
   public static readonly CUSTOM_MECHANISM_3 = new LauncherMechanism( Tandem.GLOBAL_MODEL.createTandem( 'launcherMechanisms' ).createTandem( 'customMechanism3' ), 24, 0.5 );
 }
-projectileDataLab.register( 'LauncherMechanism', LauncherMechanism );

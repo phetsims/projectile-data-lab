@@ -17,7 +17,6 @@ import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import Field from '../model/Field.js';
 import PDLColors from '../PDLColors.js';
 import SelectorNode from './SelectorNode.js';
@@ -120,4 +119,3 @@ export default class FieldSignNode extends VBox {
     this.addChild( signPostContainer );
   }
 }
-projectileDataLab.register( 'FieldSignNode', FieldSignNode );

@@ -9,7 +9,6 @@
 import BooleanProperty from '../../../axon/js/BooleanProperty.js';
 import Range from '../../../dot/js/Range.js';
 import PhetFont from '../../../scenery-phet/js/PhetFont.js';
-import projectileDataLab from '../projectileDataLab.js';
 
 const MAX_FIELD_DISTANCE = 100;
 const FIELD_WIDTH = 850;
@@ -101,5 +100,4 @@ const PDLConstants = {
 const IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY = new BooleanProperty( false );
 export { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY };
 
-projectileDataLab.register( 'PDLConstants', PDLConstants );
 export default PDLConstants;

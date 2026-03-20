@@ -32,7 +32,6 @@ import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../../common/model/Laun
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import PDLColors from '../../common/PDLColors.js';
 import LauncherNode, { BARREL_LENGTH_BEFORE_ORIGIN, GUIDE_RAIL_MAX_ANGLE, GUIDE_RAIL_MIN_ANGLE, GUIDE_RAIL_OUTER_RADIUS, LauncherNodeOptions } from '../../common/view/LauncherNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import LauncherMechanism from '../model/LauncherMechanism.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -212,5 +211,3 @@ export default class CustomLauncherNode extends LauncherNode {
            explosion_svg;
   }
 }
-
-projectileDataLab.register( 'CustomLauncherNode', CustomLauncherNode );

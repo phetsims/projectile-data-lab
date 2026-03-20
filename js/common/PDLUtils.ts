@@ -9,7 +9,6 @@
 import Vector2 from '../../../dot/js/Vector2.js';
 import Color from '../../../scenery/js/util/Color.js';
 import { VSMFieldIdentifierValues } from '../common-vsm/model/VSMFieldIdentifier.js';
-import projectileDataLab from '../projectileDataLab.js';
 import { SAMPLE_SIZES } from '../sampling/model/SamplingModel.js';
 import PDLColors from './PDLColors.js';
 import PDLConstants from './PDLConstants.js';
@@ -41,4 +40,3 @@ export default class PDLUtils {
       PDLColors.fieldDarkFillProperty.value, index / ( SAMPLE_SIZES.length - 1 ) );
   }
 }
-projectileDataLab.register( 'PDLUtils', PDLUtils );

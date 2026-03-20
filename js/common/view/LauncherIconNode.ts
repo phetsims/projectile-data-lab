@@ -16,7 +16,6 @@ import ModelViewTransform2 from '../../../../phetcommon/js/view/ModelViewTransfo
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import Launcher, { MYSTERY_LAUNCHERS } from '../model/Launcher.js';
 import { LauncherOrientation, MEAN_LAUNCH_ANGLES } from '../model/LauncherOrientation.js';
 import { MysteryOrCustom, MysteryOrCustomValues } from '../model/MysteryOrCustom.js';
@@ -93,5 +92,3 @@ export default class LauncherIconNode extends Node {
     );
   }
 }
-
-projectileDataLab.register( 'LauncherIconNode', LauncherIconNode );

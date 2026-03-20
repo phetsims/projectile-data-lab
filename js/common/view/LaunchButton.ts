@@ -116,5 +116,3 @@ export default class LaunchButton extends RectangularPushButton {
     global: true
   } );
 }
-
-projectileDataLab.register( 'LaunchButton', LaunchButton );

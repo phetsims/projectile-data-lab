@@ -33,7 +33,6 @@ import launcherPattern4_svg from '../../../images/launcherPattern4_svg.js';
 import launcherPattern5_svg from '../../../images/launcherPattern5_svg.js';
 import launcherPattern6_svg from '../../../images/launcherPattern6_svg.js';
 import LauncherFlashNode from '../../common-vsm/view/LauncherFlashNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import Field from '../model/Field.js';
 import Launcher from '../model/Launcher.js';
 import PDLColors from '../PDLColors.js';
@@ -387,5 +386,3 @@ export default class LauncherNode extends Node {
     return [ guideRail ];
   }
 }
-
-projectileDataLab.register( 'LauncherNode', LauncherNode );

@@ -15,7 +15,6 @@ import Launcher from '../../common/model/Launcher.js';
 import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
 import MysteryLauncherSection from '../../common/view/MysteryLauncherSection.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
@@ -35,4 +34,3 @@ export default class VariabilityLaunchPanel extends VSMLaunchPanel {
     super( [ mysteryLauncherSection ], launcherOrientationProperty, projectileTypeProperty, providedOptions );
   }
 }
-projectileDataLab.register( 'VariabilityLaunchPanel', VariabilityLaunchPanel );

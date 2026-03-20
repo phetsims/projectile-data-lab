@@ -13,7 +13,6 @@ import PhetioProperty from '../../../../axon/js/PhetioProperty.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import SMField from './SMField.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -39,5 +38,3 @@ export default class SMModel<T extends SMField> extends VSMModel<T> {
     } );
   }
 }
-
-projectileDataLab.register( 'SMModel', SMModel );

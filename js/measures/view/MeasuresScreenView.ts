@@ -12,7 +12,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import CustomLauncherNode from '../../common-vsm/view/CustomLauncherNode.js';
 import VSMScreenView, { VSMScreenViewOptions } from '../../common-vsm/view/VSMScreenView.js';
 import { histogramAccordionBoxTandemName } from '../../common/view/HistogramAccordionBox.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import MeasuresField from '../model/MeasuresField.js';
 import MeasuresModel from '../model/MeasuresModel.js';
@@ -113,5 +112,3 @@ export default class MeasuresScreenView extends VSMScreenView<MeasuresField> {
     this.setVSMPDOMOrder( staticToolPanel, interactiveToolPanel, intervalToolNode );
   }
 }
-
-projectileDataLab.register( 'MeasuresScreenView', MeasuresScreenView );

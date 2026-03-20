@@ -15,7 +15,6 @@ import Shape from '../../../../kite/js/Shape.js';
 import optionize from '../../../../phet-core/js/optionize.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import Field from '../model/Field.js';
 import PDLColors from '../PDLColors.js';
 import PDLConstants from '../PDLConstants.js';
@@ -163,4 +162,3 @@ export default class FieldNode extends Node {
     this.setClipArea( maskShape );
   }
 }
-projectileDataLab.register( 'FieldNode', FieldNode );

@@ -22,7 +22,6 @@ import launcherTypePressure_mp3 from '../../../sounds/launcherTypePressure_mp3.j
 import launcherTypeSpring_mp3 from '../../../sounds/launcherTypeSpring_mp3.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import PDLRectangularRadioButtonGroup, { PDLRectangularRadioButtonGroupOptions } from '../../common/view/PDLRectangularRadioButtonGroup.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type CustomLauncherTypeRadioButtonGroupOptions = SelfOptions & PDLRectangularRadioButtonGroupOptions;
@@ -85,5 +84,3 @@ export default class CustomLauncherTypeRadioButtonGroup extends PDLRectangularRa
     } );
   }
 }
-
-projectileDataLab.register( 'CustomLauncherTypeRadioButtonGroup', CustomLauncherTypeRadioButtonGroup );

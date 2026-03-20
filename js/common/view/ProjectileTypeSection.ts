@@ -18,7 +18,6 @@ import piano_png from '../../../images/piano_png.js';
 import pumpkin_png from '../../../images/pumpkin_png.js';
 import projectileTypeCannonball_mp3 from '../../../sounds/projectileTypeCannonball_mp3.js';
 import projectileTypePiano_mp3 from '../../../sounds/projectileTypePiano_mp3.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import ProjectileType, { CANNONBALL, PIANO, PUMPKIN } from '../model/ProjectileType.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from './PDLPanelSection.js';
@@ -78,5 +77,3 @@ export default class ProjectileTypeSection extends PDLPanelSection {
     super( ProjectileDataLabStrings.projectileStringProperty, projectileTypeRadioButtonGroup, providedOptions );
   }
 }
-
-projectileDataLab.register( 'ProjectileTypeSection', ProjectileTypeSection );

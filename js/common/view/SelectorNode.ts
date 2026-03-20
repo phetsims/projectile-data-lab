@@ -27,7 +27,6 @@ import RectangularPushButton, { RectangularPushButtonOptions } from '../../../..
 import nullSoundPlayer from '../../../../tambo/js/nullSoundPlayer.js';
 import PhetioObject from '../../../../tandem/js/PhetioObject.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = {
   playSound: ( selectedItem: number ) => void;
@@ -185,5 +184,3 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
     } ) );
   }
 }
-
-projectileDataLab.register( 'SelectorNode', SelectorNode );

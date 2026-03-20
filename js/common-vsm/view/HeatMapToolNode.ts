@@ -26,7 +26,6 @@ import Text from '../../../../scenery/js/nodes/Text.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = {
 
@@ -415,5 +414,3 @@ export default class HeatMapToolNode extends Node {
     } );
   }
 }
-
-projectileDataLab.register( 'HeatMapToolNode', HeatMapToolNode );

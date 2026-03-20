@@ -17,7 +17,6 @@ import Field from '../../common/model/Field.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSignNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import ProjectileSelectorNode from './ProjectileSelectorNode.js';
 
@@ -52,5 +51,3 @@ export default class VSMFieldSignNode extends FieldSignNode {
     super( fieldProperty, fieldSignHeadingContainer, projectileSelectorNode, 34, options );
   }
 }
-
-projectileDataLab.register( 'VSMFieldSignNode', VSMFieldSignNode );

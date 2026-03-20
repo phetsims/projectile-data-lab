@@ -17,7 +17,6 @@ import Circle from '../../../../scenery/js/nodes/Circle.js';
 import Node, { NodeOptions } from '../../../../scenery/js/nodes/Node.js';
 import Path from '../../../../scenery/js/nodes/Path.js';
 import Text from '../../../../scenery/js/nodes/Text.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLUtils from '../PDLUtils.js';
@@ -100,4 +99,3 @@ export default class FieldOverlayNode extends Node {
     super( options );
   }
 }
-projectileDataLab.register( 'FieldOverlayNode', FieldOverlayNode );

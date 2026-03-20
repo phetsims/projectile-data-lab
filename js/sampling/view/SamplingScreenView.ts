@@ -21,7 +21,6 @@ import LauncherNode from '../../common/view/LauncherNode.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import PDLScreenView, { PDLScreenViewOptions } from '../../common/view/PDLScreenView.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SamplingField from '../model/SamplingField.js';
 import SamplingModel from '../model/SamplingModel.js';
@@ -246,5 +245,3 @@ export default class SamplingScreenView extends PDLScreenView<SamplingField> {
     ];
   }
 }
-
-projectileDataLab.register( 'SamplingScreenView', SamplingScreenView );

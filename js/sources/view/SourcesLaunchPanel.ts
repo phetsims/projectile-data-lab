@@ -15,7 +15,6 @@ import CustomLauncherSection from '../../common-vsm/view/CustomLauncherSection.j
 import VSMLaunchPanel, { VSMLaunchPanelOptions } from '../../common-vsm/view/VSMLaunchPanel.js';
 import { LauncherOrientation } from '../../common/model/LauncherOrientation.js';
 import ProjectileType from '../../common/model/ProjectileType.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type SourcesLaunchPanelOptions = SelfOptions & VSMLaunchPanelOptions;
@@ -36,4 +35,3 @@ export default class SourcesLaunchPanel extends VSMLaunchPanel {
     super( [ customLauncherSection ], launcherOrientationProperty, projectileTypeProperty, providedOptions );
   }
 }
-projectileDataLab.register( 'SourcesLaunchPanel', SourcesLaunchPanel );

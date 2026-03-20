@@ -28,7 +28,6 @@ import PDLConstants, { IS_CURRENTLY_AUTO_GENERATING_DATA_PROPERTY } from '../../
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import { PDLPanel } from '../../common/view/PDLPanel.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 type SelfOptions = {
@@ -248,5 +247,3 @@ export default class DataMeasuresOverlay extends Node {
     super( options );
   }
 }
-
-projectileDataLab.register( 'DataMeasuresOverlay', DataMeasuresOverlay );

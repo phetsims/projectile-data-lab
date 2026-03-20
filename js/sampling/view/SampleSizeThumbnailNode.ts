@@ -28,7 +28,6 @@ import { HistogramRepresentation } from '../../common/model/HistogramRepresentat
 import PDLConstants from '../../common/PDLConstants.js';
 import HistogramCanvasPainter from '../../common/view/HistogramCanvasPainter.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SamplingField from '../model/SamplingField.js';
 
@@ -264,6 +263,3 @@ export default class SampleSizeThumbnailNode extends Node {
     return rangeStdDev;
   }
 }
-
-
-projectileDataLab.register( 'SampleSizeThumbnailNode', SampleSizeThumbnailNode );

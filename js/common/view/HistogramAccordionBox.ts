@@ -12,7 +12,6 @@ import optionize, { EmptySelfOptions } from '../../../../phet-core/js/optionize.
 import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
 import AccordionBox, { AccordionBoxOptions } from '../../../../sun/js/AccordionBox.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLColors from '../PDLColors.js';
 import PDLText from './PDLText.js';
@@ -49,5 +48,3 @@ export default class HistogramAccordionBox extends AccordionBox {
     super( content, options );
   }
 }
-
-projectileDataLab.register( 'HistogramAccordionBox', HistogramAccordionBox );

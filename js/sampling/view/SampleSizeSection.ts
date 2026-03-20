@@ -18,7 +18,6 @@ import sampleSize5_mp3 from '../../../sounds/sampleSize5_mp3.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
 import PDLRectangularRadioButtonGroup from '../../common/view/PDLRectangularRadioButtonGroup.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 const sampleSize2SoundClip = new SoundClip( sampleSize2_mp3, { initialOutputLevel: 0.2 } );
@@ -74,5 +73,3 @@ export default class SampleSizeSection extends PDLPanelSection {
     super( ProjectileDataLabStrings.sampleSizeNStringProperty, sampleSizeRadioButtonGroup, providedOptions );
   }
 }
-
-projectileDataLab.register( 'SampleSizeSection', SampleSizeSection );

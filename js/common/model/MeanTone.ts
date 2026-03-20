@@ -10,7 +10,6 @@
 import SoundClip from '../../../../tambo/js/sound-generators/SoundClip.js';
 import soundManager from '../../../../tambo/js/soundManager.js';
 import meanTone_wav from '../../../sounds/meanTone_wav.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import { playbackRateForPosition } from './ProjectileSound.js';
 
 const meanSoundClip = new SoundClip( meanTone_wav );
@@ -25,5 +24,3 @@ export class MeanTone {
     meanSoundClip.play();
   }
 }
-
-projectileDataLab.register( 'MeanTone', MeanTone );

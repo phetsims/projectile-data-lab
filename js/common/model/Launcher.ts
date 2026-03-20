@@ -21,7 +21,6 @@ import Tandem from '../../../../tandem/js/Tandem.js';
 import IOType from '../../../../tandem/js/types/IOType.js';
 import NumberIO from '../../../../tandem/js/types/NumberIO.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import { MysteryOrCustom } from './MysteryOrCustom.js';
 
@@ -125,5 +124,3 @@ export const MYSTERY_LAUNCHERS = [
     tandem: mysteryLaunchersTandem.createTandem( 'mysteryLauncher6' )
   } )
 ];
-
-projectileDataLab.register( 'Launcher', Launcher );

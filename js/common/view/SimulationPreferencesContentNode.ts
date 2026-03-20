@@ -22,7 +22,6 @@ import RichText from '../../../../scenery/js/nodes/RichText.js';
 import ToggleSwitch from '../../../../sun/js/ToggleSwitch.js';
 import VerticalAquaRadioButtonGroup from '../../../../sun/js/VerticalAquaRadioButtonGroup.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import { BinStrategy } from '../BinStrategy.js';
 import PDLPreferences from '../PDLPreferences.js';
@@ -119,5 +118,3 @@ export default class SimulationPreferencesContentNode extends PreferencesPanelCo
     } );
   }
 }
-
-projectileDataLab.register( 'SimulationPreferencesContentNode', SimulationPreferencesContentNode );

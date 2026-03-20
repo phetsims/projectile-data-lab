@@ -12,7 +12,6 @@ import ChartTransform from '../../../../bamboo/js/ChartTransform.js';
 import { EmptySelfOptions } from '../../../../phet-core/js/optionize.js';
 import Color from '../../../../scenery/js/util/Color.js';
 import HistogramData from '../../common/model/HistogramData.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import Histogram from '../model/Histogram.js';
 import { HistogramRepresentation } from '../model/HistogramRepresentation.js';
 
@@ -142,5 +141,3 @@ export default class HistogramCanvasPainter extends CanvasPainter {
     context.restore();
   }
 }
-
-projectileDataLab.register( 'HistogramCanvasPainter', HistogramCanvasPainter );

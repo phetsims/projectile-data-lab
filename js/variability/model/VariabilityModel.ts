@@ -14,7 +14,6 @@ import VSMField from '../../common-vsm/model/VSMField.js';
 import { VSMFieldIdentifierValues } from '../../common-vsm/model/VSMFieldIdentifier.js';
 import VSMModel, { VSMModelOptions } from '../../common-vsm/model/VSMModel.js';
 import { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 type SelfOptions = EmptySelfOptions;
 type VariabilityModelOptions = SelfOptions & StrictOmit<WithRequired<VSMModelOptions<VSMField>, 'tandem'>, 'isStandardDeviationAnglePropertyPhetioInstrumented'>;
@@ -40,5 +39,3 @@ export default class VariabilityModel extends VSMModel<VSMField> {
     super( fields, options );
   }
 }
-
-projectileDataLab.register( 'VariabilityModel', VariabilityModel );

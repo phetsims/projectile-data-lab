@@ -31,7 +31,6 @@ import Projectile from '../../common/model/Projectile.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import PDLPreferences from '../../common/PDLPreferences.js';
 import PDLQueryParameters from '../../common/PDLQueryParameters.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import VSMField from './VSMField.js';
 
 const tickSound = new SoundClip( stopwatchTick_mp3, { initialOutputLevel: 0.3 } );
@@ -316,4 +315,3 @@ export default class VSMModel<T extends VSMField> extends PDLModel<T> {
     this.stopwatch.reset();
   }
 }
-projectileDataLab.register( 'VSMModel', VSMModel );

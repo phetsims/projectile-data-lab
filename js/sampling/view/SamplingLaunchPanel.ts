@@ -14,7 +14,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import Launcher from '../../common/model/Launcher.js';
 import MysteryLauncherSection from '../../common/view/MysteryLauncherSection.js';
 import { PDLLaunchPanel, PDLLaunchPanelOptions } from '../../common/view/PDLLaunchPanel.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import SampleSizeSection from './SampleSizeSection.js';
 
 type SelfOptions = EmptySelfOptions;
@@ -40,4 +39,3 @@ export default class SamplingLaunchPanel extends PDLLaunchPanel {
     super( content, options );
   }
 }
-projectileDataLab.register( 'SamplingLaunchPanel', SamplingLaunchPanel );

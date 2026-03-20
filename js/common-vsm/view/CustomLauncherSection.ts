@@ -14,7 +14,6 @@ import VBox from '../../../../scenery/js/layout/nodes/VBox.js';
 import LauncherMechanism from '../../common-vsm/model/LauncherMechanism.js';
 import CustomLauncherTypeRadioButtonGroup from '../../common-vsm/view/CustomLauncherTypeRadioButtonGroup.js';
 import PDLPanelSection, { PDLPanelSectionOptions } from '../../common/view/PDLPanelSection.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import AngleStabilitySection from './AngleStabilitySection.js';
 
@@ -47,5 +46,3 @@ export default class CustomLauncherSection extends PDLPanelSection {
     super( ProjectileDataLabStrings.customLauncherStringProperty, contentContainer, options );
   }
 }
-
-projectileDataLab.register( 'CustomLauncherSection', CustomLauncherSection );

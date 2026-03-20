@@ -23,7 +23,6 @@ import ValueChangeSoundPlayer from '../../../../tambo/js/sound-generators/ValueC
 import soundManager from '../../../../tambo/js/soundManager.js';
 import angleStabilizerClick_mp3 from '../../../sounds/angleStabilizerClick_mp3.js';
 import PDLText from '../../common/view/PDLText.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 
 // The distance between minor tick marks on the slider. The total range is 0 to 1, so there are 4 minor ticks.
@@ -142,5 +141,3 @@ export default class AngleStabilitySection extends VBox {
     super( options );
   }
 }
-
-projectileDataLab.register( 'AngleStabilitySection', AngleStabilitySection );

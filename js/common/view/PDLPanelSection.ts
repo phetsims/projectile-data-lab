@@ -14,7 +14,6 @@ import WithRequired from '../../../../phet-core/js/types/WithRequired.js';
 import PhetFont from '../../../../scenery-phet/js/PhetFont.js';
 import VBox, { VBoxOptions } from '../../../../scenery/js/layout/nodes/VBox.js';
 import Node from '../../../../scenery/js/nodes/Node.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLConstants from '../PDLConstants.js';
 import PDLText from './PDLText.js';
 
@@ -50,4 +49,3 @@ export default class PDLPanelSection extends VBox {
     super( options );
   }
 }
-projectileDataLab.register( 'PDLPanelSection', PDLPanelSection );

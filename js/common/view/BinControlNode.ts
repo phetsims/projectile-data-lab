@@ -17,7 +17,6 @@ import Node from '../../../../scenery/js/nodes/Node.js';
 import ComboBox from '../../../../sun/js/ComboBox.js';
 import ToggleNode from '../../../../sun/js/ToggleNode.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import PDLPreferences from '../PDLPreferences.js';
 import PDLText from './PDLText.js';
@@ -118,5 +117,3 @@ export default class BinControlNode extends HBox {
     super( options );
   }
 }
-
-projectileDataLab.register( 'BinControlNode', BinControlNode );

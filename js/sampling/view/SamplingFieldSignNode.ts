@@ -17,7 +17,6 @@ import Launcher from '../../common/model/Launcher.js';
 import PDLColors from '../../common/PDLColors.js';
 import PDLConstants from '../../common/PDLConstants.js';
 import FieldSignNode, { FieldSignNodeOptions } from '../../common/view/FieldSignNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SampleSelectorNode from './SampleSelectorNode.js';
 
@@ -63,5 +62,3 @@ export default class SamplingFieldSignNode extends FieldSignNode {
     super( fieldProperty, fieldSignHeadingContainer, sampleSelectorNode, 25, options );
   }
 }
-
-projectileDataLab.register( 'SamplingFieldSignNode', SamplingFieldSignNode );

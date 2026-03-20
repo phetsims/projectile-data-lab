@@ -27,7 +27,6 @@ import Launcher, { MYSTERY_LAUNCHERS } from '../../common/model/Launcher.js';
 import { MeanTone } from '../../common/model/MeanTone.js';
 import { MysteryOrCustom } from '../../common/model/MysteryOrCustom.js';
 import PDLConstants from '../../common/PDLConstants.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import IntervalTool from './IntervalTool.js';
 import MeasuresField from './MeasuresField.js';
 
@@ -216,5 +215,3 @@ export default class MeasuresModel extends SMModel<MeasuresField> {
     this.intervalTool.reset();
   }
 }
-
-projectileDataLab.register( 'MeasuresModel', MeasuresModel );

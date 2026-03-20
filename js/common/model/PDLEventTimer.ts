@@ -14,7 +14,6 @@ import BooleanProperty from '../../../../axon/js/BooleanProperty.js';
 import NumberProperty from '../../../../axon/js/NumberProperty.js';
 import Property from '../../../../axon/js/Property.js';
 import Tandem from '../../../../tandem/js/Tandem.js';
-import projectileDataLab from '../../projectileDataLab.js';
 
 export default class PDLEventTimer {
 
@@ -83,5 +82,3 @@ export default class PDLEventTimer {
     this.timeRemainingProperty.value = 0;
   }
 }
-
-projectileDataLab.register( 'PDLEventTimer', PDLEventTimer );

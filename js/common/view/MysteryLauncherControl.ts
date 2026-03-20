@@ -148,5 +148,3 @@ export default class MysteryLauncherControl extends Node {
     binderName: 'Select Launcher'
   } );
 }
-
-projectileDataLab.register( 'MysteryLauncherControl', MysteryLauncherControl );

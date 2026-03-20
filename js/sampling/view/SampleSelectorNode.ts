@@ -24,7 +24,6 @@ import PDLConstants from '../../common/PDLConstants.js';
 import MeanIndicatorNode from '../../common/view/MeanIndicatorNode.js';
 import PDLText from '../../common/view/PDLText.js';
 import SelectorNode, { SelectorNodeOptions } from '../../common/view/SelectorNode.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import ProjectileDataLabStrings from '../../ProjectileDataLabStrings.js';
 import SamplingField from '../model/SamplingField.js';
 import { SamplingPhase } from '../model/SamplingPhase.js';
@@ -162,5 +161,3 @@ export default class SampleSelectorNode extends SelectorNode {
     super( sampleDataContainer, selectedSampleNumberProperty, rangeProperty, options );
   }
 }
-
-projectileDataLab.register( 'SampleSelectorNode', SampleSelectorNode );

@@ -20,7 +20,6 @@ import Path from '../../../../scenery/js/nodes/Path.js';
 import Rectangle from '../../../../scenery/js/nodes/Rectangle.js';
 import cannonball_png from '../../../images/cannonball_png.js';
 import springIcon_svg from '../../../images/springIcon_svg.js';
-import projectileDataLab from '../../projectileDataLab.js';
 import PDLColors from '../PDLColors.js';
 import MeanIndicatorNode from './MeanIndicatorNode.js';
 
@@ -169,5 +168,4 @@ const PDLScreenIconFactory = {
   }
 };
 
-projectileDataLab.register( 'PDLScreenIconFactory', PDLScreenIconFactory );
 export default PDLScreenIconFactory;
