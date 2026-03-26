@@ -49,7 +49,7 @@
     "branch": "HEAD"
   },
   "phet-io-wrappers": {
-    "sha": "5f1273698650f122eaeb92a37eee1fd021ee19e4",
+    "sha": "fc867ec812d9f8abc01752ca6fd8e7b9aba148a0",
     "branch": "HEAD"
   },
   "phetcommon": {
@@ -61,7 +61,7 @@
     "branch": "HEAD"
   },
   "projectile-data-lab": {
-    "sha": "67e9a192474770d170ae90131b32cca9aa1a5eae",
+    "sha": "34067c2ff39b8d989bee07d7cba033cf11886ca6",
     "branch": "1.0"
   },
   "query-string-machine": {
