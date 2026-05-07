@@ -32,7 +32,7 @@ type SelfOptions = {
   playSound: ( selectedItem: number ) => void;
 };
 type ParentOptions = AccessibleNumberSpinnerOptions & NodeOptions;
-export type SelectorNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'children' | 'valueProperty' | 'enabledRangeProperty' | 'keyboardStep' | 'shiftKeyboardStep' | 'pageKeyboardStep'>;
+export type SelectorNodeOptions = SelfOptions & StrictOmit<ParentOptions, 'children' | 'valueProperty' | 'enabledRangeProperty'>;
 
 export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
@@ -128,16 +128,12 @@ export default class SelectorNode extends AccessibleNumberSpinner( Node, 0 ) {
 
     options.children = [ contents, incrementButton, decrementButton ];
 
-    // pdom - SelectorNode uses AccessibleValueHandler for accessibility, but it was decided that keyboardStep
-    // and shiftKeyboardStep should have the same behavior as the SelectorNode ArrowButtons AND the ArrowButtons
-    // should look depressed when interacting with those keys. To accomplish this we actually press the ArrowButtons
-    // in response to input with those keys. keyboardStep and shiftKeyboardStep are set to zero so the value isn't
-    // modified again by AccessibleValueHandler.
-    options.keyboardStep = 0;
-    options.shiftKeyboardStep = 0;
-    options.pageKeyboardStep = 0;
-
     super( options );
+
+    // SelectorNode responds to keyboard interaction through synthetic button presses.
+    this.keyboardStep = 0;
+    this.shiftKeyboardStep = 0;
+    this.pageKeyboardStep = 0;
 
     // enable/disable arrow buttons
     const updateEnabled = () => {
